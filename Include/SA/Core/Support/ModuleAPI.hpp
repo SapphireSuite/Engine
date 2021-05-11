@@ -38,19 +38,6 @@
 #endif
 
 
-#if !defined(NDEBUG) || defined(_DEBUG)
-
-	/// Sapphire Engine Debug preprocessor.
-	#define SA_DEBUG 1
-
-#else
-
-	/// Sapphire Engine Debug preprocessor.
-	#define SA_DEBUG 0
-
-#endif
-
-
 /** \} */
 
 

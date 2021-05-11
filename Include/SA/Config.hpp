@@ -46,11 +46,23 @@ namespace Sa
 }
 
 
+/**
+*	\defgroup Debug Debug
+*	Sapphire Engine Debug tools.
+*/
+
+
 // ====== Core ======
 
 /**
 *	\defgroup Core Core
 *	Sapphire Engine Core Module.
+*/
+
+/**
+*	\defgroup Core_Debug Debug
+*	Sapphire Engine Core Debug tools.
+*	\ingroup Core Debug
 */
 
 /**
