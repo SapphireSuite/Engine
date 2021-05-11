@@ -5,9 +5,11 @@
 #ifndef SAPPHIRE_CORE_DUMMY_GUARD
 #define SAPPHIRE_CORE_DUMMY_GUARD
 
+#include <SA/Config.hpp>
+
 namespace Sa
 {
-	class __declspec(dllexport) Dummy
+	class SA_ENGINE_API Dummy
 	{
 	};
 }
