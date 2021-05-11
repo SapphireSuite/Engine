@@ -73,6 +73,6 @@ enable_testing()
 
 add_subdirectory(ThirdParty)
 
-if(SA_ENGINE_BUILD_TESTS OR SA_CI)
+if(SA_ENGINE_BUILD_TESTS)
 	add_subdirectory(Tests)
 endif()
