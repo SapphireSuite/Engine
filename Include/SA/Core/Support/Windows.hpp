@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_CORE_WINDOWS_GUARD
 #define SAPPHIRE_CORE_WINDOWS_GUARD
 
-//#include <SA/Core/Support/Pragma.hpp>
+#include <SA/Core/Support/Pragma.hpp>
 #include <SA/Core/Support/Platforms.hpp>
 
 /**
@@ -24,11 +24,11 @@
 	*	Remove macro producing 'define' expansion warning.
 	*	See: https://docs.microsoft.com/en-us/cpp/error-messages/compiler-warnings/c5105
 	*/
-	//SA_PRAGMA_SDWARN_MSVC(5105)
+	SA_PRAGMA_SDWARN_MSVC(5105)
 
 	#include <Windows.h>
 
-	//SA_PRAGMA_EDWARN()
+	SA_PRAGMA_EDWARN()
 
 #endif
 
