@@ -15,6 +15,13 @@ inline std::string UTH::ToString(const MilliSecond& _ms)
 
 void ChronoTests()
 {
+#if SA_CI
+	// Handle virtual machine latency.
+	const MilliSecond threshold = 200_ms;
+#else
+	const MilliSecond threshold = 25_ms;
+#endif
+
 	Chrono ch;
 
 	{
@@ -23,7 +30,7 @@ void ChronoTests()
 		Time::Sleep(300_ms);
 
 		const MilliSecond t1 = ch.End();
-		SA_UTH_EQ(t1, 300_ms, 25_ms);
+		SA_UTH_EQ(t1, 300_ms, threshold);
 	}
 
 	{
@@ -32,13 +39,13 @@ void ChronoTests()
 		Time::Sleep(250_ms);
 
 		const MilliSecond t2 = ch.Restart();
-		SA_UTH_EQ(t2, 250_ms, 25_ms);
+		SA_UTH_EQ(t2, 250_ms, threshold);
 	}
 
 	{
 		Time::Sleep(200_ms);
 
 		const MilliSecond t3 = ch.End();
-		SA_UTH_EQ(t3, 200_ms, 25_ms);
+		SA_UTH_EQ(t3, 200_ms, threshold);
 	}
 }
