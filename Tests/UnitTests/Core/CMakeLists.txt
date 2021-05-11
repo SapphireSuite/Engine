@@ -5,3 +5,4 @@
 # === Entrypoints ===
 
 add_subdirectory(Types)
+add_subdirectory(Time)
