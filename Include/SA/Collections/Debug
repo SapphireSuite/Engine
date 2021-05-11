@@ -5,6 +5,10 @@
 #ifndef SAPPHIRE_COLLECTIONS_DEBUG_GUARD
 #define SAPPHIRE_COLLECTIONS_DEBUG_GUARD
 
+#include <SA/Core/Debug/Debug.hpp>
 
+
+// Exceptions.
+#include <SA/Core/Debug/Exceptions/Exception_OutOfRange.hpp>
 
 #endif // GUARD

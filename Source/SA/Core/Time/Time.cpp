@@ -6,6 +6,8 @@
 
 #include <Core/Time/MilliSecond.hpp>
 
+#include <Collections/Debug>
+
 #if SA_WIN
 
 	#include <Core/Support/Windows.hpp>
@@ -26,6 +28,7 @@ namespace Sa
 		LARGE_INTEGER start;
 
 		bool bSuccess = QueryPerformanceCounter(&start);
+		SA_ASSERT(Default, SA-Core, bSuccess, L"High resolution time stamp not supported!");
 
 		return static_cast<uint64>(start.QuadPart);
 	}
@@ -36,6 +39,7 @@ namespace Sa
 		LARGE_INTEGER frequency;
 
 		bool bSuccess = QueryPerformanceFrequency(&frequency);
+		SA_ASSERT(Default, SA-Core, bSuccess, L"High resolution time stamp not supported!");
 
 		return Second::ToTicks / static_cast<float>(frequency.QuadPart);
 	}
@@ -65,6 +69,7 @@ namespace Sa
 		LARGE_INTEGER end;
 
 		bool bSuccess = QueryPerformanceCounter(&end); (void)bSuccess;
+		SA_ASSERT(Default, SA-Core, bSuccess, L"High resolution time stamp not supported!");
 
 		return (end.QuadPart - gStartTime) * gHardwareFrequency;
 
@@ -73,6 +78,7 @@ namespace Sa
 		struct timespec end;
 
 		int bSuccess = clock_gettime(CLOCK_MONOTONIC, &end) == 0; (void)bSuccess;
+		SA_ASSERT(Default, SA-Core, bSuccess, L"High resolution time stamp not supported!");
 
 
 		return (end.tv_sec * Second::ToTicks + end.tv_nsec / 1000.0f) - gStartTime;

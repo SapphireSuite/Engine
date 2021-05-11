@@ -6,6 +6,7 @@
 #include <SA/Collections/Debug>
 
 void ToStringTests();
+void LoggingTests();
 
 int main()
 {
@@ -13,6 +14,7 @@ int main()
 
 
 	SA_UTH_GP(ToStringTests());
+	SA_UTH_GP(LoggingTests());
 
 
 	SA_UTH_EXIT();
