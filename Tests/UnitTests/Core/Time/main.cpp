@@ -11,6 +11,10 @@ void SecondTests();
 void MinuteTests();
 void HourTests();
 
+void DateTimeTests();
+void ChronoTests();
+
+
 int main()
 {
 	SA_UTH_INIT();
@@ -21,6 +25,9 @@ int main()
 	SA_UTH_GP(SecondTests());
 	SA_UTH_GP(MinuteTests());
 	SA_UTH_GP(HourTests());
+
+	SA_UTH_GP(DateTimeTests());
+	SA_UTH_GP(ChronoTests());
 
 
 	SA_UTH_EXIT();
