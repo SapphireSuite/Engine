@@ -2,6 +2,9 @@
 
 #include <UnitTestHelper.hpp>
 
+// Test correct include path.
+#include <SA/Collections/Time>
+
 void TickTests();
 void MilliSecondTests();
 void SecondTests();

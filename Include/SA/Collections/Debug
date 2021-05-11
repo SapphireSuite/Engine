@@ -1,0 +1,10 @@
+// Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
+
+#pragma once
+
+#ifndef SAPPHIRE_COLLECTIONS_DEBUG_GUARD
+#define SAPPHIRE_COLLECTIONS_DEBUG_GUARD
+
+
+
+#endif // GUARD
