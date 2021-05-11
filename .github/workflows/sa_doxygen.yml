@@ -1,0 +1,39 @@
+# Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
+
+name: SA-Doxygen
+
+
+# Trigger the action.
+on:
+  push:
+    branches:
+      - main
+      - master
+
+
+# Job matrix
+jobs:
+
+  doxygen-gen:
+    name: Doxygen
+    runs-on: ubuntu-latest
+
+
+    # Steps execution.
+    steps:
+
+      - name: "[Action] Checkout repository"
+        uses: actions/checkout@v2
+
+      - name: "[Action] Generate"
+        uses: mattnotmitt/doxygen-action@v1.1.0
+        with:
+          doxyfile-path: "doxygen.config"
+
+      - name: "[Action] Deploy"
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          force_orphan: true
+          publish_dir: Doc/html
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          commit_message: "[Auto] Deploy Doxygen"
