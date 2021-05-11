@@ -8,6 +8,7 @@
 void IntTests();
 void CharTests();
 void FlagsTests();
+void HasMemberTests();
 
 int main()
 {
@@ -15,10 +16,15 @@ int main()
 
 
 	SA_UTH_GP(IntTests());
-
 	SA_UTH_GP(CharTests());
 
+
+	SA_UTH_GPB(Variadics)
+
 	SA_UTH_GP(FlagsTests());
+	SA_UTH_GP(HasMemberTests());
+	
+	SA_UTH_GPE()
 
 
 	SA_UTH_EXIT();
