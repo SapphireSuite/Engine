@@ -7,6 +7,7 @@
 
 void ToStringTests();
 void LoggingTests();
+void ExceptionTests();
 
 int main()
 {
@@ -15,6 +16,7 @@ int main()
 
 	SA_UTH_GP(ToStringTests());
 	SA_UTH_GP(LoggingTests());
+	SA_UTH_GP(ExceptionTests());
 
 
 	SA_UTH_EXIT();

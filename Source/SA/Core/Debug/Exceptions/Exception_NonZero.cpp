@@ -1,0 +1,22 @@
+// Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
+
+#include <Core/Debug/Exceptions/Exception_NonZero.hpp>
+
+namespace Sa
+{
+#if SA_LOGGING
+
+	Exception_NonZero::Exception_NonZero(
+		const std::wstring& _file,
+		uint32 _line,
+		const std::string& _function,
+		const std::wstring& _chanName,
+		bool _pred,
+		const std::wstring& _details
+	) noexcept :
+		Exception(_file, _line, _function, _chanName, _pred, L"<var> is 0!", _details)
+	{
+	}
+
+#endif
+}

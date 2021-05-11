@@ -25,7 +25,10 @@ namespace Sa
 	) noexcept :
 		Exception(_file, _line, _function, _chanName,
 			_minBound <= _currIndex && _currIndex <= _maxBound,
-			MakeOutOfRangeMessage(_currIndex, _minBound, _maxBound), _details)
+			MakeOutOfRangeMessage(_currIndex, _minBound, _maxBound), _details),
+		currIndex{ _currIndex },
+		minBound{ _minBound },
+		maxBound{ _maxBound }
 	{
 	}
 

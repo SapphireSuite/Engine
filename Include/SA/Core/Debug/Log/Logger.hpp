@@ -26,7 +26,7 @@ namespace Sa
 		*
 		*	\param[in] _log		Log to output.
 		*/
-		void Output(const Sa::Log& _log) noexcept;
+		SA_ENGINE_API void Output(const Sa::Log& _log) noexcept;
 
 	public:
 		Flags<LogLevel> levelFlags = LogLevel::Default;
@@ -64,12 +64,16 @@ namespace Sa
 		*	Log assertion on success, otherwise throw exception.
 		*	Use SA_ASSERT as helper call.
 		*
+		*	\tparam ExcepT			Exception type.
 		*	\param[in] _exception	exception to process.
 		*/
-		SA_ENGINE_API void Assert(const Exception& _exception);
+		template <typename ExcepT>
+		void Assert(const ExcepT& _exception);
 	};
 
 #endif
 }
+
+#include <SA/Core/Debug/Log/Logger.inl>
 
 #endif // GUARD

@@ -35,33 +35,6 @@ void LoggingTests()
 	SA_LOG(wshw, AssertSuccess, TestChan / SubChan);
 	SA_LOG(wshw, AssertFailed, TestChan / SubChan);
 
-	Debug::logger.levelFlags = LogLevel::Max;
-
-	//// Defaut assert.
-	SA_ASSERT(Default, AsChan, true, L"Test Assert Success!");
-
-	try
-	{
-		SA_ASSERT(Default, AsChan, false, L"Test Assert Failure!");
-	}
-	catch (const Exception& _e)
-	{
-		std::wcout << L"Exception caugth: " << _e.msg << '\n' << std::endl;
-	}
-
-
-	// Out of range assert.
-	SA_ASSERT(OutOfRange, AsChan, 4u, 0u, 8u, L"OutOfRange success test");
-
-	try
-	{
-		SA_ASSERT(OutOfRange, AsChan, 10u, 0u, 8u, L"OutOfRange failure test");
-	}
-	catch (const Exception& _e)
-		//catch (const Exception_OutOfRange& _e)
-	{
-		std::wcout << L"Exception caugth: " << _e.msg << '\n' << _e.details << '\n' << std::endl;
-	}
 
 
 	// Warnings.
@@ -116,6 +89,7 @@ void LoggingTests()
 	SA_ASSERT(OutOfRange, AsChan, 10u, 0u, 8u, L"OutOfRange failure test");
 
 	bool bWarnIfFalse = true;
+	(void)bWarnIfFalse;
 	SA_WARN(bWarnIfFalse == false, TestWarn);
 	SA_WARN(bWarnIfFalse == true, TestWarn, L"if Warning! pred false.");
 }

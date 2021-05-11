@@ -35,20 +35,6 @@ namespace Sa
 		Output(_log);
 	}
 
-	void Logger::Assert(const Exception& _exception)
-	{
-		if(_exception.level == LogLevel::AssertSuccess)
-			Log(_exception); // Simple log.
-		else
-		{
-			// Force output with level in channel.
-			Output(_exception);
-
-			throw _exception;
-		}
-	}
-
-
 	void Logger::Output(const Sa::Log& _log) noexcept
 	{
 		for (auto it = mOutStreams.begin(); it != mOutStreams.end(); ++it)
