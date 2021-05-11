@@ -1,10 +1,5 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#pragma once
-
-#ifndef SAPPHIRE_UNIT_TEST_INT_GUARD
-#define SAPPHIRE_UNIT_TEST_INT_GUARD
-
 #include <type_traits>
 
 #include <SA/Core/Types/Int.hpp>
@@ -55,5 +50,3 @@ void IntTests()
 	static_assert(std::is_same<UIntOfSize<8>, uint64>::value, "uint of size 8 must be uint64 type!");
 	static_assert(6848489799_ui64 == static_cast<uint64>(6848489799), "Operator _ui64 is invalid!");
 }
-
-#endif // GUARD

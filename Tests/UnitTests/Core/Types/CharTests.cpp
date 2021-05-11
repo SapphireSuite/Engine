@@ -1,10 +1,5 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#pragma once
-
-#ifndef SAPPHIRE_UNIT_TEST_CHAR_GUARD
-#define SAPPHIRE_UNIT_TEST_CHAR_GUARD
-
 #include <type_traits>
 
 #include <SA/Core/Types/Char.hpp>
@@ -27,5 +22,3 @@ void CharTests()
 	static_assert(std::is_same<CharOfSize<4>, char32>::value, "char of size 32 must be int8 type!");
 	static_assert(684899_c32 == static_cast<char32>(684899), "Operator _c32 is invalid!");
 }
-
-#endif // GUARD

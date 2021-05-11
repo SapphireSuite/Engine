@@ -10,8 +10,11 @@ project(SA-UT_Core_Types)
 
 # === Inputs ===
 
+# Parse files.
+file(GLOB_RECURSE SOURCES "*.cpp")
+
 # Add executable target.
-add_executable(SA-UT_Core_Types "main.cpp")
+add_executable(SA-UT_Core_Types ${SOURCES})
 
 
 

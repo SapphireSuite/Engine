@@ -5,9 +5,9 @@
 // Test correct include path.
 #include <SA/Collections/Types>
 
-#include "IntTests.hpp"
-#include "CharTests.hpp"
-#include "FlagsTests.hpp"
+void IntTests();
+void CharTests();
+void FlagsTests();
 
 int main()
 {
