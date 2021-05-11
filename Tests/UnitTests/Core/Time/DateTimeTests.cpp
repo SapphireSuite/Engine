@@ -1,5 +1,7 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
+#include <cstring>
+
 #include <UnitTestHelper.hpp>
 
 #include <SA/Core/Time/DateTime.hpp>
@@ -57,13 +59,13 @@ namespace Sa::DateTime_UT
 		for (uint8 i = 0_ui8; i < 7_ui8; ++i)
 		{
 			d1.weekday = i;
-			SA_UTH_EQ(d1.GetDayName(), DateTime::sDays[i]);
+			SA_UTH_RSF(0, strcmp, d1.GetDayName(), DateTime::sDays[i]);
 		}
 
 		for (uint8 i = 1_ui8; i < 12_ui8; ++i)
 		{
 			d1.month = i;
-			SA_UTH_EQ(d1.GetMonthName(), DateTime::sMonths[i - 1]);
+			SA_UTH_RSF(0, strcmp, d1.GetMonthName(), DateTime::sMonths[i - 1]);
 		}
 	}
 
