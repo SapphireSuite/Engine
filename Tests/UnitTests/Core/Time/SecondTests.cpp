@@ -5,7 +5,7 @@
 #include <SA/Collections/Time>
 using namespace Sa;
 
-namespace Second_UT
+namespace Sa::Second_UT
 {
 	void Constants()
 	{

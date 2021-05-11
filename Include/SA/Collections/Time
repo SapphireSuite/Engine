@@ -11,4 +11,8 @@
 #include <SA/Core/Time/Minute.hpp>
 #include <SA/Core/Time/Hour.hpp>
 
+#include <SA/Core/Time/Time.hpp>
+#include <SA/Core/Time/Chrono.hpp>
+#include <SA/Core/Time/DateTime.hpp>
+
 #endif // GUARD

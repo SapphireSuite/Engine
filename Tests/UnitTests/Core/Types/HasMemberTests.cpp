@@ -5,7 +5,7 @@
 #include <SA/Core/Types/Variadics/HasMember.hpp>
 using namespace Sa;
 
-namespace HasMember_UT
+namespace Sa::HasMember_UT
 {
 	SA_DEFINE_HAS_MEMBER(X);
 	SA_DEFINE_HAS_MEMBER(Foo);

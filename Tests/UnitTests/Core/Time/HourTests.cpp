@@ -5,7 +5,7 @@
 #include <SA/Collections/Time>
 using namespace Sa;
 
-namespace Hour_UT
+namespace Sa::Hour_UT
 {
 	void Constants()
 	{

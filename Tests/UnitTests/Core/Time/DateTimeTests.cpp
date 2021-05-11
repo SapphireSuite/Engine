@@ -5,7 +5,7 @@
 #include <SA/Core/Time/DateTime.hpp>
 using namespace Sa;
 
-namespace DateTime_UT
+namespace Sa::DateTime_UT
 {
 	bool Equals(const DateTime& _rhs, const DateTime& _lhs)
 	{
@@ -38,7 +38,14 @@ namespace DateTime_UT
 		SA_UTH_EQ(d2.year, 2010_ui16);
 		SA_UTH_EQ(d2.weekday, 4_ui8);
 
-		tm t1{ 45, 10, 2, 17, 12 - 1, 2010 - 1900, 4 };
+		tm t1{};
+		t1.tm_sec = 45;
+		t1.tm_min = 10;
+		t1.tm_hour = 2;
+		t1.tm_mday = 17;
+		t1.tm_mon = 12 - 1;
+		t1.tm_year = 2010 - 1900;
+		t1.tm_wday = 4;
 		const DateTime d3(t1);
 		SA_UTH_SF(Equals, d2, d3);
 	}
@@ -47,13 +54,13 @@ namespace DateTime_UT
 	{
 		DateTime d1;
 
-		for (int i = 0; i < 7; ++i)
+		for (uint8 i = 0_ui8; i < 7_ui8; ++i)
 		{
 			d1.weekday = i;
 			SA_UTH_EQ(d1.GetDayName(), DateTime::sDays[i]);
 		}
 
-		for (int i = 1; i < 12; ++i)
+		for (uint8 i = 1_ui8; i < 12_ui8; ++i)
 		{
 			d1.month = i;
 			SA_UTH_EQ(d1.GetMonthName(), DateTime::sMonths[i - 1]);

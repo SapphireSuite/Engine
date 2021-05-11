@@ -5,7 +5,7 @@
 #include <SA/Collections/Time>
 using namespace Sa;
 
-namespace MilliSecond_UT
+namespace Sa::MilliSecond_UT
 {
 	void Constants()
 	{

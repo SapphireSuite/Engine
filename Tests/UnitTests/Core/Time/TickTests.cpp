@@ -5,7 +5,7 @@
 #include <SA/Collections/Time>
 using namespace Sa;
 
-namespace Tick_UT
+namespace Sa::Tick_UT
 {
 	void Constants()
 	{

@@ -5,7 +5,7 @@
 #include <SA/Core/Types/Variadics/Flags.hpp>
 using namespace Sa;
 
-namespace Flags_UT
+namespace Sa::Flags_UT
 {
 	enum class TestFlags : uint8
 	{

@@ -27,11 +27,11 @@ namespace Sa
 
 
 	template <typename T>
-	std::string ToString(const T* _elems, unsigned int _size)
+	std::string ToString(const T* _elems, uint32 _size)
 	{
 		std::string res = "{ ";
 
-		for (unsigned int i = 0; i < _size; ++i)
+		for (uint32 i = 0; i < _size; ++i)
 			res += ToString(_elems[i]) + ", ";
 
 		res[res.size() - 2] = ' ';
@@ -43,7 +43,7 @@ namespace Sa
 	template <typename T>
 	std::string ToString(const std::vector<T>& _vec) noexcept
 	{
-		return ToString(_vec.data(), _vec.size());
+		return ToString(_vec.data(), static_cast<uint32>(_vec.size()));
 	}
 
 
@@ -84,11 +84,11 @@ namespace Sa
 
 
 	template <typename T>
-	std::wstring ToWString(const T* _elems, unsigned int _size)
+	std::wstring ToWString(const T* _elems, uint32 _size)
 	{
 		std::wstring res = L"{ ";
 
-		for (unsigned int i = 0; i < _size; ++i)
+		for (uint32 i = 0u; i < _size; ++i)
 			res += ToWString(_elems[i]) + L", ";
 
 		res[res.size() - 2] = L' ';
@@ -100,7 +100,7 @@ namespace Sa
 	template <typename T>
 	std::wstring ToWString(const std::vector<T>& _vec) noexcept
 	{
-		return ToWString(_vec.data(), _vec.size());
+		return ToWString(_vec.data(), static_cast<uint32>(_vec.size()));
 	}
 
 

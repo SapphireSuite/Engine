@@ -71,7 +71,7 @@ namespace Sa
 
 	/// ToString spec for tab.
 	template <typename T>
-	std::string ToString(const T* _elems, unsigned int _size);
+	std::string ToString(const T* _elems, uint32 _size);
 
 	/// ToString spec for vector.
 	template <typename T>
@@ -131,7 +131,7 @@ namespace Sa
 
 	/// ToWString spec for tab.
 	template <typename T>
-	std::wstring ToWString(const T* _elems, unsigned int _size);
+	std::wstring ToWString(const T* _elems, uint32 _size);
 
 	/// ToWString spec for vector.
 	template <typename T>

@@ -7,7 +7,7 @@ using namespace Sa;
 
 #if SA_LOGGING
 
-namespace ToString_UT
+namespace Sa::ToString_UT
 {
 	enum class TestEnum
 	{
