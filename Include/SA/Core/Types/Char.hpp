@@ -6,12 +6,6 @@
 #define SAPPHIRE_CORE_CHAR_GUARD
 
 /**
-*	\defgroup Core_Types Types
-*	Sapphire Engine Core Types.
-*	\ingroup Core
-*/
-
-/**
 *	\file Char.hpp
 *
 *	\brief \b Definition of Sapphire Engine \b char types.

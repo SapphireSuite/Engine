@@ -6,10 +6,9 @@
 #define SAPPHIRE_CONFIG_GUARD
 
 #include <SA/Core/Support/ModuleAPI.hpp>
-#include <SA/Core/Support/Compilers.hpp>
 
 /**
-*	\file Config.hpp
+*	\file SA/Config.hpp
 *
 *	\brief Sapphire Engine config file.
 */
@@ -47,9 +46,24 @@ namespace Sa
 }
 
 
+// ====== Core ======
+
 /**
 *	\defgroup Core Core
 *	Sapphire Engine Core Module.
 */
+
+/**
+*	\defgroup Core_Types Types
+*	Sapphire Engine Core Types.
+*	\ingroup Core
+*/
+
+/**
+*	\defgroup Core_Time Time
+*	Sapphire Engine Core Time.
+*	\ingroup Core
+*/
+
 
 #endif // GUARD
