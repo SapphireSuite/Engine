@@ -8,5 +8,7 @@
 #include <SA/Core/Types/Char.hpp>
 #include <SA/Core/Types/Int.hpp>
 
+#include <SA/Core/Types/Variadics/Flags.hpp>
+
 
 #endif // GUARD
