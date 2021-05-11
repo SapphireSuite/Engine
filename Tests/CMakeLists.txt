@@ -16,4 +16,4 @@ endif()
 # === Entrypoints ===
 
 add_subdirectory(Prototype)
-#add_subdirectory(UnitTests)
+add_subdirectory(UnitTests)
