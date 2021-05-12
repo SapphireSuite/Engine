@@ -5,9 +5,13 @@
 #ifndef SAPPHIRE_CORE_SECOND_GUARD
 #define SAPPHIRE_CORE_SECOND_GUARD
 
+#include <string>
+
 #include <SA/Config.hpp>
 
 #include <SA/Core/Types/Int.hpp>
+
+#include <SA/Core/Debug/Config.hpp>
 
 /**
 *	\file Second.hpp
@@ -99,6 +103,13 @@ namespace Sa
 		*	\return \c Hour converted from \c Second.
 		*/
 		SA_ENGINE_API operator Hour() const noexcept;
+
+
+#if SA_LOGGING
+
+		/// Convert ToString.
+		SA_ENGINE_API std::string ToString() const noexcept;
+#endif
 	};
 
 	/**

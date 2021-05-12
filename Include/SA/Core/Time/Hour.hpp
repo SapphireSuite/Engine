@@ -5,9 +5,13 @@
 #ifndef SAPPHIRE_CORE_HOUR_GUARD
 #define SAPPHIRE_CORE_HOUR_GUARD
 
+#include <string>
+
 #include <SA/Config.hpp>
 
 #include <SA/Core/Types/Int.hpp>
+
+#include <SA/Core/Debug/Config.hpp>
 
 /**
 *	\file Hour.hpp
@@ -99,6 +103,13 @@ namespace Sa
 		*	\return \c Minute converted from \c Hour.
 		*/
 		SA_ENGINE_API operator Minute() const noexcept;
+
+
+#if SA_LOGGING
+
+		/// Convert ToString.
+		SA_ENGINE_API std::string ToString() const noexcept;
+#endif
 	};
 
 	/**

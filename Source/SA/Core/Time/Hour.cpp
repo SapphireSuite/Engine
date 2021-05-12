@@ -44,6 +44,16 @@ namespace Sa
 	}
 
 
+#if SA_LOGGING
+
+	std::string Hour::ToString() const noexcept
+	{
+		return std::to_string(mTime) + "h";
+	}
+
+#endif
+
+
 	Hour operator""_hr(uint64 _lit) noexcept
 	{
 		return Hour(_lit);

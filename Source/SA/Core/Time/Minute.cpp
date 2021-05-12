@@ -44,6 +44,16 @@ namespace Sa
 	}
 
 
+#if SA_LOGGING
+
+	std::string Minute::ToString() const noexcept
+	{
+		return std::to_string(mTime) + "min";
+	}
+
+#endif
+
+
 	Minute operator""_min(uint64 _lit) noexcept
 	{
 		return Minute(_lit);

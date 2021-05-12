@@ -7,12 +7,6 @@
 #include <SA/Core/Time/MilliSecond.hpp>
 using namespace Sa;
 
-template <>
-inline std::string UTH::ToString(const MilliSecond& _ms)
-{
-	return std::to_string(static_cast<float>(_ms)) + "ms";
-}
-
 void ChronoTests()
 {
 #if SA_CI

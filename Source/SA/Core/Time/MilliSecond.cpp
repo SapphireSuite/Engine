@@ -44,6 +44,16 @@ namespace Sa
 	}
 
 
+#if SA_LOGGING
+
+	std::string MilliSecond::ToString() const noexcept
+	{
+		return std::to_string(mTime) + "ms";
+	}
+
+#endif
+
+
 	MilliSecond operator""_ms(uint64 _lit) noexcept
 	{
 		return MilliSecond(_lit);

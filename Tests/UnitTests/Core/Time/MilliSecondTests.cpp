@@ -80,12 +80,6 @@ namespace Sa::MilliSecond_UT
 }
 
 
-template <>
-inline std::string UTH::ToString(const MilliSecond& _ms)
-{
-	return std::to_string(static_cast<float>(_ms)) + "ms";
-}
-
 void MilliSecondTests()
 {
 	using namespace MilliSecond_UT;

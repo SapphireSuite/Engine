@@ -80,12 +80,6 @@ namespace Sa::Minute_UT
 }
 
 
-template <>
-std::string UTH::ToString(const Minute& _min)
-{
-	return std::to_string(static_cast<float>(_min)) + "min";
-}
-
 void MinuteTests()
 {
 	using namespace Minute_UT;

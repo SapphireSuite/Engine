@@ -44,6 +44,16 @@ namespace Sa
 	}
 
 
+#if SA_LOGGING
+
+	std::string Tick::ToString() const noexcept
+	{
+		return std::to_string(mTime) + "tk";
+	}
+
+#endif
+
+
 	Tick operator""_tk(uint64 _lit) noexcept
 	{
 		return Tick(_lit);

@@ -80,12 +80,6 @@ namespace Sa::Hour_UT
 }
 
 
-template <>
-std::string UTH::ToString(const Hour& _h)
-{
-	return std::to_string(static_cast<float>(_h)) + "h";
-}
-
 void HourTests()
 {
 	using namespace Hour_UT;

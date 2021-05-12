@@ -44,6 +44,16 @@ namespace Sa
 	}
 
 
+#if SA_LOGGING
+
+	std::string Second::ToString() const noexcept
+	{
+		return std::to_string(mTime) + "sec";
+	}
+
+#endif
+
+
 	Second operator""_sec(uint64 _lit) noexcept
 	{
 		return Second(_lit);

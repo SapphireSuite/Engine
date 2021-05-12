@@ -80,12 +80,6 @@ namespace Sa::Second_UT
 }
 
 
-template <>
-std::string UTH::ToString(const Second& _sec)
-{
-	return std::to_string(static_cast<float>(_sec)) + "sec";
-}
-
 void SecondTests()
 {
 	using namespace Second_UT;

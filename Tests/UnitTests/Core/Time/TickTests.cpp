@@ -80,12 +80,6 @@ namespace Sa::Tick_UT
 }
 
 
-template <>
-std::string UTH::ToString(const Tick& _tick)
-{
-	return std::to_string(static_cast<float>(_tick)) + "tk";
-}
-
 void TickTests()
 {
 	using namespace Tick_UT;
