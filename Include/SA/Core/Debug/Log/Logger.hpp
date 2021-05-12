@@ -26,7 +26,19 @@ namespace Sa
 		*
 		*	\param[in] _log		Log to output.
 		*/
-		SA_ENGINE_API void Output(const Sa::Log& _log) noexcept;
+		void Output(const Sa::Log& _log) noexcept;
+
+		/**
+		*	\brief Process exception (internal implementation).
+		*
+		*	Log assertion on success, otherwise ask for throw.
+		*	Called by Assert().
+		*
+		*	\param[in] _exception	exception to process.
+		* 
+		*	\return Should throw (typed) exception.
+		*/
+		SA_ENGINE_API bool Assert_Impl(const Exception& _exception);
 
 	public:
 		Flags<LogLevel> levelFlags = LogLevel::Default;

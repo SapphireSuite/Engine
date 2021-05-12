@@ -7,15 +7,8 @@ namespace Sa
 	template <typename ExcepT>
 	void Logger::Assert(const ExcepT& _exception)
 	{
-		if (_exception.level == LogLevel::AssertSuccess)
-			Log(_exception); // Simple log.
-		else
-		{
-			// Force output with level in channel.
-			Output(_exception);
-
+		if(Assert_Impl(_exception))
 			throw _exception;
-		}
 	}
 
 #endif
