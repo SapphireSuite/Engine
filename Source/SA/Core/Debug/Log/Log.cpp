@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Core/Debug/Log.hpp>
+#include <Core/Debug/Log/Log.hpp>
 
 #include <Core/Time/Time.hpp>
 

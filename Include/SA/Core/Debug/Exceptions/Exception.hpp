@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_CORE_EXCEPTION_GUARD
 #define SAPPHIRE_CORE_EXCEPTION_GUARD
 
-#include <SA/Core/Debug/Log.hpp>
+#include <SA/Core/Debug/Log/Log.hpp>
 
 namespace Sa
 {

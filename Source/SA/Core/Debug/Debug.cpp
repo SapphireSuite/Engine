@@ -1,14 +1,27 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
+#include <algorithm>
+
 #include <Core/Debug/Debug.hpp>
 
-#include <algorithm>
+#include <Core/Debug/Log/Streams/LogFileStream.hpp>
 
 namespace Sa::Debug
 {
 #if SA_LOGGING
 
-	SA_ENGINE_API Logger logger;
+	LogFileStream gLogFile;
+	SA_ENGINE_API LogConsoleStream csl;
+
+	SA_ENGINE_API Logger logger = []()
+	{
+		Logger _logger;
+
+		_logger.Register(gLogFile);
+		_logger.Register(csl);
+
+		return _logger;
+	}();
 
 	namespace Intl
 	{

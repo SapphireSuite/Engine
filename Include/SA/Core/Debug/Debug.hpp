@@ -8,8 +8,9 @@
 #include <SA/Core/Support/Compilers.hpp>
 #include <SA/Core/Support/Stringify.hpp>
 
-#include <SA/Core/Debug/Logger.hpp>
 #include <SA/Core/Debug/ToString.hpp>
+#include <SA/Core/Debug/Log/Logger.hpp>
+#include <SA/Core/Debug/Log/Streams/LogConsoleStream.hpp>
 
 namespace Sa::Debug
 {
@@ -85,7 +86,7 @@ namespace Sa::Debug
 
 	/// \endcond Internal
 
-
+	SA_ENGINE_API extern LogConsoleStream csl;
 	SA_ENGINE_API extern Logger logger;
 
 

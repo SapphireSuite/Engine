@@ -5,11 +5,12 @@
 #ifndef SAPPHIRE_CORE_LOGGER_GUARD
 #define SAPPHIRE_CORE_LOGGER_GUARD
 
-#include <fstream>
-#include <mutex>
+#include <vector>
 
-#include <SA/Core/Debug/Log.hpp>
-#include <SA/Core/Debug/LogChannel.hpp>
+#include <SA/Core/Debug/Log/Log.hpp>
+#include <SA/Core/Debug/Log/LogChannel.hpp>
+#include <SA/Core/Debug/Log/Streams/LogStream.hpp>
+
 #include <SA/Core/Debug/Exceptions/Exception.hpp>
 
 namespace Sa
@@ -18,12 +19,7 @@ namespace Sa
 
 	class Logger
 	{
-		std::wfstream mLogFile;
-
-		std::mutex mFileMutex;
-
-		/// Create log and log backup files.
-		void CreateLogFile(const std::string& _fileName);
+		std::vector<LogStream*> mOutStreams;
 
 		/**
 		*	\brief Output a log.
@@ -35,11 +31,21 @@ namespace Sa
 	public:
 		Flags<LogLevel> levelFlags = LogLevel::Default;
 
+		/**
+		*	\brief Register a stream to output.
+		* 
+		*	\param[in] _stream	Stream to register.
+		*/
+		SA_ENGINE_API void Register(LogStream& _stream);
 
-		/// Default constuctor.
-		SA_ENGINE_API Logger(const std::string& _fileName = "log") noexcept;
-
-		SA_ENGINE_API ~Logger() noexcept;
+		/**
+		*	\brief Unregister a stream from output.
+		*
+		*	\param[in] _stream	Stream to unregister.
+		*
+		*	\return true on success.
+		*/
+		SA_ENGINE_API bool Unregister(LogStream& _stream);
 
 
 		/**

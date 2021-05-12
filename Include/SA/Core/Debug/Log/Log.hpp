@@ -9,7 +9,7 @@
 
 #include <SA/Core/Time/DateTime.hpp>
 
-#include <SA/Core/Debug/LogLevel.hpp>
+#include <SA/Core/Debug/Log/LogLevel.hpp>
 
 /**
 *	\file Log.hpp

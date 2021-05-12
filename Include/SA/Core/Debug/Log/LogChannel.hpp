@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_CORE_LOG_CHANNEL_GUARD
 #define SAPPHIRE_CORE_LOG_CHANNEL_GUARD
 
-#include <SA/Core/Debug/LogLevel.hpp>
+#include <SA/Core/Debug/Log/LogLevel.hpp>
 
 /**
 *	\file LogChannel.hpp
