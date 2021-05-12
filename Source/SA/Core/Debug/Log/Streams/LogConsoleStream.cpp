@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include <Core/Algorithms/BitScanForward.hpp>
+
 #include <Core/Debug/Log/Streams/LogConsoleStream.hpp>
 
 namespace Sa
@@ -11,31 +13,13 @@ namespace Sa
 	/// Global console output mutex: shared among all LogConsoleStream instances.
 	std::mutex gCslMutex;
 
-	uint32 GetThemeIndex(LogLevel _lvl)
-	{
-		unsigned long index = 0u;
-
-#if SA_WIN
-
-		_BitScanForward(&index, static_cast<uint32>(_lvl));
-
-#else
-
-		if (static_cast<uint32>(_lvl) != 0u)
-			index = __builtin_ffs(static_cast<uint32>(_lvl)) - 1; // __builtin_ffs returns 1 + index if non zero.
-
-#endif
-
-		return index;
-	}
-
 
 	void LogConsoleStream::SetConsoleColorFromLvl(LogLevel _lvl) const
 	{
 		mThemeMutex.lock_shared();
 
 
-		SetConsoleColor(mTheme[GetThemeIndex(_lvl)]);
+		SetConsoleColor(mTheme[BitScanForward(static_cast<uint32>(_lvl))]);
 
 
 		mThemeMutex.unlock_shared();
@@ -46,7 +30,7 @@ namespace Sa
 		mThemeMutex.lock();
 
 
-		mTheme[GetThemeIndex(_lvl)] = _cslColor;
+		mTheme[BitScanForward(static_cast<uint32>(_lvl))] = _cslColor;
 
 
 		mThemeMutex.unlock();

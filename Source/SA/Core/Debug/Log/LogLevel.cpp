@@ -2,7 +2,7 @@
 
 #include <Core/Debug/Log/LogLevel.hpp>
 
-#include <Core/Support/Intrinsics.hpp>
+#include <Core/Algorithms/BitScanForward.hpp>
 
 namespace Sa
 {
@@ -12,18 +12,7 @@ namespace Sa
 	{
 		static constexpr const wchar* names[]{ L"Unknown", L"Normal", L"Infos", L"Warning", L"Error", L"AssertSuccess", L"AssertFailed" };
 
-		unsigned long index = 0u;
-
-#if SA_WIN
-
-		if (_BitScanForward(&index, static_cast<uint32>(_lvl)))
-			++index;
-#else
-
-		index = __builtin_ffs(static_cast<uint32>(_lvl));
-
-#endif
-		return names[index];
+		return names[BitScanForward(static_cast<uint32>(_lvl)) + 1u];
 	}
 
 #endif
