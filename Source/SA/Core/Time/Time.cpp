@@ -22,33 +22,27 @@ namespace Sa
 {
 #if SA_WIN
 
-	/// Query time at the beginnig of the program.
-	uint64 QueryStartTime()
+	/// Queried time at the beginnig of the program (in hardware counts).
+	const uint64 gStartTime = []()
 	{
 		LARGE_INTEGER start;
 
 		bool bSuccess = QueryPerformanceCounter(&start);
-		SA_ASSERT(Default, SA-Core, bSuccess, L"High resolution time stamp not supported!");
+		SA_ASSERT(Default, SA - Core, bSuccess, L"High resolution time stamp not supported!");
 
 		return static_cast<uint64>(start.QuadPart);
-	}
+	}();
 
-	/// Query hardware dependant constant to convert <b> hardware ticks </b> to <b> Sappire Engine Tick </b> (multiplication).
-	float QueryHardwareFrequency()
+	/// Hardware dependant constant to convert <b> hardware ticks </b> to <b> Sappire Engine Tick </b> (multiplication).
+	const float gHardwareFrequency = []()
 	{
 		LARGE_INTEGER frequency;
 
 		bool bSuccess = QueryPerformanceFrequency(&frequency);
-		SA_ASSERT(Default, SA-Core, bSuccess, L"High resolution time stamp not supported!");
+		SA_ASSERT(Default, SA - Core, bSuccess, L"High resolution time stamp not supported!");
 
 		return Second::ToTicks / static_cast<float>(frequency.QuadPart);
-	}
-
-	/// Queried time at the beginnig of the program (in hardware counts).
-	const uint64 gStartTime = QueryStartTime();
-
-	/// Hardware dependant constant to convert <b> hardware ticks </b> to <b> Sappire Engine Tick </b> (multiplication).
-	const float gHardwareFrequency = QueryHardwareFrequency();
+	}();
 
 #else
 
