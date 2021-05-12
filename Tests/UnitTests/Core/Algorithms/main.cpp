@@ -13,6 +13,8 @@ void MemResetTests();
 
 void BitScanForwardTests();
 
+void SizeOfTests();
+
 int main()
 {
 	SA_UTH_INIT();
@@ -25,6 +27,8 @@ int main()
 	SA_UTH_GP(MemResetTests());
 
 	SA_UTH_GP(BitScanForwardTests());
+
+	SA_UTH_GP(SizeOfTests());
 
 
 	SA_UTH_EXIT();
