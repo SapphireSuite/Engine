@@ -1,0 +1,15 @@
+// Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
+
+#pragma once
+
+#ifndef SAPPHIRE_COLLECTIONS_ALGORITHMS_GUARD
+#define SAPPHIRE_COLLECTIONS_ALGORITHMS_GUARD
+
+#include <SA/Core/Algorithms/MemMove.hpp>
+#include <SA/Core/Algorithms/MemCopy.hpp>
+#include <SA/Core/Algorithms/MemFill.hpp>
+#include <SA/Core/Algorithms/MemReset.hpp>
+
+#include <SA/Core/Algorithms/BitScanForward.hpp>
+
+#endif // GUARD

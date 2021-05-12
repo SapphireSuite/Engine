@@ -60,6 +60,12 @@ namespace Sa
 */
 
 /**
+*	\defgroup Core_Algorithms Algorithms
+*	Sapphire Engine Core Algorithms.
+*	\ingroup Core
+*/
+
+/**
 *	\defgroup Core_Debug Debug
 *	Sapphire Engine Core Debug tools.
 *	\ingroup Core Debug

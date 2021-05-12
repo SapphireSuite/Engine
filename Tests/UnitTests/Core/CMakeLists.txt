@@ -4,6 +4,7 @@
 
 # === Entrypoints ===
 
+add_subdirectory(Algorithms)
 add_subdirectory(Debug)
 add_subdirectory(Types)
 add_subdirectory(Time)

@@ -7,11 +7,15 @@
 
 #include <SA/Core/Types/Int.hpp>
 
-#include <SA/Core/Support/Platforms.hpp>
+#include <SA/Core/Support/Compilers.hpp>
 
-#if SA_WIN
+#if SA_MSVC && !SA_CLANG
 
 	#include <intrin.h>
+
+	#ifdef BitScanForward
+	#undef BitScanForward
+	#endif
 
 #else
 #endif
@@ -21,7 +25,7 @@
 * 
 *	\brief BitScanForward \e cross-platform implementation.
 * 
-*	\ingroup Core
+*	\ingroup Core_Algorithms
 *	\{
 */
 
@@ -42,7 +46,7 @@ namespace Sa
 
 		unsigned long index = 0u;
 
-#if SA_WIN
+#if SA_MSVC && !SA_CLANG
 
 		_BitScanForward(&index, _mask);
 #else
