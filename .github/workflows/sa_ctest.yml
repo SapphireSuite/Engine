@@ -10,6 +10,7 @@ on:
       - main
       - master
       - dev
+      - dev_*
 
 
 # Settings common to all jobs.
