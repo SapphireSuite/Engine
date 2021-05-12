@@ -19,7 +19,7 @@ namespace Sa
 			uint32 _line,
 			const std::string& _function,
 			const std::wstring& _chanName,
-			const void* _ptr,
+			bool _pred,
 			const std::wstring& _details = L""
 		) noexcept;
 	};

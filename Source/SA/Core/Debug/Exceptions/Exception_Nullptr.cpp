@@ -11,10 +11,10 @@ namespace Sa
 		uint32 _line,
 		const std::string& _function,
 		const std::wstring& _chanName,
-		const void* _ptr,
+		bool _pred,
 		const std::wstring& _details
 	) noexcept :
-		Exception(_file, _line, _function, _chanName, _ptr, L"<var> is nullptr!", _details)
+		Exception(_file, _line, _function, _chanName, _pred, L"<var> is nullptr!", _details)
 	{
 	}
 
