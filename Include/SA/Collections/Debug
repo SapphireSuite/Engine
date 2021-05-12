@@ -9,6 +9,8 @@
 
 
 // Exceptions.
+#include <SA/Core/Debug/Exceptions/Exception_NonZero.hpp>
+#include <SA/Core/Debug/Exceptions/Exception_Nullptr.hpp>
 #include <SA/Core/Debug/Exceptions/Exception_OutOfRange.hpp>
 
 #endif // GUARD
