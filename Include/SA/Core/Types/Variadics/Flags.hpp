@@ -5,7 +5,11 @@
 #ifndef SAPPHIRE_CORE_FLAGS_GUARD
 #define SAPPHIRE_CORE_FLAGS_GUARD
 
+#include <string>
+
 #include <SA/Core/Types/Int.hpp>
+
+#include <SA/Core/Debug/Config.hpp>
 
 /**
 *	\file Flags.hpp
@@ -230,6 +234,13 @@ namespace Sa
 		*	\return bit flags.
 		*/
 		operator BitsT() const noexcept;
+
+
+#if SA_LOGGING
+
+		/// Convert ToString.
+		std::string ToString() const noexcept;
+#endif
 	};
 
 

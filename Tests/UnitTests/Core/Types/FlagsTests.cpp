@@ -279,12 +279,6 @@ namespace Sa::Flags_UT
 	}
 }
 
-template <>
-std::string UTH::ToString(const Flags<Flags_UT::TestFlags>& _flags)
-{
-	return std::to_string(_flags);
-}
-
 void FlagsTests()
 {
 	using namespace Flags_UT;

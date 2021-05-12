@@ -147,4 +147,30 @@ namespace Sa
 	{
 		return mBits;
 	}
+
+
+#if SA_LOGGING
+
+	template <typename EnumT, typename BitsT>
+	std::string Flags<EnumT, BitsT>::ToString() const noexcept
+	{
+		std::string binaryStr;
+		const uint32 bitCount = sizeof(EnumT) * 8;
+
+		for (uint32 i = 1u; i <= bitCount; ++i)
+		{
+			// Parse bits
+			if (mBits & (1 << (bitCount - i)))
+				binaryStr.append("1");
+			else
+				binaryStr.append("0");
+
+			// Add spaces every 4 bits (and not at the end.)
+			if(i % 4 == 0 && i != bitCount)
+				binaryStr.append(" ");
+		}
+
+		return std::to_string(mBits) + " {" + binaryStr + '}';
+	}
+#endif
 }
