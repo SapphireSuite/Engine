@@ -28,7 +28,7 @@ namespace Sa
 	{
 	}
 
-	std::wstring Log::ToWString() const noexcept
+	std::wstring Log::ToWString() const
 	{
 		std::wstring str;
 

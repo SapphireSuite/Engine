@@ -84,7 +84,7 @@ namespace Sa
 		* 
 		*	\return this as a wstring.
 		*/
-		SA_ENGINE_API virtual std::wstring ToWString() const noexcept;
+		SA_ENGINE_API virtual std::wstring ToWString() const;
 	};
 
 #endif
