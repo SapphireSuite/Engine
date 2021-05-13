@@ -31,6 +31,7 @@ namespace Sa
 	template <typename R, typename C, typename... Args>
 	std::string ToString(R(C::* _ptr)(Args...)) noexcept
 	{
+		(void)_ptr;
 		return "0x<MemberFunctionPointer>";
 	}
 
@@ -98,6 +99,7 @@ namespace Sa
 	template <typename R, typename C, typename... Args>
 	std::wstring ToWString(R(C::* _ptr)(Args...)) noexcept
 	{
+		(void)_ptr;
 		return L"0x<MemberFunctionPointer>";
 	}
 
