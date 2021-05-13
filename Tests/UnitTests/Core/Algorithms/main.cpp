@@ -15,6 +15,8 @@ void BitScanForwardTests();
 
 void SizeOfTests();
 
+void EqualsTests();
+
 int main()
 {
 	SA_UTH_INIT();
@@ -29,6 +31,8 @@ int main()
 	SA_UTH_GP(BitScanForwardTests());
 
 	SA_UTH_GP(SizeOfTests());
+
+	SA_UTH_GP(EqualsTests());
 
 
 	SA_UTH_EXIT();
