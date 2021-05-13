@@ -37,9 +37,9 @@ namespace SizeOf_UT
 	void Vector()
 	{
 		const std::vector<float> v = { 1.0f, 0.32f, 78.2f, 1.24f, 462.2f };
-		SA_UTH_EQ(SizeOf(v), v.size());
-		SA_UTH_EQ(OctSizeOf(v), v.size() * sizeof(float));
-		SA_UTH_EQ(BitSizeOf(v), v.size() * 32_ui64);
+		SA_UTH_EQ(SizeOf(v), (uint64)v.size());
+		SA_UTH_EQ(OctSizeOf(v), (uint64)v.size() * sizeof(float));
+		SA_UTH_EQ(BitSizeOf(v), (uint64)v.size() * 32_ui64);
 	}
 
 	void Args()
