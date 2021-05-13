@@ -18,7 +18,7 @@ namespace Sa::Equals_UT
 		}
 	};
 
-	void IntTests()
+	void Int()
 	{
 		const int32 i0 = 0;
 		const int32 i1 = 1;
@@ -34,7 +34,7 @@ namespace Sa::Equals_UT
 		SA_UTH_RSF(false, Equals1, i0);
 	}
 
-	void FloatTests()
+	void Float()
 	{
 		const float f0 = 0.0f;
 		const float f0e = 0.0f + std::numeric_limits<float>::epsilon();
@@ -56,7 +56,7 @@ namespace Sa::Equals_UT
 		SA_UTH_RSF(false, Equals1, f0);
 	}
 
-	void TabTests()
+	void Tab()
 	{
 		const float fTab0[] = { 0.0f, 1.0f, 2.2546f, 4.25f, 1.26f };
 		const float fTab0e[] = {
@@ -75,7 +75,7 @@ namespace Sa::Equals_UT
 		SA_UTH_RSF(true, Equals, fTab0, fTab1, 3u);
 	}
 
-	void Vec2Tests()
+	void Vec2()
 	{
 		const V2 v1{ 1.2f, 2.35f };
 		const V2 v1e{ v1.x + std::numeric_limits<float>::epsilon(), v1.y + std::numeric_limits<float>::epsilon() };
@@ -96,8 +96,8 @@ void EqualsTests()
 {
 	using namespace Sa::Equals_UT;
 
-	SA_UTH_GP(IntTests());
-	SA_UTH_GP(FloatTests());
-	SA_UTH_GP(TabTests());
-	SA_UTH_GP(Vec2Tests());
+	SA_UTH_GP(Int());
+	SA_UTH_GP(Float());
+	SA_UTH_GP(Tab());
+	SA_UTH_GP(Vec2());
 }

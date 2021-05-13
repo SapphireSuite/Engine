@@ -149,6 +149,22 @@ namespace Sa
 	{
 		return OctSizeOf(_tab) * 8u;
 	}
+
+
+	/**
+	*	\brief \e Get size of packed _args.
+	* 
+	*	\tparam Args		Argument types.
+	* 
+	*	\param[in] _args	Argument values.
+	* 
+	*	\return	Size of argument pack.
+	*/
+	template <typename... Args>
+	constexpr uint64 SizeOfArgs(const Args&... _args)
+	{
+		return sizeof...(Args);
+	}
 }
 
 
