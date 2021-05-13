@@ -289,10 +289,18 @@ namespace Sa
 		void Execute(std::vector<R>& _results, const Args&... _args);
 
 
-		/// Deleted move operator.
+		/**
+		*	\brief Deleted move operator.
+		* 
+		*	\return this.
+		*/
 		Event& operator=(Event&&) = delete;
 
-		/// Deleted copy operator.
+		/**
+		*	\brief Deleted copy operator.
+		* 
+		*	\return this.
+		*/
 		Event& operator=(const Event&) = delete;
 
 

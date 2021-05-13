@@ -36,9 +36,9 @@ namespace Sa
 	template <typename T>
 	void MemMove(const T* _src, T* _dest, uint64 _num)
 	{
-		SA_ASSERT(Nullptr, SA-Core, _src);
-		SA_ASSERT(Nullptr, SA-Core, _dest);
-		SA_ASSERT(NonZero, SA-Core, _num, L"Number to copy is 0");
+		SA_ASSERT(Nullptr, Core, _src);
+		SA_ASSERT(Nullptr, Core, _dest);
+		SA_ASSERT(NonZero, Core, _num, L"Number to copy is 0");
 
 		std::memmove(_dest, _src, _num * sizeof(T));
 	}

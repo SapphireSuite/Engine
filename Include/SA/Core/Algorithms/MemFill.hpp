@@ -36,8 +36,8 @@ namespace Sa
 	template <typename T>
 	void MemFill(T* _dest, const T& _val, uint64 _num)
 	{
-		SA_ASSERT(Nullptr, SA-Core, _dest);
-		SA_ASSERT(NonZero, SA-Core, _num, L"Number to copy is 0");
+		SA_ASSERT(Nullptr, Core, _dest);
+		SA_ASSERT(NonZero, Core, _num, L"Number to copy is 0");
 
 		std::fill(_dest, _dest + _num, _val);
 	}

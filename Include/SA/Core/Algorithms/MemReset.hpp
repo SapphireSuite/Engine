@@ -35,8 +35,8 @@ namespace Sa
 	template <typename T>
 	void MemReset(T* _dest, uint64 _num)
 	{
-		SA_ASSERT(Nullptr, SA-Core, _dest);
-		SA_ASSERT(NonZero, SA-Core, _num, L"Number to copy is 0");
+		SA_ASSERT(Nullptr, Core, _dest);
+		SA_ASSERT(NonZero, Core, _num, L"Number to copy is 0");
 
 		std::memset(_dest, T(0), _num * sizeof(T));
 	}

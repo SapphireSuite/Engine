@@ -55,7 +55,7 @@ namespace Sa
 				attrib = 0u;
 				break;
 			default:
-				SA_LOG(L"ConsoleColor foreground bit [" << fg << L"] not supported", Warning, SA-Core);
+				SA_LOG(L"ConsoleColor foreground bit [" << fg << L"] not supported", Warning, Core);
 				attrib = 7;
 				break;
 		}
@@ -92,7 +92,7 @@ namespace Sa
 				attrib += 7u << 4u;
 				break;
 			default:
-				SA_LOG(L"ConsoleColor background bit [" << bg << L"] not supported", Warning, SA-Core);
+				SA_LOG(L"ConsoleColor background bit [" << bg << L"] not supported", Warning, Core);
 				break;
 		}
 
@@ -140,7 +140,7 @@ namespace Sa
 				attrib += "30";
 				break;
 			default:
-				SA_LOG(L"ConsoleColor foreground bit [" << fg << L"] not supported", Warning, SA - Core);
+				SA_LOG(L"ConsoleColor foreground bit [" << fg << L"] not supported", Warning, Core);
 				break;
 		}
 
@@ -172,7 +172,7 @@ namespace Sa
 				attrib += ";47";
 				break;
 			default:
-				SA_LOG(L"ConsoleColor background bit [" << bg << L"] not supported", Warning, SA - Core);
+				SA_LOG(L"ConsoleColor background bit [" << bg << L"] not supported", Warning, Core);
 				break;
 		}
 

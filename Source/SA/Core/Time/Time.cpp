@@ -30,7 +30,7 @@ namespace Sa
 		bool bSuccess = QueryPerformanceCounter(&start);
 
 		(void)bSuccess;
-		SA_ASSERT(Default, SA-Core, bSuccess, L"High resolution time stamp not supported!");
+		SA_ASSERT(Default, Core, bSuccess, L"High resolution time stamp not supported!");
 
 		return static_cast<uint64>(start.QuadPart);
 	}();
@@ -43,7 +43,7 @@ namespace Sa
 		bool bSuccess = QueryPerformanceFrequency(&frequency);
 		
 		(void)bSuccess;
-		SA_ASSERT(Default, SA-Core, bSuccess, L"High resolution time stamp not supported!");
+		SA_ASSERT(Default, Core, bSuccess, L"High resolution time stamp not supported!");
 
 		return Second::ToTicks / static_cast<float>(frequency.QuadPart);
 	}();
@@ -69,7 +69,7 @@ namespace Sa
 		bool bSuccess = QueryPerformanceCounter(&end); (void)bSuccess;
 		
 		(void)bSuccess;
-		SA_ASSERT(Default, SA-Core, bSuccess, L"High resolution time stamp not supported!");
+		SA_ASSERT(Default, Core, bSuccess, L"High resolution time stamp not supported!");
 
 		return (end.QuadPart - gStartTime) * gHardwareFrequency;
 
@@ -80,7 +80,7 @@ namespace Sa
 		int bSuccess = clock_gettime(CLOCK_MONOTONIC, &end) == 0; (void)bSuccess;
 		
 		(void)bSuccess;
-		SA_ASSERT(Default, SA-Core, bSuccess, L"High resolution time stamp not supported!");
+		SA_ASSERT(Default, Core, bSuccess, L"High resolution time stamp not supported!");
 
 
 		return (end.tv_sec * Second::ToTicks + end.tv_nsec / 1000.0f) - gStartTime;

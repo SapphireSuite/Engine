@@ -47,14 +47,14 @@ namespace Sa
 
 	const char8* DateTime::GetDayName() const
 	{
-		SA_ASSERT(OutOfRange, SA-Core, weekday, 0u, 6u, L"Invalid weekDay member!");
+		SA_ASSERT(OutOfRange, Core, weekday, 0u, 6u, L"Invalid weekDay member!");
 
 		return DateTime::sDays[weekday];
 	}
 
 	const char8* DateTime::GetMonthName() const
 	{
-		SA_ASSERT(OutOfRange, SA-Core, month, 1u, 12u, L"Invalid month member!");
+		SA_ASSERT(OutOfRange, Core, month, 1u, 12u, L"Invalid month member!");
 		
 		return DateTime::sMonths[month - 1];
 	}
