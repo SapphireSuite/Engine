@@ -18,7 +18,7 @@
 namespace Sa
 {
 	/// \brief Fixed \b 8-bits width int type.
-	using int8 = char;
+	using int8 = signed char;
 
 	/// \brief Fixed \b 8-bits width uint type.
 	using uint8 = unsigned char;
