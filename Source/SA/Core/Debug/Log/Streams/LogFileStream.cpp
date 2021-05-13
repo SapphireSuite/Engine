@@ -15,7 +15,11 @@ namespace Sa
 
 	LogFileStream::~LogFileStream() noexcept
 	{
+		mMutex.lock();
+
 		mHandle.close();
+
+		mMutex.unlock();
 	}
 
 
@@ -40,11 +44,11 @@ namespace Sa
 
 	LogStream& LogFileStream::Output(const Sa::Log& _log)
 	{
-		//mMutex.lock();
+		mMutex.lock();
 
 		mHandle << _log.ToWString() << std::endl;
 
-		//mMutex.unlock();
+		mMutex.unlock();
 
 		return *this;
 	}
