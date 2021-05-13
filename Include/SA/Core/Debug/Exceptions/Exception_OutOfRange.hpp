@@ -19,10 +19,7 @@ namespace Sa
 		uint32 maxBound = 0u;
 
 		SA_ENGINE_API Exception_OutOfRange(
-			const std::wstring& _file,
-			uint32 _line,
-			const std::string& _function,
-			const std::wstring& _chanName,
+			const BaseInfos& _infos,
 			uint32 _currIndex,
 			uint32 _minBound,
 			uint32 _maxBound,

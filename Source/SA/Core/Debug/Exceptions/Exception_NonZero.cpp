@@ -7,14 +7,11 @@ namespace Sa
 #if SA_LOGGING
 
 	Exception_NonZero::Exception_NonZero(
-		const std::wstring& _file,
-		uint32 _line,
-		const std::string& _function,
-		const std::wstring& _chanName,
+		const BaseInfos& _infos,
 		bool _pred,
 		const std::wstring& _details
 	) noexcept :
-		Exception(_file, _line, _function, _chanName, _pred, L"<var> is 0!", _details)
+		Exception(_infos, _pred, Sa::ToWString(_infos.argsStr[0].name) + L" should be != 0", _details)
 	{
 	}
 

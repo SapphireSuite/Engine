@@ -8,15 +8,13 @@ namespace Sa
 #if SA_LOGGING
 
 	Exception::Exception(
-		const std::wstring& _file,
-		uint32 _line,
-		const std::string& _function,
-		const std::wstring& _chanName,
+		const BaseInfos& _infos,
 		bool _pred,
 		const std::wstring& _msg,
 		const std::wstring& _details
 	) noexcept :
-		Log(_file, _line, _function, _msg, _pred ? LogLevel::AssertSuccess : LogLevel::AssertFailed, _chanName, _details)
+		Log(_infos.file, _infos.line, _infos.function, _msg, _pred ? LogLevel::AssertSuccess : LogLevel::AssertFailed, _infos.chanName, _details),
+		agrsStr{ std::move(_infos.argsStr) }
 	{
 	}
 

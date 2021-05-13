@@ -9,13 +9,16 @@ namespace Sa::Exception_UT
 {
 	void DefaultTests()
 	{
-		SA_ASSERT(Default, AsChan, true, L"Default success test!");
+		const bool bTrue = true;
+		const bool bFalse = true;
+
+		SA_ASSERT(Default, AsChan, bTrue, L"Default success test!");
 
 #if SA_LOGGING
 
 		try
 		{
-			SA_ASSERT(Default, AsChan, false, L"Default failure test!");
+			SA_ASSERT(Default, AsChan, bFalse, L"Default failure test!");
 		}
 		catch (const Exception_Default& _e)
 		{
@@ -24,20 +27,23 @@ namespace Sa::Exception_UT
 
 #else
 
-		SA_ASSERT(Default, AsChan, false, L"Default failure test!");
+		SA_ASSERT(Default, AsChan, bFalse, L"Default failure test!");
 
 #endif
 	}
 
 	void NonZeroTests()
 	{
-		SA_ASSERT(NonZero, AsChan, 4u, L"NonZero success test!");
+		const uint32 zeroI = 0u;
+		const uint32 nonZeroI = 4u;
+
+		SA_ASSERT(NonZero, AsChan, nonZeroI, L"NonZero success test!");
 
 #if SA_LOGGING
 
 		try
 		{
-			SA_ASSERT(NonZero, AsChan, 0u, L"NonZero success test!");
+			SA_ASSERT(NonZero, AsChan, zeroI, L"NonZero failure test!");
 		}
 		catch (const Exception_NonZero& _e)
 		{
@@ -46,7 +52,7 @@ namespace Sa::Exception_UT
 
 #else
 
-		SA_ASSERT(NonZero, AsChan, 0u, L"NonZero success test!");
+		SA_ASSERT(NonZero, AsChan, zeroI, L"NonZero failure test!");
 
 #endif
 	}
@@ -64,7 +70,7 @@ namespace Sa::Exception_UT
 
 		try
 		{
-			SA_ASSERT(Nullptr, AsChan, testPtr, L"Nullptr success test!");
+			SA_ASSERT(Nullptr, AsChan, testPtr, L"Nullptr failure test!");
 		}
 		catch (const Exception_Nullptr& _e)
 		{
@@ -73,33 +79,38 @@ namespace Sa::Exception_UT
 
 #else
 
-		SA_ASSERT(Nullptr, AsChan, testPtr, L"Nullptr success test!");
+		SA_ASSERT(Nullptr, AsChan, testPtr, L"Nullptr failure test!");
 
 #endif
 	}
 
 	void OutOfRangeTests()
 	{
-		SA_ASSERT(OutOfRange, AsChan, 4u, 0u, 8u, L"OutOfRange success test");
+		const uint32 min = 0u;
+		const uint32 max = 8u;
+		const uint32 goodI = 4u;
+		const uint32 wrongI = 10u;
+
+		SA_ASSERT(OutOfRange, AsChan, goodI, min, max, L"OutOfRange success test");
 
 #if SA_LOGGING
 
 		try
 		{
-			SA_ASSERT(OutOfRange, AsChan, 10u, 0u, 8u, L"OutOfRange failure test");
+			SA_ASSERT(OutOfRange, AsChan, wrongI, min, max, L"OutOfRange failure test");
 		}
 		catch (const Exception_OutOfRange& _e)
 		{
 			std::wcout << L"Exception caugth: " << _e.msg << '\n' << _e.details << '\n' << std::endl;
 
-			SA_UTH_EQ(_e.currIndex, 10u);
-			SA_UTH_EQ(_e.minBound, 0u);
-			SA_UTH_EQ(_e.maxBound, 8u);
+			SA_UTH_EQ(_e.currIndex, wrongI);
+			SA_UTH_EQ(_e.minBound, min);
+			SA_UTH_EQ(_e.maxBound, max);
 		}
 
 #else
 
-		SA_ASSERT(OutOfRange, AsChan, 4u, 0u, 8u, L"OutOfRange success test");
+		SA_ASSERT(OutOfRange, AsChan, wrongI, min, max, L"OutOfRange failure test");
 
 #endif
 	}

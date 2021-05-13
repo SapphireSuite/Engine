@@ -14,16 +14,13 @@ namespace Sa
 	}
 
 	Exception_OutOfRange::Exception_OutOfRange(
-		const std::wstring& _file,
-		uint32 _line,
-		const std::string& _function,
-		const std::wstring& _chanName,
+		const BaseInfos& _infos,
 		uint32 _currIndex,
 		uint32 _minBound,
 		uint32 _maxBound,
 		const std::wstring& _details
 	) noexcept :
-		Exception(_file, _line, _function, _chanName,
+		Exception(_infos,
 			_minBound <= _currIndex && _currIndex <= _maxBound,
 			MakeOutOfRangeMessage(_currIndex, _minBound, _maxBound), _details),
 		currIndex{ _currIndex },

@@ -5,6 +5,7 @@
 #ifndef SAPPHIRE_CORE_EXCEPTION_GUARD
 #define SAPPHIRE_CORE_EXCEPTION_GUARD
 
+#include <SA/Core/Debug/ArgsStr.hpp>
 #include <SA/Core/Debug/Log/Log.hpp>
 
 namespace Sa
@@ -14,11 +15,20 @@ namespace Sa
 	class Exception : public Log
 	{
 	public:
+		struct BaseInfos
+		{
+			const std::wstring& file;
+			uint32 line;
+			const std::string& function;
+			const std::wstring& chanName;
+			ArgsStr argsStr;
+		};
+
+		/// Generated arguments to string.
+		ArgsStr agrsStr;
+
 		SA_ENGINE_API Exception(
-			const std::wstring& _file,
-			uint32 _line,
-			const std::string& _function,
-			const std::wstring& _chanName,
+			const BaseInfos& _infos,
 			bool _pred,
 			const std::wstring& _msg,
 			const std::wstring& _details = L""

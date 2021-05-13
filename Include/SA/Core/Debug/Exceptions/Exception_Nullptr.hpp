@@ -15,10 +15,7 @@ namespace Sa
 	{
 	public:
 		SA_ENGINE_API Exception_Nullptr(
-			const std::wstring& _file,
-			uint32 _line,
-			const std::string& _function,
-			const std::wstring& _chanName,
+			const BaseInfos& _infos,
 			bool _pred,
 			const std::wstring& _details = L""
 		) noexcept;
