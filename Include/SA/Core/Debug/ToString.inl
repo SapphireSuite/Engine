@@ -28,6 +28,12 @@ namespace Sa
 
 	/// \cond Internal
 
+	template <typename R, typename C, typename... Args>
+	std::string ToString(R(C::* _ptr)(Args...)) noexcept
+	{
+		return "0x<MemberFunctionPointer>";
+	}
+
 	template <typename T>
 	std::string ToString(const T* _elems, uint32 _size)
 	{
@@ -88,6 +94,12 @@ namespace Sa
 
 
 	/// \cond Internal
+
+	template <typename R, typename C, typename... Args>
+	std::wstring ToWString(R(C::* _ptr)(Args...)) noexcept
+	{
+		return L"0x<MemberFunctionPointer>";
+	}
 
 	template <typename T>
 	std::wstring ToWString(const T* _elems, uint32 _size)

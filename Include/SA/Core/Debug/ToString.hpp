@@ -69,6 +69,10 @@ namespace Sa
 
 	/// \cond Internal
 
+	/// ToString spec for pointer to member function.
+	template <typename R, typename C, typename... Args>
+	std::string ToString(R(C::* _ptr)(Args...)) noexcept;
+
 	/// ToString spec for tab.
 	template <typename T>
 	std::string ToString(const T* _elems, uint32 _size);
@@ -128,6 +132,10 @@ namespace Sa
 	std::wstring ToWString(T* _ptr) noexcept;
 
 	/// \cond Internal
+
+	/// ToWString spec for pointer to member function.
+	template <typename R, typename C, typename... Args>
+	std::wstring ToWString(R(C::* _ptr)(Args...)) noexcept;
 
 	/// ToWString spec for tab.
 	template <typename T>
