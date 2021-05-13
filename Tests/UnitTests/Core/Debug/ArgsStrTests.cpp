@@ -31,6 +31,8 @@ namespace Sa::ArgsStr_UT
 
 void ArgsStrTests()
 {
+#if SA_LOGGING
+
 	using namespace ArgsStr_UT;
 
 	const int i = 5;
@@ -59,4 +61,6 @@ void ArgsStrTests()
 	SA_UTH_EQ(aStr[2].value, aStr.params[2].value);
 
 	SA_UTH_EQ(aStr->begin(), aStr.params.begin());
+
+#endif
 }

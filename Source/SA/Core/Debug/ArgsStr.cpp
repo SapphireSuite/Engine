@@ -6,6 +6,8 @@
 
 namespace Sa
 {
+#if SA_LOGGING
+
 	std::vector<ArgsStr::Param>* ArgsStr::operator->() noexcept
 	{
 		return &params;
@@ -28,4 +30,6 @@ namespace Sa
 	
 		return params[_index];
 	}
+
+#endif
 }

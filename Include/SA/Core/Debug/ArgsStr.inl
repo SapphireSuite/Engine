@@ -2,6 +2,8 @@
 
 namespace Sa
 {
+#if SA_LOGGING
+
 	template <typename... Args>
 	ArgsStr::ArgsStr(const std::string& _paramNames, const Args&... _args)
 	{
@@ -29,4 +31,6 @@ namespace Sa
 		if constexpr (sizeof...(_args) != 0u)
 			GenerateParamStr(_paramNames.substr(index + 2), _args...);
 	}
+
+#endif
 }

@@ -22,6 +22,8 @@
 
 namespace Sa
 {
+#if SA_LOGGING
+
 	/// Convert variadic macro parameters into strings.
 	class ArgsStr
 	{
@@ -106,6 +108,8 @@ namespace Sa
 	*	\return Created ArgsStr from input.
 	*/
 	#define SA_STR_ARGS(...) ArgsStr(#__VA_ARGS__, ##__VA_ARGS__)
+
+#endif
 }
 
 #include <SA/Core/Debug/ArgsStr.inl>
