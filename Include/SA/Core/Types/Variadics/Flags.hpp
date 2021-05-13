@@ -310,9 +310,9 @@ namespace Sa
 	}
 }
 
+#include <SA/Core/Types/Variadics/Flags.inl>
+
 
 /** \} */
-
-#include <SA/Core/Types/Variadics/Flags.inl>
 
 #endif // GUARD

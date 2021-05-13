@@ -19,6 +19,7 @@
 *	\{
 */
 
+
 namespace Sa
 {
 	/// Convert variadic macro parameters into strings.
@@ -107,9 +108,9 @@ namespace Sa
 	#define SA_STR_ARGS(...) ArgsStr(#__VA_ARGS__, ##__VA_ARGS__)
 }
 
+#include <SA/Core/Debug/ArgsStr.inl>
+
 
 /** \} */
-
-#include <SA/Core/Debug/ArgsStr.inl>
 
 #endif // GUARD

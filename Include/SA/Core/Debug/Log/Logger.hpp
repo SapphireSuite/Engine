@@ -99,8 +99,9 @@ namespace Sa
 #endif
 }
 
-/** \} */
-
 #include <SA/Core/Debug/Log/Logger.inl>
+
+
+/** \} */
 
 #endif // GUARD

@@ -347,12 +347,11 @@ namespace Sa
 		*/
 		void operator()(std::vector<R>& _results, const Args&... _args);
 	};
-	
-	
-	/** \} */
 }
 
-
 #include <SA/Core/Types/Variadics/Event.inl>
+	
+
+/** \} */
 
 #endif // GUARD

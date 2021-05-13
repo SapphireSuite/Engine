@@ -174,9 +174,9 @@ namespace Sa
 #endif
 }
 
+#include <SA/Core/Debug/ToString.inl>
+
 
 /** \} */
-
-#include <SA/Core/Debug/ToString.inl>
 
 #endif // GUARD
