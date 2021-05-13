@@ -10,7 +10,7 @@
 
 #include <SA/Core/Debug/ToString.hpp>
 #include <SA/Core/Debug/Log/Logger.hpp>
-#include <SA/Core/Debug/Log/Streams/LogConsoleStream.hpp>
+#include <SA/Core/Debug/Log/Streams/ConsoleLogStream.hpp>
 
 /**
 *	\file Debug.hpp
@@ -102,7 +102,7 @@ namespace Sa::Debug
 	/// \endcond Internal
 
 	/// Console log stream instance.
-	SA_ENGINE_API extern LogConsoleStream csl;
+	SA_ENGINE_API extern ConsoleLogStream csl;
 
 	/// Logger instance.
 	SA_ENGINE_API extern Logger logger;

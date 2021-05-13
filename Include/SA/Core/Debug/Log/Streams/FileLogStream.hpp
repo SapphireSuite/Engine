@@ -11,7 +11,7 @@
 #include <SA/Core/Debug/Log/Streams/LogStream.hpp>
 
 /**
-*	\file LogFileStream.hpp
+*	\file FileLogStream.hpp
 * 
 *	\brief Log <b>file stream</b> type implementation.
 * 
@@ -25,7 +25,7 @@ namespace Sa
 #if SA_LOGGING
 
 	/// Log file stream type.
-	class LogFileStream : public LogStream
+	class FileLogStream : public LogStream
 	{
 		/// Handled file stream.
 		std::wofstream mHandle;
@@ -42,9 +42,9 @@ namespace Sa
 		* 
 		*	\param[in] _fileName	Name of file.
 		*/
-		SA_ENGINE_API LogFileStream(const std::string& _fileName = "log") noexcept;
+		SA_ENGINE_API FileLogStream(const std::string& _fileName = "log") noexcept;
 
-		SA_ENGINE_API ~LogFileStream() noexcept;
+		SA_ENGINE_API ~FileLogStream() noexcept;
 
 		SA_ENGINE_API LogStream& Output(const Sa::Log& _log) override final;
 	};

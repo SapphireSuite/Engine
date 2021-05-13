@@ -2,18 +2,18 @@
 
 #include <filesystem>
 
-#include <Core/Debug/Log/Streams/LogFileStream.hpp>
+#include <Core/Debug/Log/Streams/FileLogStream.hpp>
 
 namespace Sa
 {
 #if SA_LOGGING
 
-	LogFileStream::LogFileStream(const std::string& _fileName) noexcept
+	FileLogStream::FileLogStream(const std::string& _fileName) noexcept
 	{
 		CreateLogFile(_fileName);
 	}
 
-	LogFileStream::~LogFileStream() noexcept
+	FileLogStream::~FileLogStream() noexcept
 	{
 		mMutex.lock();
 
@@ -23,7 +23,7 @@ namespace Sa
 	}
 
 
-	void LogFileStream::CreateLogFile(const std::string& _fileName)
+	void FileLogStream::CreateLogFile(const std::string& _fileName)
 	{
 		std::filesystem::create_directories("Logs");
 
@@ -42,7 +42,7 @@ namespace Sa
 	}
 
 
-	LogStream& LogFileStream::Output(const Sa::Log& _log)
+	LogStream& FileLogStream::Output(const Sa::Log& _log)
 	{
 		mMutex.lock();
 

@@ -12,7 +12,7 @@
 #include <SA/Core/Debug/Log/Streams/LogStream.hpp>
 
 /**
-*	\file LogConsoleStream.hpp
+*	\file ConsoleLogStream.hpp
 *
 *	\brief Log <b>console stream</b> type implementation.
 *
@@ -26,7 +26,7 @@ namespace Sa
 #if SA_LOGGING
 
 	/// Log console stream type.
-	class LogConsoleStream : public LogStream
+	class ConsoleLogStream : public LogStream
 	{
 		/// Console color theme by LogLevel.
 		uint8 mTheme[6]

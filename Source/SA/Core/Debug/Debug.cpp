@@ -4,14 +4,14 @@
 
 #include <Core/Debug/Debug.hpp>
 
-#include <Core/Debug/Log/Streams/LogFileStream.hpp>
+#include <Core/Debug/Log/Streams/FileLogStream.hpp>
 
 namespace Sa::Debug
 {
 #if SA_LOGGING
 
-	LogFileStream gLogFile;
-	SA_ENGINE_API LogConsoleStream csl;
+	FileLogStream gLogFile;
+	SA_ENGINE_API ConsoleLogStream csl;
 
 	SA_ENGINE_API Logger logger = []()
 	{

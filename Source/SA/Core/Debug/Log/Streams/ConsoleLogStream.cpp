@@ -4,17 +4,17 @@
 
 #include <Core/Algorithms/BitScanForward.hpp>
 
-#include <Core/Debug/Log/Streams/LogConsoleStream.hpp>
+#include <Core/Debug/Log/Streams/ConsoleLogStream.hpp>
 
 namespace Sa
 {
 #if SA_LOGGING
 
-	/// Global console output mutex: shared among all LogConsoleStream instances.
+	/// Global console output mutex: shared among all ConsoleLogStream instances.
 	std::mutex gCslMutex;
 
 
-	void LogConsoleStream::SetConsoleColorFromLvl(LogLevel _lvl) const
+	void ConsoleLogStream::SetConsoleColorFromLvl(LogLevel _lvl) const
 	{
 		mThemeMutex.lock_shared();
 
@@ -25,7 +25,7 @@ namespace Sa
 		mThemeMutex.unlock_shared();
 	}
 
-	void LogConsoleStream::SetCslTheme(LogLevel _lvl, uint8 _cslColor) noexcept
+	void ConsoleLogStream::SetCslTheme(LogLevel _lvl, uint8 _cslColor) noexcept
 	{
 		mThemeMutex.lock();
 
@@ -37,7 +37,7 @@ namespace Sa
 	}
 
 
-	LogStream& LogConsoleStream::Output(const Sa::Log& _log)
+	LogStream& ConsoleLogStream::Output(const Sa::Log& _log)
 	{
 		gCslMutex.lock();
 
