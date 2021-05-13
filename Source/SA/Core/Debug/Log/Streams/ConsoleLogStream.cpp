@@ -25,7 +25,7 @@ namespace Sa
 		mThemeMutex.unlock_shared();
 	}
 
-	void ConsoleLogStream::SetCslTheme(LogLevel _lvl, uint8 _cslColor) noexcept
+	void ConsoleLogStream::SetConsoleTheme(LogLevel _lvl, uint8 _cslColor) noexcept
 	{
 		mThemeMutex.lock();
 

@@ -52,7 +52,7 @@ namespace Sa
 		*	\param[in] _lvl			log level to set new theme color.
 		*	\param[in] _cslColor	console color mask from ConsoleColor enum.
 		*/
-		SA_ENGINE_API void SetCslTheme(LogLevel _lvl, uint8 _cslColor) noexcept;
+		SA_ENGINE_API void SetConsoleTheme(LogLevel _lvl, uint8 _cslColor) noexcept;
 
 		SA_ENGINE_API LogStream& Output(const Sa::Log& _log) override final;
 	};
