@@ -13,12 +13,24 @@
 
 #include <SA/Core/Debug/Exceptions/Exception.hpp>
 
+/**
+*	\file Logger.hpp
+* 
+*	\brief <b>Debug Logger</b> class implementation.
+* 
+*	\ingroup Core_Debug
+*	\{
+*/
+
+
 namespace Sa
 {
 #if SA_LOGGING
 
+	/// Debug Logger type.
 	class Logger
 	{
+		/// Registered output streams.
 		std::vector<LogStream*> mOutStreams;
 
 		/**
@@ -41,6 +53,7 @@ namespace Sa
 		SA_ENGINE_API bool Assert_Impl(const Exception& _exception);
 
 	public:
+		/// Enabled level flags for output.
 		Flags<LogLevel> levelFlags = LogLevel::Default;
 
 		/**
@@ -85,6 +98,8 @@ namespace Sa
 
 #endif
 }
+
+/** \} */
 
 #include <SA/Core/Debug/Log/Logger.inl>
 

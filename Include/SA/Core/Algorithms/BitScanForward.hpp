@@ -23,7 +23,7 @@
 /**
 *	\file BitScanForward.hpp
 * 
-*	\brief BitScanForward \e cross-platform implementation.
+*	\brief \b BitScanForward \e cross-platform implementation.
 * 
 *	\ingroup Core_Algorithms
 *	\{

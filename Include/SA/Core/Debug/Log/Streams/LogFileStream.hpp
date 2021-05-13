@@ -6,25 +6,42 @@
 #define SAPPHIRE_CORE_LOG_FILE_STREAM_GUARD
 
 #include <fstream>
-//#include <mutex>
+#include <mutex>
 
 #include <SA/Core/Debug/Log/Streams/LogStream.hpp>
+
+/**
+*	\file LogFileStream.hpp
+* 
+*	\brief Log <b>file stream</b> type implementation.
+* 
+*	\ingroup Core_Debug
+*	\{
+*/
+
 
 namespace Sa
 {
 #if SA_LOGGING
 
+	/// Log file stream type.
 	class LogFileStream : public LogStream
 	{
+		/// Handled file stream.
 		std::wofstream mHandle;
 
-		//std::mutex mMutex;
+		/// Stream mutex.
+		std::mutex mMutex;
 
 		/// Create log and log backup files.
 		void CreateLogFile(const std::string& _fileName);
 
 	public:
-		/// Default constuctor.
+		/**
+		*	\e Value Constructor
+		* 
+		*	\param[in] _fileName	Name of file.
+		*/
 		SA_ENGINE_API LogFileStream(const std::string& _fileName = "log") noexcept;
 
 		SA_ENGINE_API ~LogFileStream() noexcept;
@@ -34,5 +51,8 @@ namespace Sa
 
 #endif
 }
+
+
+/** \} */
 
 #endif // GUARD

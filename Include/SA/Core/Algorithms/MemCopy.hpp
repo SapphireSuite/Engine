@@ -12,7 +12,7 @@
 /**
 *	\file MemCopy.hpp
 *
-*	\brief \b Definition of Sapphire Engine <b> Memory Copy </b> algorithm.
+*	\brief <b>Memory Copy</b> algorithm implementation.
 *
 *	\ingroup Core_Algorithms
 *	\{

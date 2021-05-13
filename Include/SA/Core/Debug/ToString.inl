@@ -26,6 +26,8 @@ namespace Sa
 	}
 
 
+	/// \cond Internal
+
 	template <typename T>
 	std::string ToString(const T* _elems, uint32 _size)
 	{
@@ -59,6 +61,8 @@ namespace Sa
 		return _lhs + ToString(_rhs);
 	}
 
+	/// \endcond
+
 //}
 
 //{ ToWString
@@ -82,6 +86,8 @@ namespace Sa
 		return L"0x" + std::to_wstring(reinterpret_cast<uint64>(_ptr));
 	}
 
+
+	/// \cond Internal
 
 	template <typename T>
 	std::wstring ToWString(const T* _elems, uint32 _size)
@@ -121,6 +127,8 @@ namespace Sa
 	{
 		return _lhs + ToWString(_rhs);
 	}
+
+	/// \endcond
 
 //}
 

@@ -14,7 +14,7 @@
 /**
 *	\file Log.hpp
 *
-*	\brief Sapphire Engine Log class.
+*	\brief \b Log type implementation.
 *
 *	\ingroup Core_Debug
 *	\{
@@ -60,11 +60,12 @@ namespace Sa
 		*	\brief \e Value Constructor.
 		*
 		*	\param[in] _file		File of the Log.
-		*	\param[in] _function	Function of the Log.
 		*	\param[in] _line		Line of the Log.
+		*	\param[in] _function	Function of the Log.
 		*	\param[in] _msg			Message of the Log.
 		*	\param[in] _level		Level of the Log.
 		*	\param[in] _chanName	Channel's name of the Log.
+		*	\param[in] _details		Additional details to display.
 		*/
 		SA_ENGINE_API Log(
 			const std::wstring& _file,
@@ -76,7 +77,13 @@ namespace Sa
 			const std::wstring& _details = L""
 		) noexcept;
 
-		/// Convert this log to wstring.
+		/**
+		*	\brief ToWString implementation
+		* 
+		*	Convert this log to wstring.
+		* 
+		*	\return this as a wstring.
+		*/
 		SA_ENGINE_API virtual std::wstring ToWString() const noexcept;
 	};
 

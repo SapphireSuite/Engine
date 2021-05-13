@@ -23,7 +23,7 @@
 #if SA_DEBUG
 
 	/**
-	*	Sapphire Engine intrinsics support preprocessor.
+	*	\brief Sapphire Engine intrinsics support preprocessor.
 	*	Never use intrinsics while in debug.
 	*/
 	#define SA_INTRISC 0
@@ -38,7 +38,7 @@
 #endif
 
 
-#if SA_INTRISC
+#if SA_INTRISC || defined(DOXYGEN)
 
 	#include <immintrin.h>
 

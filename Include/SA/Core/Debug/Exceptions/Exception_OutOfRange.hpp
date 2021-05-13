@@ -7,17 +7,42 @@
 
 #include <SA/Core/Debug/Exceptions/Exception.hpp>
 
+/**
+*	\file Exception_OutOfRange.hpp
+*
+*	\brief <b>OutOfRange Exception</b> type implementation.
+*
+*	\ingroup Core_Debug
+*	\{
+*/
+
+
 namespace Sa
 {
 #if SA_LOGGING
 
+	/// OutOfRange Exception type.
 	class Exception_OutOfRange : public Exception
 	{
 	public:
+		/// Index used for access.
 		uint32 currIndex = 0u;
+
+		/// Minimum bound allowed.
 		uint32 minBound = 0u;
+
+		/// Maximum bound allowed.
 		uint32 maxBound = 0u;
 
+		/**
+		*	\e Value Constructor.
+		* 
+		*	\param[in] _infos		Base create infos.
+		*	\param[in] _currIndex	Index used for access.
+		*	\param[in] _minBound	Minimum bound allowed.
+		*	\param[in] _maxBound	Maximum bound allowed.
+		*	\param[in] _details		Additional details to display on assertion.
+		*/
 		SA_ENGINE_API Exception_OutOfRange(
 			const BaseInfos& _infos,
 			uint32 _currIndex,
@@ -29,5 +54,8 @@ namespace Sa
 
 #endif
 }
+
+
+/** \} */
 
 #endif // GUARD

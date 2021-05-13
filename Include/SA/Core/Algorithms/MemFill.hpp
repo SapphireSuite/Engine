@@ -12,7 +12,7 @@
 /**
 *	\file MemFill.hpp
 *
-*	\brief \b Definition of Sapphire Engine <b> Memory Fill </b> algorithm.
+*	\brief <b>Memory Fill</b> algorithm implementation.
 *
 *	\ingroup Core_Algorithms
 *	\{

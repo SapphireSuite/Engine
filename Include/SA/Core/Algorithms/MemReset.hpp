@@ -12,7 +12,7 @@
 /**
 *	\file MemReset.hpp
 *
-*	\brief \b Definition of Sapphire Engine <b> Memory Reset </b> algorithm.
+*	\brief <b> Memory Reset </b> algorithm implementation.
 *
 *	\ingroup Core_Algorithms
 *	\{

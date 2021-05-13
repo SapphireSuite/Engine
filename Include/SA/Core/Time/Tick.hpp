@@ -109,7 +109,13 @@ namespace Sa
 
 #if SA_LOGGING
 
-		/// Convert ToString.
+		/**
+		*	\brief ToString implementation
+		*
+		*	Convert this tick as a string.
+		*
+		*	\return this as a string.
+		*/
 		SA_ENGINE_API std::string ToString() const noexcept;
 #endif
 	};

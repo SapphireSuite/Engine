@@ -15,7 +15,7 @@
 /**
 *	\file LogLevel.hpp
 *
-*	\brief Log level enum used by Sapphire Engine Debug class.
+*	\brief <b>Log level</b> enum implementation.
 *
 *	\ingroup Core_Debug
 *	\{
@@ -53,7 +53,7 @@ namespace Sa
 		Max = uint8(-1)
 	};
 
-	/// \brief Alias.
+	/// Shortcut alias.
 	using LogLvl = LogLevel;
 
 	SA_DEFINE_ENUM_FLAGS(LogLevel)
@@ -62,7 +62,7 @@ namespace Sa
 	/**
 	*	\brief \e Getter of Log level name.
 	*
-	*	\param _lvl		Level to get the name.
+	*	\param[in] _lvl		Level to get the name.
 	*
 	*	\return			Name of the enum.
 	*/

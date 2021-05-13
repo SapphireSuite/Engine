@@ -10,7 +10,7 @@
 /**
 *	\file LogChannel.hpp
 *
-*	\brief Log channel used by Sapphire Engine Debug class.
+*	\brief <b>Log channel</b> type implementation.
 *
 *	\ingroup Core_Debug
 *	\{

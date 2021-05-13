@@ -13,7 +13,7 @@
 /**
 *	\file Equals.hpp
 * 
-*	\brief \b Define Sapphire Engine Equals algorithms.
+*	\brief \b Equals algorithms implementation.
 * 
 *	\ingroup Core_Algorithms
 *	\{
@@ -32,7 +32,7 @@ namespace Sa
 	/// \endcond
 
 	/**
-	*	\brief Helper Equals function using epsilon.
+	*	\brief Compare two T objects.
 	*
 	*	\tparam T			Type of operands.
 	*	\tparam EpsT		Type of epsilon.
@@ -77,7 +77,7 @@ namespace Sa
 	}
 
 	/**
-	*	\brief Helper Equals function for tab using epsilon.
+	*	\brief Compare two T[] objects.
 	*
 	*	\tparam T		Type of operands.
 	*	\tparam EpsT	Type of epsilon.
@@ -102,7 +102,7 @@ namespace Sa
 	}
 
 	/**
-	*	\brief \e Compare one T to 0.
+	*	\brief \e Compare one T to T(0).
 	*
 	*	\tparam T		Type of input.
 	*	\tparam EpsT	Type of epsilon.
@@ -115,11 +115,11 @@ namespace Sa
 	template <typename T, typename EpsT = T>
 	constexpr bool Equals0(T _in, EpsT _epsilon = std::numeric_limits<T>::epsilon()) noexcept
 	{
-		return Equals(_in, T(), _epsilon);
+		return Equals(_in, T(0), _epsilon);
 	}
 
 	/**
-	*	\brief \e Compare one T to 1.
+	*	\brief \e Compare one T to T(1).
 	*
 	*	\tparam T		Type of input.
 	*	\tparam EpsT	Type of epsilon.

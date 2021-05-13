@@ -21,6 +21,7 @@
 
 namespace Sa
 {
+	/// Convert variadic macro parameters into strings.
 	class ArgsStr
 	{
 		/// \brief Generate Params from params' names and values.
@@ -77,6 +78,8 @@ namespace Sa
 		/**
 		*	\brief \b param \e member access operator.
 		* 
+		*	\param[in] _index	Index to access at.
+		* 
 		*	\return handled param at index.
 		*/
 		SA_ENGINE_API Param& operator[](uint32 _index);
@@ -84,6 +87,8 @@ namespace Sa
 		/**
 		*	\brief \b param \e member access operator.
 		* 
+		*	\param[in] _index	Index to access at.
+		*
 		*	\return handled param at index.
 		*/
 		SA_ENGINE_API const Param& operator[](uint32 _index) const;
@@ -91,11 +96,11 @@ namespace Sa
 
 
 	/**
-	*	\def SA_STR_ARGS
+	*	\def SA_STR_ARGS(...)
 	* 
 	*	\brief Helper macro to create ArgsStr from variadic macro.
 	* 
-	*	\param[in] __VA_ARGS__	variadic macro parameters used as input.
+	*	\param[in] ...	variadic macro parameters used as input.
 	* 
 	*	\return Created ArgsStr from input.
 	*/

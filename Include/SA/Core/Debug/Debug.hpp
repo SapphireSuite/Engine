@@ -12,6 +12,18 @@
 #include <SA/Core/Debug/Log/Logger.hpp>
 #include <SA/Core/Debug/Log/Streams/LogConsoleStream.hpp>
 
+/**
+*	\file Debug.hpp
+* 
+*	\brief \b Debug Core implementation.
+* 
+*	Define Debug log and assertion macros.
+* 
+*	\ingroup Core_Debug
+*	\{
+*/
+
+
 namespace Sa::Debug
 {
 #if SA_LOGGING
@@ -89,7 +101,10 @@ namespace Sa::Debug
 
 	/// \endcond Internal
 
+	/// Console log stream instance.
 	SA_ENGINE_API extern LogConsoleStream csl;
+
+	/// Logger instance.
 	SA_ENGINE_API extern Logger logger;
 
 
@@ -101,8 +116,24 @@ namespace Sa::Debug
 	#define __SA_LOG2(_str, _lvl)			__SA_LOG3(_str, _lvl, Default)
 	#define __SA_LOG1(_str)					__SA_LOG2(_str, Normal)
 	
+	#define __SA_WARN3(_pred, _chan, _dets)	{ if(!(_pred)) Sa::Debug::logger.Log(__SA_CREATE_WARNING(_pred, _chan, _dets)); }
+	#define __SA_WARN2(_pred, _chan)		__SA_WARN3(_pred, _chan, L"")
+
 	/// \endcond Internal
 
+#if !defined(DOXYGEN)
+
+	#define SA_LOG(...) __SA_SELECT_LOG_MACRO(__VA_ARGS__, __SA_LOG3(__VA_ARGS__), __SA_LOG2(__VA_ARGS__), __SA_LOG1(__VA_ARGS__))
+	//#define SA_LOG(...) __SA_SELECT_LOG_MACRO(__VA_ARGS__, __SA_LOG3, __SA_LOG2, __SA_LOG1)(__VA_ARGS__)
+
+	#define SA_WARN(...) __SA_SELECT_LOG_MACRO(__VA_ARGS__, __SA_WARN3(__VA_ARGS__), __SA_WARN2(__VA_ARGS__))
+	//#define SA_WARN(...) __SA_SELECT_LOG_MACRO(__VA_ARGS__, __SA_WARN3, __SA_WARN2)(__VA_ARGS__)
+
+	#define SA_ASSERT(_type, _chan, ...) { Sa::Debug::logger.Assert(__SA_CREATE_EXCEPTION(_type, _chan, ##__VA_ARGS__)); }
+
+#else
+
+	#define SA_LOG(_str, _lvl, _chan)
 	/**
 	*	\def SA_LOG(_str, _lvl, _chan)
 	*
@@ -114,17 +145,8 @@ namespace Sa::Debug
 	*	\param[in] _lvl		Level of the log (optional).
 	*	\param[in] _chan	Channel of the log (optional).
 	*/
-	#define SA_LOG(...) __SA_SELECT_LOG_MACRO(__VA_ARGS__, __SA_LOG3(__VA_ARGS__), __SA_LOG2(__VA_ARGS__), __SA_LOG1(__VA_ARGS__))
-	//#define SA_LOG(...) __SA_SELECT_LOG_MACRO(__VA_ARGS__, __SA_LOG3, __SA_LOG2, __SA_LOG1)(__VA_ARGS__)
 
-
-	/// \cond Internal
-
-	#define __SA_WARN3(_pred, _chan, _dets)	{ if(!(_pred)) Sa::Debug::logger.Log(__SA_CREATE_WARNING(_pred, _chan, _dets)); }
-	#define __SA_WARN2(_pred, _chan)		__SA_WARN3(_pred, _chan, L"")
-	
-	/// \endcond Internal
-
+	#define SA_WARN(_pred, _chan, _dets)
 	/**
 	*	\def SA_WARN(_pred, _chan, _dets)
 	*
@@ -136,9 +158,8 @@ namespace Sa::Debug
 	*	\param[in] _chan	Channel of the log.
 	*	\param[in] _dets	String message of the log (optional).
 	*/
-	#define SA_WARN(...) __SA_SELECT_LOG_MACRO(__VA_ARGS__, __SA_WARN3(__VA_ARGS__), __SA_WARN2(__VA_ARGS__))
-	//#define SA_WARN(...) __SA_SELECT_LOG_MACRO(__VA_ARGS__, __SA_WARN3, __SA_WARN2)(__VA_ARGS__)
 
+	#define SA_ASSERT(_type, _chan, ...)
 	/**
 	*	\def SA_ASSERT(_type, _chan, ...)
 	*
@@ -148,9 +169,10 @@ namespace Sa::Debug
 	*
 	*	\param[in] _type		type of the exception.
 	*	\param[in] _chan		Channel of the assert.
-	*	\param[in] __VA_ARGS_	Additionnal args for exception (depends on _type).
+	*	\param[in] ...	Additionnal args for exception (depends on _type).
 	*/
-	#define SA_ASSERT(_type, _chan, ...) { Sa::Debug::logger.Assert(__SA_CREATE_EXCEPTION(_type, _chan, ##__VA_ARGS__)); }
+
+#endif
 
 #else
 
@@ -162,5 +184,7 @@ namespace Sa::Debug
 
 #endif
 }
+
+/** \} */
 
 #endif // GUARD

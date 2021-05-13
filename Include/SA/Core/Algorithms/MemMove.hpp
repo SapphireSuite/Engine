@@ -12,7 +12,7 @@
 /**
 *	\file MemMove.hpp
 *
-*	\brief \b Definition of Sapphire Engine <b> Memory Move </b> algorithm.
+*	\brief <b>Memory Move</b> algorithm implementation.
 *
 *	\ingroup Core_Algorithms
 *	\{

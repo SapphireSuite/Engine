@@ -11,7 +11,7 @@
 /**
 *	\file SizeOf.hpp
 * 
-*	\brief Definition of SizeOf algorithms.
+*	\brief \b SizeOf algorithms implementation.
 * 
 *	\ingroup Core_Algorithms
 *	\{

@@ -7,10 +7,23 @@
 
 #include <SA/Core/Debug/Log/Log.hpp>
 
+/**
+*	\file LogStream.hpp
+* 
+*	\brief Log <b>base stream</b> implementation.
+* 
+*	Stream used by Logger.
+* 
+*	\ingroup Core_Debug
+*	\{
+*/
+
+
 namespace Sa
 {
 #if SA_LOGGING
 
+	/// Log Stream base class.
 	class LogStream
 	{
 	public:
@@ -35,5 +48,8 @@ namespace Sa
 
 #endif
 }
+
+
+/** \} */
 
 #endif // GUARD

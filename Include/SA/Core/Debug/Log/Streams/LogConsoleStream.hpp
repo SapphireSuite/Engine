@@ -11,10 +11,21 @@
 
 #include <SA/Core/Debug/Log/Streams/LogStream.hpp>
 
+/**
+*	\file LogConsoleStream.hpp
+*
+*	\brief Log <b>console stream</b> type implementation.
+*
+*	\ingroup Core_Debug
+*	\{
+*/
+
+
 namespace Sa
 {
 #if SA_LOGGING
 
+	/// Log console stream type.
 	class LogConsoleStream : public LogStream
 	{
 		/// Console color theme by LogLevel.
@@ -28,6 +39,7 @@ namespace Sa
 			CslColor::Magenta_FG | CslColor::Bright_FG,	// AssertFailureColor.
 		};
 
+		/// Theme access mutex.
 		mutable std::shared_mutex mThemeMutex;
 
 		/// Set console color from log level using theme.
@@ -47,5 +59,8 @@ namespace Sa
 
 #endif
 }
+
+
+/** \} */
 
 #endif // GUARD
