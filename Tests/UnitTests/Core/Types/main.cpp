@@ -7,6 +7,7 @@
 
 void IntTests();
 void CharTests();
+void InterfaceTest();
 
 void FlagsTests();
 void EventTests();
@@ -20,6 +21,7 @@ int main()
 
 	SA_UTH_GP(IntTests());
 	SA_UTH_GP(CharTests());
+	SA_UTH_GP(InterfaceTest());
 
 
 	SA_UTH_GPB(Variadics);
