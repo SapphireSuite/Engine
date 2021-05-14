@@ -12,12 +12,14 @@ namespace Sa::UTH
 		const std::wstring& _file,
 		uint32 _line,
 		const std::string& _function,
+		const std::string& _result,
 		bool _bResult,
 		ArgsStr&& _params
 	) noexcept :
 		file{ _file },
 		line{ _line },
 		function{ _function },
+		result{ _result },
 		bResult{ _bResult },
 		params{ std::move(_params) }
 	{
@@ -50,9 +52,17 @@ namespace Sa::UTH
 			log.AddString(L"Failure ");
 		}
 
-		log.AddToken(Step::Title);
+		log.AddToken(Step::None);
+		log.AddString(Sa::ToWString(function));
 
-		log.AddString(Sa::ToWString(function) + L" -- " + file + L':' + Sa::ToWString(line));
+		log.AddToken(Step::Title);
+		log.AddString(L" == ");
+
+		log.AddToken(Step::None);
+		log.AddString(Sa::ToWString(result));
+
+		log.AddToken(Step::Title);
+		log.AddString(L" -- " + file + L':' + Sa::ToWString(line));
 
 		log.AddToken(Step::None);
 

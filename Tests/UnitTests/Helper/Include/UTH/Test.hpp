@@ -16,8 +16,12 @@ namespace Sa::UTH
 	{
 	public:
 		const std::wstring& file;
+		
 		uint32 line = 0u;
+
 		const std::string& function;
+
+		const std::string& result;
 
 		/// Test restult predicate.
 		bool bResult = false;
@@ -38,6 +42,7 @@ namespace Sa::UTH
 			const std::wstring& _file,
 			uint32 _line,
 			const std::string& _function,
+			const std::string& _result,
 			bool _bResult,
 			ArgsStr&& _params
 		) noexcept;

@@ -7,7 +7,8 @@ namespace Sa
 	template <typename... Args>
 	ArgsStr::ArgsStr(const std::string& _paramNames, const Args&... _args)
 	{
-		GenerateParamStr(_paramNames, _args...);
+		if constexpr (sizeof...(Args) != 0u)
+			GenerateParamStr(_paramNames, _args...);
 	}
 
 	/// \brief Generate Params from params' names and values.
@@ -28,7 +29,7 @@ namespace Sa
 		params.push_back(Param{ _paramNames.substr(0u, index), ToString(_first) });
 
 		// Recursive call for next params.
-		if constexpr (sizeof...(_args) != 0u)
+		if constexpr (sizeof...(Args) != 0u)
 			GenerateParamStr(_paramNames.substr(index + 2), _args...);
 	}
 
