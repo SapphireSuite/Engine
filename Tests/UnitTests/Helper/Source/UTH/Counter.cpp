@@ -27,6 +27,11 @@ namespace Sa::UTH
 		return *this;
 	}
 
+	bool Counter::IsEmpty() const
+	{
+		return success != 0 && failure != 0;
+	}
+
 	void Counter::AppendLog(Log& _log) const
 	{
 		_log.AddToken(Step::TestNum);
@@ -48,10 +53,5 @@ namespace Sa::UTH
 			_log.AddToken(Step::TestNum);
 			_log.AddString(L")");
 		}
-	}
-
-	bool Counter::IsEmpty() const
-	{
-		return success != 0 && failure != 0;
 	}
 }

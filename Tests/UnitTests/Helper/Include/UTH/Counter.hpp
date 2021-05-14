@@ -27,9 +27,9 @@ namespace Sa::UTH
 
 		Counter& operator+=(const Counter& _rhs) noexcept;
 
-		void AppendLog(Log& _log) const;
-
 		bool IsEmpty() const;
+
+		void AppendLog(Log& _log) const;
 	};
 }
 

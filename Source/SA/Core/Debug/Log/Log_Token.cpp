@@ -6,6 +6,8 @@
 
 namespace Sa
 {
+#if SA_LOGGING
+
 	Log_Token::Log_Token(
 		const std::wstring& _file,
 		uint32 _line,
@@ -52,4 +54,6 @@ namespace Sa
 			offset = index + 2;
 		}
 	}
+
+#endif
 }
