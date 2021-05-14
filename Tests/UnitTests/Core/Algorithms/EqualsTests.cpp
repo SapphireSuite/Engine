@@ -76,7 +76,7 @@ namespace Sa::Equals_UT
 		const float fTab1[] = { 0.0f, 1.0f, 2.2546f, 4.258f, 1.26f };
 
 		SA_UTH_RSF(true, Equals, fTab0, fTab0, 5u);
-		SA_UTH_RSF(true, Equals, fTab0, fTab0e, 5u);
+		SA_UTH_RSF(true, Equals, fTab0, fTab0e, 5u, std::numeric_limits<float>::epsilon());
 		SA_UTH_RSF(false, Equals, fTab0, fTab1, 5u);
 		SA_UTH_RSF(true, Equals, fTab0, fTab1, 3u);
 	}

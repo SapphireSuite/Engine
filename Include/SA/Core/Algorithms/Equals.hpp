@@ -35,6 +35,22 @@ namespace Sa
 	*	\brief Compare two T objects.
 	*
 	*	\tparam T			Type of operands.
+	*
+	*	\param[in] _lhs		Left hand side operand to compare.
+	*	\param[in] _rhs		Right hand side operand to compare.
+	*
+	*	\return	True on equality, otherwise false.
+	*/
+	template <typename T>
+	bool Equals(const T& _lhs, const T& _rhs)
+	{
+		return _lhs == _rhs;
+	}
+
+	/**
+	*	\brief Compare two T objects.
+	*
+	*	\tparam T			Type of operands.
 	*	\tparam EpsT		Type of epsilon.
 	*
 	*	\param[in] _lhs		Left hand side operand to compare.
@@ -44,27 +60,52 @@ namespace Sa
 	*	\return	True on equality, otherwise false.
 	*/
 	template <typename T, typename EpsT = T>
-	bool Equals(const T& _lhs, const T& _rhs, EpsT _epsilon = std::numeric_limits<T>::epsilon())
+	bool Equals(const T& _lhs, const T& _rhs, EpsT _epsilon)
 	{
-		// Is native type?
-		if constexpr (std::is_arithmetic<T>::value)
+		if constexpr (!std::is_arithmetic<T>::value)
+		{
+			if constexpr (Intl::HMOT_Equals<T, bool(const T&, EpsT) const>::value)
+			{
+				// User defined Equals method.
+
+				return _lhs.Equals(_rhs, _epsilon);
+			}
+			else
+			{
+				// Don't use std::abs for unsigned compatibility.
+
+				return (_lhs < _rhs ? _rhs - _lhs : _lhs - _rhs) <= _epsilon;
+			}
+		}
+		else
 		{
 			// Don't use std::abs for unsigned compatibility.
 
 			return (_lhs < _rhs ? _rhs - _lhs : _lhs - _rhs) <= _epsilon;
 		}
-		else if constexpr (Intl::HMOT_Equals<T, bool(const T&, EpsT) const>::value)
-		{
-			// User defined Equals method.
+	}
 
-			return _lhs.Equals(_rhs, _epsilon);
-		}
-		else
+	/**
+	*	\brief Compare two T[] objects.
+	*
+	*	\tparam T		Type of operands.
+	*
+	*	\param[in] _lhs		Left hand side operand to compare.
+	*	\param[in] _rhs		Right hand side operand to compare.
+	*	\param[in] _size	Size of tabs to compare compare.
+	*
+	*	\return	True on equality, otherwise false.
+	*/
+	template <typename T>
+	bool Equals(T* _lhs, T* _rhs, uint32 _size)
+	{
+		for (uint32 i = 0u; i < _size; ++i)
 		{
-			// Default comparison method.
-
-			return _lhs == _rhs;
+			if (!Equals(_lhs[i], _rhs[i]))
+				return false;
 		}
+
+		return true;
 	}
 
 	/**
@@ -81,7 +122,7 @@ namespace Sa
 	*	\return	True on equality, otherwise false.
 	*/
 	template <typename T, typename EpsT = T>
-	bool Equals(T* _lhs, T* _rhs, uint32 _size, EpsT _epsilon = std::numeric_limits<T>::epsilon())
+	bool Equals(T* _lhs, T* _rhs, uint32 _size, EpsT _epsilon)
 	{
 		for (uint32 i = 0u; i < _size; ++i)
 		{
