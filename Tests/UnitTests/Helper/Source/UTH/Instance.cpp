@@ -36,7 +36,7 @@ namespace Sa::UTH
 	
 	int32 Instance::Exit(bool _bForce)
 	{
-		Log_Token log(__SA_FILE_NAME, __LINE__, __SA_FUNC_NAME, LogLevel::Normal, L"UTH");
+		Log log = __SA_UTH_MAKE_LOG();
 
 		log.AddToken(Step::Exit);
 		log.AddString(L"[SA-UTH] Run: ");
@@ -63,14 +63,15 @@ namespace Sa::UTH
 		if (exit == EXIT_SUCCESS)
 		{
 			log.AddToken(Step::Success);
-			log.AddString(L"EXIT_SUCCESS (" + std::to_wstring(EXIT_SUCCESS) + L")\n");
+			log.AddString(L"EXIT_SUCCESS (" + std::to_wstring(EXIT_SUCCESS) + L')');
 		}
 		else
 		{
 			log.AddToken(Step::Failure);
-			log.AddString(L"EXIT_FAILURE (" + std::to_wstring(EXIT_FAILURE) + L")\n");
+			log.AddString(L"EXIT_FAILURE (" + std::to_wstring(EXIT_FAILURE) + L')');
 		}
 
+		log.EndOfLine();
 		log.AddToken(Step::None);
 
 
@@ -114,6 +115,11 @@ namespace Sa::UTH
 #endif
 	}
 
+	uint32 Instance::GetGroupNum() const
+	{
+		return mGroups.size();
+	}
+
 	void Instance::UpdateGroups(bool _pred)
 	{
 		if (!mGroups.empty())
@@ -123,5 +129,58 @@ namespace Sa::UTH
 
 			gp.Update(_pred);
 		}
+	}
+
+	void Instance::BeginGroup(const std::string& _name)
+	{
+		// Log before push for log indentation.
+		if (verbosity & Verbosity::GroupStart)
+		{
+			Log log = __SA_UTH_MAKE_LOG();
+
+			log.AddToken(Step::GroupBegin);
+			log.AddString(L"[SA-UTH] Group:\t" + Sa::ToWString(_name));
+
+			logger.Log(log);
+		}
+
+		mGroups.push(Group{ _name });
+	}
+
+	void Instance::EndGroup()
+	{
+		Group group = mGroups.top();
+		mGroups.pop();
+
+		// Spread values to parent.
+		if (!mGroups.empty())
+			group.Spread(mGroups.top());
+
+		if ((verbosity & Verbosity::GroupExit))
+		{
+			Log log = __SA_UTH_MAKE_LOG();
+
+			log.AddToken(Step::GroupEnd);
+			log.AddString(L"[SA-UTH] Group:\t" + Sa::ToWString(group.name) + L"run: ");
+			group.count.AppendLog(log);
+
+			log.AddToken(Step::GroupEnd);
+			log.AddString(L" and exit with code: ");
+
+			if (group.localExit == EXIT_SUCCESS)
+			{
+				log.AddToken(Step::Success);
+				log.AddString(L"EXIT_SUCCESS (" + std::to_wstring(EXIT_SUCCESS) + L")");
+			}
+			else
+			{
+				log.AddToken(Step::Failure);
+				log.AddString(L"EXIT_FAILURE (" + std::to_wstring(EXIT_FAILURE) + L")");
+			}
+
+			logger.Log(log);
+		}
+
+		mCounter.Increment(group.localExit == EXIT_SUCCESS);
 	}
 }

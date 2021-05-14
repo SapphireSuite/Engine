@@ -2,11 +2,8 @@
 
 #include <iostream>
 
+#include <UTH/Log.hpp>
 #include <UTH/LogStream.hpp>
-
-//#include <UTH/Instance.hpp>
-
-#include <SA/Core/Debug/Log/Log_Token.hpp>
 
 namespace Sa::UTH
 {
@@ -23,9 +20,9 @@ namespace Sa::UTH
 
 	LogStream& LogStream::Output(const Sa::Log& _log)
 	{
-		Log_Token tkLog = reinterpret_cast<const Log_Token&>(_log);
+		Log uthLog = reinterpret_cast<const Sa::UTH::Log&>(_log);
 
-		tkLog.Parse(
+		uthLog.Parse(
 			this,
 
 			[](void* _userData, wchar _token)
@@ -43,6 +40,9 @@ namespace Sa::UTH
 				stream.mHandle << _str;
 			}
 		);
+
+		// Ensure reset.
+		SetColorFromStep(Step::None);
 
 		std::wcout << std::endl;
 		mHandle << std::endl;

@@ -186,6 +186,31 @@ namespace Sa::UTH
 			ArgsStr(SA_STR(_lhs _op _rhs) ", " #_res ", " #_lhs ", " #_rhs, result, sRes, sLhs, sRhs)\
 		));\
 	}
+
+	/**
+	*	\brief Begin a group of test with name.
+	* 
+	*	\param[in] _name	Name of the group.
+	*/
+	#define SA_UTH_GPB(_name) Sa::UTH::Intl::instance.BeginGroup(#_name);
+
+	/**
+	*	\brief End current group.
+	*/
+	#define SA_UTH_GPE() Sa::UTH::Intl::instance.EndGroup();
+
+
+	/**
+	*	\brief Run a group of tests from a single function.
+	*
+	*	\param[in] _func	The function that own the group of tests.
+	*/
+	#define SA_UTH_GP(_func)\
+	{\
+		SA_UTH_GPB(_func)\
+		_func;\
+		SA_UTH_GPE()\
+	}
 }
 
 #endif // GUARD

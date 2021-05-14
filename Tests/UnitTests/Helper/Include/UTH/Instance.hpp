@@ -46,8 +46,25 @@ namespace Sa::UTH
 		*	\return exit code of all tests run.
 		*/
 		SA_UTH_API int32 Exit(bool _bForce = false);
+		
 
 		SA_UTH_API void Process(const Test& _test);
+
+		uint32 GetGroupNum() const;
+
+		/**
+		*	\brief Begin a group of tests.
+		* 
+		*	param[in] _name	The name of the group that begins.
+		*/
+		SA_UTH_API void BeginGroup(const std::string& _name);
+
+		/**
+		*	\brief End current group of tests.
+		* 
+		*	param[in] _name	The name of the group that begins.
+		*/
+		SA_UTH_API void EndGroup();
 	};
 
 	namespace Intl

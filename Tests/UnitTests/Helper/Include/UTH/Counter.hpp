@@ -5,9 +5,9 @@
 #ifndef SAPPHIRE_UTH_COUNTER_GUARD
 #define SAPPHIRE_UTH_COUNTER_GUARD
 
-#include <SA/Core/Types/Int.hpp>
+#include <UTH/Log.hpp>
 
-#include <SA/Core/Debug/Log/Log_Token.hpp>
+#include <SA/Core/Types/Int.hpp>
 
 namespace Sa::UTH
 {
@@ -27,7 +27,7 @@ namespace Sa::UTH
 
 		Counter& operator+=(const Counter& _rhs) noexcept;
 
-		void AppendLog(Log_Token& _log) const;
+		void AppendLog(Log& _log) const;
 
 		bool IsEmpty() const;
 	};

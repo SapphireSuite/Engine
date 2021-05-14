@@ -9,19 +9,16 @@ using namespace Sa;
 
 bool BarT()
 {
-	//std::cout << "CCCCCBarT()" << std::endl;
 	return true;
 }
 
 bool BarF()
 {
-	//std::cout << "CCCCCBarF()" << std::endl;
 	return false;
 }
 
 bool Foo(int _i)
 {
-	std::cout << "CCCCCFoo()" << std::endl;
 	return _i;
 }
 
@@ -30,19 +27,16 @@ class A
 public:
 	bool Foo(int _i)
 	{
-		std::cout << "CCCCFoo()" << std::endl;
 		return _i;
 	}
 
 	int Triple(int _i)
 	{
-		std::cout << "CCCCTriple()" << std::endl;
 		return _i * 3;
 	}
 
 	static int Double(int _i)
 	{
-		std::cout << "CCCCDouble()" << std::endl;
 		return _i * 2;
 	}
 };
@@ -50,21 +44,45 @@ public:
 
 int AAA()
 {
-	std::cout << "CCCCAAA()" << std::endl;
-
 	return 0;
 }
 
-int main()
+void Float()
 {
 	const float f1 = 5.24f;
 	const float f2 = 12.56f;
 	const float f3 = f1 + std::numeric_limits<float>::epsilon();
 	const float f4 = f1 + 2 * std::numeric_limits<float>::epsilon();
 
-	SA_UTH_EQ(f1,f2);
+	SA_UTH_EQ(f1, f2);
 	SA_UTH_EQ(f1, f3);
 	SA_UTH_EQ(f1, f4, 2 * std::numeric_limits<float>::epsilon());
+}
+
+void TestGroup()
+{
+	SA_UTH_GP(Float());
+
+	SA_UTH_GPB(TTTT);
+
+		SA_UTH_EQ(0, 0);
+		SA_UTH_EQ(1, 0);
+
+		SA_UTH_GPB(TTTT2);
+
+			SA_UTH_EQ(0, 0);
+			SA_UTH_EQ(1, 0);
+
+		SA_UTH_GPE();
+
+	SA_UTH_GPE();
+}
+
+int main()
+{
+	SA_UTH_GP(Float());
+	SA_UTH_GP(TestGroup());
+
 
 	SA_UTH_EQ(AAA(), 0);
 	SA_UTH_EQ(AAA(), 1);

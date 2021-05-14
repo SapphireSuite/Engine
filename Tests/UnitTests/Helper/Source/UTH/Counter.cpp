@@ -27,7 +27,7 @@ namespace Sa::UTH
 		return *this;
 	}
 
-	void Counter::AppendLog(Log_Token& _log) const
+	void Counter::AppendLog(Log& _log) const
 	{
 		_log.AddToken(Step::TestNum);
 		_log.AddString(std::to_wstring(Total()));

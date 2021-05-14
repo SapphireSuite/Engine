@@ -43,39 +43,12 @@ namespace Sa::UTH
 		/// Global Group counter.
 		SA_UTH_API static Counter globalCount;
 
-		///**
-		//*	\brief Spreads values to parent group.
-		//*
-		//*	\param[in] _parent	parent to spread values to.
-		//*/
-		//void Spread(Group& _parent);
-
-
-		///// Start a new group of tests.
-		//static void Begin(const std::string& _name);
-
-		///// End a group of tests.
-		//static Group End();
-
-
-		///**
-		//*	\brief GroupBegin output in console.
-		//*
-		//*	\param[in] _name	The name of the group that begins.
-		//*/
-		//static void BeginLog(const std::string& _name);
-
-		///**
-		//*	\brief GroupEnd output in console.
-		//*
-		//*	\param[in] _group	The group that ends.
-		//*/
-		//static void EndLog(const UTH::Group& _group);
-
-
-		//static std::string TabStr() noexcept;
-
-		//static void LogTabs() noexcept;
+		/**
+		*	\brief Spreads values to parent group.
+		*
+		*	\param[in] _parent	parent to spread values to.
+		*/
+		void Spread(Group& _parent);
 	};
 }
 

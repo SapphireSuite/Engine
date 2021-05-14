@@ -25,7 +25,7 @@ namespace Sa::UTH
 	{
 	}
 
-	Log_Token Test::MakeLog() const
+	Log Test::MakeLog() const
 	{
 		/**
 		*	[SA-UTH] <Success/Failure> <func> -- <file>:<line>
@@ -35,7 +35,7 @@ namespace Sa::UTH
 		*	<param2_value>
 		*/
 
-		Log_Token log(file, line, function, LogLevel::Normal, L"UTH");
+		Log log(file, line, function);
 
 		log.AddToken(Step::Title);
 
@@ -75,7 +75,11 @@ namespace Sa::UTH
 			for (auto it = params->begin(); it != params->end(); ++it)
 			{
 				if (verbosity & Verbosity::ParamsName)
-					log.AddString(L'\n' + Sa::ToWString(it->name) + L":\n");
+				{
+					log.EndOfLine();
+					log.AddString(Sa::ToWString(it->name) + L':');
+					log.EndOfLine();
+				}
 
 				if (it->value.empty())
 				{

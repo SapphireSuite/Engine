@@ -6,9 +6,9 @@
 #define SAPPHIRE_UTH_TEST_GUARD
 
 #include <UTH/Config.hpp>
+#include <UTH/Log.hpp>
 
 #include <SA/Core/Debug/ArgsStr.hpp>
-#include <SA/Core/Debug/Log/Log_Token.hpp>
 
 namespace Sa::UTH
 {
@@ -47,7 +47,7 @@ namespace Sa::UTH
 			ArgsStr&& _params
 		) noexcept;
 
-		Log_Token MakeLog() const;
+		Log MakeLog() const;
 	};
 }
 
