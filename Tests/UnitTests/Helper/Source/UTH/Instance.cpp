@@ -24,6 +24,11 @@ namespace Sa::UTH
 
 	void Instance::Init()
 	{
+		Log log = __SA_UTH_MAKE_LOG();
+
+		log.AddToken(Step::Init);
+		log.AddString(L"[SA-UTH] Init");
+
 		//SetConsoleColor(CslColor::Init);
 
 		//// Init rand.

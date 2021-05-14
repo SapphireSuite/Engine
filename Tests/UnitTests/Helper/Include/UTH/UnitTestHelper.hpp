@@ -15,6 +15,19 @@
 namespace Sa::UTH
 {
 	/**
+	*	\brief Helper init program macro.
+	*	Should be used at the start of main.
+	*/
+	#define SA_UTH_INIT() Sa::UTH::Intl::instance.Init();
+
+	/**
+	*	\brief Helper exit program macro.
+	*	Should be used at the end of main.
+	*/
+	#define SA_UTH_EXIT() return Sa::UTH::Intl::instance.Exit();
+
+
+	/**
 	*	\brief Run a \e <b> Unit Test </b> using internal Equals implementation.
 	*
 	*	UTH::exit will be equal to EXIT_FAILURE (1) if at least one test failed.
