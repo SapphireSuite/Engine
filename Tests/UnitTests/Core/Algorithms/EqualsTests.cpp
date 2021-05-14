@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <UnitTestHelper.hpp>
+#include <UnitTestHelper>
 
 #include <SA/Core/Algorithms/Equals.hpp>
 using namespace Sa;
@@ -58,6 +58,12 @@ namespace Sa::Equals_UT
 
 	void Tab()
 	{
+		const int32 iTab0[] = { 0, 1, 2, 4, 1 };
+		const int32 iTab1[] = { 0, 1, 2, 5, 1 };
+		SA_UTH_RSF(true, Equals, iTab0, iTab0, 3u);
+		SA_UTH_RSF(false, Equals, iTab0, iTab1, 5u);
+
+
 		const float fTab0[] = { 0.0f, 1.0f, 2.2546f, 4.25f, 1.26f };
 		const float fTab0e[] = {
 			fTab0[0] + std::numeric_limits<float>::epsilon(),
@@ -70,7 +76,7 @@ namespace Sa::Equals_UT
 		const float fTab1[] = { 0.0f, 1.0f, 2.2546f, 4.258f, 1.26f };
 
 		SA_UTH_RSF(true, Equals, fTab0, fTab0, 5u);
-		SA_UTH_RSF(true, Equals, fTab0, fTab0e, 5u);
+		SA_UTH_RSF(true, Equals, fTab0, fTab0e, 5u, std::numeric_limits<float>::epsilon());
 		SA_UTH_RSF(false, Equals, fTab0, fTab1, 5u);
 		SA_UTH_RSF(true, Equals, fTab0, fTab1, 3u);
 	}

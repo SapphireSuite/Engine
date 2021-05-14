@@ -11,7 +11,7 @@
 /**
 *	\file Pragma.hpp
 *
-*	\brief Sapphire Engine pragma directives support file.
+*	\brief \b Pragma directives support file.
 *
 *	Source: https://www.fluentcpp.com/2019/08/30/how-to-disable-a-warning-in-cpp/
 *

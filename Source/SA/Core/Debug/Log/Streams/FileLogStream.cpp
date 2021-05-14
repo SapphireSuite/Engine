@@ -10,16 +10,24 @@ namespace Sa
 
 	FileLogStream::FileLogStream(const std::string& _fileName) noexcept
 	{
+#if !SA_CI
+
 		CreateLogFile(_fileName);
+
+#endif
 	}
 
 	FileLogStream::~FileLogStream() noexcept
 	{
+#if !SA_CI
+
 		mMutex.lock();
 
 		mHandle.close();
 
 		mMutex.unlock();
+
+#endif
 	}
 
 
@@ -44,11 +52,15 @@ namespace Sa
 
 	LogStream& FileLogStream::Output(const Sa::Log& _log)
 	{
+#if !SA_CI
+
 		mMutex.lock();
 
 		mHandle << _log.ToWString() << std::endl;
 
 		mMutex.unlock();
+
+#endif
 
 		return *this;
 	}

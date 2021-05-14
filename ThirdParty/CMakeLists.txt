@@ -4,4 +4,3 @@
 
 # === Entrypoints ===
 
-add_subdirectory(UnitTestHelper)

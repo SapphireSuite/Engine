@@ -54,15 +54,6 @@ namespace Sa
 
 
 		/**
-		*	\brief Perform \b equal operation between bit flags and enum.
-		*
-		*	\param[in] _enum		Right operand.
-		*
-		*	\return result of equal operation.
-		*/
-		constexpr bool Equals(EnumT _enum) const noexcept;
-
-		/**
 		*	\brief Perform \b equal operation between Flags and type bits.
 		*
 		*	\param[in] _bits		Right operand.

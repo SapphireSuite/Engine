@@ -8,7 +8,7 @@
 /**
 *	\file Platforms.hpp
 *
-*	\brief Sapphire Engine platform support definition file.
+*	\brief \b Platform support definition file.
 *
 *	Define platform support preprocessors.
 *
@@ -17,7 +17,7 @@
 */
 
 
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(_WIN32) || defined(_WIN64) || defined(DOXYGEN)
 
 	/// Sapphire Engine Windows platform support preprocessor.
 	#define SA_WIN 1

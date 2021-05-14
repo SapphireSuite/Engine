@@ -47,6 +47,20 @@ target_compile_features(SA-Engine PUBLIC cxx_std_17)
 # SA-Engine module implementation preprocessor.
 target_compile_definitions(SA-Engine PUBLIC SA_ENGINE_IMPL)
 
+# Thread
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+target_link_libraries(SA-Engine PUBLIC Threads::Threads)
+
+# std::filesystem.
+if(MSVC)
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "GNU" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS "9.0.0")
+	target_link_libraries(SA-Engine PUBLIC stdc++fs)
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS "10.0.0")
+	# TODO: Wait for gh action fix.
+	#target_link_libraries(SA-Engine PUBLIC c++fs)
+endif()
+
 
 
 # === Options ===

@@ -10,7 +10,7 @@
 /**
 *	\file Compilers.hpp
 *
-*	\brief Sapphire Engine compiler support definition file.
+*	\brief \b Compiler support definition file.
 *
 *	Define compiler support preprocessors.
 *
@@ -19,7 +19,7 @@
 */
 
 
-#if defined(_MSC_VER)
+#if defined(_MSC_VER) || defined(DOXYGEN)
 
 	/// Sapphire Engine MSVC compiler support preprocessor.
 	#define SA_MSVC 1
@@ -34,7 +34,7 @@
 
 #endif
 
-#if defined(__clang__)
+#if defined(__clang__) || defined(DOXYGEN)
 
 	/// Sapphire Engine Clang compiler support preprocessor.
 	#define SA_CLANG 1
@@ -49,7 +49,7 @@
 
 #endif
 
-#if defined(__GNUC__)
+#if defined(__GNUC__) || defined(DOXYGEN)
 
 	/// Sapphire Engine GNU compiler support preprocessor.
 	#define SA_GNU 1

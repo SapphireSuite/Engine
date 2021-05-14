@@ -11,7 +11,7 @@
 /**
 *	\file Intrinsics.hpp
 * 
-*	\brief Sapphire Engine intrinsics support file.
+*	\brief \b Intrinsics support file.
 * 
 *	Define intrinsics preprocessors and include support.
 * 

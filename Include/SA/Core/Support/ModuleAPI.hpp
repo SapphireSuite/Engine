@@ -10,7 +10,7 @@
 /**
 *	\file ModuleAPI.hpp
 *
-*	\brief Sapphire Engine API Module config file.
+*	\brief <b>API Module</b> support definition file.
 *
 *	Define API module import / export preprocessors.
 *

@@ -27,13 +27,18 @@ namespace Sa
 	/// Log file stream type.
 	class FileLogStream : public LogStream
 	{
+	protected:
 		/// Handled file stream.
 		std::wofstream mHandle;
 
 		/// Stream mutex.
 		std::mutex mMutex;
 
-		/// Create log and log backup files.
+		/**
+		*	\brief Create log and log backup files.
+		* 
+		*	\param[in] _fileName	Name of the log file.
+		*/
 		void CreateLogFile(const std::string& _fileName);
 
 	public:
@@ -46,7 +51,7 @@ namespace Sa
 
 		SA_ENGINE_API ~FileLogStream() noexcept;
 
-		SA_ENGINE_API LogStream& Output(const Sa::Log& _log) override final;
+		SA_ENGINE_API LogStream& Output(const Sa::Log& _log) override;
 	};
 
 #endif

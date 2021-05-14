@@ -8,7 +8,7 @@
 /**
 *	\file SA/Core/Debug/Config.hpp
 *
-*	\brief Sapphire Engine Core Debug config file.
+*	\brief <b>Core Debug</b> config file.
 * 
 *	\ingroup Core_Debug
 *	\{
@@ -29,7 +29,7 @@
 
 
 /// Sapphire Engine enable Logging preprocessor.
-#define SA_LOGGING SA_DEBUG
+#define SA_LOGGING SA_DEBUG || 1 // TODO: Remove Later.
 
 
 /** \} */

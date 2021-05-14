@@ -11,7 +11,7 @@
 /**
 *	\file Windows.hpp
 *
-*	\brief Sapphire Engine support of Windows.h file.
+*	\brief \b Windows.h support file.
 *
 *	\ingroup Core
 *	\{
