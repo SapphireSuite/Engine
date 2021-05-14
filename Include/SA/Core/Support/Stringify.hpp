@@ -8,7 +8,7 @@
 /**
 *	\file Stringify.hpp
 *
-*	\brief Sapphire Engine stringify support definition file.
+*	\brief \b Stringify support definition file.
 *
 *	Define stringify support preprocessors.
 *

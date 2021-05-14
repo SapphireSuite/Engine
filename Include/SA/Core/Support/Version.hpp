@@ -8,7 +8,7 @@
 /**
 *	\file Version.hpp
 *
-*	\brief Sapphire Engine version definition file.
+*	\brief \b Version definition file.
 *
 *	Define version preprocessors.
 *	Version follows the norm Major.Minor.Patch.

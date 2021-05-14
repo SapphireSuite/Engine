@@ -8,7 +8,7 @@
 /**
 *	\file Architectures.hpp
 *
-*	\brief Sapphire Engine architecture support definition file.
+*	\brief \b Architecture support definition file.
 *
 *	Define architecture support preprocessors.
 *
@@ -17,7 +17,7 @@
 */
 
 
-#if defined(__x86_64__) || defined(_M_AMD64)
+#if defined(__x86_64__) || defined(_M_AMD64) || defined(DOXYGEN)
 
 	/// Sapphire Engine x32 architecture support preprocessor.
 	#define SA_x32 0

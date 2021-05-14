@@ -8,7 +8,7 @@
 /**
 *	\file SA/Core/Debug/Config.hpp
 *
-*	\brief Sapphire Engine Core Debug config file.
+*	\brief <b>Core Debug</b> config file.
 * 
 *	\ingroup Core_Debug
 *	\{

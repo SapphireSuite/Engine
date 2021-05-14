@@ -34,7 +34,11 @@ namespace Sa
 		/// Stream mutex.
 		std::mutex mMutex;
 
-		/// Create log and log backup files.
+		/**
+		*	\brief Create log and log backup files.
+		* 
+		*	\param[in] _fileName	Name of the log file.
+		*/
 		void CreateLogFile(const std::string& _fileName);
 
 	public:
