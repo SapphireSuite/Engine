@@ -55,11 +55,14 @@ namespace Sa::UTH
 		log.AddToken(Step::None);
 		log.AddString(Sa::ToWString(function));
 
-		log.AddToken(Step::Title);
-		log.AddString(L" == ");
+		if (!result.empty())
+		{
+			log.AddToken(Step::Title);
+			log.AddString(L" == ");
 
-		log.AddToken(Step::None);
-		log.AddString(Sa::ToWString(result));
+			log.AddToken(Step::None);
+			log.AddString(Sa::ToWString(result));
+		}
 
 		log.AddToken(Step::Title);
 		log.AddString(L" -- " + file + L':' + Sa::ToWString(line));
