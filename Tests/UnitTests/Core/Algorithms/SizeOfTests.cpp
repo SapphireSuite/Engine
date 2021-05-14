@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include <UnitTestHelper.hpp>
+#include <UnitTestHelper>
 
 #include <SA/Core/Algorithms/SizeOf.hpp>
 using namespace Sa;

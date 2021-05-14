@@ -49,18 +49,9 @@ namespace Sa
 		// Is native type?
 		if constexpr (std::is_arithmetic<T>::value)
 		{
-			if constexpr (std::is_integral<T>::value)
-			{
-				// Simple comparison for int.
+			// Don't use std::abs for unsigned compatibility.
 
-				return _lhs == _rhs;
-			}
-			else
-			{
-				// Epsilon comparison for floating points.
-
-				return std::abs(_lhs - _rhs) <= _epsilon;
-			}
+			return (_lhs < _rhs ? _rhs - _lhs : _lhs - _rhs) <= _epsilon;
 		}
 		else if constexpr (Intl::HMOT_Equals<T, bool(const T&, EpsT) const>::value)
 		{
@@ -90,7 +81,7 @@ namespace Sa
 	*	\return	True on equality, otherwise false.
 	*/
 	template <typename T, typename EpsT = T>
-	bool Equals(const T* _lhs, const T* _rhs, uint32 _size, EpsT _epsilon = std::numeric_limits<T>::epsilon())
+	bool Equals(T* _lhs, T* _rhs, uint32 _size, EpsT _epsilon = std::numeric_limits<T>::epsilon())
 	{
 		for (uint32 i = 0u; i < _size; ++i)
 		{
