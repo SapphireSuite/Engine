@@ -71,12 +71,7 @@ namespace Sa
 		static constexpr bool OfType()\
 		{\
 			if constexpr (value)\
-			{\
-				if constexpr (std::is_function<MemT>::value)\
-					return std::is_same<decltype(&T::_name), MemT (T::*)>::value;\
-				else\
-					return std::is_same<decltype(T::_name), MemT>::value;\
-			}\
+				return std::is_same<decltype(&T::_name), MemT (T::*)>::value;\
 		\
 			return false;\
 		}\
@@ -85,7 +80,7 @@ namespace Sa
 	template<typename T, typename MemT>\
 	struct HMOT_##_name : public StaticConstant<bool, HM_ ## _name<T>::template OfType<MemT>()>{};
 
-#if SA_DOC
+#if SA_DOC || 1
 
 	namespace Doc
 	{
@@ -158,20 +153,8 @@ namespace Sa
 				// Check member exists.
 				if constexpr (value)
 				{
-					// Handle function types.
-					if constexpr (std::is_function<MemT>::value)
-					{
-						// Function specialization.
-
-						// Compare using MemT (T::*) for easy semantic function type check:
-						// OfType<void(int)>() -> void (T::*)(int)
-						return std::is_same<decltype(&T::_name), MemT (T::*)>::value;
-					}
-					else
-					{
-						// Simple type (native, class...).
-						return std::is_same<decltype(T::_name), MemT>::value;
-					}
+					// Compare using MemT (T::*) for easy semantic.
+					return std::is_same<decltype(&T::Name), MemT (T::*)>::value;
 				}
 
 				return false;
