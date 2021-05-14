@@ -14,52 +14,6 @@
 
 namespace Sa::UTH
 {
-	/// \cond Internal
-
-	#define __SA_UTH_CREATE_FT(_func, ...) Sa::UTH::Test(\
-		__SA_FILE_NAME,\
-		__LINE__,\
-		#_func "(" #__VA_ARGS__ ")",\
-		"true",\
-		_func(__VA_ARGS__),\
-		SA_STR_ARGS(__VA_ARGS__)\
-	)
-
-	/**
-	*	Handle single test-function call.
-	*	(_expRes) == _func(__VA_ARGS__)
-	*	SA_STR_ARGS(_func(__VA_ARGS__), _expRes, ##__VA_ARGS__)
-	*/
-	#define __SA_UTH_CREATE_RFT(_expRes, _res, _func, ...) Sa::UTH::Test(\
-		__SA_FILE_NAME,\
-		__LINE__,\
-		#_func "(" #__VA_ARGS__ ")",\
-		#_expRes,\
-		(_expRes) == _res,\
-		ArgsStr(#_func "(" #__VA_ARGS__ "), " #_expRes ", " #__VA_ARGS__, _res, _expRes, ##__VA_ARGS__)\
-	)
-
-
-	#define __SA_UTH_CREATE_OPT(_lhs, _op, _rhs) Sa::UTH::Test(\
-		__SA_FILE_NAME,\
-		__LINE__,\
-		#_lhs " " #_op " " #_rhs,\
-		"",\
-		_lhs _op _rhs,\
-		SA_STR_ARGS(_lhs, _rhs)\
-	)
-
-	#define __SA_UTH_CREATE_ROPT(_expRes, _lhs, _op, _rhs) Sa::UTH::Test(\
-		__SA_FILE_NAME,\
-		__LINE__,\
-		"(" #_lhs " " #_op " " #_rhs ")",\
-		#_expRes,\
-		(_lhs _op _rhs) == _expRes,\
-		SA_STR_ARGS(_lhs _op _rhs, _expRes, _lhs, _rhs)\
-	)
-
-	/// \endcond
-
 	/**
 	*	\brief Run a \e <b> Unit Test </b> using internal Equals implementation.
 	*
@@ -74,9 +28,17 @@ namespace Sa::UTH
 	*/
 	#define SA_UTH_EQ(_lhs, _rhs, ...)\
 	{\
-		Sa::UTH::Intl::instance.Process(__SA_UTH_CREATE_FT(\
-			Sa::Equals,\
-			_lhs, _rhs, ##__VA_ARGS__\
+		auto&& sLhs = _lhs;\
+		auto&& sRhs = _rhs;\
+		bool bRes = Sa::Equals(sLhs, sRhs, ##__VA_ARGS__);\
+	\
+		Sa::UTH::Intl::instance.Process(Sa::UTH::Test(\
+			__SA_FILE_NAME,\
+			__LINE__,\
+			SA_STR(Sa::Equals(_lhs, _rhs, ##__VA_ARGS__)),\
+			"",\
+			bRes,\
+			ArgsStr(#_lhs ", " #_rhs ", " #__VA_ARGS__, sLhs, sRhs, ##__VA_ARGS__)\
 		));\
 	}
 
@@ -89,9 +51,15 @@ namespace Sa::UTH
 	*/
 	#define SA_UTH_SF(_func, ...)\
 	{\
-		Sa::UTH::Intl::instance.Process(__SA_UTH_CREATE_FT(\
-			_func,\
-			##__VA_ARGS__\
+		bool bRes = _func(__VA_ARGS__);\
+	\
+		Sa::UTH::Intl::instance.Process(Sa::UTH::Test(\
+			__SA_FILE_NAME,\
+			__LINE__,\
+			SA_STR(_func(__VA_ARGS__)),\
+			"true",\
+			bRes,\
+			SA_STR_ARGS(__VA_ARGS__)\
 		));\
 	}
 
@@ -105,11 +73,17 @@ namespace Sa::UTH
 	*/
 	#define SA_UTH_RSF(_res, _func, ...)\
 	{\
-		Sa::UTH::Intl::instance.Process(__SA_UTH_CREATE_RFT(\
-			_res,\
-			_func(__VA_ARGS__),\
-			_func,\
-			##__VA_ARGS__\
+		auto&& sRes = _res;\
+		auto result = _func(__VA_ARGS__);\
+		bool bRes = result == sRes;\
+	\
+		Sa::UTH::Intl::instance.Process(Sa::UTH::Test(\
+			__SA_FILE_NAME,\
+			__LINE__,\
+			SA_STR(_func(__VA_ARGS__)),\
+			#_res,\
+			bRes,\
+			ArgsStr(SA_STR(_func(__VA_ARGS__)) ", " #_res ", " #__VA_ARGS__, result, sRes, ##__VA_ARGS__)\
 		));\
 	}
 
@@ -123,9 +97,15 @@ namespace Sa::UTH
 	*/
 	#define SA_UTH_MF(_caller, _func, ...)\
 	{\
-		Sa::UTH::Intl::instance.Process(__SA_UTH_CREATE_FT(\
-			(_caller)._func,\
-			##__VA_ARGS__\
+		bool bRes = (_caller)._func(__VA_ARGS__);\
+	\
+		Sa::UTH::Intl::instance.Process(Sa::UTH::Test(\
+			__SA_FILE_NAME,\
+			__LINE__,\
+			SA_STR((_caller)._func(__VA_ARGS__)),\
+			"true",\
+			bRes,\
+			SA_STR_ARGS(_caller, ##__VA_ARGS__)\
 		));\
 	}
 
@@ -140,11 +120,17 @@ namespace Sa::UTH
 	*/
 	#define SA_UTH_RMF(_res, _caller, _func, ...)\
 	{\
-		Sa::UTH::Intl::instance.Process(__SA_UTH_CREATE_RFT(\
-			_res,\
-			(_caller)._func(__VA_ARGS__),\
-			(_caller)._func,\
-			##__VA_ARGS__\
+		auto&& sRes = _res;\
+		auto result = (_caller)._func(__VA_ARGS__);\
+		bool bRes = result == sRes;\
+	\
+		Sa::UTH::Intl::instance.Process(Sa::UTH::Test(\
+			__SA_FILE_NAME,\
+			__LINE__,\
+			SA_STR((_caller)._func(__VA_ARGS__)),\
+			#_res,\
+			bRes,\
+			ArgsStr(SA_STR((_caller)._func(__VA_ARGS__)) ", " #_res ", " #__VA_ARGS__, result, sRes, ##__VA_ARGS__)\
 		));\
 	}
 
@@ -159,8 +145,17 @@ namespace Sa::UTH
 	*/
 	#define SA_UTH_OP(_lhs, _op, _rhs)\
 	{\
-		Sa::UTH::Intl::instance.Process(__SA_UTH_CREATE_OPT(\
-			_lhs, _op, _rhs\
+		auto&& sLhs = _lhs;\
+		auto&& sRhs = _rhs;\
+		bool bRes = sLhs _op sRhs;\
+	\
+		Sa::UTH::Intl::instance.Process(Sa::UTH::Test(\
+			__SA_FILE_NAME,\
+			__LINE__,\
+			SA_STR(_lhs _op _rhs),\
+			"",\
+			bRes,\
+			ArgsStr(#_lhs ", " #_rhs, sLhs, sRhs)\
 		));\
 	}
 
@@ -176,9 +171,19 @@ namespace Sa::UTH
 	*/
 	#define SA_UTH_ROP(_res, _lhs, _op, _rhs)\
 	{\
-		Sa::UTH::Intl::instance.Process(__SA_UTH_CREATE_ROPT(\
-			_res,\
-			_lhs, _op, _rhs\
+		auto&& sLhs = _lhs;\
+		auto&& sRhs = _rhs;\
+		auto&& sRes = _res;\
+		auto result = sLhs _op sRhs;\
+		bool bRes = result == sRes;\
+	\
+		Sa::UTH::Intl::instance.Process(Sa::UTH::Test(\
+			__SA_FILE_NAME,\
+			__LINE__,\
+			SA_STR(_lhs _op _rhs),\
+			#_res,\
+			bRes,\
+			ArgsStr(SA_STR(_lhs _op _rhs) ", " #_res ", " #_lhs ", " #_rhs, result, sRes, sLhs, sRhs)\
 		));\
 	}
 }
