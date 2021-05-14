@@ -30,8 +30,9 @@ namespace Sa
 	*
 	*	Contains log infos.
 	*/
-	struct Log
+	class Log
 	{
+	public:
 		/// File name.
 		std::wstring file;
 
