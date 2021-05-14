@@ -29,7 +29,7 @@
 
 
 /// Sapphire Engine enable Logging preprocessor.
-#define SA_LOGGING SA_DEBUG || 1
+#define SA_LOGGING SA_DEBUG || 1 // TODO: Remove Later.
 
 
 /** \} */
