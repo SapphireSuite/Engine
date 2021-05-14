@@ -27,11 +27,11 @@ namespace SizeOf_UT
 
 	void Tab()
 	{
-		//const uint32 utab[]{ 4u, 132u, 553u, 16u };
-		//const uint64 uTabSize = sizeof(utab) / sizeof(uint32);
-		//SA_UTH_EQ(SizeOf(utab), uTabSize);
-		//SA_UTH_EQ(OctSizeOf(utab), sizeof(utab));
-		//SA_UTH_EQ(BitSizeOf(utab), 32_ui64 * uTabSize);
+		const uint32 utab[]{ 4u, 132u, 553u, 16u };
+		const uint64 uTabSize = sizeof(utab) / sizeof(uint32);
+		SA_UTH_EQ(SizeOf(utab), uTabSize);
+		SA_UTH_EQ(OctSizeOf(utab), (uint64)sizeof(utab));
+		SA_UTH_EQ(BitSizeOf(utab), 32_ui64 * uTabSize);
 	}
 
 	void Vector()
