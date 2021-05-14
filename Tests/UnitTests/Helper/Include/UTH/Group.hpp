@@ -31,7 +31,7 @@ namespace Sa::UTH
 		bool localExit = EXIT_SUCCESS;
 
 		/// Counter of test run in this group.
-		Counter count;
+		Counter count{};
 
 		/**
 		*	\brief Update group from predicate

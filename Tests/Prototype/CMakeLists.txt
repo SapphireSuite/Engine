@@ -18,7 +18,7 @@ add_executable(SA-Engine_Prototype "main.cpp")
 # === Dependencies ===
 
 # Add library dependencies.
-target_link_libraries(SA-Engine_Prototype PRIVATE SA-UnitTestHelper)
+target_link_libraries(SA-Engine_Prototype PRIVATE SA-Engine)
 
 
 
