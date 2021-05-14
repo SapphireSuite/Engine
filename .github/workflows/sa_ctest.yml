@@ -44,7 +44,7 @@ jobs:
           - GNU
           - Clang
 
-        compiler_v: [9, 10]
+        compiler_v: [8, 9, 10]
 
         gen:
           - Ninja
