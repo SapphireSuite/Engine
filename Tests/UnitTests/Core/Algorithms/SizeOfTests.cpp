@@ -30,16 +30,16 @@ namespace SizeOf_UT
 		const uint32 utab[]{ 4u, 132u, 553u, 16u };
 		const uint64 uTabSize = sizeof(utab) / sizeof(uint32);
 		SA_UTH_EQ(SizeOf(utab), uTabSize);
-		SA_UTH_EQ(OctSizeOf(utab), sizeof(utab));
+		SA_UTH_EQ(OctSizeOf(utab), (uint64)sizeof(utab));
 		SA_UTH_EQ(BitSizeOf(utab), 32_ui64 * uTabSize);
 	}
 
 	void Vector()
 	{
 		const std::vector<float> v = { 1.0f, 0.32f, 78.2f, 1.24f, 462.2f };
-		SA_UTH_EQ(SizeOf(v), v.size());
-		SA_UTH_EQ(OctSizeOf(v), v.size() * sizeof(float));
-		SA_UTH_EQ(BitSizeOf(v), v.size() * 32_ui64);
+		SA_UTH_EQ(SizeOf(v), (uint64)v.size());
+		SA_UTH_EQ(OctSizeOf(v), (uint64)v.size() * sizeof(float));
+		SA_UTH_EQ(BitSizeOf(v), (uint64)v.size() * 32_ui64);
 	}
 
 	void Args()
