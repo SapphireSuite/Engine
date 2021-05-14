@@ -27,6 +27,7 @@ namespace Sa
 	/// Log file stream type.
 	class FileLogStream : public LogStream
 	{
+	protected:
 		/// Handled file stream.
 		std::wofstream mHandle;
 
@@ -46,7 +47,7 @@ namespace Sa
 
 		SA_ENGINE_API ~FileLogStream() noexcept;
 
-		SA_ENGINE_API LogStream& Output(const Sa::Log& _log) override final;
+		SA_ENGINE_API LogStream& Output(const Sa::Log& _log) override;
 	};
 
 #endif
