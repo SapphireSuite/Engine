@@ -14,12 +14,6 @@ namespace Sa
 
 
 	template <typename EnumT, typename BitsT>
-	constexpr bool Flags<EnumT, BitsT>::Equals(EnumT _enum) const noexcept
-	{
-		return *this == static_cast<BitsT>(_enum);
-	}
-
-	template <typename EnumT, typename BitsT>
 	constexpr bool Flags<EnumT, BitsT>::Equals(BitsT _bits) const noexcept
 	{
 		return mBits == _bits;
@@ -120,7 +114,7 @@ namespace Sa
 	template <typename EnumT, typename BitsT>
 	constexpr bool Flags<EnumT, BitsT>::operator==(EnumT _rhs) const noexcept
 	{
-		return Equals(_rhs);
+		return *this == static_cast<BitsT>(_rhs);
 	}
 
 	template <typename EnumT, typename BitsT>
@@ -132,7 +126,7 @@ namespace Sa
 	template <typename EnumT, typename BitsT>
 	constexpr bool Flags<EnumT, BitsT>::operator!=(EnumT _rhs) const noexcept
 	{
-		return !Equals(_rhs);
+		return *this != static_cast<BitsT>(_rhs);
 	}
 
 	template <typename EnumT, typename BitsT>

@@ -154,6 +154,8 @@ namespace Sa
 	/**
 	*	\brief \e Get size of packed _args.
 	* 
+	*	Helper for sizeof variadic macro parameters.
+	* 
 	*	\tparam Args		Argument types.
 	* 
 	*	\param[in] _args	Argument values.
@@ -163,7 +165,7 @@ namespace Sa
 	template <typename... Args>
 	constexpr uint64 SizeOfArgs(const Args&... _args)
 	{
-		return sizeof...(Args);
+		return sizeof...(_args);
 	}
 }
 

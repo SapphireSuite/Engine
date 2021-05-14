@@ -2,7 +2,7 @@
 
 #include <cstring>
 
-#include <UnitTestHelper.hpp>
+#include <UnitTestHelper>
 
 #include <SA/Core/Time/DateTime.hpp>
 using namespace Sa;
@@ -69,7 +69,7 @@ namespace Sa::DateTime_UT
 		}
 	}
 
-	void Debug()
+	void String()
 	{
 #if SA_LOGGING
 
@@ -86,5 +86,5 @@ void DateTimeTests()
 
 	SA_UTH_GP(Constructors());
 	SA_UTH_GP(Names());
-	SA_UTH_GP(Debug());
+	SA_UTH_GP(String());
 }

@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <UnitTestHelper.hpp>
+#include <UnitTestHelper>
 
 #include <SA/Core/Types/Variadics/Event.hpp>
 using namespace Sa;

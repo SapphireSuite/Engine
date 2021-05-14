@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <UnitTestHelper.hpp>
+#include <UnitTestHelper>
 
 #include <SA/Core/Types/Variadics/Flags.hpp>
 using namespace Sa;
@@ -121,7 +121,7 @@ namespace Sa::Flags_UT
 		const Flags<TestFlags> f2 = TestFlags::F2 | TestFlags::F8;
 		const Flags<TestFlags> f3 = f2;
 
-		SA_UTH_MF(f1, Equals, TestFlags::F5);
+		//SA_UTH_MF(f1, Equals, TestFlags::F5);
 		SA_UTH_OP(f1, ==, TestFlags::F5);
 
 		SA_UTH_MF(f2, Equals, (TestFlags::F2 | TestFlags::F8));
@@ -131,7 +131,7 @@ namespace Sa::Flags_UT
 		SA_UTH_OP(f2, ==, f3);
 
 
-		SA_UTH_RMF(false, f1, Equals, TestFlags::F4);
+		//SA_UTH_RMF(false, f1, Equals, TestFlags::F4);
 		SA_UTH_OP(f1, !=, TestFlags::F4);
 
 		SA_UTH_RMF(false, f2, Equals, (TestFlags::F6 | TestFlags::F8));

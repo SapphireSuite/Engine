@@ -1,6 +1,8 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <UnitTestHelper.hpp>
+#include <iostream>
+
+#include <UnitTestHelper>
 
 #include <SA/Collections/Debug>
 using namespace Sa;

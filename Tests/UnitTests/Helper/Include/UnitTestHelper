@@ -1,0 +1,10 @@
+// Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
+
+#pragma once
+
+#ifndef SAPPHIRE_UTH_GUARD
+#define SAPPHIRE_UTH_GUARD
+
+#include <UTH/UnitTestHelper.hpp>
+
+#endif // GUARD
