@@ -102,5 +102,11 @@ namespace Sa
 *	\ingroup Maths
 */
 
+/**
+*	\defgroup Maths_Misc Misc
+*	Sapphire Engine Maths Misc.
+*	\ingroup Maths
+*/
+
 
 #endif // GUARD

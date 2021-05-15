@@ -42,7 +42,9 @@ namespace Sa
 				return (T(0) < _in) - (_in < T(0));
 			else
 			{
+				(void)_in;
 				SA_LOG(L"Get Sign of an unsigned type [" << typeid(T).name() << L"]", Warning, Maths);
+				
 				return T(1);
 			}
 		}

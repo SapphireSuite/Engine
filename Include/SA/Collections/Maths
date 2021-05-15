@@ -1,0 +1,16 @@
+// Copyright (c) 2021 Sapphire Development Team. All Rights Reserved.
+
+#pragma once
+
+#ifndef SAPPHIRE_COLLECTIONS_MATHS_GUARD
+#define SAPPHIRE_COLLECTIONS_MATHS_GUARD
+
+// Algorithms.
+#include <SA/Maths/Algorithms/Sign.hpp>
+
+// Misc.
+#include <SA/Maths/Misc/Constants.hpp>
+#include <SA/Maths/Misc/Degree.hpp>
+#include <SA/Maths/Misc/Radian.hpp>
+
+#endif // GUARD

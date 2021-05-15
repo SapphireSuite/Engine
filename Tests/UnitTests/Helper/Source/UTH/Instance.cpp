@@ -166,7 +166,7 @@ namespace Sa::UTH
 			Log log = __SA_UTH_MAKE_LOG();
 
 			log.AddToken(Step::GroupEnd);
-			log.AddString(L"[SA-UTH] Group:\t" + Sa::ToWString(group.name) + L"run: ");
+			log.AddString(L"[SA-UTH] Group:\t" + Sa::ToWString(group.name) + L" run: ");
 			group.count.AppendLog(log);
 
 			log.AddToken(Step::GroupEnd);
