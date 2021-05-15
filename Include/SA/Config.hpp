@@ -83,5 +83,11 @@ namespace Sa
 *	\ingroup Core
 */
 
+/**
+*	\defgroup Core_Misc Misc
+*	Sapphire Engine Core Misc.
+*	\ingroup Core
+*/
+
 
 #endif // GUARD
