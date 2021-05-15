@@ -3,9 +3,11 @@
 #include <UnitTestHelper>
 
 // Test correct include path.
-//#include <SA/Collections/Algorithms>
+#include <SA/Collections/Maths>
 
 void SignTests();
+
+void CosSinTanTests();
 
 int main()
 {
@@ -13,6 +15,7 @@ int main()
 
 
 	SA_UTH_GP(SignTests());
+	SA_UTH_GP(CosSinTanTests());
 
 
 	SA_UTH_EXIT();
