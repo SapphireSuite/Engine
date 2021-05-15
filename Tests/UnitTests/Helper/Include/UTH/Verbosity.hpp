@@ -40,10 +40,17 @@ namespace Sa::UTH
 
 
 		/// Light verbosity value.
-		Light = ParamsName | ParamsFailure | GroupExit,
+		Light = ParamsName | ParamsFailure | GroupCount,
+
+#if SA_CI
+
+		Default = Light,
+#else
 
 		/// Default verbosity value.
 		Default = Success | ParamsName | ParamsFailure | GroupStart | GroupExit | GroupCount,
+
+#endif
 
 		/// Maximum verbosity level (all flags set).
 		Max = 0xFF

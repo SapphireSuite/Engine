@@ -40,9 +40,6 @@ namespace Sa::UTH
 		*/
 		void Update(bool _pred);
 
-		/// Global Group counter.
-		SA_UTH_API static Counter globalCount;
-
 		/**
 		*	\brief Spreads values to parent group.
 		*

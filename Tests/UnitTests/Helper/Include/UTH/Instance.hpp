@@ -23,6 +23,9 @@ namespace Sa::UTH
 		/// Total number of test run.
 		Counter mCounter;
 
+		/// Total number of group run.
+		Counter mGroupCounter;
+
 		std::stack<Group> mGroups;
 
 		/// Update groups from predicate.

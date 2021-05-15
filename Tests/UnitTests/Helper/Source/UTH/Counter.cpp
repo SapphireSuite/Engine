@@ -29,7 +29,7 @@ namespace Sa::UTH
 
 	bool Counter::IsEmpty() const
 	{
-		return success != 0 && failure != 0;
+		return success == 0 && failure == 0;
 	}
 
 	void Counter::AppendLog(Log& _log) const

@@ -4,8 +4,6 @@
 
 namespace Sa::UTH
 {
-	Counter Group::globalCount;
-
 	void Group::Update(bool _pred)
 	{
 		count.Increment(_pred);

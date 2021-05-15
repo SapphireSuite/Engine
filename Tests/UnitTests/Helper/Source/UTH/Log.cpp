@@ -4,6 +4,8 @@
 
 #include <UTH/Instance.hpp>
 
+//#include <UTH/Verbosity.hpp>
+
 namespace Sa::UTH
 {
 	Log::Log(
@@ -13,13 +15,18 @@ namespace Sa::UTH
 	) noexcept :
 		Log_Token(_file, _line, _function, LogLevel::Normal, L"UTH")
 	{
-		mTabNum = Intl::instance.GetGroupNum();
-		msg.append(mTabNum, L'\t');
+		//if ((verbosity & Verbosity::GroupStart) | (verbosity & Verbosity::GroupExit))
+		{
+			mTabNum = Intl::instance.GetGroupNum();
+			msg.append(mTabNum, L'\t');
+		}
 	}
 
 	void Log::EndOfLine()
 	{
 		msg += L'\n';
-		msg.append(mTabNum, L'\t');
+
+		//if ((verbosity & Verbosity::GroupStart) | (verbosity & Verbosity::GroupExit))
+			msg.append(mTabNum, L'\t');
 	}
 }

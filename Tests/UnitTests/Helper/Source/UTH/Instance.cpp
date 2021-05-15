@@ -49,12 +49,12 @@ namespace Sa::UTH
 
 
 		// Output Group counter.
-		if ((verbosity & Verbosity::GroupCount) && !Group::globalCount.IsEmpty())
+		if ((verbosity & Verbosity::GroupCount) && !mGroupCounter.IsEmpty())
 		{
 			log.AddToken(Step::Exit);
 			log.AddString(L" in ");
 
-			Group::globalCount.AppendLog(log);
+			mGroupCounter.AppendLog(log);
 
 			log.AddToken(Step::GroupEnd);
 			log.AddString(L" groups");
@@ -107,7 +107,7 @@ namespace Sa::UTH
 		
 		UpdateGroups(_test.bResult);
 
-		if (_test.bResult || (verbosity & Verbosity::Success)) // Should log test.
+		if (!_test.bResult || (verbosity & Verbosity::Success)) // Should log test.
 			logger.Log(_test.MakeLog());
 
 		if(!_test.bResult)
@@ -122,7 +122,7 @@ namespace Sa::UTH
 
 	uint32 Instance::GetGroupNum() const
 	{
-		return mGroups.size();
+		return static_cast<uint32>(mGroups.size());
 	}
 
 	void Instance::UpdateGroups(bool _pred)
@@ -161,7 +161,7 @@ namespace Sa::UTH
 		if (!mGroups.empty())
 			group.Spread(mGroups.top());
 
-		if ((verbosity & Verbosity::GroupExit))
+		if ((verbosity & Verbosity::GroupExit) || group.localExit == EXIT_FAILURE)
 		{
 			Log log = __SA_UTH_MAKE_LOG();
 
@@ -186,6 +186,6 @@ namespace Sa::UTH
 			logger.Log(log);
 		}
 
-		mCounter.Increment(group.localExit == EXIT_SUCCESS);
+		mGroupCounter.Increment(group.localExit == EXIT_SUCCESS);
 	}
 }
