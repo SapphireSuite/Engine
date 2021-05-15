@@ -4,13 +4,17 @@
 
 #include <Core/Debug/Log/Streams/FileLogStream.hpp>
 
+// ToDo: Wait for github action fix std::filesystem linkage.
+#include <Core/Support/Compilers.hpp>
+#define __SA_NO_FILESTREAM (SA_CI && SA_CLANG && __clang_major__ == 9)
+
 namespace Sa
 {
 #if SA_LOGGING
 
 	FileLogStream::FileLogStream(const std::string& _fileName) noexcept
 	{
-#if !SA_CI
+#if !__SA_NO_FILESTREAM
 
 		CreateLogFile(_fileName);
 
@@ -19,7 +23,7 @@ namespace Sa
 
 	FileLogStream::~FileLogStream() noexcept
 	{
-#if !SA_CI
+#if !__SA_NO_FILESTREAM
 
 		mMutex.lock();
 
@@ -52,7 +56,7 @@ namespace Sa
 
 	LogStream& FileLogStream::Output(const Sa::Log& _log)
 	{
-#if !SA_CI
+#if !__SA_NO_FILESTREAM
 
 		mMutex.lock();
 

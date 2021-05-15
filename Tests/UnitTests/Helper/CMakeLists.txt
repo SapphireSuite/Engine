@@ -25,6 +25,9 @@ target_link_libraries(SA-UnitTestHelper PUBLIC SA-Engine)
 
 # === Option ===
 
+# Enable log in release.
+target_compile_definitions(SA-Engine PUBLIC __SA_LOG_RELEASE)
+
 # Test exit on first failure.
 option(SA_UTH_EXIT_ON_FAILURE "Exit on first failure" OFF)
 

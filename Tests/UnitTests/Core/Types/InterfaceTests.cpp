@@ -28,7 +28,7 @@ namespace Sa::Interface_UT
 		a1.As<B>();
 		ca2.As<B>();
 
-#if SA_LOGGING
+#if SA_DEBUG
 
 		bool bException = false;
 		
@@ -56,7 +56,7 @@ namespace Sa::Interface_UT
 		a1->AsPtr<B>();
 		ca2->AsPtr<B>();
 
-#if SA_LOGGING
+#if SA_DEBUG
 
 		bool bException = false;
 

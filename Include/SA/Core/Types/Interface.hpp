@@ -23,7 +23,7 @@ namespace Sa
 	class Interface
 	{
 	public:
-#if SA_DEBUG || 1 // TODO: Remove Later.
+#if SA_DEBUG
 
 		/**
 		*	\brief \b Virtual destructor (<b>DEBUG ONLY</b>).

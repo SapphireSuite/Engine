@@ -129,7 +129,16 @@ namespace Sa::Debug
 	#define SA_WARN(...) __SA_SELECT_LOG_MACRO(__VA_ARGS__, __SA_WARN3(__VA_ARGS__), __SA_WARN2(__VA_ARGS__))
 	//#define SA_WARN(...) __SA_SELECT_LOG_MACRO(__VA_ARGS__, __SA_WARN3, __SA_WARN2)(__VA_ARGS__)
 
-	#define SA_ASSERT(_type, _chan, ...) { Sa::Debug::logger.Assert(__SA_CREATE_EXCEPTION(_type, _chan, ##__VA_ARGS__)); }
+
+	#if SA_DEBUG // Assertion requieres active Debug.
+
+		#define SA_ASSERT(_type, _chan, ...) { Sa::Debug::logger.Assert(__SA_CREATE_EXCEPTION(_type, _chan, ##__VA_ARGS__)); }
+
+	#else
+
+		#define SA_ASSERT(...) {}
+
+	#endif
 
 #else
 

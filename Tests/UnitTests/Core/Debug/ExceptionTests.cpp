@@ -16,7 +16,7 @@ namespace Sa::Exception_UT
 
 		SA_ASSERT(Default, AsChan, bTrue, L"Default success test!");
 
-#if SA_LOGGING
+#if SA_DEBUG
 
 		try
 		{
@@ -28,6 +28,9 @@ namespace Sa::Exception_UT
 		}
 
 #else
+
+		(void)bTrue;
+		(void)bFalse;
 
 		SA_ASSERT(Default, AsChan, bFalse, L"Default failure test!");
 
@@ -41,7 +44,7 @@ namespace Sa::Exception_UT
 
 		SA_ASSERT(NonZero, AsChan, nonZeroI, L"NonZero success test!");
 
-#if SA_LOGGING
+#if SA_DEBUG
 
 		try
 		{
@@ -53,6 +56,9 @@ namespace Sa::Exception_UT
 		}
 
 #else
+
+		(void)zeroI;
+		(void)nonZeroI;
 
 		SA_ASSERT(NonZero, AsChan, zeroI, L"NonZero failure test!");
 
@@ -68,7 +74,7 @@ namespace Sa::Exception_UT
 
 		testPtr = nullptr;
 
-#if SA_LOGGING
+#if SA_DEBUG
 
 		try
 		{
@@ -95,7 +101,7 @@ namespace Sa::Exception_UT
 
 		SA_ASSERT(OutOfRange, AsChan, goodI, min, max, L"OutOfRange success test");
 
-#if SA_LOGGING
+#if SA_DEBUG
 
 		try
 		{
@@ -111,6 +117,11 @@ namespace Sa::Exception_UT
 		}
 
 #else
+
+		(void)min;
+		(void)max;
+		(void)goodI;
+		(void)wrongI;
 
 		SA_ASSERT(OutOfRange, AsChan, wrongI, min, max, L"OutOfRange failure test");
 

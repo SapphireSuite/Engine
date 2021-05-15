@@ -27,9 +27,16 @@
 
 #endif
 
+#if !defined(__SA_LOG_RELEASE) || defined(DOXYGEN)
+
+	/// Enable log in release.
+	#define __SA_LOG_RELEASE 0
+
+#endif
+
 
 /// Sapphire Engine enable Logging preprocessor.
-#define SA_LOGGING SA_DEBUG || 1 // TODO: Remove Later.
+#define SA_LOGGING SA_DEBUG || __SA_LOG_RELEASE
 
 
 /** \} */
