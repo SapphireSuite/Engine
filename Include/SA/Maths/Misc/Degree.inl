@@ -65,7 +65,7 @@ namespace Sa
 	template <typename T>
 	Deg<T>& Deg<T>::operator/=(T _scale)
 	{
-		SA_ASSERT(NonZero, Maths, _scale, L"Division by 0");
+		SA_WARN(Sa::Equals0(_scale), Maths, L"Unscale Deg<" << typeid(T).name() << "> by 0 (division by 0).");
 
 		mHandle /= _scale;
 

@@ -6,10 +6,10 @@
 #define SAPPHIRE_COLLECTIONS_MATHS_GUARD
 
 // Algorithms.
-#include <SA/Maths/Algorithms/Sign.hpp>
 #include <SA/Maths/Algorithms/Cos.hpp>
 #include <SA/Maths/Algorithms/Sin.hpp>
 #include <SA/Maths/Algorithms/Tan.hpp>
+#include <SA/Maths/Algorithms/Sign.hpp>
 
 // Misc.
 #include <SA/Maths/Misc/Constants.hpp>
