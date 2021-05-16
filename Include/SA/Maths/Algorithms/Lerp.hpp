@@ -80,7 +80,7 @@ namespace Sa
 		*	\return interpolation between _start and _end. return _start when _alpha == 0.0f and _end when _alpha == 1.0f.
 		*/
 		template <typename T>
-		T SLerpUnclamped(const T& _start, T _end, float _alpha) noexcept
+		T SLerpUnclamped(const T& _start, const T& _end, float _alpha) noexcept
 		{
 			/**
 			*	Reference: https://en.wikipedia.org/wiki/Slerp
@@ -89,11 +89,12 @@ namespace Sa
 
 			using TScalar = typename T::Type;
 			TScalar dot = T::Dot(_start, _end);
+			TScalar endSign = 1.0f;
 
 			// Ensure shortest path between _start and _end.
 			if (dot < 0.0f)
 			{
-				_end = -_end;
+				endSign = -1.0f;
 				dot = -dot;
 			}
 
@@ -101,7 +102,7 @@ namespace Sa
 			if (Equals1(dot))
 			{
 				// Basic linear interpolation.
-				return LerpUnclamped(_start, _end, _alpha);
+				return LerpUnclamped(_start, _end * endSign, _alpha);
 			}
 
 			// Current angle.
@@ -118,7 +119,7 @@ namespace Sa
 
 			float s0 = Cos(angleStep) - dot * sinRatio;
 
-			return s0 * _start + sinRatio * _end;
+			return s0 * _start + sinRatio * _end * endSign;
 		}
 
 		/**

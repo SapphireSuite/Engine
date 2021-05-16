@@ -5,6 +5,8 @@
 #ifndef SAPPHIRE_MATHS_SQRT_GUARD
 #define SAPPHIRE_MATHS_SQRT_GUARD
 
+#include <cmath>
+
 #include <SA/Collections/Debug>
 
 /**
