@@ -74,11 +74,11 @@ namespace Sa::Radian_UT
 		const Radf r1 = 10_rad;
 		const Radf r2 = 23_rad;
 
-		SA_UTH_EQ(-r1, -10.0f);
-		SA_UTH_EQ(r1 + r2, 33.0f);
-		SA_UTH_EQ(r2 - r1, 13.0f);
-		SA_UTH_EQ(r1 * 3, 30.0f);
-		SA_UTH_EQ(r1 / 2, 5.0f);
+		SA_UTH_EQ(-r1, -10.0_rad);
+		SA_UTH_EQ(r1 + r2, 33.0_rad);
+		SA_UTH_EQ(r2 - r1, 13.0_rad);
+		SA_UTH_EQ(r1 * 3.0f, 30.0_rad);
+		SA_UTH_EQ(r1 / 2.0f, 5.0_rad);
 
 		Radf r3;
 		r3 += 11_rad;

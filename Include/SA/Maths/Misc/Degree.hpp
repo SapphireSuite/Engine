@@ -82,6 +82,50 @@ namespace Sa
 
 
 		/**
+		*	\brief \e Getter of the opposite signed degree.
+		*
+		*	\return new opposite signed degree.
+		*/
+		constexpr Deg operator-() const noexcept;
+
+		/**
+		*	\brief \b Add degrees to handle.
+		*
+		*	\param[in] _rhs		degrees to add.
+		*
+		*	\return new degree result.
+		*/
+		constexpr Deg operator+(Deg _rhs) const noexcept;
+
+		/**
+		*	\brief \b Substract degrees to handle.
+		*
+		*	\param[in] _rhs		degrees to substract.
+		*
+		*	\return new degree result.
+		*/
+		constexpr Deg operator-(Deg _rhs) const noexcept;
+
+		/**
+		*	\brief \b Scale angle.
+		*
+		*	\param[in] _scale	scale to apply.
+		*
+		*	\return new degree result.
+		*/
+		constexpr Deg operator*(T _scale) const noexcept;
+
+		/**
+		*	\brief \b Unscale angle.
+		*
+		*	\param[in] _scale	un-scale to apply.
+		*
+		*	\return new degree result.
+		*/
+		Deg operator/(T _scale) const;
+
+
+		/**
 		*	\brief \b Add degrees to handle.
 		*
 		*	\param[in] _rhs		degrees to add.

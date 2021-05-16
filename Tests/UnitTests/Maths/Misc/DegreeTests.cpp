@@ -74,11 +74,11 @@ namespace Sa::Degree_UT
 		const Degf d1 = 10_deg;
 		const Degf d2 = 23_deg;
 
-		SA_UTH_EQ(-d1, -10.0f);
-		SA_UTH_EQ(d1 + d2, 33.0f);
-		SA_UTH_EQ(d2 - d1, 13.0f);
-		SA_UTH_EQ(d1 * 3, 30.0f);
-		SA_UTH_EQ(d1 / 2, 5.0f);
+		SA_UTH_EQ(-d1, -10.0_deg);
+		SA_UTH_EQ(d1 + d2, 33.0_deg);
+		SA_UTH_EQ(d2 - d1, 13.0_deg);
+		SA_UTH_EQ(d1 * 3.0f, 30.0_deg);
+		SA_UTH_EQ(d1 / 2.0f, 5.0_deg);
 
 		Degf d3;
 		d3 += 11_deg;

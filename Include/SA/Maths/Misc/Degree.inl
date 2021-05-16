@@ -39,6 +39,39 @@ namespace Sa
 
 
 	template <typename T>
+	constexpr Deg<T> Deg<T>::operator-() const noexcept
+	{
+		return -mHandle;
+	}
+
+	template <typename T>
+	constexpr Deg<T> Deg<T>::operator+(Deg _rhs) const noexcept
+	{
+		return mHandle + _rhs.mHandle;
+	}
+
+	template <typename T>
+	constexpr Deg<T> Deg<T>::operator-(Deg _rhs) const noexcept
+	{
+		return mHandle - _rhs.mHandle;
+	}
+
+	template <typename T>
+	constexpr Deg<T> Deg<T>::operator*(T _scale) const noexcept
+	{
+		return Deg(mHandle * _scale);
+	}
+
+	template <typename T>
+	Deg<T> Deg<T>::operator/(T _scale) const
+	{
+		SA_WARN(!Sa::Equals0(_scale), Maths, L"Unscale Degree by 0 (division by 0).");
+
+		return Deg(mHandle / _scale);
+	}
+
+
+	template <typename T>
 	Deg<T>& Deg<T>::operator+=(Deg _rhs) noexcept
 	{
 		mHandle += _rhs.mHandle;

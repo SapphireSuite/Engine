@@ -40,6 +40,39 @@ namespace Sa
 
 
 	template <typename T>
+	constexpr Rad<T> Rad<T>::operator-() const noexcept
+	{
+		return -mHandle;
+	}
+
+	template <typename T>
+	constexpr Rad<T> Rad<T>::operator+(Rad _rhs) const noexcept
+	{
+		return mHandle + _rhs.mHandle;
+	}
+
+	template <typename T>
+	constexpr Rad<T> Rad<T>::operator-(Rad _rhs) const noexcept
+	{
+		return mHandle - _rhs.mHandle;
+	}
+
+	template <typename T>
+	constexpr Rad<T> Rad<T>::operator*(T _scale) const noexcept
+	{
+		return Rad(mHandle * _scale);
+	}
+
+	template <typename T>
+	Rad<T> Rad<T>::operator/(T _scale) const
+	{
+		SA_WARN(!Sa::Equals0(_scale), Maths, L"Unscale Radian by 0 (division by 0).");
+
+		return Rad(mHandle / _scale);
+	}
+
+
+	template <typename T>
 	Rad<T>& Rad<T>::operator+=(Rad _rhs) noexcept
 	{
 		mHandle += _rhs.mHandle;

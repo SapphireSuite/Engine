@@ -83,6 +83,50 @@ namespace Sa
 
 
 		/**
+		*	\brief \e Getter of the opposite signed radian.
+		*
+		*	\return new opposite signed radian.
+		*/
+		constexpr Rad operator-() const noexcept;
+
+		/**
+		*	\brief \b Add Radian to handle.
+		*
+		*	\param[in] _rhs		radian to add.
+		*
+		*	\return new Radian result.
+		*/
+		constexpr Rad operator+(Rad _rhs) const noexcept;
+
+		/**
+		*	\brief \b Substract Radian to handle.
+		*
+		*	\param[in] _rhs		radian to substract.
+		*
+		*	\return new Radian result.
+		*/
+		constexpr Rad operator-(Rad _rhs) const noexcept;
+
+		/**
+		*	\brief \b Scale angle.
+		*
+		*	\param[in] _scale	scale to apply.
+		*
+		*	\return new radian result.
+		*/
+		constexpr Rad operator*(T _scale) const noexcept;
+
+		/**
+		*	\brief \b Unscale angle.
+		*
+		*	\param[in] _scale	un-scale to apply.
+		*
+		*	\return new radian result.
+		*/
+		Rad operator/(T _scale) const;
+
+
+		/**
 		*	\brief \b Add Radian to handle.
 		*
 		*	\param[in] _rhs		radian to add.
