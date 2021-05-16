@@ -5,6 +5,8 @@
 #ifndef SAPPHIRE_CORE_INTRINSICS_GUARD
 #define SAPPHIRE_CORE_INTRINSICS_GUARD
 
+#include <SA/Core/Debug/Config.hpp>
+
 #include <SA/Core/Support/ModuleAPI.hpp>
 #include <SA/Core/Support/Compilers.hpp>
 

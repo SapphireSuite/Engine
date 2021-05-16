@@ -61,6 +61,11 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang" AND CMAKE_CXX_COMPILER_VERSION VER
 	#target_link_libraries(SA-Engine PUBLIC c++fs)
 endif()
 
+# SIMD support
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+	target_compile_options(SA-Engine PUBLIC -mavx -mavx2)
+endif()
+
 
 
 # === Options ===
