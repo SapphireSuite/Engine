@@ -103,6 +103,12 @@ namespace Sa
 */
 
 /**
+*	\defgroup Maths_Space Space
+*	Sapphire Engine Maths Space.
+*	\ingroup Maths
+*/
+
+/**
 *	\defgroup Maths_Misc Misc
 *	Sapphire Engine Maths Misc.
 *	\ingroup Maths

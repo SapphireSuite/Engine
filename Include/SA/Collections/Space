@@ -1,0 +1,10 @@
+// Copyright (c) 2021 Sapphire Development Team. All Rights Reserved.
+
+#pragma once
+
+#ifndef SAPPHIRE_COLLECTIONS_SPACE_GUARD
+#define SAPPHIRE_COLLECTIONS_SPACE_GUARD
+
+#include <SA/Maths/Space/Vector2.hpp>
+
+#endif // GUARD

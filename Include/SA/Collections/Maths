@@ -5,6 +5,8 @@
 #ifndef SAPPHIRE_COLLECTIONS_MATHS_GUARD
 #define SAPPHIRE_COLLECTIONS_MATHS_GUARD
 
+#include <SA/Collections/Space>
+
 // Algorithms.
 #include <SA/Maths/Algorithms/Cos.hpp>
 #include <SA/Maths/Algorithms/Sin.hpp>
