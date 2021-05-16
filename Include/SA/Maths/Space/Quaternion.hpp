@@ -58,13 +58,17 @@ namespace Sa
 		/// Quaternion's Z component (k axis).
 		T z = T();
 
+//{ Constants
 
-		/// Zero quaternion constant {0, 0, 0, 0}
+		/// Zero quaternion constant { 0, 0, 0, 0 }
 		static const Quat Zero;
 
-		/// Identity quaternion constant {1, 0, 0, 0}
+		/// Identity quaternion constant { 1, 0, 0, 0 }
 		static const Quat Identity;
 
+//}
+
+//{ Constructors
 
 		/// \e Default constructor.
 		Quat() = default;
@@ -97,6 +101,9 @@ namespace Sa
 		template <typename TIn>
 		constexpr Quat(const Quat<TIn>& _other) noexcept;
 
+//}
+
+//{ Equals
 
 		/**
 		*	\brief Whether this quaternion is a zero quaternion.
@@ -122,6 +129,9 @@ namespace Sa
 		*/
 		constexpr bool Equals(const Quat& _other, T _threshold = std::numeric_limits<T>::epsilon()) const noexcept;
 
+//}
+
+//{ Length
 
 		/**
 		*	\brief \e Getter of the \b length of this quaternion.
@@ -136,39 +146,6 @@ namespace Sa
 		*	\return Squared Length of this quaternion.
 		*/
 		T SqrLength() const noexcept;
-
-
-		/**
-		*	\brief \e Getter of quaternion data
-		*
-		*	\return this quaternion as a T*.
-		*/
-		T* Data() noexcept;
-
-		/**
-		*	\brief <em> Const Getter </em> of quaternion data
-		*
-		*	\return this quaternion as a const T*.
-		*/
-		const T* Data() const noexcept;
-
-		/**
-		*	\brief \e Getter of quaternion's imaginary axis.
-		* 
-		*	Get the values of i, j and k axis (x, y, z).
-		*
-		*	\return Vec3<T> imaginary axis of this quaternion.
-		*/
-		Vec3<T>& ImgAxis() noexcept;
-
-		/**
-		*	\brief \e <em> Const Getter </em> of quaternion's imaginary axis.
-		*
-		*	Get the values of i, j and k axis (x, y, z).
-		* 
-		*	\return const Vec3<T> imaginary axis of this quaternion.
-		*/
-		const Vec3<T>& ImgAxis() const noexcept;
 
 
 		/**
@@ -192,6 +169,10 @@ namespace Sa
 		*/
 		bool IsNormalized() const noexcept;
 
+//}
+
+//{ Inverse
+
 		/**
 		*	\brief \b Inverse this quaternion.
 		*
@@ -206,6 +187,28 @@ namespace Sa
 		*/
 		Quat GetInversed() const noexcept;
 
+//}
+
+//{ Angle/Axis
+
+		/**
+		*	\brief \e Getter of quaternion's imaginary axis.
+		*
+		*	Get the values of i, j and k axis (x, y, z).
+		*
+		*	\return Vec3<T> imaginary axis of this quaternion.
+		*/
+		Vec3<T>& ImgAxis() noexcept;
+
+		/**
+		*	\brief \e <em> Const Getter </em> of quaternion's imaginary axis.
+		*
+		*	Get the values of i, j and k axis (x, y, z).
+		*
+		*	\return const Vec3<T> imaginary axis of this quaternion.
+		*/
+		const Vec3<T>& ImgAxis() const noexcept;
+
 		/**
 		*	\brief \e Getter of the angle handled by this quaternion.
 		*
@@ -219,6 +222,10 @@ namespace Sa
 		*	\return Axis of the quaternion.
 		*/
 		constexpr Vec3<T> GetAxis() const noexcept;
+
+//}
+
+//{ Rotate
 
 		/**
 		*	\brief \b Rotate _other quaternion by this quaternion.
@@ -289,6 +296,9 @@ namespace Sa
 		*/
 		constexpr Vec3<T> ForwardVector() const noexcept;
 
+//}
+
+//{ Euler
 
 		/**
 		*	\brief \e Convert this quaternion into euler angles in degrees.
@@ -314,6 +324,10 @@ namespace Sa
 		*/
 		static Quat FromEuler(const Vec3<Deg<T>>& _angles) noexcept;
 
+//}
+
+//{ Dot
+
 		/**
 		*	\brief \e Compute the <b> Dot product </b> between _lhs and _rhs.
 		*
@@ -323,6 +337,10 @@ namespace Sa
 		*	\return <b> Dot product </b> between _lhs and _rhs.
 		*/
 		static T Dot(const Quat& _lhs, const Quat& _rhs) noexcept;
+
+//}
+
+//{ Lerp
 
 		/**
 		*	\brief <b> Clamped Lerp </b> from _start to _end at _alpha.
@@ -384,6 +402,9 @@ namespace Sa
 		*/
 		static Quat SLerpUnclamped(const Quat& _start, const Quat& _end, float _alpha) noexcept;
 
+//}
+
+//{ Operators
 
 		/**
 		*	\brief \e Getter of the opposite signed quaternion.
@@ -564,6 +585,24 @@ namespace Sa
 		*/
 		constexpr bool operator!=(const Quat<T>& _rhs) const noexcept;
 
+//}
+
+//{ Accessors
+
+		/**
+		*	\brief \e Getter of quaternion data
+		*
+		*	\return this quaternion as a T*.
+		*/
+		T* Data() noexcept;
+
+		/**
+		*	\brief <em> Const Getter </em> of quaternion data
+		*
+		*	\return this quaternion as a const T*.
+		*/
+		const T* Data() const noexcept;
+
 
 		/**
 		*	\brief \e Access operator by index.
@@ -583,9 +622,17 @@ namespace Sa
 		*/
 		T operator[](uint32 _index) const;
 
+//}
 
 #if SA_LOGGING
 
+		/**
+		*	\brief ToString implementation
+		*
+		*	Convert this vector as a string.
+		*
+		*	\return this as a string.
+		*/
 		std::string ToString() const noexcept;
 
 #endif
@@ -642,6 +689,9 @@ namespace Sa
 	template <typename T>
 	constexpr Vec3<T> operator/(const Vec3<T>& _lhs, const Quat<T>& _rhs) noexcept;
 
+
+//{ Aliases
+
 	/// Alias for float Quat.
 	using Quatf = Quat<float>;
 
@@ -658,6 +708,8 @@ namespace Sa
 
 	/// Alias for double Quaternion.
 	using Quaterniond = Quaternion<double>;
+
+//}
 
 
 	/// \cond Internal

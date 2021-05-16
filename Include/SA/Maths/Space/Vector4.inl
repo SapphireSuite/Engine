@@ -2,6 +2,8 @@
 
 namespace Sa
 {
+//{ Constructors
+
 	template <typename T>
 	constexpr Vec4<T>::Vec4(T _x, T _y, T _z, T _w) noexcept :
 		x{ _x },
@@ -60,6 +62,9 @@ namespace Sa
 	{
 	}
 
+//}
+
+//{ Equals
 
 	template <typename T>
 	constexpr bool Vec4<T>::IsZero() const noexcept
@@ -76,19 +81,9 @@ namespace Sa
 			Sa::Equals(w, _other.w, _epsilon);
 	}
 
+//}
 
-	template <typename T>
-	T* Vec4<T>::Data() noexcept
-	{
-		return &x;
-	}
-
-	template <typename T>
-	const T* Vec4<T>::Data() const noexcept
-	{
-		return &x;
-	}
-
+//{ Operators
 
 	template <typename T>
 	constexpr bool Vec4<T>::operator==(const Vec4& _rhs) const noexcept
@@ -100,6 +95,22 @@ namespace Sa
 	constexpr bool Vec4<T>::operator!=(const Vec4& _rhs) const noexcept
 	{
 		return !(*this == _rhs);
+	}
+
+//}
+
+//{ Accessors
+
+	template <typename T>
+	T* Vec4<T>::Data() noexcept
+	{
+		return &x;
+	}
+
+	template <typename T>
+	const T* Vec4<T>::Data() const noexcept
+	{
+		return &x;
 	}
 
 
@@ -119,6 +130,7 @@ namespace Sa
 		return Data()[_index];
 	}
 
+//}
 
 #if SA_LOGGING
 

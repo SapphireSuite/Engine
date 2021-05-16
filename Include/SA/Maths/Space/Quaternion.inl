@@ -2,12 +2,17 @@
 
 namespace Sa
 {
+//{ Constants
+
 	template <typename T>
 	const Quat<T> Quat<T>::Zero{ T(0), T(0), T(0), T(0) };
 
 	template <typename T>
 	const Quat<T> Quat<T>::Identity{ T(1), T(0), T(0), T(0) };
 
+//}
+
+//{ Constructors
 
 	template <typename T>
 	constexpr Quat<T>::Quat(T _w, T _x, T _y, T _z) noexcept :
@@ -42,6 +47,10 @@ namespace Sa
 	{
 	}
 
+//}
+
+//{ Equals
+
 	template <typename T>
 	constexpr bool Quat<T>::IsZero() const noexcept
 	{
@@ -63,6 +72,10 @@ namespace Sa
 			Sa::Equals(z, _other.z, _threshold);
 	}
 
+//}
+
+//{ Length
+
 	template <typename T>
 	T Quat<T>::Length() const noexcept
 	{
@@ -73,32 +86,6 @@ namespace Sa
 	T Quat<T>::SqrLength() const noexcept
 	{
 		return w * w + x * x + y * y + z * z;
-	}
-
-
-	template <typename T>
-	T* Quat<T>::Data() noexcept
-	{
-		return &w;
-	}
-
-	template <typename T>
-	const T* Quat<T>::Data() const noexcept
-	{
-		return &w;
-	}
-
-
-	template <typename T>
-	Vec3<T>& Quat<T>::ImgAxis() noexcept
-	{
-		return reinterpret_cast<Vec3<T>&>(x);
-	}
-
-	template <typename T>
-	const Vec3<T>& Quat<T>::ImgAxis() const noexcept
-	{
-		return reinterpret_cast<const Vec3<T>&>(x);
 	}
 
 
@@ -138,6 +125,9 @@ namespace Sa
 		return Sa::Equals1(SqrLength());
 	}
 
+//}
+
+//{ Inverse
 
 	template <typename T>
 	Quat<T>& Quat<T>::Inverse() noexcept
@@ -163,6 +153,22 @@ namespace Sa
 		return Quat(w, -x, -y, -z);
 	}
 
+//}
+
+//{ Angle/Axis
+
+	template <typename T>
+	Vec3<T>& Quat<T>::ImgAxis() noexcept
+	{
+		return reinterpret_cast<Vec3<T>&>(x);
+	}
+
+	template <typename T>
+	const Vec3<T>& Quat<T>::ImgAxis() const noexcept
+	{
+		return reinterpret_cast<const Vec3<T>&>(x);
+	}
+
 	template <typename T>
 	constexpr Deg<T> Quat<T>::GetAngle() const noexcept
 	{
@@ -179,6 +185,9 @@ namespace Sa
 		return (Axis() / Maths::Sin(halfAngle)).GetNormalized();
 	}
 
+//}
+
+//{ Rotate
 
 	template <typename T>
 	Quat<T> Quat<T>::Rotate(const Quat<T>& _other) const noexcept
@@ -245,6 +254,9 @@ namespace Sa
 		return Rotate(Vec3<T>::Forward);
 	}
 
+//}
+
+//{ Euler
 
 	template <typename T>
 	Vec3<Deg<T>> Quat<T>::ToEuler() const noexcept
@@ -371,6 +383,10 @@ namespace Sa
 		);
 	}
 
+//}
+
+//{ Dot
+
 	template <typename T>
 	T Quat<T>::Dot(const Quat<T>& _lhs, const Quat& _rhs) noexcept
 	{
@@ -379,6 +395,10 @@ namespace Sa
 			_lhs.y * _rhs.y +
 			_lhs.z * _rhs.z;
 	}
+
+//}
+
+//{ Lerp
 
 	template <typename T>
 	Quat<T> Quat<T>::Lerp(const Quat& _start, const Quat& _end, float _alpha) noexcept
@@ -416,6 +436,9 @@ namespace Sa
 		return Maths::SLerpUnclamped(_start, _end, _alpha).GetNormalized();
 	}
 
+//}
+
+//{ Operators
 
 	template <typename T>
 	constexpr Quat<T> Quat<T>::operator-() const noexcept
@@ -570,6 +593,22 @@ namespace Sa
 		return !(*this == _rhs);
 	}
 
+//}
+
+//{ Accessors
+
+	template <typename T>
+	T* Quat<T>::Data() noexcept
+	{
+		return &w;
+	}
+
+	template <typename T>
+	const T* Quat<T>::Data() const noexcept
+	{
+		return &w;
+	}
+
 
 	template <typename T>
 	T& Quat<T>::operator[](uint32 _index)
@@ -587,6 +626,7 @@ namespace Sa
 		return Data()[_index];
 	}
 
+//}
 
 #if SA_LOGGING
 

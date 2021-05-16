@@ -43,6 +43,7 @@ namespace Sa
 		/// Vector's Y component (axis value).
 		T y = T();
 
+//{ Constants
 
 		/// Zero vector constant { 0, 0 }.
 		static const Vec2 Zero;
@@ -62,6 +63,9 @@ namespace Sa
 		/// Down vector constant { 0, -1 }.
 		static const Vec2 Down;
 
+//}
+
+//{ Constructors
 
 		/// \e Default constructor.
 		Vec2() = default;
@@ -103,6 +107,9 @@ namespace Sa
 		template <typename TIn>
 		constexpr Vec2(const Vec3<TIn>& _other) noexcept;
 
+//}
+
+//{ Equals
 
 		/**
 		*	\brief Whether this vector is a zero vector.
@@ -121,6 +128,10 @@ namespace Sa
 		*/
 		constexpr bool Equals(const Vec2& _other, T _epsilon = std::numeric_limits<T>::epsilon()) const noexcept;
 
+//}
+
+//{ Length
+
 		/**
 		*	\brief \e Getter of the /b length of this vector.
 		*
@@ -135,19 +146,6 @@ namespace Sa
 		*/
 		constexpr T SqrLength() const noexcept;
 
-		/**
-		*	\brief \e Getter of vector data
-		*
-		*	\return this vector as a T*.
-		*/
-		T* Data() noexcept;
-
-		/**
-		*	\brief <em> Const Getter </em> of vector data
-		*
-		*	\return this vector as a const T*.
-		*/
-		const T* Data() const noexcept;
 
 		/**
 		*	\brief \b Normalize this vector.
@@ -169,6 +167,10 @@ namespace Sa
 		*	\return True if this vector is normalized, otherwise false.
 		*/
 		constexpr bool IsNormalized() const noexcept;
+
+//}
+
+//{ Project
 
 		/**
 		*	\brief \b Reflect this vector over the normal.
@@ -213,6 +215,9 @@ namespace Sa
 		*/
 		Vec2 Perpendicular() const noexcept;
 
+//}
+
+//{ Dot/Cross
 
 		/**
 		*	\brief \e Compute the <b> Dot product </b> between _lhs and _rhs.
@@ -234,6 +239,10 @@ namespace Sa
 		*/
 		static constexpr T Cross(const Vec2& _lhs, const Vec2& _rhs) noexcept;
 
+//}
+
+//{ Angle
+
 		/**
 		*	\brief \e Compute the <b> Signed Angle </b> between _start and _end.
 		*
@@ -253,6 +262,10 @@ namespace Sa
 		*	\return <b> Unsigned Angle </b> between _start and _end.
 		*/
 		static Deg<T> AngleUnsigned(const Vec2& _start, const Vec2& _end) noexcept;
+
+//}
+
+//{ Dist/Dir
 
 		/**
 		*	\brief \e Compute the <b> Distance </b> between _start and _end.
@@ -296,6 +309,9 @@ namespace Sa
 		*/
 		static constexpr Vec2 DirN(const Vec2& _start, const Vec2& _end) noexcept;
 
+//}
+
+//{ Lerp
 		/**
 		*	\brief <b> Clamped Lerp </b> from _start to _end at _alpha.
 		*
@@ -348,6 +364,9 @@ namespace Sa
 		*/
 		static Vec2 SLerpUnclamped(const Vec2& _start, const Vec2& _end, float _alpha) noexcept;
 
+//}
+
+//{ Operators
 
 		/**
 		*	\brief \e Getter of the opposite signed vector.
@@ -502,6 +521,24 @@ namespace Sa
 		*/
 		constexpr bool operator!=(const Vec2& _rhs) const noexcept;
 
+//}
+
+//{ Accessors
+
+		/**
+		*	\brief \e Getter of vector data
+		*
+		*	\return this vector as a T*.
+		*/
+		T* Data() noexcept;
+
+		/**
+		*	\brief <em> Const Getter </em> of vector data
+		*
+		*	\return this vector as a const T*.
+		*/
+		const T* Data() const noexcept;
+
 
 		/**
 		*	\brief \e Access operator by index: x, y using 0, 1.
@@ -520,6 +557,8 @@ namespace Sa
 		*	\return T value at index.
 		*/
 		const T& operator[](uint32 _index) const;
+
+//}
 
 #if SA_LOGGING
 
@@ -559,6 +598,8 @@ namespace Sa
 	constexpr Vec2<T> operator/(typename std::remove_cv<T>::type _lhs, const Vec2<T>& _rhs) noexcept;
 
 
+//{ Aliases
+
 	/// Alias for int32 Vec2.
 	using Vec2i = Vec2<int32>;
 
@@ -587,6 +628,8 @@ namespace Sa
 
 	/// Alias for double Vector2.
 	using Vector2d = Vector2<double>;
+
+//}
 }
 
 

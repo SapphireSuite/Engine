@@ -46,6 +46,7 @@ namespace Sa
 		/// Vector's Z component (axis value).
 		T z = T();
 
+//{ Constants
 
 		/// Zero vector constant {0, 0, 0}.
 		static const Vec3 Zero;
@@ -71,6 +72,9 @@ namespace Sa
 		/// Down vector constant {0, 0, -1}.
 		static const Vec3 Backward;
 
+//}
+
+//{ Constructors
 
 		/// \e Default constructor.
 		Vec3() = default;
@@ -124,6 +128,9 @@ namespace Sa
 		template <typename TIn>
 		constexpr Vec3(const Vec4<TIn>& _other) noexcept;
 
+//}
+
+//{ Equals
 
 		/**
 		*	\brief Whether this vector is a zero vector.
@@ -142,6 +149,10 @@ namespace Sa
 		*/
 		constexpr bool Equals(const Vec3& _other, T _epsilon = std::numeric_limits<T>::epsilon()) const noexcept;
 
+//}
+
+//{ Length
+
 		/**
 		*	\brief \e Getter of the \b length of this vector.
 		*
@@ -155,20 +166,6 @@ namespace Sa
 		*	\return Squared Length of this vector.
 		*/
 		constexpr T SqrLength() const noexcept;
-
-		/**
-		*	\brief \e Getter of vector data
-		*
-		*	\return this vector as a T*.
-		*/
-		T* Data() noexcept;
-
-		/**
-		*	\brief <em> Const Getter </em> of vector data
-		*
-		*	\return this vector as a const T*.
-		*/
-		const T* Data() const noexcept;
 
 		/**
 		*	\brief \b Normalize this vector.
@@ -190,6 +187,10 @@ namespace Sa
 		*	\return True if this vector is normalized, otherwise false.
 		*/
 		constexpr bool IsNormalized() const noexcept;
+
+//}
+
+//{ Project
 
 		/**
 		*	\brief \b Reflect this vector over the normal.
@@ -225,6 +226,9 @@ namespace Sa
 		*/
 		Vec3 ProjectOnToNormal(const Vec3& _normal) const noexcept;
 
+//}
+
+//{ Dot/Cross
 
 		/**
 		*	\brief \e Compute the <b> Dot product </b> between _lhs and _rhs.
@@ -246,6 +250,10 @@ namespace Sa
 		*/
 		static constexpr Vec3<T> Cross(const Vec3& _lhs, const Vec3& _rhs) noexcept;
 
+//}
+
+//{ Angle
+
 		/**
 		*	\brief \e Compute the <b> Signed Angle </b> between _lhs and _rhs.
 		*
@@ -266,6 +274,10 @@ namespace Sa
 		*	\return <b> Unsigned Angle </b> between _lhs and _rhs.
 		*/
 		static Deg<T> AngleUnsigned(const Vec3& _start, const Vec3& _end) noexcept;
+
+//}
+
+//{ Dist/Dir
 
 		/**
 		*	\brief \e Compute the <b> Distance </b> between _lhs and _rhs.
@@ -308,6 +320,10 @@ namespace Sa
 		*	\return <b> Normalized Direction </b> from _start to _end.
 		*/
 		static constexpr Vec3 DirN(const Vec3& _start, const Vec3& _end) noexcept;
+
+//}
+
+//{ Lerp
 
 		/**
 		*	\brief <b> Clamped Lerp </b> from _start to _end at _alpha.
@@ -361,6 +377,9 @@ namespace Sa
 		*/
 		static Vec3 SLerpUnclamped(const Vec3& _start, const Vec3& _end, float _alpha) noexcept;
 
+//}
+
+//{ Operators
 
 		/**
 		*	\brief \e Getter of the opposite signed vector.
@@ -515,6 +534,24 @@ namespace Sa
 		*/
 		constexpr bool operator!=(const Vec3& _rhs) const noexcept;
 
+//}
+
+//{ Accessors
+
+		/**
+		*	\brief \e Getter of vector data
+		*
+		*	\return this vector as a T*.
+		*/
+		T* Data() noexcept;
+
+		/**
+		*	\brief <em> Const Getter </em> of vector data
+		*
+		*	\return this vector as a const T*.
+		*/
+		const T* Data() const noexcept;
+
 
 		/**
 		*	\brief \e Access operator by index: x, y, z using 0, 1, 2.
@@ -534,9 +571,17 @@ namespace Sa
 		*/
 		const T& operator[](uint32 _index) const;
 
+//}
 
 #if SA_LOGGING
 
+		/**
+		*	\brief ToString implementation
+		*
+		*	Convert this vector as a string.
+		*
+		*	\return this as a string.
+		*/
 		std::string ToString() const noexcept;
 
 #endif
@@ -566,6 +611,8 @@ namespace Sa
 	constexpr Vec3<T> operator/(typename std::remove_cv<T>::type _lhs, const Vec3<T>& _rhs) noexcept;
 
 
+//{ Aliases
+
 	/// Alias for int32 Vec3.
 	using Vec3i = Vec3<int32>;
 
@@ -594,6 +641,8 @@ namespace Sa
 
 	/// Alias for double Vector3.
 	using Vector3d = Vector3<double>;
+
+//}
 }
 
 

@@ -50,6 +50,8 @@ namespace Sa
 		T w = T();
 
 
+//{ Constructors
+
 		/// \e Default constructor.
 		Vec4() = default;
 
@@ -115,6 +117,9 @@ namespace Sa
 		template <typename TIn>
 		constexpr Vec4(const Vec3<TIn>&_other, T _w = T(0)) noexcept;
 
+//}
+
+//{ Equals
 
 		/**
 		*	\brief Whether this vector is a zero vector.
@@ -133,21 +138,9 @@ namespace Sa
 		*/
 		constexpr bool Equals(const Vec4& _other, T _epsilon = std::numeric_limits<T>::epsilon()) const noexcept;
 
+//}
 
-		/**
-		*	\brief \e Getter of vector data
-		*
-		*	\return this vector as a T*.
-		*/
-		T* Data() noexcept;
-
-		/**
-		*	\brief <em> Const Getter </em> of vector data
-		*
-		*	\return this vector as a const T*.
-		*/
-		const T* Data() const noexcept;
-
+//{ Operators
 
 		/**
 		*	\brief \e Compare 2 vector equality.
@@ -166,6 +159,24 @@ namespace Sa
 		*	\return Whether this and _rhs are non-equal.
 		*/
 		constexpr bool operator!=(const Vec4& _rhs) const noexcept;
+
+//}
+
+//{ Acccessors
+
+		/**
+		*	\brief \e Getter of vector data
+		*
+		*	\return this vector as a T*.
+		*/
+		T* Data() noexcept;
+
+		/**
+		*	\brief <em> Const Getter </em> of vector data
+		*
+		*	\return this vector as a const T*.
+		*/
+		const T* Data() const noexcept;
 
 
 		/**
@@ -186,14 +197,25 @@ namespace Sa
 		*/
 		const T& operator[](uint32 _index) const;
 
+//}
+
 
 #if SA_LOGGING
 
+		/**
+		*	\brief ToString implementation
+		*
+		*	Convert this vector as a string.
+		*
+		*	\return this as a string.
+		*/
 		std::string ToString() const noexcept;
 
 #endif
 	};
 
+
+//{ Aliases
 
 	/// Alias for int32 Vec4.
 	using Vec4i = Vec4<int32>;
@@ -223,6 +245,8 @@ namespace Sa
 
 	/// Alias for double Vector4.
 	using Vector4d = Vector4<double>;
+
+//}
 }
 
 

@@ -2,6 +2,8 @@
 
 namespace Sa
 {
+//{ Constants
+
 	template <typename T>
 	const Vec2<T> Vec2<T>::Zero{ T(0), T(0) };
 
@@ -20,6 +22,9 @@ namespace Sa
 	template <typename T>
 	const Vec2<T> Vec2<T>::Down{ T(0), T(-1) };
 
+//}
+
+//{ Constructors
 
 	template <typename T>
 	constexpr Vec2<T>::Vec2(T _x, T _y) noexcept :
@@ -51,6 +56,9 @@ namespace Sa
 	{
 	}
 
+//}
+
+//{ Equals
 
 	template <typename T>
 	constexpr bool Vec2<T>::IsZero() const noexcept
@@ -64,6 +72,10 @@ namespace Sa
 		return Sa::Equals(x, _other.x, _epsilon) && Sa::Equals(y, _other.y, _epsilon);
 	}
 
+//}
+
+//{ Length
+
 	template <typename T>
 	constexpr T Vec2<T>::Length() const noexcept
 	{
@@ -74,18 +86,6 @@ namespace Sa
 	constexpr T Vec2<T>::SqrLength() const noexcept
 	{
 		return x * x + y * y;
-	}
-
-	template <typename T>
-	T* Vec2<T>::Data() noexcept
-	{
-		return &x;
-	}
-
-	template <typename T>
-	const T* Vec2<T>::Data() const noexcept
-	{
-		return &x;
 	}
 
 
@@ -117,6 +117,10 @@ namespace Sa
 		return Sa::Equals1(SqrLength(), std::numeric_limits<T>::epsilon());
 	}
 
+//}
+
+//{ Project
+
 	template <typename T>
 	Vec2<T> Vec2<T>::Reflect(const Vec2& _normal, float _elasticity) const noexcept
 	{
@@ -143,6 +147,9 @@ namespace Sa
 		return Vec2(y, -x);
 	}
 
+//}
+
+//{ Dot/Cross
 
 	template <typename T>
 	constexpr T Vec2<T>::Dot(const Vec2<T>& _lhs, const Vec2& _rhs) noexcept
@@ -156,6 +163,10 @@ namespace Sa
 		return _lhs.x * _rhs.y + _lhs.y * _rhs.x;
 	}
 
+//}
+
+//{ Angle
+
 	template <typename T>
 	Deg<T> Vec2<T>::Angle(const Vec2<T>& _start, const Vec2& _end) noexcept
 	{
@@ -167,6 +178,10 @@ namespace Sa
 	{
 		return Maths::ACos(Dot(_start, _end));
 	}
+
+//}
+
+//{ Dist/Dir
 
 	template <typename T>
 	constexpr T Vec2<T>::Dist(const Vec2& _start, const Vec2& _end) noexcept
@@ -192,6 +207,10 @@ namespace Sa
 		return Dir(_start, _end).GetNormalized();
 	}
 
+//}
+
+//{ Lerp
+
 	template <typename T>
 	Vec2<T> Vec2<T>::Lerp(const Vec2& _start, const Vec2& _end, float _alpha) noexcept
 	{
@@ -216,6 +235,9 @@ namespace Sa
 		return Maths::SLerpUnclamped(_start, _end, _alpha);
 	}
 
+//}
+
+//{ Operators
 
 	template <typename T>
 	constexpr Vec2<T> Vec2<T>::operator-() const noexcept
@@ -349,6 +371,22 @@ namespace Sa
 		return !(*this == _rhs);
 	}
 
+//}
+
+//{ Accessors
+
+	template <typename T>
+	T* Vec2<T>::Data() noexcept
+	{
+		return &x;
+	}
+
+	template <typename T>
+	const T* Vec2<T>::Data() const noexcept
+	{
+		return &x;
+	}
+
 
 	template <typename T>
 	T& Vec2<T>::operator[](uint32 _index)
@@ -365,6 +403,8 @@ namespace Sa
 
 		return Data()[_index];
 	}
+
+//}
 
 
 #if SA_LOGGING
