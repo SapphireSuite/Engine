@@ -27,16 +27,15 @@ namespace Sa::UTH
 		Log log = __SA_UTH_MAKE_LOG();
 
 		log.AddToken(Step::Init);
-		log.AddString(L"[SA-UTH] Init");
+		log.AddString(L"[SA-UTH] Init ");
 
-		//SetConsoleColor(CslColor::Init);
 
-		//// Init rand.
-		//time_t currTime = time(NULL);
-		//srand(static_cast<unsigned int>(currTime));
-		//SA_UTH_LOG("[SA-UTH] Init Rand seed: " << currTime);
+		// Init rand. TODO: Remove later, use engine Random impl.
+		time_t currTime = time(NULL);
+		srand(static_cast<unsigned int>(currTime));
+		log.AddString(L"Rand seed: " + ToWString(currTime));
 
-		//SetConsoleColor(CslColor::None);
+		logger.Log(log);
 	}
 	
 	int32 Instance::Exit(bool _bForce)
