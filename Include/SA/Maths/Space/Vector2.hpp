@@ -82,6 +82,7 @@ namespace Sa
 		*/
 		constexpr Vec2(T _scale) noexcept;
 
+
 		/**
 		*	\brief \e Value constructor from another Vec2 type.
 		*

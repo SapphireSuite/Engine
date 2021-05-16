@@ -4,6 +4,7 @@
 
 #include <SA/Maths/Space/Vector2.hpp>
 #include <SA/Maths/Space/Vector3.hpp>
+#include <SA/Maths/Space/Vector4.hpp>
 using namespace Sa;
 
 namespace Sa::Vector3_UT
@@ -111,7 +112,13 @@ namespace Sa::Vector3_UT
 		SA_UTH_EQ(v6.z, v6Z);
 
 
-		// TODO: Add from Vec4.
+		// From Vec4.
+		const Vec4f v7(UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f));
+
+		const Vec3f v8(v7);
+		SA_UTH_EQ(v8.x, v7.x);
+		SA_UTH_EQ(v8.y, v7.y);
+		SA_UTH_EQ(v8.z, v7.z);
 	}
 
 	void Equals()

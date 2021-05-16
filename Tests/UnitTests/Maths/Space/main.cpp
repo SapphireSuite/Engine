@@ -7,6 +7,7 @@
 
 void Vector2Tests();
 void Vector3Tests();
+void Vector4Tests();
 
 int main()
 {
@@ -15,6 +16,7 @@ int main()
 
 	SA_UTH_GP(Vector2Tests());
 	SA_UTH_GP(Vector3Tests());
+	SA_UTH_GP(Vector4Tests());
 
 
 	SA_UTH_EXIT();
