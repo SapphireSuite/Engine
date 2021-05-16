@@ -43,13 +43,13 @@ namespace Sa
 	{
 	}
 
-	//template <typename T>
-	//template <typename TIn>
-	//constexpr Vec2<T>::Vec2(const Vec3<TIn>& _other) noexcept :
-	//	x{ static_cast<T>(_other.x) },
-	//	y{ static_cast<T>(_other.y) }
-	//{
-	//}
+	template <typename T>
+	template <typename TIn>
+	constexpr Vec2<T>::Vec2(const Vec3<TIn>& _other) noexcept :
+		x{ static_cast<T>(_other.x) },
+		y{ static_cast<T>(_other.y) }
+	{
+	}
 
 
 	template <typename T>

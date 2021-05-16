@@ -3,6 +3,7 @@
 #include <UnitTestHelper>
 
 #include <SA/Maths/Space/Vector2.hpp>
+#include <SA/Maths/Space/Vector3.hpp>
 using namespace Sa;
 
 namespace Sa::Vector2_UT
@@ -78,13 +79,12 @@ namespace Sa::Vector2_UT
 		SA_UTH_EQ(v4.y, v1.y);
 
 
-		// TODO: Add later.
-		//// From Vec3.
-		//const Vec3f v5(UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f));
+		// From Vec3.
+		const Vec3f v5(UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f));
 
-		//const Vec2f v6(v5);
-		//SA_UTH_EQ(v6.x, v5.x);
-		//SA_UTH_EQ(v6.y, v5.y);
+		const Vec2f v6(v5);
+		SA_UTH_EQ(v6.x, v5.x);
+		SA_UTH_EQ(v6.y, v5.y);
 	}
 
 	void Equals()

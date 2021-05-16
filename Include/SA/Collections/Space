@@ -6,5 +6,6 @@
 #define SAPPHIRE_COLLECTIONS_SPACE_GUARD
 
 #include <SA/Maths/Space/Vector2.hpp>
+#include <SA/Maths/Space/Vector3.hpp>
 
 #endif // GUARD
