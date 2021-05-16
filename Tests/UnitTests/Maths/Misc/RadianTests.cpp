@@ -8,6 +8,8 @@ using namespace Sa;
 
 namespace Sa::Radian_UT
 {
+	const float fPi = static_cast<float>(Maths::Pi);
+
 	void Literals()
 	{
 		const Radf r1 = 1.3_rad;
@@ -28,7 +30,7 @@ namespace Sa::Radian_UT
 
 		const Degf d5 = 180_deg;
 		const Radf r5 = d5;
-		SA_UTH_EQ(r5, Radf(Maths::Pi));
+		SA_UTH_EQ(r5, Radf(fPi));
 	}
 
 	void Equals()
@@ -52,19 +54,19 @@ namespace Sa::Radian_UT
 		r1.Clamp();
 		SA_UTH_EQ(r1, 1.26_rad);
 
-		Radf r2 = Maths::Pi + 1.26_rad;
+		Radf r2 = fPi + 1.26_rad;
 		r2.Clamp();
 		SA_UTH_EQ(r2, Radf(-1.8815926_rad));
 
-		Radf r3 = 3 * Maths::Pi + 1.26_rad;
+		Radf r3 = 3 * fPi + 1.26_rad;
 		r3.Clamp();
 		SA_UTH_EQ(r3, Radf(-1.8815926_rad));
 
-		Radf r4 = -Maths::Pi - 1.26_rad;
+		Radf r4 = -fPi - 1.26_rad;
 		r4.Clamp();
 		SA_UTH_EQ(r4, Radf(1.8815926_rad));
 
-		Radf r5 = 3 * -Maths::Pi - 1.26_rad;
+		Radf r5 = 3 * -fPi - 1.26_rad;
 		r5.Clamp();
 		SA_UTH_EQ(r5, Radf(1.8815926_rad));
 	}

@@ -35,7 +35,7 @@ namespace Sa
 		const T abs = std::abs(mHandle);
 
 		if (abs > Maths::Pi)
-			mHandle = (abs - Maths::PiX2) * Maths::Sign(mHandle);
+			mHandle = (abs - static_cast<T>(Maths::PiX2)) * Maths::Sign(mHandle);
 	}
 
 

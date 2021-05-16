@@ -26,7 +26,7 @@ namespace Sa::Degree_UT
 		const Degf d4 = dd4;
 		SA_UTH_EQ(d4, 4.23_deg);
 
-		const Radf r5 = Maths::Pi;
+		const Radf r5 = static_cast<float>(Maths::Pi);
 		const Degf d5 = r5;
 		SA_UTH_EQ(d5, 180.0_deg);
 	}
