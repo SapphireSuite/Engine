@@ -441,26 +441,46 @@ namespace Sa::Quaternion_UT
 		*	Random values from Wolfram Alpha.
 		*	https://www.wolframalpha.com/input/?i=Quaternion%2848%2C36.12%2C-42.1%2C-3%29
 		*/
-		const Quat<T> qmlt1(0.65379899684951437, 0.49198400932684733, -0.57343602132006610, -0.040862400050191698);
+		const Quat<T> qmlt1(
+			static_cast<T>(0.65379899684951437),
+			static_cast<T>(0.49198400932684733),
+			static_cast<T>(-0.57343602132006610),
+			static_cast<T>(-0.040862400050191698)
+		);
 
 		/**
 		*	Random values from Wolfram Alpha.
 		*	https://www.wolframalpha.com/input/?i=Quaternion%287%2B1.36i-4j-23.2k%29
 		*/
-		const Quat<T> qmlt2(0.28456911695921927, 0.055287819843885436, -0.16261099422502870, -0.94314438937370981);
+		const Quat<T> qmlt2(
+			static_cast<T>(0.28456911695921927),
+			static_cast<T>(0.055287819843885436),
+			static_cast<T>(-0.16261099422502870),
+			static_cast<T>(-0.94314438937370981)
+		);
 
 		/**
 		*	Computed values from Wolfram Alpha.
 		*	https://www.wolframalpha.com/input/?i=Quaternion%2848%2B36.12i-42.1j-3k%29*Quaternion%287%2B1.36i-4j-23.2k%29
 		*/
-		const Quat<T> q1mltq2(0.027064122703847494, 0.71033883189067515, 0.19225561767425950, -0.67655306860818476);
+		const Quat<T> q1mltq2(
+			static_cast<T>(0.027064122703847494),
+			static_cast<T>(0.71033883189067515),
+			static_cast<T>(0.19225561767425950),
+			static_cast<T>(-0.67655306860818476)
+		);
 		SA_UTH_MF((qmlt1 * qmlt2), Equals, q1mltq2, eps);
 
 		/**
 		*	Computed values from Wolfram Alpha.
 		*	https://www.wolframalpha.com/input/?i=Quaternion%280.653799+%2B+0.491984i+-+0.573436j+-+0.0408624k%29+*+Quaternion%280.0115685+-+0.0022476i+%2B+0.00661059j+%2B+0.0383414k%29
 		*/
-		const Quat<T> q1dq2(0.34503790147878188, -0.43033188617788687, -0.51861987096184237, 0.65329682666091582);
+		const Quat<T> q1dq2(
+			static_cast<T>(0.34503790147878188),
+			static_cast<T>(-0.43033188617788687),
+			static_cast<T>(-0.51861987096184237),
+			static_cast<T>(0.65329682666091582)
+		);
 		SA_UTH_MF((qmlt1 / qmlt2), Equals, q1dq2, eps);
 
 		// op *= scalar.

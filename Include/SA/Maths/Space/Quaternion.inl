@@ -182,7 +182,7 @@ namespace Sa
 
 		const Rad<T> halfAngle = Maths::ACos(w);
 
-		return (Axis() / Maths::Sin(halfAngle)).GetNormalized();
+		return (ImgAxis() / Maths::Sin(halfAngle)).GetNormalized();
 	}
 
 //}
