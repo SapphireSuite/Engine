@@ -19,7 +19,7 @@ void SignTests()
 
 
 	const uint32 ui1 = 10;
-	SA_UTH_EQ(Maths::Sign(ui1), 1);
+	SA_UTH_EQ(Maths::Sign(ui1), 1); // Intended warning.
 
 
 	const float f1 = 13.2446f;
