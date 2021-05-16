@@ -134,7 +134,7 @@ jobs:
           - Release
 
         compiler:
-          - MSVC
+          #- MSVC # ToDo: Fix CI /experimental:preprocessor
           - Clang
 
         compiler_v: [10]
