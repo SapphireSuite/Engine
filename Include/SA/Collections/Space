@@ -8,5 +8,6 @@
 #include <SA/Maths/Space/Vector2.hpp>
 #include <SA/Maths/Space/Vector3.hpp>
 #include <SA/Maths/Space/Vector4.hpp>
+#include <SA/Maths/Space/Quaternion.hpp>
 
 #endif // GUARD

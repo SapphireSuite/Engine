@@ -60,7 +60,7 @@ namespace Sa
 		T Lerp(const T& _start, const T& _end, float _alpha) noexcept
 		{
 			SA_WARN(_alpha >= 0.0f && _alpha <= 1.0f, Maths,
-				L"Alpha[" << _alpha << L"] clamped! Use LerpUnclamped if intended instead.");
+				L"Alpha[" << _alpha << L"] clamped to range [0, 1]! Use LerpUnclamped if intended instead.");
 
 			return LerpUnclamped(_start, _end, std::clamp(_alpha, 0.0f, 1.0f));
 		}
@@ -139,7 +139,7 @@ namespace Sa
 		T SLerp(const T& _start, const T& _end, float _alpha) noexcept
 		{
 			SA_WARN(_alpha >= 0.0f && _alpha <= 1.0f, Maths,
-				L"Alpha[" << _alpha << L"] clamped! Use SLerpUnclamped if intended instead.");
+				L"Alpha[" << _alpha << L"] clamped to range [0, 1]! Use SLerpUnclamped if intended instead.");
 
 			return SLerpUnclamped(_start, _end, std::clamp(_alpha, 0.0f, 1.0f));
 		}
