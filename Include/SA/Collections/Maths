@@ -10,6 +10,8 @@
 #include <SA/Maths/Algorithms/Sin.hpp>
 #include <SA/Maths/Algorithms/Tan.hpp>
 #include <SA/Maths/Algorithms/Sign.hpp>
+#include <SA/Maths/Algorithms/Sqrt.hpp>
+#include <SA/Maths/Algorithms/Lerp.hpp>
 
 // Misc.
 #include <SA/Maths/Misc/Constants.hpp>
