@@ -19,14 +19,14 @@ namespace Sa
 
 	ArgsStr::Param& ArgsStr::operator[](uint32 _index)
 	{
-		SA_ASSERT(OutOfRange, Core, _index, 0u, params.size());
+		SA_ASSERT(OutOfRange, Core, _index, 0u, static_cast<uint32>(params.size()));
 
 		return params[_index];
 	}
 
 	const ArgsStr::Param& ArgsStr::operator[](uint32 _index) const
 	{
-		SA_ASSERT(OutOfRange, Core, _index, 0u, params.size());
+		SA_ASSERT(OutOfRange, Core, _index, 0u, static_cast<uint32>(params.size()));
 	
 		return params[_index];
 	}
