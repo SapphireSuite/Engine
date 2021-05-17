@@ -122,7 +122,8 @@ namespace Sa
 	template <typename T>
 	bool Quat<T>::IsNormalized() const noexcept
 	{
-		return Sa::Equals1(SqrLength());
+		/// Handle Maths::Sqrt() miss precision.
+		return Sa::Equals1(SqrLength(), T(3.0) * std::numeric_limits<T>::epsilon());
 	}
 
 //}

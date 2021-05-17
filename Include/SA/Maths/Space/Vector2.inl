@@ -114,7 +114,8 @@ namespace Sa
 	template <typename T>
 	constexpr bool Vec2<T>::IsNormalized() const noexcept
 	{
-		return Sa::Equals1(SqrLength(), std::numeric_limits<T>::epsilon());
+		/// Handle Maths::Sqrt() miss precision.
+		return Sa::Equals1(SqrLength(), T(2.0) * std::numeric_limits<T>::epsilon());
 	}
 
 //}
