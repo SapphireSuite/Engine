@@ -6,4 +6,5 @@
 
 add_subdirectory(Algorithms)
 add_subdirectory(Space)
+add_subdirectory(Matrix)
 add_subdirectory(Misc)
