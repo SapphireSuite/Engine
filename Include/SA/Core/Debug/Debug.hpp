@@ -123,11 +123,9 @@ namespace Sa::Debug
 
 #if !defined(DOXYGEN)
 
-	#define SA_LOG(...) __SA_SELECT_LOG_MACRO(__VA_ARGS__, __SA_LOG3(__VA_ARGS__), __SA_LOG2(__VA_ARGS__), __SA_LOG1(__VA_ARGS__))
-	//#define SA_LOG(...) __SA_SELECT_LOG_MACRO(__VA_ARGS__, __SA_LOG3, __SA_LOG2, __SA_LOG1)(__VA_ARGS__)
+	#define SA_LOG(...) __SA_SELECT_LOG_MACRO(__VA_ARGS__, __SA_LOG3, __SA_LOG2, __SA_LOG1)(__VA_ARGS__)
 
-	#define SA_WARN(...) __SA_SELECT_LOG_MACRO(__VA_ARGS__, __SA_WARN3(__VA_ARGS__), __SA_WARN2(__VA_ARGS__))
-	//#define SA_WARN(...) __SA_SELECT_LOG_MACRO(__VA_ARGS__, __SA_WARN3, __SA_WARN2)(__VA_ARGS__)
+	#define SA_WARN(...) __SA_SELECT_LOG_MACRO(__VA_ARGS__, __SA_WARN3, __SA_WARN2)(__VA_ARGS__)
 
 
 	#if SA_DEBUG // Assertion requieres active Debug.
