@@ -24,6 +24,16 @@ namespace Sa
 	}
 
 	template <typename T>
+	template <typename TIn>
+	constexpr Quat<T>::Quat(const Quat<TIn>& _other) noexcept :
+		w{ static_cast<T>(_other.w) },
+		x{ static_cast<T>(_other.x) },
+		y{ static_cast<T>(_other.y) },
+		z{ static_cast<T>(_other.z) }
+	{
+	}
+
+	template <typename T>
 	Quat<T>::Quat(Deg<T> _angle, const Vec3<T>& _axis) noexcept
 	{
 		const Rad<T> halfAngle = _angle / T(2.0);
@@ -35,16 +45,6 @@ namespace Sa
 		// Quaternion imaginary axis.
 		Vec3<T>& imgAxis = ImgAxis();
 		imgAxis = _axis * Maths::Sin(halfAngle);
-	}
-
-	template <typename T>
-	template <typename TIn>
-	constexpr Quat<T>::Quat(const Quat<TIn>& _other) noexcept :
-		w{ static_cast<T>(_other.w) },
-		x{ static_cast<T>(_other.x) },
-		y{ static_cast<T>(_other.y) },
-		z{ static_cast<T>(_other.z) }
-	{
 	}
 
 //}

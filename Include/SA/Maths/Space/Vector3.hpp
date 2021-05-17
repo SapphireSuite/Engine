@@ -97,6 +97,12 @@ namespace Sa
 		constexpr Vec3(T _scale) noexcept;
 
 
+		/// Default move constructor.
+		Vec3(Vec3&&) = default;
+
+		/// Default copy constructor.
+		Vec3(const Vec3&) = default;
+
 		/**
 		*	\brief \e Value constructor from another Vec3 type.
 		*
@@ -380,6 +386,13 @@ namespace Sa
 //}
 
 //{ Operators
+
+		/// Default assignment move operator.
+		Vec3& operator=(Vec3&&) = default;
+
+		/// Default assignment copy operator.
+		Vec3& operator=(const Vec3&) = default;
+
 
 		/**
 		*	\brief \e Getter of the opposite signed vector.

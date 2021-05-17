@@ -83,13 +83,12 @@ namespace Sa
 		*/
 		constexpr Quat(T _w, T _x, T _y, T _z) noexcept;
 
-		/**
-		*	\brief \e Value constructor angle and axis.
-		*
-		*	\param[in] _angle	Angle rotation in Degree.
-		*	\param[in] _axis	Axis rotation.
-		*/
-		Quat(Deg<T> _angle, const Vec3<T>& _axis) noexcept;
+
+		/// Default move constructor.
+		Quat(Quat&&) = default;
+
+		/// Default copy constructor.
+		Quat(const Quat&) = default;
 
 		/**
 		*	\brief \e Value constructor from another quaternion type.
@@ -100,6 +99,15 @@ namespace Sa
 		*/
 		template <typename TIn>
 		constexpr Quat(const Quat<TIn>& _other) noexcept;
+
+
+		/**
+		*	\brief \e Value constructor angle and axis.
+		*
+		*	\param[in] _angle	Angle rotation in Degree.
+		*	\param[in] _axis	Axis rotation.
+		*/
+		Quat(Deg<T> _angle, const Vec3<T>& _axis) noexcept;
 
 //}
 
@@ -407,6 +415,13 @@ namespace Sa
 //}
 
 //{ Operators
+
+		/// Default assignment move operator.
+		Quat& operator=(Quat&&) = default;
+
+		/// Default assignment copy operator.
+		Quat& operator=(const Quat&) = default;
+
 
 		/**
 		*	\brief \e Getter of the opposite signed quaternion.

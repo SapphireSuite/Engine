@@ -73,6 +73,12 @@ namespace Sa
 		constexpr Vec4(T _scale) noexcept;
 
 
+		/// Default move constructor.
+		Vec4(Vec4&&) = default;
+
+		/// Default copy constructor.
+		Vec4(const Vec4&) = default;
+
 		/**
 		*	\brief \e Value constructor from another Vec4 type.
 		*
@@ -141,6 +147,13 @@ namespace Sa
 //}
 
 //{ Operators
+
+		/// Default assignment move operator.
+		Vec4& operator=(Vec4&&) = default;
+
+		/// Default assignment copy operator.
+		Vec4& operator=(const Vec4&) = default;
+
 
 		/**
 		*	\brief \e Compare 2 vector equality.
