@@ -315,6 +315,8 @@ namespace Sa
 		/**
 		*	\brief \e Create quaternion from euler angles in degrees.
 		*
+		*	\param[in] _angles	Euler angles in degree (using Engine euler norm).
+		* 
 		*	Euler norm:
 		*	X-Axis: Pitch
 		*	Y-Axis: Yaw
@@ -607,7 +609,7 @@ namespace Sa
 		/**
 		*	\brief \e Access operator by index.
 		*
-		*	param[in] _index	Index to access: 0 == w, 1 == x, 2 == y, 3 == z.
+		*	\param[in] _index	Index to access: 0 == w, 1 == x, 2 == y, 3 == z.
 		*
 		*	\return T value at index.
 		*/
@@ -616,7 +618,7 @@ namespace Sa
 		/**
 		*	\brief <em> Const Access </em> operator by index.
 		*
-		*	param[in] _index	Index to access: 0 == w, 1 == x, 2 == y, 3 == z.
+		*	\param[in] _index	Index to access: 0 == w, 1 == x, 2 == y, 3 == z.
 		*
 		*	\return T value at index.
 		*/

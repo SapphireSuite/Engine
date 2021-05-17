@@ -412,7 +412,7 @@ namespace Sa
 	template <typename T>
 	Quat<T> Quat<T>::LerpUnclamped(const Quat& _start, const Quat& _end, float _alpha) noexcept
 	{
-		SA_WARN(_start.IsNormalized(), Maths, L"start quaternion should be normalized!",);
+		SA_WARN(_start.IsNormalized(), Maths, L"start quaternion should be normalized!");
 		SA_WARN(_end.IsNormalized(), Maths, L"start quaternion should be normalized!");
 
 		return Maths::LerpUnclamped(_start, _end, _alpha).GetNormalized();

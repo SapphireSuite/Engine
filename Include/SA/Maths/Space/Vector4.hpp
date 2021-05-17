@@ -101,7 +101,7 @@ namespace Sa
 		*	\tparam TIn			Type of the in Vec2.
 		*
 		*	\param[in] _v1		First Vec2 to construct from.
-		*	\param[in] _v1		Second Vec2 to construct from.
+		*	\param[in] _v2		Second Vec2 to construct from.
 		*/
 		template <typename TIn>
 		constexpr Vec4(const Vec2<TIn>&_v1, const Vec2<TIn>& _v2) noexcept;
