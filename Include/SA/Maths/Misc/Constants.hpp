@@ -5,6 +5,16 @@
 #ifndef SAPPHIRE_MATHS_CONSTANTS_GUARD
 #define SAPPHIRE_MATHS_CONSTANTS_GUARD
 
+/**
+*	\file Constants.hpp
+* 
+*	\brief Maths \b Constants definition file.
+* 
+*	\ingroup Maths_Misc
+*	\{
+*/
+
+
 namespace Sa
 {
 	namespace Maths
@@ -34,5 +44,8 @@ namespace Sa
 		static constexpr double RadToDeg = 180.0 / Pi;
 	}
 }
+
+
+/** \} */
 
 #endif // GUARD

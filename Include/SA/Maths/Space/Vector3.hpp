@@ -443,10 +443,18 @@ namespace Sa
 
 //{ Operators
 
-		/// Default assignment move operator.
+		/**
+		*	\brief \e Default assignment move operator.
+		*
+		*	\return self vector assigned.
+		*/
 		Vec3& operator=(Vec3&&) = default;
 
-		/// Default assignment copy operator.
+		/**
+		*	\brief \e Default assignment copy operator.
+		*
+		*	\return self vector assigned.
+		*/
 		Vec3& operator=(const Vec3&) = default;
 
 

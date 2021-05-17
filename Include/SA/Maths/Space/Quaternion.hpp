@@ -472,10 +472,18 @@ namespace Sa
 
 //{ Operators
 
-		/// Default assignment move operator.
+		/**
+		*	\brief \e Default assignment move operator.
+		* 
+		*	\return self vector assigned.
+		*/
 		Quat& operator=(Quat&&) = default;
 
-		/// Default assignment copy operator.
+		/**
+		*	\brief \e Default assignment copy operator.
+		*
+		*	\return self vector assigned.
+		*/
 		Quat& operator=(const Quat&) = default;
 
 

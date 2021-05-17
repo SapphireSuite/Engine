@@ -2,6 +2,8 @@
 
 namespace Sa::Intl
 {
+	/// \cond Internal
+
 //{ Row Major
 
 //{ Construcors
@@ -151,4 +153,6 @@ namespace Sa::Intl
 //}
 
 //}
+
+	///\endcond
 }
