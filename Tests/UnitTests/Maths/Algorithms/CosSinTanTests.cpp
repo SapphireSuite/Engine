@@ -34,7 +34,7 @@ namespace Sa::CosSinTan_UT
 	{
 		SA_UTH_EQ(Maths::Tan<double>(Maths::Pi), 0.0, deps);
 		SA_UTH_EQ(Maths::Tan<double>(Maths::PiOv3), 1.7320508075688767);
-		SA_UTH_EQ(Maths::Tan<double>(-Maths::PiOv6), -0.57735026918962573);
+		SA_UTH_EQ(Maths::Tan<double>(-Maths::PiOv6), -0.57735026918962573, deps);
 		SA_UTH_EQ(Maths::Tan<float>(40_deg), 0.83910012f, 0.000001f);
 		SA_UTH_EQ(Maths::Tan<float>(0.698132_rad), 0.83910012f);
 	}
