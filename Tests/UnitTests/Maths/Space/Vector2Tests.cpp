@@ -187,8 +187,14 @@ namespace Sa::Vector2_UT
 		const Vec2f lerp_res05 = Vec2f(0.0f, 3.0f);
 		SA_UTH_RSF(lerp_res05, Vec2f::Lerp, v1, v2, 0.5f);
 
-		// Intended warning.
-		SA_UTH_RSF(v2, Vec2f::Lerp, v1, v2, 2.0f);
+
+		SA_LOGLVL_DIS_SECTB(Warning)
+
+			// Intended warning.
+			SA_UTH_RSF(v2, Vec2f::Lerp, v1, v2, 2.0f);
+
+		SA_LOGLVL_DIS_SECTE()
+
 
 		const Vec2f ulerp_res1 = Vec2f(6.0f, 0.0f);
 		SA_UTH_RSF(ulerp_res1, Vec2f::LerpUnclamped, v1, v2, -1.0f);

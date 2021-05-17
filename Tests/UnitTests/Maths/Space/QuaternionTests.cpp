@@ -394,8 +394,14 @@ namespace Sa::Quaternion_UT
 		const Quatf lerp_res05 = Quatf(0.5721251f, 0.3336728f, -0.4487695f, -0.5999511f);
 		SA_UTH_RSF(lerp_res05, Quatf::Lerp, q1, q2, 0.5f);
 
-		// Intended warning.
-		SA_UTH_RSF(q2, Quatf::Lerp, q1, q2, 2.0f);
+
+		SA_LOGLVL_DIS_SECTB(Warning)
+
+			// Intended warning.
+			SA_UTH_RSF(q2, Quatf::Lerp, q1, q2, 2.0f);
+
+		SA_LOGLVL_DIS_SECTE()
+
 
 		// Precomputed value.
 		const Quatf ulerp_res1 = Quatf(0.5377033f, 0.4881137f, -0.517327f, 0.4527616f);

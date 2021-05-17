@@ -18,8 +18,12 @@ void SignTests()
 	SA_UTH_EQ(Maths::Sign(i2), -1);
 
 
-	const uint32 ui1 = 10;
-	SA_UTH_EQ(Maths::Sign(ui1), 1); // Intended warning.
+	SA_LOGLVL_DIS_SECTB(Warning)
+
+		const uint32 ui1 = 10;
+		SA_UTH_EQ(Maths::Sign(ui1), 1); // Intended warning.
+	
+	SA_LOGLVL_DIS_SECTE()
 
 
 	const float f1 = 13.2446f;

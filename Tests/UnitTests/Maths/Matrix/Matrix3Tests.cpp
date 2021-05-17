@@ -313,16 +313,12 @@ namespace Sa::Matrix3_UT
 		SA_UTH_RSF(lerp_res05, (Mat3<float, major>::Lerp), m1, m2, 0.5f);
 
 
-#if SA_LOGGING
-		Debug::logger.levelFlags.Remove(LogLevel::Warning);
-#endif
+		SA_LOGLVL_DIS_SECTB(Warning)
 
-		// Intended warning.
-		SA_UTH_RSF(m2, (Mat3<float, major>::Lerp), m1, m2, 2.0f);
+			// Intended warning.
+			SA_UTH_RSF(m2, (Mat3<float, major>::Lerp), m1, m2, 2.0f);
 
-#if SA_LOGGING
-		Debug::logger.levelFlags.Add(LogLevel::Warning);
-#endif
+		SA_LOGLVL_DIS_SECTE()
 
 
 		const Mat3<float, major> ulerp_res1(
