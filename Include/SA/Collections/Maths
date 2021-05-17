@@ -6,6 +6,7 @@
 #define SAPPHIRE_COLLECTIONS_MATHS_GUARD
 
 #include <SA/Collections/Space>
+#include <SA/Collections/Matrix>
 
 // Algorithms.
 #include <SA/Maths/Algorithms/Cos.hpp>

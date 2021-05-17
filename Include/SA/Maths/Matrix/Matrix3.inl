@@ -35,16 +35,16 @@ namespace Sa
 	{
 	}
 
-	//template <typename T, MatrixMajor major>
-	//template <typename TIn>
-	//constexpr Mat3<T, major>::Mat3(const Mat4<TIn, major>& _other) noexcept :
-	//	Intl::Mat3_Base<T, major>(
-	//		static_cast<T>(_other.e00), static_cast<T>(_other.e01), static_cast<T>(_other.e02),
-	//		static_cast<T>(_other.e10), static_cast<T>(_other.e11), static_cast<T>(_other.e12),
-	//		static_cast<T>(_other.e20), static_cast<T>(_other.e21), static_cast<T>(_other.e22)
-	//	)
-	//{
-	//}
+	template <typename T, MatrixMajor major>
+	template <typename TIn>
+	constexpr Mat3<T, major>::Mat3(const Mat4<TIn, major>& _other) noexcept :
+		Intl::Mat3_Base<T, major>(
+			static_cast<T>(_other.e00), static_cast<T>(_other.e01), static_cast<T>(_other.e02),
+			static_cast<T>(_other.e10), static_cast<T>(_other.e11), static_cast<T>(_other.e12),
+			static_cast<T>(_other.e20), static_cast<T>(_other.e21), static_cast<T>(_other.e22)
+		)
+	{
+	}
 
 //}
 
@@ -230,17 +230,9 @@ namespace Sa
 	template <typename T, MatrixMajor major>
 	Mat3<T, major> Mat3<T, major>::Lerp(const Mat3& _start, const Mat3& _end, float _alpha) noexcept
 	{
-		return Mat3(
-			Maths::Lerp(_start.e00, _end.e00, _alpha),
-			Maths::Lerp(_start.e01, _end.e01, _alpha),
-			Maths::Lerp(_start.e02, _end.e02, _alpha),
-			Maths::Lerp(_start.e10, _end.e10, _alpha),
-			Maths::Lerp(_start.e11, _end.e11, _alpha),
-			Maths::Lerp(_start.e12, _end.e12, _alpha),
-			Maths::Lerp(_start.e20, _end.e20, _alpha),
-			Maths::Lerp(_start.e21, _end.e21, _alpha),
-			Maths::Lerp(_start.e22, _end.e22, _alpha)
-		);
+		SA_WARN(_alpha >= 0.0f && _alpha <= 1.0f, Maths, L"Alpha[" << _alpha << L"] clamped to range [0, 1]! Use LerpUnclamped if intended instead.");
+
+		return LerpUnclamped(_start, _end, std::clamp(_alpha, 0.0f, 1.0f));
 	}
 
 	template <typename T, MatrixMajor major>

@@ -29,9 +29,8 @@ namespace Sa
 	template <typename T>
 	struct Quat;
 
-	// TODO: Add later.
-	//template <typename T, MatrixMajor major>
-	//struct Mat4;
+	template <typename T, MatrixMajor major>
+	struct Mat4;
 
 
 	/**
@@ -106,16 +105,15 @@ namespace Sa
 		template <typename TIn>
 		constexpr Mat3(const Mat3<TIn, major>& _other) noexcept;
 
-		// TODO: Add later.
-		///**
-		//*	\brief \e Value constructor from another Mat4 type.
-		//*
-		//*	\tparam TIn			Type of the input Mat4.
-		//*
-		//*	\param[in] _other	Mat4 to construct from.
-		//*/
-		//template <typename TIn>
-		//constexpr Mat3(const Mat4<TIn, major>& _other) noexcept;
+		/**
+		*	\brief \e Value constructor from another Mat4 type.
+		*
+		*	\tparam TIn			Type of the input Mat4.
+		*
+		*	\param[in] _other	Mat4 to construct from.
+		*/
+		template <typename TIn>
+		constexpr Mat3(const Mat4<TIn, major>& _other) noexcept;
 
 //}
 

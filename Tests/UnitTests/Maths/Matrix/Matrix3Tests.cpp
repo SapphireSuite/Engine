@@ -5,6 +5,7 @@
 #include <SA/Maths/Space/Vector3.hpp>
 #include <SA/Maths/Space/Quaternion.hpp>
 #include <SA/Maths/Matrix/Matrix3.hpp>
+#include <SA/Maths/Matrix/Matrix4.hpp>
 using namespace Sa;
 
 namespace Sa::Matrix3_UT
@@ -180,25 +181,25 @@ namespace Sa::Matrix3_UT
 		SA_UTH_EQ(m3.e22, m1.e22);
 
 
-		//// From Mat4.
-		//const Mat4<float, major> m4(
-		//	UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f),
-		//	UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f),
-		//	UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f),
-		//	UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f)
-		//);
+		// From Mat4.
+		const Mat4<float, major> m4(
+			UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f),
+			UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f),
+			UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f),
+			UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f), UTH::Rand(-100.0f, 100.0f)
+		);
 
-		//const Mat3<float, major> m5(m4);
+		const Mat3<float, major> m5(m4);
 
-		//SA_UTH_EQ(m5.e00, m4.e00);
-		//SA_UTH_EQ(m5.e01, m4.e01);
-		//SA_UTH_EQ(m5.e02, m4.e02);
-		//SA_UTH_EQ(m5.e10, m4.e10);
-		//SA_UTH_EQ(m5.e11, m4.e11);
-		//SA_UTH_EQ(m5.e12, m4.e12);
-		//SA_UTH_EQ(m5.e20, m4.e20);
-		//SA_UTH_EQ(m5.e21, m4.e21);
-		//SA_UTH_EQ(m5.e22, m4.e22);
+		SA_UTH_EQ(m5.e00, m4.e00);
+		SA_UTH_EQ(m5.e01, m4.e01);
+		SA_UTH_EQ(m5.e02, m4.e02);
+		SA_UTH_EQ(m5.e10, m4.e10);
+		SA_UTH_EQ(m5.e11, m4.e11);
+		SA_UTH_EQ(m5.e12, m4.e12);
+		SA_UTH_EQ(m5.e20, m4.e20);
+		SA_UTH_EQ(m5.e21, m4.e21);
+		SA_UTH_EQ(m5.e22, m4.e22);
 	}
 
 	template <MatrixMajor major>
