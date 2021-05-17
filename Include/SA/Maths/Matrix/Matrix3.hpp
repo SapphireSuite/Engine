@@ -5,6 +5,7 @@
 #ifndef SAPPHIRE_MATHS_MATRIX3_GUARD
 #define SAPPHIRE_MATHS_MATRIX3_GUARD
 
+#include <SA/Core/Support/Pragma.hpp>
 #include <SA/Core/Support/Intrinsics.hpp>
 
 #include <SA/Maths/Algorithms/Lerp.hpp>
@@ -42,6 +43,9 @@ namespace Sa
 	*/
 
 #if SA_INTRISC
+
+	// Disable padding struct warning.
+	SA_PRAGMA_SDWARN_MSVC(4324)
 
 	template <typename T, MatrixMajor major = MatrixMajor::Default>
 	struct alignas(32) Mat3 : public Intl::Mat3_Base<T, major>
@@ -503,6 +507,13 @@ namespace Sa
 
 #endif
 	};
+
+#if SA_INTRISC
+
+	// Disable padding struct warning.
+	SA_PRAGMA_EDWARN_MSVC()
+
+#endif
 
 
 	/**

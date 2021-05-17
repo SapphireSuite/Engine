@@ -6,8 +6,12 @@
 
 # Max warning level for tests.
 if(MSVC)
-	target_compile_options(SA-Engine PUBLIC /W4)
-else()
+	if(${CMAKE_CXX_COMPILER_ID} MATCHES "Clang") # ClangCl
+		target_compile_options(SA-Engine PUBLIC -W4)
+	else()
+		target_compile_options(SA-Engine PUBLIC /W4)
+	endif()
+elseif()
 	target_compile_options(SA-Engine PUBLIC -Wall -Wextra)
 endif()
 

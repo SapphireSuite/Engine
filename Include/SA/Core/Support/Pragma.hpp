@@ -25,7 +25,7 @@
 
 /// \cond Internal
 
-#if SA_GNU || SA_CLANG && !SA_MSVC
+#if SA_GNU || (SA_CLANG && !SA_MSVC)
 
 	/**
 	*	\brief Push pragma directive.
@@ -130,27 +130,57 @@
 #define SA_PRAGMA_EDWARN() __SA_PRAGMA_POP
 
 
-#if SA_GNU || SA_CLANG && !SA_MSVC
+#if SA_GNU || (SA_CLANG && !SA_MSVC)
 
-	/// \brief \b Start a <em> disabled-warning segment </em>, enabled on <b> GNU and Clang only </b>.
+	/**
+	*	\brief \b Start a <em> disabled-warning segment </em>
+	*	Enabled on \b GNU and \b Clang only
+	*/
 	#define SA_PRAGMA_SDWARN_GNU(_warnName) SA_PRAGMA_SDWARN(_warnName, 0)
+
+	/**
+	*	\b End a <em>disabled-warning segment</em>.
+	*	Enabled on \b GNU and \b Clang only
+	*/
+	#define SA_PRAGMA_EDWARN_GNU() SA_PRAGMA_EDWARN()
 
 #else
 
-	/// \brief \b Start a <em> disabled-warning segment </em>, enabled on <b> GNU and Clang only </b>.
+	/**
+	*	\brief \b Start a <em> disabled-warning segment </em>
+	*	Enabled on \b GNU and \b Clang only
+	*/
 	#define SA_PRAGMA_SDWARN_GNU(_warnName)
+
+	/**
+	*	\b End a <em>disabled-warning segment</em>.
+	*	Enabled on \b GNU and \b Clang only
+	*/
+	#define SA_PRAGMA_EDWARN_GNU()
 
 #endif
 
-#if SA_MSVC
+#if SA_MSVC && !SA_CLANG
 
 	/// \brief \b Start a <em> disabled-warning segment </em>, enabled on <b> MSVC only </b>.
 	#define SA_PRAGMA_SDWARN_MSVC(_warnCode) SA_PRAGMA_SDWARN(None, _warnCode)
+
+	/**
+	*	\b End a <em>disabled-warning segment</em>.
+	*	Enabled on \b MSVC only
+	*/
+	#define SA_PRAGMA_EDWARN_MSVC() SA_PRAGMA_EDWARN()
 
 #else
 
 	/// \brief \b Start a <em> disabled-warning segment </em>, enabled on <b> MSVC only </b>.
 	#define SA_PRAGMA_SDWARN_MSVC(_warnCode)
+
+	/**
+	*	\b End a <em>disabled-warning segment</em>.
+	*	Enabled on \b MSVC only
+	*/
+	#define SA_PRAGMA_EDWARN_MSVC()
 
 #endif
 
