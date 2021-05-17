@@ -137,6 +137,62 @@ namespace Sa
 		*/
 		constexpr bool Equals(const Quat& _other, T _threshold = std::numeric_limits<T>::epsilon()) const noexcept;
 
+
+		/**
+		*	\brief \e Compare 2 quaternion equality.
+		*
+		*	\param[in] _rhs		Other quaternion to compare to.
+		*
+		*	\return Whether this and _rhs are equal.
+		*/
+		constexpr bool operator==(const Quat<T>& _rhs) const noexcept;
+
+		/**
+		*	\brief \e Compare 2 quaternion inequality.
+		*
+		*	\param[in] _rhs		Other quaternion to compare to.
+		*
+		*	\return Whether this and _rhs are non-equal.
+		*/
+		constexpr bool operator!=(const Quat<T>& _rhs) const noexcept;
+
+//}
+
+//{ Accessors
+
+		/**
+		*	\brief \e Getter of quaternion data
+		*
+		*	\return this quaternion as a T*.
+		*/
+		T* Data() noexcept;
+
+		/**
+		*	\brief <em> Const Getter </em> of quaternion data
+		*
+		*	\return this quaternion as a const T*.
+		*/
+		const T* Data() const noexcept;
+
+
+		/**
+		*	\brief \e Access operator by index.
+		*
+		*	\param[in] _index	Index to access: 0 == w, 1 == x, 2 == y, 3 == z.
+		*
+		*	\return T value at index.
+		*/
+		T& operator[](uint32 _index);
+
+		/**
+		*	\brief <em> Const Access </em> operator by index.
+		*
+		*	\param[in] _index	Index to access: 0 == w, 1 == x, 2 == y, 3 == z.
+		*
+		*	\return T value at index.
+		*/
+		T operator[](uint32 _index) const;
+
 //}
 
 //{ Length
@@ -583,63 +639,8 @@ namespace Sa
 		*/
 		Quat& operator/=(const Quat& _rhs) noexcept;
 
-
-		/**
-		*	\brief \e Compare 2 quaternion equality.
-		*
-		*	\param[in] _rhs		Other quaternion to compare to.
-		*
-		*	\return Whether this and _rhs are equal.
-		*/
-		constexpr bool operator==(const Quat<T>& _rhs) const noexcept;
-
-		/**
-		*	\brief \e Compare 2 quaternion inequality.
-		*
-		*	\param[in] _rhs		Other quaternion to compare to.
-		*
-		*	\return Whether this and _rhs are non-equal.
-		*/
-		constexpr bool operator!=(const Quat<T>& _rhs) const noexcept;
-
 //}
 
-//{ Accessors
-
-		/**
-		*	\brief \e Getter of quaternion data
-		*
-		*	\return this quaternion as a T*.
-		*/
-		T* Data() noexcept;
-
-		/**
-		*	\brief <em> Const Getter </em> of quaternion data
-		*
-		*	\return this quaternion as a const T*.
-		*/
-		const T* Data() const noexcept;
-
-
-		/**
-		*	\brief \e Access operator by index.
-		*
-		*	\param[in] _index	Index to access: 0 == w, 1 == x, 2 == y, 3 == z.
-		*
-		*	\return T value at index.
-		*/
-		T& operator[](uint32 _index);
-
-		/**
-		*	\brief <em> Const Access </em> operator by index.
-		*
-		*	\param[in] _index	Index to access: 0 == w, 1 == x, 2 == y, 3 == z.
-		*
-		*	\return T value at index.
-		*/
-		T operator[](uint32 _index) const;
-
-//}
 
 #if SA_LOGGING
 

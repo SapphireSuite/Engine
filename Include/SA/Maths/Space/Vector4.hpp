@@ -144,16 +144,6 @@ namespace Sa
 		*/
 		constexpr bool Equals(const Vec4& _other, T _epsilon = std::numeric_limits<T>::epsilon()) const noexcept;
 
-//}
-
-//{ Operators
-
-		/// Default assignment move operator.
-		Vec4& operator=(Vec4&&) = default;
-
-		/// Default assignment copy operator.
-		Vec4& operator=(const Vec4&) = default;
-
 
 		/**
 		*	\brief \e Compare 2 vector equality.
@@ -162,7 +152,7 @@ namespace Sa
 		*
 		*	\return Whether this and _rhs are equal.
 		*/
-		constexpr bool operator==(const Vec4& _rhs) const noexcept;
+		constexpr bool operator==(const Vec4 & _rhs) const noexcept;
 
 		/**
 		*	\brief \e Compare 2 vector inequality.
@@ -171,8 +161,7 @@ namespace Sa
 		*
 		*	\return Whether this and _rhs are non-equal.
 		*/
-		constexpr bool operator!=(const Vec4& _rhs) const noexcept;
-
+		constexpr bool operator!=(const Vec4 & _rhs) const noexcept;
 //}
 
 //{ Acccessors
@@ -209,6 +198,16 @@ namespace Sa
 		*	\return T value at index.
 		*/
 		const T& operator[](uint32 _index) const;
+
+//}
+
+//{ Operators
+
+		/// Default assignment move operator.
+		Vec4& operator=(Vec4&&) = default;
+
+		/// Default assignment copy operator.
+		Vec4& operator=(const Vec4&) = default;
 
 //}
 

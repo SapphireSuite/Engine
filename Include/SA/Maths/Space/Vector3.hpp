@@ -155,6 +155,62 @@ namespace Sa
 		*/
 		constexpr bool Equals(const Vec3& _other, T _epsilon = std::numeric_limits<T>::epsilon()) const noexcept;
 
+
+		/**
+		*	\brief \e Compare 2 vector equality.
+		*
+		*	\param[in] _rhs		Other vector to compare to.
+		*
+		*	\return Whether this and _rhs are equal.
+		*/
+		constexpr bool operator==(const Vec3 & _rhs) const noexcept;
+
+		/**
+		*	\brief \e Compare 2 vector inequality.
+		*
+		*	\param[in] _rhs		Other vector to compare to.
+		*
+		*	\return Whether this and _rhs are non-equal.
+		*/
+		constexpr bool operator!=(const Vec3 & _rhs) const noexcept;
+
+//}
+
+//{ Accessors
+
+		/**
+		*	\brief \e Getter of vector data
+		*
+		*	\return this vector as a T*.
+		*/
+		T* Data() noexcept;
+
+		/**
+		*	\brief <em> Const Getter </em> of vector data
+		*
+		*	\return this vector as a const T*.
+		*/
+		const T* Data() const noexcept;
+
+
+		/**
+		*	\brief \e Access operator by index: x, y, z using 0, 1, 2.
+		*
+		*	\param[in] _index	Index to access.
+		*
+		*	\return T value at index.
+		*/
+		T& operator[](uint32 _index);
+
+		/**
+		*	\brief <em> Const Access </em> operator by index: x, y, z using 0, 1, 2.
+		*
+		*	\param[in] _index	Index to access.
+		*
+		*	\return T value at index.
+		*/
+		const T& operator[](uint32 _index) const;
+
 //}
 
 //{ Length
@@ -528,63 +584,8 @@ namespace Sa
 		*/
 		Vec3 operator/=(const Vec3& _rhs) noexcept;
 
-
-		/**
-		*	\brief \e Compare 2 vector equality.
-		*
-		*	\param[in] _rhs		Other vector to compare to.
-		*
-		*	\return Whether this and _rhs are equal.
-		*/
-		constexpr bool operator==(const Vec3& _rhs) const noexcept;
-
-		/**
-		*	\brief \e Compare 2 vector inequality.
-		*
-		*	\param[in] _rhs		Other vector to compare to.
-		*
-		*	\return Whether this and _rhs are non-equal.
-		*/
-		constexpr bool operator!=(const Vec3& _rhs) const noexcept;
-
 //}
 
-//{ Accessors
-
-		/**
-		*	\brief \e Getter of vector data
-		*
-		*	\return this vector as a T*.
-		*/
-		T* Data() noexcept;
-
-		/**
-		*	\brief <em> Const Getter </em> of vector data
-		*
-		*	\return this vector as a const T*.
-		*/
-		const T* Data() const noexcept;
-
-
-		/**
-		*	\brief \e Access operator by index: x, y, z using 0, 1, 2.
-		*
-		*	\param[in] _index	Index to access.
-		*
-		*	\return T value at index.
-		*/
-		T& operator[](uint32 _index);
-
-		/**
-		*	\brief <em> Const Access </em> operator by index: x, y, z using 0, 1, 2.
-		*
-		*	\param[in] _index	Index to access.
-		*
-		*	\return T value at index.
-		*/
-		const T& operator[](uint32 _index) const;
-
-//}
 
 #if SA_LOGGING
 

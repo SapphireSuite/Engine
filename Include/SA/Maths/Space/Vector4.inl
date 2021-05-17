@@ -81,9 +81,6 @@ namespace Sa
 			Sa::Equals(w, _other.w, _epsilon);
 	}
 
-//}
-
-//{ Operators
 
 	template <typename T>
 	constexpr bool Vec4<T>::operator==(const Vec4& _rhs) const noexcept
@@ -131,6 +128,13 @@ namespace Sa
 	}
 
 //}
+
+//{ Operators
+
+
+
+//}
+
 
 #if SA_LOGGING
 

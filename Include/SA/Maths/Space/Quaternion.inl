@@ -72,6 +72,52 @@ namespace Sa
 			Sa::Equals(z, _other.z, _threshold);
 	}
 
+
+	template <typename T>
+	constexpr bool Quat<T>::operator==(const Quat<T>& _rhs) const noexcept
+	{
+		return Equals(_rhs);
+	}
+
+	template <typename T>
+	constexpr bool Quat<T>::operator!=(const Quat<T>& _rhs) const noexcept
+	{
+		return !(*this == _rhs);
+	}
+
+//}
+
+//{ Accessors
+
+	template <typename T>
+	T* Quat<T>::Data() noexcept
+	{
+		return &w;
+	}
+
+	template <typename T>
+	const T* Quat<T>::Data() const noexcept
+	{
+		return &w;
+	}
+
+
+	template <typename T>
+	T& Quat<T>::operator[](uint32 _index)
+	{
+		SA_ASSERT(OutOfRange, Maths, _index, 0u, 3u);
+
+		return Data()[_index];
+	}
+
+	template <typename T>
+	T Quat<T>::operator[](uint32 _index) const
+	{
+		SA_ASSERT(OutOfRange, Maths, _index, 0u, 3u);
+
+		return Data()[_index];
+	}
+
 //}
 
 //{ Length
@@ -581,53 +627,8 @@ namespace Sa
 		return *this = Rotate(_rhs.GetInversed());
 	}
 
-
-	template <typename T>
-	constexpr bool Quat<T>::operator==(const Quat<T>& _rhs) const noexcept
-	{
-		return Equals(_rhs);
-	}
-
-	template <typename T>
-	constexpr bool Quat<T>::operator!=(const Quat<T>& _rhs) const noexcept
-	{
-		return !(*this == _rhs);
-	}
-
 //}
 
-//{ Accessors
-
-	template <typename T>
-	T* Quat<T>::Data() noexcept
-	{
-		return &w;
-	}
-
-	template <typename T>
-	const T* Quat<T>::Data() const noexcept
-	{
-		return &w;
-	}
-
-
-	template <typename T>
-	T& Quat<T>::operator[](uint32 _index)
-	{
-		SA_ASSERT(OutOfRange, Maths, _index, 0u, 3u);
-
-		return Data()[_index];
-	}
-
-	template <typename T>
-	T Quat<T>::operator[](uint32 _index) const
-	{
-		SA_ASSERT(OutOfRange, Maths, _index, 0u, 3u);
-
-		return Data()[_index];
-	}
-
-//}
 
 #if SA_LOGGING
 

@@ -72,6 +72,52 @@ namespace Sa
 		return Sa::Equals(x, _other.x, _epsilon) && Sa::Equals(y, _other.y, _epsilon);
 	}
 
+
+	template <typename T>
+	constexpr bool Vec2<T>::operator==(const Vec2& _rhs) const noexcept
+	{
+		return Equals(_rhs);
+	}
+
+	template <typename T>
+	constexpr bool Vec2<T>::operator!=(const Vec2& _rhs) const noexcept
+	{
+		return !(*this == _rhs);
+	}
+
+//}
+
+//{ Accessors
+
+	template <typename T>
+	T* Vec2<T>::Data() noexcept
+	{
+		return &x;
+	}
+
+	template <typename T>
+	const T* Vec2<T>::Data() const noexcept
+	{
+		return &x;
+	}
+
+
+	template <typename T>
+	T& Vec2<T>::operator[](uint32 _index)
+	{
+		SA_ASSERT(OutOfRange, Maths, _index, 0u, 1u);
+
+		return Data()[_index];
+	}
+
+	template <typename T>
+	const T& Vec2<T>::operator[](uint32 _index) const
+	{
+		SA_ASSERT(OutOfRange, Maths, _index, 0u, 1u);
+
+		return Data()[_index];
+	}
+
 //}
 
 //{ Length
@@ -360,50 +406,7 @@ namespace Sa
 	}
 
 
-	template <typename T>
-	constexpr bool Vec2<T>::operator==(const Vec2& _rhs) const noexcept
-	{
-		return Equals(_rhs);
-	}
 
-	template <typename T>
-	constexpr bool Vec2<T>::operator!=(const Vec2& _rhs) const noexcept
-	{
-		return !(*this == _rhs);
-	}
-
-//}
-
-//{ Accessors
-
-	template <typename T>
-	T* Vec2<T>::Data() noexcept
-	{
-		return &x;
-	}
-
-	template <typename T>
-	const T* Vec2<T>::Data() const noexcept
-	{
-		return &x;
-	}
-
-
-	template <typename T>
-	T& Vec2<T>::operator[](uint32 _index)
-	{
-		SA_ASSERT(OutOfRange, Maths, _index, 0u, 1u);
-
-		return Data()[_index];
-	}
-
-	template <typename T>
-	const T& Vec2<T>::operator[](uint32 _index) const
-	{
-		SA_ASSERT(OutOfRange, Maths, _index, 0u, 1u);
-
-		return Data()[_index];
-	}
 
 //}
 
