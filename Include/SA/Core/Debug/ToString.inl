@@ -57,15 +57,15 @@ namespace Sa
 
 
 	template <typename T>
-	std::string operator<<(const char* _lhs, const T& _rhs) noexcept
+	std::string& operator<<(std::string& _lhs, const T& _rhs) noexcept
 	{
-		return ToString(_lhs) + ToString(_rhs);
+		return _lhs += ToString(_rhs);
 	}
 
 	template <typename T>
-	std::string operator<<(const std::string& _lhs, const T& _rhs) noexcept
+	std::string&& operator<<(std::string&& _lhs, const T& _rhs) noexcept
 	{
-		return _lhs + ToString(_rhs);
+		return std::move(_lhs += ToString(_rhs));
 	}
 
 	/// \endcond
@@ -125,21 +125,15 @@ namespace Sa
 
 
 	template <typename T>
-	std::wstring operator<<(const char* _lhs, const T& _rhs) noexcept
+	std::wstring& operator<<(std::wstring& _lhs, const T& _rhs) noexcept
 	{
-		return ToWString(_lhs) + ToWString(_rhs);
+		return _lhs += ToWString(_rhs);
 	}
 
 	template <typename T>
-	std::wstring operator<<(const wchar* _lhs, const T& _rhs) noexcept
+	std::wstring&& operator<<(std::wstring&& _lhs, const T& _rhs) noexcept
 	{
-		return ToWString(_lhs) + ToWString(_rhs);
-	}
-
-	template <typename T>
-	std::wstring operator<<(const std::wstring& _lhs, const T& _rhs) noexcept
-	{
-		return _lhs + ToWString(_rhs);
+		return std::move(_lhs += ToWString(_rhs));
 	}
 
 	/// \endcond

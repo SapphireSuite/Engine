@@ -82,6 +82,10 @@ namespace Sa
 	std::string ToString(const std::vector<T>& _vec) noexcept;
 
 
+	/// ToString spec for single char.
+	template <>
+	SA_ENGINE_API std::string ToString(const char& _char) noexcept;
+
 	/// ToString spec for cstr char*.
 	template <>
 	SA_ENGINE_API std::string ToString(const char* _cstr) noexcept;
@@ -91,13 +95,13 @@ namespace Sa
 	SA_ENGINE_API std::string ToString(const std::string& _str) noexcept;
 
 
-	/// ToString stream operator for char*.
+	/// ToString stream operator for string.
 	template <typename T>
-	std::string operator<<(const char* _lhs, const T& _rhs) noexcept;
+	std::string& operator<<(std::string& _lhs, const T& _rhs) noexcept;
 
 	/// ToString stream operator for string.
 	template <typename T>
-	std::string operator<<(const std::string& _lhs, const T& _rhs) noexcept;
+	std::string&& operator<<(std::string&& _lhs, const T& _rhs) noexcept;
 
 	/// \endcond
 
@@ -146,13 +150,23 @@ namespace Sa
 	std::wstring ToWString(const std::vector<T>& _vec) noexcept;
 
 
+	/// ToString spec for single char.
+	template <>
+	SA_ENGINE_API std::wstring ToWString(const char& _char) noexcept;
+
 	/// ToWString spec for cstr char*.
 	template <>
 	SA_ENGINE_API std::wstring ToWString(const char* _cstr) noexcept;
 
+
+	/// ToString spec for single wchar.
+	template <>
+	SA_ENGINE_API std::wstring ToWString(const wchar& _char) noexcept;
+
 	/// ToWString spec for cstr wchar*.
 	template <>
 	SA_ENGINE_API std::wstring ToWString(const wchar* _cwstr) noexcept;
+
 
 	/// ToWString spec for c++ str.
 	template <>
@@ -163,17 +177,13 @@ namespace Sa
 	SA_ENGINE_API std::wstring ToWString(const std::wstring& _wstr) noexcept;
 
 
-	/// ToWString stream operator for char*.
+	/// ToWString stream operator for wstring.
 	template <typename T>
-	std::wstring operator<<(const char* _lhs, const T& _rhs) noexcept;
-
-	/// ToWString stream operator for wchar*.
-	template <typename T>
-	std::wstring operator<<(const wchar* _lhs, const T& _rhs) noexcept;
+	std::wstring& operator<<(std::wstring& _lhs, const T& _rhs) noexcept;
 
 	/// ToWString stream operator for wstring.
 	template <typename T>
-	std::wstring operator<<(const std::wstring& _lhs, const T& _rhs) noexcept;
+	std::wstring&& operator<<(std::wstring&& _lhs, const T& _rhs) noexcept;
 
 	/// \endcond
 
