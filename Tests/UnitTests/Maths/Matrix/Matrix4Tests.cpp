@@ -456,6 +456,10 @@ namespace Sa::Matrix4_UT
 		);
 		SA_UTH_EQ((Mat4<T, major>::MakeTranslation(vTr)), mTr);
 
+		Mat4<T, major> mTr2 = Mat4<T, major>::Identity;
+		mTr2.ApplyTranslation(vTr);
+		SA_UTH_EQ(mTr2, mTr);
+
 
 		// Rotation.
 
