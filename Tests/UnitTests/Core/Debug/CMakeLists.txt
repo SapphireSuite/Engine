@@ -23,9 +23,6 @@ add_executable(SA-UT_Core_Debug ${SOURCES})
 # Unit test module dependency.
 target_link_libraries(SA-UT_Core_Debug PUBLIC SA-UnitTestHelper)
 
-# Add Engine dependency.
-target_link_libraries(SA-UT_Core_Debug PRIVATE SA-Engine)
-
 
 
 # === Tests ===
