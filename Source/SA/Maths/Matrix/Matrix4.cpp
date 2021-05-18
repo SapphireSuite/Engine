@@ -8,9 +8,7 @@
 
 namespace Sa
 {
-#if SA_INTRISC
-
-//{ SIMD int32
+#if SA_INTRISC_AVX // SIMD int32
 
 //{ Row Major
 
@@ -469,10 +467,9 @@ namespace Sa
 
 //}
 
-//}
+#endif
 
-
-//{ SIMD float
+#if SA_INTRISC_SSE // SIMD float
 
 //{ Row Major
 
@@ -1819,10 +1816,9 @@ namespace Sa
 
 //}
 
-//}
+#endif
 
-
-//{ SIMD double
+#if SA_INTRISC_AVX // SIMD double
 
 //{ Row Major
 
@@ -3401,8 +3397,6 @@ namespace Sa
 
 		return res;
 	}
-
-//}
 
 //}
 

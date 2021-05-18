@@ -459,7 +459,7 @@ namespace Sa::Matrix3_UT
 			m1.e00 * v1.x + m1.e01 * v1.y + m1.e02 * v1.z,
 			m1.e10 * v1.x + m1.e11 * v1.y + m1.e12 * v1.z,
 			m1.e20 * v1.x + m1.e21 * v1.y + m1.e22 * v1.z
-			);
+		);
 		SA_UTH_EQ(m1 * v1, v1_res);
 
 
