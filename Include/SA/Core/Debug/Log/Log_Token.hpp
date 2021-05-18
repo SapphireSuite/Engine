@@ -78,7 +78,7 @@ namespace Sa
 		*	\param[in] _onToken		Callback on token encountered while parsing.
 		*	\param[in] _onStr		Callback on string encountered while parsing.
 		*/
-		SA_ENGINE_API void Parse(void* _userData, void (*_onToken)(void*, wchar), void (*_onStr)(void*, const std::wstring&));
+		SA_ENGINE_API void Parse(void* _userData, void (*_onToken)(void*, wchar), void (*_onStr)(void*, const std::wstring&)) const;
 	};
 
 #endif
