@@ -90,7 +90,24 @@ namespace Sa::UTH
 					log.AddToken(Step::None);
 				}
 				else
-					log.AddString(Sa::ToWString(it->value));
+				{
+					std::wstring vStr = Sa::ToWString(it->value);
+
+					// Indent all '\n' in value string.
+					{
+						const std::wstring indentStr = std::wstring(Intl::instance.GetGroupNum(), L'\t');
+						size_t index = vStr.find(L'\n');
+
+						while (index != std::string::npos)
+						{
+							vStr.insert(index + 1, indentStr);
+
+							index = vStr.find(L'\n', index + indentStr.size() + 1);
+						}
+					}
+
+					log.AddString(vStr);
+				}
 			}
 		}
 

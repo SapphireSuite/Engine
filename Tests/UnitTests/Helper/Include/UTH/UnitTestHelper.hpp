@@ -54,7 +54,7 @@ namespace Sa::UTH
 			SA_STR(Sa::Equals(_lhs, _rhs, ##__VA_ARGS__)),\
 			"",\
 			bRes,\
-			ArgsStr(#_lhs ", " #_rhs ", " #__VA_ARGS__, sLhs, sRhs, ##__VA_ARGS__)\
+			Sa::ArgsStr(#_lhs ", " #_rhs ", " #__VA_ARGS__, sLhs, sRhs, ##__VA_ARGS__)\
 		));\
 	}
 
@@ -99,7 +99,7 @@ namespace Sa::UTH
 			SA_STR(_func(__VA_ARGS__)),\
 			#_res,\
 			bRes,\
-			ArgsStr(SA_STR(_func(__VA_ARGS__)) ", " #_res ", " #__VA_ARGS__, result, sRes, ##__VA_ARGS__)\
+			Sa::ArgsStr(SA_STR(_func(__VA_ARGS__)) ", " #_res ", " #__VA_ARGS__, result, sRes, ##__VA_ARGS__)\
 		));\
 	}
 
@@ -146,7 +146,7 @@ namespace Sa::UTH
 			SA_STR((_caller)._func(__VA_ARGS__)),\
 			#_res,\
 			bRes,\
-			ArgsStr(SA_STR((_caller)._func(__VA_ARGS__)) ", " #_res ", " #__VA_ARGS__, result, sRes, ##__VA_ARGS__)\
+			Sa::ArgsStr(SA_STR((_caller)._func(__VA_ARGS__)) ", " #_res ", " #__VA_ARGS__, result, sRes, ##__VA_ARGS__)\
 		));\
 	}
 
@@ -171,7 +171,7 @@ namespace Sa::UTH
 			SA_STR(_lhs _op _rhs),\
 			"",\
 			bRes,\
-			ArgsStr(#_lhs ", " #_rhs, sLhs, sRhs)\
+			Sa::ArgsStr(#_lhs ", " #_rhs, sLhs, sRhs)\
 		));\
 	}
 
@@ -199,7 +199,7 @@ namespace Sa::UTH
 			SA_STR(_lhs _op _rhs),\
 			#_res,\
 			bRes,\
-			ArgsStr(SA_STR(_lhs _op _rhs) ", " #_res ", " #_lhs ", " #_rhs, result, sRes, sLhs, sRhs)\
+			Sa::ArgsStr(SA_STR(_lhs _op _rhs) ", " #_res ", " #_lhs ", " #_rhs, result, sRes, sLhs, sRhs)\
 		));\
 	}
 
