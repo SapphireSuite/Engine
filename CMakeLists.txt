@@ -47,24 +47,30 @@ target_compile_features(SA-Engine PUBLIC cxx_std_17)
 # SA-Engine module implementation preprocessor.
 target_compile_definitions(SA-Engine PUBLIC SA_ENGINE_IMPL)
 
+
 # Thread
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 target_link_libraries(SA-Engine PUBLIC Threads::Threads)
 
+
 # std::filesystem.
-if(MSVC)
-elseif (${CMAKE_CXX_COMPILER_ID} MATCHES "GNU" AND ${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS "9.0.0")
+if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU" AND ${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS "9.0.0")
 	target_link_libraries(SA-Engine PUBLIC stdc++fs)
-elseif (${CMAKE_CXX_COMPILER_ID} MATCHES "Clang" AND ${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS "10.0.0")
-	# TODO: Wait for gh action fix.
-	#target_link_libraries(SA-Engine PUBLIC c++fs)
+endif()
+
+
+# SIMD support
+if("${CMAKE_CXX_COMPILER_ID}" MATCHES "MSVC")
+	target_compile_options(SA-Engine PUBLIC /arch:AVX2)
+else()
+	target_compile_options(SA-Engine PUBLIC -mavx -mavx2)
 endif()
 
 
 # Advanced MSVC preprocessor required for Core::Debug
 # https://docs.microsoft.com/en-us/cpp/preprocessor/preprocessor-experimental-overview
-if(MSVC AND NOT ${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")  # Not allowed on Clang-cl for Visual Studio.
+if("${CMAKE_CXX_COMPILER_ID}" MATCHES "MSVC")
 	if(${MSVC_TOOLSET_VERSION} LESS 142)
 		target_compile_options(SA-Engine PUBLIC /experimental:preprocessor)
 	else()

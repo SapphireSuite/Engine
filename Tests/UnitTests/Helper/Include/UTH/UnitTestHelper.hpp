@@ -12,6 +12,9 @@
 
 #include <UTH/Instance.hpp>
 
+// TODO: Remove later, use Engine Random impl.
+#include <UTH/Random.hpp>
+
 namespace Sa::UTH
 {
 	/**

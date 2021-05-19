@@ -1,0 +1,11 @@
+// Copyright (c) 2021 Sapphire Development Team. All Rights Reserved.
+
+#pragma once
+
+#ifndef SAPPHIRE_COLLECTIONS_MATRIX_GUARD
+#define SAPPHIRE_COLLECTIONS_MATRIX_GUARD
+
+#include <SA/Maths/Matrix/Matrix3.hpp>
+#include <SA/Maths/Matrix/Matrix4.hpp>
+
+#endif // GUARD

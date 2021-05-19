@@ -15,13 +15,13 @@ namespace Sa::UTH
 	class Test
 	{
 	public:
-		const std::wstring& file;
+		std::wstring file;
 		
 		uint32 line = 0u;
 
-		const std::string& function;
+		std::string function;
 
-		const std::string& result;
+		std::string result;
 
 		/// Test restult predicate.
 		bool bResult = false;

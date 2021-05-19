@@ -33,7 +33,7 @@ namespace Sa
 	}
 
 
-	void Log_Token::Parse(void* _userData, void (*_onToken)(void*, wchar), void (*_onStr)(void*, const std::wstring&))
+	void Log_Token::Parse(void* _userData, void (*_onToken)(void*, wchar), void (*_onStr)(void*, const std::wstring&)) const
 	{
 		uint64 offset = 0u;
 		uint64 index = 0u;

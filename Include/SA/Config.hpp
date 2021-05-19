@@ -30,6 +30,11 @@
 /// Sapphire Engine global namespace
 namespace Sa
 {
+	/// Sapphire Engine Maths algorithms implementations.
+	namespace Maths
+	{
+	}
+
 	/// Sapphire Engine Documentation classes implementations.
 	namespace Doc
 	{
@@ -81,6 +86,32 @@ namespace Sa
 *	\defgroup Core_Time Time
 *	Sapphire Engine Core Time.
 *	\ingroup Core
+*/
+
+
+// ====== Maths ======
+
+/**
+*	\defgroup Maths Maths
+*	Sapphire Engine Maths Module.
+*/
+
+/**
+*	\defgroup Maths_Algorithms Algorithms
+*	Sapphire Engine Maths Algorithms.
+*	\ingroup Maths
+*/
+
+/**
+*	\defgroup Maths_Space Space
+*	Sapphire Engine Maths Space.
+*	\ingroup Maths
+*/
+
+/**
+*	\defgroup Maths_Misc Misc
+*	Sapphire Engine Maths Misc.
+*	\ingroup Maths
 */
 
 

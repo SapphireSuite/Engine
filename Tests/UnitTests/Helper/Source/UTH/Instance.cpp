@@ -27,16 +27,15 @@ namespace Sa::UTH
 		Log log = __SA_UTH_MAKE_LOG();
 
 		log.AddToken(Step::Init);
-		log.AddString(L"[SA-UTH] Init");
+		log.AddString(L"[SA-UTH] Init ");
 
-		//SetConsoleColor(CslColor::Init);
 
-		//// Init rand.
-		//time_t currTime = time(NULL);
-		//srand(static_cast<unsigned int>(currTime));
-		//SA_UTH_LOG("[SA-UTH] Init Rand seed: " << currTime);
+		// Init rand. TODO: Remove later, use engine Random impl.
+		time_t currTime = time(NULL);
+		srand(static_cast<unsigned int>(currTime));
+		log.AddString(L"Rand seed: " + ToWString(currTime));
 
-		//SetConsoleColor(CslColor::None);
+		logger.Log(log);
 	}
 	
 	int32 Instance::Exit(bool _bForce)
@@ -104,20 +103,22 @@ namespace Sa::UTH
 	void Instance::Process(const Test& _test)
 	{
 		mCounter.Increment(_test.bResult);
-		
+
 		UpdateGroups(_test.bResult);
 
 		if (!_test.bResult || (verbosity & Verbosity::Success)) // Should log test.
 			logger.Log(_test.MakeLog());
 
-		if(!_test.bResult)
+		if (!_test.bResult)
+		{
 			exit = EXIT_FAILURE;
 
 #if SA_UTH_EXIT_ON_FAILURE
 
-		Exit(true);
+			Exit(true);
 
 #endif
+		}
 	}
 
 	uint32 Instance::GetGroupNum() const
@@ -166,7 +167,7 @@ namespace Sa::UTH
 			Log log = __SA_UTH_MAKE_LOG();
 
 			log.AddToken(Step::GroupEnd);
-			log.AddString(L"[SA-UTH] Group:\t" + Sa::ToWString(group.name) + L"run: ");
+			log.AddString(L"[SA-UTH] Group:\t" + Sa::ToWString(group.name) + L" run: ");
 			group.count.AppendLog(log);
 
 			log.AddToken(Step::GroupEnd);

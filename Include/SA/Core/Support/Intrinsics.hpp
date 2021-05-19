@@ -5,8 +5,11 @@
 #ifndef SAPPHIRE_CORE_INTRINSICS_GUARD
 #define SAPPHIRE_CORE_INTRINSICS_GUARD
 
+#include <SA/Core/Debug/Config.hpp>
+
 #include <SA/Core/Support/ModuleAPI.hpp>
 #include <SA/Core/Support/Compilers.hpp>
+#include <SA/Core/Support/Architectures.hpp>
 
 /**
 *	\file Intrinsics.hpp
@@ -30,8 +33,6 @@
 
 #else
 
-	// TODO: Add intrinsics platform dependency.
-
 	/// Sapphire Engine intrinsics support preprocessor.
 	#define SA_INTRISC 1
 
@@ -40,20 +41,71 @@
 
 #if SA_INTRISC || defined(DOXYGEN)
 
-	#include <immintrin.h>
+	// SSE / SSE2.
+	#if SA_x64
 
-	#if SA_CLANG || SA_GNU
+		/// SSE intrinsics support preprocessor.
+		#define SA_INTRISC_SSE 1
 
-		#include <avxintrin.h>
-		#include <avx2intrin.h>
+		#include <immintrin.h>
 
-		/// Sapphire Engine intrinsics SVML support preprocessor.
-		#define SA_INTRISC_SVML 0
+	#else
 
-	#elif SA_MSVC
+		/// SSE intrinsics support preprocessor.
+		#define SA_INTRISC_SSE 0
 
-		/// Sapphire Engine intrinsics SVML support preprocessor.
+	#endif
+
+	// AVX.
+	#if __AVX__
+
+		/// AVX intrinsics support preprocessor.
+		#define SA_INTRISC_AVX 1
+
+		#if SA_CLANG || SA_GNU
+
+			#include <avxintrin.h>
+
+		#endif
+
+	#else
+
+		/// AVX intrinsics support preprocessor.
+		#define SA_INTRISC_AVX 0
+
+	#endif
+
+
+	// AVX2.
+	#if __AVX2__
+
+		/// AVX2 intrinsics support preprocessor.
+		#define SA_INTRISC_AVX2 1
+
+		#if SA_CLANG || SA_GNU
+
+			#include <avx2intrin.h>
+
+		#endif
+
+	#else
+
+		/// AVX2 intrinsics support preprocessor.
+		#define SA_INTRISC_AVX2 0
+
+	#endif
+
+
+	// SVML.
+	#if SA_MSVC && !SA_CLANG // Not supported on clang-cl.
+
+		/// SVML intrinsics support preprocessor.
 		#define SA_INTRISC_SVML 1
+
+	#else
+
+		/// SVML intrinsics support preprocessor.
+		#define SA_INTRISC_SVML 0
 
 	#endif
 

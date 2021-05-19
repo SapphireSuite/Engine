@@ -1,0 +1,177 @@
+# Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
+
+name: Windows Build & CTests
+
+
+# Trigger the action.
+on:
+  push:
+    branches:
+      - main
+      - master
+      - dev
+      - dev_*
+
+
+# Settings common to all jobs.
+defaults:
+  run:
+    shell: bash
+
+# Variables common to all jobs.
+env:
+  CMAKE_V: '3.17.0'
+  CMAKE_OPTIONS: '-DSA_CI=1 -DSA_ENGINE_BUILD_TESTS=ON'
+
+# Job matrix
+jobs:
+
+  ctests_win:
+    name: Default
+
+    # Setup environment.
+    runs-on: windows-latest
+
+    strategy:
+
+      # Don't cancel jobs on failure.
+      fail-fast: false
+
+      matrix:
+
+        config:
+          - Debug
+          - Release
+
+        compiler:
+          - Clang
+
+        compiler_v: [10]
+
+        gen:
+          - Ninja
+
+
+    # Steps execution.
+    steps:
+
+        - name: "[Action] Checkout repository"
+          uses: actions/checkout@v2
+          with:
+            submodules: recursive
+
+
+        # Install Clang.
+        - name: "[Package] Install LLVM and Clang"
+          if: ${{ matrix.compiler == 'Clang' }}
+          run: |
+              choco install -y llvm --version=${{ matrix.compiler_v }}.0.0
+              echo "CC=C:/Program Files/LLVM/bin/clang" >> $GITHUB_ENV
+              echo "CXX=C:/Program Files/LLVM/bin/clang++" >> $GITHUB_ENV
+
+
+        # Install CMake.
+        - name: "[Action] Install CMake"
+          uses: jwlawson/actions-setup-cmake@v1.8
+          with:
+            cmake-version: ${{ env.CMAKE_V }}
+
+
+        # Install Ninja.
+        - name: "[Action] Install Ninja 1/2"
+          if: ${{ matrix.gen == 'Ninja' }}
+          uses: seanmiddleditch/gha-setup-ninja@master
+
+        # Set env variables.
+        - name: "[Command] Install Ninja 2/2"
+          if: ${{ matrix.gen == 'Ninja' }}
+          run: echo "GEN=Ninja" >> $GITHUB_ENV
+
+
+        # Deploy & Build & Test
+
+        # Default
+        - name: Generate Project
+          run: cmake -B Build/${{ matrix.gen }}/${{ matrix.config }} -DCMAKE_BUILD_TYPE=${{ matrix.config }} ${{ env.CMAKE_OPTIONS }} -G "${GEN}"
+
+        - name: Build Project
+          run: cmake --build Build/${{ matrix.gen }}/${{ matrix.config }} --config ${{ matrix.config }} --verbose
+
+        - name: Run CTests
+          run: cd Build/${{ matrix.gen }}/${{ matrix.config }} && ctest -C ${{ matrix.config }} -V
+
+
+
+  # Windows CTest.
+  ctests_win_VS2019:
+    name: VS2019
+
+    if: ${{ false }} # Disabled from now
+
+    # Setup environment.
+    runs-on: windows-latest
+
+    strategy:
+
+      # Don't cancel jobs on failure.
+      fail-fast: false
+
+      matrix:
+
+        config:
+          - Debug
+          - Release
+
+        compiler:
+          - MSVC
+          - Clang
+
+        compiler_v: [10]
+
+
+    # Steps execution.
+    steps:
+
+        - name: "[Action] Checkout repository"
+          uses: actions/checkout@v2
+          with:
+            submodules: recursive
+
+
+        # Install Clang.
+        - name: "[Command] Install LLVM and Clang"
+          if: ${{ matrix.compiler == 'Clang' }}
+          run: |
+              echo "CC=clang-cl" >> $GITHUB_ENV
+              echo "CXX=clang-cl" >> $GITHUB_ENV
+
+
+        # Install CMake.
+        - name: "[Action] Install CMake"
+          uses: jwlawson/actions-setup-cmake@v1.8
+          with:
+            cmake-version: ${{ env.CMAKE_V }}
+
+
+        # Install VS2019.
+        - name: "[Command] Install VS2019"
+          run: echo "GEN=Visual Studio 16 2019" >> $GITHUB_ENV
+
+
+        # Deploy & Build & Test
+
+        # Visual Studio only
+        - name: Generate Project - VS2019
+          if: ${{ matrix.compiler != 'Clang' }}
+          run: cmake -B Build/VS2019/${{ matrix.config }} -DCMAKE_BUILD_TYPE=${{ matrix.config }} ${{ env.CMAKE_OPTIONS }} -G "${GEN}" -A x64
+
+        # Visual Studio with ClangCl
+        - name: Generate Project - ClangCl
+          if: ${{ matrix.compiler == 'Clang' }}
+          run: cmake -B Build/VS2019/${{ matrix.config }} -DCMAKE_BUILD_TYPE=${{ matrix.config }} ${{ env.CMAKE_OPTIONS }} -G "${GEN}" -A x64 -T "ClangCl"
+
+        - name: Build Project
+          run: cmake --build Build/VS2019/${{ matrix.config }} --config ${{ matrix.config }} --verbose
+
+        - name: Run CTests
+          run: cd Build/VS2019/${{ matrix.config }} && ctest -C ${{ matrix.config }} -V

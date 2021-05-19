@@ -1,0 +1,24 @@
+// Copyright (c) 2021 Sapphire Development Team. All Rights Reserved.
+
+#pragma once
+
+#ifndef SAPPHIRE_COLLECTIONS_MATHS_GUARD
+#define SAPPHIRE_COLLECTIONS_MATHS_GUARD
+
+#include <SA/Collections/Space>
+#include <SA/Collections/Matrix>
+
+// Algorithms.
+#include <SA/Maths/Algorithms/Cos.hpp>
+#include <SA/Maths/Algorithms/Sin.hpp>
+#include <SA/Maths/Algorithms/Tan.hpp>
+#include <SA/Maths/Algorithms/Sign.hpp>
+#include <SA/Maths/Algorithms/Sqrt.hpp>
+#include <SA/Maths/Algorithms/Lerp.hpp>
+
+// Misc.
+#include <SA/Maths/Misc/Constants.hpp>
+#include <SA/Maths/Misc/Degree.hpp>
+#include <SA/Maths/Misc/Radian.hpp>
+
+#endif // GUARD

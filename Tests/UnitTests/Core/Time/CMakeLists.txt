@@ -23,9 +23,6 @@ add_executable(SA-UT_Core_Time ${SOURCES})
 # Unit test module dependency.
 target_link_libraries(SA-UT_Core_Time PUBLIC SA-UnitTestHelper)
 
-# Add Engine dependency.
-target_link_libraries(SA-UT_Core_Time PRIVATE SA-Engine)
-
 
 
 # === Tests ===

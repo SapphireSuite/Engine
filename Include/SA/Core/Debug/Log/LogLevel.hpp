@@ -8,6 +8,7 @@
 #include <SA/Config.hpp>
 
 #include <SA/Core/Types/Char.hpp>
+#include <SA/Core/Types/Variadics/RAII.hpp>
 #include <SA/Core/Types/Variadics/Flags.hpp>
 
 #include <SA/Core/Debug/Config.hpp>
@@ -67,6 +68,46 @@ namespace Sa
 	*	\return			Name of the enum.
 	*/
 	SA_ENGINE_API const wchar* GetLogLevelName(LogLevel _lvl) noexcept;
+
+
+	/**
+	*	\brief RAII specialization for LogLvl.
+	* 
+	*	Disable input Loglevel on construction, re-enable on destruction.
+	* 
+	*	Use //TODO:
+	*
+	*	\implements RAII
+	*/
+	template<>
+	class RAII<LogLvl>
+	{
+		/// Handled level.
+		LogLvl mHandle = LogLvl::Normal;
+
+	public:
+		/**
+		*	\brief \e Value constructor
+		*
+		*	\param[in] _lvl		LogLevel to disable.
+		*/
+		SA_ENGINE_API RAII(LogLvl _lvl) noexcept;
+
+		/// Re-enable log level.
+		SA_ENGINE_API ~RAII() noexcept;
+	};
+
+	/// \brief Start disable log level section.
+	#define SA_LOGLVL_DIS_SECTB(_lvl) { RAII<LogLvl> __r(LogLevel::_lvl);
+
+	/// \brief End disable log level section.
+	#define SA_LOGLVL_DIS_SECTE() }
+
+#else
+
+	#define SA_LOGLVL_DIS_SECTB(...) {}
+
+	#define SA_LOGLVL_DIS_SECTE(...) {}
 
 #endif
 }
