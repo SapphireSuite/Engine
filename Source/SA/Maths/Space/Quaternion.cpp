@@ -11,12 +11,10 @@ namespace Sa
 	template <>
 	float Quatf::SqrLength() const noexcept
 	{
-		__m128 pack = _mm_load_ps(&w);
+		const __m128 pack = _mm_load_ps(&w);
 
-		pack = _mm_mul_ps(pack, pack);
-		
 		float fp[4];
-		_mm_store_ps(fp, pack);
+		_mm_store_ps(fp, _mm_mul_ps(pack, pack));
 
 		return fp[0] + fp[1] + fp[2] + fp[3];
 	}
@@ -30,7 +28,7 @@ namespace Sa
 		const __m128 pack = _mm_load_ps(&w);
 
 		const __m128 resP = _mm_div_ps(pack, lenP);
-		_mm_store_ps(Data(), resP);
+		_mm_store_ps(&w, resP);
 
 		return *this;
 	}
@@ -45,8 +43,7 @@ namespace Sa
 		const __m128 lenP = _mm_set_ps1(Length());
 		const __m128 pack = _mm_load_ps(&w);
 
-		const __m128 resP = _mm_div_ps(pack, lenP);
-		_mm_store_ps(res.Data(), resP);
+		_mm_store_ps(&res.w, _mm_div_ps(pack, lenP));
 
 		return res;
 	}
@@ -75,8 +72,7 @@ namespace Sa
 		const __m128 yPmqVP3 = _mm_mul_ps(yP, qVP3);
 		const __m128 zPmqVP4 = _mm_mul_ps(zP, qVP4);
 
-		const __m128 resP = _mm_add_ps(_mm_add_ps(wPmqVP1, xPmqVP2), _mm_add_ps(yPmqVP3, zPmqVP4));
-		_mm_store_ps(res.Data(), resP);
+		_mm_store_ps(&res.w, _mm_add_ps(_mm_add_ps(wPmqVP1, xPmqVP2), _mm_add_ps(yPmqVP3, zPmqVP4)));
 
 		return res;
 	}
@@ -88,10 +84,8 @@ namespace Sa
 		const __m128 lPack = _mm_load_ps(&_lhs.w);
 		const __m128 rPack = _mm_load_ps(&_rhs.w);
 
-		const __m128 res = _mm_mul_ps(lPack, rPack);
-
 		float fp[4];
-		_mm_store_ps(fp, res);
+		_mm_store_ps(fp, _mm_mul_ps(lPack, rPack));
 
 		return fp[0] + fp[1] + fp[2] + fp[3];
 	}
@@ -120,9 +114,8 @@ namespace Sa
 		const __m256 p3 = _mm256_set_ps(0.0f, 0.0f, 0.0f, x, z, -z, y, y);
 		const __m256 p4 = _mm256_set_ps(0.0f, 0.0f, 0.0f, y, z, x, z, y);
 
-		const __m256 pTotal = _mm256_mul_ps(pDbl, _mm256_add_ps(_mm256_mul_ps(p1, p2), _mm256_mul_ps(p3, p4)));
 		float fTotal[8];
-		_mm256_store_ps(fTotal, pTotal);
+		_mm256_store_ps(fTotal, _mm256_mul_ps(pDbl, _mm256_add_ps(_mm256_mul_ps(p1, p2), _mm256_mul_ps(p3, p4))));
 
 		// Pitch - X axis.
 		result.x = Maths::ATan2(fTotal[1], 1.0f - fTotal[0]); // atan2(sinPitch, cosPitch).
@@ -146,7 +139,7 @@ namespace Sa
 	{
 		Quat res;
 
-		Vec3<Radf> halfRadAngles = Vec3f(_angles) * 0.5f * static_cast<float>(Maths::DegToRad);
+		const Vec3<Radf> halfRadAngles = Vec3f(_angles) * 0.5f * static_cast<float>(Maths::DegToRad);
 
 		const float cosPitch = Maths::Cos(halfRadAngles.x);
 		const float sinPitch = Maths::Sin(halfRadAngles.x);
@@ -158,21 +151,20 @@ namespace Sa
 		const float sinRoll = Maths::Sin(halfRadAngles.z);
 
 
-		__m128 pitchP1 = _mm_set_ps(cosPitch, cosPitch, sinPitch, cosPitch);
-		__m128 yawP1 = _mm_set_ps(cosYaw, sinYaw, cosYaw, cosYaw);
-		__m128 rollP1 = _mm_set_ps(sinRoll, cosRoll, cosRoll, cosRoll);
+		const __m128 pitchP1 = _mm_set_ps(cosPitch, cosPitch, sinPitch, cosPitch);
+		const __m128 yawP1 = _mm_set_ps(cosYaw, sinYaw, cosYaw, cosYaw);
+		const __m128 rollP1 = _mm_set_ps(sinRoll, cosRoll, cosRoll, cosRoll);
 
-		__m128 lhs = _mm_mul_ps(_mm_mul_ps(pitchP1, yawP1), rollP1);
+		const __m128 lhs = _mm_mul_ps(_mm_mul_ps(pitchP1, yawP1), rollP1);
 
 
-		__m128 pitchP2 = _mm_set_ps(-sinPitch, sinPitch, -cosPitch, sinPitch);
-		__m128 yawP2 = _mm_set_ps(sinYaw, cosYaw, sinYaw, sinYaw);
-		__m128 rollP2 = _mm_set_ps(cosRoll, sinRoll, sinRoll, sinRoll);
+		const __m128 pitchP2 = _mm_set_ps(-sinPitch, sinPitch, -cosPitch, sinPitch);
+		const __m128 yawP2 = _mm_set_ps(sinYaw, cosYaw, sinYaw, sinYaw);
+		const __m128 rollP2 = _mm_set_ps(cosRoll, sinRoll, sinRoll, sinRoll);
 
-		__m128 rhs = _mm_mul_ps(_mm_mul_ps(pitchP2, yawP2), rollP2);
+		const __m128 rhs = _mm_mul_ps(_mm_mul_ps(pitchP2, yawP2), rollP2);
 
-		const __m128 resP = _mm_add_ps(lhs, rhs);
-		_mm_store_ps(res.Data(), resP);
+		_mm_store_ps(&res.w, _mm_add_ps(lhs, rhs));
 
 		return res;
 	}
@@ -186,8 +178,7 @@ namespace Sa
 		const __m128 scP = _mm_set_ps1(_scale);
 		const __m128 pack = _mm_load_ps(&w);
 
-		const __m128 resP = _mm_mul_ps(pack, scP);
-		_mm_store_ps(res.Data(), resP);
+		_mm_store_ps(&res.w, _mm_mul_ps(pack, scP));
 
 		return res;
 	}
@@ -202,8 +193,7 @@ namespace Sa
 		const __m128 scP = _mm_set_ps1(_scale);
 		const __m128 pack = _mm_load_ps(&w);
 
-		const __m128 resP = _mm_div_ps(pack, scP);
-		_mm_store_ps(res.Data(), resP);
+		_mm_store_ps(&res.w, _mm_div_ps(pack, scP));
 
 		return res;
 	}
@@ -216,8 +206,7 @@ namespace Sa
 		const __m128 lPack = _mm_load_ps(&w);
 		const __m128 rPack = _mm_load_ps(&_rhs.w);
 
-		const __m128 resP = _mm_add_ps(lPack, rPack);
-		_mm_store_ps(res.Data(), resP);
+		_mm_store_ps(&res.w, _mm_add_ps(lPack, rPack));
 
 		return res;
 	}
@@ -230,8 +219,7 @@ namespace Sa
 		const __m128 lPack = _mm_load_ps(&w);
 		const __m128 rPack = _mm_load_ps(&_rhs.w);
 
-		const __m128 resP = _mm_sub_ps(lPack, rPack);
-		_mm_store_ps(res.Data(), resP);
+		_mm_store_ps(&res.w, _mm_sub_ps(lPack, rPack));
 
 		return res;
 	}
@@ -244,7 +232,7 @@ namespace Sa
 		const __m128 pack = _mm_load_ps(&w);
 
 		const __m128 resP = _mm_mul_ps(pack, scP);
-		_mm_store_ps(Data(), resP);
+		_mm_store_ps(&w, resP);
 
 		return *this;
 	}
@@ -258,7 +246,7 @@ namespace Sa
 		const __m128 pack = _mm_load_ps(&w);
 
 		const __m128 resP = _mm_div_ps(pack, scP);
-		_mm_store_ps(Data(), resP);
+		_mm_store_ps(&w, resP);
 
 		return *this;
 	}
@@ -270,7 +258,7 @@ namespace Sa
 		const __m128 rPack = _mm_load_ps(&_rhs.w);
 
 		const __m128 resP = _mm_add_ps(lPack, rPack);
-		_mm_store_ps(Data(), resP);
+		_mm_store_ps(&w, resP);
 
 		return *this;
 	}
@@ -282,7 +270,7 @@ namespace Sa
 		const __m128 rPack = _mm_load_ps(&_rhs.w);
 
 		const __m128 resP = _mm_sub_ps(lPack, rPack);
-		_mm_store_ps(Data(), resP);
+		_mm_store_ps(&w, resP);
 
 		return *this;
 	}
@@ -301,8 +289,7 @@ namespace Sa
 		const __m128 lPack = _mm_set_ps1(_lhs);
 		const __m128 rPack = _mm_load_ps(&_rhs.w);
 
-		const __m128 resP = _mm_div_ps(lPack, rPack);
-		_mm_store_ps(res.Data(), resP);
+		_mm_store_ps(&res.w, _mm_div_ps(lPack, rPack));
 
 		return res;
 	}
@@ -314,12 +301,10 @@ namespace Sa
 	template <>
 	double Quatd::SqrLength() const noexcept
 	{
-		__m256d pack = _mm256_load_pd(&w);
+		const __m256d pack = _mm256_load_pd(&w);
 
-		pack = _mm256_mul_pd(pack, pack);
-		
 		double dp[4];
-		_mm256_store_pd(dp, pack);
+		_mm256_store_pd(dp, _mm256_mul_pd(pack, pack));
 
 		return dp[0] + dp[1] + dp[2] + dp[3];
 	}
@@ -333,7 +318,7 @@ namespace Sa
 		const __m256d pack = _mm256_load_pd(&w);
 
 		const __m256d resP = _mm256_div_pd(pack, lenP);
-		_mm256_store_pd(Data(), resP);
+		_mm256_store_pd(&w, resP);
 
 		return *this;
 	}
@@ -348,8 +333,7 @@ namespace Sa
 		const __m256d lenP = _mm256_set1_pd(Length());
 		const __m256d pack = _mm256_load_pd(&w);
 
-		const __m256d resP = _mm256_div_pd(pack, lenP);
-		_mm256_store_pd(res.Data(), resP);
+		_mm256_store_pd(&res.w, _mm256_div_pd(pack, lenP));
 
 		return res;
 	}
@@ -378,8 +362,7 @@ namespace Sa
 		const __m256d yPmqVP3 = _mm256_mul_pd(yP, qVP3);
 		const __m256d zPmqVP4 = _mm256_mul_pd(zP, qVP4);
 
-		const __m256d resP = _mm256_add_pd(_mm256_add_pd(wPmqVP1, xPmqVP2), _mm256_add_pd(yPmqVP3, zPmqVP4));
-		_mm256_store_pd(res.Data(), resP);
+		_mm256_store_pd(&res.w, _mm256_add_pd(_mm256_add_pd(wPmqVP1, xPmqVP2), _mm256_add_pd(yPmqVP3, zPmqVP4)));
 
 		return res;
 	}
@@ -391,10 +374,8 @@ namespace Sa
 		const __m256d lPack = _mm256_load_pd(&_lhs.w);
 		const __m256d rPack = _mm256_load_pd(&_rhs.w);
 
-		const __m256d resP = _mm256_mul_pd(lPack, rPack);
-
 		double dp[4];
-		_mm256_store_pd(dp, resP);
+		_mm256_store_pd(dp, _mm256_mul_pd(lPack, rPack));
 
 		return dp[0] + dp[1] + dp[2] + dp[3];
 	}
@@ -423,10 +404,8 @@ namespace Sa
 		const __m256d p3 = _mm256_set_pd(x, z, y, y);
 		const __m256d p4 = _mm256_set_pd(y, z, z, y);
 
-		const __m256d pTotal = _mm256_mul_pd(pDbl, _mm256_add_pd(_mm256_mul_pd(p1, p2), _mm256_mul_pd(p3, p4)));
-		
 		double dTotal[4];
-		_mm256_store_pd(dTotal, pTotal);
+		_mm256_store_pd(dTotal, _mm256_mul_pd(pDbl, _mm256_add_pd(_mm256_mul_pd(p1, p2), _mm256_mul_pd(p3, p4))));
 
 
 		double cosPitch = 1.0 - dTotal[0];
@@ -472,7 +451,7 @@ namespace Sa
 	{
 		Quat res;
 
-		Vec3<Radd> halfRadAngles = Vec3d(_angles) * 0.5 * Maths::DegToRad;
+		const Vec3<Radd> halfRadAngles = Vec3d(_angles) * 0.5 * Maths::DegToRad;
 
 		const double cosPitch = Maths::Cos(halfRadAngles.x);
 		const double sinPitch = Maths::Sin(halfRadAngles.x);
@@ -484,21 +463,20 @@ namespace Sa
 		const double sinRoll = Maths::Sin(halfRadAngles.z);
 
 
-		__m256d pitchP1 = _mm256_set_pd(cosPitch, cosPitch, sinPitch, cosPitch);
-		__m256d yawP1 = _mm256_set_pd(cosYaw, sinYaw, cosYaw, cosYaw);
-		__m256d rollP1 = _mm256_set_pd(sinRoll, cosRoll, cosRoll, cosRoll);
+		const __m256d pitchP1 = _mm256_set_pd(cosPitch, cosPitch, sinPitch, cosPitch);
+		const __m256d yawP1 = _mm256_set_pd(cosYaw, sinYaw, cosYaw, cosYaw);
+		const __m256d rollP1 = _mm256_set_pd(sinRoll, cosRoll, cosRoll, cosRoll);
 
-		__m256d lhs = _mm256_mul_pd(_mm256_mul_pd(pitchP1, yawP1), rollP1);
+		const __m256d lhs = _mm256_mul_pd(_mm256_mul_pd(pitchP1, yawP1), rollP1);
 
 
-		__m256d pitchP2 = _mm256_set_pd(-sinPitch, sinPitch, -cosPitch, sinPitch);
-		__m256d yawP2 = _mm256_set_pd(sinYaw, cosYaw, sinYaw, sinYaw);
-		__m256d rollP2 = _mm256_set_pd(cosRoll, sinRoll, sinRoll, sinRoll);
+		const __m256d pitchP2 = _mm256_set_pd(-sinPitch, sinPitch, -cosPitch, sinPitch);
+		const __m256d yawP2 = _mm256_set_pd(sinYaw, cosYaw, sinYaw, sinYaw);
+		const __m256d rollP2 = _mm256_set_pd(cosRoll, sinRoll, sinRoll, sinRoll);
 
-		__m256d rhs = _mm256_mul_pd(_mm256_mul_pd(pitchP2, yawP2), rollP2);
+		const __m256d rhs = _mm256_mul_pd(_mm256_mul_pd(pitchP2, yawP2), rollP2);
 
-		const __m256d resP = _mm256_add_pd(lhs, rhs);
-		_mm256_store_pd(res.Data(), resP);
+		_mm256_store_pd(&res.w, _mm256_add_pd(lhs, rhs));
 
 		return res;
 	}
@@ -512,8 +490,7 @@ namespace Sa
 		const __m256d scP = _mm256_set1_pd(_scale);
 		const __m256d pack = _mm256_load_pd(&w);
 
-		const __m256d resP = _mm256_mul_pd(pack, scP);
-		_mm256_store_pd(res.Data(), resP);
+		_mm256_store_pd(&res.w, _mm256_mul_pd(pack, scP));
 
 		return res;
 	}
@@ -528,8 +505,7 @@ namespace Sa
 		const __m256d scP = _mm256_set1_pd(_scale);
 		const __m256d pack = _mm256_load_pd(&w);
 
-		const __m256d resP = _mm256_div_pd(pack, scP);
-		_mm256_store_pd(res.Data(), resP);
+		_mm256_store_pd(&res.w, _mm256_div_pd(pack, scP));
 
 		return res;
 	}
@@ -542,8 +518,7 @@ namespace Sa
 		const __m256d lPack = _mm256_load_pd(&w);
 		const __m256d rPack = _mm256_load_pd(&_rhs.w);
 
-		const __m256d resP = _mm256_add_pd(lPack, rPack);
-		_mm256_store_pd(res.Data(), resP);
+		_mm256_store_pd(&res.w, _mm256_add_pd(lPack, rPack));
 
 		return res;
 	}
@@ -556,8 +531,7 @@ namespace Sa
 		const __m256d lPack = _mm256_load_pd(&w);
 		const __m256d rPack = _mm256_load_pd(&_rhs.w);
 
-		const __m256d resP = _mm256_sub_pd(lPack, rPack);
-		_mm256_store_pd(res.Data(), resP);
+		_mm256_store_pd(&res.w, _mm256_sub_pd(lPack, rPack));
 
 		return res;
 	}
@@ -570,7 +544,7 @@ namespace Sa
 		const __m256d pack = _mm256_load_pd(&w);
 
 		const __m256d resP = _mm256_mul_pd(pack, scP);
-		_mm256_store_pd(Data(), resP);
+		_mm256_store_pd(&w, resP);
 
 		return *this;
 	}
@@ -584,7 +558,7 @@ namespace Sa
 		const __m256d pack = _mm256_load_pd(&w);
 
 		const __m256d resP = _mm256_div_pd(pack, scP);
-		_mm256_store_pd(Data(), resP);
+		_mm256_store_pd(&w, resP);
 
 		return *this;
 	}
@@ -596,7 +570,7 @@ namespace Sa
 		const __m256d rPack = _mm256_load_pd(&_rhs.w);
 
 		const __m256d resP = _mm256_add_pd(lPack, rPack);
-		_mm256_store_pd(Data(), resP);
+		_mm256_store_pd(&w, resP);
 
 		return *this;
 	}
@@ -608,7 +582,7 @@ namespace Sa
 		const __m256d rPack = _mm256_load_pd(&_rhs.w);
 
 		const __m256d resP = _mm256_sub_pd(lPack, rPack);
-		_mm256_store_pd(Data(), resP);
+		_mm256_store_pd(&w, resP);
 
 		return *this;
 	}
@@ -627,8 +601,7 @@ namespace Sa
 		const __m256d lPack = _mm256_set1_pd(_lhs);
 		const __m256d rPack = _mm256_load_pd(&_rhs.w);
 
-		const __m256d resP = _mm256_div_pd(lPack, rPack);
-		_mm256_store_pd(res.Data(), resP);
+		_mm256_store_pd(&res.w, _mm256_div_pd(lPack, rPack));
 
 		return res;
 	}
