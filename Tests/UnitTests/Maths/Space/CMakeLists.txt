@@ -23,9 +23,6 @@ add_executable(SA-UT_Maths_Space ${SOURCES})
 # Unit test module dependency.
 target_link_libraries(SA-UT_Maths_Space PUBLIC SA-UnitTestHelper)
 
-# Add Engine dependency.
-target_link_libraries(SA-UT_Maths_Space PRIVATE SA-Engine)
-
 
 
 # === Tests ===

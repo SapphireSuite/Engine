@@ -6,9 +6,7 @@
 
 namespace Sa
 {
-#if SA_INTRISC
-
-//{ SIMD float
+#if SA_INTRISC_SSE // SIMD float.
 
 	template <>
 	float Quatf::SqrLength() const noexcept
@@ -99,9 +97,9 @@ namespace Sa
 		/*
 			cosPitch =	1.0 -	2.0f * (x * x + y * y);
 			sinPitch =			2.0f * (w * x + y * z);
-			
+
 			sinYaw =			2.0f * (w * y - z * x);
-			
+
 			cosRoll =	1.0 -	2.0f * (y * y + z * z);
 			sinRoll =			2.0f * (w * z + x * y);
 		*/
@@ -189,7 +187,7 @@ namespace Sa
 	Quatf Quatf::operator/(float _scale) const noexcept
 	{
 		SA_WARN(!Sa::Equals0(_scale), Maths, L"Unscale quaternion by 0 (division by 0)!");
-		
+
 		Quatf res;
 
 		const __m128 scP = _mm_set_ps1(_scale);
@@ -292,10 +290,9 @@ namespace Sa
 		return res;
 	}
 
-//}
+#endif
 
-
-//{ SIMD double
+#if SA_INTRISC_AVX // SIMD double
 
 	template <>
 	double Quatd::SqrLength() const noexcept
@@ -599,8 +596,6 @@ namespace Sa
 
 		return res;
 	}
-
-//}
 
 #endif
 }

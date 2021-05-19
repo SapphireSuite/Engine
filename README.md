@@ -1,6 +1,8 @@
 # Engine
 
-[![SA-CTests](https://github.com/SapphireSuite/Engine/actions/workflows/sa_ctest.yml/badge.svg)](https://github.com/SapphireSuite/Engine/actions/workflows/sa_ctest.yml)
+[![Unix Build & CTests](https://github.com/SapphireSuite/Engine/actions/workflows/sa_ctest_unix.yml/badge.svg)](https://github.com/SapphireSuite/Engine/actions/workflows/sa_ctest_unix.yml)
+[![Windows Build & CTests](https://github.com/SapphireSuite/Engine/actions/workflows/sa_ctest_win.yml/badge.svg)](https://github.com/SapphireSuite/Engine/actions/workflows/sa_ctest_win.yml)
+[![MacOS Build & CTests](https://github.com/SapphireSuite/Engine/actions/workflows/sa_ctest_macos.yml/badge.svg)](https://github.com/SapphireSuite/Engine/actions/workflows/sa_ctest_macos.yml)
 
 Sapphire's Suite's **Engine**
 

@@ -23,9 +23,6 @@ add_executable(SA-UT_Maths_Algorithms ${SOURCES})
 # Unit test module dependency.
 target_link_libraries(SA-UT_Maths_Algorithms PUBLIC SA-UnitTestHelper)
 
-# Add Engine dependency.
-target_link_libraries(SA-UT_Maths_Algorithms PRIVATE SA-Engine)
-
 
 
 # === Tests ===

@@ -17,7 +17,7 @@
 */
 
 
-#if defined(__x86_64__) || defined(_M_AMD64) || defined(DOXYGEN)
+#if defined(__x86_64__) || defined(_WIN64) || defined(DOXYGEN)
 
 	/// Sapphire Engine x32 architecture support preprocessor.
 	#define SA_x32 0

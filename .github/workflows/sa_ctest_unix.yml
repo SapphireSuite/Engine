@@ -1,0 +1,111 @@
+# Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
+
+name: Unix Build & CTests
+
+
+# Trigger the action.
+on:
+  push:
+    branches:
+      - main
+      - master
+      - dev
+      - dev_*
+
+
+# Settings common to all jobs.
+defaults:
+  run:
+    shell: bash
+
+
+# Variables common to all jobs.
+env:
+  CMAKE_V: '3.17.0'
+  CMAKE_OPTIONS: '-DSA_CI=1 -DSA_ENGINE_BUILD_TESTS=ON'
+
+
+# Job matrix
+jobs:
+
+  ctests_unix:
+    name: Default
+
+    # Setup environment.
+    runs-on: ubuntu-latest
+
+    strategy:
+
+      # Don't cancel jobs on failure.
+      fail-fast: false
+
+      matrix:
+
+        config:
+          - Debug
+          - Release
+
+        compiler:
+          - GNU
+          - Clang
+
+        compiler_v: [8, 9, 10]
+
+        gen:
+          - Ninja
+
+
+    # Steps execution.
+    steps:
+
+        - name: "[Action] Checkout repository"
+          uses: actions/checkout@v2
+          with:
+            submodules: recursive
+
+
+         # Install GCC.
+        - name: "[Package] Install GCC"
+          if: ${{ matrix.compiler == 'GNU' }}
+          run: |
+              sudo apt-get install g++-${{ matrix.compiler_v }}
+              echo "CC=gcc-${{ matrix.compiler_v }}" >> $GITHUB_ENV
+              echo "CXX=g++-${{ matrix.compiler_v }}" >> $GITHUB_ENV
+
+
+        # Install Clang.
+        - name: "[Package] Install LLVM and Clang 1/2"
+          if: ${{ matrix.compiler == 'Clang' }}
+          run: |
+              sudo apt-get install clang-${{ matrix.compiler_v }}
+              echo "CC=clang-${{ matrix.compiler_v }}" >> $GITHUB_ENV
+              echo "CXX=clang++-${{ matrix.compiler_v }}" >> $GITHUB_ENV
+
+
+        # Install CMake.
+        - name: "[Action] Install CMake"
+          uses: jwlawson/actions-setup-cmake@v1.8
+          with:
+            cmake-version: ${{ env.CMAKE_V }}
+
+
+        # Install Ninja.
+        - name: "[Action] Install Ninja 1/2"
+          if: ${{ matrix.gen == 'Ninja' }}
+          uses: seanmiddleditch/gha-setup-ninja@master
+
+        # Set env variables.
+        - name: "[Command] Install Ninja 2/2"
+          if: ${{ matrix.gen == 'Ninja' }}
+          run: echo "GEN=Ninja" >> $GITHUB_ENV
+
+
+        # Deploy & Build & Test
+        - name: Generate Project
+          run: cmake -B Build/${{ matrix.gen }}/${{ matrix.config }} -DCMAKE_BUILD_TYPE=${{ matrix.config }} ${{ env.CMAKE_OPTIONS }} -G "${GEN}"
+
+        - name: Build Project
+          run: cmake --build Build/${{ matrix.gen }}/${{ matrix.config }} --config ${{ matrix.config }} --verbose
+
+        - name: Run CTests
+          run: cd Build/${{ matrix.gen }}/${{ matrix.config }} && ctest -C ${{ matrix.config }} -V

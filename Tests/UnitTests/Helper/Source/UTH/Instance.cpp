@@ -103,20 +103,22 @@ namespace Sa::UTH
 	void Instance::Process(const Test& _test)
 	{
 		mCounter.Increment(_test.bResult);
-		
+
 		UpdateGroups(_test.bResult);
 
 		if (!_test.bResult || (verbosity & Verbosity::Success)) // Should log test.
 			logger.Log(_test.MakeLog());
 
-		if(!_test.bResult)
+		if (!_test.bResult)
+		{
 			exit = EXIT_FAILURE;
 
 #if SA_UTH_EXIT_ON_FAILURE
 
-		Exit(true);
+			Exit(true);
 
 #endif
+		}
 	}
 
 	uint32 Instance::GetGroupNum() const

@@ -740,11 +740,8 @@ namespace Sa
 
 	/// \cond Internal
 	
-	// Template Specs.
 
-#if SA_INTRISC
-
-//{ SIMD float
+#if SA_INTRISC_SSE	// SIMD float
 
 	template <>
 	SA_ENGINE_API float Quatf::SqrLength() const noexcept;
@@ -799,10 +796,9 @@ namespace Sa
 	template <>
 	SA_ENGINE_API Quatf operator/(float _lhs, const Quatf& _rhs) noexcept;
 
-//}
+#endif
 
-
-//{ SIMD double
+#if SA_INTRISC_AVX // SIMD double
 
 	template <>
 	SA_ENGINE_API double Quatd::SqrLength() const noexcept;
@@ -857,8 +853,6 @@ namespace Sa
 
 	template <>
 	SA_ENGINE_API Quatd operator/(double _lhs, const Quatd& _rhs) noexcept;
-
-//}
 
 #endif
 

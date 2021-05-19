@@ -20,7 +20,7 @@ namespace Sa::UTH
 
 	LogStream& LogStream::Output(const Sa::Log& _log)
 	{
-		Log uthLog = reinterpret_cast<const Sa::UTH::Log&>(_log);
+		const Log& uthLog = reinterpret_cast<const Sa::UTH::Log&>(_log);
 
 		uthLog.Parse(
 			this,
