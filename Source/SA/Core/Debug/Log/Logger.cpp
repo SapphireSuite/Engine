@@ -6,13 +6,51 @@ namespace Sa
 {
 #if SA_LOGGING
 
+	Logger::Logger()
+	{
+		// if mQueueSize: dequeue, else yield.
+		mThread = std::thread([this]()
+		{
+			while (mIsRunning || mQueueSize)
+			{
+				// Dequeue.
+				while (mQueueSize)
+				{
+					const Log* log = Pop();
+
+					ProcessLog(*log);
+
+					delete log;
+				}
+
+				// Wait for queue.
+				std::this_thread::yield();
+			}
+		});
+	}
+
+	Logger::~Logger()
+	{
+		Join();
+
+		mIsRunning = false;
+
+		if (mThread.joinable())
+			mThread.join();
+	}
+
+
 	void Logger::Register(LogStream& _stream)
 	{
+		std::lock_guard<std::mutex> lk(mStreamMutex);
+
 		mOutStreams.push_back(&_stream);
 	}
 
 	bool Logger::Unregister(LogStream& _stream)
 	{
+		std::lock_guard<std::mutex> lk(mStreamMutex);
+
 		for (auto it = mOutStreams.begin(); it != mOutStreams.end(); ++it)
 		{
 			if (*it == &_stream)
@@ -26,36 +64,76 @@ namespace Sa
 	}
 
 
-	void Logger::Log(const Sa::Log& _log) noexcept
+	void Logger::Output(const Log& _log)
 	{
-		// Level disabled.
-		if (static_cast<bool>(levelFlags & _log.level) == 0)
-			return;
+		std::lock_guard<std::mutex> lk(mStreamMutex);
 
-		Output(_log);
+		for (auto it = mOutStreams.begin(); it != mOutStreams.end(); ++it)
+			(*it)->Output(_log);
 	}
 
-	bool Logger::Assert_Impl(const Exception& _exception)
+	void Logger::ProcessLog(const Log& _log)
 	{
-		if (_exception.level == LogLevel::AssertSuccess)
+		//// Level disabled.
+		//if (static_cast<bool>(levelFlags & _log.level) == 0)
+		//	return;
+
+		Output(_log);
+
+		// Decrement after process (correct Join).
+		--mQueueSize;
+	}
+
+	bool Logger::ProcessAssert(const Exception& _exc)
+	{
+		if (_exc.level == LogLevel::AssertSuccess)
 		{
-			Log(_exception); // Simple log.
+			Push(&_exc); // Simple log.
 
 			return false; // Do not throw.
 		}
 		else
 		{
-			// Force output with level in channel.
-			Output(_exception);
+			// Force instant output (ignore level and channel).
+			Output(_exc);
 
 			return true; // Ask for throw.
 		}
 	}
 
-	void Logger::Output(const Sa::Log& _log) noexcept
+
+	const Log* Logger::Pop()
 	{
-		for (auto it = mOutStreams.begin(); it != mOutStreams.end(); ++it)
-			(*it)->Output(_log);
+		mLogQueueMutex.lock();
+
+		const Log* log = mLogQueue.front();
+
+		mLogQueue.pop();
+
+		mLogQueueMutex.unlock();
+
+		// Decrement after process (correct Join).
+		//--mQueueSize;
+
+		return log;
+	}
+
+	void Logger::Push(const Log* _log)
+	{
+		mLogQueueMutex.lock();
+
+		mLogQueue.push(_log);
+
+		mLogQueueMutex.unlock();
+
+		++mQueueSize;
+	}
+
+	void Logger::Join()
+	{
+		// Wait for empty queue (all log processed).
+		while (mQueueSize)
+			std::this_thread::yield();
 	}
 
 #endif

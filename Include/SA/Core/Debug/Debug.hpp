@@ -69,7 +69,7 @@ namespace Sa::Debug
 
 	#define __SA_CHAN_NAME(_chan) Sa::Debug::Intl::RemoveSpaces(SA_WSTR(_chan))
 
-	#define __SA_CREATE_LOG(_str, _lvl, _chan) Sa::Log(\
+	#define __SA_CREATE_LOG(_str, _lvl, _chan) new Sa::Log(\
 		__SA_FILE_NAME,\
 		__LINE__,\
 		__SA_FUNC_NAME,\
@@ -78,7 +78,7 @@ namespace Sa::Debug
 		__SA_CHAN_NAME(_chan)\
 	)
 
-	#define __SA_CREATE_WARNING(_pred, _chan, _dets) Sa::Log(\
+	#define __SA_CREATE_WARNING(_pred, _chan, _dets) new Sa::Log(\
 		__SA_FILE_NAME,\
 		__LINE__,\
 		__SA_FUNC_NAME,\
@@ -88,7 +88,7 @@ namespace Sa::Debug
 		(std::wstring() << _dets)\
 	)
 
-	#define __SA_CREATE_EXCEPTION(_type, _chan, ...) Sa::Exception_##_type(\
+	#define __SA_CREATE_EXCEPTION(_type, _chan, ...) new Sa::Exception_##_type(\
 		Sa::Exception::BaseInfos{\
 			__SA_FILE_NAME,\
 			__LINE__,\
@@ -112,11 +112,11 @@ namespace Sa::Debug
 
 	#define __SA_SELECT_LOG_MACRO(_1, _2, _3, _name, ...) _name
 
-	#define __SA_LOG3(_str, _lvl, _chan)	{ Sa::Debug::logger.Log(__SA_CREATE_LOG(_str, _lvl, _chan)); }
+	#define __SA_LOG3(_str, _lvl, _chan)	{ Sa::Debug::logger.Push(__SA_CREATE_LOG(_str, _lvl, _chan)); }
 	#define __SA_LOG2(_str, _lvl)			__SA_LOG3(_str, _lvl, Default)
 	#define __SA_LOG1(_str)					__SA_LOG2(_str, Normal)
 	
-	#define __SA_WARN3(_pred, _chan, _dets)	{ if(!(_pred)) Sa::Debug::logger.Log(__SA_CREATE_WARNING(_pred, _chan, _dets)); }
+	#define __SA_WARN3(_pred, _chan, _dets)	{ if(!(_pred)) Sa::Debug::logger.Push(__SA_CREATE_WARNING(_pred, _chan, _dets)); }
 	#define __SA_WARN2(_pred, _chan)		__SA_WARN3(_pred, _chan, L"")
 
 	/// \endcond Internal

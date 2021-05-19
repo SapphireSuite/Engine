@@ -13,14 +13,14 @@ namespace Sa::Debug
 	FileLogStream gLogFile;
 	SA_ENGINE_API ConsoleLogStream csl;
 
-	SA_ENGINE_API Logger logger = []()
+	SA_ENGINE_API Logger logger;
+
+	bool loggerInitializer = []()
 	{
-		Logger _logger;
+		logger.Register(csl);
+		logger.Register(gLogFile);
 
-		_logger.Register(gLogFile);
-		_logger.Register(csl);
-
-		return _logger;
+		return true;
 	}();
 
 	namespace Intl

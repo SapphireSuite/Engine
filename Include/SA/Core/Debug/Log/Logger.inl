@@ -5,10 +5,10 @@ namespace Sa
 #if SA_LOGGING
 
 	template <typename ExcepT>
-	void Logger::Assert(const ExcepT& _exception)
+	void Logger::Assert(const ExcepT* _exc)
 	{
-		if(Assert_Impl(_exception))
-			throw _exception;
+		if(ProcessAssert(*_exc))
+			throw *_exc;
 	}
 
 #endif

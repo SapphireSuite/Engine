@@ -33,6 +33,8 @@ namespace Sa
 	class Log
 	{
 	public:
+		virtual ~Log() = default;
+
 		/// File name.
 		std::wstring file;
 

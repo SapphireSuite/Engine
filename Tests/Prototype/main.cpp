@@ -9,7 +9,12 @@ using namespace Sa;
 
 int main()
 {
-	LOG("Hello, World!");
+	SA_LOG("Hello 1");
+	SA_LOG("Hello 2", Infos);
+	SA_LOG("Hello 2", Warning, TestCH);
+	
+	Debug::logger.Join();
 
+	std::cin.get();
 	return 0;
 }
