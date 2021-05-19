@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_UTH_INSTANCE_GUARD
 #define SAPPHIRE_UTH_INSTANCE_GUARD
 
-#include <stack>
+#include <vector>
 
 #include <UTH/Config.hpp>
 
@@ -26,10 +26,14 @@ namespace Sa::UTH
 		/// Total number of group run.
 		Counter mGroupCounter;
 
-		std::stack<Group> mGroups;
+		std::vector<Group> mGroups;
+
+		std::vector<Log> mRecap;
 
 		/// Update groups from predicate.
 		void UpdateGroups(bool _pred);
+
+		void AddRecapLog(const Log& _log);
 
 	public:
 		Instance();

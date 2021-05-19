@@ -18,7 +18,7 @@ namespace Sa::UTH
 	{
 	public:
 		/// Name of the group.
-		const std::string name;
+		std::string name;
 
 		/**
 		*	\brief Local exit from tests of the group.

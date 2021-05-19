@@ -76,20 +76,29 @@ namespace Sa::UTH
 		}
 
 		log.EndOfLine();
-		log.AddToken(Step::None);
+
+		if (!mRecap.empty())
+		{
+			log.AddToken(Step::Exit);
+			log.AddString(L"---------- Test Recap ----------");
+		}
+
+		logger.Log(log);
+
+
+		// Print recap.
+		for (auto it = mRecap.begin(); it != mRecap.end(); ++it)
+			logger.Log(*it);
 
 
 #if SA_UTH_EXIT_PAUSE && !SA_CI
 
-		log.AddString(L"[SA-UTH] Press Enter to continue...\n");
+		Log pauseLog = __SA_UTH_MAKE_LOG();
+		pauseLog.AddString(L"[SA-UTH] Press Enter to continue...\n");
 
-		logger.Log(log);
+		logger.Log(pauseLog);
 
 		std::cin.get();
-
-#else
-
-		logger.Log(log);
 
 #endif
 
@@ -106,11 +115,16 @@ namespace Sa::UTH
 
 		UpdateGroups(_test.bResult);
 
+		Log tLog = _test.MakeLog();
+
 		if (!_test.bResult || (verbosity & Verbosity::Success)) // Should log test.
-			logger.Log(_test.MakeLog());
+			logger.Log(tLog);
 
 		if (!_test.bResult)
 		{
+			if (verbosity & Verbosity::Recap)
+				AddRecapLog(tLog);
+
 			exit = EXIT_FAILURE;
 
 #if SA_UTH_EXIT_ON_FAILURE
@@ -130,8 +144,8 @@ namespace Sa::UTH
 	{
 		if (!mGroups.empty())
 		{
-			// Update top group.
-			Group& gp = mGroups.top();
+			// Update top group (last added).
+			Group& gp = mGroups.back();
 
 			gp.Update(_pred);
 		}
@@ -150,17 +164,17 @@ namespace Sa::UTH
 			logger.Log(log);
 		}
 
-		mGroups.push(Group{ _name });
+		mGroups.push_back(Group{ _name });
 	}
 
 	void Instance::EndGroup()
 	{
-		Group group = mGroups.top();
-		mGroups.pop();
+		Group group = mGroups.back();
+		mGroups.erase(mGroups.end() - 1);
 
 		// Spread values to parent.
 		if (!mGroups.empty())
-			group.Spread(mGroups.top());
+			group.Spread(mGroups.back());
 
 		if ((verbosity & Verbosity::GroupExit) || group.localExit == EXIT_FAILURE)
 		{
@@ -188,5 +202,56 @@ namespace Sa::UTH
 		}
 
 		mGroupCounter.Increment(group.localExit == EXIT_SUCCESS);
+	}
+
+	void Instance::AddRecapLog(const Log& _log)
+	{
+		Log rLog(_log.file, _log.line, _log.function);
+
+		rLog.msg.clear();
+		std::wstring msg = _log.msg;
+
+		// Remove all indentation.
+		{
+			size_t index = msg.find(L'\t');
+
+			while (index != std::string::npos)
+			{
+				msg.erase(index, 1);
+				index = msg.find(L'\t');
+			}
+		}
+
+		// Add Title.
+		const size_t titleIndex = msg.find_first_of(L'\n');
+		rLog.AddString(msg.substr(0u, titleIndex));
+
+		// Append group trace.
+		if (!mGroups.empty())
+		{
+			rLog.AddToken(Step::Title);
+			rLog.AddString(L"\tGroup: ");
+
+			for (auto it = mGroups.begin(); it != mGroups.end(); ++it)
+			{
+				rLog.AddToken(Step::GroupBegin);
+
+				rLog.AddString(Sa::ToWString(it->name));
+
+				if (it + 1 != mGroups.end())
+				{
+					rLog.AddToken(Step::None);
+					rLog.AddString(L"/");
+				}
+			}
+
+			rLog.AddToken(Step::None);
+		}
+
+
+		// Add end.
+		rLog.AddString(msg.substr(titleIndex) + L'\n');
+
+		mRecap.push_back(rLog);
 	}
 }

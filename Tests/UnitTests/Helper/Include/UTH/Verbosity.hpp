@@ -38,9 +38,12 @@ namespace Sa::UTH
 		/// Output group counter on exit.
 		GroupCount = 1 << 6,
 
+		/// Output recap of all failure test at the end.
+		Recap = 1 << 7,
+
 
 		/// Light verbosity value.
-		Light = ParamsName | ParamsFailure | GroupCount,
+		Light = ParamsName | ParamsFailure | GroupCount | Recap,
 
 #if SA_CI
 
@@ -48,7 +51,7 @@ namespace Sa::UTH
 #else
 
 		/// Default verbosity value.
-		Default = Success | ParamsName | ParamsFailure | GroupStart | GroupExit | GroupCount,
+		Default = Success | ParamsName | ParamsFailure | GroupStart | GroupExit | GroupCount | Recap,
 
 #endif
 
