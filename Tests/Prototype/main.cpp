@@ -15,10 +15,14 @@ int main()
 	
 	Debug::logger.Join();
 
-	Debug::logger.levelFlags.Remove(LogLevel::Warning);
+	SA_LOGLVL_DIS_SECTB(Warning)
 
-	SA_LOG("Hello 3", Warning, TestCH);
-	SA_LOG("Hello 3", Infos);
+		SA_LOG("Hello 3", Warning, TestCH);
+		SA_LOG("Hello 3", Infos);
+
+	SA_LOGLVL_DIS_SECTE()
+
+	SA_LOG("Hello 4", Warning, TestCH);
 
 	Debug::logger.Join();
 

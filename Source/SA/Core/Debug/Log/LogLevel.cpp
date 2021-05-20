@@ -18,13 +18,18 @@ namespace Sa
 	}
 
 
-	RAII<LogLevel>::RAII(LogLevel _lvl) noexcept : mHandle{ _lvl }
+	RAII<LogLevel>::RAII(LogLevel _lvl, bool _bJoinOnEnd) noexcept :
+		mHandle{ _lvl },
+		bJoinOnEnd{ _bJoinOnEnd }
 	{
 		Debug::logger.levelFlags.Remove(mHandle);
 	}
 
 	RAII<LogLevel>::~RAII() noexcept
 	{
+		if (bJoinOnEnd)
+			Debug::logger.Join();
+
 		Debug::logger.levelFlags.Add(mHandle);
 	}
 
