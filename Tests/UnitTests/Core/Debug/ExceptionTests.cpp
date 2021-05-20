@@ -24,6 +24,7 @@ namespace Sa::Exception_UT
 		}
 		catch (const Exception_Default& _e)
 		{
+			Debug::logger.Join();
 			std::wcout << L"Exception caugth: " << _e.msg << '\n' << std::endl;
 		}
 
@@ -52,6 +53,7 @@ namespace Sa::Exception_UT
 		}
 		catch (const Exception_NonZero& _e)
 		{
+			Debug::logger.Join();
 			std::wcout << L"Exception caugth: " << _e.msg << '\n' << std::endl;
 		}
 
@@ -82,6 +84,7 @@ namespace Sa::Exception_UT
 		}
 		catch (const Exception_Nullptr& _e)
 		{
+			Debug::logger.Join();
 			std::wcout << L"Exception caugth: " << _e.msg << '\n' << std::endl;
 		}
 
@@ -109,6 +112,7 @@ namespace Sa::Exception_UT
 		}
 		catch (const Exception_OutOfRange& _e)
 		{
+			Debug::logger.Join();
 			std::wcout << L"Exception caugth: " << _e.msg << '\n' << _e.details << '\n' << std::endl;
 
 			SA_UTH_EQ(_e.currIndex, wrongI);

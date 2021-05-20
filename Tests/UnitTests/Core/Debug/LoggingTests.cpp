@@ -43,36 +43,42 @@ void LoggingTests()
 	SA_WARN(bWarnIfFalse == false, TestWarn, L"if Warning! pred true.");
 	SA_WARN(bWarnIfFalse == true, TestWarn, L"if Warning! pred false.");
 
+	Debug::logger.Join();
 
-	//// Chan test.
-	//LogChannel& chan = Debug::logger.GetChannel(L"FooChan");
+	// Chan test.
+	LogChannel& chan = Debug::logger.GetChannel(L"FooChan");
 
-	//Foo();
+	Foo();
+	Debug::logger.Join();
 
-	//chan.enabled = false;
+	chan.Disable();
 
-	//Foo();
+	Foo();
+	Debug::logger.Join();
 
-	//chan.enabled = true;
+	chan.Enable();
 
-	//Foo();
+	Foo();
+	Debug::logger.Join();
 
-	//chan.levelmask.Remove(LogLevel::Normal);
+	chan.levelFlags.Remove(LogLevel::Normal);
 
-	//Foo();
+	Foo();
+	Debug::logger.Join();
 
-	//SA_LOG("Warning Hello World", Warning, TestChan/SubChan);
+	SA_LOG("Warning Hello Infos", Infos, TestChan/SubChan);
+	Debug::logger.Join();
 
-	//Debug::logger.globalLevelMask.Remove(LogLevel::Warning);
+	Debug::logger.levelFlags.Remove(LogLevel::Infos);
 
-	//SA_LOG("Warning2 Hello World", Warning, TestChan/SubChan);
+	SA_LOG("Warning2 Hello Infos", Infos, TestChan/SubChan);
 
-	//SA_LOG("Last Hello World", Error, TestChan/SubChan);
-	//SA_LOG("Last Hello World", Infos, TestChan/SubChan);
+	SA_LOG("Last Hello World", Warning, TestChan/SubChan);
+	SA_LOG("Last Hello World", Error, TestChan/SubChan);
 
 
-	//int iLog = 5;
-	//SA_LOG("i is: " << iLog, Infos, TestChan/SubChan);
+	int iLog = 5;
+	SA_LOG("i is: " << iLog, Infos, TestChan/SubChan);
 }
 
 #else
