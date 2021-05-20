@@ -26,15 +26,17 @@ namespace Sa
 	*	\brief \e Template class for \b bit-flags enum management.
 	*
 	*	\tparam EnumT		EnumT type.
-	*	\tparam BitsT		Bits type.
+	*	\tparam IntlBitsT	Internal Bits type.
 	*/
-	template <typename EnumT, typename BitsT = UIntOfSize<sizeof(EnumT)>>
+	template <typename EnumT, typename IntlBitsT = UIntOfSize<sizeof(EnumT)>>
 	class Flags
 	{
 		/// bit-flags value.
-		BitsT mBits = 0;
+		IntlBitsT mBits = 0;
 
 	public:
+		using BitsT = UIntOfSize<sizeof(EnumT)>;
+
 		/// \b Default constructor.
 		Flags() = default;
 
