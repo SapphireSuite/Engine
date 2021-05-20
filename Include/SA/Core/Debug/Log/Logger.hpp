@@ -72,18 +72,6 @@ namespace Sa
 		*/
 		void ProcessLog(const LogBase& _log);
 
-		/**
-		*	\brief Process exception (internal implementation).
-		*
-		*	Log assertion on success, otherwise ask for throw.
-		*	Called by Assert().
-		*
-		*	\param[in] _exc		exception to process.
-		* 
-		*	\return Should throw (typed) exception.
-		*/
-		SA_ENGINE_API bool ProcessAssert(const Exception& _exc);
-
 	public:
 		/// Enabled level flags for output.
 		Flags<LogLevel, std::atomic<UIntOfSize<sizeof(LogLevel)>>> levelFlags = LogLevel::Default;
@@ -112,7 +100,9 @@ namespace Sa
 		SA_ENGINE_API bool Unregister(LogStreamBase& _stream);
 
 
-		SA_ENGINE_API void Push(const LogBase* _log);
+		template <typename LogT>
+		void Push(LogT&& _log);
+
 		SA_ENGINE_API void Join();
 
 
@@ -126,7 +116,7 @@ namespace Sa
 		*	\param[in] _exc		exception to process.
 		*/
 		template <typename ExcepT>
-		void Assert(const ExcepT* _exc);
+		void Assert(ExcepT&& _exc);
 	};
 
 #endif

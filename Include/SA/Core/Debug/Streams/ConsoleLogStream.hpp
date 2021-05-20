@@ -61,7 +61,7 @@ namespace Sa
 		SA_ENGINE_API void SetConsoleTheme(LogLevel _lvl, uint8 _cslColor) noexcept;
 
 
-		std::wostream& operator<<(const std::wstring& _str);
+		SA_ENGINE_API std::wostream& operator<<(const std::wstring& _str);
 	};
 
 //}
@@ -71,7 +71,7 @@ namespace Sa
 	class IConsoleLog : public ILogT<ConsoleLogStream>
 	{
 	public:
-		void Output(ConsoleLogStream& _stream) const override;
+		SA_ENGINE_API void Output(ConsoleLogStream& _stream) const override;
 	};
 
 //}

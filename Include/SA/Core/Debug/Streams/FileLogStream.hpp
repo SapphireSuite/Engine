@@ -52,7 +52,7 @@ namespace Sa
 
 		SA_ENGINE_API ~FileLogStream() noexcept;
 
-		std::wostream& operator<<(const std::wstring& _str);
+		SA_ENGINE_API std::wostream& operator<<(const std::wstring& _str);
 	};
 
 //}

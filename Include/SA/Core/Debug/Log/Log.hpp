@@ -83,7 +83,7 @@ namespace Sa
 		* 
 		*	\return this as a wstring.
 		*/
-		std::wstring ToWString() const override;
+		SA_ENGINE_API std::wstring ToWString() const override;
 	};
 
 #endif

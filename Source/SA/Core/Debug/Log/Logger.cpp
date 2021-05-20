@@ -119,24 +119,6 @@ namespace Sa
 		--mQueueSize;
 	}
 
-	bool Logger::ProcessAssert(const Exception& _exc)
-	{
-		if (_exc.level == LogLevel::AssertSuccess)
-		{
-			Push(&_exc); // Simple log.
-
-			return false; // Do not throw.
-		}
-		else
-		{
-			// Force instant output (ignore level and channel).
-			Output(_exc);
-
-			return true; // Ask for throw.
-		}
-	}
-
-
 	const LogBase* Logger::Pop()
 	{
 		mLogQueueMutex.lock();
@@ -151,17 +133,6 @@ namespace Sa
 		//--mQueueSize;
 
 		return log;
-	}
-
-	void Logger::Push(const LogBase* _log)
-	{
-		mLogQueueMutex.lock();
-
-		mLogQueue.push(_log);
-
-		mLogQueueMutex.unlock();
-
-		++mQueueSize;
 	}
 
 	void Logger::Join()
