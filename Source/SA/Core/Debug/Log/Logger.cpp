@@ -74,11 +74,9 @@ namespace Sa
 
 	void Logger::ProcessLog(const Log& _log)
 	{
-		//// Level disabled.
-		//if (static_cast<bool>(levelFlags & _log.level) == 0)
-		//	return;
-
-		Output(_log);
+		// Level enabled.
+		if (levelFlags & _log.level)
+			Output(_log);
 
 		// Decrement after process (correct Join).
 		--mQueueSize;

@@ -15,6 +15,13 @@ int main()
 	
 	Debug::logger.Join();
 
+	Debug::logger.levelFlags.Remove(LogLevel::Warning);
+
+	SA_LOG("Hello 3", Warning, TestCH);
+	SA_LOG("Hello 3", Infos);
+
+	Debug::logger.Join();
+
 	std::cin.get();
 	return 0;
 }

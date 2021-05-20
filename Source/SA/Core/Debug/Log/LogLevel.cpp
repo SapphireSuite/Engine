@@ -20,12 +20,12 @@ namespace Sa
 
 	RAII<LogLevel>::RAII(LogLevel _lvl) noexcept : mHandle{ _lvl }
 	{
-		//Debug::logger.levelFlags.Remove(mHandle);
+		Debug::logger.levelFlags.Remove(mHandle);
 	}
 
 	RAII<LogLevel>::~RAII() noexcept
 	{
-		//Debug::logger.levelFlags.Add(mHandle);
+		Debug::logger.levelFlags.Add(mHandle);
 	}
 
 #endif

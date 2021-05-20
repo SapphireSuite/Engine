@@ -76,6 +76,9 @@ namespace Sa
 		bool ProcessAssert(const Exception& _exc);
 
 	public:
+		/// Enabled level flags for output.
+		Flags<LogLevel, std::atomic<UIntOfSize<sizeof(LogLevel)>>> levelFlags = LogLevel::Default;
+
 		SA_ENGINE_API Logger();
 		SA_ENGINE_API ~Logger();
 
