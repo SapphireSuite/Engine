@@ -9,10 +9,10 @@
 
 #include <UTH/Config.hpp>
 
-#include <UTH/Test.hpp>
 #include <UTH/Group.hpp>
 #include <UTH/Verbosity.hpp>
-#include <UTH/LogStream.hpp>
+#include <UTH/Log/TestLog.hpp>
+#include <UTH/Log/RecapLog.hpp>
 
 #include <SA/Core/Debug/Log/Logger.hpp>
 
@@ -28,18 +28,14 @@ namespace Sa::UTH
 
 		std::vector<Group> mGroups;
 
-		std::vector<Log> mRecap;
+		RecapLog mRecap;
 
 		/// Update groups from predicate.
 		void UpdateGroups(bool _pred);
 
-		void AddRecapLog(const Log& _log);
+		void AddRecapLog(const TestLog& _log);
 
 	public:
-		Instance();
-
-		Logger logger;
-
 		/**
 		*	\brief Init function to be called at the start of main.
 		*	Use SA_UTH_INIT() as helper macro.
@@ -55,16 +51,17 @@ namespace Sa::UTH
 		SA_UTH_API int32 Exit(bool _bForce = false);
 		
 
-		SA_UTH_API void Process(const Test& _test);
+		SA_UTH_API void Process(TestLog&& _test);
 
 		uint32 GetGroupNum() const;
+		const std::vector<Group>& GetGroups() const;
 
 		/**
 		*	\brief Begin a group of tests.
 		* 
 		*	param[in] _name	The name of the group that begins.
 		*/
-		SA_UTH_API void BeginGroup(const std::string& _name);
+		SA_UTH_API void BeginGroup(const std::wstring& _name);
 
 		/**
 		*	\brief End current group of tests.
@@ -94,8 +91,8 @@ namespace Sa::UTH
 	/// Current verbosity level.
 	SA_UTH_API extern uint8 verbosity;
 
-	/// Custom UTH console log stream.
-	SA_UTH_API extern LogStream csl;
+	///// Custom UTH console log stream.
+	//SA_UTH_API extern LogStream csl;
 }
 
 #endif // GUARD

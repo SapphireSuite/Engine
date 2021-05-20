@@ -7,18 +7,18 @@
 
 #include <string>
 
-#include <UTH/Config.hpp>
-
 #include <UTH/Counter.hpp>
 
 namespace Sa::UTH
 {
+//{ Group
+
 	/// Infos generated from a group of tests.
 	class Group
 	{
 	public:
 		/// Name of the group.
-		std::string name;
+		std::wstring name;
 
 		/**
 		*	\brief Local exit from tests of the group.
@@ -47,6 +47,8 @@ namespace Sa::UTH
 		*/
 		void Spread(Group& _parent);
 	};
+
+//}
 }
 
 #endif // GUARD

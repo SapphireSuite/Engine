@@ -4,6 +4,8 @@
 
 #include <UTH/Step.hpp>
 
+#include <SA/Core/Debug/ToString.hpp>
+
 namespace Sa::UTH
 {
 	uint32 Counter::Total() const
@@ -32,26 +34,26 @@ namespace Sa::UTH
 		return success == 0 && failure == 0;
 	}
 
-	void Counter::AppendLog(Log& _log) const
+	void Counter::AppendStr(StringToken& _str) const
 	{
-		_log.AddToken(Step::TestNum);
-		_log.AddString(std::to_wstring(Total()));
+		_str.AppendToken(Step::TestNum);
+		_str.AppendString(Sa::ToWString(Total()));
 
 		if (failure)
 		{
-			_log.AddString(L" (");
+			_str.AppendString(L" (");
 
-			_log.AddToken(Step::Success);
-			_log.AddString(std::to_wstring(success));
+			_str.AppendToken(Step::Success);
+			_str.AppendString(Sa::ToWString(success));
 
-			_log.AddToken(Step::TestNum);
-			_log.AddString(L"/");
+			_str.AppendToken(Step::TestNum);
+			_str.AppendString(L"/");
 
-			_log.AddToken(Step::Failure);
-			_log.AddString(std::to_wstring(failure));
+			_str.AppendToken(Step::Failure);
+			_str.AppendString(Sa::ToWString(failure));
 
-			_log.AddToken(Step::TestNum);
-			_log.AddString(L")");
+			_str.AppendToken(Step::TestNum);
+			_str.AppendString(L")");
 		}
 	}
 }

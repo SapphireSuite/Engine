@@ -48,7 +48,7 @@ namespace Sa::UTH
 		auto&& sRhs = _rhs;\
 		bool bRes = Sa::Equals(sLhs, sRhs, ##__VA_ARGS__);\
 	\
-		Sa::UTH::Intl::instance.Process(Sa::UTH::Test(\
+		Sa::UTH::Intl::instance.Process(Sa::UTH::TestLog(\
 			__SA_FILE_NAME,\
 			__LINE__,\
 			SA_STR(Sa::Equals(_lhs, _rhs, ##__VA_ARGS__)),\
@@ -69,7 +69,7 @@ namespace Sa::UTH
 	{\
 		bool bRes = _func(__VA_ARGS__);\
 	\
-		Sa::UTH::Intl::instance.Process(Sa::UTH::Test(\
+		Sa::UTH::Intl::instance.Process(Sa::UTH::TestLog(\
 			__SA_FILE_NAME,\
 			__LINE__,\
 			SA_STR(_func(__VA_ARGS__)),\
@@ -93,7 +93,7 @@ namespace Sa::UTH
 		auto result = _func(__VA_ARGS__);\
 		bool bRes = result == sRes;\
 	\
-		Sa::UTH::Intl::instance.Process(Sa::UTH::Test(\
+		Sa::UTH::Intl::instance.Process(Sa::UTH::TestLog(\
 			__SA_FILE_NAME,\
 			__LINE__,\
 			SA_STR(_func(__VA_ARGS__)),\
@@ -115,7 +115,7 @@ namespace Sa::UTH
 	{\
 		bool bRes = (_caller)._func(__VA_ARGS__);\
 	\
-		Sa::UTH::Intl::instance.Process(Sa::UTH::Test(\
+		Sa::UTH::Intl::instance.Process(Sa::UTH::TestLog(\
 			__SA_FILE_NAME,\
 			__LINE__,\
 			SA_STR((_caller)._func(__VA_ARGS__)),\
@@ -140,7 +140,7 @@ namespace Sa::UTH
 		auto result = (_caller)._func(__VA_ARGS__);\
 		bool bRes = result == sRes;\
 	\
-		Sa::UTH::Intl::instance.Process(Sa::UTH::Test(\
+		Sa::UTH::Intl::instance.Process(Sa::UTH::TestLog(\
 			__SA_FILE_NAME,\
 			__LINE__,\
 			SA_STR((_caller)._func(__VA_ARGS__)),\
@@ -165,7 +165,7 @@ namespace Sa::UTH
 		auto&& sRhs = _rhs;\
 		bool bRes = sLhs _op sRhs;\
 	\
-		Sa::UTH::Intl::instance.Process(Sa::UTH::Test(\
+		Sa::UTH::Intl::instance.Process(Sa::UTH::TestLog(\
 			__SA_FILE_NAME,\
 			__LINE__,\
 			SA_STR(_lhs _op _rhs),\
@@ -193,7 +193,7 @@ namespace Sa::UTH
 		auto result = sLhs _op sRhs;\
 		bool bRes = result == sRes;\
 	\
-		Sa::UTH::Intl::instance.Process(Sa::UTH::Test(\
+		Sa::UTH::Intl::instance.Process(Sa::UTH::TestLog(\
 			__SA_FILE_NAME,\
 			__LINE__,\
 			SA_STR(_lhs _op _rhs),\
@@ -208,7 +208,7 @@ namespace Sa::UTH
 	* 
 	*	\param[in] _name	Name of the group.
 	*/
-	#define SA_UTH_GPB(_name) Sa::UTH::Intl::instance.BeginGroup(#_name);
+	#define SA_UTH_GPB(_name) Sa::UTH::Intl::instance.BeginGroup(SA_WSTR(_name));
 
 	/**
 	*	\brief End current group.
