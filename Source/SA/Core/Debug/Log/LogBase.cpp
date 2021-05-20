@@ -4,9 +4,9 @@
 
 namespace Sa
 {
-	LogBase::LogBase(LogLevel _level, const std::wstring& _chanName) :
+	LogBase::LogBase(LogLevel _level, std::wstring&& _chanName) :
 		level{ _level },
-		chanName{ _chanName }
+		chanName{ std::move(_chanName) }
 	{
 	}
 }

@@ -53,9 +53,8 @@ namespace Sa
 		/// Date time.
 		DateTime date;
 
-
 		/**
-		*	\brief \e Value Constructor.
+		*	\brief \e Value Move Constructor.
 		*
 		*	\param[in] _file		File of the Log.
 		*	\param[in] _line		Line of the Log.
@@ -66,13 +65,13 @@ namespace Sa
 		*	\param[in] _details		Additional details to display.
 		*/
 		SA_ENGINE_API Log(
-			const std::wstring& _file,
+			std::wstring&& _file,
 			uint32 _line,
-			const std::string& _function,
-			const std::wstring& _msg = L"Hello, World!",
+			std::string&& _function,
+			std::wstring&& _msg = L"Hello, World!",
 			LogLevel _level = LogLevel::Normal,
-			const std::wstring& _chanName = L"Default",
-			const std::wstring& _details = L""
+			std::wstring&& _chanName = L"Default",
+			std::wstring&& _details = L""
 		) noexcept;
 
 

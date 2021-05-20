@@ -39,6 +39,27 @@ int main()
 
 	Debug::logger.Join();
 
+	{
+		const uint32 min = 0u;
+		const uint32 max = 8u;
+		const uint32 goodI = 4u;
+		const uint32 wrongI = 10u;
+
+		SA_ASSERT(OutOfRange, AsChan, goodI, min, max, L"OutOfRange success test");
+
+		try
+		{
+			SA_ASSERT(Default, AsChan, true, L"OutOfRange failure test");
+			SA_ASSERT(OutOfRange, AsChan, wrongI, min, max, L"OutOfRange failure test");
+		}
+		catch (const Exception_OutOfRange& _e)
+		{
+			std::wcout << L"Exception caugth: " << _e.msg << '\n' << _e.details << '\n' << std::endl;
+		}
+	}
+
+
+
 	std::cin.get();
 	return 0;
 }

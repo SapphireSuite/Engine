@@ -60,7 +60,7 @@ namespace Sa
 		*
 		*	\param[in] _log		Log to output.
 		*/
-		void Output(const LogBase& _log);
+		SA_ENGINE_API void Output(const LogBase& _log);
 
 		/**
 		*	\brief Process log.

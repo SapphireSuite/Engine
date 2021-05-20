@@ -26,12 +26,12 @@ namespace Sa
 		LogBase() = default;
 
 		/**
-		*	\brief \e Value constructor
+		*	\brief \e Value move constructor
 		* 
 		*	\param[in] _level		LogLevel of the log.
 		*	\param[in] _chanName	Channel's name of the Log.
 		*/
-		LogBase(LogLevel _level, const std::wstring& _chanName);
+		LogBase(LogLevel _level, std::wstring&& _chanName);
 
 		/// \e Default virtual destructor.
 		virtual ~LogBase() = default;

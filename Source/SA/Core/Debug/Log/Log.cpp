@@ -10,23 +10,24 @@ namespace Sa
 #if SA_LOGGING
 
 	Log::Log(
-		const std::wstring& _file,
+		std::wstring&& _file,
 		uint32 _line,
-		const std::string& _function,
-		const std::wstring& _msg,
+		std::string&& _function,
+		std::wstring&& _msg,
 		LogLevel _level,
-		const std::wstring& _chanName,
-		const std::wstring& _details
+		std::wstring&& _chanName,
+		std::wstring&& _details
 	) noexcept :
-		LogBase(_level,_chanName),
-		file{ _file },
+		LogBase(_level, std::move(_chanName)),
+		file{ std::move(_file) },
 		line{ _line },
-		function{ _function },
-		msg{ _msg },
-		details{ _details },
+		function{ std::move(_function) },
+		msg{ std::move(_msg) },
+		details{ std::move(_details) },
 		date{ Time::Date() }
 	{
 	}
+
 
 	std::wstring Log::ToWString() const
 	{
