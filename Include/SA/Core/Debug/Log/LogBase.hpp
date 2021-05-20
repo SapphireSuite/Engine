@@ -7,7 +7,7 @@
 
 #include <string>
 
-#include <SA/Core/Debug/Config.hpp>
+#include <SA/Core/Debug/Log/LogLevel.hpp>
 
 namespace Sa
 {
@@ -16,6 +16,24 @@ namespace Sa
 	class LogBase
 	{
 	public:
+		/// Output level.
+		LogLevel level = LogLevel::Normal;
+
+		/// Output channel name.
+		std::wstring chanName = L"Default";
+
+		/// \e Default constructor.
+		LogBase() = default;
+
+		/**
+		*	\brief \e Value constructor
+		* 
+		*	\param[in] _level		LogLevel of the log.
+		*	\param[in] _chanName	Channel's name of the Log.
+		*/
+		LogBase(LogLevel _level, const std::wstring& _chanName);
+
+		/// \e Default virtual destructor.
 		virtual ~LogBase() = default;
 	};
 

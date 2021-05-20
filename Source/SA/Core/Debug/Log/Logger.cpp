@@ -16,7 +16,7 @@ namespace Sa
 				// Dequeue.
 				while (mQueueSize)
 				{
-					const Log* log = Pop();
+					const LogBase* log = Pop();
 
 					ProcessLog(*log);
 
@@ -91,7 +91,7 @@ namespace Sa
 	}
 
 
-	void Logger::Output(const Log& _log)
+	void Logger::Output(const LogBase& _log)
 	{
 		std::lock_guard lk(mStreamMutex);
 
@@ -99,7 +99,7 @@ namespace Sa
 			(*it)->Output(_log);
 	}
 
-	void Logger::ProcessLog(const Log& _log)
+	void Logger::ProcessLog(const LogBase& _log)
 	{
 		// Level enabled.
 		if (levelFlags & _log.level)
@@ -137,11 +137,11 @@ namespace Sa
 	}
 
 
-	const Log* Logger::Pop()
+	const LogBase* Logger::Pop()
 	{
 		mLogQueueMutex.lock();
 
-		const Log* log = mLogQueue.front();
+		const LogBase* log = mLogQueue.front();
 
 		mLogQueue.pop();
 
@@ -153,7 +153,7 @@ namespace Sa
 		return log;
 	}
 
-	void Logger::Push(const Log* _log)
+	void Logger::Push(const LogBase* _log)
 	{
 		mLogQueueMutex.lock();
 

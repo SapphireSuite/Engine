@@ -18,13 +18,12 @@ namespace Sa
 		const std::wstring& _chanName,
 		const std::wstring& _details
 	) noexcept :
+		LogBase(_level,_chanName),
 		file{ _file },
 		line{ _line },
 		function{ _function },
 		msg{ _msg },
 		details{ _details },
-		level{ _level },
-		chanName{ _chanName },
 		date{ Time::Date() }
 	{
 	}
@@ -49,16 +48,6 @@ namespace Sa
 			str << std::wstring(L"Dets:\t") << details << L'\n';
 
 		return str;
-	}
-
-
-	void Log::Output(ConsoleLogStream& _stream) const
-	{
-		_stream.SetConsoleColorFromLvl(level);
-
-		IConsoleLog::Output(_stream);
-
-		Sa::SetConsoleColor(CslColor::Reset);
 	}
 
 #endif

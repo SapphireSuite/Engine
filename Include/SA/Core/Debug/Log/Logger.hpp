@@ -40,7 +40,7 @@ namespace Sa
 		std::mutex mStreamMutex;
 
 		std::thread mThread;
-		std::queue<const Log*> mLogQueue;
+		std::queue<const LogBase*> mLogQueue;
 		std::mutex mLogQueueMutex;
 		std::atomic<bool> mIsRunning = true;
 		std::atomic<uint32> mQueueSize = 0u;
@@ -53,14 +53,14 @@ namespace Sa
 		bool ShouldLogChannel(const std::wstring& _chanName, LogLevel _level, uint32 _offset = 0u);
 
 
-		const Log* Pop();
+		const LogBase* Pop();
 
 		/**
 		*	\brief Output a log into registered streams.
 		*
 		*	\param[in] _log		Log to output.
 		*/
-		void Output(const Log& _log);
+		void Output(const LogBase& _log);
 
 		/**
 		*	\brief Process log.
@@ -70,7 +70,7 @@ namespace Sa
 		*
 		*	\param[in] _log		Log to process.
 		*/
-		void ProcessLog(const Log& _log);
+		void ProcessLog(const LogBase& _log);
 
 		/**
 		*	\brief Process exception (internal implementation).
@@ -112,7 +112,7 @@ namespace Sa
 		SA_ENGINE_API bool Unregister(LogStreamBase& _stream);
 
 
-		SA_ENGINE_API void Push(const Log* _log);
+		SA_ENGINE_API void Push(const LogBase* _log);
 		SA_ENGINE_API void Join();
 
 

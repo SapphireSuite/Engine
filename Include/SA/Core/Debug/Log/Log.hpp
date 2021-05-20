@@ -50,12 +50,6 @@ namespace Sa
 		/// Additional details string.
 		std::wstring details;
 
-		/// Output level.
-		LogLevel level = LogLevel::Normal;
-
-		/// Output channel name.
-		std::wstring chanName = L"Default";
-
 		/// Date time.
 		DateTime date;
 
@@ -90,9 +84,6 @@ namespace Sa
 		*	\return this as a wstring.
 		*/
 		std::wstring ToWString() const override;
-
-		using IFileLog::Output;
-		void Output(ConsoleLogStream& _stream) const override;
 	};
 
 #endif

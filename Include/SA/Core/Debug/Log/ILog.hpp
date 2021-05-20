@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_CORE_ILOG_GUARD
 #define SAPPHIRE_CORE_ILOG_GUARD
 
-#include <SA/Core/Debug/Config.hpp>
+#include <SA/Core/Debug/Log/LogBase.hpp>
 
 namespace Sa
 {
@@ -13,6 +13,10 @@ namespace Sa
 
 	class ILog
 	{
+	public:
+		virtual ~ILog() = default;
+
+		const LogBase& GetBase() const;
 	};
 
 	template <typename StreamT>

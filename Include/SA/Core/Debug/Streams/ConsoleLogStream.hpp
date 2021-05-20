@@ -70,6 +70,8 @@ namespace Sa
 
 	class IConsoleLog : public ILogT<ConsoleLogStream>
 	{
+	public:
+		void Output(ConsoleLogStream& _stream) const override;
 	};
 
 //}
