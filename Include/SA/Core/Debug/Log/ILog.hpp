@@ -5,8 +5,6 @@
 #ifndef SAPPHIRE_CORE_ILOG_GUARD
 #define SAPPHIRE_CORE_ILOG_GUARD
 
-#include <string>
-
 #include <SA/Core/Debug/Config.hpp>
 
 namespace Sa
@@ -15,8 +13,13 @@ namespace Sa
 
 	class ILog
 	{
+	};
+
+	template <typename StreamT>
+	class ILogT : public ILog
+	{
 	public:
-		virtual ~ILog() = default;
+		virtual void Output(StreamT& _stream) const;
 
 		/**
 		*	\brief ToWString implementation
@@ -26,14 +29,6 @@ namespace Sa
 		*	\return this as a wstring.
 		*/
 		virtual std::wstring ToWString() const = 0;
-	};
-
-
-	template <typename StreamT>
-	class ILogT : public ILog
-	{
-	public:
-		virtual void Output(StreamT& _stream) const;
 	};
 
 #endif

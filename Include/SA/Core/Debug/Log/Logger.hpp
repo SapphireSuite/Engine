@@ -14,7 +14,7 @@
 
 #include <SA/Core/Debug/Log/Log.hpp>
 #include <SA/Core/Debug/Log/LogChannel.hpp>
-#include <SA/Core/Debug/Streams/ILogStream.hpp>
+#include <SA/Core/Debug/Streams/LogStreamBase.hpp>
 
 #include <SA/Core/Debug/Exceptions/Exception.hpp>
 
@@ -36,7 +36,7 @@ namespace Sa
 	class Logger
 	{
 		/// Registered output streams.
-		std::vector<ILogStream*> mOutStreams;
+		std::vector<LogStreamBase*> mOutStreams;
 		std::mutex mStreamMutex;
 
 		std::thread mThread;
@@ -100,7 +100,7 @@ namespace Sa
 		* 
 		*	\param[in] _stream	Stream to register.
 		*/
-		SA_ENGINE_API void Register(ILogStream& _stream);
+		SA_ENGINE_API void Register(LogStreamBase& _stream);
 
 		/**
 		*	\brief Unregister a stream from output.
@@ -109,7 +109,7 @@ namespace Sa
 		*
 		*	\return true on success.
 		*/
-		SA_ENGINE_API bool Unregister(ILogStream& _stream);
+		SA_ENGINE_API bool Unregister(LogStreamBase& _stream);
 
 
 		SA_ENGINE_API void Push(const Log* _log);

@@ -1,12 +1,12 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <SA/Core/Debug/Streams/ILogStream.hpp>
+#include <SA/Core/Debug/Streams/LogStreamBase.hpp>
 
 namespace Sa
 {
 #if SA_LOGGING
 
-	ILogStream& ILogStream::operator<<(const Sa::ILog& _log)
+	LogStreamBase& LogStreamBase::operator<<(const LogBase& _log)
 	{
 		return Output(_log);
 	}

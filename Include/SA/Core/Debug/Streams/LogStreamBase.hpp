@@ -2,10 +2,12 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_CORE_ILOG_STREAM_GUARD
-#define SAPPHIRE_CORE_ILOG_STREAM_GUARD
+#ifndef SAPPHIRE_CORE_ILOG_STREAM_Base_GUARD
+#define SAPPHIRE_CORE_ILOG_STREAM_Base_GUARD
 
-#include <SA/Core/Debug/Log/ILog.hpp>
+#include <SA/Config.hpp>
+
+#include <SA/Core/Debug/Log/LogBase.hpp>
 
 /**
 *	\file LogStream.hpp
@@ -24,7 +26,7 @@ namespace Sa
 #if SA_LOGGING
 
 	/// Log Stream base class.
-	class ILogStream
+	class LogStreamBase
 	{
 	public:
 		/**
@@ -34,7 +36,7 @@ namespace Sa
 		*
 		*	\return this.
 		*/
-		virtual ILogStream& Output(const ILog& _log) = 0;
+		virtual LogStreamBase& Output(const LogBase& _log) = 0;
 
 		/**
 		*	\brief Output log operator.
@@ -43,15 +45,15 @@ namespace Sa
 		*
 		*	\return this.
 		*/
-		ILogStream& operator<<(const ILog& _log);
+		SA_ENGINE_API LogStreamBase& operator<<(const LogBase& _log);
 	};
 
 
 	template <typename StreamT, typename LogT>
-	class ILogStreamT : public ILogStream
+	class LogStreamBaseT : public LogStreamBase
 	{
 	public:
-		ILogStream& Output(const ILog& _log) override;
+		LogStreamBase& Output(const LogBase& _log) override;
 	};
 
 #endif
@@ -60,6 +62,6 @@ namespace Sa
 
 /** \} */
 
-#include <SA/Core/Debug/Streams/ILogStream.inl>
+#include <SA/Core/Debug/Streams/LogStreamBase.inl>
 
 #endif // GUARD

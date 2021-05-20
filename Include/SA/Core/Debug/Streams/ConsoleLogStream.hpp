@@ -9,8 +9,9 @@
 
 #include <SA/Core/Debug/ConsoleColor.hpp>
 
+#include <SA/Core/Debug/Log/ILog.hpp>
 #include <SA/Core/Debug/Log/LogLevel.hpp>
-#include <SA/Core/Debug/Streams/ILogStream.hpp>
+#include <SA/Core/Debug/Streams/LogStreamBase.hpp>
 
 /**
 *	\file ConsoleLogStream.hpp
@@ -31,7 +32,7 @@ namespace Sa
 	class IConsoleLog;
 
 	/// Log console stream type.
-	class ConsoleLogStream : public ILogStreamT<ConsoleLogStream, IConsoleLog>
+	class ConsoleLogStream : public LogStreamBaseT<ConsoleLogStream, IConsoleLog>
 	{
 		/// Console color theme by LogLevel.
 		uint8 mTheme[6]

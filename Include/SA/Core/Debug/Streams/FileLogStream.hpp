@@ -7,9 +7,8 @@
 
 #include <fstream>
 
-#include <SA/Config.hpp>
-
-#include <SA/Core/Debug/Streams/ILogStream.hpp>
+#include <SA/Core/Debug/Log/ILog.hpp>
+#include <SA/Core/Debug/Streams/LogStreamBase.hpp>
 
 /**
 *	\file FileLogStream.hpp
@@ -30,7 +29,7 @@ namespace Sa
 	class IFileLog;
 
 	/// Log file stream type.
-	class FileLogStream : public ILogStreamT<FileLogStream, IFileLog>
+	class FileLogStream : public LogStreamBaseT<FileLogStream, IFileLog>
 	{
 	protected:
 		/// Handled file stream.

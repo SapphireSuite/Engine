@@ -31,7 +31,8 @@ namespace Sa
 	*
 	*	Contains log infos.
 	*/
-	class Log : public IConsoleLog, public IFileLog
+	class Log : public LogBase, 
+		public IConsoleLog, public IFileLog // Interfaces
 	{
 	public:
 		/// File name.
@@ -90,6 +91,7 @@ namespace Sa
 		*/
 		std::wstring ToWString() const override;
 
+		using IFileLog::Output;
 		void Output(ConsoleLogStream& _stream) const override;
 	};
 

@@ -5,7 +5,7 @@ namespace Sa
 #if SA_LOGGING
 
 	template <typename StreamT, typename LogT>
-	ILogStream& ILogStreamT<StreamT, LogT>::Output(const ILog& _log)
+	LogStreamBase& LogStreamBaseT<StreamT, LogT>::Output(const LogBase& _log)
 	{
 		const LogT* logT = dynamic_cast<const LogT*>(&_log);
 
