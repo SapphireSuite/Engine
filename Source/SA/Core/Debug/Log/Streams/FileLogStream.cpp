@@ -25,11 +25,7 @@ namespace Sa
 	{
 #if !__SA_NO_FILESTREAM
 
-		mMutex.lock();
-
 		mHandle.close();
-
-		mMutex.unlock();
 
 #endif
 	}
@@ -58,11 +54,7 @@ namespace Sa
 	{
 #if !__SA_NO_FILESTREAM
 
-		mMutex.lock();
-
 		mHandle << _log.ToWString() << std::endl;
-
-		mMutex.unlock();
 
 #endif
 

@@ -31,9 +31,6 @@ namespace Sa
 		/// Handled file stream.
 		std::wofstream mHandle;
 
-		/// Stream mutex.
-		std::mutex mMutex;
-
 		/**
 		*	\brief Create log and log backup files.
 		* 
