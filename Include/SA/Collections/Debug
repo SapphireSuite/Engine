@@ -9,7 +9,6 @@
 
 // Logs.
 #include <SA/Core/Debug/Log/Log.hpp>
-#include <SA/Core/Debug/Log/Log_Token.hpp>
 
 // Exceptions.
 #include <SA/Core/Debug/Exceptions/Exception_NonZero.hpp>

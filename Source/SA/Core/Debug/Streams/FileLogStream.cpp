@@ -2,15 +2,21 @@
 
 #include <filesystem>
 
-#include <Core/Debug/Log/Streams/FileLogStream.hpp>
+#include <Core/Debug/Streams/FileLogStream.hpp>
 
-// ToDo: Wait for github action fix std::filesystem linkage.
+#include <Core/Time/DateTime.hpp>
+
+
+// TODO: Wait for github action fix std::filesystem linkage.
 #include <Core/Support/Compilers.hpp>
 #define __SA_NO_FILESTREAM (SA_CI && SA_CLANG && __clang_major__ == 9)
+
 
 namespace Sa
 {
 #if SA_LOGGING
+
+//{ FileLogStream
 
 	FileLogStream::FileLogStream(const std::string& _fileName) noexcept
 	{
@@ -50,16 +56,20 @@ namespace Sa
 	}
 
 
-	LogStream& FileLogStream::Output(const Sa::Log& _log)
+	std::wostream& FileLogStream::operator<<(const std::wstring& _str)
 	{
 #if !__SA_NO_FILESTREAM
 
-		mHandle << _log.ToWString() << std::endl;
+		return mHandle << _str;
+
+#else
+
+		return mHandle;
 
 #endif
-
-		return *this;
 	}
+
+//}
 
 #endif
 }

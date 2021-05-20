@@ -51,5 +51,15 @@ namespace Sa
 		return str;
 	}
 
+
+	void Log::Output(ConsoleLogStream& _stream) const
+	{
+		_stream.SetConsoleColorFromLvl(level);
+
+		IConsoleLog::Output(_stream);
+
+		Sa::SetConsoleColor(CslColor::Reset);
+	}
+
 #endif
 }

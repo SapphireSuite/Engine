@@ -6,9 +6,10 @@
 #define SAPPHIRE_CORE_LOG_FILE_STREAM_GUARD
 
 #include <fstream>
-#include <mutex>
 
-#include <SA/Core/Debug/Log/Streams/LogStream.hpp>
+#include <SA/Config.hpp>
+
+#include <SA/Core/Debug/Streams/ILogStream.hpp>
 
 /**
 *	\file FileLogStream.hpp
@@ -24,8 +25,12 @@ namespace Sa
 {
 #if SA_LOGGING
 
+//{ FileLogStream
+
+	class IFileLog;
+
 	/// Log file stream type.
-	class FileLogStream : public LogStream
+	class FileLogStream : public ILogStreamT<FileLogStream, IFileLog>
 	{
 	protected:
 		/// Handled file stream.
@@ -48,8 +53,18 @@ namespace Sa
 
 		SA_ENGINE_API ~FileLogStream() noexcept;
 
-		SA_ENGINE_API LogStream& Output(const Sa::Log& _log) override;
+		std::wostream& operator<<(const std::wstring& _str);
 	};
+
+//}
+
+//{ IFileLog
+
+	class IFileLog : public ILogT<FileLogStream>
+	{
+	};
+
+//}
 
 #endif
 }

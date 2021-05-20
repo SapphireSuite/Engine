@@ -67,14 +67,14 @@ namespace Sa
 		return mChannels[_chanName];
 	}
 
-	void Logger::Register(LogStream& _stream)
+	void Logger::Register(ILogStream& _stream)
 	{
 		std::lock_guard lk(mStreamMutex);
 
 		mOutStreams.push_back(&_stream);
 	}
 
-	bool Logger::Unregister(LogStream& _stream)
+	bool Logger::Unregister(ILogStream& _stream)
 	{
 		std::lock_guard lk(mStreamMutex);
 

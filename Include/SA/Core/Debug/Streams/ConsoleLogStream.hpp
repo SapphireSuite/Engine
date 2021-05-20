@@ -9,7 +9,8 @@
 
 #include <SA/Core/Debug/ConsoleColor.hpp>
 
-#include <SA/Core/Debug/Log/Streams/LogStream.hpp>
+#include <SA/Core/Debug/Log/LogLevel.hpp>
+#include <SA/Core/Debug/Streams/ILogStream.hpp>
 
 /**
 *	\file ConsoleLogStream.hpp
@@ -25,8 +26,12 @@ namespace Sa
 {
 #if SA_LOGGING
 
+//{ ConsoleLogStream
+
+	class IConsoleLog;
+
 	/// Log console stream type.
-	class ConsoleLogStream : public LogStream
+	class ConsoleLogStream : public ILogStreamT<ConsoleLogStream, IConsoleLog>
 	{
 		/// Console color theme by LogLevel.
 		uint8 mTheme[6]
@@ -42,10 +47,10 @@ namespace Sa
 		/// Theme access mutex.
 		mutable std::shared_mutex mThemeMutex;
 
+	public:
 		/// Set console color from log level using theme.
 		void SetConsoleColorFromLvl(LogLevel _lvl) const;
 
-	public:
 		/**
 		*	\brief Set console color mask for loglevel.
 		* 
@@ -54,8 +59,19 @@ namespace Sa
 		*/
 		SA_ENGINE_API void SetConsoleTheme(LogLevel _lvl, uint8 _cslColor) noexcept;
 
-		SA_ENGINE_API LogStream& Output(const Sa::Log& _log) override final;
+
+		std::wostream& operator<<(const std::wstring& _str);
 	};
+
+//}
+
+//{ IConsoleLog
+
+	class IConsoleLog : public ILogT<ConsoleLogStream>
+	{
+	};
+
+//}
 
 #endif
 }

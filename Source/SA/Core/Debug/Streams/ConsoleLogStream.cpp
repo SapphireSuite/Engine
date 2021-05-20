@@ -4,11 +4,13 @@
 
 #include <Core/Algorithms/BitScanForward.hpp>
 
-#include <Core/Debug/Log/Streams/ConsoleLogStream.hpp>
+#include <Core/Debug/Streams/ConsoleLogStream.hpp>
 
 namespace Sa
 {
 #if SA_LOGGING
+
+//{ ConsoleLogStream
 
 	void ConsoleLogStream::SetConsoleColorFromLvl(LogLevel _lvl) const
 	{
@@ -32,17 +34,12 @@ namespace Sa
 		mThemeMutex.unlock();
 	}
 
-
-	LogStream& ConsoleLogStream::Output(const Sa::Log& _log)
+	std::wostream& ConsoleLogStream::operator<<(const std::wstring& _str)
 	{
-		SetConsoleColorFromLvl(_log.level);
-
-		std::wcout << _log.ToWString() << std::endl;
-
-		SetConsoleColor(CslColor::Reset);
-
-		return *this;
+		return std::wcout << _str;
 	}
+
+//}
 
 #endif
 }

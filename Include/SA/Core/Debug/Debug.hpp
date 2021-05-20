@@ -10,7 +10,7 @@
 
 #include <SA/Core/Debug/ToString.hpp>
 #include <SA/Core/Debug/Log/Logger.hpp>
-#include <SA/Core/Debug/Log/Streams/ConsoleLogStream.hpp>
+#include <SA/Core/Debug/Streams/ConsoleLogStream.hpp>
 
 /**
 *	\file Debug.hpp

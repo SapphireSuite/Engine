@@ -9,7 +9,8 @@
 
 #include <SA/Core/Time/DateTime.hpp>
 
-#include <SA/Core/Debug/Log/LogLevel.hpp>
+#include <SA/Core/Debug/Streams/ConsoleLogStream.hpp>
+#include <SA/Core/Debug/Streams/FileLogStream.hpp>
 
 /**
 *	\file Log.hpp
@@ -30,11 +31,9 @@ namespace Sa
 	*
 	*	Contains log infos.
 	*/
-	class Log
+	class Log : public IConsoleLog, public IFileLog
 	{
 	public:
-		virtual ~Log() = default;
-
 		/// File name.
 		std::wstring file;
 
@@ -59,6 +58,7 @@ namespace Sa
 		/// Date time.
 		DateTime date;
 
+
 		/**
 		*	\brief \e Value Constructor.
 		*
@@ -80,6 +80,7 @@ namespace Sa
 			const std::wstring& _details = L""
 		) noexcept;
 
+
 		/**
 		*	\brief ToWString implementation
 		* 
@@ -87,7 +88,9 @@ namespace Sa
 		* 
 		*	\return this as a wstring.
 		*/
-		SA_ENGINE_API virtual std::wstring ToWString() const;
+		std::wstring ToWString() const override;
+
+		void Output(ConsoleLogStream& _stream) const override;
 	};
 
 #endif

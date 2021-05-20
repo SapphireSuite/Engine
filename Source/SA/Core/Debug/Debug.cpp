@@ -4,7 +4,7 @@
 
 #include <Core/Debug/Debug.hpp>
 
-#include <Core/Debug/Log/Streams/FileLogStream.hpp>
+#include <Core/Debug/Streams/FileLogStream.hpp>
 
 namespace Sa::Debug
 {
