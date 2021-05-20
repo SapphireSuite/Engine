@@ -82,7 +82,10 @@ namespace Sa
 		* 
 		*	\return this as a wstring.
 		*/
-		SA_ENGINE_API std::wstring ToWString() const override;
+		SA_ENGINE_API std::wstring ToWString() const;
+
+		SA_ENGINE_API void Output(ConsoleLogStream& _stream) const override;
+		SA_ENGINE_API void Output(FileLogStream& _stream) const override;
 	};
 
 #endif

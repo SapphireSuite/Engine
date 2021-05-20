@@ -51,5 +51,20 @@ namespace Sa
 		return str;
 	}
 
+
+	void Log::Output(ConsoleLogStream& _stream) const
+	{
+		_stream.SetConsoleColorFromLvl(level);
+
+		_stream << ToWString() << std::endl;
+
+		Sa::SetConsoleColor(CslColor::Reset);
+	}
+	
+	void Log::Output(FileLogStream& _stream) const
+	{
+		_stream << ToWString() << std::endl;
+	}
+
 #endif
 }

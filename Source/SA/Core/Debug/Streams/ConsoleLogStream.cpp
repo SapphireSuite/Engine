@@ -41,18 +41,5 @@ namespace Sa
 
 //}
 
-//{ IConsoleLog
-
-	void IConsoleLog::Output(ConsoleLogStream& _stream) const
-	{
-		_stream.SetConsoleColorFromLvl(GetBase().level);
-
-		ILogT<ConsoleLogStream>::Output(_stream);
-
-		Sa::SetConsoleColor(CslColor::Reset);
-	}
-
-//}
-
 #endif
 }

@@ -70,8 +70,6 @@ namespace Sa
 
 	class IConsoleLog : public ILogT<ConsoleLogStream>
 	{
-	public:
-		SA_ENGINE_API void Output(ConsoleLogStream& _stream) const override;
 	};
 
 //}

@@ -15,29 +15,16 @@ namespace Sa
 	{
 	public:
 		virtual ~ILog() = default;
-
-		const LogBase& GetBase() const;
 	};
 
 	template <typename StreamT>
 	class ILogT : public ILog
 	{
 	public:
-		virtual void Output(StreamT& _stream) const;
-
-		/**
-		*	\brief ToWString implementation
-		*
-		*	Convert this log to wstring.
-		*
-		*	\return this as a wstring.
-		*/
-		virtual std::wstring ToWString() const = 0;
+		virtual void Output(StreamT& _stream) const = 0;
 	};
 
 #endif
 }
-
-#include <SA/Core/Debug/Log/ILog.inl>
 
 #endif // GUARD
