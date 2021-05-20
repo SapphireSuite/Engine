@@ -40,16 +40,43 @@ namespace Sa
 	}
 
 
+	bool Logger::ShouldLogChannel(const std::wstring& _chanName, LogLevel _level, uint32 _offset)
+	{
+		int32 fIndex = static_cast<int32>(_chanName.find('/', _offset));
+
+		if (fIndex == -1)
+		{
+			const LogChannel& channel = mChannels[_chanName];
+			return channel.levelFlags & _level;
+		}
+		else
+		{
+			const LogChannel& channel = mChannels[_chanName.substr(0u, fIndex)];
+
+			if (channel.levelFlags & _level)
+				return ShouldLogChannel(_chanName, _level, fIndex + 1);
+
+			return false;
+		}
+	}
+
+	LogChannel& Logger::GetChannel(const std::wstring& _chanName) noexcept
+	{
+		std::lock_guard lk(mChannelMutex);
+
+		return mChannels[_chanName];
+	}
+
 	void Logger::Register(LogStream& _stream)
 	{
-		std::lock_guard<std::mutex> lk(mStreamMutex);
+		std::lock_guard lk(mStreamMutex);
 
 		mOutStreams.push_back(&_stream);
 	}
 
 	bool Logger::Unregister(LogStream& _stream)
 	{
-		std::lock_guard<std::mutex> lk(mStreamMutex);
+		std::lock_guard lk(mStreamMutex);
 
 		for (auto it = mOutStreams.begin(); it != mOutStreams.end(); ++it)
 		{
@@ -66,7 +93,7 @@ namespace Sa
 
 	void Logger::Output(const Log& _log)
 	{
-		std::lock_guard<std::mutex> lk(mStreamMutex);
+		std::lock_guard lk(mStreamMutex);
 
 		for (auto it = mOutStreams.begin(); it != mOutStreams.end(); ++it)
 			(*it)->Output(_log);
@@ -76,7 +103,17 @@ namespace Sa
 	{
 		// Level enabled.
 		if (levelFlags & _log.level)
-			Output(_log);
+		{
+			mChannelMutex.lock();
+
+			bool bShouldLogChan = ShouldLogChannel(_log.chanName, _log.level);
+
+			mChannelMutex.unlock();
+
+			// Channel enabled.
+			if(bShouldLogChan)
+				Output(_log);
+		}
 
 		// Decrement after process (correct Join).
 		--mQueueSize;

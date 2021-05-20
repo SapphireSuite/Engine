@@ -5,6 +5,8 @@
 #ifndef SAPPHIRE_CORE_LOG_CHANNEL_GUARD
 #define SAPPHIRE_CORE_LOG_CHANNEL_GUARD
 
+#include <atomic>
+
 #include <SA/Core/Debug/Log/LogLevel.hpp>
 
 /**
@@ -26,11 +28,34 @@ namespace Sa
 	*/
 	struct LogChannel
 	{
-		/// Whether channel is enabled.
-		bool enabled = true;
-
 		/// Self level mask.
-		Flags<LogLevel> levelmask = LogLevel::Max;
+		Flags<LogLevel, std::atomic<UIntOfSize<sizeof(LogLevel)>>> levelFlags = LogLevel::Default;
+
+		/// Enable this channel (if not already).
+		inline void Enable()
+		{
+			if(levelFlags)
+				levelFlags = LogLevel::Default;
+		}
+
+		/// Disable this channel.
+		inline void Disable()
+		{
+			levelFlags = 0u;
+		}
+
+		/**
+		*	\brief Set this channel enabled.
+		* 
+		*	\param[in] _bEnable		Wether to enable.
+		*/
+		inline void SetEnabled(bool _bEnable)
+		{
+			if (_bEnable)
+				Enable();
+			else
+				Disable();
+		}
 	};
 
 #endif

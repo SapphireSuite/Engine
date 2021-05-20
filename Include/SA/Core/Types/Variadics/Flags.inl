@@ -34,6 +34,21 @@ namespace Sa
 
 
 	template <typename EnumT, typename IntlBitsT>
+	Flags<EnumT, IntlBitsT>& Flags<EnumT, IntlBitsT>::Set(EnumT _enum) noexcept
+	{
+		return Set(static_cast<BitsT>(_enum));
+	}
+
+	template <typename EnumT, typename IntlBitsT>
+	Flags<EnumT, IntlBitsT>& Flags<EnumT, IntlBitsT>::Set(BitsT _bits) noexcept
+	{
+		mBits = _bits;
+
+		return *this;
+	}
+
+
+	template <typename EnumT, typename IntlBitsT>
 	Flags<EnumT, IntlBitsT>& Flags<EnumT, IntlBitsT>::Add(EnumT _enum) noexcept
 	{
 		return Add(static_cast<BitsT>(_enum));
@@ -66,6 +81,19 @@ namespace Sa
 	constexpr Flags<EnumT, IntlBitsT> Flags<EnumT, IntlBitsT>::operator~() const noexcept
 	{
 		return Flags(~mBits);
+	}
+
+
+	template <typename EnumT, typename IntlBitsT>
+	Flags<EnumT, IntlBitsT>& Flags<EnumT, IntlBitsT>::operator=(EnumT _rhs) noexcept
+	{
+		return Set(_rhs);
+	}
+
+	template <typename EnumT, typename IntlBitsT>
+	Flags<EnumT, IntlBitsT>& Flags<EnumT, IntlBitsT>::operator=(BitsT _rhs) noexcept
+	{
+		return Set(_rhs);
 	}
 
 	template <typename EnumT, typename IntlBitsT>

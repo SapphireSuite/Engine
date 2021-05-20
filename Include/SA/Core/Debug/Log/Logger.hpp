@@ -7,12 +7,13 @@
 
 #include <vector>
 #include <queue>
+#include <unordered_map>
 
 #include <mutex>
 #include <thread>
 
 #include <SA/Core/Debug/Log/Log.hpp>
-//#include <SA/Core/Debug/Log/LogChannel.hpp>
+#include <SA/Core/Debug/Log/LogChannel.hpp>
 #include <SA/Core/Debug/Log/Streams/LogStream.hpp>
 
 #include <SA/Core/Debug/Exceptions/Exception.hpp>
@@ -43,6 +44,14 @@ namespace Sa
 		std::mutex mLogQueueMutex;
 		std::atomic<bool> mIsRunning = true;
 		std::atomic<uint32> mQueueSize = 0u;
+
+
+		/// Registered channels.
+		std::unordered_map<std::wstring, LogChannel> mChannels;
+		std::mutex mChannelMutex;
+
+		bool ShouldLogChannel(const std::wstring& _chanName, LogLevel _level, uint32 _offset = 0u);
+
 
 		const Log* Pop();
 
@@ -81,6 +90,9 @@ namespace Sa
 
 		SA_ENGINE_API Logger();
 		SA_ENGINE_API ~Logger();
+
+
+		SA_ENGINE_API LogChannel& GetChannel(const std::wstring& _chanName) noexcept;
 
 
 		/**

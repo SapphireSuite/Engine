@@ -26,6 +26,19 @@ int main()
 
 	Debug::logger.Join();
 
+	LogChannel& fooChan = Debug::logger.GetChannel(L"FooChan");
+
+	fooChan.Disable();
+
+	SA_LOG("Foo 1", Infos, FooChan);
+	Debug::logger.Join();
+
+	fooChan.Enable();
+	
+	SA_LOG("Foo 2", Infos, FooChan);
+
+	Debug::logger.Join();
+
 	std::cin.get();
 	return 0;
 }
