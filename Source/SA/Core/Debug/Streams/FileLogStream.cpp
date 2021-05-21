@@ -6,12 +6,6 @@
 
 #include <Core/Time/DateTime.hpp>
 
-
-// TODO: Wait for github action fix std::filesystem linkage.
-#include <Core/Support/Compilers.hpp>
-#define __SA_NO_FILESTREAM (SA_CI && SA_CLANG && __clang_major__ == 9)
-
-
 namespace Sa
 {
 #if SA_LOGGING
@@ -20,20 +14,12 @@ namespace Sa
 
 	FileLogStream::FileLogStream(const std::string& _fileName) noexcept
 	{
-#if !__SA_NO_FILESTREAM
-
 		CreateLogFile(_fileName);
-
-#endif
 	}
 
 	FileLogStream::~FileLogStream() noexcept
 	{
-#if !__SA_NO_FILESTREAM
-
 		mHandle.close();
-
-#endif
 	}
 
 
@@ -58,15 +44,7 @@ namespace Sa
 
 	std::wostream& FileLogStream::operator<<(const std::wstring& _str)
 	{
-#if !__SA_NO_FILESTREAM
-
 		return mHandle << _str;
-
-#else
-
-		return mHandle;
-
-#endif
 	}
 
 //}
