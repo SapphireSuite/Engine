@@ -4,9 +4,13 @@
 
 namespace Sa
 {
+#if SA_LOGGING
+
 	LogBase::LogBase(LogLevel _level, std::wstring&& _chanName) :
 		level{ _level },
 		chanName{ std::move(_chanName) }
 	{
 	}
+
+#endif
 }
