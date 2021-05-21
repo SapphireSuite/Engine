@@ -16,6 +16,13 @@ elseif()
 endif()
 
 
+# Add Thread sanitizer.
+if(UNIX AND NOT APPLE AND ${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+	target_compile_options(SA-Engine PUBLIC -fsanitize=thread)
+	target_link_options(SA-Engine PUBLIC -fsanitize=thread)
+endif()
+
+
 
 # === Entrypoints ===
 
