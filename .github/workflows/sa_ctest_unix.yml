@@ -74,7 +74,7 @@ jobs:
 
 
         # Install Clang.
-        - name: "[Package] Install LLVM and Clang 1/2"
+        - name: "[Package] Install LLVM and Clang"
           if: ${{ matrix.compiler == 'Clang' }}
           run: |
               sudo apt-get install clang-${{ matrix.compiler_v }}
