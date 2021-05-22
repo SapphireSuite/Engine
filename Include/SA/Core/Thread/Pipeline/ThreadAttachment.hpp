@@ -7,7 +7,7 @@
 
 #include <thread>
 
-#include <SA/Thread/Pipeline/ThreadState.hpp>
+#include <SA/Core/Thread/Pipeline/ThreadState.hpp>
 
 /**
 *	\file ThreadAttachment.hpp

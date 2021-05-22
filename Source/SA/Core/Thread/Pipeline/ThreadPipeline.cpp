@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Thread/Pipeline/ThreadPipeline.hpp>
+#include <Core/Thread/Pipeline/ThreadPipeline.hpp>
 
 namespace Sa
 {

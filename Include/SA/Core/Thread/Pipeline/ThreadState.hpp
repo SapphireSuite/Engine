@@ -274,6 +274,6 @@ namespace Sa
 
 /** \} */
 
-#include <SA/Thread/Pipeline/ThreadState.inl>
+#include <SA/Core/Thread/Pipeline/ThreadState.inl>
 
 #endif // GUARD

@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-#include <Thread/Pipeline/ThreadState.hpp>
+#include <Core/Thread/Pipeline/ThreadState.hpp>
 
 namespace Sa
 {

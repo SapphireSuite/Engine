@@ -2,7 +2,7 @@
 
 #include <UnitTestHelper>
 
-#include <SA/Thread/Pipeline/ThreadPipeline.hpp>
+#include <SA/Core/Thread/Pipeline/ThreadPipeline.hpp>
 using namespace Sa;
 
 namespace Sa::TheadPipelineLoop_UT

@@ -7,14 +7,14 @@
 
 #include <vector>
 
-#include <SA/Thread/Pipeline/ThreadAttachment.hpp>
+#include <SA/Core/Thread/Pipeline/ThreadAttachment.hpp>
 
 /**
 *	\file ThreadPipeline.hpp
 *
 *	\brief \b Thread Pipeline type implementation.
 *
-*	\ingroup Thread
+*	\ingroup Core_Thread
 *	\{
 */
 

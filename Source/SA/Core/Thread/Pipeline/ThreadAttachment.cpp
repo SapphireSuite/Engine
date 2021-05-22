@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Thread/Pipeline/ThreadAttachment.hpp>
+#include <Core/Thread/Pipeline/ThreadAttachment.hpp>
 
 namespace Sa
 {
