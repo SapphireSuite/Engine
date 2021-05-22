@@ -69,21 +69,12 @@ namespace Sa::Debug
 
 	#define __SA_CHAN_NAME(_chan) Sa::Debug::Intl::RemoveSpaces(SA_WSTR(_chan))
 
-	#define __SA_CREATE_LOG(_str, _lvl, _chan) Sa::Log(\
+	#define __SA_CREATE_LOG(_str, _lvl, _chan, _dets) Sa::Log(\
 		__SA_FILE_NAME,\
 		__LINE__,\
 		__SA_FUNC_NAME,\
 		(std::wstring() << _str),\
 		Sa::LogLevel::_lvl,\
-		__SA_CHAN_NAME(_chan)\
-	)
-
-	#define __SA_CREATE_WARNING(_pred, _chan, _dets) Sa::Log(\
-		__SA_FILE_NAME,\
-		__LINE__,\
-		__SA_FUNC_NAME,\
-		SA_WSTR(_pred),\
-		Sa::LogLevel::Warning,\
 		__SA_CHAN_NAME(_chan),\
 		(std::wstring() << _dets)\
 	)
@@ -110,22 +101,24 @@ namespace Sa::Debug
 
 	/// \cond Internal
 
-	#define __SA_SELECT_LOG_MACRO(_1, _2, _3, _name, ...) _name
+	#define __SA_SELECT_LOG_MACRO(_1, _2, _3, _4, _name, ...) _name
 
-	#define __SA_LOG3(_str, _lvl, _chan)	{ Sa::Debug::logger.Push(__SA_CREATE_LOG(_str, _lvl, _chan)); }
+	#define __SA_LOG4(_str, _lvl, _chan, _dets)	{ Sa::Debug::logger.Push(__SA_CREATE_LOG(_str, _lvl, _chan, _dets)); }
+	#define __SA_LOG3(_str, _lvl, _chan)	__SA_LOG4(_str, _lvl, _chan, L"")
 	#define __SA_LOG2(_str, _lvl)			__SA_LOG3(_str, _lvl, Default)
 	#define __SA_LOG1(_str)					__SA_LOG2(_str, Normal)
 	
-	#define __SA_WARN3(_pred, _chan, _dets)	{ if(!(_pred)) Sa::Debug::logger.Push(__SA_CREATE_WARNING(_pred, _chan, _dets)); }
-	#define __SA_WARN2(_pred, _chan)		__SA_WARN3(_pred, _chan, L"")
-
 	/// \endcond Internal
 
 #if !defined(DOXYGEN)
 
-	#define SA_LOG(...) __SA_SELECT_LOG_MACRO(__VA_ARGS__, __SA_LOG3, __SA_LOG2, __SA_LOG1)(__VA_ARGS__)
+	#define SA_LOG(...) __SA_SELECT_LOG_MACRO(__VA_ARGS__, __SA_LOG4, __SA_LOG3, __SA_LOG2, __SA_LOG1)(__VA_ARGS__)
 
-	#define SA_WARN(...) __SA_SELECT_LOG_MACRO(__VA_ARGS__, __SA_WARN3, __SA_WARN2)(__VA_ARGS__)
+
+	#define __SA_COND_LOG(_pred, _lvl, ...)		{ if(!(_pred)) SA_LOG(SA_WSTR(_pred), _lvl, ##__VA_ARGS__) }
+
+	#define SA_WARN(_pred, ...) __SA_COND_LOG(_pred, Warning, ##__VA_ARGS__)
+	#define SA_ERROR(_pred, ...) __SA_COND_LOG(_pred, Error, ##__VA_ARGS__)
 
 
 	#if SA_DEBUG // Assertion requieres active Debug.
@@ -140,9 +133,9 @@ namespace Sa::Debug
 
 #else
 
-	#define SA_LOG(_str, _lvl, _chan)
+	#define SA_LOG(_str, _lvl, _chan, _dets)
 	/**
-	*	\def SA_LOG(_str, _lvl, _chan)
+	*	\def SA_LOG(_str, _lvl, _chan, _dets)
 	*
 	*	\brief Sapphire Log macro.
 	*
@@ -151,6 +144,7 @@ namespace Sa::Debug
 	*	\param[in] _str		String message of the log.
 	*	\param[in] _lvl		Level of the log (optional).
 	*	\param[in] _chan	Channel of the log (optional).
+	*	\param[in] _dets	Additional details string of the log (optional).
 	*/
 
 	#define SA_WARN(_pred, _chan, _dets)
@@ -159,11 +153,24 @@ namespace Sa::Debug
 	*
 	*	\brief Sapphire Log "warning if" macro.
 	*
-	*	Helper macro to use Debug::Log warning.
+	*	Helper macro to use conditionnal Debug::Log warning.
 	*
 	*	\param[in] _pred	predicate of the Log. Output warnings on false.
 	*	\param[in] _chan	Channel of the log.
-	*	\param[in] _dets	String message of the log (optional).
+	*	\param[in] _dets	Additional details string of the log (optional).
+	*/
+
+	#define SA_ERROR(_pred, _chan, _dets)
+	/**
+	*	\def SA_ERROR(_pred, _chan, _dets)
+	*
+	*	\brief Sapphire Log "error if" macro.
+	*
+	*	Helper macro to use conditionnal Debug::Log error.
+	*
+	*	\param[in] _pred	predicate of the Log. Output error on false.
+	*	\param[in] _chan	Channel of the log.
+	*	\param[in] _dets	Additional details string of the log (optional).
 	*/
 
 	#define SA_ASSERT(_type, _chan, ...)
@@ -176,7 +183,7 @@ namespace Sa::Debug
 	*
 	*	\param[in] _type		type of the exception.
 	*	\param[in] _chan		Channel of the assert.
-	*	\param[in] ...	Additionnal args for exception (depends on _type).
+	*	\param[in] ...			Additionnal args for exception (depends on _type).
 	*/
 
 #endif
