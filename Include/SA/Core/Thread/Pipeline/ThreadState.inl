@@ -34,9 +34,13 @@ namespace Sa
 		mOutputMutex.lock();
 
 		_inBuffFunctor(mInBuffer);
+		mInBuffer = nullptr;
 
 		_outBuffFunctor(mCurrBuffer);
+		mCurrBuffer = nullptr;
+
 		_outBuffFunctor(mOutBuffer);
+		mOutBuffer = nullptr;
 
 		mOutputMutex.unlock();
 	}

@@ -98,9 +98,6 @@ namespace Sa
 
 	void ThreadState::QueryOutput(void*& _dst, QueryMode _overrideMode)
 	{
-		if (!bIsRunning)
-			return;
-
 		QueryMode qMode = _overrideMode == QueryMode::None ? queryMode : _overrideMode;
 
 		switch (qMode)
@@ -111,7 +108,9 @@ namespace Sa
 
 				mOutputMutex.lock_shared();
 
-				mCopyBuffer(mOutBuffer, _dst);
+				// Output buffer still valid.
+				if (mOutBuffer)
+					mCopyBuffer(mOutBuffer, _dst);
 
 				mOutputMutex.unlock_shared();
 
@@ -121,7 +120,9 @@ namespace Sa
 			{
 				mOutputMutex.lock();
 
-				std::swap(mOutBuffer, _dst);
+				// Output buffer still valid.
+				if (mOutBuffer)
+					std::swap(mOutBuffer, _dst);
 
 				mOutputMutex.unlock();
 
