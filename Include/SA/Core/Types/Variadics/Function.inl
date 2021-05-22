@@ -29,7 +29,7 @@ namespace Sa
 	template <typename R, typename... Args>
 	Function<R(Args...)>::Function(R(*_func)(Args...)) noexcept :
 		mData{ nullptr },
-		mSfunc{ _func }
+		mSFunc{ _func }
 	{
 	}
 
@@ -54,7 +54,7 @@ namespace Sa
 			mData = nullptr;
 		}
 
-		mSfunc = _func;
+		mSFunc = _func;
 	}
 
 	template <typename R, typename... Args>
@@ -81,32 +81,26 @@ namespace Sa
 			mData = nullptr;
 		}
 
-		mSfunc = nullptr;
+		mSFunc = nullptr;
 	}
 
 
 	template <typename R, typename... Args>
 	bool Function<R(Args...)>::IsEmpty() const noexcept
 	{
-		return mSfunc == 0;
+		return mSFunc == 0;
 	}
 
 
 	template <typename R, typename... Args>
-	R Function<R(Args...)>::Execute(Args... _args)
+	R Function<R(Args...)>::Execute(Args... _args) const
 	{
 		if (mData)
-		{
-			SA_ASSERT(Nullptr, Core / Types, mIntlFunc);
-
 			return mIntlFunc(mData, std::forward<Args>(_args)...);
-		}
-		else
-		{
-			SA_ASSERT(Nullptr, Core / Types, mSfunc);
+		else if(mSFunc)
+			return mSFunc(std::forward<Args>(_args)...);
 
-			return mSfunc(std::forward<Args>(_args)...);
-		}
+		return R();
 	}
 
 //}
@@ -122,9 +116,16 @@ namespace Sa
 	}
 
 	template <typename R, typename... Args>
-	R Function<R(Args...)>::operator()(Args... _args)
+	R Function<R(Args...)>::operator()(Args... _args) const
 	{
 		return Execute(std::forward<Args>(_args)...);
+	}
+
+
+	template <typename R, typename... Args>
+	Function<R(Args...)>::operator bool() const
+	{
+		return mSFunc;
 	}
 
 //}

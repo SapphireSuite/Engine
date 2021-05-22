@@ -65,7 +65,7 @@ namespace Sa
 		union
 		{
 			/// Static function ptr.
-			R(*mSfunc)(Args...) = nullptr;
+			R(*mSFunc)(Args...) = nullptr;
 
 			/// Internal interface function ptr (handle for member function call).
 			R(*mIntlFunc)(void*, Args...);
@@ -77,10 +77,16 @@ namespace Sa
 
 		Function() = default;
 
+
 		Function(R(*_func)(Args...)) noexcept;
 
 		template <typename C>
 		Function(C* _caller, R(C::*_func)(Args...));
+
+
+		Function(Function&&) = default;
+
+		Function(const Function&) = delete;
 
 //}
 
@@ -97,17 +103,26 @@ namespace Sa
 		bool IsEmpty() const noexcept;
 
 
-		R Execute(Args... _args);
+		R Execute(Args... _args) const;
 //}
 
 //{ Operators
+
+		Function& operator=(Function&&) = default;
+
+		Function& operator=(const Function&) = delete;
+
 
 		Function& operator=(R(*_func)(Args...)) noexcept;
 
 		//template <typename C>
 		//Function& operator=(C* _caller, R(C::* _func)(Args...));
 
-		R operator()(Args... _args);
+
+		R operator()(Args... _args) const;
+
+
+		operator bool() const;
 
 //}
 	};
