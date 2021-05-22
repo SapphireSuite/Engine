@@ -2,7 +2,7 @@
 
 #include <UnitTestHelper>
 
-#include <SA/Core/Thread/Pipeline/ThreadPipeline.hpp>
+#include <SA/Thread/Pipeline/ThreadPipeline.hpp>
 using namespace Sa;
 
 namespace Sa::TheadPipelineLoop_UT
@@ -17,16 +17,16 @@ namespace Sa::TheadPipelineLoop_UT
 
 	using Data = uint32;
 
-	void DataCopy(const void* _src, void* _dst) { *reinterpret_cast<Data*>(_dst) = *reinterpret_cast<const Data*>(_src); }
-	void DataDeleter(void* _data) { delete reinterpret_cast<Data*>(_data); }
-
+	auto createDataFunctor = []() { return new Data{}; };
+	auto deleteDataFunctor = [](void* _buff) { delete static_cast<Data*>(_buff); };
+	void DataCopy(const void* _src, void* _dst) { *static_cast<Data*>(_dst) = *static_cast<const Data*>(_src); }
 
 	uint32 behSubmit = 0;
 	void BehaviorUpdate(ThreadState& _state)
 	{
-		_state.CreateBuffers(new Data{ 1 }, new Data{ 2 }, new Data{ 3 });
+		_state.CreateBuffers(createDataFunctor, createDataFunctor);
 
-		while (_state.IsRunning())
+		while (_state.Submit())
 		{
 			// Must get after each submit.
 			const Data* in = _state.GetInputBuffer<Data>();
@@ -36,20 +36,19 @@ namespace Sa::TheadPipelineLoop_UT
 			Data rand = UTH::Rand(0u, 100u);
 			LOG("BH.out: " << *out << " -> " << rand);
 			*out = rand;
-
-			_state.Submit();
+			
 			++behSubmit;
 		}
 
-		_state.DestroyBuffers(DataDeleter, DataDeleter);
+		_state.DestroyBuffers(deleteDataFunctor, deleteDataFunctor);
 	}
 
 	uint32 phSubmit = 0;
 	void PhysicsUpdate(ThreadState& _state)
 	{
-		_state.CreateBuffers(new Data{ 4 }, new Data{ 5 }, new Data{ 6 });
+		_state.CreateBuffers(createDataFunctor, createDataFunctor);
 
-		while (_state.IsRunning())
+		while (_state.Submit())
 		{
 			// Must get after each submit.
 			const Data* in = _state.GetInputBuffer<Data>();
@@ -60,19 +59,18 @@ namespace Sa::TheadPipelineLoop_UT
 			LOG("PH.out: " << *out << " -> " << rand);
 			*out = rand;
 
-			_state.Submit();
 			++phSubmit;
 		}
 
-		_state.DestroyBuffers(DataDeleter, DataDeleter);
+		_state.DestroyBuffers(deleteDataFunctor, deleteDataFunctor);
 	}
 
 	uint32 rendSubmit = 0;
 	void RenderUpdate(ThreadState& _state)
 	{
-		_state.CreateBuffers(new Data{ 7 }, new Data{ 8 }, new Data{ 9 });
+		_state.CreateBuffers(createDataFunctor, createDataFunctor);
 
-		while (_state.IsRunning())
+		while (_state.Submit())
 		{
 			// Must get after each submit.
 			const Data* in = _state.GetInputBuffer<Data>();
@@ -83,11 +81,10 @@ namespace Sa::TheadPipelineLoop_UT
 			LOG("RN.out: " << *out << " -> " << rand);
 			*out = rand;
 
-			_state.Submit();
 			++rendSubmit;
 		}
 
-		_state.DestroyBuffers(DataDeleter, DataDeleter);
+		_state.DestroyBuffers(deleteDataFunctor, deleteDataFunctor);
 	}
 
 	bool Create()
@@ -96,47 +93,45 @@ namespace Sa::TheadPipelineLoop_UT
 
 		// Behavior Step.
 		{
-			ThreadAttachment::CreateInfos infos;
-			infos.method = BehaviorUpdate;
-			infos.stateInfos.frequency = 1.0f / 30.0f;
-			infos.stateInfos.inAttachIndex = 2;	// Render Step.
-			infos.stateInfos.queryMode = ThreadState::QueryMode::Move;
+			ThreadAttachment::CreateInfos& infos = thPipeInfos.attachInfos.emplace_back();
 
-			thPipeInfos.attachInfos.push_back(infos);
+			infos.main = BehaviorUpdate;
+			infos.inAttachIndex = 2;	// Render Step.
+			infos.stateInfos.frequency = 1.0f / 30.0f;
+			infos.stateInfos.queryMode = ThreadState::QueryMode::Move;
 		}
 
 		// Physics Step.
 		{
-			ThreadAttachment::CreateInfos infos;
-			infos.method = PhysicsUpdate;
+			ThreadAttachment::CreateInfos& infos = thPipeInfos.attachInfos.emplace_back();
+
+			infos.main = PhysicsUpdate;
+			infos.inAttachIndex = 0;	// Behavior Step.
 			infos.stateInfos.frequency = 1.0f / 120.0f;
-			infos.stateInfos.inAttachIndex = 0;	// Behavior Step.
 			infos.stateInfos.copyBuffer = DataCopy;
 			infos.stateInfos.inputState = ThreadState::InputState::SelfSubmit;
 			infos.stateInfos.queryMode = ThreadState::QueryMode::Move;
-
-			thPipeInfos.attachInfos.push_back(infos);
 		}
 
 		// Render Step.
 		{
-			ThreadAttachment::CreateInfos infos;
-			infos.method = RenderUpdate;
-			infos.stateInfos.frequency = 1.0f / 60.0f;
-			infos.stateInfos.inAttachIndex = 1;	// Physics Step.
-			infos.stateInfos.queryMode = ThreadState::QueryMode::Move;
+			ThreadAttachment::CreateInfos& infos = thPipeInfos.attachInfos.emplace_back();
 
-			thPipeInfos.attachInfos.push_back(infos);
+			infos.main = RenderUpdate;
+			infos.inAttachIndex = 1;	// Physics Step.
+			infos.stateInfos.frequency = 1.0f / 60.0f;
+			infos.stateInfos.copyBuffer = DataCopy;
+			infos.stateInfos.queryMode = ThreadState::QueryMode::Copy;
 		}
 
-		thPipeline.Create(thPipeInfos);
+		thPipeline.Create(std::move(thPipeInfos));
 
 		return true;
 	}
 
 	bool Start()
 	{
-		thPipeline.Start();
+		//thPipeline.Start();
 
 		return true;
 	}

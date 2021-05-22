@@ -7,12 +7,12 @@
 
 #include <vector>
 
-#include <SA/Core/Thread/Pipeline/ThreadAttachment.hpp>
+#include <SA/Thread/Pipeline/ThreadAttachment.hpp>
 
 /**
 *	\file ThreadPipeline.hpp
 *
-*	\brief \b Definition of Sapphire's Suite \b Thread Pipeline type.
+*	\brief \b Thread Pipeline type implementation.
 *
 *	\ingroup Thread
 *	\{
@@ -32,7 +32,7 @@ namespace Sa
 		std::vector<ThreadAttachment> mThAttachments;
 
 		/// Currently running state.
-		std::atomic<float> bIsRunning = false;
+		std::atomic<float> bIsRunning = true;
 
 	public:
 		/// Create infos struct.
@@ -43,20 +43,12 @@ namespace Sa
 			*	One attachment will be created for each infos.
 			*/
 			std::vector<ThreadAttachment::CreateInfos> attachInfos;
-
-			/// Instantly start upon creation. Manually call Start() instead.
-			bool bStartOnCreate = false;
 		};
+
+//{ Constructors
 
 		/// Default constructor.
 		ThreadPipeline() = default;
-
-		/**
-		*	\brief In-Constructor creation.
-		* 
-		*	\param[in] _infos	Create infos.
-		*/
-		ThreadPipeline(const CreateInfos& _infos);
 
 		/// Deleted move constructor.
 		ThreadPipeline(ThreadPipeline&&) = delete;
@@ -64,45 +56,35 @@ namespace Sa
 		/// Deleted copy constructor.
 		ThreadPipeline(const ThreadPipeline&) = delete;
 
+//}
+
+//{ Methods
+
 		/**
 		*	\brief getter of attachment by index.
 		*	Attachment index is defined by order in create infos.
-		* 
+		*
 		*	\param[in] _index	Index of attachment.
-		* 
+		*
 		*	\returns attachment at index.
 		*/
-		ThreadAttachment& GetAttachment(unsigned int _index);
+		ThreadAttachment& GetAttachment(uint32 _index);
 
-		/**
-		*	\brief const getter of attachment by index.
-		*	Attachment index is defined by order in create infos.
-		* 
-		*	\param[in] _index	Index of attachment.
-		* 
-		*	\returns attachment at index.
-		*/
-		const ThreadAttachment& GetAttachment(unsigned int _index) const;
 
 		/**
 		*	\brief Create pipeline from infos.
-		* 
+		*
 		*	\param[in] _infos	creation infos.
 		*/
-		SA_ENGINE_API void Create(const CreateInfos& _infos);
+		SA_ENGINE_API void Create(CreateInfos&& _infos);
 
 		/// Destroy the created pipeline.
 		SA_ENGINE_API void Destroy();
 
-		/**
-		*	Start running the pipeline.
-		*	Only useful if bStartOnCreate = false in CreateInfos.
-		*/
-		SA_ENGINE_API void Start();
 
 		/**
 		*	Update pipeline from time.
-		* 
+		*
 		*	\param[in] _deltaTime	delta time.
 		*/
 		SA_ENGINE_API void Update(float _deltaTime);
@@ -112,6 +94,7 @@ namespace Sa
 		*	Stop the running pipeline and join all attached threads.
 		*/
 		SA_ENGINE_API void End();
+//}
 	};
 }
 

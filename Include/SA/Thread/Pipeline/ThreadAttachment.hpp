@@ -7,14 +7,14 @@
 
 #include <thread>
 
-#include <SA/Core/Thread/Pipeline/ThreadState.hpp>
+#include <SA/Thread/Pipeline/ThreadState.hpp>
 
 /**
 *	\file ThreadAttachment.hpp
 *
-*	\brief \b Definition of Sapphire's Suite \b Thread Attachment type.
+*	\brief \b Thread Attachment type implementation.
 *
-*	\ingroup Thread
+*	\ingroup Core_Thread
 *	\{
 */
 
@@ -38,20 +38,23 @@ namespace Sa
 			/// State create infos.
 			ThreadState::CreateInfos stateInfos;
 
+			/// input attachment index (if any).
+			uint32 inAttachIndex = uint32(-1);
+
 			/// Main method to run.
-			void (*method)(ThreadState&) = nullptr;
+			Function<void(ThreadState&)> main;
 		};
 
-		/// State of attachment.
+		/// Attachment's state.
 		ThreadState state;
 
 		/**
 		*	Value Constructor.
 		*
 		*	\param[in]	_infos		Attachment create infos.
-		*	\param[in] _bIsRunning	Atomic running from ThreadPipeline.
 		*/
-		ThreadAttachment(const CreateInfos& _infos, std::atomic<float>& _bIsRunning);
+		ThreadAttachment(CreateInfos&& _infos, std::atomic<float>& _bIsRunning);
+
 
 		/**
 		*	Update the attachment from time.
