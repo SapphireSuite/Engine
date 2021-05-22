@@ -130,7 +130,7 @@ namespace Sa::TheadPipelineEngine_UT
 
 	bool Start()
 	{
-		//thPipeline.Start();
+		thPipeline.Start();
 
 		return true;
 	}

@@ -53,7 +53,7 @@ namespace Sa
 		*
 		*	\param[in]	_infos		Attachment create infos.
 		*/
-		ThreadAttachment(CreateInfos&& _infos, std::atomic<float>& _bIsRunning);
+		ThreadAttachment(CreateInfos&& _infos, std::atomic<float>& _bHasStarted, std::atomic<float>& _bIsRunning);
 
 
 		/**

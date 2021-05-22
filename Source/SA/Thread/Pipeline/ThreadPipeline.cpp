@@ -18,7 +18,7 @@ namespace Sa
 
 		// Construct.
 		for(auto it = _infos.attachInfos.begin(); it != _infos.attachInfos.end(); ++it)
-			mThAttachments.emplace_back(std::move(*it), bIsRunning);
+			mThAttachments.emplace_back(std::move(*it), bHasStarted, bIsRunning);
 
 
 		// Init Input attachment.
@@ -41,6 +41,11 @@ namespace Sa
 	}
 
 
+	void ThreadPipeline::Start()
+	{
+		bHasStarted = true;
+	}
+
 	void ThreadPipeline::Update(float _deltaTime)
 	{
 		for (auto it = mThAttachments.begin(); it != mThAttachments.end(); ++it)
@@ -50,6 +55,7 @@ namespace Sa
 	void ThreadPipeline::End()
 	{
 		bIsRunning = false;
+		bHasStarted = true; // Force start if not.
 
 		for (auto it = mThAttachments.begin(); it != mThAttachments.end(); ++it)
 			it->Join();

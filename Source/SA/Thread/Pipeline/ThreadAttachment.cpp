@@ -4,12 +4,16 @@
 
 namespace Sa
 {
-	ThreadAttachment::ThreadAttachment(CreateInfos&& _infos, std::atomic<float>& _bIsRunning) :
+	ThreadAttachment::ThreadAttachment(CreateInfos&& _infos, std::atomic<float>& _bHasStarted, std::atomic<float>& _bIsRunning) :
 		state{ std::move(_infos.stateInfos), _bIsRunning }
 	{
 		mHandle = std::thread(
-			[this](Function<void(ThreadState&)> _main)
+			[this, &_bHasStarted](Function<void(ThreadState&)> _main)
 			{
+				// Wait for start.
+				while (!_bHasStarted)
+					std::this_thread::yield();
+
 				_main(state);
 			},
 			

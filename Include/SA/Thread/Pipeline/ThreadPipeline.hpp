@@ -34,6 +34,9 @@ namespace Sa
 		/// Currently running state.
 		std::atomic<float> bIsRunning = true;
 
+		/// Threads started running.
+		std::atomic<float> bHasStarted = false;
+
 	public:
 		/// Create infos struct.
 		struct CreateInfos
@@ -81,6 +84,12 @@ namespace Sa
 		/// Destroy the created pipeline.
 		SA_ENGINE_API void Destroy();
 
+
+		/**
+		*	Start running the pipeline.
+		*	Only useful if bStartOnCreate = false in CreateInfos.
+		*/
+		SA_ENGINE_API void Start();
 
 		/**
 		*	Update pipeline from time.
