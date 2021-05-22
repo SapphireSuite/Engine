@@ -79,10 +79,10 @@ namespace Sa::UTH
 #if SA_UTH_EXIT_PAUSE && !SA_CI
 
 		{
-			MessageLog log;
-			log.str.AppendString(L"[SA-UTH] Press Enter to continue...\n");
+			MessageLog msgLog;
+			msgLog.str.AppendString(L"[SA-UTH] Press Enter to continue...\n");
 
-			Debug::logger.Push(std::move(log));
+			Debug::logger.Push(std::move(msgLog));
 
 			std::cin.get();
 		}
