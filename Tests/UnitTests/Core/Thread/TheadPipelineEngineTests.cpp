@@ -17,7 +17,8 @@ namespace Sa::TheadPipelineEngine_UT
 
 	using Data = uint32;
 
-	auto createDataFunctor = []() { return new Data{}; };
+	uint32 gID = 0;
+	auto createDataFunctor = []() { return new Data{ gID++ }; };
 	auto deleteDataFunctor = [](void* _buff) { delete static_cast<Data*>(_buff); };
 	void DataCopy(const void* _src, void* _dst) { *static_cast<Data*>(_dst) = *static_cast<const Data*>(_src); }
 

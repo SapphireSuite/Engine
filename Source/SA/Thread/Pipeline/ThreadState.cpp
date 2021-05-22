@@ -98,6 +98,9 @@ namespace Sa
 
 	void ThreadState::QueryOutput(void*& _dst, QueryMode _overrideMode)
 	{
+		if (!bIsRunning)
+			return;
+
 		QueryMode qMode = _overrideMode == QueryMode::None ? queryMode : _overrideMode;
 
 		switch (qMode)
@@ -176,7 +179,7 @@ namespace Sa
 	void ThreadState::Yield()
 	{
 		// Wait for frequency.
-		while (mCurrTime < frequency)
+		while (mCurrTime < frequency && bIsRunning)
 			std::this_thread::yield();
 
 		mCurrTime = std::fmod(mCurrTime, frequency);

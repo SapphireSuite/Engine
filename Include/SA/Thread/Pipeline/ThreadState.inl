@@ -18,22 +18,26 @@ namespace Sa
 	template <typename InFuncT, typename OutFuncT>
 	void ThreadState::CreateBuffers(const InFuncT& _inBuffFunctor, const OutFuncT& _outBuffFunctor)
 	{
+		mOutputMutex.lock();
+
 		mInBuffer = _inBuffFunctor();
 
 		mCurrBuffer = _outBuffFunctor();
 		mOutBuffer = _outBuffFunctor();
+
+		mOutputMutex.unlock();
 	}
 
 	template <typename InFuncT, typename OutFuncT>
 	void ThreadState::DestroyBuffers(const InFuncT& _inBuffFunctor, const OutFuncT& _outBuffFunctor)
 	{
-		//mOutputMutex.lock();
+		mOutputMutex.lock();
 
 		_inBuffFunctor(mInBuffer);
 
 		_outBuffFunctor(mCurrBuffer);
 		_outBuffFunctor(mOutBuffer);
 
-		//mOutputMutex.unlock();
+		mOutputMutex.unlock();
 	}
 }
