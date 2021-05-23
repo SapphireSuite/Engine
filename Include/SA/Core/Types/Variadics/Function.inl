@@ -14,6 +14,22 @@ namespace Sa
 		}
 
 		template <typename C, typename R, typename... Args>
+		FuncMemberDataBase* FuncMemberData<C, R, Args...>::Duplicate() const
+		{
+			return new FuncMemberData(caller, func);
+		}
+
+		template <typename C, typename R, typename... Args>
+		bool FuncMemberData<C, R, Args...>::Compare(const FuncMemberDataBase* _other) const
+		{
+			SA_ASSERT(Nullptr, Core/Types, _other);
+			const FuncMemberData* memData = reinterpret_cast<const FuncMemberData*>(_other);
+
+			return reinterpret_cast<uint64>(caller) && reinterpret_cast<uint64>(memData->caller) && func == memData->func;
+		}
+
+
+		template <typename C, typename R, typename... Args>
 		R FuncMemberData<C, R, Args...>::InterfaceCall(void* _data, Args... _args)
 		{
 			FuncMemberData* fData = reinterpret_cast<FuncMemberData*>(_data);
@@ -41,36 +57,89 @@ namespace Sa
 	{
 	}
 
+
+	template <typename R, typename... Args>
+	Function<R(Args...)>::Function(Function&& _other) noexcept
+	{
+		if (_other.mData)
+		{
+			mData = _other.mData;
+			_other.mData = nullptr;
+
+			mIntlFunc = _other.mIntlFunc;
+			_other.mIntlFunc = nullptr;
+		}
+		else
+		{
+			mSFunc = _other.mSFunc;
+			_other.mSFunc = nullptr;
+		}
+	}
+
+	template <typename R, typename... Args>
+	Function<R(Args...)>::Function(const Function& _other) noexcept
+	{
+		if (_other.mData)
+		{
+			mData = _other.mData->Duplicate();
+			mIntlFunc = _other.mIntlFunc;
+		}
+		else
+			mSFunc = _other.mSFunc;
+	}
+
+	template <typename R, typename... Args>
+	Function<R(Args...)>::~Function()
+	{
+		Clear();
+	}
+
 //}
 
-//{ Methods
+//{ Equals
 
 	template <typename R, typename... Args>
-	void Function<R(Args...)>::Set(R(*_func)(Args...))
+	bool Function<R(Args...)>::IsEmpty() const noexcept
 	{
-		if (mData)
-		{
-			delete mData;
-			mData = nullptr;
-		}
-
-		mSFunc = _func;
+		return !mSFunc;
 	}
 
 	template <typename R, typename... Args>
-	template <typename C>
-	void Function<R(Args...)>::Set(C* _caller, R(C::* _func)(Args...))
+	Function<R(Args...)>::operator bool() const
+	{
+		return mSFunc;
+	}
+
+
+	template <typename R, typename... Args>
+	bool Function<R(Args...)>::Equals(const Function& _other) const
 	{
 		if (mData)
 		{
-			delete mData;
-			mData = nullptr;
+			if (_other.mData)
+				return mData->Compare(_other.mData);
 		}
+		else if (mSFunc)
+			return mSFunc == _other.mSFunc;
 
-		mData = new Intl::FuncMemberData<C, R, Args...>(_caller, _func);
-		mIntlFunc = Intl::FuncMemberData<C, R, Args...>::InterfaceCall;
+		return false;
 	}
 
+	template <typename R, typename... Args>
+	bool Function<R(Args...)>::operator==(const Function& _rhs) const
+	{
+		return Equals(_rhs);
+	}
+
+	template <typename R, typename... Args>
+	bool Function<R(Args...)>::operator!=(const Function& _rhs) const
+	{
+		return !Equals(_rhs);
+	}
+
+//}
+
+//{ Set
 
 	template <typename R, typename... Args>
 	void Function<R(Args...)>::Clear()
@@ -86,11 +155,74 @@ namespace Sa
 
 
 	template <typename R, typename... Args>
-	bool Function<R(Args...)>::IsEmpty() const noexcept
+	void Function<R(Args...)>::Set(R(*_func)(Args...))
 	{
-		return mSFunc == 0;
+		Clear();
+
+		mSFunc = _func;
 	}
 
+	template <typename R, typename... Args>
+	template <typename C>
+	void Function<R(Args...)>::Set(C* _caller, R(C::* _func)(Args...))
+	{
+		Clear();
+
+		mData = new Intl::FuncMemberData<C, R, Args...>(_caller, _func);
+		mIntlFunc = Intl::FuncMemberData<C, R, Args...>::InterfaceCall;
+	}
+
+
+	template <typename R, typename... Args>
+	Function<R(Args...)>& Function<R(Args...)>::operator=(Function&& _rhs) noexcept
+	{
+		Clear();
+
+		if (_rhs.mData)
+		{
+			mData = _rhs.mData;
+			_rhs.mData = nullptr;
+
+			mIntlFunc = _rhs.mIntlFunc;
+			_rhs.mIntlFunc = nullptr;
+		}
+		else
+		{
+			mSFunc = _rhs.mSFunc;
+			_rhs.mSFunc = nullptr;
+		}
+
+		return *this;
+	}
+
+
+	template <typename R, typename... Args>
+	Function<R(Args...)>& Function<R(Args...)>::operator=(const Function& _rhs) noexcept
+	{
+		Clear();
+
+		if (_rhs.mData)
+		{
+			mData = _rhs.mData->Duplicate();
+			mIntlFunc = _rhs.mIntlFunc;
+		}
+		else
+			mSFunc = _rhs.mSFunc;
+
+		return *this;
+	}
+
+
+	template <typename R, typename... Args>
+	Function<R(Args...)>& Function<R(Args...)>::operator=(R(*_func)(Args...)) noexcept
+	{
+		Set(_func);
+
+		return *this;
+	}
+//}
+
+//{ Execute
 
 	template <typename R, typename... Args>
 	R Function<R(Args...)>::Execute(Args... _args) const
@@ -103,29 +235,10 @@ namespace Sa
 		return R();
 	}
 
-//}
-
-//{ Operators
-
-	template <typename R, typename... Args>
-	Function<R(Args...)>& Function<R(Args...)>::operator=(R(*_func)(Args...)) noexcept
-	{
-		Set(_func);
-
-		return *this;
-	}
-
 	template <typename R, typename... Args>
 	R Function<R(Args...)>::operator()(Args... _args) const
 	{
 		return Execute(std::forward<Args>(_args)...);
-	}
-
-
-	template <typename R, typename... Args>
-	Function<R(Args...)>::operator bool() const
-	{
-		return mSFunc;
 	}
 
 //}
