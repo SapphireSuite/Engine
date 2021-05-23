@@ -7,59 +7,23 @@
 #include <SA/Collections/Debug>
 using namespace Sa;
 
+#include <SA/Window/GLFW/GLFWWindow.hpp>
+
 int main()
 {
-	SA_LOG("Hello 1");
-	SA_LOG("Hello 2", Infos);
-	SA_LOG("Hello 2", Warning, TestCH);
-	
-	Debug::logger.Join();
+	GLFW::Window win;
 
-	SA_LOGLVL_DIS_SECTB(Warning)
+	win.Create(1200u, 800);
 
-		SA_LOG("Hello 3", Warning, TestCH);
-		SA_LOG("Hello 3", Infos);
 
-	SA_LOGLVL_DIS_SECTE()
+#if !SA_CI
 
-	SA_LOG("Hello 4", Warning, TestCH);
+	while (!win.ShouldClose())
 
-	Debug::logger.Join();
-
-	LogChannel& fooChan = Debug::logger.GetChannel(L"FooChan");
-
-	fooChan.Disable();
-
-	SA_LOG("Foo 1", Infos, FooChan);
-	Debug::logger.Join();
-
-	fooChan.Enable();
-	
-	SA_LOG("Foo 2", Infos, FooChan);
-
-	Debug::logger.Join();
-
+#endif
 	{
-		const uint32 min = 0u;
-		const uint32 max = 8u;
-		const uint32 goodI = 4u;
-		const uint32 wrongI = 10u;
-
-		SA_ASSERT(OutOfRange, AsChan, goodI, min, max, L"OutOfRange success test");
-
-		try
-		{
-			SA_ASSERT(Default, AsChan, true, L"OutOfRange failure test");
-			SA_ASSERT(OutOfRange, AsChan, wrongI, min, max, L"OutOfRange failure test");
-		}
-		catch (const Exception_OutOfRange& _e)
-		{
-			std::wcout << L"Exception caugth: " << _e.msg << '\n' << _e.details << '\n' << std::endl;
-		}
+		win.Update();
 	}
 
-
-
-	std::cin.get();
 	return 0;
 }
