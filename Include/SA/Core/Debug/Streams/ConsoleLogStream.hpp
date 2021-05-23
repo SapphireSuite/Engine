@@ -49,7 +49,11 @@ namespace Sa
 		mutable std::shared_mutex mThemeMutex;
 
 	public:
-		/// Set console color from log level using theme.
+		/**
+		*	\brief Set console color from log level using theme.
+		* 
+		*	\param[in] _lvl		LogLevel to use for theme.
+		*/
 		void SetConsoleColorFromLvl(LogLevel _lvl) const;
 
 		/**
@@ -61,6 +65,13 @@ namespace Sa
 		SA_ENGINE_API void SetConsoleTheme(LogLevel _lvl, uint8 _cslColor) noexcept;
 
 
+		/**
+		*	\brief Output wstring into the stream.
+		* 
+		*	\param[in] _str		String to output.
+		* 
+		*	\return handled std::wostream.
+		*/
 		SA_ENGINE_API std::wostream& operator<<(const std::wstring& _str);
 	};
 
@@ -68,6 +79,7 @@ namespace Sa
 
 //{ IConsoleLog
 
+	/// Console Log interface implementation.
 	class IConsoleLog : public ILogT<ConsoleLogStream>
 	{
 	};

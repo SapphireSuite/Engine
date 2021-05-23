@@ -51,7 +51,9 @@ namespace Sa
 		/**
 		*	Value Constructor.
 		*
-		*	\param[in]	_infos		Attachment create infos.
+		*	\param[in]	_infos			Attachment create infos.
+		*	\param[in]	_bHasStarted	Has pipeline started state.
+		*	\param[in]	_bIsRunning		Is pipeline running state.
 		*/
 		ThreadAttachment(CreateInfos&& _infos, std::atomic<float>& _bHasStarted, std::atomic<float>& _bIsRunning);
 

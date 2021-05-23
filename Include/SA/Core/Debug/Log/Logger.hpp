@@ -76,10 +76,26 @@ namespace Sa
 		/// Enabled level flags for output.
 		Flags<LogLevel, std::atomic<UIntOfSize<sizeof(LogLevel)>>> levelFlags = LogLevel::Default;
 
+		/**
+		*	\e Constructor
+		*	Create Log thread.
+		*/
 		SA_ENGINE_API Logger();
+
+		/**
+		*	\e Destructor
+		*	Join and end Log thread.
+		*/
 		SA_ENGINE_API ~Logger();
 
 
+		/**
+		*	\brief Get log channel from name.
+		* 
+		*	\param[in] _chanName	Channel's name.
+		* 
+		*	\return registered LogChannel.
+		*/
 		SA_ENGINE_API LogChannel& GetChannel(const std::wstring& _chanName) noexcept;
 
 
@@ -100,9 +116,19 @@ namespace Sa
 		SA_ENGINE_API bool Unregister(LogStreamBase& _stream);
 
 
+		/**
+		*	\brief Push a new log in queue.
+		* 
+		*	\tparam LogT		Log type.
+		*	\param[in] _log		Log to push.
+		*/
 		template <typename LogT>
 		void Push(LogT&& _log);
 
+		/**
+		*	\brief Join current queue.
+		*	Make this thread wait until log queue is empty.
+		*/
 		SA_ENGINE_API void Join();
 
 

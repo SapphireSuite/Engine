@@ -9,10 +9,21 @@
 
 #include <SA/Core/Debug/Log/LogLevel.hpp>
 
+/**
+*	\file LogBase.hpp
+* 
+*	\brief \b LogBase type implementation.
+* 
+*	\ingroup Core_Debug
+*	\{
+*/
+
+
 namespace Sa
 {
 #if SA_LOGGING
 
+	/// LogBase type implementation.
 	class LogBase
 	{
 	public:
@@ -39,5 +50,8 @@ namespace Sa
 
 #endif
 }
+
+
+/** \} */
 
 #endif // GUARD

@@ -50,8 +50,18 @@ namespace Sa
 		*/
 		SA_ENGINE_API FileLogStream(const std::string& _fileName = "log") noexcept;
 
+		/**
+		*	\e Destructor. Close the file stream.
+		*/
 		SA_ENGINE_API ~FileLogStream() noexcept;
 
+		/**
+		*	\brief Output wstring into the stream.
+		* 
+		*	\param[in] _str		String to output.
+		* 
+		*	\return handled std::wostream.
+		*/
 		SA_ENGINE_API std::wostream& operator<<(const std::wstring& _str);
 	};
 
@@ -59,6 +69,7 @@ namespace Sa
 
 //{ IFileLog
 
+	/// File Log interface implementation.
 	class IFileLog : public ILogT<FileLogStream>
 	{
 	};

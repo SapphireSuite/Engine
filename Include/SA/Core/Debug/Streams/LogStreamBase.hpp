@@ -10,7 +10,7 @@
 #include <SA/Core/Debug/Log/LogBase.hpp>
 
 /**
-*	\file LogStream.hpp
+*	\file LogStreamBase.hpp
 * 
 *	\brief Log <b>base stream</b> implementation.
 * 
@@ -49,10 +49,25 @@ namespace Sa
 	};
 
 
+	/**
+	*	\brief Helper LogStream type class.
+	*	Define default Output method using LogT interface.
+	*
+	*	\tparam StreamT		Child stream type.
+	*	\tparam LogT		Associated log interface type.
+	*/
 	template <typename StreamT, typename LogT>
 	class LogStreamBaseT : public LogStreamBase
 	{
 	public:
+		/**
+		*	\brief Default output implementation.
+		*	Cast LogBase into LogT interface and call Output with this as StreamT.
+		* 
+		*	\param[in] _log		Log to process.
+		* 
+		*	\return this.
+		*/
 		LogStreamBase& Output(const LogBase& _log) override;
 	};
 

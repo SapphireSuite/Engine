@@ -35,7 +35,9 @@ namespace Sa
 		IntlBitsT mBits = 0;
 
 	public:
+		/// Enum as bits type.
 		using BitsT = UIntOfSize<sizeof(EnumT)>;
+
 
 		/// \b Default constructor.
 		Flags() = default;

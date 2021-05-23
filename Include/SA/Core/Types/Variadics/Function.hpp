@@ -7,6 +7,16 @@
 
 #include <SA/Collections/Debug>
 
+/**
+*	\file Function.hpp
+*
+*	\brief \b Definition of Sapphire \b Function type.
+*
+*	\ingroup Core_Types
+*	\{
+*/
+
+
 namespace Sa
 {
 	namespace Intl
@@ -290,7 +300,9 @@ namespace Sa
 	};
 }
 
-
 #include <SA/Core/Types/Variadics/Function.inl>
+
+
+/** \} */
 
 #endif // GUARD
