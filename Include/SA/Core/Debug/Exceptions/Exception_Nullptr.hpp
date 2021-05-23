@@ -26,16 +26,16 @@ namespace Sa
 	{
 	public:
 		/**
-		*	\e Value Constructor.
+		*	\e Value move Constructor.
 		* 
 		*	\param[in] _infos		Base create infos.
 		*	\param[in] _pred		Evaluated pointer predicate.
 		*	\param[in] _details		Additional details to display on assertion.
 		*/
 		SA_ENGINE_API Exception_Nullptr(
-			const BaseInfos& _infos,
+			BaseInfos&& _infos,
 			bool _pred,
-			const std::wstring& _details = L""
+			std::wstring&& _details = L""
 		) noexcept;
 	};
 

@@ -30,11 +30,8 @@ namespace Sa::UTH
 		/// Color used on test failure.
 		Failure,
 
-		/// Color used for group begin.
-		GroupBegin,
-
-		/// Color used for group begin.
-		GroupEnd,
+		/// Color used for groups.
+		Group,
 
 		/// Color used for test number.
 		TestNum,

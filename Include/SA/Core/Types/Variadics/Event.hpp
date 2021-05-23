@@ -7,7 +7,7 @@
 
 #include <vector>
 
-#include <SA/Collections/Debug>
+#include <SA/Core/Types/Variadics/Function.hpp>
 
 /**
 *	\file Event.hpp
@@ -51,50 +51,6 @@ namespace Sa
 		{
 			/// Function ptr handle.
 			void(*func)(Args...) = nullptr;
-		};
-
-
-		/**
-		*	\brief Base struct of member function data.
-		* 
-		*	Interface class with virtual destructor to store template child class.
-		*/
-		struct FuncMemberDataBase
-		{
-			/**
-			*	\brief default virtual destructor.
-			*	Ensure correct child class destruction on delete.
-			*/
-			virtual ~FuncMemberDataBase() = default;
-		};
-
-		/**
-		*	\brief Data struct for <b>typed</b> member function.
-		*
-		*	\tparam C		Caller type of function's declaration.
-		*	\tparam R		Return type of function's declaration.
-		*	\tparam	Args	Argument types of function's declaration.
-		*/
-		template <typename C, typename R, typename... Args>
-		struct FuncMemberData : public FuncMemberDataBase
-		{
-			/// Caller ptr handle.
-			C* caller = nullptr;
-
-			/// Function ptr handle.
-			R(C::* func)(Args...) = nullptr;
-
-			/**
-			*	\brief Default value constructor.
-			* 
-			*	\param[in] _caller	Caller of the member function.
-			*	\param[in] _func	Member function to call.
-			*/
-			FuncMemberData(C* _caller, R(C::* _func)(Args...)) :
-				caller{ _caller },
-				func{ _func }
-			{
-			}
 		};
 
 		/**

@@ -9,7 +9,9 @@
 
 #include <SA/Core/Debug/ConsoleColor.hpp>
 
-#include <SA/Core/Debug/Log/Streams/LogStream.hpp>
+#include <SA/Core/Debug/Log/ILog.hpp>
+#include <SA/Core/Debug/Log/LogLevel.hpp>
+#include <SA/Core/Debug/Streams/LogStreamBase.hpp>
 
 /**
 *	\file ConsoleLogStream.hpp
@@ -25,8 +27,12 @@ namespace Sa
 {
 #if SA_LOGGING
 
+//{ ConsoleLogStream
+
+	class IConsoleLog;
+
 	/// Log console stream type.
-	class ConsoleLogStream : public LogStream
+	class ConsoleLogStream : public LogStreamBaseT<ConsoleLogStream, IConsoleLog>
 	{
 		/// Console color theme by LogLevel.
 		uint8 mTheme[6]
@@ -42,10 +48,14 @@ namespace Sa
 		/// Theme access mutex.
 		mutable std::shared_mutex mThemeMutex;
 
-		/// Set console color from log level using theme.
+	public:
+		/**
+		*	\brief Set console color from log level using theme.
+		* 
+		*	\param[in] _lvl		LogLevel to use for theme.
+		*/
 		void SetConsoleColorFromLvl(LogLevel _lvl) const;
 
-	public:
 		/**
 		*	\brief Set console color mask for loglevel.
 		* 
@@ -54,8 +64,27 @@ namespace Sa
 		*/
 		SA_ENGINE_API void SetConsoleTheme(LogLevel _lvl, uint8 _cslColor) noexcept;
 
-		SA_ENGINE_API LogStream& Output(const Sa::Log& _log) override final;
+
+		/**
+		*	\brief Output wstring into the stream.
+		* 
+		*	\param[in] _str		String to output.
+		* 
+		*	\return handled std::wostream.
+		*/
+		SA_ENGINE_API std::wostream& operator<<(const std::wstring& _str);
 	};
+
+//}
+
+//{ IConsoleLog
+
+	/// Console Log interface implementation.
+	class IConsoleLog : public ILogT<ConsoleLogStream>
+	{
+	};
+
+//}
 
 #endif
 }

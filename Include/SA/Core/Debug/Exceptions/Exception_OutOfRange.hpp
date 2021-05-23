@@ -35,7 +35,7 @@ namespace Sa
 		uint32 maxBound = 0u;
 
 		/**
-		*	\e Value Constructor.
+		*	\e Value move Constructor.
 		* 
 		*	\param[in] _infos		Base create infos.
 		*	\param[in] _currIndex	Index used for access.
@@ -44,11 +44,11 @@ namespace Sa
 		*	\param[in] _details		Additional details to display on assertion.
 		*/
 		SA_ENGINE_API Exception_OutOfRange(
-			const BaseInfos& _infos,
+			BaseInfos&& _infos,
 			uint32 _currIndex,
 			uint32 _minBound,
 			uint32 _maxBound,
-			const std::wstring& _details = L""
+			std::wstring&& _details = L""
 		) noexcept;
 	};
 

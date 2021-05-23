@@ -234,7 +234,7 @@ namespace Sa
 		/**
 		*	\brief \e Access operator by index.
 		*
-		*	param[in] _index	Index to access.
+		*	\param[in] _index	Index to access.
 		*
 		*	\return T value at index.
 		*/
@@ -243,7 +243,7 @@ namespace Sa
 		/**
 		*	\brief <em> Const Access </em> operator by index.
 		*
-		*	param[in] _index	Index to access.
+		*	\param[in] _index	Index to access.
 		*
 		*	\return T value at index.
 		*/
@@ -995,6 +995,8 @@ namespace Sa
 //}
 
 #endif
+
+	/// \endcond
 }
 
 

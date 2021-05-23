@@ -54,6 +54,11 @@ jobs:
         gen:
           - Ninja
 
+        exclude:
+        # FileSystem linkage, Thread crash.
+        - compiler: Clang
+          compiler_v: 9
+
 
     # Steps execution.
     steps:

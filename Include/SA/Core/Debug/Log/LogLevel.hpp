@@ -85,20 +85,23 @@ namespace Sa
 		/// Handled level.
 		LogLvl mHandle = LogLvl::Normal;
 
+		bool bJoinOnEnd = true;
+
 	public:
 		/**
 		*	\brief \e Value constructor
 		*
-		*	\param[in] _lvl		LogLevel to disable.
+		*	\param[in] _lvl				LogLevel to disable.
+		*	\param[in] _bJoinOnEnd		Should join logger on section end (RAII destroyed).
 		*/
-		SA_ENGINE_API RAII(LogLvl _lvl) noexcept;
+		SA_ENGINE_API RAII(LogLvl _lvl, bool _bJoinOnEnd = true) noexcept;
 
 		/// Re-enable log level.
 		SA_ENGINE_API ~RAII() noexcept;
 	};
 
 	/// \brief Start disable log level section.
-	#define SA_LOGLVL_DIS_SECTB(_lvl) { RAII<LogLvl> __r(LogLevel::_lvl);
+	#define SA_LOGLVL_DIS_SECTB(_lvl, ...) { RAII<LogLvl> __r(LogLevel::_lvl, ##__VA_ARGS__);
 
 	/// \brief End disable log level section.
 	#define SA_LOGLVL_DIS_SECTE() }

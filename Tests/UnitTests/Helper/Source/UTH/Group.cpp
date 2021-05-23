@@ -4,6 +4,8 @@
 
 namespace Sa::UTH
 {
+//{ Group
+
 	void Group::Update(bool _pred)
 	{
 		count.Increment(_pred);
@@ -19,4 +21,6 @@ namespace Sa::UTH
 
 		_parent.count += count;
 	}
+
+//}
 }

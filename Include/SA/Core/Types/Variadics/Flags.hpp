@@ -26,15 +26,19 @@ namespace Sa
 	*	\brief \e Template class for \b bit-flags enum management.
 	*
 	*	\tparam EnumT		EnumT type.
-	*	\tparam BitsT		Bits type.
+	*	\tparam IntlBitsT	Internal Bits type.
 	*/
-	template <typename EnumT, typename BitsT = UIntOfSize<sizeof(EnumT)>>
+	template <typename EnumT, typename IntlBitsT = UIntOfSize<sizeof(EnumT)>>
 	class Flags
 	{
 		/// bit-flags value.
-		BitsT mBits = 0;
+		IntlBitsT mBits = 0;
 
 	public:
+		/// Enum as bits type.
+		using BitsT = UIntOfSize<sizeof(EnumT)>;
+
+
 		/// \b Default constructor.
 		Flags() = default;
 
@@ -81,6 +85,23 @@ namespace Sa
 		*/
 		constexpr bool AreSet(BitsT _bits) const noexcept;
 
+		/**
+		*	\brief Set enum value to the current bit flags.
+		*
+		*	\param[in] _enum	Enum value to set.
+		*
+		*	\return this.
+		*/
+		Flags& Set(EnumT _enum) noexcept;
+
+		/**
+		*	\brief Set bits value to the current bit flags.
+		*
+		*	\param[in] _bits	Bits value to set.
+		*
+		*	\return this.
+		*/
+		Flags& Set(BitsT _bits) noexcept;
 
 		/**
 		*	\brief Add enum value to the current bit flags.
@@ -126,6 +147,24 @@ namespace Sa
 		*/
 		constexpr Flags operator~() const noexcept;
 
+
+		/**
+		*	\brief Perform \b assign operations with EnumT.
+		*
+		*	\param[in] _rhs		Right operand.
+		*
+		*	\return this instance.
+		*/
+		Flags& operator=(EnumT _rhs) noexcept;
+
+		/**
+		*	\brief Perform \b assign operations with BitsT.
+		*
+		*	\param[in] _rhs		Right operand.
+		*
+		*	\return this instance.
+		*/
+		Flags& operator=(BitsT _rhs) noexcept;
 
 		/**
 		*	\brief Perform \b OR and \b assign operations with EnumT.

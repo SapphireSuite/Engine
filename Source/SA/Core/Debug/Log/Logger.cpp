@@ -6,13 +6,78 @@ namespace Sa
 {
 #if SA_LOGGING
 
-	void Logger::Register(LogStream& _stream)
+	Logger::Logger()
 	{
+		// if mQueueSize: dequeue, else yield.
+		mThread = std::thread([this]()
+		{
+			while (mIsRunning || mQueueSize)
+			{
+				// Dequeue.
+				while (mQueueSize)
+				{
+					const LogBase* log = Pop();
+
+					ProcessLog(*log);
+
+					delete log;
+				}
+
+				// Wait for queue.
+				std::this_thread::yield();
+			}
+		});
+	}
+
+	Logger::~Logger()
+	{
+		Join();
+
+		mIsRunning = false;
+
+		if (mThread.joinable())
+			mThread.join();
+	}
+
+
+	bool Logger::ShouldLogChannel(const std::wstring& _chanName, LogLevel _level, uint32 _offset)
+	{
+		int32 fIndex = static_cast<int32>(_chanName.find('/', _offset));
+
+		if (fIndex == -1)
+		{
+			const LogChannel& channel = mChannels[_chanName];
+			return channel.levelFlags & _level;
+		}
+		else
+		{
+			const LogChannel& channel = mChannels[_chanName.substr(0u, fIndex)];
+
+			if (channel.levelFlags & _level)
+				return ShouldLogChannel(_chanName, _level, fIndex + 1);
+
+			return false;
+		}
+	}
+
+	LogChannel& Logger::GetChannel(const std::wstring& _chanName) noexcept
+	{
+		std::lock_guard lk(mChannelMutex);
+
+		return mChannels[_chanName];
+	}
+
+	void Logger::Register(LogStreamBase& _stream)
+	{
+		std::lock_guard lk(mStreamMutex);
+
 		mOutStreams.push_back(&_stream);
 	}
 
-	bool Logger::Unregister(LogStream& _stream)
+	bool Logger::Unregister(LogStreamBase& _stream)
 	{
+		std::lock_guard lk(mStreamMutex);
+
 		for (auto it = mOutStreams.begin(); it != mOutStreams.end(); ++it)
 		{
 			if (*it == &_stream)
@@ -26,36 +91,55 @@ namespace Sa
 	}
 
 
-	void Logger::Log(const Sa::Log& _log) noexcept
+	void Logger::Output(const LogBase& _log)
 	{
-		// Level disabled.
-		if (static_cast<bool>(levelFlags & _log.level) == 0)
-			return;
+		std::lock_guard lk(mStreamMutex);
 
-		Output(_log);
-	}
-
-	bool Logger::Assert_Impl(const Exception& _exception)
-	{
-		if (_exception.level == LogLevel::AssertSuccess)
-		{
-			Log(_exception); // Simple log.
-
-			return false; // Do not throw.
-		}
-		else
-		{
-			// Force output with level in channel.
-			Output(_exception);
-
-			return true; // Ask for throw.
-		}
-	}
-
-	void Logger::Output(const Sa::Log& _log) noexcept
-	{
 		for (auto it = mOutStreams.begin(); it != mOutStreams.end(); ++it)
 			(*it)->Output(_log);
+	}
+
+	void Logger::ProcessLog(const LogBase& _log)
+	{
+		// Level enabled.
+		if (levelFlags & _log.level)
+		{
+			mChannelMutex.lock();
+
+			bool bShouldLogChan = ShouldLogChannel(_log.chanName, _log.level);
+
+			mChannelMutex.unlock();
+
+			// Channel enabled.
+			if(bShouldLogChan)
+				Output(_log);
+		}
+
+		// Decrement after process (correct Join).
+		--mQueueSize;
+	}
+
+	const LogBase* Logger::Pop()
+	{
+		mLogQueueMutex.lock();
+
+		const LogBase* log = mLogQueue.front();
+
+		mLogQueue.pop();
+
+		mLogQueueMutex.unlock();
+
+		// Decrement after process (correct Join).
+		//--mQueueSize;
+
+		return log;
+	}
+
+	void Logger::Join()
+	{
+		// Wait for empty queue (all log processed).
+		while (mQueueSize)
+			std::this_thread::yield();
 	}
 
 #endif

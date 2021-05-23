@@ -30,16 +30,16 @@ namespace Sa
 		struct BaseInfos
 		{
 			/// File name.
-			const std::wstring& file;
+			std::wstring file;
 
 			/// line number.
 			uint32 line;
 
 			/// Funciton name.
-			const std::string& function;
+			std::string function;
 
 			/// LogChannel name.
-			const std::wstring& chanName;
+			std::wstring chanName;
 
 			/// Generated ArgsStr from macro parameters.
 			ArgsStr argsStr;
@@ -48,8 +48,9 @@ namespace Sa
 		/// Generated arguments to string.
 		ArgsStr agrsStr;
 
+
 		/**
-		*	\e Value Constructor.
+		*	\e Value move Constructor.
 		* 
 		*	\param[in] _infos		Base create infos.
 		*	\param[in] _pred		Predicate used for assertion.
@@ -57,10 +58,10 @@ namespace Sa
 		*	\param[in] _details		Additional details to display on assertion.
 		*/
 		SA_ENGINE_API Exception(
-			const BaseInfos& _infos,
+			BaseInfos&& _infos,
 			bool _pred,
-			const std::wstring& _msg,
-			const std::wstring& _details = L""
+			std::wstring&& _msg,
+			std::wstring&& _details = L""
 		) noexcept;
 	};
 

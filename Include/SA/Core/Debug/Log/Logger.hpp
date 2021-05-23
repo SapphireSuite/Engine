@@ -6,10 +6,15 @@
 #define SAPPHIRE_CORE_LOGGER_GUARD
 
 #include <vector>
+#include <queue>
+#include <unordered_map>
+
+#include <mutex>
+#include <thread>
 
 #include <SA/Core/Debug/Log/Log.hpp>
 #include <SA/Core/Debug/Log/LogChannel.hpp>
-#include <SA/Core/Debug/Log/Streams/LogStream.hpp>
+#include <SA/Core/Debug/Streams/LogStreamBase.hpp>
 
 #include <SA/Core/Debug/Exceptions/Exception.hpp>
 
@@ -31,47 +36,31 @@ namespace Sa
 	class Logger
 	{
 		/// Registered output streams.
-		std::vector<LogStream*> mOutStreams;
+		std::vector<LogStreamBase*> mOutStreams;
+		std::mutex mStreamMutex;
+
+		std::thread mThread;
+		std::queue<const LogBase*> mLogQueue;
+		std::mutex mLogQueueMutex;
+		std::atomic<bool> mIsRunning = true;
+		std::atomic<uint32> mQueueSize = 0u;
+
+
+		/// Registered channels.
+		std::unordered_map<std::wstring, LogChannel> mChannels;
+		std::mutex mChannelMutex;
+
+		bool ShouldLogChannel(const std::wstring& _chanName, LogLevel _level, uint32 _offset = 0u);
+
+
+		const LogBase* Pop();
 
 		/**
-		*	\brief Output a log.
+		*	\brief Output a log into registered streams.
 		*
 		*	\param[in] _log		Log to output.
 		*/
-		void Output(const Sa::Log& _log) noexcept;
-
-		/**
-		*	\brief Process exception (internal implementation).
-		*
-		*	Log assertion on success, otherwise ask for throw.
-		*	Called by Assert().
-		*
-		*	\param[in] _exception	exception to process.
-		* 
-		*	\return Should throw (typed) exception.
-		*/
-		SA_ENGINE_API bool Assert_Impl(const Exception& _exception);
-
-	public:
-		/// Enabled level flags for output.
-		Flags<LogLevel> levelFlags = LogLevel::Default;
-
-		/**
-		*	\brief Register a stream to output.
-		* 
-		*	\param[in] _stream	Stream to register.
-		*/
-		SA_ENGINE_API void Register(LogStream& _stream);
-
-		/**
-		*	\brief Unregister a stream from output.
-		*
-		*	\param[in] _stream	Stream to unregister.
-		*
-		*	\return true on success.
-		*/
-		SA_ENGINE_API bool Unregister(LogStream& _stream);
-
+		SA_ENGINE_API void Output(const LogBase& _log);
 
 		/**
 		*	\brief Process log.
@@ -81,7 +70,67 @@ namespace Sa
 		*
 		*	\param[in] _log		Log to process.
 		*/
-		SA_ENGINE_API void Log(const Sa::Log& _log) noexcept;
+		void ProcessLog(const LogBase& _log);
+
+	public:
+		/// Enabled level flags for output.
+		Flags<LogLevel, std::atomic<UIntOfSize<sizeof(LogLevel)>>> levelFlags = LogLevel::Default;
+
+		/**
+		*	\e Constructor
+		*	Create Log thread.
+		*/
+		SA_ENGINE_API Logger();
+
+		/**
+		*	\e Destructor
+		*	Join and end Log thread.
+		*/
+		SA_ENGINE_API ~Logger();
+
+
+		/**
+		*	\brief Get log channel from name.
+		* 
+		*	\param[in] _chanName	Channel's name.
+		* 
+		*	\return registered LogChannel.
+		*/
+		SA_ENGINE_API LogChannel& GetChannel(const std::wstring& _chanName) noexcept;
+
+
+		/**
+		*	\brief Register a stream to output.
+		* 
+		*	\param[in] _stream	Stream to register.
+		*/
+		SA_ENGINE_API void Register(LogStreamBase& _stream);
+
+		/**
+		*	\brief Unregister a stream from output.
+		*
+		*	\param[in] _stream	Stream to unregister.
+		*
+		*	\return true on success.
+		*/
+		SA_ENGINE_API bool Unregister(LogStreamBase& _stream);
+
+
+		/**
+		*	\brief Push a new log in queue.
+		* 
+		*	\tparam LogT		Log type.
+		*	\param[in] _log		Log to push.
+		*/
+		template <typename LogT>
+		void Push(LogT&& _log);
+
+		/**
+		*	\brief Join current queue.
+		*	Make this thread wait until log queue is empty.
+		*/
+		SA_ENGINE_API void Join();
+
 
 		/**
 		*	\brief Process exception.
@@ -89,11 +138,11 @@ namespace Sa
 		*	Log assertion on success, otherwise throw exception.
 		*	Use SA_ASSERT as helper call.
 		*
-		*	\tparam ExcepT			Exception type.
-		*	\param[in] _exception	exception to process.
+		*	\tparam ExcepT		Exception type.
+		*	\param[in] _exc		exception to process.
 		*/
 		template <typename ExcepT>
-		void Assert(const ExcepT& _exception);
+		void Assert(ExcepT&& _exc);
 	};
 
 #endif

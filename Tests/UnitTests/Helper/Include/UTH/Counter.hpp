@@ -5,9 +5,7 @@
 #ifndef SAPPHIRE_UTH_COUNTER_GUARD
 #define SAPPHIRE_UTH_COUNTER_GUARD
 
-#include <UTH/Log.hpp>
-
-#include <SA/Core/Types/Int.hpp>
+#include <UTH/StringToken.hpp>
 
 namespace Sa::UTH
 {
@@ -29,7 +27,7 @@ namespace Sa::UTH
 
 		bool IsEmpty() const;
 
-		void AppendLog(Log& _log) const;
+		void AppendStr(StringToken& _str) const;
 	};
 }
 

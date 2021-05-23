@@ -7,11 +7,11 @@ namespace Sa
 #if SA_LOGGING
 
 	Exception_Nullptr::Exception_Nullptr(
-		const BaseInfos& _infos,
+		BaseInfos&& _infos,
 		bool _pred,
-		const std::wstring& _details
+		std::wstring&& _details
 	) noexcept :
-		Exception(_infos, _pred, Sa::ToWString(_infos.argsStr[0].name) + L" should not be nullptr!", _details)
+		Exception(std::move(_infos), _pred, Sa::ToWString(_infos.argsStr[0].name) + L" should not be nullptr!", std::move(_details))
 	{
 	}
 

@@ -6,9 +6,9 @@
 #define SAPPHIRE_CORE_LOG_FILE_STREAM_GUARD
 
 #include <fstream>
-#include <mutex>
 
-#include <SA/Core/Debug/Log/Streams/LogStream.hpp>
+#include <SA/Core/Debug/Log/ILog.hpp>
+#include <SA/Core/Debug/Streams/LogStreamBase.hpp>
 
 /**
 *	\file FileLogStream.hpp
@@ -24,15 +24,16 @@ namespace Sa
 {
 #if SA_LOGGING
 
+//{ FileLogStream
+
+	class IFileLog;
+
 	/// Log file stream type.
-	class FileLogStream : public LogStream
+	class FileLogStream : public LogStreamBaseT<FileLogStream, IFileLog>
 	{
 	protected:
 		/// Handled file stream.
 		std::wofstream mHandle;
-
-		/// Stream mutex.
-		std::mutex mMutex;
 
 		/**
 		*	\brief Create log and log backup files.
@@ -49,10 +50,31 @@ namespace Sa
 		*/
 		SA_ENGINE_API FileLogStream(const std::string& _fileName = "log") noexcept;
 
+		/**
+		*	\e Destructor. Close the file stream.
+		*/
 		SA_ENGINE_API ~FileLogStream() noexcept;
 
-		SA_ENGINE_API LogStream& Output(const Sa::Log& _log) override;
+		/**
+		*	\brief Output wstring into the stream.
+		* 
+		*	\param[in] _str		String to output.
+		* 
+		*	\return handled std::wostream.
+		*/
+		SA_ENGINE_API std::wostream& operator<<(const std::wstring& _str);
 	};
+
+//}
+
+//{ IFileLog
+
+	/// File Log interface implementation.
+	class IFileLog : public ILogT<FileLogStream>
+	{
+	};
+
+//}
 
 #endif
 }

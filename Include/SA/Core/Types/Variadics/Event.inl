@@ -54,15 +54,7 @@ namespace Sa
 		FuncMemberHandle& handle = mMemberFunctions.emplace_back(FuncMemberHandle
 		{
 			new Intl::FuncMemberData<C, R, Args...>{ _caller, _func },
-
-			[](void* _data, Args... _args)
-			{
-				Intl::FuncMemberData<C, R, Args...>* cData = reinterpret_cast<Intl::FuncMemberData<C, R, Args...>*>(_data);
-
-				SA_ASSERT(Nullptr, Core, cData, L"Internal function call: data nullptr!");
-
-				return (cData->caller->*cData->func)(_args...);
-			}
+			Intl::FuncMemberData<C, R, Args...>::InterfaceCall
 		});
 
 		(void)handle;

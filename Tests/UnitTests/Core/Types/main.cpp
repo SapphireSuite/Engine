@@ -10,6 +10,7 @@ void CharTests();
 void InterfaceTest();
 
 void FlagsTests();
+void FunctionTests();
 void EventTests();
 
 void HasMemberTests();
@@ -27,6 +28,7 @@ int main()
 	SA_UTH_GPB(Variadics);
 
 	SA_UTH_GP(FlagsTests());
+	SA_UTH_GP(FunctionTests());
 	SA_UTH_GP(EventTests());
 
 	SA_UTH_GP(HasMemberTests());

@@ -9,7 +9,8 @@
 
 #include <SA/Core/Time/DateTime.hpp>
 
-#include <SA/Core/Debug/Log/LogLevel.hpp>
+#include <SA/Core/Debug/Streams/ConsoleLogStream.hpp>
+#include <SA/Core/Debug/Streams/FileLogStream.hpp>
 
 /**
 *	\file Log.hpp
@@ -30,7 +31,8 @@ namespace Sa
 	*
 	*	Contains log infos.
 	*/
-	class Log
+	class Log : public LogBase, 
+		public IConsoleLog, public IFileLog // Interfaces
 	{
 	public:
 		/// File name.
@@ -48,17 +50,11 @@ namespace Sa
 		/// Additional details string.
 		std::wstring details;
 
-		/// Output level.
-		LogLevel level = LogLevel::Normal;
-
-		/// Output channel name.
-		std::wstring chanName = L"Default";
-
 		/// Date time.
 		DateTime date;
 
 		/**
-		*	\brief \e Value Constructor.
+		*	\brief \e Value Move Constructor.
 		*
 		*	\param[in] _file		File of the Log.
 		*	\param[in] _line		Line of the Log.
@@ -69,14 +65,15 @@ namespace Sa
 		*	\param[in] _details		Additional details to display.
 		*/
 		SA_ENGINE_API Log(
-			const std::wstring& _file,
+			std::wstring&& _file,
 			uint32 _line,
-			const std::string& _function,
-			const std::wstring& _msg = L"Hello, World!",
+			std::string&& _function,
+			std::wstring&& _msg = L"Hello, World!",
 			LogLevel _level = LogLevel::Normal,
-			const std::wstring& _chanName = L"Default",
-			const std::wstring& _details = L""
+			std::wstring&& _chanName = L"Default",
+			std::wstring&& _details = L""
 		) noexcept;
+
 
 		/**
 		*	\brief ToWString implementation
@@ -85,7 +82,10 @@ namespace Sa
 		* 
 		*	\return this as a wstring.
 		*/
-		SA_ENGINE_API virtual std::wstring ToWString() const;
+		SA_ENGINE_API std::wstring ToWString() const;
+
+		SA_ENGINE_API void Output(ConsoleLogStream& _stream) const override;
+		SA_ENGINE_API void Output(FileLogStream& _stream) const override;
 	};
 
 #endif

@@ -7,11 +7,11 @@ namespace Sa
 #if SA_LOGGING
 
 	Exception_NonZero::Exception_NonZero(
-		const BaseInfos& _infos,
+		BaseInfos&& _infos,
 		bool _pred,
-		const std::wstring& _details
+		std::wstring&& _details
 	) noexcept :
-		Exception(_infos, _pred, Sa::ToWString(_infos.argsStr[0].name) + L" should be != 0", _details)
+		Exception(std::move(_infos), _pred, Sa::ToWString(_infos.argsStr[0].name) + L" should be != 0", std::move(_details))
 	{
 	}
 

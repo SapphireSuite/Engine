@@ -7,6 +7,8 @@ namespace Sa
 	template <typename... Args>
 	ArgsStr::ArgsStr(const std::string& _paramNames, const Args&... _args)
 	{
+		(void)_paramNames;
+
 		if constexpr (sizeof...(Args) != 0u)
 			GenerateParamStr(_paramNames, _args...);
 	}
