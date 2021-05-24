@@ -18,7 +18,7 @@
 
 #include <SA/Core/Debug/Exceptions/Exception.hpp>
 
-#include <SA/Core/Thread/ThreadJoinMode.hpp>
+#include <SA/Core/Thread/Queue/ThreadJoinMode.hpp>
 
 /**
 *	\file Logger.hpp
