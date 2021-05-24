@@ -2,6 +2,8 @@
 
 #include <Core/Debug/Log/Logger.hpp>
 
+#include <Collections/Debug>
+
 namespace Sa
 {
 #if SA_LOGGING
@@ -135,11 +137,37 @@ namespace Sa
 		return log;
 	}
 
-	void Logger::Join()
+	void Logger::Join(ThreadJoinMode _mode)
 	{
-		// Wait for empty queue (all log processed).
-		while (mQueueSize)
-			std::this_thread::yield();
+		switch (_mode)
+		{
+			case ThreadJoinMode::Complete:
+			{
+				// Wait for empty queue (all log processed).
+				while (mQueueSize)
+					std::this_thread::yield();
+
+				break;
+			}
+			case ThreadJoinMode::Abandon:
+			{
+				if (mQueueSize > 1)
+					mQueueSize = 1;
+
+				// Wait for empty queue (current log processed).
+				while (mQueueSize)
+					std::this_thread::yield();
+
+				break;
+			}
+			default:
+			{
+				SA_LOG(L"ThreadJoinMode [" << _mode << L"] not supported yet!", Warning, Core);
+				break;
+			}
+		}
+
+
 	}
 
 #endif
