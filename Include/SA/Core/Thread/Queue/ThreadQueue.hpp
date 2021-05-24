@@ -46,7 +46,7 @@ namespace Sa
 		void OnTaskProcessed(const ThreadQueueTask& _task);
 
 		template <typename R, typename... Args>
-		std::future<R> Push(R(*_func)(Args...), Args... _args);
+		std::future<R> Push(R(*_func)(Args...), Args&&... _args);
 
 		bool Pop(ThreadQueueTask& _task);
 
