@@ -13,8 +13,11 @@ namespace Sa
 		// if mQueueSize: dequeue, else yield.
 		mThread = std::thread([this]()
 		{
-			while (mIsRunning || mQueueSize)
+			while (mIsRunning)
 			{
+				// Wait for queue.
+				std::this_thread::yield();
+
 				// Dequeue.
 				while (mQueueSize)
 				{
@@ -24,9 +27,6 @@ namespace Sa
 
 					delete log;
 				}
-
-				// Wait for queue.
-				std::this_thread::yield();
 			}
 		});
 	}
@@ -117,7 +117,11 @@ namespace Sa
 				Output(_log);
 		}
 
-		// Decrement after process (correct Join).
+		/**
+		*	Decrement after process
+		*	Ensure correct Join.
+		*	no error because only 1 thread running (mProcessingCount not needed).
+		*/
 		--mQueueSize;
 	}
 
@@ -131,7 +135,7 @@ namespace Sa
 
 		mLogQueueMutex.unlock();
 
-		// Decrement after process (correct Join).
+		// Decrement after process.
 		//--mQueueSize;
 
 		return log;
