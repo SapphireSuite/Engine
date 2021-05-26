@@ -11,6 +11,8 @@ on:
       - master
       - dev
       - dev_*
+      - '!dev_osx'
+      - '!dev_win'
 
 
 # Settings common to all jobs.

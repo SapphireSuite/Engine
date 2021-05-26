@@ -10,7 +10,7 @@ on:
       - main
       - master
       - dev
-      - dev_*
+      - dev_osx
 
 
 # Settings common to all jobs.
