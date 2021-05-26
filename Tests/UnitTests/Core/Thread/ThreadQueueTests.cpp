@@ -11,10 +11,18 @@ namespace Sa::ThreadQueue_UT
 {
 	ThreadQueue queue;
 
+	class A
+	{
+	public:
+		void Foo()
+		{
+			SA_LOG("A::Foo()");
+		}
+	};
+
+	std::atomic<uint32> count;
 	uint32 Count()
 	{
-		static std::atomic<uint32> count;
-
 		return ++count;
 	}
 
@@ -45,15 +53,15 @@ namespace Sa::ThreadQueue_UT
 		for (uint32 i = 0; i < 1000; ++i)
 			queue.Push(Count);
 
+		queue.Join();
+
 		std::future res = queue.Push(Count);
 		res.wait();
 
 		SA_UTH_EQ(res.get(), 1001u);
-	}
 
-	void Join()
-	{
-		queue.Join();
+		A a;
+		queue.Push(&a, &A::Foo);
 	}
 
 	void Destroy()
@@ -69,11 +77,11 @@ void ThreadQueueTests()
 	SA_UTH_GP(Create());
 	SA_UTH_GP(PushWait1());
 
-	queue.Join();
+	SA_UTH_GP(queue.Join());
 
 	SA_UTH_GP(PushWait2());
 
-	queue.Join(ThreadJoinMode::Abandon);
+	SA_UTH_GP(queue.Join(ThreadJoinMode::Abandon));
 
 	SA_UTH_GP(Future());
 

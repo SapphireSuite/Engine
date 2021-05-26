@@ -8,9 +8,7 @@
 #include <queue>
 #include <vector>
 
-#include <future>
-
-#include <SA/Config.hpp>
+#include <SA/Core/Types/Variadics/Function.hpp>
 
 #include <SA/Core/Thread/Queue/ThreadJoinMode.hpp>
 #include <SA/Core/Thread/Queue/ThreadQueueWorker.hpp>
@@ -45,10 +43,18 @@ namespace Sa
 
 		void OnTaskProcessed(const ThreadQueueTask& _task);
 
+
 		template <typename R, typename... Args>
-		std::future<R> Push(R(*_func)(Args...), Args&&... _args);
+		std::future<R> Push(PackedFunction<R, Args...>&& _func);
+
+		template <typename R, typename... Args>
+		std::future<R> Push(R(*_func)(Args...), Args... _args);
+
+		template <typename C, typename R, typename... Args>
+		std::future<R> Push(C* _caller, R(C::*_func)(Args...), Args... _args);
 
 		bool Pop(ThreadQueueTask& _task);
+
 
 		SA_ENGINE_API void Join(ThreadJoinMode _mode = ThreadJoinMode::Complete);
 	};

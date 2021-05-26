@@ -31,7 +31,12 @@ namespace Sa
 	public:
 		std::packaged_task<void()> handle;
 		std::unique_ptr<Intl::ThreadPromiseBase> promise;
+
+		template <typename R>
+		static ThreadQueueTask Make(std::promise<R>*& _hPromise);
 	};
 }
+
+#include <SA/Core/Thread/Queue/ThreadQueueTask.inl>
 
 #endif // GUARD
