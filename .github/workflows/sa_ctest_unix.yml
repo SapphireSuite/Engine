@@ -49,15 +49,10 @@ jobs:
           - GNU
           - Clang
 
-        compiler_v: [8, 9, 10]
+        compiler_v: [10, 11]
 
         gen:
           - Ninja
-
-        exclude:
-        # FileSystem linkage, Thread crash.
-        - compiler: Clang
-          compiler_v: 9
 
 
     # Steps execution.
