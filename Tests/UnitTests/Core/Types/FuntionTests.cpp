@@ -27,12 +27,12 @@ namespace Sa::Function_UT
 		Function<int(int)> f1;
 		SA_UTH_MF(f1, IsEmpty);
 
-		Function<int(int)> f2 = Foo;
+		Function f2 = Foo;
 		SA_UTH_RMF(false, f2, IsEmpty);
 		SA_UTH_EQ(f2(2), 4);
 
 		A a;
-		Function<int(int)> f3(&a, &A::Bar);
+		Function f3(&a, &A::Bar);
 		SA_UTH_RMF(false, f3, IsEmpty);
 		SA_UTH_EQ(f3(2), 6);
 	}
@@ -40,15 +40,15 @@ namespace Sa::Function_UT
 	void MoveConstructors()
 	{
 		// Static function move.
-		Function<int(int)> f1 = Foo;
-		const Function<int(int)> f2 = std::move(f1);
+		Function f1 = Foo;
+		const Function f2 = std::move(f1);
 		SA_UTH_MF(f1, IsEmpty);
 		SA_UTH_EQ(f2(2), 4);
 
 		// Member function move.
 		A a;
-		Function<int(int)> f3(&a, &A::Bar);
-		const Function<int(int)> f4 = std::move(f3);
+		Function f3(&a, &A::Bar);
+		const Function f4 = std::move(f3);
 		SA_UTH_MF(f3, IsEmpty);
 		SA_UTH_EQ(f4(2), 6);
 	}
@@ -56,14 +56,14 @@ namespace Sa::Function_UT
 	void CopyConstructors()
 	{
 		// Static function copy.
-		const Function<int(int)> f1 = Foo;
-		const Function<int(int)> f2 = f1;
+		const Function f1 = Foo;
+		const Function f2 = f1;
 		SA_UTH_EQ(f2(2), 4);
 
 		// Member function copy.
 		A a;
-		const Function<int(int)> f3(&a, &A::Bar);
-		const Function<int(int)> f4 = f3;
+		const Function f3(&a, &A::Bar);
+		const Function f4 = f3;
 		SA_UTH_EQ(f4(2), 6);
 	}
 
@@ -78,8 +78,8 @@ namespace Sa::Function_UT
 	void Equals()
 	{
 		A a;
-		const Function<int(int)> f1 = Foo;
-		const Function<int(int)> f2(&a, &A::Bar);
+		const Function f1 = Foo;
+		const Function f2(&a, &A::Bar);
 
 		SA_UTH_MF(f1, Equals, f1);
 		SA_UTH_RMF(false, f1, Equals, f2);
@@ -91,7 +91,7 @@ namespace Sa::Function_UT
 		SA_UTH_ROP(false, f1, !=, f1);
 
 
-		Function<int(int)> f3 = Foo;
+		Function f3 = Foo;
 		SA_UTH_RMF(false, f3, IsEmpty);
 
 		f3.Clear();
@@ -102,7 +102,7 @@ namespace Sa::Function_UT
 	void MoveOperators()
 	{
 		// Static function move.
-		Function<int(int)> f1 = Foo;
+		Function f1 = Foo;
 		Function<int(int)> f2;
 		f2 = std::move(f1);
 		SA_UTH_MF(f1, IsEmpty);
@@ -110,7 +110,7 @@ namespace Sa::Function_UT
 
 		// Member function move.
 		A a;
-		Function<int(int)> f3(&a, &A::Bar);
+		Function f3(&a, &A::Bar);
 		Function<int(int)> f4;
 		f4 = std::move(f3);
 		SA_UTH_MF(f3, IsEmpty);
@@ -120,14 +120,14 @@ namespace Sa::Function_UT
 	void CopyOperators()
 	{
 		// Static function copy.
-		const Function<int(int)> f1 = Foo;
+		const Function f1 = Foo;
 		Function<int(int)> f2;
 		f2 = f1;
 		SA_UTH_EQ(f2(2), 4);
 
 		// Member function copy.
 		A a;
-		const Function<int(int)> f3(&a, &A::Bar);
+		const Function f3(&a, &A::Bar);
 		Function<int(int)> f4;
 		f4 = f3;
 		SA_UTH_EQ(f4(2), 6);
@@ -168,12 +168,12 @@ namespace Sa::PackedFunction_UT
 		PackedFunction<int(int)> f1;
 		SA_UTH_MF(f1, IsEmpty);
 
-		PackedFunction<int(int, int)> f2(Foo, 2, 3);
+		PackedFunction f2(Foo, 2, 3);
 		SA_UTH_RMF(false, f2, IsEmpty);
 		SA_UTH_EQ(f2(), 7);
 
 		A a;
-		PackedFunction<int(int, int)> f3(&a, &A::Bar, 2, 2);
+		PackedFunction f3(&a, &A::Bar, 2, 2);
 		SA_UTH_RMF(false, f3, IsEmpty);
 		SA_UTH_EQ(f3(), 8);
 	}
@@ -181,15 +181,15 @@ namespace Sa::PackedFunction_UT
 	void MoveConstructors()
 	{
 		// Static function move.
-		PackedFunction<int(int, int)> f1(Foo, 2, 3);
-		const PackedFunction<int(int, int)> f2 = std::move(f1);
+		PackedFunction f1(Foo, 2, 3);
+		const PackedFunction f2 = std::move(f1);
 		SA_UTH_MF(f1, IsEmpty);
 		SA_UTH_EQ(f2(), 7);
 
 		// Member function move.
 		A a;
-		PackedFunction<int(int, int)> f3(&a, &A::Bar, 2, 2);
-		const PackedFunction<int(int, int)> f4 = std::move(f3);
+		PackedFunction f3(&a, &A::Bar, 2, 2);
+		const PackedFunction f4 = std::move(f3);
 		SA_UTH_MF(f3, IsEmpty);
 		SA_UTH_EQ(f4(), 8);
 	}
@@ -197,14 +197,14 @@ namespace Sa::PackedFunction_UT
 	void CopyConstructors()
 	{
 		// Static function copy.
-		const PackedFunction<int(int, int)> f1(Foo, 2, 3);
-		const PackedFunction<int(int, int)> f2 = f1;
+		const PackedFunction f1(Foo, 2, 3);
+		const PackedFunction f2 = f1;
 		SA_UTH_EQ(f2(), 7);
 
 		// Member function copy.
 		A a;
-		const PackedFunction<int(int, int)> f3(&a, &A::Bar, 2, 2);
-		const PackedFunction<int(int, int)> f4 = f3;
+		const PackedFunction f3(&a, &A::Bar, 2, 2);
+		const PackedFunction f4 = f3;
 		SA_UTH_EQ(f4(), 8);
 	}
 
@@ -219,8 +219,8 @@ namespace Sa::PackedFunction_UT
 	void Equals()
 	{
 		A a;
-		const PackedFunction<int(int, int)> f1(Foo, 2, 3);
-		const PackedFunction<int(int, int)> f2(&a, &A::Bar, 2, 2);
+		const PackedFunction f1(Foo, 2, 3);
+		const PackedFunction f2(&a, &A::Bar, 2, 2);
 
 		SA_UTH_MF(f1, Equals, f1);
 		SA_UTH_RMF(false, f1, Equals, f2);
@@ -232,7 +232,7 @@ namespace Sa::PackedFunction_UT
 		SA_UTH_ROP(false, f1, !=, f1);
 
 
-		PackedFunction<int(int, int)> f3(Foo, 2, 3);
+		PackedFunction f3(Foo, 2, 3);
 		SA_UTH_RMF(false, f3, IsEmpty);
 
 		f3.Clear();
@@ -253,7 +253,7 @@ namespace Sa::PackedFunction_UT
 	void MoveOperators()
 	{
 		// Static function move.
-		PackedFunction<int(int, int)> f1(Foo, 2, 3);
+		PackedFunction f1(Foo, 2, 3);
 		PackedFunction<int(int, int)> f2;
 		f2 = std::move(f1);
 		SA_UTH_MF(f1, IsEmpty);
@@ -261,7 +261,7 @@ namespace Sa::PackedFunction_UT
 
 		// Member function move.
 		A a;
-		PackedFunction<int(int, int)> f3(&a, &A::Bar, 2, 2);
+		PackedFunction f3(&a, &A::Bar, 2, 2);
 		PackedFunction<int(int, int)> f4;
 		f4 = std::move(f3);
 		SA_UTH_MF(f3, IsEmpty);
@@ -271,14 +271,14 @@ namespace Sa::PackedFunction_UT
 	void CopyOperators()
 	{
 		// Static function copy.
-		const PackedFunction<int(int, int)> f1(Foo, 2, 3);
+		const PackedFunction f1(Foo, 2, 3);
 		PackedFunction<int(int, int)> f2;
 		f2 = f1;
 		SA_UTH_EQ(f2(), 7);
 
 		// Member function copy.
 		A a;
-		const PackedFunction<int(int, int)> f3(&a, &A::Bar, 2, 2);
+		const PackedFunction f3(&a, &A::Bar, 2, 2);
 		PackedFunction<int(int, int)> f4;
 		f4 = f3;
 		SA_UTH_EQ(f4(), 8);

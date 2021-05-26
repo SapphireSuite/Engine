@@ -18,6 +18,8 @@
 
 #include <SA/Core/Debug/Exceptions/Exception.hpp>
 
+#include <SA/Core/Thread/Queue/ThreadJoinMode.hpp>
+
 /**
 *	\file Logger.hpp
 * 
@@ -127,9 +129,10 @@ namespace Sa
 
 		/**
 		*	\brief Join current queue.
-		*	Make this thread wait until log queue is empty.
+		* 
+		*	\param[in] _mode	Queue join mode.
 		*/
-		SA_ENGINE_API void Join();
+		SA_ENGINE_API void Join(ThreadJoinMode _mode = ThreadJoinMode::Complete);
 
 
 		/**

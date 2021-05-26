@@ -8,6 +8,9 @@
 void TheadPipelineEngineTests();
 void TheadPipelineLoopTests();
 
+void ThreadQueueTests();
+
+
 int main()
 {
 	SA_UTH_INIT();
@@ -15,6 +18,8 @@ int main()
 
 	SA_UTH_GP(TheadPipelineEngineTests());
 	SA_UTH_GP(TheadPipelineLoopTests());
+
+	SA_UTH_GP(ThreadQueueTests());
 
 
 	SA_UTH_EXIT();

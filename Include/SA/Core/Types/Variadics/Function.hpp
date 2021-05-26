@@ -93,20 +93,14 @@ namespace Sa
 
 //{ Function
 
-	/// Function default (undefined) declaration.
-	template <typename T>
-	class Function;
-
 	/**
 	*	\brief \b Function type implementation.
-	* 
-	*	Template specialization for R(Args...) deduction.
 	* 
 	*	\tparam R		Return type.
 	*	\tparam Args	Argument types
 	*/
 	template <typename R, typename... Args>
-	class Function<R(Args...)>
+	class Function
 	{
 		/// Abstract member data (used by function interface for member function call).
 		Intl::FuncMemberDataBase* mData = nullptr;
@@ -302,24 +296,37 @@ namespace Sa
 //}
 	};
 
+
+	/// \cond Internal
+
+	/**
+	*	\brief Template specialization for R(Args...) deduction.
+	* 
+	*	\tparam R		Return type.
+	*	\tparam Args	Argument types
+	*/
+	template <typename R, typename... Args>
+	class Function<R(Args...)> : public Function<R, Args...>
+	{
+	public:
+		using Function<R, Args...>::Function;
+		using Function<R, Args...>::operator=;
+	};
+
+	/// \endcond
+
 //}
 
 //{ Packed Function
 
-	/// Function default (undefined) declaration.
-	template <typename T>
-	class PackedFunction;
-
 	/**
 	*	\brief <b> Packed Function</b> type implementation.
-	*
-	*	Template specialization for R(Args...) deduction.
 	*
 	*	\tparam R		Return type.
 	*	\tparam Args	Argument types
 	*/
 	template <typename R, typename... Args>
-	class PackedFunction<R(Args...)> : private Function<R(Args...)>
+	class PackedFunction : private Function<R, Args...>
 	{
 		std::tuple<Args...> mArgs;
 
@@ -370,8 +377,8 @@ namespace Sa
 
 //{ Equals
 
-		using Function<R(Args...)>::IsEmpty;
-		using Function<R(Args...)>::operator bool;
+		using Function<R, Args...>::IsEmpty;
+		using Function<R, Args...>::operator bool;
 
 
 		/**
@@ -406,7 +413,7 @@ namespace Sa
 
 //{ Set
 
-		using Function<R(Args...)>::Clear;
+		using Function<R, Args...>::Clear;
 
 		/**
 		*	\brief Set (assignation) new <b>static function</b> to bind.
@@ -471,6 +478,25 @@ namespace Sa
 
 //}
 	};
+
+
+	/// \cond Internal
+
+	/**
+	*	\brief Template specialization for R(Args...) deduction.
+	* 
+	*	\tparam R		Return type.
+	*	\tparam Args	Argument types
+	*/
+	template <typename R, typename... Args>
+	class PackedFunction<R(Args...)> : public PackedFunction<R, Args...>
+	{
+	public:
+		using PackedFunction<R, Args...>::PackedFunction;
+		using PackedFunction<R, Args...>::operator=;
+	};
+
+	/// \endcond
 
 //}
 }
