@@ -69,6 +69,7 @@ namespace Sa::UTH
 		Max = 0xFF
 	};
 
+	/// Verbosity flags definition.
 	SA_DEFINE_ENUM_FLAGS(Verbosity);
 }
 

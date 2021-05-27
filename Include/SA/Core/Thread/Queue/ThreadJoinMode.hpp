@@ -7,8 +7,19 @@
 
 #include <SA/Core/Types/Int.hpp>
 
+/**
+*	\file ThreadJoinMode.hpp
+* 
+*	\brief Thread join mode enum implementation.
+* 
+*	\ingroup Core_Thread
+*	\{
+*/
+
+
 namespace Sa
 {
+	/// ThreadJoinMode enum.
 	enum class ThreadJoinMode : uint8
 	{
 		/// Complete all queued tasks on join.
@@ -18,5 +29,8 @@ namespace Sa
 		Abandon,
 	};
 }
+
+
+/** \} */
 
 #endif // GUARD
