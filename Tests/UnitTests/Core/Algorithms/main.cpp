@@ -19,9 +19,6 @@ void EqualsTests();
 
 int main()
 {
-	SA_UTH_INIT();
-
-
 	SA_UTH_GP(MemCopyTests());
 	SA_UTH_GP(MemMoveTests());
 
@@ -34,6 +31,5 @@ int main()
 
 	SA_UTH_GP(EqualsTests());
 
-
-	SA_UTH_EXIT();
+	return 0;
 }

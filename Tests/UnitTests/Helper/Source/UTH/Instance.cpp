@@ -18,7 +18,7 @@ namespace Sa::UTH
 
 	SA_UTH_API uint8 verbosity = static_cast<uint8>(Verbosity::Default);
 
-	void Instance::Init()
+	Instance::Instance()
 	{
 		MessageLog log;
 
@@ -34,7 +34,12 @@ namespace Sa::UTH
 		Debug::logger.Push(std::move(log));
 	}
 	
-	int32 Instance::Exit(bool _bForce)
+	Instance::~Instance()
+	{
+		Exit();
+	}
+
+	void Instance::Exit()
 	{
 		MessageLog log;
 
@@ -89,10 +94,7 @@ namespace Sa::UTH
 
 #endif
 
-		if(_bForce)
-			::exit(exit);
-
-		return exit;
+		::exit(exit);
 	}
 
 
@@ -117,7 +119,7 @@ namespace Sa::UTH
 
 #if SA_UTH_EXIT_ON_FAILURE
 
-			Exit(true);
+			Exit();
 
 #endif
 		}

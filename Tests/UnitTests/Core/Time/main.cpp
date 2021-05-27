@@ -17,9 +17,6 @@ void ChronoTests();
 
 int main()
 {
-	SA_UTH_INIT();
-
-
 	SA_UTH_GP(TickTests());
 	SA_UTH_GP(MilliSecondTests());
 	SA_UTH_GP(SecondTests());
@@ -29,6 +26,5 @@ int main()
 	SA_UTH_GP(DateTimeTests());
 	SA_UTH_GP(ChronoTests());
 
-
-	SA_UTH_EXIT();
+	return 0;
 }

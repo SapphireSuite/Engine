@@ -36,19 +36,15 @@ namespace Sa::UTH
 		void AddRecapLog(const TestLog& _log);
 
 	public:
-		/**
-		*	\brief Init function to be called at the start of main.
-		*	Use SA_UTH_INIT() as helper macro.
-		*/
-		SA_UTH_API void Init();
+		/// \e Default constructor. Initialize UTH instance.
+		Instance();
 
-		/**
-		*	\brief Exit function to be called at the end of main.
-		*	Use SA_UTH_EXIT() as helper macro.
-		*
-		*	\return exit code of all tests run.
-		*/
-		SA_UTH_API int32 Exit(bool _bForce = false);
+		/// Destructor, call exit main function.
+		~Instance();
+
+
+		/// Exit main function.
+		void Exit();
 		
 
 		SA_UTH_API void Process(TestLog&& _test);

@@ -14,9 +14,6 @@ void LerpTests();
 
 int main()
 {
-	SA_UTH_INIT();
-
-
 	SA_UTH_GP(CosSinTanTests());
 
 	SA_UTH_GP(SignTests());
@@ -24,6 +21,5 @@ int main()
 
 	SA_UTH_GP(LerpTests());
 
-
-	SA_UTH_EXIT();
+	return 0;
 }

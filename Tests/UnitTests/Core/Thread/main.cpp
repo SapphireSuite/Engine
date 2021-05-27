@@ -13,14 +13,10 @@ void ThreadQueueTests();
 
 int main()
 {
-	SA_UTH_INIT();
-
-
 	SA_UTH_GP(TheadPipelineEngineTests());
 	SA_UTH_GP(TheadPipelineLoopTests());
 
 	SA_UTH_GP(ThreadQueueTests());
 
-
-	SA_UTH_EXIT();
+	return 0;
 }
