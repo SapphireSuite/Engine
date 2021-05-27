@@ -12,11 +12,15 @@
 
 namespace Sa::UTH
 {
-	SA_UTH_API Instance Intl::instance;
-
 	SA_UTH_API int32 exit = EXIT_SUCCESS;
 
 	SA_UTH_API uint8 verbosity = static_cast<uint8>(Verbosity::Default);
+
+	SA_UTH_API ConsoleTheme cslTheme;
+
+	// Instantiate after.
+	SA_UTH_API Instance Intl::instance;
+
 
 	Instance::Instance()
 	{

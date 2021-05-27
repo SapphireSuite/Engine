@@ -7,25 +7,6 @@
 
 namespace Sa::UTH
 {
-	uint8 theme[10]
-	{
-		(uint8)ConsoleColor::Reset,							// None.
-		ConsoleColor::Bright_FG | ConsoleColor::Magenta_FG,	// Init.
-		ConsoleColor::Bright_FG | ConsoleColor::Magenta_FG,	// Exit.
-		ConsoleColor::Bright_FG | ConsoleColor::Yellow_FG,	// Title.
-		(uint8)ConsoleColor::Green_FG,						// Success.
-		(uint8)ConsoleColor::Red_FG,						// Failure.
-		ConsoleColor::Bright_FG | ConsoleColor::Blue_FG,	// Group.
-		ConsoleColor::Bright_FG | ConsoleColor::Yellow_FG,	// TestNum.
-		(uint8)ConsoleColor::Yellow_FG						// ParamWarning.
-	};
-
-	void SetConsoleColorFromStep(Step _step)
-	{
-		SetConsoleColor(theme[static_cast<uint8>(_step)]);
-	}
-
-
 	Log::Log(LogLevel _lvl) :
 		LogBase(_lvl, L"UTH"),
 		tabNum { Intl::instance.GetGroupNum() }
@@ -59,7 +40,7 @@ namespace Sa::UTH
 			[](void* _userData, wchar _token)
 			{
 				(void)_userData;
-				SetConsoleColorFromStep(static_cast<Step>(_token));
+				cslTheme.SetConsoleColorFromStep(static_cast<Step>(_token));
 			},
 
 			[](void* _userData, const std::wstring& _str)
@@ -70,7 +51,7 @@ namespace Sa::UTH
 			}
 		);
 
-		SetConsoleColorFromStep(Step::None);
+		cslTheme.SetConsoleColorFromStep(Step::None);
 
 		_stream << L"" << std::endl;
 	}

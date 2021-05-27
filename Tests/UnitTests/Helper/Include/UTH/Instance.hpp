@@ -13,6 +13,7 @@
 #include <UTH/Verbosity.hpp>
 #include <UTH/Log/TestLog.hpp>
 #include <UTH/Log/RecapLog.hpp>
+#include <UTH/Log/ConsoleTheme.hpp>
 
 #include <SA/Core/Debug/Log/Logger.hpp>
 
@@ -92,15 +93,6 @@ namespace Sa::UTH
 		SA_UTH_API void EndGroup();
 	};
 
-	namespace Intl
-	{
-		/**
-		*	Internal instance object.
-		*	Use SA_UTH_ test macros as helper use.
-		*/
-		SA_UTH_API extern Instance instance;
-	}
-
 	// Easy User Access variables.
 
 	/**
@@ -115,6 +107,23 @@ namespace Sa::UTH
 
 	/// Current verbosity level.
 	SA_UTH_API extern uint8 verbosity;
+
+	/// Console theme.
+	SA_UTH_API extern ConsoleTheme cslTheme;
+
+
+	/// \cond Internal
+
+	namespace Intl
+	{
+		/**
+		*	Internal instance object.
+		*	Use SA_UTH_ test macros as helper use.
+		*/
+		SA_UTH_API extern Instance instance;
+	}
+
+	/// \endcond
 }
 
 
