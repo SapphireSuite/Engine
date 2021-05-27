@@ -12,14 +12,10 @@ void ArgsStrTests();
 
 int main()
 {
-	SA_UTH_INIT();
-
-
 	SA_UTH_GP(ToStringTests());
 	SA_UTH_GP(ArgsStrTests());
 	SA_UTH_GP(LoggingTests());
 	SA_UTH_GP(ExceptionTests());
 
-
-	SA_UTH_EXIT();
+	return 0;
 }

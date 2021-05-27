@@ -9,6 +9,16 @@
 
 #include <UTH/Counter.hpp>
 
+/**
+*	\file Group.hpp
+* 
+*	\brief UTH Group test implementation.
+* 
+*	\ingroup UTH
+*	\{
+*/
+
+
 namespace Sa::UTH
 {
 //{ Group
@@ -50,5 +60,8 @@ namespace Sa::UTH
 
 //}
 }
+
+
+/** \} */
 
 #endif // GUARD

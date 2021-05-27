@@ -7,6 +7,16 @@
 
 #include <SA/Core/Types/Int.hpp>
 
+/**
+*	\file Step.hpp
+* 
+*	\brief UTH execution step color enum.
+* 
+*	\ingroup UTH
+*	\{
+*/
+
+
 namespace Sa::UTH
 {
 	/// enum for console colors.
@@ -40,5 +50,8 @@ namespace Sa::UTH
 		ParamWarning,
 	};
 }
+
+
+/** \} */
 
 #endif // GUARD

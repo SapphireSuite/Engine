@@ -2,6 +2,8 @@
 
 #include <Core/Debug/Log/Logger.hpp>
 
+#include <Collections/Debug>
+
 namespace Sa
 {
 #if SA_LOGGING
@@ -11,8 +13,11 @@ namespace Sa
 		// if mQueueSize: dequeue, else yield.
 		mThread = std::thread([this]()
 		{
-			while (mIsRunning || mQueueSize)
+			while (mIsRunning)
 			{
+				// Wait for queue.
+				std::this_thread::yield();
+
 				// Dequeue.
 				while (mQueueSize)
 				{
@@ -22,9 +27,6 @@ namespace Sa
 
 					delete log;
 				}
-
-				// Wait for queue.
-				std::this_thread::yield();
 			}
 		});
 	}
@@ -115,7 +117,11 @@ namespace Sa
 				Output(_log);
 		}
 
-		// Decrement after process (correct Join).
+		/**
+		*	Decrement after process
+		*	Ensure correct Join.
+		*	no error because only 1 thread running (mProcessingCount not needed).
+		*/
 		--mQueueSize;
 	}
 
@@ -129,17 +135,43 @@ namespace Sa
 
 		mLogQueueMutex.unlock();
 
-		// Decrement after process (correct Join).
+		// Decrement after process.
 		//--mQueueSize;
 
 		return log;
 	}
 
-	void Logger::Join()
+	void Logger::Join(ThreadJoinMode _mode)
 	{
-		// Wait for empty queue (all log processed).
-		while (mQueueSize)
-			std::this_thread::yield();
+		switch (_mode)
+		{
+			case ThreadJoinMode::Complete:
+			{
+				// Wait for empty queue (all log processed).
+				while (mQueueSize)
+					std::this_thread::yield();
+
+				break;
+			}
+			case ThreadJoinMode::Abandon:
+			{
+				if (mQueueSize > 1)
+					mQueueSize = 1;
+
+				// Wait for empty queue (current log processed).
+				while (mQueueSize)
+					std::this_thread::yield();
+
+				break;
+			}
+			default:
+			{
+				SA_LOG(L"ThreadJoinMode [" << _mode << L"] not supported yet!", Warning, Core);
+				break;
+			}
+		}
+
+
 	}
 
 #endif

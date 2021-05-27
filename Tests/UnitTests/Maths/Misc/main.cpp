@@ -10,12 +10,8 @@ void RadianTests();
 
 int main()
 {
-	SA_UTH_INIT();
-
-
 	SA_UTH_GP(DegreeTests());
 	SA_UTH_GP(RadianTests());
 
-
-	SA_UTH_EXIT();
+	return 0;
 }

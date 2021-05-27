@@ -9,6 +9,16 @@
 
 #include <SA/Core/Types/Variadics/Flags.hpp>
 
+/**
+*	\file Verbosity.hpp
+* 
+*	\brief UTH Verbosity enum implementation.
+* 
+*	\ingroup UTH
+*	\{
+*/
+
+
 namespace Sa::UTH
 {
 	/// Verbosity level enum.
@@ -59,7 +69,11 @@ namespace Sa::UTH
 		Max = 0xFF
 	};
 
+	/// Verbosity flags definition.
 	SA_DEFINE_ENUM_FLAGS(Verbosity);
 }
+
+
+/** \} */
 
 #endif // GUARD

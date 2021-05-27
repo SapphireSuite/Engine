@@ -40,10 +40,12 @@ namespace Sa
 		}
 	}
 
+//{ Function
+
 //{ Constructors
 
 	template <typename R, typename... Args>
-	Function<R(Args...)>::Function(R(*_func)(Args...)) noexcept :
+	Function<R, Args...>::Function(R(*_func)(Args...)) noexcept :
 		mData{ nullptr },
 		mSFunc{ _func }
 	{
@@ -51,7 +53,7 @@ namespace Sa
 
 	template <typename R, typename... Args>
 	template <typename C>
-	Function<R(Args...)>::Function(C* _caller, R(C::* _func)(Args...)) :
+	Function<R, Args...>::Function(C* _caller, R(C::* _func)(Args...)) :
 		mData{ new Intl::FuncMemberData<C, R, Args...>(_caller, _func) },
 		mIntlFunc{ Intl::FuncMemberData<C, R, Args...>::InterfaceCall }
 	{
@@ -59,7 +61,7 @@ namespace Sa
 
 
 	template <typename R, typename... Args>
-	Function<R(Args...)>::Function(Function&& _other) noexcept
+	Function<R, Args...>::Function(Function&& _other) noexcept
 	{
 		if (_other.mData)
 		{
@@ -77,7 +79,7 @@ namespace Sa
 	}
 
 	template <typename R, typename... Args>
-	Function<R(Args...)>::Function(const Function& _other) noexcept
+	Function<R, Args...>::Function(const Function& _other) noexcept
 	{
 		if (_other.mData)
 		{
@@ -89,7 +91,7 @@ namespace Sa
 	}
 
 	template <typename R, typename... Args>
-	Function<R(Args...)>::~Function()
+	Function<R, Args...>::~Function()
 	{
 		Clear();
 	}
@@ -99,20 +101,20 @@ namespace Sa
 //{ Equals
 
 	template <typename R, typename... Args>
-	bool Function<R(Args...)>::IsEmpty() const noexcept
+	bool Function<R, Args...>::IsEmpty() const noexcept
 	{
 		return !mSFunc;
 	}
 
 	template <typename R, typename... Args>
-	Function<R(Args...)>::operator bool() const
+	Function<R, Args...>::operator bool() const
 	{
 		return mSFunc;
 	}
 
 
 	template <typename R, typename... Args>
-	bool Function<R(Args...)>::Equals(const Function& _other) const
+	bool Function<R, Args...>::Equals(const Function& _other) const
 	{
 		if (mData)
 		{
@@ -126,13 +128,13 @@ namespace Sa
 	}
 
 	template <typename R, typename... Args>
-	bool Function<R(Args...)>::operator==(const Function& _rhs) const
+	bool Function<R, Args...>::operator==(const Function& _rhs) const
 	{
 		return Equals(_rhs);
 	}
 
 	template <typename R, typename... Args>
-	bool Function<R(Args...)>::operator!=(const Function& _rhs) const
+	bool Function<R, Args...>::operator!=(const Function& _rhs) const
 	{
 		return !Equals(_rhs);
 	}
@@ -142,7 +144,7 @@ namespace Sa
 //{ Set
 
 	template <typename R, typename... Args>
-	void Function<R(Args...)>::Clear()
+	void Function<R, Args...>::Clear()
 	{
 		if (mData)
 		{
@@ -155,7 +157,7 @@ namespace Sa
 
 
 	template <typename R, typename... Args>
-	void Function<R(Args...)>::Set(R(*_func)(Args...))
+	void Function<R, Args...>::Set(R(*_func)(Args...))
 	{
 		Clear();
 
@@ -164,7 +166,7 @@ namespace Sa
 
 	template <typename R, typename... Args>
 	template <typename C>
-	void Function<R(Args...)>::Set(C* _caller, R(C::* _func)(Args...))
+	void Function<R, Args...>::Set(C* _caller, R(C::* _func)(Args...))
 	{
 		Clear();
 
@@ -174,7 +176,7 @@ namespace Sa
 
 
 	template <typename R, typename... Args>
-	Function<R(Args...)>& Function<R(Args...)>::operator=(Function&& _rhs) noexcept
+	Function<R, Args...>& Function<R, Args...>::operator=(Function&& _rhs) noexcept
 	{
 		Clear();
 
@@ -197,7 +199,7 @@ namespace Sa
 
 
 	template <typename R, typename... Args>
-	Function<R(Args...)>& Function<R(Args...)>::operator=(const Function& _rhs) noexcept
+	Function<R, Args...>& Function<R, Args...>::operator=(const Function& _rhs) noexcept
 	{
 		Clear();
 
@@ -214,7 +216,7 @@ namespace Sa
 
 
 	template <typename R, typename... Args>
-	Function<R(Args...)>& Function<R(Args...)>::operator=(R(*_func)(Args...)) noexcept
+	Function<R, Args...>& Function<R, Args...>::operator=(R(*_func)(Args...)) noexcept
 	{
 		Set(_func);
 
@@ -225,7 +227,7 @@ namespace Sa
 //{ Execute
 
 	template <typename R, typename... Args>
-	R Function<R(Args...)>::Execute(Args... _args) const
+	R Function<R, Args...>::Execute(Args... _args) const
 	{
 		if (mData)
 			return mIntlFunc(mData, std::forward<Args>(_args)...);
@@ -236,10 +238,129 @@ namespace Sa
 	}
 
 	template <typename R, typename... Args>
-	R Function<R(Args...)>::operator()(Args... _args) const
+	R Function<R, Args...>::operator()(Args... _args) const
 	{
 		return Execute(std::forward<Args>(_args)...);
 	}
+
+//}
+
+//}
+
+//{ PackedFunction
+
+//{ Constructors
+
+	template <typename R, typename... Args>
+	PackedFunction<R, Args...>::PackedFunction(R(*_func)(Args...), Args... _args) noexcept :
+		Function<R, Args...>(_func),
+		mArgs{ std::forward<Args>(_args)... }
+	{
+	}
+
+	template <typename R, typename... Args>
+	template <typename C>
+	PackedFunction<R, Args...>::PackedFunction(C* _caller, R(C::* _func)(Args...), Args... _args) :
+		Function<R, Args...>(_caller, _func),
+		mArgs{ std::forward<Args>(_args)... }
+	{
+	}
+
+
+	template <typename R, typename... Args>
+	PackedFunction<R, Args...>::PackedFunction(PackedFunction&& _other) noexcept :
+		Function<R, Args...>(std::move(_other)),
+		mArgs{ std::move(_other.mArgs) }
+	{
+	}
+
+	template <typename R, typename... Args>
+	PackedFunction<R, Args...>::PackedFunction(const PackedFunction& _other) noexcept :
+		Function<R, Args...>(_other),
+		mArgs{ _other.mArgs }
+	{
+	}
+
+//}
+
+//{ Equals
+
+	template <typename R, typename... Args>
+	bool PackedFunction<R, Args...>::Equals(const PackedFunction& _other) const
+	{
+		return Function<R, Args...>::Equals(_other) && mArgs == _other.mArgs;
+	}
+
+	template <typename R, typename... Args>
+	bool PackedFunction<R, Args...>::operator==(const PackedFunction& _rhs) const
+	{
+		return Equals(_rhs);
+	}
+
+	template <typename R, typename... Args>
+	bool PackedFunction<R, Args...>::operator!=(const PackedFunction& _rhs) const
+	{
+		return !Equals(_rhs);
+	}
+
+//}
+
+//{ Set
+
+	template <typename R, typename... Args>
+	void PackedFunction<R, Args...>::Set(R(*_func)(Args...), Args... _args)
+	{
+		Function<R, Args...>::Set(_func);
+		mArgs = std::tuple<Args...>{ std::forward<Args>(_args)... };
+	}
+
+	template <typename R, typename... Args>
+	template <typename C>
+	void PackedFunction<R, Args...>::Set(C* _caller, R(C::* _func)(Args...), Args... _args)
+	{
+		Function<R, Args...>::Set(_caller, _func);
+		mArgs = std::tuple<Args...>{ std::forward<Args>(_args)... };
+	}
+
+
+	template <typename R, typename... Args>
+	PackedFunction<R, Args...>& PackedFunction<R, Args...>::operator=(PackedFunction&& _rhs) noexcept
+	{
+		Function<R, Args...>::operator=(std::move(_rhs));
+		mArgs = std::move(_rhs.mArgs);
+
+		return *this;
+	}
+
+	template <typename R, typename... Args>
+	PackedFunction<R, Args...>& PackedFunction<R, Args...>::operator=(const PackedFunction& _rhs) noexcept
+	{
+		Function<R, Args...>::operator=(_rhs);
+		mArgs = _rhs.mArgs;
+
+		return *this;
+	}
+
+	//}
+
+	//{ Execute
+
+	template <typename R, typename... Args>
+	R PackedFunction<R, Args...>::Execute() const
+	{
+		const Function<R, Args...>& fThis = *this;
+
+		return std::apply(fThis, mArgs);
+	}
+
+
+	template <typename R, typename... Args>
+	R PackedFunction<R, Args...>::operator()() const
+	{
+		return Execute();
+	}
+
+//}
 
 //}
 }

@@ -105,6 +105,7 @@ namespace Sa
 	/// Shortcut alias.
 	using CslColor = ConsoleColor;
 
+	/// ConsoleColor flags definition.
 	SA_DEFINE_ENUM_FLAGS(ConsoleColor);
 
 	/**

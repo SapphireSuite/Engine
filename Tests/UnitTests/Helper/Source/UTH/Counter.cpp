@@ -21,14 +21,6 @@ namespace Sa::UTH
 			++failure;
 	}
 
-	Counter& Counter::operator+=(const Counter& _rhs) noexcept
-	{
-		success += _rhs.success;
-		failure += _rhs.failure;
-
-		return *this;
-	}
-
 	bool Counter::IsEmpty() const
 	{
 		return success == 0 && failure == 0;
@@ -55,5 +47,13 @@ namespace Sa::UTH
 			_str.AppendToken(Step::TestNum);
 			_str.AppendString(L")");
 		}
+	}
+
+	Counter& Counter::operator+=(const Counter& _rhs) noexcept
+	{
+		success += _rhs.success;
+		failure += _rhs.failure;
+
+		return *this;
 	}
 }

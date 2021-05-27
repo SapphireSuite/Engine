@@ -75,7 +75,7 @@ namespace Sa
 			}
 			default:
 			{
-				SA_LOG(L"InputState [" << inputState << L"] not supported yet!", Error, Thread);
+				SA_LOG(L"InputState [" << inputState << L"] not supported yet!", Error, Core/Thread);
 				break;
 			}
 		}
@@ -104,7 +104,7 @@ namespace Sa
 		{
 			case QueryMode::Copy:
 			{
-				SA_ERROR(mCopyBuffer, Thread, L"Copy buffer method must be provided!");
+				SA_ERROR(mCopyBuffer, Core/Thread, L"Copy buffer method must be provided!");
 
 				mOutputMutex.lock_shared();
 
@@ -130,7 +130,7 @@ namespace Sa
 			}
 			default:
 			{
-				SA_LOG(L"QueryMode: [" << queryMode << L"] not supported yet!", Error, Thread);
+				SA_LOG(L"QueryMode: [" << queryMode << L"] not supported yet!", Error, Core/Thread);
 				break;
 			}
 		}

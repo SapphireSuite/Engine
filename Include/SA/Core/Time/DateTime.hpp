@@ -120,7 +120,7 @@ namespace Sa
 		/**
 		*	\brief Convert to string to date-time format.
 		* 
-		*	<month>.<day>.<year>-<hour>h<minute>m<second>s
+		*	\<month\>.\<day\>.\<year\>-\<hour\>h\<minute\>m\<second\>s
 		*	Ex: 2/27/2021 at 12:07:43	=> "2.27.2021-12h07m43s"
 		*
 		*	\return this as a string.

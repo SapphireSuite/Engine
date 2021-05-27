@@ -15,21 +15,19 @@
 // TODO: Remove later, use Engine Random impl.
 #include <UTH/Random.hpp>
 
+/**
+*	\file UnitTestHelper.hpp
+* 
+*	\brief UTH Helper macro definition file.
+*	Include \<UnitTestHelper\>
+* 
+*	\ingroup UTH
+*	\{
+*/
+
+
 namespace Sa::UTH
 {
-	/**
-	*	\brief Helper init program macro.
-	*	Should be used at the start of main.
-	*/
-	#define SA_UTH_INIT() Sa::UTH::Intl::instance.Init();
-
-	/**
-	*	\brief Helper exit program macro.
-	*	Should be used at the end of main.
-	*/
-	#define SA_UTH_EXIT() return Sa::UTH::Intl::instance.Exit();
-
-
 	/**
 	*	\brief Run a \e <b> Unit Test </b> using internal Equals implementation.
 	*
@@ -228,5 +226,8 @@ namespace Sa::UTH
 		SA_UTH_GPE()\
 	}
 }
+
+
+/** \} */
 
 #endif // GUARD

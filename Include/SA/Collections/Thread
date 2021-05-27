@@ -6,5 +6,6 @@
 #define SAPPHIRE_COLLECTIONS_THREAD_GUARD
 
 #include <SA/Core/Thread/Pipeline/ThreadPipeline.hpp>
+#include <SA/Core/Thread/Queue/ThreadQueue.hpp>
 
 #endif // GUARD

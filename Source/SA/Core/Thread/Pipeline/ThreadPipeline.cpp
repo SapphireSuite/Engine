@@ -6,7 +6,7 @@ namespace Sa
 {
 	ThreadAttachment& ThreadPipeline::GetAttachment(uint32 _index)
 	{
-		SA_ASSERT(OutOfRange, Thread, _index, 0u, (uint32)mThAttachments.size());
+		SA_ASSERT(OutOfRange, Core/Thread, _index, 0u, (uint32)mThAttachments.size());
 
 		return mThAttachments[_index];
 	}

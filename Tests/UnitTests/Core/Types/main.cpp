@@ -17,9 +17,6 @@ void HasMemberTests();
 
 int main()
 {
-	SA_UTH_INIT();
-
-
 	SA_UTH_GP(IntTests());
 	SA_UTH_GP(CharTests());
 	SA_UTH_GP(InterfaceTest());
@@ -35,6 +32,5 @@ int main()
 	
 	SA_UTH_GPE();
 
-
-	SA_UTH_EXIT();
+	return 0;
 }
