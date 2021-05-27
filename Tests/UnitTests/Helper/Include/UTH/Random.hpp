@@ -9,6 +9,16 @@
 
 // TODO: Remove later, use Engine Random impl.
 
+/**
+*	\file Random.hpp
+* 
+*	\brief Fast Random implementation.
+* 
+*	\ingroup UTH
+*	\{
+*/
+
+
 namespace Sa::UTH
 {
 	/**
@@ -37,5 +47,8 @@ namespace Sa::UTH
 	template<>
 	inline bool Rand(bool _min, bool _max) { (void)_min; (void)_max; return Rand<int>(0, 2) == 1; }
 }
+
+
+/** \} */
 
 #endif // GUARD

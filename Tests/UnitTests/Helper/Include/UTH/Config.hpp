@@ -50,13 +50,23 @@
 
 #endif
 
-
-namespace Sa::UTH
+namespace Sa
 {
-	namespace Intl
+	/// Unit Test Helper module main namespace.
+	namespace UTH
 	{
+		/// UTH Internal classes implementations.
+		namespace Intl
+		{
+		}
 	}
 }
+
+
+/**
+*	\defgroup UTH UnitTestHelper
+*	Sapphire Engine Unit Test Helper module.
+*/
 
 
 /** \} */

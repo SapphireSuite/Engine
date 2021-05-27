@@ -16,8 +16,19 @@
 
 #include <SA/Core/Debug/Log/Logger.hpp>
 
+/**
+*	\file Instance.hpp
+* 
+*	\brief UTH Instance implementation.
+* 
+*	\ingroup UTH
+*	\{
+*/
+
+
 namespace Sa::UTH
 {
+	/// UTH instance class.
 	class Instance
 	{
 		/// Total number of test run.
@@ -25,14 +36,21 @@ namespace Sa::UTH
 
 		/// Total number of group run.
 		Counter mGroupCounter;
-
+		
+		/// Current active groups.
 		std::vector<Group> mGroups;
 
+		/// Recap of failed tests log.
 		RecapLog mRecap;
 
 		/// Update groups from predicate.
 		void UpdateGroups(bool _pred);
 
+		/**
+		*	\brief Add a test log to RecapLog.
+		* 
+		*	\param[in] _log		Log to add.
+		*/
 		void AddRecapLog(const TestLog& _log);
 
 	public:
@@ -47,28 +65,39 @@ namespace Sa::UTH
 		void Exit();
 		
 
+		/**
+		*	\brief Process a test.
+		*	Use SA_UTH_ test macros as helper.
+		* 
+		*	\param[in] _test	Test to process.
+		*/
 		SA_UTH_API void Process(TestLog&& _test);
 
+		/// \return Current number of groups.
 		uint32 GetGroupNum() const;
+
+		/// \return Current active group list.
 		const std::vector<Group>& GetGroups() const;
 
 		/**
 		*	\brief Begin a group of tests.
 		* 
-		*	param[in] _name	The name of the group that begins.
+		*	\param[in] _name	The name of the group that begins.
 		*/
 		SA_UTH_API void BeginGroup(const std::wstring& _name);
 
 		/**
 		*	\brief End current group of tests.
-		* 
-		*	param[in] _name	The name of the group that begins.
 		*/
 		SA_UTH_API void EndGroup();
 	};
 
 	namespace Intl
 	{
+		/**
+		*	Internal instance object.
+		*	Use SA_UTH_ test macros as helper use.
+		*/
 		SA_UTH_API extern Instance instance;
 	}
 
@@ -86,9 +115,9 @@ namespace Sa::UTH
 
 	/// Current verbosity level.
 	SA_UTH_API extern uint8 verbosity;
-
-	///// Custom UTH console log stream.
-	//SA_UTH_API extern LogStream csl;
 }
+
+
+/** \} */
 
 #endif // GUARD

@@ -13,7 +13,7 @@
 #include <SA/Core/Debug/Streams/FileLogStream.hpp>
 
 /**
-*	\file Log.hpp
+*	\file Core/Debug/Log/Log.hpp
 *
 *	\brief \b Log type implementation.
 *

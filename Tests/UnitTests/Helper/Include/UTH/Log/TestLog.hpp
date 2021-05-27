@@ -9,19 +9,35 @@
 
 #include <SA/Core/Debug/ArgsStr.hpp>
 
+/**
+*	\file TestLog.hpp
+* 
+*	\brief UTH Log implementation for single Test.
+* 
+*	\ingroup UTH
+*	\{
+*/
+
+
 namespace Sa::UTH
 {
+	/// UTH Test Log class.
 	class TestLog : public Log
 	{
 	public:
+		/// File name.
 		std::wstring file;
 
+		/// Line number.
 		uint32 line = 0u;
 
+		/// Function name.
 		std::string function;
 
+		/// Result value as string.
 		std::string result;
 
+		/// Group trace of Test.
 		StringToken groupTrace;
 
 		/// Test restult predicate.
@@ -37,6 +53,7 @@ namespace Sa::UTH
 		*	\param[in] _file		File of the Log.
 		*	\param[in] _line		Line of the Log.
 		*	\param[in] _function	Function of the Log.
+		*	\param[in] _result		Test result as a string.
 		*	\param[in] _bResult		Test result predicate.
 		*	\param[in] _params		Test parameters.
 		*/
@@ -52,5 +69,8 @@ namespace Sa::UTH
 		SA_UTH_API StringToken ToStringToken() const  override final;
 	};
 }
+
+
+/** \} */
 
 #endif // GUARD

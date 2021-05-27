@@ -15,6 +15,17 @@
 // TODO: Remove later, use Engine Random impl.
 #include <UTH/Random.hpp>
 
+/**
+*	\file UnitTestHelper.hpp
+* 
+*	\brief UTH Helper macro definition file.
+*	Include \<UnitTestHelper\>
+* 
+*	\ingroup UTH
+*	\{
+*/
+
+
 namespace Sa::UTH
 {
 	/**
@@ -215,5 +226,8 @@ namespace Sa::UTH
 		SA_UTH_GPE()\
 	}
 }
+
+
+/** \} */
 
 #endif // GUARD
