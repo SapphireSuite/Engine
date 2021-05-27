@@ -18,6 +18,9 @@ namespace Sa::GLFW
 		mHandle = glfwCreateWindow(_width, _height, _name.c_str(), nullptr, nullptr);
 
 		SA_ASSERT(Default, Window/GLFW, mHandle, L"GLFW create window failed!");
+
+		glfwSetWindowUserPointer(mHandle, this);
+		glfwSetKeyCallback(mHandle, GLFW::WindowKeyCallback);
 	}
 	
 	void Window::Destroy()
@@ -30,11 +33,6 @@ namespace Sa::GLFW
 		GLFW::UnInit();
 	}
 
-
-	void Window::Update()
-	{
-		GLFW::PollEvents();
-	}
 
 	bool Window::ShouldClose() const
 	{

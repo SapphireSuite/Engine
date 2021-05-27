@@ -8,14 +8,17 @@
 #include <SA/Core/Types/Int.hpp>
 #include <SA/Core/Types/Interface.hpp>
 
+#include <SA/Input/InputHandler.hpp>
+
 namespace Sa
 {
 	class IWindow : public Interface
 	{
+	public:
+		InputHandler input;
+
 		virtual void Create(uint32 _width, uint32 _height, const std::string& _name = "Main Window") = 0;
 		virtual void Destroy() = 0;
-
-		virtual void Update() = 0;
 
 		virtual bool ShouldClose() const = 0;
 	};

@@ -1,6 +1,7 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
 #include <Window/GLFW/GLFW.hpp>
+#include <Window/GLFW/GLFWWindow.hpp>
 
 #include <Collections/Debug>
 
@@ -45,6 +46,15 @@ namespace Sa::GLFW
 	void PollEvents()
 	{
 		glfwPollEvents();
+	}
+
+
+	void WindowKeyCallback(struct GLFWwindow* window, int key, int scancode, int action, int mods)
+	{
+		GLFW::Window* win = static_cast<GLFW::Window*>(glfwGetWindowUserPointer(window));
+		SA_ASSERT(Nullptr, SA/Window/GLFW, win);
+
+		win->input.UpdateKey(static_cast<InputKey>(key), static_cast<InputKeyState>(action));
 	}
 }
 
