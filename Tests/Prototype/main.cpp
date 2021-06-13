@@ -10,19 +10,17 @@ using namespace Sa;
 #include <SA/Window/GLFW/GLFW.hpp>
 #include <SA/Window/GLFW/GLFWWindow.hpp>
 
-void OnKey(InputKey _key, InputKeyState _state)
-{
-	SA_LOG("Input: " << _key << ": " << _state);
-}
-
 int main()
 {
 	GLFW::Window win;
 
 	win.Create(1200u, 800);
 
-	win.input.onKey += OnKey;
+	InputContext* inputContext = win.input.CreateContext();
 
+	inputContext->BindAction(InputAction{ InputKey::Q, InputKeyState::Pressed }, Function<void()>([]() { SA_LOG("Q Pressed"); }));
+	inputContext->BindAction(InputAction{ InputKey::Q, InputKeyState::Released }, Function<void()>([]() { SA_LOG("Q Released"); }));
+	
 #if !SA_CI
 
 	while (!win.ShouldClose())

@@ -49,12 +49,15 @@ namespace Sa::GLFW
 	}
 
 
-	void WindowKeyCallback(struct GLFWwindow* window, int key, int scancode, int action, int mods)
+	void WindowKeyCallback(struct GLFWwindow* _window, int _key, int _scancode, int _action, int _mods)
 	{
-		GLFW::Window* win = static_cast<GLFW::Window*>(glfwGetWindowUserPointer(window));
+		GLFW::Window* win = static_cast<GLFW::Window*>(glfwGetWindowUserPointer(_window));
 		SA_ASSERT(Nullptr, SA/Window/GLFW, win);
 
-		win->input.UpdateKey(static_cast<InputKey>(key), static_cast<InputKeyState>(action));
+		if (_key == 81)
+		{
+			win->input.Process(InputAction{ InputKey::Q, _action == 1 ? InputKeyState::Pressed : InputKeyState:: Released});
+		}
 	}
 }
 
