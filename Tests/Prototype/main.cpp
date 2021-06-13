@@ -18,8 +18,8 @@ int main()
 
 	InputContext* inputContext = win.input.CreateContext();
 
-	inputContext->BindAction(InputAction{ InputKey::Q, InputKeyState::Pressed }, Function<void()>([]() { SA_LOG("Q Pressed"); }));
-	inputContext->BindAction(InputAction{ InputKey::Q, InputKeyState::Released }, Function<void()>([]() { SA_LOG("Q Released"); }));
+	inputContext->Bind(InputKey{ Key::Q, KeyState::Pressed }, Function<void()>([]() { SA_LOG("Q Pressed"); }));
+	inputContext->Bind(InputKey{ Key::Q, KeyState::Released }, Function<void()>([]() { SA_LOG("Q Released"); }));
 	
 #if !SA_CI
 

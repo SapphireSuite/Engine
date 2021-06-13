@@ -23,8 +23,9 @@ namespace Sa
 
 		void Clear();
 
-		bool Process(const InputAction& _action);
-		//void ProcessAction(InputKey _key, const InputAction& _action);
+		bool Process(const InputKey& _inKey);
+		//bool Process(const InputAxis& _inAxis);
+		//bool Process(const InputComposite& _inComp);
 	};
 }
 

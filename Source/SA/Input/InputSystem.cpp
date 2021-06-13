@@ -46,16 +46,24 @@ namespace Sa
 	}
 
 
-	bool InputSystem::Process(const InputAction& _action)
+	bool InputSystem::Process(const InputKey& _inKey)
 	{
-		// Find first context that can consume the input.
+		// Process from last added context to older one.
 
-		for (auto it = mContexts.begin(); it != mContexts.end(); ++it)
+		bool bSuccess = false;
+
+		for (auto it = mContexts.rbegin(); it != mContexts.rend(); ++it)
 		{
-			if ((*it)->Process(_action))
-				return true;
+			if ((*it)->Process(_inKey))
+			{
+				bSuccess = true;
+
+				// Consume input (no forward to next contexts).
+				if ((*it)->mode == InputContext::ProcessMode::Consume)
+					return true;
+			}
 		}
 
-		return false;
+		return bSuccess;
 	}
 }

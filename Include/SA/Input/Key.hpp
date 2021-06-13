@@ -2,14 +2,14 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_INPUT_INPUT_KEY_GUARD
-#define SAPPHIRE_INPUT_INPUT_KEY_GUARD
+#ifndef SAPPHIRE_INPUT_KEY_GUARD
+#define SAPPHIRE_INPUT_KEY_GUARD
 
 #include <SA/Core/Types/Int.hpp>
 
 namespace Sa
 {
-	enum class InputKey : uint16
+	enum class Key : uint16
 	{
 //{ Keyboard
 

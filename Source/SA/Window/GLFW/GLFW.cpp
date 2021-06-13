@@ -54,9 +54,9 @@ namespace Sa::GLFW
 		GLFW::Window* win = static_cast<GLFW::Window*>(glfwGetWindowUserPointer(_window));
 		SA_ASSERT(Nullptr, SA/Window/GLFW, win);
 
-		if (_key == 81)
+		if (_key == 81 && _action != 2)
 		{
-			win->input.Process(InputAction{ InputKey::Q, _action == 1 ? InputKeyState::Pressed : InputKeyState:: Released});
+			win->input.Process(InputKey{ Key::Q, _action == 1 ? KeyState::Pressed : KeyState:: Released});
 		}
 	}
 }
