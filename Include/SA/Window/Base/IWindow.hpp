@@ -20,6 +20,7 @@ namespace Sa
 		virtual void Create(uint32 _width, uint32 _height, const std::string& _name = "Main Window") = 0;
 		virtual void Destroy() = 0;
 
+		virtual void Close() = 0;
 		virtual bool ShouldClose() const = 0;
 	};
 }

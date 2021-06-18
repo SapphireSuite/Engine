@@ -34,6 +34,11 @@ namespace Sa::GLFW
 	}
 
 
+	void Window::Close()
+	{
+		glfwSetWindowShouldClose(mHandle, GLFW_TRUE);
+	}
+
 	bool Window::ShouldClose() const
 	{
 		return glfwWindowShouldClose(mHandle);

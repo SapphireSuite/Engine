@@ -89,13 +89,11 @@ namespace Sa
 		RightShift,
 
 		LeftCtrl,
-		LeftFunction,
 		LeftOS,
 		LeftAlt,
 		Space,
 		RightAlt,
 		RightOS,
-		RightFunction,
 		Menu,
 		RightCtrl,
 

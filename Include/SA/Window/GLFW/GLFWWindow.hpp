@@ -22,6 +22,7 @@ namespace Sa::GLFW
 		SA_ENGINE_API void Create(uint32 _width, uint32 _height, const std::string& _name = "Main Window") override final;
 		SA_ENGINE_API void Destroy() override final;
 
+		SA_ENGINE_API void Close() override final;
 		SA_ENGINE_API bool ShouldClose() const override final;
 	};
 }

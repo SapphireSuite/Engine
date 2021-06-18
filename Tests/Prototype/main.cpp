@@ -20,7 +20,15 @@ int main()
 
 	inputContext->Bind(InputKey{ Key::Q, KeyState::Pressed }, Function<void()>([]() { SA_LOG("Q Pressed"); }));
 	inputContext->Bind(InputKey{ Key::Q, KeyState::Released }, Function<void()>([]() { SA_LOG("Q Released"); }));
-	
+	inputContext->Bind(InputKey{ Key::Esc, KeyState::Pressed }, Function<void()>(&win, &GLFW::Window::Close));
+
+	inputContext->Bind(InputKey{ Key::T, KeyState::Pressed }, Function<void()>([]() { SA_LOG("T Pressed"); }));
+	inputContext->Bind(InputKey{ Key::T, KeyState::Released }, Function<void()>([]() { SA_LOG("T Released"); }));
+
+	inputContext->Bind(InputKey{ Key::Y, KeyState::Pressed }, Function<void()>([]() { SA_LOG("Y Pressed"); }));
+	inputContext->Bind(InputKey{ Key::Y, KeyState::Released }, Function<void()>([]() { SA_LOG("Y Released"); }));
+
+
 #if !SA_CI
 
 	while (!win.ShouldClose())
