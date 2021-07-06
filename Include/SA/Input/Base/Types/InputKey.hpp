@@ -25,8 +25,8 @@ namespace Sa
 		InputKey() = default;
 		SA_ENGINE_API InputKey(Key _key, KeyState _state) noexcept;
 
-		bool operator==(const InputKey& _rhs) const noexcept;
-		bool operator!=(const InputKey& _rhs) const noexcept;
+		SA_ENGINE_API bool operator==(const InputKey& _rhs) const noexcept;
+		SA_ENGINE_API bool operator!=(const InputKey& _rhs) const noexcept;
 	};
 }
 
@@ -38,7 +38,7 @@ namespace std
 	template<>
 	struct hash<Sa::InputKey>
 	{
-		std::size_t operator()(Sa::InputKey const& _inKey) const noexcept;
+		SA_ENGINE_API std::size_t operator()(Sa::InputKey const& _inKey) const noexcept;
 	};
 }
 

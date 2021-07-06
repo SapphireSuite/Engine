@@ -4,12 +4,7 @@
 
 namespace Sa
 {
-	InputAction::InputAction(Function<void()> _handle) : mHandle{ std::move(_handle) }
-	{
-	}
-
-
-	bool InputAction::Execute(KeyState _keyState)
+	bool InputKeyAction::Execute(KeyState _keyState)
 	{
 		(void)_keyState;
 
@@ -18,11 +13,13 @@ namespace Sa
 		return true;
 	}
 
-	bool InputAction::Execute(float _value)
+	bool InputAxisAction::Execute(float _value)
 	{
-		(void)_value;
+		if (bUseAbs)
+			_value = std::abs(_value);
 
-		mHandle.Execute();
+		if(_value >= threshold)
+			mHandle.Execute();
 
 		return true;
 	}

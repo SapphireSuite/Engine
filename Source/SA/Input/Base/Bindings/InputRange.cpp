@@ -4,12 +4,7 @@
 
 namespace Sa
 {
-	InputRange::InputRange(Function<void(float)> _handle) : mHandle{ std::move(_handle) }
-	{
-	}
-
-
-	bool InputRange::Execute(KeyState _keyState)
+	bool InputKeyRange::Execute(KeyState _keyState)
 	{
 		(void)_keyState;
 
@@ -18,13 +13,16 @@ namespace Sa
 		return true;
 	}
 
-	bool InputRange::Execute(float _value)
+
+	bool InputAxisRange::Execute(float _value)
 	{
 		// Apply scale.
 		_value *= scale;
 
+		const float absV = std::abs(_value);
+
 		// Out of threshold.
-		if (_value < -1.0f + minThreshold || _value > 1.0f - maxThreshold)
+		if (absV < minThreshold || absV > maxThreshold)
 			return false;
 
 		mHandle.Execute(_value);

@@ -11,34 +11,4 @@ namespace Sa
 		value{ _value }
 	{
 	}
-
-
-	bool InputAxis::operator==(const InputAxis& _rhs) const noexcept
-	{
-		// Compare Axis only.
-		return axis == _rhs.axis;
-
-		//return axis == _rhs.axis && value == _rhs.value;
-	}
-
-	bool InputAxis::operator!=(const InputAxis& _rhs) const noexcept
-	{
-		return !(*this == _rhs);
-	}
-}
-
-
-namespace std
-{
-	std::size_t hash<Sa::InputAxis>::operator()(Sa::InputAxis const& _inAxis) const noexcept
-	{
-		std::size_t h = 0;
-
-		// Compare Axis only.
-		h ^= hash<Sa::uint32>{}(static_cast<Sa::uint32>(_inAxis.axis));
-
-		//h ^= hash<Sa::uint32>{}(static_cast<Sa::uint32>(_inAxis.value)) << 1;
-
-		return h;
-	}
 }

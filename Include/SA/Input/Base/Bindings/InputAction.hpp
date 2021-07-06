@@ -5,21 +5,44 @@
 #ifndef SAPPHIRE_INPUT_INPUT_ACTION_GUARD
 #define SAPPHIRE_INPUT_INPUT_ACTION_GUARD
 
-#include <SA/Input/Base/Bindings/InputBindingBase.hpp>
+#include <SA/Input/Base/Bindings/InputKeyBinding.hpp>
+#include <SA/Input/Base/Bindings/InputAxisBinding.hpp>
 
 #include <SA/Core/Types/Variadics/Function.hpp>
 
 namespace Sa
 {
-	class InputAction : public InputBindingBase
+	template <typename BaseT>
+	class InputActionBase : public BaseT
 	{
+	protected:
 		Function<void()> mHandle;
-	
-	public:
-		SA_ENGINE_API InputAction(Function<void()> _handle);
 
-		bool Execute(KeyState _keyState) override final;
-		bool Execute(float _value) override final;
+	public:
+		InputActionBase(Function<void()> _handle) : mHandle{ std::move(_handle) }
+		{
+		}
+	};
+
+
+	class InputKeyAction : public InputActionBase<InputKeyBinding>
+	{
+	public:
+		using InputActionBase<InputKeyBinding>::InputActionBase;
+
+		SA_ENGINE_API bool Execute(KeyState _keyState) override final;
+	};
+
+
+	class InputAxisAction : public InputActionBase<InputAxisBinding>
+	{
+	public:
+		bool bUseAbs = false;
+		float threshold = 0.0f;
+
+		using InputActionBase<InputAxisBinding>::InputActionBase;
+
+		SA_ENGINE_API bool Execute(float _value) override final;
 	};
 }
 
