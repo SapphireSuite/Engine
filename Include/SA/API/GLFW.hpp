@@ -2,13 +2,14 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_WINDOW_GLFW_GUARD
-#define SAPPHIRE_WINDOW_GLFW_GUARD
+#ifndef SAPPHIRE_API_GLFW_GUARD
+#define SAPPHIRE_API_GLFW_GUARD
 
-// TODO: REMOVE LATER.
-#include <SA/Config.hpp>
 
-#include <SA/Window/Config.hpp>
+// TODO: Add if compilation.
+/// Sapphire Engine enable GLFW preprocessor.
+#define SA_GLFW 1
+
 
 #if SA_GLFW
 
@@ -18,9 +19,6 @@ namespace Sa::GLFW
 {
 	void Init();
 	void UnInit();
-
-	// TODO: Remove SA_ENGINE_API.
-	SA_ENGINE_API void PollEvents();
 
 	void WindowKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 }

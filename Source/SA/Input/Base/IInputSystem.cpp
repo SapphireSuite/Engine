@@ -1,23 +1,23 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Input/InputSystem.hpp>
+#include <Input/Base/IInputSystem.hpp>
 
 #include <Collections/Debug>
 
 namespace Sa
 {
-	InputSystem::~InputSystem()
+	IInputSystem::~IInputSystem()
 	{
 		Clear();
 	}
 
 
-	InputContext* InputSystem::CreateContext()
+	InputContext* IInputSystem::CreateContext()
 	{
 		return mContexts.emplace_back(new InputContext);
 	}
 
-	void InputSystem::DestroyContext(InputContext* _context)
+	void IInputSystem::DestroyContext(InputContext* _context)
 	{
 		SA_ASSERT(Nullptr, SA/Input, _context);
 
@@ -37,7 +37,7 @@ namespace Sa
 	}
 
 
-	void InputSystem::Clear()
+	void IInputSystem::Clear()
 	{
 		for (auto it = mContexts.begin(); it != mContexts.end(); ++it)
 			delete* it;
@@ -46,7 +46,7 @@ namespace Sa
 	}
 
 
-	bool InputSystem::Process(const InputKey& _inKey)
+	bool IInputSystem::Process(const InputKey& _inKey)
 	{
 		// Process from last added context to older one.
 

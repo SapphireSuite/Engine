@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Input/Bindings/InputState.hpp>
+#include <Input/Base/Bindings/InputState.hpp>
 
 namespace Sa
 {

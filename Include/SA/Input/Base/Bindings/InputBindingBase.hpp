@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_INPUT_INPUT_BINDING_BASE_GUARD
 #define SAPPHIRE_INPUT_INPUT_BINDING_BASE_GUARD
 
-#include <SA/Input/KeyState.hpp>
+#include <SA/Input/Base/KeyState.hpp>
 
 namespace Sa
 {

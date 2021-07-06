@@ -5,12 +5,13 @@
 #ifndef SAPPHIRE_WINDOW_GLFW_WINDOW_GUARD
 #define SAPPHIRE_WINDOW_GLFW_WINDOW_GUARD
 
-#include <SA/Window/Config.hpp>
+#include <SA/API/GLFW.hpp>
+
 #include <SA/Window/Base/IWindow.hpp>
 
-#if SA_GLFW
+#include <SA/Input/GLFW/GLFWInputSystem.hpp>
 
-struct GLFWwindow;
+#if SA_GLFW
 
 namespace Sa::GLFW
 {
@@ -18,12 +19,18 @@ namespace Sa::GLFW
 	{
 		GLFWwindow* mHandle = nullptr;
 
+		GLFWInputSystem mInput;
+
 	public:
 		SA_ENGINE_API void Create(uint32 _width, uint32 _height, const std::string& _name = "Main Window") override final;
 		SA_ENGINE_API void Destroy() override final;
 
+		SA_ENGINE_API IInputSystem& GetInputSystem() override final;
+
 		SA_ENGINE_API void Close() override final;
 		SA_ENGINE_API bool ShouldClose() const override final;
+
+		SA_ENGINE_API void Update() override final;
 	};
 }
 

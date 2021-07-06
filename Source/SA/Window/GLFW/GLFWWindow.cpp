@@ -2,8 +2,6 @@
 
 #include <Window/GLFW/GLFWWindow.hpp>
 
-#include <Window/GLFW/GLFW.hpp>
-
 #if SA_GLFW
 
 #include <glfw/glfw3.h>
@@ -34,6 +32,12 @@ namespace Sa::GLFW
 	}
 
 
+	IInputSystem& Window::GetInputSystem()
+	{
+		return mInput;
+	}
+
+
 	void Window::Close()
 	{
 		glfwSetWindowShouldClose(mHandle, GLFW_TRUE);
@@ -42,6 +46,12 @@ namespace Sa::GLFW
 	bool Window::ShouldClose() const
 	{
 		return glfwWindowShouldClose(mHandle);
+	}
+
+
+	void Window::Update()
+	{
+		IWindow::Update();
 	}
 }
 

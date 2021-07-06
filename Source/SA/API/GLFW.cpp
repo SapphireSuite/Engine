@@ -1,9 +1,12 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Window/GLFW/GLFW.hpp>
-#include <Window/GLFW/GLFWWindow.hpp>
+#include <API/GLFW.hpp>
 
 #include <Collections/Debug>
+
+//#include <Input/Base/Key.hpp>
+//#include <Input/Base/KeyState.hpp>
+#include <Window/GLFW/GLFWWindow.hpp>
 
 #if SA_GLFW
 
@@ -196,7 +199,7 @@ namespace Sa::GLFW
 		{
 			SA_LOG(L"Key [" << _key << "] not registered in input map.", Warning, SA/Window/GLFW);
 
-			win->input.Process(InputKey{Key::Esc, KeyState::Pressed });
+			win->GetInputSystem().Process(InputKey{Key::Esc, KeyState::Pressed });
 
 			return;
 		}
@@ -205,7 +208,7 @@ namespace Sa::GLFW
 
 		const InputKey key{ keyIt->second, GetKeyState(_action) };
 
-		win->input.Process(key);
+		win->GetInputSystem().Process(key);
 	}
 }
 

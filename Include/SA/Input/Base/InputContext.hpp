@@ -9,11 +9,11 @@
 
 #include <SA/Config.hpp>
 
-#include <SA/Input/Types/InputKey.hpp>
-#include <SA/Input/Types/InputAxis.hpp>
-#include <SA/Input/Types/InputComposite.hpp>
+#include <SA/Input/Base/Types/InputKey.hpp>
+#include <SA/Input/Base/Types/InputAxis.hpp>
+#include <SA/Input/Base/Types/InputComposite.hpp>
 
-#include <SA/Input/Bindings/InputAction.hpp>
+#include <SA/Input/Base/Bindings/InputAction.hpp>
 
 namespace Sa
 {

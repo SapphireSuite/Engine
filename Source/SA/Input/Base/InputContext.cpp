@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Input/InputContext.hpp>
+#include <Input/Base/InputContext.hpp>
 
 namespace Sa
 {

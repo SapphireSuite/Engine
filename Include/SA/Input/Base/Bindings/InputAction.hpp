@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_INPUT_INPUT_ACTION_GUARD
 #define SAPPHIRE_INPUT_INPUT_ACTION_GUARD
 
-#include <SA/Input/Bindings/InputBindingBase.hpp>
+#include <SA/Input/Base/Bindings/InputBindingBase.hpp>
 
 #include <SA/Core/Types/Variadics/Function.hpp>
 

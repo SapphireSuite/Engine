@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Input/Bindings/InputRange.hpp>
+#include <Input/Base/Bindings/InputRange.hpp>
 
 namespace Sa
 {

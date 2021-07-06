@@ -8,20 +8,22 @@
 #include <SA/Core/Types/Int.hpp>
 #include <SA/Core/Types/Interface.hpp>
 
-#include <SA/Input/InputSystem.hpp>
-
 namespace Sa
 {
+	class IInputSystem;
+
 	class IWindow : public Interface
 	{
 	public:
-		InputSystem input;
-
 		virtual void Create(uint32 _width, uint32 _height, const std::string& _name = "Main Window") = 0;
 		virtual void Destroy() = 0;
 
+		virtual IInputSystem& GetInputSystem() = 0;
+
 		virtual void Close() = 0;
 		virtual bool ShouldClose() const = 0;
+
+		SA_ENGINE_API virtual void Update();
 	};
 }
 

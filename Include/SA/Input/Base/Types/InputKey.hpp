@@ -9,10 +9,10 @@
 
 #include <SA/Config.hpp>
 
-#include <SA/Input/Types/InputBase.hpp>
+#include <SA/Input/Base/Types/InputBase.hpp>
 
-#include <SA/Input/Key.hpp>
-#include <SA/Input/KeyState.hpp>
+#include <SA/Input/Base/Key.hpp>
+#include <SA/Input/Base/KeyState.hpp>
 
 namespace Sa
 {

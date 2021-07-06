@@ -7,7 +7,6 @@
 #include <SA/Collections/Debug>
 using namespace Sa;
 
-#include <SA/Window/GLFW/GLFW.hpp>
 #include <SA/Window/GLFW/GLFWWindow.hpp>
 
 int main()
@@ -16,7 +15,7 @@ int main()
 
 	win.Create(1200u, 800);
 
-	InputContext* inputContext = win.input.CreateContext();
+	InputContext* const inputContext = win.GetInputSystem().CreateContext();
 
 	inputContext->Bind(InputKey{ Key::Q, KeyState::Pressed }, Function<void()>([]() { SA_LOG("Q Pressed"); }));
 	inputContext->Bind(InputKey{ Key::Q, KeyState::Released }, Function<void()>([]() { SA_LOG("Q Released"); }));
@@ -35,7 +34,7 @@ int main()
 
 #endif
 	{
-		GLFW::PollEvents();
+		win.Update();
 	}
 
 	return 0;

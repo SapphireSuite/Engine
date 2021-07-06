@@ -7,7 +7,7 @@
 
 #include <vector>
 
-#include <SA/Input/Types/InputBase.hpp>
+#include <SA/Input/Base/Types/InputBase.hpp>
 
 namespace Sa
 {

@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Input/Types/InputComposite.hpp>
+#include <Input/Base/Types/InputComposite.hpp>
 
 namespace Sa
 {
