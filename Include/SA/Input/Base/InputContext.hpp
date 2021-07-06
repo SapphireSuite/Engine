@@ -14,13 +14,14 @@
 #include <SA/Input/Base/Types/InputComposite.hpp>
 
 #include <SA/Input/Base/Bindings/InputAction.hpp>
+#include <SA/Input/Base/Bindings/InputRange.hpp>
 
 namespace Sa
 {
 	class InputContext
 	{
 		std::unordered_map<InputKey, InputBindingBase*> mKeyMap;
-		//std::unordered_map<InputAxis, InputBindingBase*> mAxisMap;
+		std::unordered_map<InputAxis, InputBindingBase*> mAxisMap;
 		//std::unordered_map<InputComposite, InputBindingBase*> mCompositeMap;
 
 	public:
@@ -39,15 +40,15 @@ namespace Sa
 
 
 		SA_ENGINE_API void Bind(const InputKey& _inKey, InputAction _action);
-		//void Bind(const InputAxis& _inAxis, InputAction _action);
+		SA_ENGINE_API void Bind(const InputAxis& _inAxis, InputRange _range);
 		//void Bind(InputComposite _inComp, InputAction _action);
 
 		void UnBind(const InputKey& _inKey);
-		//void UnBind(const InputAxis& _inAxis);
+		void UnBind(const InputAxis& _inAxis);
 		//void UnBind(const InputComposite& _inComp);
 
 		bool Process(const InputKey& _inKey);
-		//bool Process(const InputAxis& _inAxis);
+		bool Process(const InputAxis& _inAxis);
 		//bool Process(const InputComposite& _inComp);
 	};
 }

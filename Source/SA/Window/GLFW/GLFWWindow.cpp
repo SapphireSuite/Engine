@@ -4,12 +4,12 @@
 
 #if SA_GLFW
 
-#include <glfw/glfw3.h>
-
 namespace Sa::GLFW
 {
 	void Window::Create(uint32 _width, uint32 _height, const std::string& _name)
 	{
+		IWindow::Create(_width, _height, _name);
+
 		GLFW::Init();
 
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
@@ -18,12 +18,15 @@ namespace Sa::GLFW
 		SA_ASSERT(Default, Window/GLFW, mHandle, L"GLFW create window failed!");
 
 		glfwSetWindowUserPointer(mHandle, this);
-		glfwSetKeyCallback(mHandle, GLFW::WindowKeyCallback);
+
+		mInput.Create(mHandle);
 	}
 	
 	void Window::Destroy()
 	{
 		SA_ASSERT(Nullptr, Window/GLFW, mHandle, L"Try to destroy a non-created window, call Create() first.");
+
+		mInput.Destroy();
 
 		glfwDestroyWindow(mHandle);
 		mHandle = nullptr;
@@ -46,12 +49,6 @@ namespace Sa::GLFW
 	bool Window::ShouldClose() const
 	{
 		return glfwWindowShouldClose(mHandle);
-	}
-
-
-	void Window::Update()
-	{
-		IWindow::Update();
 	}
 }
 

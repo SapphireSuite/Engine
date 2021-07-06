@@ -7,11 +7,13 @@
 
 #include <vector>
 
+#include <SA/Core/Types/Interface.hpp>
+
 #include <SA/Input/Base/InputContext.hpp>
 
 namespace Sa
 {
-	class IInputSystem
+	class IInputSystem : public Interface
 	{
 		std::vector<InputContext*> mContexts;
 
@@ -23,12 +25,13 @@ namespace Sa
 
 		void Clear();
 
-		bool Process(const InputKey& _inKey);
-		//bool Process(const InputAxis& _inAxis);
-		//bool Process(const InputComposite& _inComp);
+		template <typename InputT>
+		bool Process(const InputT& _input);
 
 		virtual void Update() = 0;
 	};
 }
+
+#include <SA/Input/Base/IInputSystem.inl>
 
 #endif // GUARD

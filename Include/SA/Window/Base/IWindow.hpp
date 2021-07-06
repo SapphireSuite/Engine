@@ -8,14 +8,21 @@
 #include <SA/Core/Types/Int.hpp>
 #include <SA/Core/Types/Interface.hpp>
 
+#include <SA/Maths/Space/Vector2.hpp>
+
 namespace Sa
 {
 	class IInputSystem;
 
 	class IWindow : public Interface
 	{
+	protected:
+		Vec2ui mSize;
+
 	public:
-		virtual void Create(uint32 _width, uint32 _height, const std::string& _name = "Main Window") = 0;
+		const Vec2ui& GetSize() const;
+
+		SA_ENGINE_API virtual void Create(uint32 _width, uint32 _height, const std::string& _name = "Main Window");
 		virtual void Destroy() = 0;
 
 		virtual IInputSystem& GetInputSystem() = 0;

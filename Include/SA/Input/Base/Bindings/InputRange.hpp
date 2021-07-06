@@ -21,7 +21,7 @@ namespace Sa
 
 		float scale = 1.0f;
 
-		InputRange(Function<void(float)> _handle);
+		SA_ENGINE_API InputRange(Function<void(float)> _handle);
 
 		bool Execute(KeyState _keyState) override final;
 		bool Execute(float _value) override final;

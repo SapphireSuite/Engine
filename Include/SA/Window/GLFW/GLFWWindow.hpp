@@ -5,8 +5,6 @@
 #ifndef SAPPHIRE_WINDOW_GLFW_WINDOW_GUARD
 #define SAPPHIRE_WINDOW_GLFW_WINDOW_GUARD
 
-#include <SA/API/GLFW.hpp>
-
 #include <SA/Window/Base/IWindow.hpp>
 
 #include <SA/Input/GLFW/GLFWInputSystem.hpp>
@@ -29,8 +27,6 @@ namespace Sa::GLFW
 
 		SA_ENGINE_API void Close() override final;
 		SA_ENGINE_API bool ShouldClose() const override final;
-
-		SA_ENGINE_API void Update() override final;
 	};
 }
 

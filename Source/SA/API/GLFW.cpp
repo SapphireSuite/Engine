@@ -4,13 +4,9 @@
 
 #include <Collections/Debug>
 
-//#include <Input/Base/Key.hpp>
-//#include <Input/Base/KeyState.hpp>
 #include <Window/GLFW/GLFWWindow.hpp>
 
 #if SA_GLFW
-
-#include <GLFW/glfw3.h>
 
 namespace Sa::GLFW
 {
@@ -164,12 +160,6 @@ namespace Sa::GLFW
 	}
 
 
-	void PollEvents()
-	{
-		glfwPollEvents();
-	}
-
-
 	KeyState GetKeyState(int _action)
 	{
 		switch (_action)
@@ -186,10 +176,12 @@ namespace Sa::GLFW
 		}
 	}
 
-	void WindowKeyCallback(struct GLFWwindow* _window, int _key, int _scancode, int _action, int _mods)
+	void WindowKeyCallback(struct GLFWwindow* _handle, int _key, int _scancode, int _action, int _mods)
 	{
-		GLFW::Window* win = static_cast<GLFW::Window*>(glfwGetWindowUserPointer(_window));
+		GLFW::Window* const win = static_cast<GLFW::Window*>(glfwGetWindowUserPointer(_handle));
 		SA_ASSERT(Nullptr, SA/Window/GLFW, win);
+
+		GLFWInputSystem& input = win->GetInputSystem().As<GLFWInputSystem>();
 
 		auto keyIt = gGlfwToEngineInputMap.find(_key);
 
@@ -199,7 +191,7 @@ namespace Sa::GLFW
 		{
 			SA_LOG(L"Key [" << _key << "] not registered in input map.", Warning, SA/Window/GLFW);
 
-			win->GetInputSystem().Process(InputKey{Key::Esc, KeyState::Pressed });
+			input.WindowKeyCallback(InputKey{Key::Esc, KeyState::Pressed });
 
 			return;
 		}
@@ -208,7 +200,17 @@ namespace Sa::GLFW
 
 		const InputKey key{ keyIt->second, GetKeyState(_action) };
 
-		win->GetInputSystem().Process(key);
+		input.WindowKeyCallback(key);
+	}
+
+	void CursorPositionCallback(GLFWwindow* _handle, double _posX, double _posY)
+	{
+		GLFW::Window* const win = static_cast<GLFW::Window*>(glfwGetWindowUserPointer(_handle));
+		SA_ASSERT(Nullptr, SA/Window/GLFW, win);
+
+		GLFWInputSystem& input = win->GetInputSystem().As<GLFWInputSystem>();
+
+		input.CursorPositionCallback(win->GetSize(), Vec2d{ _posX, _posY });
 	}
 }
 

@@ -24,14 +24,14 @@ namespace Sa
 		mKeyMap.emplace(_inKey, new InputAction{ std::move(_action) });
 	}
 
-	/*
-	void InputContext::Bind(const InputAxis& _inAxis, InputAction _action)
+	void InputContext::Bind(const InputAxis& _inAxis, InputRange _range)
 	{
 		SA_WARN(mAxisMap.find(_inAxis) == mAxisMap.end(), SA/Input, L"Input axis [" << _inAxis << "] already bound!");
 
-		mAxisMap.emplace(_inAxis, std::move(_action));
+		mAxisMap.emplace(_inAxis, new InputRange{ std::move(_range) });
 	}
 
+	/*
 	void InputContext::Bind(InputComposite _inComp, InputAction _action)
 	{
 		SA_WARN(mCompositeMap.find(_inComp) == mCompositeMap.end(), SA/Input, L"Input composite [" << _inComp << "] already bound!");
@@ -50,17 +50,17 @@ namespace Sa
 		mKeyMap.erase(it);
 	}
 
-	/*
 	void InputContext::UnBind(const InputAxis& _inAxis)
 	{
 		auto it = mAxisMap.find(_inAxis);
-		SA_WARN(it != mAxisMap.end(), SA / Input, L"Input axis [" << _inAxis << "] not previously bound!");
+		SA_WARN(it != mAxisMap.end(), SA/Input, L"Input axis [" << _inAxis << "] not previously bound!");
 		
 		delete it->second;
 
 		mAxisMap.erase(it);
 	}
 
+	/*
 	void InputContext::UnBind(const InputComposite& _inComp)
 	{
 		auto it = mCompositeMap.find(_inComp);
@@ -86,7 +86,6 @@ namespace Sa
 		return it->second->Execute(_inKey.state);
 	}
 	
-	/*
 	bool InputContext::Process(const InputAxis& _inAxis)
 	{
 		if (!bEnabled)
@@ -101,6 +100,7 @@ namespace Sa
 		return it->second->Execute(_inAxis.value);
 	}
 	
+	/*
 	bool InputContext::Process(const InputComposite& _inComp)
 	{
 		if (!bEnabled)

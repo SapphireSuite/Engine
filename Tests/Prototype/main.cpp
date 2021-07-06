@@ -27,6 +27,9 @@ int main()
 	inputContext->Bind(InputKey{ Key::Y, KeyState::Pressed }, Function<void()>([]() { SA_LOG("Y Pressed"); }));
 	inputContext->Bind(InputKey{ Key::Y, KeyState::Released }, Function<void()>([]() { SA_LOG("Y Released"); }));
 
+	inputContext->Bind(InputAxis{ Axis::MouseX }, Function<void(float)>([](float _inX) { SA_LOG("MouseX: " << _inX); }));
+	inputContext->Bind(InputAxis{ Axis::MouseY }, Function<void(float)>([](float _inY) { SA_LOG("MouseY: " << _inY); }));
+
 
 #if !SA_CI
 
@@ -36,6 +39,12 @@ int main()
 	{
 		win.Update();
 	}
+
+#if SA_LOGGING
+
+	Debug::logger.Join(ThreadJoinMode::Abandon);
+
+#endif
 
 	return 0;
 }
