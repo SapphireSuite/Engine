@@ -178,6 +178,9 @@ namespace Sa::GLFW
 
 	void WindowKeyCallback(struct GLFWwindow* _handle, int _key, int _scancode, int _action, int _mods)
 	{
+		(void)_scancode;
+		(void)_mods;
+
 		GLFW::Window* const win = static_cast<GLFW::Window*>(glfwGetWindowUserPointer(_handle));
 		SA_ASSERT(Nullptr, SA/Window/GLFW, win);
 
@@ -191,14 +194,14 @@ namespace Sa::GLFW
 		{
 			SA_LOG(L"Key [" << _key << "] not registered in input map.", Warning, SA/Window/GLFW);
 
-			input.WindowKeyCallback(InputKey{Key::Esc, KeyState::Pressed });
+			input.WindowKeyCallback(InputRawKey{Key::Esc, KeyState::Pressed });
 
 			return;
 		}
 
 #endif
 
-		const InputKey key{ keyIt->second, GetKeyState(_action) };
+		const InputRawKey key{ keyIt->second, GetKeyState(_action) };
 
 		input.WindowKeyCallback(key);
 	}

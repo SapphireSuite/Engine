@@ -16,17 +16,24 @@
 
 namespace Sa
 {
+	struct InputRawKey
+	{
+		Key key = Key::Esc;
+		KeyState state = KeyState::Pressed;
+
+		SA_ENGINE_API bool operator==(const InputRawKey& _rhs) const noexcept;
+	};
+
+
 	class InputKey : public InputBase
 	{
 	public:
 		Key key = Key::Esc;
-		KeyState state = KeyState::Pressed;
+		Flags<KeyState> stateFlags = KeyState::Pressed;
 
 		InputKey() = default;
-		SA_ENGINE_API InputKey(Key _key, KeyState _state) noexcept;
-
-		SA_ENGINE_API bool operator==(const InputKey& _rhs) const noexcept;
-		SA_ENGINE_API bool operator!=(const InputKey& _rhs) const noexcept;
+		InputKey(const InputRawKey& _inRawKey) noexcept;
+		SA_ENGINE_API InputKey(Key _key, Flags<KeyState> _stateFlags) noexcept;
 	};
 }
 
@@ -36,9 +43,9 @@ namespace Sa
 namespace std
 {
 	template<>
-	struct hash<Sa::InputKey>
+	struct hash<Sa::InputRawKey>
 	{
-		SA_ENGINE_API std::size_t operator()(Sa::InputKey const& _inKey) const noexcept;
+		SA_ENGINE_API std::size_t operator()(Sa::InputRawKey const& _inKey) const noexcept;
 	};
 }
 

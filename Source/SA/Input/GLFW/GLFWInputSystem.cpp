@@ -8,9 +8,9 @@
 
 namespace Sa
 {
-	void GLFWInputSystem::WindowKeyCallback(const InputKey& _inKey)
+	void GLFWInputSystem::WindowKeyCallback(const InputRawKey& _inRawKey)
 	{
-		Process(_inKey);
+		Process(_inRawKey);
 	}
 
 	void GLFWInputSystem::CursorPositionCallback(const Vec2ui& _windowSize, const Vec2f& _mousePos)

@@ -23,7 +23,7 @@ namespace Sa
 
 		SA_ENGINE_API void Update() override final;
 
-		void WindowKeyCallback(const InputKey& _inKey);
+		void WindowKeyCallback(const InputRawKey& _inRawKey);
 		void CursorPositionCallback(const Vec2ui& _windowSize, const Vec2f& _mousePos);
 	};
 }

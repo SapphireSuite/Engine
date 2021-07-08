@@ -17,14 +17,18 @@ int main()
 
 	InputContext* const inputContext = win.GetInputSystem().CreateContext();
 
-	inputContext->Bind<InputKeyAction>(InputKey{ Key::Q, KeyState::Pressed }, Function<void()>([]() { SA_LOG("Q Pressed"); }));
-	inputContext->Bind<InputKeyAction>(InputKey{ Key::Q, KeyState::Released }, Function<void()>([]() { SA_LOG("Q Released"); }));
-	inputContext->Bind<InputKeyAction>(InputKey{ Key::Esc, KeyState::Pressed }, Function<void()>(&win, &GLFW::Window::Close));
+	//inputContext->key.Bind<InputKeyAction>(InputKey{ Key::Q, KeyState::Pressed }, Function<void()>([]() { SA_LOG("Q Pressed"); }));
+	//inputContext->key.Bind<InputKeyAction>(InputKey{ Key::Q, KeyState::Released }, Function<void()>([]() { SA_LOG("Q Released"); }));
+	//inputContext->key.Bind<InputKeyAction>(InputKey{ Key::Esc, KeyState::Pressed }, Function<void()>(&win, &GLFW::Window::Close));
 
-	inputContext->Bind<InputAxisRange>(Axis::MouseX, Function<void(float)>([](float _inX) { SA_LOG("MouseX: " << _inX); }));
-	inputContext->Bind<InputAxisRange>(Axis::MouseY, Function<void(float)>([](float _inY) { SA_LOG("MouseY: " << _inY); }));
+	//inputContext->Bind<InputAxisRange>(Axis::MouseX, Function<void(float)>([](float _inX) { SA_LOG("MouseX: " << _inX); }));
+	//inputContext->Bind<InputAxisRange>(Axis::MouseY, Function<void(float)>([](float _inY) { SA_LOG("MouseY: " << _inY); }));
 
-	inputContext->Bind<InputKeyRange>(InputKey{ Key::Y, KeyState::Hold }, Function<void(float)>([](float _inX) { SA_LOG("Y Pressed:" << _inX); }));
+	inputContext->key.Bind<InputKeyAction>(InputKey{ Key::Y, KeyState::Pressed },
+		Function<void()>([]() { SA_LOG("Y Pressed:"); }));
+
+	inputContext->key.Bind<InputKeyRange>(InputKey{ Key::Y, KeyState::Pressed | KeyState::Hold },
+		Function<void(float)>([](float _inX) { SA_LOG("Y Pressed Or Hold:" << _inX); }));
 
 
 #if !SA_CI
