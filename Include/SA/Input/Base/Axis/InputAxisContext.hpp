@@ -23,8 +23,8 @@ namespace Sa
 		template <typename InBindT, typename... Args>
 		std::shared_ptr<InputAxisBinding> Bind(const Axis& _axis, Args&&... _args);
 
-		void UnBind(Axis _axis);
-		void UnBind(std::shared_ptr<InputAxisBinding> _inBinding);
+		SA_ENGINE_API void UnBind(Axis _axis);
+		SA_ENGINE_API void UnBind(std::shared_ptr<InputAxisBinding> _inBinding);
 
 		bool Process(const InputAxis& _inAxis);
 	};

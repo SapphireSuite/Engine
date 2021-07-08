@@ -33,10 +33,12 @@ namespace Sa
 	{
 		for (auto itBinds = mMap.begin(); itBinds != mMap.end(); ++itBinds)
 		{
-			for (auto it = itBinds->second.begin(); it != itBinds->second.end(); ++it)
+			for (auto it = itBinds->second.begin(); it != itBinds->second.end();)
 			{
-				if (_inBinding == *it)
-					itBinds->second.erase(it--);
+				if (*it == _inBinding)
+					it = itBinds->second.erase(it);
+				else
+					++it;
 			}
 		}
 	}

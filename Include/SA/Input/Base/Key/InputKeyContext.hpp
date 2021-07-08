@@ -23,9 +23,9 @@ namespace Sa
 		template <typename InBindT, typename... Args>
 		std::shared_ptr<InputKeyBinding> Bind(const InputKey& _inKey, Args&&... _args);
 
-		void UnBind(const InputKey& _inKey);
-		void UnBind(const InputRawKey& _inRawKey);
-		void UnBind(std::shared_ptr<InputKeyBinding> _inBinding);
+		SA_ENGINE_API void UnBind(const InputKey& _inKey);
+		SA_ENGINE_API void UnBind(const InputRawKey& _inRawKey);
+		SA_ENGINE_API void UnBind(std::shared_ptr<InputKeyBinding> _inBinding);
 
 		bool Process(const InputRawKey& _inRawKey);
 	};
