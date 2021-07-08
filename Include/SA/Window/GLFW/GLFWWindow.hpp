@@ -19,6 +19,9 @@ namespace Sa::GLFW
 
 		GLFWInputSystem mInput;
 
+		static void ResizeCallback(GLFWwindow* _handle, int32 _width, int32 _height);
+		static void MinimizedCallback(GLFWwindow* _handle, int32 _iconified);
+
 	public:
 		SA_ENGINE_API void Create(uint32 _width, uint32 _height, const std::string& _name = "Main Window") override final;
 		SA_ENGINE_API void Destroy() override final;

@@ -11,6 +11,24 @@ namespace Sa
 		return mSize;
 	}
 
+	void IWindow::SetSize(const Vec2ui& _size)
+	{
+		mSize = _size;
+		onResize(_size);
+	}
+
+
+	bool IWindow::IsMinimized() const
+	{
+		return bMinimized;
+	}
+
+	void IWindow::SetMinimized(bool _bIsMinimized)
+	{
+		bMinimized = _bIsMinimized;
+		onMinimized(_bIsMinimized);
+	}
+
 
 	void IWindow::Create(uint32 _width, uint32 _height, const std::string& _name)
 	{

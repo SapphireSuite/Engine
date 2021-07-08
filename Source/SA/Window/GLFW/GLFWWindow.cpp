@@ -18,6 +18,8 @@ namespace Sa::GLFW
 		SA_ASSERT(Default, Window/GLFW, mHandle, L"GLFW create window failed!");
 
 		glfwSetWindowUserPointer(mHandle, this);
+		glfwSetWindowIconifyCallback(mHandle, MinimizedCallback);
+		glfwSetWindowSizeCallback(mHandle, ResizeCallback);
 
 		mInput.Create(mHandle);
 	}
@@ -49,6 +51,29 @@ namespace Sa::GLFW
 	bool Window::ShouldClose() const
 	{
 		return glfwWindowShouldClose(mHandle);
+	}
+
+
+	void Window::ResizeCallback(GLFWwindow* _handle, int32 _width, int32 _height)
+	{
+		GLFW::Window* const win = static_cast<GLFW::Window*>(glfwGetWindowUserPointer(_handle));
+		SA_ASSERT(Nullptr, SA/Window/GLFW, win);
+
+		Vec2ui newSize = Vec2i{ _width, _height };
+
+		// Window minimized (in/out).
+		if (win->IsMinimized() || newSize == win->GetSize())
+			return;
+
+		win->SetSize(newSize);
+	}
+
+	void Window::MinimizedCallback(GLFWwindow* _handle, int32 _iconified)
+	{
+		GLFW::Window* const win = static_cast<GLFW::Window*>(glfwGetWindowUserPointer(_handle));
+		SA_ASSERT(Nullptr, SA/Window/GLFW, win);
+
+		win->SetMinimized(_iconified);
 	}
 }
 
