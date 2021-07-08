@@ -19,6 +19,17 @@ namespace Sa
 		Function<void(float)> mHandle;
 
 	public:
+		InputRangeBase(void(*_func)(float)) noexcept :
+			mHandle{ _func }
+		{
+		}
+
+		template <typename C>
+		InputRangeBase(C* _caller, void(C::* _func)(float)) noexcept :
+			mHandle{ _caller, _func }
+		{
+		}
+
 		InputRangeBase(Function<void(float)> _handle) : mHandle{ std::move(_handle) }
 		{
 		}

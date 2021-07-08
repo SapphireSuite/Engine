@@ -19,7 +19,19 @@ namespace Sa
 		Function<void()> mHandle;
 
 	public:
-		InputActionBase(Function<void()> _handle) : mHandle{ std::move(_handle) }
+		InputActionBase(void(*_func)()) noexcept :
+			mHandle{ _func }
+		{
+		}
+
+		template <typename C>
+		InputActionBase(C* _caller, void(C::*_func)()) noexcept :
+			mHandle{ _caller, _func }
+		{
+		}
+
+		InputActionBase(Function<void()> _handle) noexcept :
+			mHandle{ std::move(_handle) }
 		{
 		}
 	};
@@ -37,7 +49,7 @@ namespace Sa
 	class InputAxisAction : public InputActionBase<InputAxisBinding>
 	{
 	public:
-		bool bUseAbs = false;
+		bool bUseAbs = true;
 		float threshold = 0.0f;
 
 		using InputActionBase<InputAxisBinding>::InputActionBase;

@@ -20,8 +20,8 @@ namespace Sa
 		std::unordered_map<InputRawKey, std::vector<std::shared_ptr<InputKeyBinding>>> mMap;
 
 	public:
-		template <typename InBindT>
-		std::shared_ptr<InputKeyBinding> Bind(const InputKey& _inKey, InBindT _binding);
+		template <typename InBindT, typename... Args>
+		std::shared_ptr<InputKeyBinding> Bind(const InputKey& _inKey, Args&&... _bindingArgs);
 
 		void UnBind(const InputKey& _inKey);
 		void UnBind(const InputRawKey& _inRawKey);
