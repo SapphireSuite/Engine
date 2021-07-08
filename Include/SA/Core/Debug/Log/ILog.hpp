@@ -21,13 +21,13 @@ namespace Sa
 {
 #if SA_LOGGING
 
-	/// Log interface base class.
-	class ILog
-	{
-	public:
-		/// Virtual destructor (ensure correct child deletion).
-		virtual ~ILog() = default;
-	};
+	///// Log interface base class.
+	//class ILog
+	//{
+	//public:
+	//	/// Virtual destructor (ensure correct child deletion).
+	//	virtual ~ILog() = default;
+	//};
 
 	/**
 	*	\brief Helper Log Interface with stream type.
@@ -36,9 +36,12 @@ namespace Sa
 	*	\tparam StreamT	Associated stream type.
 	*/
 	template <typename StreamT>
-	class ILogT : public ILog
+	class ILogT/* : public ILog*/
 	{
 	public:
+		/// Virtual destructor (ensure correct child deletion).
+		virtual ~ILogT() = default;
+
 		/**
 		*	\brief Abstract Output from stream definition
 		* 
