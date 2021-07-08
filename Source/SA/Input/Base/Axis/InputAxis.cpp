@@ -1,8 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Input/Base/Types/InputAxis.hpp>
-
-#include <Core/Types/Int.hpp>
+#include <Input/Base/Axis/InputAxis.hpp>
 
 namespace Sa
 {

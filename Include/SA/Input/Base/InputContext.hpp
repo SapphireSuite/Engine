@@ -7,16 +7,13 @@
 
 #include <SA/Config.hpp>
 
-#include <SA/Input/Base/Types/InputAxis.hpp>
-
-#include <SA/Input/Base/Contexts/InputKeyContext.hpp>
+#include <SA/Input/Base/Key/InputKeyContext.hpp>
+#include <SA/Input/Base/Axis/InputAxisContext.hpp>
 
 namespace Sa
 {
 	class InputContext
 	{
-		std::unordered_map<Axis, InputAxisBinding*> mAxisMap;
-
 	public:
 		enum class ProcessMode
 		{
@@ -26,26 +23,14 @@ namespace Sa
 
 		ProcessMode mode = ProcessMode::Consume;
 
+		InputKeyContext key;
+		InputAxisContext axis;
+
 		bool bEnabled = true;
 
-		InputKeyContext key;
-
-
-		~InputContext();
-
-		template <typename InBindT>
-		void Bind(Axis _axis, InBindT _binding);
-
-
-		void UnBind(Axis _axis);
-
-
 		bool Process(const InputRawKey& _inKey);
-		
 		bool Process(const InputAxis& _inAxis);
 	};
 }
-
-#include <SA/Input/Base/Contexts/InputContext.inl>
 
 #endif // GUARD

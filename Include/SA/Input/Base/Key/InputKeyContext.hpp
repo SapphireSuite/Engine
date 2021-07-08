@@ -8,10 +8,10 @@
 #include <memory>
 #include <unordered_map>
 
-#include <SA/Input/Base/Types/InputKey.hpp>
+#include <SA/Collections/Debug>
 
-#include <SA/Input/Base/Bindings/InputAction.hpp>
-#include <SA/Input/Base/Bindings/InputRange.hpp>
+#include <SA/Input/Base/Key/InputKey.hpp>
+#include <SA/Input/Base/Key/Bindings/InputKeyBinding.hpp>
 
 namespace Sa
 {
@@ -21,7 +21,7 @@ namespace Sa
 
 	public:
 		template <typename InBindT, typename... Args>
-		std::shared_ptr<InputKeyBinding> Bind(const InputKey& _inKey, Args&&... _bindingArgs);
+		std::shared_ptr<InputKeyBinding> Bind(const InputKey& _inKey, Args&&... _args);
 
 		void UnBind(const InputKey& _inKey);
 		void UnBind(const InputRawKey& _inRawKey);
@@ -31,6 +31,6 @@ namespace Sa
 	};
 }
 
-#include <SA/Input/Base/Contexts/InputKeyContext.inl>
+#include <SA/Input/Base/Key/InputKeyContext.inl>
 
 #endif // GUARD

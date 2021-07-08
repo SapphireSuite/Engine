@@ -7,7 +7,7 @@
 
 #include <SA/Input/Base/Bindings/InputBindingBase.hpp>
 
-#include <SA/Input/Base/KeyState.hpp>
+#include <SA/Input/Base/Key/KeyState.hpp>
 
 namespace Sa
 {

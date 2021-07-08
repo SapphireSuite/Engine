@@ -1,19 +1,9 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Input/Base/Bindings/InputRange.hpp>
+#include <Input/Base/Axis/Bindings/InputAxisRange.hpp>
 
 namespace Sa
 {
-	bool InputKeyRange::Execute(KeyState _keyState)
-	{
-		(void)_keyState;
-
-		mHandle.Execute(scale);
-
-		return true;
-	}
-
-
 	bool InputAxisRange::Execute(float _value)
 	{
 		// Apply scale.

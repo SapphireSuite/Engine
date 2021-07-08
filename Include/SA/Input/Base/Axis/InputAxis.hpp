@@ -7,8 +7,8 @@
 
 #include <SA/Config.hpp>
 
-#include <SA/Input/Base/Axis.hpp>
-#include <SA/Input/Base/Types/InputBase.hpp>
+#include <SA/Input/Base/InputBase.hpp>
+#include <SA/Input/Base/Axis/Axis.hpp>
 
 namespace Sa
 {

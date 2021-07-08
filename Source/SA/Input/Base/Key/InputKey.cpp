@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Input/Base/Types/InputKey.hpp>
+#include <Input/Base/Key/InputKey.hpp>
 
 namespace Sa
 {

@@ -9,6 +9,11 @@ using namespace Sa;
 
 #include <SA/Window/GLFW/GLFWWindow.hpp>
 
+#include <SA/Input/Base/Key/Bindings/InputKeyAction.hpp>
+#include <SA/Input/Base/Key/Bindings/InputKeyRange.hpp>
+#include <SA/Input/Base/Axis/Bindings/InputAxisAction.hpp>
+#include <SA/Input/Base/Axis/Bindings/InputAxisRange.hpp>
+
 int main()
 {
 	GLFW::Window win;
@@ -21,8 +26,8 @@ int main()
 	inputContext->key.Bind<InputKeyAction>(InputKey{ Key::Q, KeyState::Released }, []() { SA_LOG("Q Released"); });
 	inputContext->key.Bind<InputKeyAction>(InputKey{ Key::Esc, KeyState::Pressed }, &win, &GLFW::Window::Close);
 
-	//inputContext->Bind<InputAxisRange>(Axis::MouseX, [](float _inX) { SA_LOG("MouseX: " << _inX); });
-	//inputContext->Bind<InputAxisRange>(Axis::MouseY, [](float _inY) { SA_LOG("MouseY: " << _inY); });
+	inputContext->axis.Bind<InputAxisRange>(Axis::MouseX, [](float _inX) { SA_LOG("MouseX: " << _inX); });
+	inputContext->axis.Bind<InputAxisRange>(Axis::MouseY, [](float _inY) { SA_LOG("MouseY: " << _inY); });
 
 	inputContext->key.Bind<InputKeyAction>(InputKey{ Key::Y, KeyState::Pressed }, []() { SA_LOG("Y Pressed:"); });
 	inputContext->key.Bind<InputKeyRange>(InputKey{ Key::Y, KeyState::Pressed | KeyState::Hold },

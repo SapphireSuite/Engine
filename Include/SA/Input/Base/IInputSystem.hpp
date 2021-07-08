@@ -9,7 +9,7 @@
 
 #include <SA/Core/Types/Interface.hpp>
 
-#include <SA/Input/Base/Contexts/InputContext.hpp>
+#include <SA/Input/Base/InputContext.hpp>
 
 namespace Sa
 {
