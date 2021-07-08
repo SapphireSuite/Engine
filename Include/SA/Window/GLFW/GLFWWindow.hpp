@@ -19,10 +19,18 @@ namespace Sa::GLFW
 
 		GLFWInputSystem mInput;
 
+		Vec2ui mSavedSize;
+		Vec2i mSavedPosition;
+
+		static void MinimizedCallback(GLFWwindow* _handle, int32 _minimized);
+		static void MaximizedCallback(GLFWwindow* _handle, int32 _maximized);
 		static void ResizeCallback(GLFWwindow* _handle, int32 _width, int32 _height);
-		static void MinimizedCallback(GLFWwindow* _handle, int32 _iconified);
+
+		GLFWmonitor* GetCurrentMonitor();
 
 	public:
+		SA_ENGINE_API void SetWindowMode(WindowMode _mode) override final;
+
 		SA_ENGINE_API void Create(uint32 _width, uint32 _height, const std::string& _name = "Main Window") override final;
 		SA_ENGINE_API void Destroy() override final;
 

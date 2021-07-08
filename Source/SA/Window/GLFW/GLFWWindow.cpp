@@ -6,6 +6,63 @@
 
 namespace Sa::GLFW
 {
+	void Window::SetWindowMode(WindowMode _mode)
+	{
+		if (_mode == GetWindowMode())
+			return;
+
+		GLFWmonitor* const currMonitor = GetCurrentMonitor();
+		const GLFWvidmode* const mode = glfwGetVideoMode(currMonitor);
+		const Vec2i newSize = Vec2i{ mode->width, mode->height };
+
+
+		// Previous mode was windowed: save values.
+		if (GetWindowMode() == WindowMode::Windowed)
+		{
+			mSavedSize = GetSize();
+			glfwGetWindowPos(mHandle, &mSavedPosition.x, &mSavedPosition.y);
+		}
+
+
+		switch (_mode)
+		{
+			case WindowMode::Windowed:
+			{
+				glfwSetWindowMonitor(mHandle, nullptr, mSavedPosition.x, mSavedPosition.y, mSavedSize.x, mSavedSize.y, NULL);
+				break;
+			}
+			case WindowMode::FullScreen:
+			{
+				glfwSetWindowMonitor(mHandle, currMonitor, 0, 0, newSize.x, newSize.y, mode->refreshRate);
+				break;
+			}
+			case WindowMode::Borderless:
+			{
+				// Full screen before.
+				if (GetWindowMode() == WindowMode::FullScreen)
+				{
+					// Ensure correct desktop resolution.
+					// Source: https://www.glfw.org/docs/3.3/window_guide.html#window_windowed_full_screen
+
+					SetWindowMode(WindowMode::Windowed);
+					SetWindowMode(WindowMode::Borderless);
+				}
+				else
+					glfwSetWindowMonitor(mHandle, nullptr, 0, 0, newSize.x, newSize.y, mode->refreshRate);
+
+				break;
+			}
+			default:
+			{
+				SA_LOG(L"WindowMode [" << _mode << "] not supported yet!", Warning, SA/Window/GLFW);
+				break;
+			}
+		}
+
+		IWindow::SetWindowMode(_mode);
+	}
+
+
 	void Window::Create(uint32 _width, uint32 _height, const std::string& _name)
 	{
 		IWindow::Create(_width, _height, _name);
@@ -18,8 +75,9 @@ namespace Sa::GLFW
 		SA_ASSERT(Default, Window/GLFW, mHandle, L"GLFW create window failed!");
 
 		glfwSetWindowUserPointer(mHandle, this);
-		glfwSetWindowIconifyCallback(mHandle, MinimizedCallback);
 		glfwSetWindowSizeCallback(mHandle, ResizeCallback);
+		glfwSetWindowIconifyCallback(mHandle, MinimizedCallback);
+		glfwSetWindowMaximizeCallback(mHandle, MaximizedCallback);
 
 		mInput.Create(mHandle);
 	}
@@ -54,10 +112,26 @@ namespace Sa::GLFW
 	}
 
 
-	void Window::ResizeCallback(GLFWwindow* _handle, int32 _width, int32 _height)
+	void Window::MinimizedCallback(GLFWwindow* _handle, int32 _minimized)
 	{
 		GLFW::Window* const win = static_cast<GLFW::Window*>(glfwGetWindowUserPointer(_handle));
 		SA_ASSERT(Nullptr, SA/Window/GLFW, win);
+
+		win->SetMinimized(_minimized);
+	}
+
+	void Window::MaximizedCallback(GLFWwindow* _handle, int32 _maximized)
+	{
+		GLFW::Window* const win = static_cast<GLFW::Window*>(glfwGetWindowUserPointer(_handle));
+		SA_ASSERT(Nullptr, SA/Window/GLFW, win);
+
+		win->SetMaximized(_maximized);
+	}
+
+	void Window::ResizeCallback(GLFWwindow* _handle, int32 _width, int32 _height)
+	{
+		GLFW::Window* const win = static_cast<GLFW::Window*>(glfwGetWindowUserPointer(_handle));
+		SA_ASSERT(Nullptr, SA / Window / GLFW, win);
 
 		Vec2ui newSize = Vec2i{ _width, _height };
 
@@ -68,12 +142,38 @@ namespace Sa::GLFW
 		win->SetSize(newSize);
 	}
 
-	void Window::MinimizedCallback(GLFWwindow* _handle, int32 _iconified)
-	{
-		GLFW::Window* const win = static_cast<GLFW::Window*>(glfwGetWindowUserPointer(_handle));
-		SA_ASSERT(Nullptr, SA/Window/GLFW, win);
 
-		win->SetMinimized(_iconified);
+	GLFWmonitor* Window::GetCurrentMonitor()
+	{
+		// Source: https://stackoverflow.com/questions/21421074/how-to-create-a-full-screen-window-on-the-current-monitor-with-glfw
+
+		Vec2i winPos;
+		glfwGetWindowPos(mHandle, &winPos.x, &winPos.y);
+
+		const Vec2i winSize = GetSize();
+
+		int32 num = 0;
+		int32 bestOverlap = 0;
+		GLFWmonitor* const * const monitors = glfwGetMonitors(&num);
+		GLFWmonitor* bestMonitor = glfwGetPrimaryMonitor();
+
+		for (int32 i = 0u; i < num; ++i)
+		{
+			Vec2i monPos;
+			glfwGetMonitorPos(monitors[i], &monPos.x, &monPos.y);
+
+			const GLFWvidmode* const mode = glfwGetVideoMode(monitors[i]);
+
+			const int32 overlap = std::max(0, std::min(winPos.x + winSize.x, monPos.x + mode->width) - std::max(winPos.x, monPos.x));
+
+			if (overlap > bestOverlap)
+			{
+				bestOverlap = overlap;
+				bestMonitor = monitors[i];
+			}
+		}
+
+		return bestMonitor;
 	}
 }
 

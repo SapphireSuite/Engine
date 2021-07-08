@@ -6,6 +6,30 @@
 
 namespace Sa
 {
+	bool IWindow::IsMinimized() const
+	{
+		return bMinimized;
+	}
+
+	void IWindow::SetMinimized(bool _bIsMinimized)
+	{
+		bMinimized = _bIsMinimized;
+		onMinimized(_bIsMinimized);
+	}
+
+
+	bool IWindow::IsMaximized() const
+	{
+		return bMaximized && !bMinimized;
+	}
+
+	void IWindow::SetMaximized(bool _bIsMaximized)
+	{
+		bMaximized = _bIsMaximized;
+		onMaximized(_bIsMaximized);
+	}
+
+
 	const Vec2ui& IWindow::GetSize() const
 	{
 		return mSize;
@@ -18,15 +42,15 @@ namespace Sa
 	}
 
 
-	bool IWindow::IsMinimized() const
+	WindowMode IWindow::GetWindowMode() const
 	{
-		return bMinimized;
+		return mMode;
 	}
 
-	void IWindow::SetMinimized(bool _bIsMinimized)
+	void IWindow::SetWindowMode(WindowMode _mode)
 	{
-		bMinimized = _bIsMinimized;
-		onMinimized(_bIsMinimized);
+		mMode = _mode;
+		onWindowModeChange(_mode);
 	}
 
 

@@ -6,10 +6,11 @@
 #define SAPPHIRE_WINDOW_IWINDOW_GUARD
 
 #include <SA/Core/Types/Interface.hpp>
+#include <SA/Core/Types/Variadics/Event.hpp>
 
 #include <SA/Maths/Space/Vector2.hpp>
 
-#include <SA/Core/Types/Variadics/Event.hpp>
+#include <SA/Window/Base/WindowMode.hpp>
 
 namespace Sa
 {
@@ -17,19 +18,34 @@ namespace Sa
 
 	class IWindow : public Interface
 	{
-		Vec2ui mSize;
 		bool bMinimized = false;
+		bool bMaximized = false;
+
+		Vec2ui mSize;
+
+		WindowMode mMode = WindowMode::Windowed;
 
 	protected:
-		void SetSize(const Vec2ui& _size);
 		void SetMinimized(bool _bIsMinimized);
+		void SetMaximized(bool _bIsMaximized);
+
+		void SetSize(const Vec2ui& _size);
 
 	public:
-		Event<void(Vec2ui)> onResize;
 		Event<void(bool)> onMinimized;
+		Event<void(bool)> onMaximized;
+
+		Event<void(Vec2ui)> onResize;
+		Event<void(WindowMode)> onWindowModeChange;
+
+
+		bool IsMinimized() const;
+		bool IsMaximized() const;
 
 		const Vec2ui& GetSize() const;
-		bool IsMinimized() const;
+
+		WindowMode GetWindowMode() const;
+		SA_ENGINE_API virtual void SetWindowMode(WindowMode _mode);
 
 		SA_ENGINE_API virtual void Create(uint32 _width, uint32 _height, const std::string& _name = "Main Window");
 		virtual void Destroy() = 0;

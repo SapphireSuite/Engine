@@ -14,14 +14,14 @@ using namespace Sa;
 #include <SA/Input/Base/Axis/Bindings/InputAxisAction.hpp>
 #include <SA/Input/Base/Axis/Bindings/InputAxisRange.hpp>
 
+GLFW::Window win;
+
 InputContext* inputContext = nullptr;
 
 std::shared_ptr<InputKeyBinding> yHoldBind;
 
 int main()
 {
-	GLFW::Window win;
-
 	win.Create(1200u, 800);
 
 	inputContext = win.GetInputSystem().CreateContext();
@@ -34,13 +34,13 @@ int main()
 
 
 	inputContext->key.Bind<InputKeyAction>(InputKey{ Key::O, KeyState::Pressed }, []()
-		{
-			inputContext->axis.Bind<InputAxisRange>(Axis::MouseX, [](float _inX) { SA_LOG("MouseX: " << _inX); });
-			inputContext->axis.Bind<InputAxisRange>(Axis::MouseY, [](float _inY) { SA_LOG("MouseY: " << _inY); });
+	{
+		inputContext->axis.Bind<InputAxisRange>(Axis::MouseX, [](float _inX) { SA_LOG("MouseX: " << _inX); });
+		inputContext->axis.Bind<InputAxisRange>(Axis::MouseY, [](float _inY) { SA_LOG("MouseY: " << _inY); });
 			
-			yHoldBind = inputContext->key.Bind<InputKeyRange>(InputKey{ Key::Y, KeyState::Pressed | KeyState::Hold },
-				[](float _inX) { SA_LOG("Y Pressed Or Hold:" << _inX); });
-		});
+		yHoldBind = inputContext->key.Bind<InputKeyRange>(InputKey{ Key::Y, KeyState::Pressed | KeyState::Hold },
+			[](float _inX) { SA_LOG("Y Pressed Or Hold:" << _inX); });
+	});
 
 	inputContext->key.Bind<InputKeyAction>(InputKey{ Key::P, KeyState::Pressed }, []()
 	{
@@ -49,6 +49,11 @@ int main()
 
 		inputContext->key.UnBind(yHoldBind);
 	});
+
+
+	inputContext->key.Bind<InputKeyAction>(InputKey{ Key::J, KeyState::Pressed }, []() { win.SetWindowMode(WindowMode::Windowed); });
+	inputContext->key.Bind<InputKeyAction>(InputKey{ Key::K, KeyState::Pressed }, []() { win.SetWindowMode(WindowMode::FullScreen); });
+	inputContext->key.Bind<InputKeyAction>(InputKey{ Key::L, KeyState::Pressed }, []() { win.SetWindowMode(WindowMode::Borderless); });
 
 #if !SA_CI
 
