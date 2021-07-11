@@ -54,11 +54,12 @@ namespace Sa
 	}
 
 
-	void IWindow::Create(uint32 _width, uint32 _height, const std::string& _name)
+	void IWindow::Create(const CreateInfos& _infos)
 	{
-		(void)_name;
+		mSize = _infos.dimension;
 
-		mSize = Vec2ui{ _width,_height };
+		// Always create as Windowed and call SetWindowMode.
+		//mMode = _infos.mode;
 	}
 
 

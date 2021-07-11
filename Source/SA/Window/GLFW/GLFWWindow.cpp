@@ -63,14 +63,14 @@ namespace Sa::GLFW
 	}
 
 
-	void Window::Create(uint32 _width, uint32 _height, const std::string& _name)
+	void Window::Create(const CreateInfos& _infos)
 	{
-		IWindow::Create(_width, _height, _name);
+		IWindow::Create(_infos);
 
 		GLFW::Init();
 
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-		mHandle = glfwCreateWindow(_width, _height, _name.c_str(), nullptr, nullptr);
+		mHandle = glfwCreateWindow(_infos.dimension.x, _infos.dimension.y, _infos.name.c_str(), nullptr, nullptr);
 
 		SA_ASSERT(Default, Window/GLFW, mHandle, L"GLFW create window failed!");
 
@@ -78,6 +78,8 @@ namespace Sa::GLFW
 		glfwSetWindowSizeCallback(mHandle, ResizeCallback);
 		glfwSetWindowIconifyCallback(mHandle, MinimizedCallback);
 		glfwSetWindowMaximizeCallback(mHandle, MaximizedCallback);
+
+		SetWindowMode(_infos.mode);
 
 		mInput.Create(mHandle);
 	}

@@ -22,7 +22,11 @@ std::shared_ptr<InputKeyBinding> yHoldBind;
 
 int main()
 {
-	win.Create(1200u, 800);
+	IWindow::CreateInfos infos;
+	infos.dimension = Vec2ui{ 1200u, 800u };
+	//infos.mode = WindowMode::Borderless;
+
+	win.Create(infos);
 
 	inputContext = win.GetInputSystem().CreateContext();
 

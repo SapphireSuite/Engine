@@ -32,6 +32,16 @@ namespace Sa
 		void SetSize(const Vec2ui& _size);
 
 	public:
+		struct CreateInfos
+		{
+			Vec2ui dimension = Vec2ui{ 1200u, 800u };
+			Vec2ui position;
+
+			WindowMode mode = WindowMode::Windowed;
+
+			std::string name = "Main Window";
+		};
+
 		Event<void(bool)> onMinimized;
 		Event<void(bool)> onMaximized;
 
@@ -47,7 +57,7 @@ namespace Sa
 		WindowMode GetWindowMode() const;
 		SA_ENGINE_API virtual void SetWindowMode(WindowMode _mode);
 
-		SA_ENGINE_API virtual void Create(uint32 _width, uint32 _height, const std::string& _name = "Main Window");
+		SA_ENGINE_API virtual void Create(const CreateInfos& _infos);
 		virtual void Destroy() = 0;
 
 		virtual IInputSystem& GetInputSystem() = 0;

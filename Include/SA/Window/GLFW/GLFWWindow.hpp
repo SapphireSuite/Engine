@@ -31,7 +31,7 @@ namespace Sa::GLFW
 	public:
 		SA_ENGINE_API void SetWindowMode(WindowMode _mode) override final;
 
-		SA_ENGINE_API void Create(uint32 _width, uint32 _height, const std::string& _name = "Main Window") override final;
+		SA_ENGINE_API void Create(const CreateInfos& _infos) override final;
 		SA_ENGINE_API void Destroy() override final;
 
 		SA_ENGINE_API IInputSystem& GetInputSystem() override final;
