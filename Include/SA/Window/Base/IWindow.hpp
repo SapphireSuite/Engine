@@ -14,7 +14,7 @@
 
 namespace Sa
 {
-	class IInputSystem;
+	class IInputWindowContext;
 
 	class IWindow : public Interface
 	{
@@ -60,12 +60,10 @@ namespace Sa
 		SA_ENGINE_API virtual void Create(const CreateInfos& _infos);
 		virtual void Destroy() = 0;
 
-		virtual IInputSystem& GetInputSystem() = 0;
+		virtual IInputWindowContext* GetInputWindowContext() const = 0;
 
 		virtual void Close() = 0;
 		virtual bool ShouldClose() const = 0;
-
-		SA_ENGINE_API virtual void Update();
 	};
 }
 

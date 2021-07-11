@@ -2,8 +2,6 @@
 
 #include <Window/Base/IWindow.hpp>
 
-#include <Input/Base/IInputSystem.hpp>
-
 namespace Sa
 {
 	bool IWindow::IsMinimized() const
@@ -60,11 +58,5 @@ namespace Sa
 
 		// Always create as Windowed and call SetWindowMode.
 		//mMode = _infos.mode;
-	}
-
-
-	void IWindow::Update()
-	{
-		GetInputSystem().Update();
 	}
 }

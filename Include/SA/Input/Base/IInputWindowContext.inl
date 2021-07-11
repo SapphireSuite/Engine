@@ -3,7 +3,7 @@
 namespace Sa
 {
 	template <typename InputT>
-	bool IInputSystem::Process(const InputT& _input)
+	bool IInputWindowContext::Process(const InputT& _input)
 	{
 		// Process from last added context to older one.
 

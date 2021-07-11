@@ -7,24 +7,17 @@
 
 #include <SA/Input/Base/IInputSystem.hpp>
 
-#include <SA/Maths/Space/Vector2.hpp>
-
 #if SA_GLFW
 
-namespace Sa
+namespace Sa::GLFW
 {
-	class GLFWInputSystem : public IInputSystem
+	class InputSystem : public IInputSystem
 	{
-		Vec2f mSavedMousePos;
+	protected:
+		SA_ENGINE_API IInputWindowContext* InstantiateWindowContext(IWindow* _win) override final;
 
 	public:
-		void Create(GLFWwindow* _handle);
-		void Destroy();
-
 		SA_ENGINE_API void Update() override final;
-
-		void WindowKeyCallback(const InputRawKey& _inRawKey);
-		void CursorPositionCallback(const Vec2ui& _windowSize, const Vec2f& _mousePos);
 	};
 }
 

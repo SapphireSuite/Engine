@@ -2,52 +2,21 @@
 
 #include <Input/GLFW/GLFWInputSystem.hpp>
 
-#include <Core/Algorithms/Equals.hpp>
+#include <Input/GLFW/GLFWInputWindowContext.hpp>
+
+#include <Window/GLFW/GLFWWindow.hpp>
 
 #if SA_GLFW
 
-namespace Sa
+namespace Sa::GLFW
 {
-	void GLFWInputSystem::WindowKeyCallback(const InputRawKey& _inRawKey)
+	IInputWindowContext* InputSystem::InstantiateWindowContext(IWindow* _win)
 	{
-		Process(_inRawKey);
-	}
-
-	void GLFWInputSystem::CursorPositionCallback(const Vec2ui& _windowSize, const Vec2f& _mousePos)
-	{
-		if(!Sa::Equals(_mousePos.x, mSavedMousePos.x))
-			Process(InputAxis{ Axis::MouseX, (_mousePos.x - mSavedMousePos.x) / _windowSize.x });
-		
-		if (!Sa::Equals(_mousePos.y, mSavedMousePos.y))
-			Process(InputAxis{ Axis::MouseY, (_mousePos.y - mSavedMousePos.y) / _windowSize.y });
-
-		mSavedMousePos = _mousePos;
+		return new GLFW::InputWindowContext{ _win->AsPtr<GLFW::Window>() };
 	}
 
 
-	void GLFWInputSystem::Create(GLFWwindow* _handle)
-	{
-		glfwSetKeyCallback(_handle, GLFW::WindowKeyCallback);
-		glfwSetCursorPosCallback(_handle, GLFW::CursorPositionCallback);
-
-
-		// Init first cursor position.
-		{
-			double mouseX = 0.0;
-			double mouseY = 0.0;
-
-			glfwGetCursorPos(_handle, &mouseX, &mouseY);
-
-			GLFW::CursorPositionCallback(_handle, mouseX, mouseY);
-		}
-	}
-
-	void GLFWInputSystem::Destroy()
-	{
-	}
-
-
-	void GLFWInputSystem::Update()
+	void InputSystem::Update()
 	{
 		glfwPollEvents();
 	}

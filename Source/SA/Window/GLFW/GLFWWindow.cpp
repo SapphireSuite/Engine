@@ -2,6 +2,8 @@
 
 #include <Window/GLFW/GLFWWindow.hpp>
 
+#include <Input/GLFW/GLFWInputWindowContext.hpp>
+
 #if SA_GLFW
 
 namespace Sa::GLFW
@@ -80,15 +82,11 @@ namespace Sa::GLFW
 		glfwSetWindowMaximizeCallback(mHandle, MaximizedCallback);
 
 		SetWindowMode(_infos.mode);
-
-		mInput.Create(mHandle);
 	}
 	
 	void Window::Destroy()
 	{
 		SA_ASSERT(Nullptr, Window/GLFW, mHandle, L"Try to destroy a non-created window, call Create() first.");
-
-		mInput.Destroy();
 
 		glfwDestroyWindow(mHandle);
 		mHandle = nullptr;
@@ -96,10 +94,9 @@ namespace Sa::GLFW
 		GLFW::UnInit();
 	}
 
-
-	IInputSystem& Window::GetInputSystem()
+	IInputWindowContext* Window::GetInputWindowContext() const
 	{
-		return mInput;
+		return inputWinContext;
 	}
 
 
@@ -133,7 +130,7 @@ namespace Sa::GLFW
 	void Window::ResizeCallback(GLFWwindow* _handle, int32 _width, int32 _height)
 	{
 		GLFW::Window* const win = static_cast<GLFW::Window*>(glfwGetWindowUserPointer(_handle));
-		SA_ASSERT(Nullptr, SA / Window / GLFW, win);
+		SA_ASSERT(Nullptr, SA/Window/GLFW, win);
 
 		Vec2ui newSize = Vec2i{ _width, _height };
 
@@ -176,6 +173,12 @@ namespace Sa::GLFW
 		}
 
 		return bestMonitor;
+	}
+
+
+	GLFWwindow* Window::GetHandle() const
+	{
+		return mHandle;
 	}
 }
 

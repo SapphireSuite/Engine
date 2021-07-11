@@ -5,19 +5,19 @@
 #ifndef SAPPHIRE_WINDOW_GLFW_WINDOW_GUARD
 #define SAPPHIRE_WINDOW_GLFW_WINDOW_GUARD
 
-#include <SA/Window/Base/IWindow.hpp>
+#include <SA/API/GLFW.hpp>
 
-#include <SA/Input/GLFW/GLFWInputSystem.hpp>
+#include <SA/Window/Base/IWindow.hpp>
 
 #if SA_GLFW
 
 namespace Sa::GLFW
 {
+	class InputWindowContext;
+
 	class Window : public IWindow
 	{
 		GLFWwindow* mHandle = nullptr;
-
-		GLFWInputSystem mInput;
 
 		Vec2ui mSavedSize;
 		Vec2i mSavedPosition;
@@ -29,15 +29,23 @@ namespace Sa::GLFW
 		GLFWmonitor* GetCurrentMonitor();
 
 	public:
+		using CreateInfos = IWindow::CreateInfos;
+
+
+		InputWindowContext* inputWinContext = nullptr;
+
+
 		SA_ENGINE_API void SetWindowMode(WindowMode _mode) override final;
 
 		SA_ENGINE_API void Create(const CreateInfos& _infos) override final;
 		SA_ENGINE_API void Destroy() override final;
 
-		SA_ENGINE_API IInputSystem& GetInputSystem() override final;
+		SA_ENGINE_API IInputWindowContext* GetInputWindowContext() const override final;
 
 		SA_ENGINE_API void Close() override final;
 		SA_ENGINE_API bool ShouldClose() const override final;
+
+		GLFWwindow* GetHandle() const;
 	};
 }
 
