@@ -142,7 +142,7 @@ namespace Sa::GLFW
 	}
 
 
-	GLFWmonitor* Window::GetCurrentMonitor()
+	GLFWmonitor* Window::GetCurrentMonitor() const
 	{
 		// Source: https://stackoverflow.com/questions/21421074/how-to-create-a-full-screen-window-on-the-current-monitor-with-glfw
 

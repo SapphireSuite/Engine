@@ -7,14 +7,32 @@
 
 #include <SA/Core/Types/Int.hpp>
 
+/**
+*	\file WindowMode.hpp
+* 
+*	\brief Window mode enum definition.
+* 
+*	\ingroup Window
+*	\{
+*/
+
 namespace Sa
 {
+	/// Window mode enum.
 	enum class WindowMode : uint8
 	{
+		/// Windowed.
 		Windowed = 1,
+
+		/// FullScreen.
 		FullScreen,
+
+		/// Borderless fullscreen.
 		Borderless,
 	};
 }
+
+
+/** \} */
 
 #endif // GUARD
