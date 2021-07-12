@@ -107,3 +107,16 @@ add_subdirectory(ThirdParty)
 if(SA_ENGINE_BUILD_TESTS)
 	add_subdirectory(Tests)
 endif()
+
+
+
+# === Input Libs ===
+
+# GLFW.
+# TODO: Add if GLFW compilation.
+target_link_libraries(SA-Engine PUBLIC glfw ${GLFW_LIBRARIES})
+target_include_directories(SA-Engine PRIVATE ThirdParty/Libs/glfw/include)
+
+# ImGUI.
+# TODO: Add if ImGUI compilation.
+target_link_libraries(SA-Engine PUBLIC ImGui)
