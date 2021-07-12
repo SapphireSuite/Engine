@@ -33,7 +33,7 @@ namespace Sa::GLFW
 	}
 
 
-	void InputWindowContext::WindowKeyCallback(const InputRawKey& _inRawKey)
+	void InputWindowContext::WindowKeyCallback(const InputKey& _inRawKey)
 	{
 		Process(_inRawKey);
 	}

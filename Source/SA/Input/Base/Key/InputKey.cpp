@@ -4,29 +4,22 @@
 
 namespace Sa
 {
-	bool InputRawKey::operator==(const InputRawKey& _rhs) const noexcept
+	InputKey::InputKey(Key _key, KeyState _state) noexcept :
+		key{ _key },
+		state{ _state }
+	{
+	}
+
+	bool InputKey::operator==(const InputKey& _rhs) const noexcept
 	{
 		return key == _rhs.key && state == _rhs.state;
-	}
-
-
-	InputKey::InputKey(const InputRawKey& _inRawKey) noexcept :
-		key{ _inRawKey.key },
-		stateFlags{ _inRawKey.state }
-	{
-	}
-
-	InputKey::InputKey(Key _key, Flags<KeyState> _stateFlags) noexcept :
-		key{ _key },
-		stateFlags{ _stateFlags }
-	{
 	}
 }
 
 
 namespace std
 {
-	std::size_t hash<Sa::InputRawKey>::operator()(Sa::InputRawKey const& _inKey) const noexcept
+	std::size_t hash<Sa::InputKey>::operator()(Sa::InputKey const& _inKey) const noexcept
 	{
 		std::size_t h = 0;
 

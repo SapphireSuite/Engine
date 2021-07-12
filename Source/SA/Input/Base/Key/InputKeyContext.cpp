@@ -4,25 +4,25 @@
 
 namespace Sa
 {
-	void InputKeyContext::UnBind(const InputKey& _inKey)
+	void InputKeyContext::UnBind(const InputKeyBind& _inKeyBind)
 	{
-		if (_inKey.stateFlags & KeyState::Pressed)
-			UnBind(InputRawKey{ _inKey.key, KeyState::Pressed });
+		if (_inKeyBind.stateFlags & KeyState::Pressed)
+			UnBind(InputKey{ _inKeyBind.key, KeyState::Pressed });
 
-		if (_inKey.stateFlags & KeyState::Released)
-			UnBind(InputRawKey{ _inKey.key, KeyState::Released });
+		if (_inKeyBind.stateFlags & KeyState::Released)
+			UnBind(InputKey{ _inKeyBind.key, KeyState::Released });
 
-		if (_inKey.stateFlags & KeyState::Hold)
-			UnBind(InputRawKey{ _inKey.key, KeyState::Hold });
+		if (_inKeyBind.stateFlags & KeyState::Hold)
+			UnBind(InputKey{ _inKeyBind.key, KeyState::Hold });
 	}
 	
-	void InputKeyContext::UnBind(const InputRawKey& _inRawKey)
+	void InputKeyContext::UnBind(const InputKey& _inKey)
 	{
-		auto it = mMap.find(_inRawKey);
+		auto it = mMap.find(_inKey);
 
 		if (it == mMap.end())
 		{
-			SA_LOG(L"Input key [" << _inRawKey << "] not previously bound!", Warning, SA/Input);
+			SA_LOG(L"Input key [" << _inKey << "] not previously bound!", Warning, SA/Input);
 			return;
 		}
 
@@ -43,9 +43,9 @@ namespace Sa
 		}
 	}
 
-	bool InputKeyContext::Process(const InputRawKey& _inRawKey)
+	bool InputKeyContext::Process(const InputKey& _inKey)
 	{
-		auto itBinds = mMap.find(_inRawKey);
+		auto itBinds = mMap.find(_inKey);
 
 		// Action not bind.
 		if (itBinds == mMap.end())
@@ -54,7 +54,7 @@ namespace Sa
 		bool bRes = false;
 
 		for (auto it = itBinds->second.begin(); it != itBinds->second.end(); ++it)
-			bRes |= (*it)->Execute(_inRawKey.state);
+			bRes |= (*it)->Execute(_inKey.state);
 
 		return bRes;
 	}

@@ -44,23 +44,23 @@ int main()
 
 	// Input Binding.
 	{
-		inputContext->key.Bind<InputKeyAction>(InputKey{ Key::Q, KeyState::Pressed }, []() { SA_LOG("Q Pressed"); });
-		inputContext->key.Bind<InputKeyAction>(InputKey{ Key::Q, KeyState::Released }, []() { SA_LOG("Q Released"); });
-		inputContext->key.Bind<InputKeyAction>(InputKey{ Key::Esc, KeyState::Pressed }, &win, &GLFW::Window::Close);
+		inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::Q, KeyState::Pressed }, []() { SA_LOG("Q Pressed"); });
+		inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::Q, KeyState::Released }, []() { SA_LOG("Q Released"); });
+		inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::Esc, KeyState::Pressed }, &win, &GLFW::Window::Close);
 
-		inputContext->key.Bind<InputKeyAction>(InputKey{ Key::Y, KeyState::Pressed }, []() { SA_LOG("Y Pressed:"); });
+		inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::Y, KeyState::Pressed }, []() { SA_LOG("Y Pressed:"); });
 
 
-		inputContext->key.Bind<InputKeyAction>(InputKey{ Key::O, KeyState::Pressed }, []()
+		inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::O, KeyState::Pressed }, []()
 		{
 			inputContext->axis.Bind<InputAxisRange>(Axis::MouseX, [](float _inX) { SA_LOG("MouseX: " << _inX); });
 			inputContext->axis.Bind<InputAxisRange>(Axis::MouseY, [](float _inY) { SA_LOG("MouseY: " << _inY); });
 			
-			yHoldBind = inputContext->key.Bind<InputKeyRange>(InputKey{ Key::Y, KeyState::Pressed | KeyState::Hold },
+			yHoldBind = inputContext->key.Bind<InputKeyRange>(InputKeyBind{ Key::Y, KeyState::Pressed | KeyState::Hold },
 				[](float _inX) { SA_LOG("Y Pressed Or Hold:" << _inX); });
 		});
 
-		inputContext->key.Bind<InputKeyAction>(InputKey{ Key::P, KeyState::Pressed }, []()
+		inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::P, KeyState::Pressed }, []()
 		{
 			inputContext->axis.UnBind(Axis::MouseX);
 			inputContext->axis.UnBind(Axis::MouseY);
@@ -69,9 +69,9 @@ int main()
 		});
 
 
-		inputContext->key.Bind<InputKeyAction>(InputKey{ Key::J, KeyState::Pressed }, []() { win.SetWindowMode(WindowMode::Windowed); });
-		inputContext->key.Bind<InputKeyAction>(InputKey{ Key::K, KeyState::Pressed }, []() { win.SetWindowMode(WindowMode::FullScreen); });
-		inputContext->key.Bind<InputKeyAction>(InputKey{ Key::L, KeyState::Pressed }, []() { win.SetWindowMode(WindowMode::Borderless); });
+		inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::J, KeyState::Pressed }, []() { win.SetWindowMode(WindowMode::Windowed); });
+		inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::K, KeyState::Pressed }, []() { win.SetWindowMode(WindowMode::FullScreen); });
+		inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::L, KeyState::Pressed }, []() { win.SetWindowMode(WindowMode::Borderless); });
 	}
 
 

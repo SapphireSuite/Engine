@@ -28,7 +28,7 @@ namespace Sa
 
 		bool bEnabled = true;
 
-		bool Process(const InputRawKey& _inKey);
+		bool Process(const InputKey& _inKey);
 		bool Process(const InputAxis& _inAxis);
 	};
 }

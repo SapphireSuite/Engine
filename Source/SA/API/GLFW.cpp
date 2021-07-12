@@ -195,14 +195,14 @@ namespace Sa::GLFW
 		{
 			SA_LOG(L"Key [" << _key << "] not registered in input map.", Warning, SA/Window/GLFW);
 
-			win->inputWinContext->WindowKeyCallback(InputRawKey{Key::Esc, KeyState::Pressed });
+			win->inputWinContext->WindowKeyCallback(InputKey{Key::Esc, KeyState::Pressed });
 
 			return;
 		}
 
 #endif
 
-		const InputRawKey key{ keyIt->second, GetKeyState(_action) };
+		const InputKey key{ keyIt->second, GetKeyState(_action) };
 
 		win->inputWinContext->WindowKeyCallback(key);
 	}

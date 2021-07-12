@@ -24,7 +24,7 @@ namespace Sa::GLFW
 	public:
 		InputWindowContext(Window* _win);
 
-		void WindowKeyCallback(const InputRawKey& _inRawKey);
+		void WindowKeyCallback(const InputKey& _inRawKey);
 		void CursorPositionCallback(const Vec2ui& _windowSize, const Vec2f& _mousePos);
 	};
 }

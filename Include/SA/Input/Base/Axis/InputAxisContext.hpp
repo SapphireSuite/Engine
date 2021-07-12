@@ -10,7 +10,7 @@
 
 #include <SA/Collections/Debug>
 
-#include <SA/Input/Base/Axis/InputAxis.hpp>
+#include <SA/Input/Base/Axis/InputAxisBind.hpp>
 #include <SA/Input/Base/Axis/Bindings/InputAxisBinding.hpp>
 
 namespace Sa
@@ -21,7 +21,7 @@ namespace Sa
 
 	public:
 		template <typename InBindT, typename... Args>
-		std::shared_ptr<InputAxisBinding> Bind(const Axis& _axis, Args&&... _args);
+		std::shared_ptr<InputAxisBinding> Bind(const InputAxisBind& _inAxisBind, Args&&... _args);
 
 		SA_ENGINE_API void UnBind(Axis _axis);
 		SA_ENGINE_API void UnBind(std::shared_ptr<InputAxisBinding> _inBinding);

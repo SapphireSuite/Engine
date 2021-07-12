@@ -4,7 +4,7 @@
 
 namespace Sa
 {
-	bool InputContext::Process(const InputRawKey& _inRawKey)
+	bool InputContext::Process(const InputKey& _inRawKey)
 	{
 		if (!bEnabled)
 			return false;
