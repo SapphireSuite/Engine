@@ -93,12 +93,14 @@ namespace Sa::UTH
 
 			Debug::logger.Push(std::move(msgLog));
 
+			Debug::logger.Join();
+
 			std::cin.get();
 		}
 
 #endif
 
-		::exit(exit);
+		std::exit(exit);
 	}
 
 

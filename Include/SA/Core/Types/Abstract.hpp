@@ -2,16 +2,16 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_CORE_INTERFACE_GUARD
-#define SAPPHIRE_CORE_INTERFACE_GUARD
+#ifndef SAPPHIRE_CORE_ABSTRACT_GUARD
+#define SAPPHIRE_CORE_ABSTRACT_GUARD
 
 #include <SA/Collections/Debug>
 
 
 /**
-*	\file Interface.hpp
+*	\file Abstract.hpp
 * 
-*	\brief \b Interface type implementation.
+*	\brief \b Abstract type implementation.
 * 
 *	\ingroup Core_Types
 *	\{
@@ -19,20 +19,12 @@
 
 namespace Sa
 {
-	/// Interface class.
-	class Interface
+	/// Abstract class.
+	class Abstract
 	{
 	public:
-#if SA_DEBUG
-
-		/**
-		*	\brief \b Virtual destructor (<b>DEBUG ONLY</b>).
-		* 
-		*	Allow type check on debug.
-		*/
-		virtual ~Interface() = default;
-
-#endif
+		/// Virtual destructor (ensure correct child deletion).
+		virtual ~Abstract() = default;
 
 		/**
 		*	\brief Cast this as T&
@@ -77,7 +69,7 @@ namespace Sa
 	};
 }
 
-#include <SA/Core/Types/Interface.inl>
+#include <SA/Core/Types/Abstract.inl>
 
 
 /** \} */

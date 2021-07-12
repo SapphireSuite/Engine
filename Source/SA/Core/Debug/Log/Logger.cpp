@@ -170,8 +170,6 @@ namespace Sa
 				break;
 			}
 		}
-
-
 	}
 
 #endif

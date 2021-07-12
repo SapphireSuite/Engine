@@ -3,7 +3,7 @@
 namespace Sa
 {
 	template <typename T>
-	T& Interface::As()
+	T& Abstract::As()
 	{
 		SA_ASSERT(Nullptr, Core, dynamic_cast<T*>(this), L"Interface is not of type T");
 
@@ -11,7 +11,7 @@ namespace Sa
 	}
 
 	template <typename T>
-	const T& Interface::As() const
+	const T& Abstract::As() const
 	{
 		SA_ASSERT(Nullptr, Core, dynamic_cast<const T*>(this), L"Interface is not of type T");
 
@@ -19,7 +19,7 @@ namespace Sa
 	}
 
 	template <typename T>
-	T* Interface::AsPtr()
+	T* Abstract::AsPtr()
 	{
 		SA_ASSERT(Nullptr, Core, dynamic_cast<T*>(this), L"Interface is not of type T");
 
@@ -27,7 +27,7 @@ namespace Sa
 	}
 
 	template <typename T>
-	const T* Interface::AsPtr() const
+	const T* Abstract::AsPtr() const
 	{
 		SA_ASSERT(Nullptr, Core, dynamic_cast<const T*>(this), L"Interface is not of type T");
 
