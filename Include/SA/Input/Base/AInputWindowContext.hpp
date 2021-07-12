@@ -5,20 +5,18 @@
 #ifndef SAPPHIRE_INPUT_IINPUT_WINDOW_CONTEXT_GUARD
 #define SAPPHIRE_INPUT_IINPUT_WINDOW_CONTEXT_GUARD
 
-#include <SA/Core/Types/Interface.hpp>
+#include <SA/Core/Types/Abstract.hpp>
 
 #include <SA/Input/Base/InputContext.hpp>
 
 namespace Sa
 {
-	class IWindow;
-
-	class IInputWindowContext : public Interface
+	class AInputWindowContext : public Abstract
 	{
 		std::vector<InputContext*> mContexts;
 
 	public:
-		virtual ~IInputWindowContext();
+		virtual ~AInputWindowContext();
 
 		template <typename InputT>
 		bool Process(const InputT& _input);
@@ -30,6 +28,6 @@ namespace Sa
 	};
 }
 
-#include <SA/Input/Base/IInputWindowContext.inl>
+#include <SA/Input/Base/AInputWindowContext.inl>
 
 #endif // GUARD

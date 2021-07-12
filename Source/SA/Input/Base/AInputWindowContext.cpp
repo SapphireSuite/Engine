@@ -1,21 +1,21 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Input/Base/IInputWindowContext.hpp>
+#include <Input/Base/AInputWindowContext.hpp>
 
 namespace Sa
 {
-	IInputWindowContext::~IInputWindowContext()
+	AInputWindowContext::~AInputWindowContext()
 	{
 		Clear();
 	}
 
 
-	InputContext* IInputWindowContext::Create()
+	InputContext* AInputWindowContext::Create()
 	{
 		return mContexts.emplace_back(new InputContext);
 	}
 
-	bool IInputWindowContext::Destroy(const InputContext* _context)
+	bool AInputWindowContext::Destroy(const InputContext* _context)
 	{
 		SA_ASSERT(Nullptr, SA/Input, _context, L"Destroy null InputContext");
 
@@ -32,7 +32,7 @@ namespace Sa
 	}
 
 
-	void IInputWindowContext::Clear()
+	void AInputWindowContext::Clear()
 	{
 		for (auto it = mContexts.begin(); it != mContexts.end(); ++it)
 		{

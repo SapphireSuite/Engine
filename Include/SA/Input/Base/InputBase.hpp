@@ -5,12 +5,12 @@
 #ifndef SAPPHIRE_INPUT_INPUT_BASE_GUARD
 #define SAPPHIRE_INPUT_INPUT_BASE_GUARD
 
+#include <SA/Core/Types/Abstract.hpp>
+
 namespace Sa
 {
-	class InputBase
+	class InputBase : public Abstract
 	{
-	public:
-		virtual ~InputBase() = default;
 	};
 }
 

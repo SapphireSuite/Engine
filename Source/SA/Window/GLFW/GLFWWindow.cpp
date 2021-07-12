@@ -61,13 +61,13 @@ namespace Sa::GLFW
 			}
 		}
 
-		IWindow::SetWindowMode(_mode);
+		AWindow::SetWindowMode(_mode);
 	}
 
 
 	void Window::Create(const CreateInfos& _infos)
 	{
-		IWindow::Create(_infos);
+		AWindow::Create(_infos);
 
 		GLFW::Init();
 
@@ -94,7 +94,7 @@ namespace Sa::GLFW
 		GLFW::UnInit();
 	}
 
-	IInputWindowContext* Window::GetInputWindowContext() const
+	AInputWindowContext* Window::GetInputWindowContext() const
 	{
 		return inputWinContext;
 	}

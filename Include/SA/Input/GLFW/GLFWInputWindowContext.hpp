@@ -7,7 +7,7 @@
 
 #include <SA/API/GLFW.hpp>
 
-#include <SA/Input/Base/IInputWindowContext.hpp>
+#include <SA/Input/Base/AInputWindowContext.hpp>
 
 #include <SA/Maths/Space/Vector2.hpp>
 
@@ -17,7 +17,7 @@ namespace Sa::GLFW
 {
 	class Window;
 
-	class InputWindowContext : public IInputWindowContext
+	class InputWindowContext : public AInputWindowContext
 	{
 		Vec2f mSavedMousePos;
 

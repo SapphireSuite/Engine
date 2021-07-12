@@ -1,58 +1,58 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Window/Base/IWindow.hpp>
+#include <Window/Base/AWindow.hpp>
 
 namespace Sa
 {
-	bool IWindow::IsMinimized() const
+	bool AWindow::IsMinimized() const
 	{
 		return bMinimized;
 	}
 
-	void IWindow::SetMinimized(bool _bIsMinimized)
+	void AWindow::SetMinimized(bool _bIsMinimized)
 	{
 		bMinimized = _bIsMinimized;
 		onMinimized(_bIsMinimized);
 	}
 
 
-	bool IWindow::IsMaximized() const
+	bool AWindow::IsMaximized() const
 	{
 		return bMaximized && !bMinimized;
 	}
 
-	void IWindow::SetMaximized(bool _bIsMaximized)
+	void AWindow::SetMaximized(bool _bIsMaximized)
 	{
 		bMaximized = _bIsMaximized;
 		onMaximized(_bIsMaximized);
 	}
 
 
-	const Vec2ui& IWindow::GetSize() const
+	const Vec2ui& AWindow::GetSize() const
 	{
 		return mSize;
 	}
 
-	void IWindow::SetSize(const Vec2ui& _size)
+	void AWindow::SetSize(const Vec2ui& _size)
 	{
 		mSize = _size;
 		onResize(_size);
 	}
 
 
-	WindowMode IWindow::GetWindowMode() const
+	WindowMode AWindow::GetWindowMode() const
 	{
 		return mMode;
 	}
 
-	void IWindow::SetWindowMode(WindowMode _mode)
+	void AWindow::SetWindowMode(WindowMode _mode)
 	{
 		mMode = _mode;
 		onWindowModeChange(_mode);
 	}
 
 
-	void IWindow::Create(const CreateInfos& _infos)
+	void AWindow::Create(const CreateInfos& _infos)
 	{
 		mSize = _infos.dimension;
 

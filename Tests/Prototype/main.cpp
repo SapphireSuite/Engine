@@ -36,7 +36,7 @@ int main()
 
 	// Input context creation.
 	{
-		IInputWindowContext* const inWinContext = inputSys.Register(&win);
+		AInputWindowContext* const inWinContext = inputSys.Register(&win);
 
 		inputContext = inWinContext->Create();
 	}

@@ -1,18 +1,18 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Input/Base/IInputSystem.hpp>
+#include <Input/Base/AInputSystem.hpp>
 
 #include <Collections/Debug>
 
 namespace Sa
 {
-	IInputSystem::~IInputSystem()
+	AInputSystem::~AInputSystem()
 	{
 		Clear();
 	}
 
 
-	void IInputSystem::DestroyWindowContext(IInputWindowContext* _winContext)
+	void AInputSystem::DestroyWindowContext(AInputWindowContext* _winContext)
 	{
 		SA_ASSERT(Nullptr, SA/Input, _winContext, L"Destroy null window context!");
 
@@ -20,7 +20,7 @@ namespace Sa
 	}
 
 
-	IInputWindowContext* IInputSystem::Register(IWindow* _win)
+	AInputWindowContext* AInputSystem::Register(AWindow* _win)
 	{
 		SA_ASSERT(Nullptr, SA/Input, _win, L"Register null window!");
 
@@ -32,14 +32,14 @@ namespace Sa
 			return itFind->second;
 		}
 
-		IInputWindowContext* const winContext = InstantiateWindowContext(_win);
+		AInputWindowContext* const winContext = InstantiateWindowContext(_win);
 
 		mWindowContextMap.emplace(_win, winContext);
 
 		return winContext;
 	}
 
-	bool IInputSystem::UnRegister(const IWindow* _win)
+	bool AInputSystem::UnRegister(const AWindow* _win)
 	{
 		SA_ASSERT(Nullptr, SA/Input, _win, L"UnRegister null window!");
 
@@ -58,7 +58,7 @@ namespace Sa
 	}
 
 
-	void IInputSystem::Clear()
+	void AInputSystem::Clear()
 	{
 		for (auto it = mWindowContextMap.begin(); it != mWindowContextMap.end(); ++it)
 			delete it->second;

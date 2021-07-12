@@ -7,7 +7,7 @@
 
 #include <SA/API/GLFW.hpp>
 
-#include <SA/Window/Base/IWindow.hpp>
+#include <SA/Window/Base/AWindow.hpp>
 
 #if SA_GLFW
 
@@ -15,7 +15,7 @@ namespace Sa::GLFW
 {
 	class InputWindowContext;
 
-	class Window : public IWindow
+	class Window : public AWindow
 	{
 		GLFWwindow* mHandle = nullptr;
 
@@ -29,7 +29,7 @@ namespace Sa::GLFW
 		GLFWmonitor* GetCurrentMonitor();
 
 	public:
-		using CreateInfos = IWindow::CreateInfos;
+		using CreateInfos = AWindow::CreateInfos;
 
 
 		InputWindowContext* inputWinContext = nullptr;
@@ -40,7 +40,7 @@ namespace Sa::GLFW
 		SA_ENGINE_API void Create(const CreateInfos& _infos) override final;
 		SA_ENGINE_API void Destroy() override final;
 
-		SA_ENGINE_API IInputWindowContext* GetInputWindowContext() const override final;
+		SA_ENGINE_API AInputWindowContext* GetInputWindowContext() const override final;
 
 		SA_ENGINE_API void Close() override final;
 		SA_ENGINE_API bool ShouldClose() const override final;

@@ -10,7 +10,7 @@
 
 namespace Sa::GLFW
 {
-	IInputWindowContext* InputSystem::InstantiateWindowContext(IWindow* _win)
+	AInputWindowContext* InputSystem::InstantiateWindowContext(AWindow* _win)
 	{
 		return new GLFW::InputWindowContext{ _win->AsPtr<GLFW::Window>() };
 	}

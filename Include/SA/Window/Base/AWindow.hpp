@@ -2,10 +2,10 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_WINDOW_IWINDOW_GUARD
-#define SAPPHIRE_WINDOW_IWINDOW_GUARD
+#ifndef SAPPHIRE_WINDOW_AWINDOW_GUARD
+#define SAPPHIRE_WINDOW_AWINDOW_GUARD
 
-#include <SA/Core/Types/Interface.hpp>
+#include <SA/Core/Types/Abstract.hpp>
 #include <SA/Core/Types/Variadics/Event.hpp>
 
 #include <SA/Maths/Space/Vector2.hpp>
@@ -14,9 +14,9 @@
 
 namespace Sa
 {
-	class IInputWindowContext;
+	class AInputWindowContext;
 
-	class IWindow : public Interface
+	class AWindow : public Abstract
 	{
 		bool bMinimized = false;
 		bool bMaximized = false;
@@ -60,7 +60,7 @@ namespace Sa
 		SA_ENGINE_API virtual void Create(const CreateInfos& _infos);
 		virtual void Destroy() = 0;
 
-		virtual IInputWindowContext* GetInputWindowContext() const = 0;
+		virtual AInputWindowContext* GetInputWindowContext() const = 0;
 
 		virtual void Close() = 0;
 		virtual bool ShouldClose() const = 0;
