@@ -15,4 +15,7 @@
 #include <SA/Core/Debug/Exceptions/Exception_Nullptr.hpp>
 #include <SA/Core/Debug/Exceptions/Exception_OutOfRange.hpp>
 
+// Module specific
+#include <SA/Render/Debug.hpp>
+
 #endif // GUARD

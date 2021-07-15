@@ -5,11 +5,10 @@
 #ifndef SAPPHIRE_RENDER_VULKAN_GUARD
 #define SAPPHIRE_RENDER_VULKAN_GUARD
 
-#include <SA/Collections/Debug>
+#include <SA/Render/Config.hpp>
 
-// TODO: Add if compilation.
-/// Sapphire Engine enable Vulkan preprocessor.
-#define SA_VULKAN 1
+#include <SA/Core/Debug/Debug.hpp>
+
 
 #if SA_VULKAN
 
@@ -20,7 +19,7 @@
 	#define SA_VK_VALIDATION_LAYERS (SA_DEBUG || __SA_LOG_RELEASE) && 1
 
 
-	#define SA_VK_ASSERT(_pred, ...) SA_ASSERT_EXEC(Default, SA/Render/Vulkan, (_pred) == VkResult::VK_SUCCESS, ##__VA_ARGS__)
+	#define SA_VK_ASSERT(_pred, ...) SA_ASSERT_EXEC(Vulkan, SA/Render/Vulkan, (_pred), ##__VA_ARGS__)
 
 
 	namespace Sa::Vk
@@ -28,6 +27,7 @@
 		SA_ENGINE_API void Init();
 		SA_ENGINE_API void UnInit();
 	}
+
 
 #endif
 
