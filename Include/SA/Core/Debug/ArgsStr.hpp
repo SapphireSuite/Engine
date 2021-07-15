@@ -27,10 +27,6 @@ namespace Sa
 	/// Convert variadic macro parameters into strings.
 	class ArgsStr
 	{
-		/// \brief Generate Params from params' names and values.
-		template <typename FirstT, typename... Args>
-		void GenerateParamStr(std::string _paramNames, const FirstT& _first, const Args&... _args);
-
 	public:
 		/// Pair of param name and value.
 		struct Param
@@ -50,6 +46,15 @@ namespace Sa
 		ArgsStr() = default;
 
 		/**
+		*	\brief \e Value constructor with names only.
+		* 
+		*	Parse _paramNames.
+		*
+		*	\param[in] _paramNames	String containing all parameters' names.
+		*/
+		SA_ENGINE_API ArgsStr(const std::string& _paramNames);
+
+		/**
 		*	\brief \e Value constructor
 		* 
 		*	Parse _paramNames and _args.
@@ -61,6 +66,31 @@ namespace Sa
 		*/
 		template <typename... Args>
 		ArgsStr(const std::string& _paramNames, const Args&... _args);
+
+
+		/**
+		*	\brief \e Append parameters' name only at the end.
+		* 
+		*	Parse _paramNames.
+		*
+		*	\param[in] _paramNames	String containing all parameters' names.
+		*/
+		SA_ENGINE_API void Append(const std::string& _paramNames);
+
+		/**
+		*	\brief \e Append parameters at the end.
+		* 
+		*	Parse _paramNames and _args.
+		*
+		*	\tparam FirstT	first arg type.
+		*	\tparam Args	Args types.
+		* 
+		*	\param[in] _paramNames	String containing all parameters' names.
+		*	\param[in] _first		First Argument's value.
+		*	\param[in] _args		Argument's values.
+		*/
+		template <typename FirstT, typename... Args>
+		void Append(const std::string& _paramNames, const FirstT& _first, const Args&... _args);
 
 
 		/**
@@ -108,6 +138,9 @@ namespace Sa
 	*	\return Created ArgsStr from input.
 	*/
 	#define SA_STR_ARGS(...) ArgsStr(#__VA_ARGS__, ##__VA_ARGS__)
+
+	#define SA_STR_ARGS_NAMES(...) ArgsStr(#__VA_ARGS__)
+
 
 #endif
 }

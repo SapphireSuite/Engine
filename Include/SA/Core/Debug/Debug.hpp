@@ -79,14 +79,13 @@ namespace Sa::Debug
 		(std::wstring() << _dets)\
 	)
 
-	#define __SA_CREATE_EXCEPTION(_type, _chan, ...) Sa::Exception_##_type(\
-		Sa::Exception::BaseInfos{\
+	#define __SA_CREATE_EXCEPTION(_type, _chan, ...) __SA_CREATE_EXCEPTION_##_type(\
+		(Sa::Exception::BaseInfos{\
 			__SA_FILE_NAME,\
 			__LINE__,\
 			__SA_FUNC_NAME,\
-			__SA_CHAN_NAME(_chan),\
-			SA_STR_ARGS(__VA_ARGS__),\
-		},\
+			__SA_CHAN_NAME(_chan)\
+		}),\
 		##__VA_ARGS__\
 	)
 

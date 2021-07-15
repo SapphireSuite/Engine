@@ -52,6 +52,15 @@ namespace Sa
 		) noexcept;
 	};
 
+
+	#define __SA_CREATE_EXCEPTION_OutOfRange(_baseInfos, _currIndex, _minBound, _maxBound, ...) Sa::Exception_OutOfRange(\
+		_baseInfos,\
+		_currIndex,\
+		_minBound,\
+		_maxBound,\
+		##__VA_ARGS__\
+	)
+
 #endif
 }
 

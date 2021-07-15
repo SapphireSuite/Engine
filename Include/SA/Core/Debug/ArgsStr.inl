@@ -10,12 +10,12 @@ namespace Sa
 		(void)_paramNames;
 
 		if constexpr (sizeof...(Args) != 0u)
-			GenerateParamStr(_paramNames, _args...);
+			Append(_paramNames, _args...);
 	}
 
 	/// \brief Generate Params from params' names and values.
 	template <typename FirstT, typename... Args>
-	void ArgsStr::GenerateParamStr(std::string _paramNames, const FirstT& _first, const Args&... _args)
+	void ArgsStr::Append(const std::string& _paramNames, const FirstT& _first, const Args&... _args)
 	{
 		const uint64 commaIndex = _paramNames.find_first_of(',');
 		const uint64 pthesisIndex = _paramNames.find_first_of('(');
@@ -32,7 +32,7 @@ namespace Sa
 
 		// Recursive call for next params.
 		if constexpr (sizeof...(Args) != 0u)
-			GenerateParamStr(_paramNames.substr(index + 2), _args...);
+			Append(_paramNames.substr(index + 2), _args...);
 	}
 
 #endif

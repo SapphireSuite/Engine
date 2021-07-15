@@ -12,7 +12,7 @@ namespace Sa::Exception_UT
 	void DefaultTests()
 	{
 		const bool bTrue = true;
-		const bool bFalse = true;
+		const bool bFalse = false;
 
 		SA_ASSERT(Default, AsChan, bTrue, L"Default success test!");
 
