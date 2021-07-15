@@ -22,12 +22,12 @@
 
 	#if SA_DEBUG
 
-		#define SA_VK_ASSERT(_pred) SA_ASSERT(Vulkan, SA/Render/Vulkan, (_pred) == VK_SUCCESS)
+		#define SA_VK_ASSERT(_pred, ...) SA_ASSERT(Default, SA/Render/Vulkan, (_pred) == VK_SUCCESS, ##__VA_ARGS__)
 
 	#else
 
 		// Still execute vk method.
-		#define SA_VK_ASSERT(_pred) { _pred; }
+		#define SA_VK_ASSERT(_pred, ...) { _pred; }
 
 	#endif
 

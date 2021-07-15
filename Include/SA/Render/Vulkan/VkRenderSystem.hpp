@@ -15,6 +15,14 @@ namespace Sa::Vk
 {
 	class RenderSystem : public ARenderSystem
 	{
+		VkInstance mHandle = VK_NULL_HANDLE;
+
+#if SA_VK_VALIDATION_LAYERS
+
+		VkDebugUtilsMessengerEXT mDebugMessenger = nullptr;
+
+#endif
+
 	public:
 		SA_ENGINE_API void Create() override final;
 		SA_ENGINE_API void Destroy() override final;

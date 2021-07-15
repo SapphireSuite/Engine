@@ -2,6 +2,8 @@
 
 #include <Window/Base/AWindow.hpp>
 
+#include <Window/GLFW/GLFWWindow.hpp>
+
 namespace Sa
 {
 	bool AWindow::IsMinimized() const
@@ -58,5 +60,15 @@ namespace Sa
 
 		// Always create as Windowed and call SetWindowMode.
 		//mMode = _infos.mode;
+	}
+
+
+	bool AWindow::QueryRequiredExtensions(std::vector<const char*>& _extensions)
+	{
+#if SA_GLFW
+
+		return GLFW::Window::QueryRequiredExtensions(_extensions);
+
+#endif
 	}
 }

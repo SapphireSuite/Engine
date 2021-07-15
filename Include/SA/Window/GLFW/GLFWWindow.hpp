@@ -96,6 +96,8 @@ namespace Sa::GLFW
 		*	\returns GLFW internal handle.
 		*/
 		GLFWwindow* GetHandle() const;
+
+		static bool QueryRequiredExtensions(std::vector<const char*>& _extensions);
 	};
 }
 

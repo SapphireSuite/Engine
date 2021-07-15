@@ -83,8 +83,33 @@ namespace Sa::Vk
 		const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
 		void* pUserData)
 	{
-		(void)messageType;
 		(void)pUserData;
+
+		std::wstring msgTypeStr;
+
+		switch (messageType)
+		{
+			case VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT:
+			{
+				msgTypeStr = L"[General]";
+				break;
+			}
+			case VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT:
+			{
+				msgTypeStr = L"[Validation]";
+				break;
+			}
+			case VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT:
+			{
+				msgTypeStr = L"[Performance]";
+				break;
+			}
+			default:
+			{
+				msgTypeStr = L"[Unknown]";
+				break;
+			}
+		}
 
 		switch (messageSeverity)
 		{
@@ -92,22 +117,22 @@ namespace Sa::Vk
 			//	break;
 			case VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT:
 			{
-				SA_LOG(pCallbackData->pMessage, Infos, SA/Render/Vulkan, L"Vulkan Validation Layers");
+				SA_LOG(pCallbackData->pMessage, Infos, SA/Render/Vulkan, L"Vulkan Validation Layers " << msgTypeStr);
 				break;
 			}
 			case VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT:
 			{
-				SA_LOG(pCallbackData->pMessage, Warning, SA/Render/Vulkan, L"Vulkan Validation Layers");
+				SA_LOG(pCallbackData->pMessage, Warning, SA/Render/Vulkan, L"Vulkan Validation Layers " << msgTypeStr);
 				break;
 			}
 			case VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT:
 			{
-				SA_LOG(pCallbackData->pMessage, Error, SA/Render/Vulkan, L"Vulkan Validation Layers");
+				SA_LOG(pCallbackData->pMessage, Error, SA/Render/Vulkan, L"Vulkan Validation Layers " << msgTypeStr);
 				break;
 			}
 			default:
 			{
-				SA_LOG(pCallbackData->pMessage, Normal, SA/Render/Vulkan, L"Vulkan Validation Layers");
+				SA_LOG(pCallbackData->pMessage, Normal, SA/Render/Vulkan, L"Vulkan Validation Layers " << msgTypeStr);
 				break;
 			}
 		}

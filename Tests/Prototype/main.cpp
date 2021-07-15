@@ -49,7 +49,7 @@ int main()
 		{
 			Vk::Init();
 
-			renderSys;
+			renderSys.Create();
 		}
 	}
 
@@ -68,6 +68,8 @@ int main()
 	{
 		// Render
 		{
+			renderSys.Destroy();
+
 			Vk::UnInit();
 		}
 
@@ -79,10 +81,16 @@ int main()
 
 #if SA_LOGGING
 
-		Debug::logger.Join(ThreadJoinMode::Abandon);
+		Debug::logger.Join();
 
 #endif
 	}
+
+#if !SA_CI
+
+	std::cin.get();
+
+#endif
 
 	return 0;
 }
