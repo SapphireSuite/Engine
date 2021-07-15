@@ -112,6 +112,11 @@ endif()
 
 # === Input Libs ===
 
+# Vulkan.
+# TODO: Add if Vulkan compilation.
+find_package(Vulkan REQUIRED FATAL_ERROR)
+target_link_libraries(SA-Engine PUBLIC Vulkan::Vulkan)
+
 # GLFW.
 # TODO: Add if GLFW compilation.
 target_link_libraries(SA-Engine PUBLIC glfw ${GLFW_LIBRARIES})

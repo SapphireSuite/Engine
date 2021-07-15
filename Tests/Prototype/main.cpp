@@ -15,63 +15,42 @@ using namespace Sa;
 #include <SA/Input/Base/Axis/Bindings/InputAxisAction.hpp>
 #include <SA/Input/Base/Axis/Bindings/InputAxisRange.hpp>
 
+#include <SA/Render/Vulkan/VkRenderSystem.hpp>
+
 GLFW::Window win;
 GLFW::InputSystem inputSys;
+Vk::RenderSystem renderSys;
 
-InputContext* inputContext = nullptr;
-
-std::shared_ptr<InputKeyBinding> yHoldBind;
 
 int main()
 {
-	// Window Creation.
+	// Init.
 	{
-		GLFW::Window::CreateInfos infos;
-		infos.dimension = Vec2ui{ 1200u, 800u };
-		//infos.mode = WindowMode::Borderless;
-
-		win.Create(infos);
-	}
-
-
-	// Input context creation.
-	{
-		AInputWindowContext* const inWinContext = inputSys.Register(&win);
-
-		inputContext = inWinContext->Create();
-	}
-
-
-	// Input Binding.
-	{
-		inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::Q, KeyState::Pressed }, []() { SA_LOG("Q Pressed"); });
-		inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::Q, KeyState::Released }, []() { SA_LOG("Q Released"); });
-		inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::Esc, KeyState::Pressed }, &win, &GLFW::Window::Close);
-
-		inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::Y, KeyState::Pressed }, []() { SA_LOG("Y Pressed:"); });
-
-
-		inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::O, KeyState::Pressed }, []()
+		// Window.
 		{
-			inputContext->axis.Bind<InputAxisRange>(Axis::MouseX, [](float _inX) { SA_LOG("MouseX: " << _inX); });
-			inputContext->axis.Bind<InputAxisRange>(Axis::MouseY, [](float _inY) { SA_LOG("MouseY: " << _inY); });
-			
-			yHoldBind = inputContext->key.Bind<InputKeyRange>(InputKeyBind{ Key::Y, KeyState::Pressed | KeyState::Hold },
-				[](float _inX) { SA_LOG("Y Pressed Or Hold:" << _inX); });
-		});
+			GLFW::Init();
 
-		inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::P, KeyState::Pressed }, []()
+			GLFW::Window::CreateInfos infos;
+			infos.dimension = Vec2ui{ 1200u, 800u };
+
+			win.Create(infos);
+
+			AInputWindowContext* const inWinContext = inputSys.Register(&win);
+			InputContext* const inputContext = inWinContext->Create();
+
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::Esc, KeyState::Pressed }, &win, &GLFW::Window::Close);
+
+			//inputContext->axis.Bind<InputAxisRange>(Axis::MouseX, [](float _inX) { SA_LOG("MouseX: " << _inX); });
+			//inputContext->axis.Bind<InputAxisRange>(Axis::MouseY, [](float _inY) { SA_LOG("MouseY: " << _inY); });
+		}
+
+
+		// Render
 		{
-			inputContext->axis.UnBind(Axis::MouseX);
-			inputContext->axis.UnBind(Axis::MouseY);
+			Vk::Init();
 
-			inputContext->key.UnBind(yHoldBind);
-		});
-
-
-		inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::J, KeyState::Pressed }, []() { win.SetWindowMode(WindowMode::Windowed); });
-		inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::K, KeyState::Pressed }, []() { win.SetWindowMode(WindowMode::FullScreen); });
-		inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::L, KeyState::Pressed }, []() { win.SetWindowMode(WindowMode::Borderless); });
+			renderSys;
+		}
 	}
 
 
@@ -85,11 +64,25 @@ int main()
 	}
 
 
+	// Uninit
+	{
+		// Render
+		{
+			Vk::UnInit();
+		}
+
+		// Window
+		{
+			GLFW::UnInit();
+		}
+
+
 #if SA_LOGGING
 
-	Debug::logger.Join(ThreadJoinMode::Abandon);
+		Debug::logger.Join(ThreadJoinMode::Abandon);
 
 #endif
+	}
 
 	return 0;
 }

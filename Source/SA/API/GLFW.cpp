@@ -129,8 +129,6 @@ namespace Sa::GLFW
 
 	};
 
-	static uint32 gInitCount = 0u;
-
 	void ErrorCallback(int32 error, const char* description)
 	{
 		SA_LOG(L"GLFW Error [" << error << L"]:" << description, Error, SA/Window/GLFW);
@@ -139,10 +137,6 @@ namespace Sa::GLFW
 
 	void Init()
 	{
-		// Already init.
-		if (gInitCount++ > 0)
-			return;
-
 		glfwSetErrorCallback(ErrorCallback);
 
 		bool bInit = glfwInit();
@@ -153,10 +147,6 @@ namespace Sa::GLFW
 
 	void UnInit()
 	{
-		// Not last instance.
-		if (--gInitCount > 0)
-			return;
-
 		glfwTerminate();
 	}
 

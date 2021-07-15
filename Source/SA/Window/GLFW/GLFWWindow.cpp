@@ -69,8 +69,6 @@ namespace Sa::GLFW
 	{
 		AWindow::Create(_infos);
 
-		GLFW::Init();
-
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 		mHandle = glfwCreateWindow(_infos.dimension.x, _infos.dimension.y, _infos.name.c_str(), nullptr, nullptr);
 
@@ -90,8 +88,6 @@ namespace Sa::GLFW
 
 		glfwDestroyWindow(mHandle);
 		mHandle = nullptr;
-
-		GLFW::UnInit();
 	}
 
 	AInputWindowContext* Window::GetInputWindowContext() const

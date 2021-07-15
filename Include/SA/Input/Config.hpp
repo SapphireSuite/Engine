@@ -21,6 +21,10 @@
 */
 
 
+// TODO: Add if compilation.
+/// Sapphire Engine enable Vulkan preprocessor.
+#define SA_VULKAN 1
+
 /** \} */
 
 #endif // GUARD

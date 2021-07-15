@@ -5,6 +5,8 @@
 #ifndef SAPPHIRE_API_GLFW_GUARD
 #define SAPPHIRE_API_GLFW_GUARD
 
+#include <SA/Config.hpp>
+
 
 // TODO: Add if compilation.
 /// Sapphire Engine enable GLFW preprocessor.
@@ -17,8 +19,8 @@
 
 namespace Sa::GLFW
 {
-	void Init();
-	void UnInit();
+	SA_ENGINE_API void Init();
+	SA_ENGINE_API void UnInit();
 
 	void WindowKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 	void CursorPositionCallback(GLFWwindow* _handle, double _posX, double _posY);
