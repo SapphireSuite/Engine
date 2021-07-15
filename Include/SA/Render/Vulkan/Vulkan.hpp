@@ -20,16 +20,7 @@
 	#define SA_VK_VALIDATION_LAYERS (SA_DEBUG || __SA_LOG_RELEASE) && 1
 
 
-	#if SA_DEBUG
-
-		#define SA_VK_ASSERT(_pred, ...) SA_ASSERT(Default, SA/Render/Vulkan, (_pred) == VK_SUCCESS, ##__VA_ARGS__)
-
-	#else
-
-		// Still execute vk method.
-		#define SA_VK_ASSERT(_pred, ...) { _pred; }
-
-	#endif
+	#define SA_VK_ASSERT(_pred, ...) SA_ASSERT_EXEC(Default, SA/Render/Vulkan, (_pred) == VkResult::VK_SUCCESS, ##__VA_ARGS__)
 
 
 	namespace Sa::Vk

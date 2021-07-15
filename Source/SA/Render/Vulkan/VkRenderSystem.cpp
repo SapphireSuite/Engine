@@ -73,15 +73,7 @@ namespace Sa::Vk
 		auto createDebugFunc = (PFN_vkCreateDebugUtilsMessengerEXT)vkGetInstanceProcAddr(mHandle, "vkCreateDebugUtilsMessengerEXT");
 		SA_ASSERT(Nullptr, SA/Render/Vulkan, createDebugFunc, L"Extension PFN_vkCreateDebugUtilsMessengerEXT missing!");
 
-		const VkResult res = createDebugFunc(mHandle, &debugUtilscreateInfo, nullptr, &mDebugMessenger);
-		
-		SA_ASSERT(Default, SA/Render/Vulkan, res == VK_SUCCESS, L"Failed to create vulkan debug messenger!");
-
-		//SA_ASSERT(Default, SA/Render/Vulkan,
-		//	createDebugFunc(mHandle, &debugUtilscreateInfo, nullptr, &mDebugMessenger) == VK_SUCCESS,
-		//	L"Failed to create vulkan debug messenger!");
-		
-		//SA_VK_ASSERT(createDebugFunc(mHandle, &debugUtilscreateInfo, nullptr, &mDebugMessenger), L"Failed to create vulkan debug messenger!");
+		SA_VK_ASSERT(createDebugFunc(mHandle, &debugUtilscreateInfo, nullptr, &mDebugMessenger), L"Failed to create vulkan debug messenger!");
 
 #endif
 	}
