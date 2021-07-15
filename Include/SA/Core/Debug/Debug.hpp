@@ -79,14 +79,13 @@ namespace Sa::Debug
 		(std::wstring() << _dets)\
 	)
 
-	#define __SA_CREATE_EXCEPTION(_type, _chan, ...) Sa::Exception_##_type(\
-		Sa::Exception::BaseInfos{\
+	#define __SA_CREATE_EXCEPTION(_type, _chan, ...) __SA_CREATE_EXCEPTION_##_type(\
+		(Sa::Exception::BaseInfos{\
 			__SA_FILE_NAME,\
 			__LINE__,\
 			__SA_FUNC_NAME,\
-			__SA_CHAN_NAME(_chan),\
-			SA_STR_ARGS(__VA_ARGS__),\
-		},\
+			__SA_CHAN_NAME(_chan)\
+		}),\
 		##__VA_ARGS__\
 	)
 
@@ -125,9 +124,13 @@ namespace Sa::Debug
 
 		#define SA_ASSERT(_type, _chan, ...) { Sa::Debug::logger.Assert(__SA_CREATE_EXCEPTION(_type, _chan, ##__VA_ARGS__)); }
 
+		#define SA_ASSERT_EXEC(_type, _chan, _exec, ...) SA_ASSERT(_type, _chan, _exec, ##__VA_ARGS__)
+
 	#else
 
 		#define SA_ASSERT(...) {}
+	
+		#define SA_ASSERT_EXEC(_type, _chan, _exec, ...) { _exec; }
 
 	#endif
 
@@ -186,6 +189,21 @@ namespace Sa::Debug
 	*	\param[in] ...			Additionnal args for exception (depends on _type).
 	*/
 
+	#define SA_ASSERT_EXEC(_type, _chan, _exec, ...)
+	/**
+	*	\def SA_ASSERT_EXEC(_type, _chan, _exec, ...)
+	*
+	*	\brief Sapphire Assertion execution macro.
+	*	_exec will still be executed in non-debug but no debug infos will be generated.
+	*
+	*	Helper macro to use Debug::Assert.
+	*
+	*	\param[in] _type		type of the exception.
+	*	\param[in] _chan		Channel of the assert.
+	*	\param[in] _exec		Method to execute (even in non-debug).
+	*	\param[in] ...			Additionnal args for exception (depends on _type).
+	*/
+
 #endif
 
 #else
@@ -195,6 +213,8 @@ namespace Sa::Debug
 	#define SA_WARN(...) {}
 
 	#define SA_ASSERT(...) {}
+
+	#define SA_ASSERT_EXEC(_type, _chan, _exec, ...) { _exec; }
 
 #endif
 }

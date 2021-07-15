@@ -35,9 +35,17 @@ namespace Sa
 		SA_ENGINE_API Exception_Nullptr(
 			BaseInfos&& _infos,
 			bool _pred,
+			std::string&& _predStr,
 			std::wstring&& _details = L""
 		) noexcept;
 	};
+
+	#define __SA_CREATE_EXCEPTION_Nullptr(_baseInfos, _pred, ...) Sa::Exception_Nullptr(\
+		_baseInfos,\
+		_pred,\
+		#_pred,\
+		##__VA_ARGS__\
+	)
 
 #endif
 }

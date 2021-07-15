@@ -139,10 +139,7 @@ namespace Sa::GLFW
 	{
 		glfwSetErrorCallback(ErrorCallback);
 
-		bool bInit = glfwInit();
-
-		(void)bInit;
-		SA_ASSERT(Default, Window/GLFW, bInit, L"GLFW init failed!");
+		SA_ASSERT_EXEC(Default, Window/GLFW, glfwInit(), L"GLFW init failed!");
 	}
 
 	void UnInit()

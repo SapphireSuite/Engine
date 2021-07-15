@@ -10,6 +10,7 @@ namespace Sa
 	Exception::Exception(
 		BaseInfos&& _infos,
 		bool _pred,
+		std::string&& _predStr,
 		std::wstring&& _msg,
 		std::wstring&& _details
 	) noexcept :
@@ -20,9 +21,14 @@ namespace Sa
 			std::move(_msg),
 			_pred ? LogLevel::AssertSuccess : LogLevel::AssertFailed,
 			std::move(_infos.chanName),
-			std::move(_details)),
-		agrsStr{ std::move(_infos.argsStr) }
+			std::move(_details))
 	{
+		if (msg.empty())
+			msg = Sa::ToWString(_predStr) << L" == " << _pred;
+		else if(details.empty())
+			details = Sa::ToWString(_predStr) << L" == " << _pred;
+
+		agrsStr.Append(_predStr, _pred);
 	}
 
 #endif
