@@ -15,9 +15,19 @@
 */
 
 
-// TODO: Add if compilation.
-/// Sapphire Engine enable Vulkan preprocessor.
-#define SA_VULKAN 1
+#ifndef SA_VULKAN
+
+	/// Sapphire Engine enable Vulkan preprocessor.
+	#define SA_VULKAN 0
+
+#endif
+
+#ifndef SA_OPEN_GL
+
+	/// Sapphire Engine enable OpenGL preprocessor.
+	#define SA_OPEN_GL 0
+
+#endif
 
 
 /**

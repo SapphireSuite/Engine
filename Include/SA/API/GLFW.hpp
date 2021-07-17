@@ -8,9 +8,12 @@
 #include <SA/Config.hpp>
 
 
-// TODO: Add if compilation.
-/// Sapphire Engine enable GLFW preprocessor.
-#define SA_GLFW 1
+#ifndef SA_GLFW
+
+	/// Sapphire Engine enable GLFW preprocessor.
+	#define SA_GLFW 0
+
+#endif
 
 
 #if SA_GLFW

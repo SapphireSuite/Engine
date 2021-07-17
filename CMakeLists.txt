@@ -112,16 +112,35 @@ endif()
 
 # === Input Libs ===
 
+# === Rendering ===
+
 # Vulkan.
-# TODO: Add if Vulkan compilation.
-find_package(Vulkan REQUIRED FATAL_ERROR)
-target_link_libraries(SA-Engine PUBLIC Vulkan::Vulkan)
+option(SA_VULKAN "Compile Vulkan Renderer" ON)
+
+if(SA_VULKAN)
+	find_package(Vulkan REQUIRED FATAL_ERROR)
+	target_link_libraries(SA-Engine PUBLIC Vulkan::Vulkan)
+	target_compile_definitions(SA-Engine PUBLIC SA_VULKAN)
+endif()
+
+# OpenGL.
+option(SA_OPEN_GL "Compile OpenGL Renderer" ON)
+
+if(SA_OPEN_GL)
+	target_compile_definitions(SA-Engine PUBLIC SA_OPEN_GL)
+endif()
+
+
+# === Windowing ===
 
 # GLFW.
-# TODO: Add if GLFW compilation.
-target_link_libraries(SA-Engine PUBLIC glfw ${GLFW_LIBRARIES})
-target_include_directories(SA-Engine PRIVATE ThirdParty/Libs/glfw/include)
+option(SA_GLFW "Compile GLFW Window Manager" ON)
+
+if(SA_GLFW)
+	target_link_libraries(SA-Engine PUBLIC glfw ${GLFW_LIBRARIES})
+	target_include_directories(SA-Engine PRIVATE ThirdParty/Libs/glfw/include)
+	target_compile_definitions(SA-Engine PUBLIC SA_GLFW)
+endif()
 
 # ImGUI.
-# TODO: Add if ImGUI compilation.
 target_link_libraries(SA-Engine PUBLIC ImGui)
