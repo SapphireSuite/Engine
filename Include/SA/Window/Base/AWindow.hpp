@@ -164,9 +164,6 @@ namespace Sa
 		*	\returns current closed state.
 		*/
 		virtual bool ShouldClose() const = 0;
-
-
-		static bool QueryRequiredExtensions(std::vector<const char*>& _extensions);
 	};
 }
 

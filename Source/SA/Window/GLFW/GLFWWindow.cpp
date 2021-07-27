@@ -176,21 +176,6 @@ namespace Sa::GLFW
 	{
 		return mHandle;
 	}
-
-
-	bool Window::QueryRequiredExtensions(std::vector<const char*>& _extensions)
-	{
-		// Query extensions.
-		uint32_t glfwExtensionCount = 0;
-		const char** glfwExtensions = nullptr;
-
-		glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
-
-		_extensions.reserve(glfwExtensionCount);
-		_extensions.insert(_extensions.end(), glfwExtensions, glfwExtensions + glfwExtensionCount);
-
-		return true;
-	}
 }
 
 #endif

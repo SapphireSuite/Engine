@@ -2,8 +2,8 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_CORE_WINDOWS_GUARD
-#define SAPPHIRE_CORE_WINDOWS_GUARD
+#ifndef SAPPHIRE_CORE_WINDOWS_API_GUARD
+#define SAPPHIRE_CORE_WINDOWS_API_GUARD
 
 #include <SA/Core/Support/Pragma.hpp>
 #include <SA/Core/Support/Platforms.hpp>

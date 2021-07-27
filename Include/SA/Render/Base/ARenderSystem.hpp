@@ -9,10 +9,12 @@
 
 namespace Sa
 {
+	class AWindowSystem;
+
 	class ARenderSystem : public Abstract
 	{
 	public:
-		virtual void Create() = 0;
+		virtual void Create(const AWindowSystem& _winSys) = 0;
 		virtual void Destroy() = 0;
 	};
 }

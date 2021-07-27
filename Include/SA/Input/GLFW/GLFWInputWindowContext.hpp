@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_INPUT_GLFW_INPUT_WINDOW_CONTEXT_GUARD
 #define SAPPHIRE_INPUT_GLFW_INPUT_WINDOW_CONTEXT_GUARD
 
-#include <SA/API/GLFW.hpp>
+#include <SA/Core/Support/API/GLFW.hpp>
 
 #include <SA/Input/Base/AInputWindowContext.hpp>
 

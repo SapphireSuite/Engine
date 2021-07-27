@@ -8,8 +8,9 @@
 using namespace Sa;
 
 #include <SA/Window/GLFW/GLFWWindow.hpp>
-#include <SA/Input/GLFW/GLFWInputSystem.hpp>
+#include <SA/Window/GLFW/GLFWWindowSystem.hpp>
 
+#include <SA/Input/GLFW/GLFWInputSystem.hpp>
 #include <SA/Input/Base/Key/Bindings/InputKeyAction.hpp>
 #include <SA/Input/Base/Key/Bindings/InputKeyRange.hpp>
 #include <SA/Input/Base/Axis/Bindings/InputAxisAction.hpp>
@@ -17,8 +18,11 @@ using namespace Sa;
 
 #include <SA/Render/Vulkan/VkRenderSystem.hpp>
 
+GLFW::WindowSystem winSys;
 GLFW::Window win;
+
 GLFW::InputSystem inputSys;
+
 Vk::RenderSystem renderSys;
 
 
@@ -28,12 +32,17 @@ int main()
 	{
 		// Window.
 		{
-			GLFW::Init();
+			winSys.Create();
 
 			GLFW::Window::CreateInfos infos;
 			infos.dimension = Vec2ui{ 1200u, 800u };
 
 			win.Create(infos);
+		}
+
+		// Input.
+		{
+			inputSys.Create();
 
 			AInputWindowContext* const inWinContext = inputSys.Register(&win);
 			InputContext* const inputContext = inWinContext->Create();
@@ -47,9 +56,7 @@ int main()
 
 		// Render
 		{
-			Vk::Init();
-
-			renderSys.Create();
+			renderSys.Create(winSys);
 		}
 	}
 
@@ -69,13 +76,17 @@ int main()
 		// Render
 		{
 			renderSys.Destroy();
+		}
 
-			Vk::UnInit();
+		// Input.
+		{
+			inputSys.Destroy();
 		}
 
 		// Window
 		{
-			GLFW::UnInit();
+			win.Destroy();
+			winSys.Destroy();
 		}
 
 

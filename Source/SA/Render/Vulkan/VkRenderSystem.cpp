@@ -6,16 +6,16 @@
 
 #include <Render/Vulkan/Debug/VkValidationLayers.hpp>
 
-#include <Window/Base/AWindow.hpp>
+#include <Window/Base/AWindowSystem.hpp>
 
 namespace Sa::Vk
 {
-	std::vector<const char*> GetRequiredExtensions() noexcept
+	std::vector<const char*> GetRequiredExtensions(const AWindowSystem& _winSys) noexcept
 	{
 		std::vector<const char*> extensions;
 
 		// Query window API required extensions.
-		AWindow::QueryRequiredExtensions(extensions);
+		_winSys.QueryRequiredExtensions(extensions);
 
 #if SA_VK_VALIDATION_LAYERS
 
@@ -26,7 +26,7 @@ namespace Sa::Vk
 	}
 
 
-	void RenderSystem::Create()
+	void RenderSystem::Create(const AWindowSystem& _winSys)
 	{
 		VkApplicationInfo appInfos;
 
@@ -39,7 +39,7 @@ namespace Sa::Vk
 		appInfos.apiVersion = VK_API_VERSION_1_0;
 
 
-		std::vector<const char*> extensions = GetRequiredExtensions();
+		std::vector<const char*> extensions = GetRequiredExtensions(_winSys);
 
 
 		VkInstanceCreateInfo instanceInfos;

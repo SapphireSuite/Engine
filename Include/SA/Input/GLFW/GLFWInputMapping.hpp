@@ -1,11 +1,13 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <API/GLFW.hpp>
+#pragma once
+
+#ifndef SAPPHIRE_INPUT_GLFW_INPUT_MAPPING_GUARD
+#define SAPPHIRE_INPUT_GLFW_INPUT_MAPPING_GUARD
+
+#include <SA/Core/Support/API/GLFW.hpp>
 
 #include <Collections/Debug>
-
-#include <Window/GLFW/GLFWWindow.hpp>
-#include <Input/GLFW/GLFWInputWindowContext.hpp>
 
 #if SA_GLFW
 
@@ -129,79 +131,23 @@ namespace Sa::GLFW
 
 	};
 
-	void ErrorCallback(int32 error, const char* description)
-	{
-		SA_LOG(L"GLFW Error [" << error << L"]:" << description, Error, SA/Window/GLFW);
-	}
-
-
-	void Init()
-	{
-		glfwSetErrorCallback(ErrorCallback);
-
-		SA_ASSERT_EXEC(Default, Window/GLFW, glfwInit(), L"GLFW init failed!");
-	}
-
-	void UnInit()
-	{
-		glfwTerminate();
-	}
-
-
 	KeyState GetKeyState(int _action)
 	{
 		switch (_action)
 		{
-			case 1:
+			case GLFW_PRESS:
 				return KeyState::Pressed;
-			case 0:
+			case GLFW_RELEASE:
 				return KeyState::Released;
-			case 2:
+			case GLFW_REPEAT:
 				return KeyState::Hold;
 			default:
 				SA_LOG("GLFW Key action [" << _action << "] not supported yet!", Warning, SA/Window/GLFW);
 				return KeyState::Pressed;
 		}
 	}
-
-	void WindowKeyCallback(struct GLFWwindow* _handle, int _key, int _scancode, int _action, int _mods)
-	{
-		(void)_scancode;
-		(void)_mods;
-
-		GLFW::Window* const win = static_cast<GLFW::Window*>(glfwGetWindowUserPointer(_handle));
-		SA_ASSERT(Nullptr, SA/Window/GLFW, win);
-		SA_ASSERT(Nullptr, SA/Window/GLFW, win->inputWinContext);
-
-
-		auto keyIt = gGlfwToEngineInputMap.find(_key);
-
-#if SA_DEBUG
-
-		if (keyIt == gGlfwToEngineInputMap.end())
-		{
-			SA_LOG(L"Key [" << _key << "] not registered in input map.", Warning, SA/Window/GLFW);
-
-			win->inputWinContext->WindowKeyCallback(InputKey{Key::Esc, KeyState::Pressed });
-
-			return;
-		}
-
-#endif
-
-		const InputKey key{ keyIt->second, GetKeyState(_action) };
-
-		win->inputWinContext->WindowKeyCallback(key);
-	}
-
-	void CursorPositionCallback(GLFWwindow* _handle, double _posX, double _posY)
-	{
-		GLFW::Window* const win = static_cast<GLFW::Window*>(glfwGetWindowUserPointer(_handle));
-		SA_ASSERT(Nullptr, SA/Window/GLFW, win);
-		SA_ASSERT(Nullptr, SA/Window/GLFW, win->inputWinContext);
-
-		win->inputWinContext->CursorPositionCallback(win->GetSize(), Vec2d{ _posX, _posY });
-	}
 }
 
 #endif
+
+#endif // GUARD

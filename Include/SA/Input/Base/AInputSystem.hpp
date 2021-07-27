@@ -7,6 +7,8 @@
 
 #include <vector>
 
+#include <SA/Core/Types/Abstract.hpp>
+
 #include <SA/Input/Base/AInputWindowContext.hpp>
 
 namespace Sa
@@ -28,6 +30,10 @@ namespace Sa
 		SA_ENGINE_API bool UnRegister(const AWindow* _win);
 
 		SA_ENGINE_API void Clear();
+
+
+		virtual void Create() = 0;
+		SA_ENGINE_API virtual void Destroy();
 
 		virtual void Update() = 0;
 	};

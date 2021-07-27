@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_INPUT_GLFW_INPUT_SYSTEM_GUARD
 #define SAPPHIRE_INPUT_GLFW_INPUT_SYSTEM_GUARD
 
-#include <SA/API/GLFW.hpp>
+#include <SA/Core/Support/API/GLFW.hpp>
 
 #include <SA/Input/Base/AInputSystem.hpp>
 
@@ -19,6 +19,9 @@ namespace Sa::GLFW
 		SA_ENGINE_API AInputWindowContext* InstantiateWindowContext(AWindow* _win) override final;
 
 	public:
+		SA_ENGINE_API void Create() override final;
+		SA_ENGINE_API void Destroy() override final;
+
 		SA_ENGINE_API void Update() override final;
 	};
 }

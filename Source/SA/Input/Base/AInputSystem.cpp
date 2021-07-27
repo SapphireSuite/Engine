@@ -65,4 +65,10 @@ namespace Sa
 
 		mWindowContextMap.clear();
 	}
+
+
+	void AInputSystem::Destroy()
+	{
+		Clear();
+	}
 }

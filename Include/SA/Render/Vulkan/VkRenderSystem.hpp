@@ -24,7 +24,7 @@ namespace Sa::Vk
 #endif
 
 	public:
-		SA_ENGINE_API void Create() override final;
+		SA_ENGINE_API void Create(const AWindowSystem& _winSys) override final;
 		SA_ENGINE_API void Destroy() override final;
 	};
 }

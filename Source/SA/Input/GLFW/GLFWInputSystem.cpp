@@ -16,6 +16,16 @@ namespace Sa::GLFW
 	}
 
 
+	void InputSystem::Create()
+	{
+	}
+	
+	void InputSystem::Destroy()
+	{
+		AInputSystem::Destroy();
+	}
+
+
 	void InputSystem::Update()
 	{
 		glfwPollEvents();

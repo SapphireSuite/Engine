@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_WINDOW_GLFW_WINDOW_GUARD
 #define SAPPHIRE_WINDOW_GLFW_WINDOW_GUARD
 
-#include <SA/API/GLFW.hpp>
+#include <SA/Core/Support/API/GLFW.hpp>
 
 #include <SA/Window/Base/AWindow.hpp>
 
@@ -96,8 +96,6 @@ namespace Sa::GLFW
 		*	\returns GLFW internal handle.
 		*/
 		GLFWwindow* GetHandle() const;
-
-		static bool QueryRequiredExtensions(std::vector<const char*>& _extensions);
 	};
 }
 
