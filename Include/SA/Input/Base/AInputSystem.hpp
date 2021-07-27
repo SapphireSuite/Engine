@@ -7,7 +7,7 @@
 
 #include <vector>
 
-#include <SA/Core/Types/Abstract.hpp>
+#include <SA/Core/Types/ASystem.hpp>
 
 #include <SA/Input/Base/AInputWindowContext.hpp>
 
@@ -15,7 +15,7 @@ namespace Sa
 {
 	class AWindow;
 
-	class AInputSystem : public Abstract
+	class AInputSystem : public ASystem
 	{
 		std::unordered_map<const AWindow*, AInputWindowContext*> mWindowContextMap;
 
@@ -32,8 +32,7 @@ namespace Sa
 		SA_ENGINE_API void Clear();
 
 
-		virtual void Create() = 0;
-		SA_ENGINE_API virtual void Destroy();
+		SA_ENGINE_API void Destroy() override;
 
 		virtual void Update() = 0;
 	};

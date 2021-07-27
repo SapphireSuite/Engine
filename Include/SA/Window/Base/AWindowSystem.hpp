@@ -5,16 +5,13 @@
 #ifndef SAPPHIRE_WINDOW_AWINDOW_SYSTEM_GUARD
 #define SAPPHIRE_WINDOW_AWINDOW_SYSTEM_GUARD
 
-#include <SA/Core/Types/Abstract.hpp>
+#include <SA/Core/Types/ASystem.hpp>
 
 namespace Sa
 {
-	class AWindowSystem : public Abstract
+	class AWindowSystem : public ASystem
 	{
 	public:
-		virtual void Create() = 0;
-		virtual void Destroy() = 0;
-
 		virtual bool QueryRequiredExtensions(std::vector<const char*>& _extensions) const;
 	};
 }

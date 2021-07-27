@@ -17,6 +17,7 @@ using namespace Sa;
 #include <SA/Input/Base/Axis/Bindings/InputAxisRange.hpp>
 
 #include <SA/Render/Vulkan/VkRenderSystem.hpp>
+#include <SA/Render/Vulkan/VkRenderInstance.hpp>
 
 GLFW::WindowSystem winSys;
 GLFW::Window win;
@@ -24,6 +25,7 @@ GLFW::Window win;
 GLFW::InputSystem inputSys;
 
 Vk::RenderSystem renderSys;
+Vk::RenderInstance renderInst;
 
 
 int main()
@@ -39,6 +41,7 @@ int main()
 
 			win.Create(infos);
 		}
+
 
 		// Input.
 		{
@@ -56,18 +59,22 @@ int main()
 
 		// Render
 		{
-			renderSys.Create(winSys);
+			renderSys.Create();
+			renderInst.Create(winSys);
 		}
 	}
 
 
-#if !SA_CI
-
-	while (!win.ShouldClose())
-
-#endif
+	// Loop.
 	{
-		inputSys.Update();
+	#if !SA_CI
+
+		while (!win.ShouldClose())
+
+	#endif
+		{
+			inputSys.Update();
+		}
 	}
 
 
@@ -75,13 +82,16 @@ int main()
 	{
 		// Render
 		{
+			renderInst.Destroy();
 			renderSys.Destroy();
 		}
+
 
 		// Input.
 		{
 			inputSys.Destroy();
 		}
+
 
 		// Window
 		{

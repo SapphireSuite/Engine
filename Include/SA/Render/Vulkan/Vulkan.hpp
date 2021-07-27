@@ -22,13 +22,6 @@
 	#define SA_VK_ASSERT(_pred, ...) SA_ASSERT_EXEC(Vulkan, SA/Render/Vulkan, (_pred), ##__VA_ARGS__)
 
 
-	namespace Sa::Vk
-	{
-		SA_ENGINE_API void Init();
-		SA_ENGINE_API void UnInit();
-	}
-
-
 #endif
 
 

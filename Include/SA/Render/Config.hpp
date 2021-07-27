@@ -22,6 +22,7 @@
 
 #endif
 
+
 #ifndef SA_OPEN_GL
 
 	/// Sapphire Engine enable OpenGL preprocessor.
