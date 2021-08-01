@@ -41,12 +41,15 @@ namespace Sa
 		std::vector<LogStreamBase*> mOutStreams;
 		std::mutex mStreamMutex;
 
+#if __SA_LOG_THREAD
+
 		std::thread mThread;
 		std::queue<const LogBase*> mLogQueue;
 		std::mutex mLogQueueMutex;
 		std::atomic<bool> mIsRunning = true;
 		std::atomic<uint32> mQueueSize = 0u;
 
+#endif
 
 		/// Registered channels.
 		std::unordered_map<std::wstring, LogChannel> mChannels;
@@ -54,8 +57,11 @@ namespace Sa
 
 		bool ShouldLogChannel(const std::wstring& _chanName, LogLevel _level, uint32 _offset = 0u);
 
+#if __SA_LOG_THREAD
 
 		const LogBase* Pop();
+
+#endif
 
 		/**
 		*	\brief Output a log into registered streams.
@@ -72,11 +78,14 @@ namespace Sa
 		*
 		*	\param[in] _log		Log to process.
 		*/
-		void ProcessLog(const LogBase& _log);
+		SA_ENGINE_API void ProcessLog(const LogBase& _log);
 
 	public:
 		/// Enabled level flags for output.
 		Flags<LogLevel, std::atomic<UIntOfSize<sizeof(LogLevel)>>> levelFlags = LogLevel::Default;
+
+
+#if __SA_LOG_THREAD
 
 		/**
 		*	\e Constructor
@@ -89,6 +98,8 @@ namespace Sa
 		*	Join and end Log thread.
 		*/
 		SA_ENGINE_API ~Logger();
+
+#endif
 
 
 		/**
@@ -127,8 +138,9 @@ namespace Sa
 		template <typename LogT>
 		void Push(LogT&& _log);
 
+
 		/**
-		*	\brief Join current queue.
+		*	\brief Join current queue. Only if __SA_LOG_THREAD = 1.
 		* 
 		*	\param[in] _mode	Queue join mode.
 		*/

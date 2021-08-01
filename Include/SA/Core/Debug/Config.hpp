@@ -39,6 +39,10 @@
 #define SA_LOGGING SA_DEBUG || __SA_LOG_RELEASE
 
 
+/// Should log in separated thread.
+#define __SA_LOG_THREAD 0
+
+
 /** \} */
 
 #endif // GUARD

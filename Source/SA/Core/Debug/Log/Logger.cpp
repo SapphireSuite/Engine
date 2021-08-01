@@ -8,8 +8,11 @@ namespace Sa
 {
 #if SA_LOGGING
 
+#if __SA_LOG_THREAD
+
 	Logger::Logger()
 	{
+
 		// if mQueueSize: dequeue, else yield.
 		mThread = std::thread([this]()
 		{
@@ -29,6 +32,7 @@ namespace Sa
 				}
 			}
 		});
+
 	}
 
 	Logger::~Logger()
@@ -41,6 +45,7 @@ namespace Sa
 			mThread.join();
 	}
 
+#endif
 
 	bool Logger::ShouldLogChannel(const std::wstring& _chanName, LogLevel _level, uint32 _offset)
 	{
@@ -117,13 +122,18 @@ namespace Sa
 				Output(_log);
 		}
 
+#if __SA_LOG_THREAD
 		/**
 		*	Decrement after process
 		*	Ensure correct Join.
 		*	no error because only 1 thread running (mProcessingCount not needed).
 		*/
 		--mQueueSize;
+
+#endif
 	}
+
+#if __SA_LOG_THREAD
 
 	const LogBase* Logger::Pop()
 	{
@@ -141,8 +151,13 @@ namespace Sa
 		return log;
 	}
 
+#endif
+
+
 	void Logger::Join(ThreadJoinMode _mode)
 	{
+#if __SA_LOG_THREAD
+
 		switch (_mode)
 		{
 			case ThreadJoinMode::Complete:
@@ -170,6 +185,12 @@ namespace Sa
 				break;
 			}
 		}
+
+#else
+
+		(void)_mode;
+
+#endif
 	}
 
 #endif

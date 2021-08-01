@@ -98,13 +98,6 @@ int main()
 			win.Destroy();
 			winSys.Destroy();
 		}
-
-
-#if SA_LOGGING
-
-		Debug::logger.Join();
-
-#endif
 	}
 
 #if !SA_CI
