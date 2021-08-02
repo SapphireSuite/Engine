@@ -5,8 +5,6 @@
 #ifndef SAPPHIRE_VK_RENDER_SYSTEM_GUARD
 #define SAPPHIRE_VK_RENDER_SYSTEM_GUARD
 
-#include <SA/Render/Vulkan/Vulkan.hpp>
-
 #include <SA/Render/Base/ARenderSystem.hpp>
 
 #if SA_VULKAN

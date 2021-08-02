@@ -2,7 +2,7 @@
 
 #include <Core/Thread/Queue/ThreadQueue.hpp>
 
-#include <Collections/Debug>
+#include <Core/Debug.hpp>
 
 namespace Sa
 {

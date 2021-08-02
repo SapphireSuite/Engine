@@ -5,6 +5,7 @@
 #ifndef SAPPHIRE_CORE_GLFW_API_GUARD
 #define SAPPHIRE_CORE_GLFW_API_GUARD
 
+
 #ifndef SA_GLFW
 
 	/// Sapphire Engine enable GLFW preprocessor.
@@ -14,6 +15,9 @@
 
 
 #if SA_GLFW
+
+	// Include Vulkan before GLFW (if enabled).
+	#include <SA/Core/Support/API/Vulkan.hpp>
 
 	#include <GLFW/glfw3.h>
 

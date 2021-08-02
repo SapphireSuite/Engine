@@ -2,7 +2,7 @@
 
 #include <Window/GLFW/GLFWWindowSystem.hpp>
 
-#include <Collections/Debug>
+#include <Core/Debug.hpp>
 
 #if SA_GLFW
 

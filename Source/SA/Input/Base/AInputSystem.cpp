@@ -2,7 +2,7 @@
 
 #include <Input/Base/AInputSystem.hpp>
 
-#include <Collections/Debug>
+#include <Core/Debug.hpp>
 
 namespace Sa
 {

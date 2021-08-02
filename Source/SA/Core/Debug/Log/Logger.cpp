@@ -2,7 +2,7 @@
 
 #include <Core/Debug/Log/Logger.hpp>
 
-#include <Collections/Debug>
+#include <Core/Debug.hpp>
 
 namespace Sa
 {

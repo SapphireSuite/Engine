@@ -8,7 +8,7 @@
 #include <memory>
 #include <unordered_map>
 
-#include <SA/Collections/Debug>
+#include <SA/Core/Debug.hpp>
 
 #include <SA/Input/Base/Axis/InputAxisBind.hpp>
 #include <SA/Input/Base/Axis/Bindings/InputAxisBinding.hpp>

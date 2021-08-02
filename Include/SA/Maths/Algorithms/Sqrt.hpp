@@ -7,7 +7,7 @@
 
 #include <cmath>
 
-#include <SA/Collections/Debug>
+#include <SA/Core/Debug.hpp>
 
 /**
 *	\file Sqrt.hpp

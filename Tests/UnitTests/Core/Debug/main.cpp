@@ -3,7 +3,7 @@
 #include <UnitTestHelper>
 
 // Test correct include path.
-#include <SA/Collections/Debug>
+#include <SA/Core/Debug.hpp>
 
 void ToStringTests();
 void LoggingTests();

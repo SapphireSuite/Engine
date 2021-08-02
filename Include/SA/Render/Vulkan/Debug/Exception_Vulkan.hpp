@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_RENDER_EXCEPTION_VULKAN_GUARD
 #define SAPPHIRE_RENDER_EXCEPTION_VULKAN_GUARD
 
-#include <SA/Render/Vulkan/Vulkan.hpp>
+#include <SA/Core/Support/API/Vulkan.hpp>
 
 #include <SA/Core/Debug/Exceptions/Exception.hpp>
 

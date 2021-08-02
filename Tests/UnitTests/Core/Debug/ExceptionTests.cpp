@@ -4,7 +4,7 @@
 
 #include <UnitTestHelper>
 
-#include <SA/Collections/Debug>
+#include <SA/Core/Debug.hpp>
 using namespace Sa;
 
 namespace Sa::Exception_UT

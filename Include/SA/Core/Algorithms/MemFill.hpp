@@ -7,7 +7,7 @@
 
 #include <algorithm>
 
-#include <SA/Collections/Debug>
+#include <SA/Core/Debug.hpp>
 
 /**
 *	\file MemFill.hpp

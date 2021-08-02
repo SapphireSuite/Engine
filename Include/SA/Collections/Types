@@ -9,8 +9,11 @@
 #include <SA/Core/Types/Int.hpp>
 
 #include <SA/Core/Types/Variadics/Flags.hpp>
+#include <SA/Core/Types/Variadics/Function.hpp>
 #include <SA/Core/Types/Variadics/Event.hpp>
 #include <SA/Core/Types/Variadics/HasMember.hpp>
 
+#include <SA/Core/Types/Abstract.hpp>
+#include <SA/Core/Types/ASystem.hpp>
 
 #endif // GUARD

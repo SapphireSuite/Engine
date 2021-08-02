@@ -7,7 +7,7 @@
 
 #include <cstring> // std::mem*
 
-#include <SA/Collections/Debug>
+#include <SA/Core/Debug.hpp>
 
 /**
 *	\file MemCopy.hpp

@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_RENDER_VK_VALIDATION_LAYES_GUARD
 #define SAPPHIRE_RENDER_VK_VALIDATION_LAYES_GUARD
 
-#include <SA/Render/Vulkan/Vulkan.hpp>
+#include <SA/Render/Vulkan/Debug/Debug.hpp>
 
 #if SA_VK_VALIDATION_LAYERS
 

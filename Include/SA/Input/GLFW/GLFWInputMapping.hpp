@@ -7,7 +7,7 @@
 
 #include <SA/Core/Support/API/GLFW.hpp>
 
-#include <Collections/Debug>
+#include <SA/Core/Debug.hpp>
 
 #if SA_GLFW
 

@@ -8,7 +8,7 @@
 #include <memory>
 #include <unordered_map>
 
-#include <SA/Collections/Debug>
+#include <SA/Core/Debug.hpp>
 
 #include <SA/Input/Base/Key/InputKeyBind.hpp>
 #include <SA/Input/Base/Key/Bindings/InputKeyBinding.hpp>
