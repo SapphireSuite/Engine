@@ -80,6 +80,8 @@ namespace Sa::GLFW
 		glfwSetWindowMaximizeCallback(mHandle, MaximizedCallback);
 
 		SetWindowMode(_infos.mode);
+
+		SA_LOG(L"Window created", Infos, SA/Window/GLFW);
 	}
 	
 	void Window::Destroy()
@@ -88,6 +90,8 @@ namespace Sa::GLFW
 
 		glfwDestroyWindow(mHandle);
 		mHandle = nullptr;
+
+		SA_LOG(L"Window destroyed", Infos, SA/Window/GLFW);
 	}
 
 	AInputWindowContext* Window::GetInputWindowContext() const

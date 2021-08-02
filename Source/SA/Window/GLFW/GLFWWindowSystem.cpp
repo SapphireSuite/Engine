@@ -10,19 +10,23 @@ namespace Sa::GLFW
 {
 	void ErrorCallback(int32 error, const char* description)
 	{
-		SA_LOG(L"GLFW Error [" << error << L"]:" << description, Error, SA / Window / GLFW);
+		SA_LOG(L"GLFW Error [" << error << L"]:" << description, Error, SA/Window/GLFW);
 	}
 
 	void WindowSystem::Create()
 	{
 		glfwSetErrorCallback(ErrorCallback);
 
-		SA_ASSERT_EXEC(Default, Window / GLFW, glfwInit(), L"GLFW init failed!");
+		SA_ASSERT_EXEC(Default, SA/Window/GLFW, glfwInit(), L"GLFW init failed!");
+
+		SA_LOG(L"Window System created.", Infos, SA/Window/GLFW);
 	}
 
 	void WindowSystem::Destroy()
 	{
 		glfwTerminate();
+
+		SA_LOG(L"Window System destroyed.", Infos, SA/Window/GLFW);
 	}
 
 

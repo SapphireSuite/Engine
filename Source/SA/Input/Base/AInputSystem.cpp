@@ -12,14 +12,6 @@ namespace Sa
 	}
 
 
-	void AInputSystem::DestroyWindowContext(AInputWindowContext* _winContext)
-	{
-		SA_ASSERT(Nullptr, SA/Input, _winContext, L"Destroy null window context!");
-
-		delete _winContext;
-	}
-
-
 	AInputWindowContext* AInputSystem::Register(AWindow* _win)
 	{
 		SA_ASSERT(Nullptr, SA/Input, _win, L"Register null window!");
@@ -32,7 +24,8 @@ namespace Sa
 			return itFind->second;
 		}
 
-		AInputWindowContext* const winContext = InstantiateWindowContext(_win);
+		AInputWindowContext* const winContext = InstantiateWindowContext();
+		winContext->Create(_win);
 
 		mWindowContextMap.emplace(_win, winContext);
 
@@ -51,7 +44,9 @@ namespace Sa
 			return false;
 		}
 
-		DestroyWindowContext(itFind->second);
+		itFind->second->Destroy();
+		DeleteWindowContext(itFind->second);
+
 		mWindowContextMap.erase(itFind);
 
 		return true;
@@ -61,7 +56,10 @@ namespace Sa
 	void AInputSystem::Clear()
 	{
 		for (auto it = mWindowContextMap.begin(); it != mWindowContextMap.end(); ++it)
-			delete it->second;
+		{
+			it->second->Destroy();
+			DeleteWindowContext(it->second);
+		}
 
 		mWindowContextMap.clear();
 	}

@@ -20,8 +20,8 @@ namespace Sa
 		std::unordered_map<const AWindow*, AInputWindowContext*> mWindowContextMap;
 
 	protected:
-		virtual AInputWindowContext* InstantiateWindowContext(AWindow* _win) = 0;
-		SA_ENGINE_API virtual void DestroyWindowContext(AInputWindowContext* _winContext);
+		virtual AInputWindowContext* InstantiateWindowContext() = 0;
+		virtual void DeleteWindowContext(AInputWindowContext* _winContext) = 0;
 
 	public:
 		SA_ENGINE_API virtual ~AInputSystem();

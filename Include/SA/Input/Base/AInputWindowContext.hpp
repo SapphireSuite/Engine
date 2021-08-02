@@ -11,6 +11,8 @@
 
 namespace Sa
 {
+	class AWindow;
+
 	class AInputWindowContext : public Abstract
 	{
 		std::vector<InputContext*> mContexts;
@@ -21,8 +23,11 @@ namespace Sa
 		template <typename InputT>
 		bool Process(const InputT& _input);
 
-		SA_ENGINE_API InputContext* Create();
-		SA_ENGINE_API bool Destroy(const InputContext* _context);
+		virtual void Create(AWindow* _win) = 0;
+		virtual void Destroy() = 0;
+
+		SA_ENGINE_API InputContext* CreateContext();
+		SA_ENGINE_API bool DestroyContext(const InputContext* _context);
 
 		void Clear();
 	};

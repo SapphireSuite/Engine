@@ -10,12 +10,12 @@ namespace Sa
 	}
 
 
-	InputContext* AInputWindowContext::Create()
+	InputContext* AInputWindowContext::CreateContext()
 	{
 		return mContexts.emplace_back(new InputContext);
 	}
 
-	bool AInputWindowContext::Destroy(const InputContext* _context)
+	bool AInputWindowContext::DestroyContext(const InputContext* _context)
 	{
 		SA_ASSERT(Nullptr, SA/Input, _context, L"Destroy null InputContext");
 

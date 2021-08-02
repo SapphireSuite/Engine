@@ -51,14 +51,15 @@ namespace Sa::GLFW
 	}
 
 
-	InputWindowContext::InputWindowContext(Window* _win)
+	void InputWindowContext::Create(AWindow* _win)
 	{
 		SA_ASSERT(Nullptr, SA/Input/GLFW, _win);
+		GLFW::Window& glfwWin = _win->As<Window>();
 
-		GLFWwindow* const winHandle = _win->GetHandle();
+		GLFWwindow* const winHandle = glfwWin.GetHandle();
 		SA_ASSERT(Nullptr, SA/Input/GLFW, winHandle);
 
-		_win->inputWinContext = this;
+		glfwWin.inputWinContext = this;
 
 		glfwSetKeyCallback(winHandle, GLFW::WindowKeyCallback);
 		glfwSetCursorPosCallback(winHandle, GLFW::CursorPositionCallback);
@@ -73,6 +74,13 @@ namespace Sa::GLFW
 
 			GLFW::CursorPositionCallback(winHandle, mouseX, mouseY);
 		}
+
+		SA_LOG(L"Input Window Context created.", Infos, SA/Input/GLFW);
+	}
+
+	void InputWindowContext::Destroy()
+	{
+		SA_LOG(L"Input Window Context destroyed.", Infos, SA/Input/GLFW);
 	}
 
 

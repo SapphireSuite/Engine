@@ -15,14 +15,13 @@
 
 namespace Sa::GLFW
 {
-	class Window;
-
 	class InputWindowContext : public AInputWindowContext
 	{
 		Vec2f mSavedMousePos;
 
 	public:
-		InputWindowContext(Window* _win);
+		void Create(AWindow* _win) override final;
+		void Destroy() override final;
 
 		void WindowKeyCallback(const InputKey& _inRawKey);
 		void CursorPositionCallback(const Vec2ui& _windowSize, const Vec2f& _mousePos);

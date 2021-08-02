@@ -48,7 +48,7 @@ int main()
 			inputSys.Create();
 
 			AInputWindowContext* const inWinContext = inputSys.Register(&win);
-			InputContext* const inputContext = inWinContext->Create();
+			InputContext* const inputContext = inWinContext->CreateContext();
 
 			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::Esc, KeyState::Pressed }, &win, &GLFW::Window::Close);
 
