@@ -5,9 +5,9 @@
 #ifndef SAPPHIRE_WINDOW_GLFW_WINDOW_GUARD
 #define SAPPHIRE_WINDOW_GLFW_WINDOW_GUARD
 
-#include <SA/Core/Support/API/GLFW.hpp>
-
 #include <SA/Window/Base/AWindow.hpp>
+
+#include <SA/Core/Support/API/GLFW.hpp>
 
 #if SA_GLFW
 
@@ -89,6 +89,12 @@ namespace Sa::GLFW
 
 		SA_ENGINE_API void Close() override final;
 		SA_ENGINE_API bool ShouldClose() const override final;
+
+#if SA_VULKAN
+
+		SA_ENGINE_API VkSurfaceKHR_T* CreateVkRenderSurface(const Vk::RenderInstance& _instance) const override final;
+
+#endif
 
 		/**
 		*	\brief \e Getter of GLFW internal handle.

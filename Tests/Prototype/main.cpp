@@ -18,6 +18,8 @@ using namespace Sa;
 
 #include <SA/Render/Vulkan/VkRenderSystem.hpp>
 #include <SA/Render/Vulkan/VkRenderInstance.hpp>
+#include <SA/Render/Vulkan/Surface/VkRenderSurface.hpp>
+#include <SA/Render/Vulkan/Device/VkDevice.hpp>
 
 GLFW::WindowSystem winSys;
 GLFW::Window win;
@@ -26,6 +28,8 @@ GLFW::InputSystem inputSys;
 
 Vk::RenderSystem renderSys;
 Vk::RenderInstance renderInst;
+Vk::Device renderDevice;
+Vk::RenderSurface* renderSurface = nullptr;
 
 
 int main()
@@ -61,6 +65,12 @@ int main()
 		{
 			renderSys.Create();
 			renderInst.Create(winSys);
+			renderSurface = renderInst.CreateRenderSurface(win)->AsPtr<Vk::RenderSurface>();
+			
+			std::vector<Vk::GraphicDeviceInfos> deviceInfos = Vk::Device::QuerySuitableDevices(renderInst, Vk::QueueType::Max, renderSurface);
+			renderDevice.Create(deviceInfos[0]);
+
+			renderSurface->Create(renderInst);
 		}
 	}
 
@@ -82,6 +92,11 @@ int main()
 	{
 		// Render
 		{
+			renderSurface->Destroy(renderInst);
+
+			renderDevice.Destroy();
+
+			renderInst.DestroyRenderSurface(renderSurface);
 			renderInst.Destroy();
 			renderSys.Destroy();
 		}

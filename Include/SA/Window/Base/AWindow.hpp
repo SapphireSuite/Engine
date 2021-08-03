@@ -8,6 +8,8 @@
 #include <SA/Core/Types/Abstract.hpp>
 #include <SA/Core/Types/Variadics/Event.hpp>
 
+#include <SA/Core/Support/API/Vulkan.hpp>
+
 #include <SA/Maths/Space/Vector2.hpp>
 
 #include <SA/Window/Base/WindowMode.hpp>
@@ -24,6 +26,12 @@
 namespace Sa
 {
 	class AInputWindowContext;
+
+	namespace Vk
+	{
+		class RenderInstance;
+	}
+
 
 	/**
 	*	\brief Window \e Abstract class
@@ -164,6 +172,13 @@ namespace Sa
 		*	\returns current closed state.
 		*/
 		virtual bool ShouldClose() const = 0;
+
+
+#if SA_VULKAN
+
+		virtual VkSurfaceKHR_T* CreateVkRenderSurface(const Vk::RenderInstance& _instance) const = 0;
+
+#endif
 	};
 }
 

@@ -2,10 +2,9 @@
 
 #include <Render/Vulkan/VkRenderInstance.hpp>
 
-#include <Core/Algorithms/SizeOf.hpp>
-
 #include <Render/Vulkan/Debug/VkValidationLayers.hpp>
 
+#include <Window/Base/AWindow.hpp>
 #include <Window/Base/AWindowSystem.hpp>
 
 #if SA_VULKAN
@@ -41,7 +40,7 @@ namespace Sa::Vk
 		appInfos.apiVersion = VK_API_VERSION_1_0;
 
 
-		std::vector<const char*> extensions = GetRequiredExtensions(_winSys);
+		const std::vector<const char*> extensions = GetRequiredExtensions(_winSys);
 
 
 		VkInstanceCreateInfo instanceInfos;
@@ -54,7 +53,7 @@ namespace Sa::Vk
 		instanceInfos.enabledLayerCount = 0;
 		instanceInfos.ppEnabledLayerNames = nullptr;
 
-		instanceInfos.enabledExtensionCount = static_cast<uint32>(SizeOf(extensions));
+		instanceInfos.enabledExtensionCount = static_cast<uint32>(extensions.size());
 		instanceInfos.ppEnabledExtensionNames = extensions.data();
 
 #if SA_VK_VALIDATION_LAYERS
@@ -78,6 +77,8 @@ namespace Sa::Vk
 		SA_VK_ASSERT(createDebugFunc(mHandle, &debugUtilscreateInfo, nullptr, &mDebugMessenger), L"Failed to create vulkan debug messenger!");
 
 #endif
+
+		SA_LOG(L"Render Instance created.", Infos, SA/Render/Vulkan);
 	}
 
 	void RenderInstance::Destroy()
@@ -91,8 +92,52 @@ namespace Sa::Vk
 
 #endif
 
-
 		vkDestroyInstance(mHandle, nullptr);
+
+		SA_LOG(L"Render Instance destroyed.", Infos, SA/Render/Vulkan);
+	}
+
+
+	ARenderSurface* RenderInstance::CreateRenderSurface(const AWindow& _win)
+	{
+		// Create.
+		VkSurfaceKHR vkSurface = _win.CreateVkRenderSurface(*this);
+
+		// Register.
+		RenderSurface* surface = mSurfaces.emplace_back(new RenderSurface(vkSurface));
+
+		return surface;
+	}
+
+	void RenderInstance::DestroyRenderSurface(const ARenderSurface* _surface)
+	{
+		SA_ASSERT(Nullptr, SA/Render/Vulkan, _surface);
+
+		bool bDestroyed = false;
+
+		for (auto it = mSurfaces.begin(); it != mSurfaces.end(); ++it)
+		{
+			if (*it == _surface)
+			{
+				bDestroyed = true;
+				//(*it)->Destroy(*this);
+
+				vkDestroySurfaceKHR(mHandle, **it, nullptr);
+
+				mSurfaces.erase(it);
+
+				break;
+			}
+		}
+
+		(void)bDestroyed;
+		SA_WARN(bDestroyed, SA/Render/Vulkan, L"RenderSurface not registered in instance!");
+	}
+
+
+	RenderInstance::operator VkInstance() const noexcept
+	{
+		return mHandle;
 	}
 }
 

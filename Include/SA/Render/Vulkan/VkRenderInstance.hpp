@@ -7,10 +7,13 @@
 
 #include <SA/Render/Vulkan/Debug/Debug.hpp>
 
+#include <SA/Render/Vulkan/Surface/VkRenderSurface.hpp>
+
 #if SA_VULKAN
 
 namespace Sa
 {
+	class AWindow;
 	class AWindowSystem;
 }
 
@@ -19,6 +22,8 @@ namespace Sa::Vk
 	class RenderInstance
 	{
 		VkInstance mHandle = VK_NULL_HANDLE;
+
+		std::vector<RenderSurface*> mSurfaces;
 
 #if SA_VK_VALIDATION_LAYERS
 
@@ -29,6 +34,11 @@ namespace Sa::Vk
 	public:
 		SA_ENGINE_API void Create(const AWindowSystem& _winSys);
 		SA_ENGINE_API void Destroy();
+
+		SA_ENGINE_API ARenderSurface* CreateRenderSurface(const AWindow& _win);
+		SA_ENGINE_API void DestroyRenderSurface(const ARenderSurface* _surface);
+
+		operator VkInstance() const noexcept;
 	};
 }
 
