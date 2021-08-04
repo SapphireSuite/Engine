@@ -2,8 +2,8 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_RENDER_VK_QUEUE_TYPE_GUARD
-#define SAPPHIRE_RENDER_VK_QUEUE_TYPE_GUARD
+#ifndef SAPPHIRE_RENDER_VK_QUEUE_FAMILY_GUARD
+#define SAPPHIRE_RENDER_VK_QUEUE_FAMILY_GUARD
 
 #include <SA/Core/Types/Variadics/Flags.hpp>
 
@@ -13,7 +13,7 @@
 
 namespace Sa::Vk
 {
-	enum class QueueType : uint8
+	enum class QueueFamily : uint8
 	{
 		Graphics = 1 << 0,
 
@@ -25,9 +25,10 @@ namespace Sa::Vk
 
 		// === Group ===
 		Max = Graphics | Compute | Transfer | Present,
+		OffScreen = Graphics | Compute | Transfer,
 	};
 
-	SA_DEFINE_ENUM_FLAGS(QueueType)
+	SA_DEFINE_ENUM_FLAGS(QueueFamily)
 }
 
 #endif

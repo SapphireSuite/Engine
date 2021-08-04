@@ -69,7 +69,7 @@ int main()
 			renderInst.Create(winSys);
 			renderSurface = renderInst.CreateRenderSurface(win)->AsPtr<Vk::RenderSurface>();
 			
-			std::vector<Vk::GraphicDeviceInfos> deviceInfos = Vk::Device::QuerySuitableDevices(renderInst, Vk::QueueType::Max, renderSurface);
+			std::vector<Vk::GraphicDeviceInfos> deviceInfos = Vk::Device::QuerySuitableDevices(renderInst, renderSurface);
 			renderDevice.Create(deviceInfos[0]);
 
 			renderSurface->Create(renderInst);

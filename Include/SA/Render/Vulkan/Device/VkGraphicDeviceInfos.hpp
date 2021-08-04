@@ -7,7 +7,7 @@
 
 #include <SA/Render/Base/AGraphicDeviceInfos.hpp>
 
-#include <SA/Render/Vulkan/Device/VkQueueType.hpp>
+#include <SA/Render/Vulkan/Device/VkQueueRequirements.hpp>
 
 #if SA_VULKAN
 
@@ -19,32 +19,39 @@ namespace Sa::Vk
 	{
 		struct FamilyInfos
 		{
-			uint32 index = ~uint32();
-			uint32 maxQueueNum = 1u;
-			uint32 queueNum = 1u;
+			struct QueueInfos
+			{
+				uint32 familyIndex = 0;
+				uint32 queueIndex = 0;
+			};
 
-			bool IsCompleted() const noexcept;
+			std::vector<QueueInfos> queueInfos;
 		};
-
-		const VkPhysicalDevice device = VK_NULL_HANDLE;
-		const QueueType familyTypes;
 
 		FamilyInfos graphics;
 		FamilyInfos compute;
 		FamilyInfos transfer;
 		FamilyInfos present;
 
-		static constexpr uint32 familyNum = 4;
+
+		struct IndexInfos
+		{
+			uint32 index = ~uint32();
+			uint32 num = 0u;
+		};
+
+		std::vector<IndexInfos> indexInfos;
 
 
-		GraphicDeviceInfos(GraphicDeviceInfos&&) = default;
-		GraphicDeviceInfos(const GraphicDeviceInfos&) = default;
-		GraphicDeviceInfos(VkPhysicalDevice _device, QueueType _familyTypes) noexcept;
+		const VkPhysicalDevice device = VK_NULL_HANDLE;
+		
+		QueueRequirements reqs;
 
-		const FamilyInfos* Families() const noexcept;
+
+		GraphicDeviceInfos(VkPhysicalDevice _device, const QueueRequirements& _reqs) noexcept;
 
 		void QueryQueueFamilies(const RenderSurface* _surface) noexcept;
-		void AddFamily(const RenderSurface* _surface, const VkQueueFamilyProperties& _family, uint32 _index) noexcept;
+		void AddFamily(const RenderSurface* _surface, const VkQueueFamilyProperties& _family, uint32 _famIndex) noexcept;
 
 		bool QueueFamiliesCompleted() const noexcept;
 

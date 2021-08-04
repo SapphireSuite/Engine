@@ -11,7 +11,7 @@
 
 namespace Sa::Vk
 {
-	std::vector<const char*> GetRequiredExtensions(QueueType _reqFamilies)
+	std::vector<const char*> GetRequiredExtensions(QueueFamily _reqFamilies)
 	{
 		// Present requiered extensions.
 		static constexpr const char* presentRequieredExtensions[] =
@@ -22,13 +22,13 @@ namespace Sa::Vk
 
 		std::vector<const char*> result;
 
-		if (_reqFamilies & QueueType::Present)
+		if (_reqFamilies & QueueFamily::Present)
 			result.insert(result.end(), presentRequieredExtensions, presentRequieredExtensions + SizeOf(presentRequieredExtensions));
 
 		return result;
 	}
 
-	bool CheckExtensionSupport(VkPhysicalDevice _device, QueueType _reqFamilies)
+	bool CheckExtensionSupport(VkPhysicalDevice _device, QueueFamily _reqFamilies)
 	{
 		uint32 extensionCount = 0u;
 		SA_VK_ASSERT(vkEnumerateDeviceExtensionProperties(_device, nullptr, &extensionCount, nullptr),
@@ -66,7 +66,7 @@ namespace Sa::Vk
 	bool IsPhysicalDeviceSuitable(GraphicDeviceInfos& _infos, const RenderSurface* _surface)
 	{
 		// Check requiered extensions.
-		if (!CheckExtensionSupport(_infos.device, _infos.familyTypes))
+		if (!CheckExtensionSupport(_infos.device, _infos.reqs.familyFlags))
 			return false;
 
 		// Check queue family suitability.
@@ -110,14 +110,10 @@ namespace Sa::Vk
 		//physicalDeviceFeatures.sampleRateShading = VK_TRUE;
 		//physicalDeviceFeatures.samplerAnisotropy = VK_TRUE;
 
-		std::vector<const char*> extensions = GetRequiredExtensions(_infos.familyTypes);
+		//physicalDeviceFeatures.multiViewport = VK_TRUE;
+
+		std::vector<const char*> extensions = GetRequiredExtensions(_infos.reqs.familyFlags);
 		std::vector<VkDeviceQueueCreateInfo> queueCreateInfos = _infos.GetDeviceCreateInfos();
-
-		SA_LOG(L"Graphic device created.", Infos, SA/Render/Vulkan);
-
-		//// TODO: Implement.
-		//_infos.graphics.queueNum = 3u;
-		//_infos.present.queueNum = 3u;
 
 		VkDeviceCreateInfo deviceCreateInfo{};
 		deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
@@ -143,14 +139,19 @@ namespace Sa::Vk
 		SA_VK_ASSERT(vkCreateDevice(mPhysicalDevice, &deviceCreateInfo, nullptr, &mLogicalDevice),
 			L"Failed to create logical device!");
 
-
 		// Query properties.
 		vkGetPhysicalDeviceMemoryProperties(mPhysicalDevice, &mMemProperties);
+
+		queueMgr.Create(*this, _infos);
+
+		SA_LOG(L"Graphic device created.", Infos, SA/Render/Vulkan);
 	}
 	
 	void Device::Destroy()
 	{
 		SA_ASSERT(Default, SA/Render/Vulkan, mLogicalDevice != VK_NULL_HANDLE && mPhysicalDevice != VK_NULL_HANDLE, L"Destroy invalid device.");
+
+		queueMgr.Destroy(*this);
 
 		vkDestroyDevice(mLogicalDevice, nullptr);
 
@@ -161,9 +162,14 @@ namespace Sa::Vk
 	}
 
 
-	std::vector<GraphicDeviceInfos> Device::QuerySuitableDevices(const RenderInstance& _inst, QueueType _reqFamilies, const RenderSurface* _surface)
+	std::vector<GraphicDeviceInfos> QuerySuitableDevices(const RenderInstance& _inst, const QueueRequirements& _queueReq)
 	{
-		SA_ASSERT(Default, SA/Render/Vulkan, !((bool)(_reqFamilies & QueueType::Present) ^ (_surface != nullptr)),
+		return Device::QuerySuitableDevices(_inst, nullptr, _queueReq);
+	}
+
+	std::vector<GraphicDeviceInfos> Device::QuerySuitableDevices(const RenderInstance& _inst, const RenderSurface* _surface, const QueueRequirements& _queueReq)
+	{
+		SA_ASSERT(Default, SA/Render/Vulkan, !((bool)(_queueReq.familyFlags & QueueFamily::Present) ^ (_surface != nullptr)),
 			L"QueueType::Present requiere a valid RenderSurface as parameter!");
 
 		// Query Physical devices.
@@ -181,7 +187,7 @@ namespace Sa::Vk
 
 		for (auto it = vkDevices.begin(); it != vkDevices.end(); ++it)
 		{
-			GraphicDeviceInfos infos{ *it, _reqFamilies };
+			GraphicDeviceInfos infos{ *it, _queueReq };
 
 			if (IsPhysicalDeviceSuitable(infos, _surface))
 				ghDeviceInfos.emplace_back(infos);
@@ -193,5 +199,16 @@ namespace Sa::Vk
 		//std::sort(ghDeviceInfos.begin(), ghDeviceInfos.end(), AGraphicDeviceInfos::SortScore);
 
 		return ghDeviceInfos;
+	}
+
+
+	Device::operator VkDevice() const noexcept
+	{
+		return mLogicalDevice;
+	}
+
+	Device::operator VkPhysicalDevice() const noexcept
+	{
+		return mPhysicalDevice;
 	}
 }
