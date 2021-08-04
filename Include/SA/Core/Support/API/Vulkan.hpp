@@ -21,4 +21,12 @@
 #endif
 
 
+/**
+*	Useful Documentations:
+* 
+*	https://vulkan-tutorial.com/
+*	https://developer.nvidia.com/blog/vulkan-dos-donts/
+*/
+
+
 #endif // GUARD

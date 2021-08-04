@@ -36,6 +36,8 @@ int main()
 {
 	// Init.
 	{
+		Debug::logger.GetChannel(L"SA/Render/Vulkan/VLayers").levelFlags.Remove(LogLevel::Normal);
+
 		// Window.
 		{
 			winSys.Create();
