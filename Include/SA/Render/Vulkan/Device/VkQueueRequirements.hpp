@@ -7,6 +7,8 @@
 
 #include <SA/Render/Vulkan/Device/VkQueueFamily.hpp>
 
+#if SA_VULKAN
+
 namespace Sa::Vk
 {
 	struct QueueRequirements
@@ -19,5 +21,7 @@ namespace Sa::Vk
 		uint32 presentNum = 1;
 	};
 }
+
+#endif
 
 #endif // GUARD

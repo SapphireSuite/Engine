@@ -2,6 +2,8 @@
 
 #include <Render/Vulkan/Device/VkQueueMgr.hpp>
 
+#if SA_VULKAN
+
 namespace Sa::Vk
 {
 	const QueueFamilyMgr& QueueMgr::GetQueueFamilyMgrFromType(QueueFamily _family) const
@@ -43,3 +45,5 @@ namespace Sa::Vk
 		SA_LOG(L"Queue Mgr destroyed", Infos, SA/Render/Vulkan);
 	}
 }
+
+#endif

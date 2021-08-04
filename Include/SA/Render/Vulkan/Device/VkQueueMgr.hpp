@@ -8,6 +8,8 @@
 #include <SA/Render/Vulkan/Device/VkQueueFamilyMgr.hpp>
 #include <SA/Render/Vulkan/Device/VkGraphicDeviceInfos.hpp>
 
+#if SA_VULKAN
+
 namespace Sa::Vk
 {
 	class QueueMgr
@@ -24,5 +26,7 @@ namespace Sa::Vk
 		void Destroy(const Device& _device);
 	};
 }
+
+#endif
 
 #endif // GUARD

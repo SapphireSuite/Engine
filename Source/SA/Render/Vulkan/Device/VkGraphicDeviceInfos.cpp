@@ -5,6 +5,8 @@
 #include <Render/Vulkan/Debug/Debug.hpp>
 #include <Render/Vulkan/Surface/VkRenderSurface.hpp>
 
+#if SA_VULKAN
+
 namespace Sa::Vk
 {
 	GraphicDeviceInfos::GraphicDeviceInfos(VkPhysicalDevice _device, const QueueRequirements& _reqs) noexcept :
@@ -132,3 +134,5 @@ namespace Sa::Vk
 		return result;
 	}
 }
+
+#endif
