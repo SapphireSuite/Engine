@@ -69,7 +69,7 @@ namespace Sa::Vk
 		if (_device.queueMgr.present.GetQueue(0).IsValid() && familyIndices[0] != familyIndices[1]) // Graphic and present familiy are different.
 		{
 			swapChainCreateInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
-			swapChainCreateInfo.queueFamilyIndexCount = SizeOf(familyIndices);
+			swapChainCreateInfo.queueFamilyIndexCount = SizeOf<uint32>(familyIndices);
 			swapChainCreateInfo.pQueueFamilyIndices = familyIndices;
 		}
 

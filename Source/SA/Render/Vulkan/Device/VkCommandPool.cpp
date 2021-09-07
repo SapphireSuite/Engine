@@ -92,7 +92,7 @@ namespace Sa::Vk
 
 	void CommandPool::FreeMultiple(const Device& _device, std::vector<CommandBuffer>& _buffers)
 	{
-		const uint32 num = SizeOf(_buffers);
+		const uint32 num = SizeOf<uint32>(_buffers);
 
 		std::vector<VkCommandBuffer> vkCommandBuffers;
 		vkCommandBuffers.resize(num);

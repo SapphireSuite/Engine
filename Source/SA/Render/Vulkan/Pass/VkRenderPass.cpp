@@ -90,7 +90,7 @@ namespace Sa::Vk
 	void RenderPass::Create(const Device& _device, const RenderPassDescriptor& _descriptor)
 	{
 		// === Subpasses ===
-		uint32 subpassNum = SizeOf(_descriptor.subPassDescs);
+		uint32 subpassNum = SizeOf<uint32>(_descriptor.subPassDescs);
 
 		std::vector<VkSubpassDescription> subpassDescriptions;
 		subpassDescriptions.reserve(subpassNum);
@@ -144,11 +144,11 @@ namespace Sa::Vk
 				if (IsDepthFormat(attIt->format))
 				{
 					attachDesc.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-					depthAttachRef.attachment = SizeOf(subpassAttachments) - 1u;
+					depthAttachRef.attachment = SizeOf<uint32>(subpassAttachments) - 1u;
 				}
 				else
 				{
-					colorAttachmentRefs.push_back(VkAttachmentReference{ (uint32)SizeOf(subpassAttachments) - 1u, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL });
+					colorAttachmentRefs.push_back(VkAttachmentReference{ SizeOf<uint32>(subpassAttachments) - 1u, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL });
 					resolveAttachmentRefs.push_back(VkAttachmentReference{ VK_ATTACHMENT_UNUSED, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL });
 
 					if (sampling != VK_SAMPLE_COUNT_1_BIT)
@@ -160,21 +160,21 @@ namespace Sa::Vk
 						if (IsPresentFormat(attIt->format))
 							resolveAttachDesc.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
 
-						resolveAttachmentRefs.back().attachment = SizeOf(subpassAttachments) - 1u;
+						resolveAttachmentRefs.back().attachment = SizeOf<uint32>(subpassAttachments) - 1u;
 					}
 					else if (IsPresentFormat(attIt->format))
 						attachDesc.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
 				}
 
 				if (attIt->bInputNext)
-					inputAttachmentRefs.push_back({ (uint32)SizeOf(subpassAttachments) - 1u, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL });
+					inputAttachmentRefs.push_back({ SizeOf<uint32>(subpassAttachments) - 1u, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL });
 			}
 
 
 			// Subpass description.
 			VkSubpassDescription& vkSubpassDesc = subpassDescriptions.emplace_back(CreateSubpassDesc());
 
-			vkSubpassDesc.colorAttachmentCount = SizeOf(colorAttachmentRefs);
+			vkSubpassDesc.colorAttachmentCount = SizeOf<uint32>(colorAttachmentRefs);
 			vkSubpassDesc.pColorAttachments = colorAttachmentRefs.data();
 			vkSubpassDesc.pResolveAttachments = resolveAttachmentRefs.data();
 
@@ -183,7 +183,7 @@ namespace Sa::Vk
 			if (i > 0u && SizeOf(subpassInputAttachmentRefs[i - 1]) > 0u)
 			{
 				// Add input attachment from previous subpass.
-				vkSubpassDesc.inputAttachmentCount = SizeOf(subpassInputAttachmentRefs[i - 1]);
+				vkSubpassDesc.inputAttachmentCount = SizeOf<uint32>(subpassInputAttachmentRefs[i - 1]);
 				vkSubpassDesc.pInputAttachments = subpassInputAttachmentRefs[i - 1].data();
 			}
 
@@ -198,11 +198,11 @@ namespace Sa::Vk
 		renderPassCreateInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
 		renderPassCreateInfo.pNext = nullptr;
 		renderPassCreateInfo.flags = VK_RENDER_PASS_CREATE_TRANSFORM_BIT_QCOM;
-		renderPassCreateInfo.attachmentCount = SizeOf(subpassAttachments);
+		renderPassCreateInfo.attachmentCount = SizeOf<uint32>(subpassAttachments);
 		renderPassCreateInfo.pAttachments = subpassAttachments.data();
-		renderPassCreateInfo.subpassCount = SizeOf(subpassDescriptions);
+		renderPassCreateInfo.subpassCount = SizeOf<uint32>(subpassDescriptions);
 		renderPassCreateInfo.pSubpasses = subpassDescriptions.data();
-		renderPassCreateInfo.dependencyCount = SizeOf(subpassDependencies);
+		renderPassCreateInfo.dependencyCount = SizeOf<uint32>(subpassDependencies);
 		renderPassCreateInfo.pDependencies = subpassDependencies.data();
 
 		SA_VK_ASSERT(vkCreateRenderPass(_device, &renderPassCreateInfo, nullptr, &mHandle), L"Failed to create render pass!");

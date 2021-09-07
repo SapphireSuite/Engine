@@ -81,7 +81,7 @@ namespace Sa::Vk
 		framebufferCreateInfo.pNext = nullptr;
 		framebufferCreateInfo.flags = 0;
 		framebufferCreateInfo.renderPass = _renderPass;
-		framebufferCreateInfo.attachmentCount = SizeOf(attachementCreateInfos);
+		framebufferCreateInfo.attachmentCount = SizeOf<uint32>(attachementCreateInfos);
 		framebufferCreateInfo.pAttachments = attachementCreateInfos.data();
 		framebufferCreateInfo.width = _extent.x;
 		framebufferCreateInfo.height = _extent.y;
