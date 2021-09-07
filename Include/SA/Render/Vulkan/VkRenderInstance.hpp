@@ -23,8 +23,6 @@ namespace Sa::Vk
 	{
 		VkInstance mHandle = VK_NULL_HANDLE;
 
-		std::vector<RenderSurface*> mSurfaces;
-
 #if SA_VK_VALIDATION_LAYERS
 
 		VkDebugUtilsMessengerEXT mDebugMessenger = nullptr;
@@ -34,9 +32,6 @@ namespace Sa::Vk
 	public:
 		SA_ENGINE_API void Create(const AWindowSystem& _winSys);
 		SA_ENGINE_API void Destroy();
-
-		SA_ENGINE_API ARenderSurface* CreateRenderSurface(const AWindow& _win);
-		SA_ENGINE_API void DestroyRenderSurface(const ARenderSurface* _surface);
 
 		operator VkInstance() const noexcept;
 	};

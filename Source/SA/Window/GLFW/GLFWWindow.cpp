@@ -6,6 +6,7 @@
 
 #include <Render/Vulkan/Debug/Debug.hpp>
 #include <Render/Vulkan/VkRenderInstance.hpp>
+#include <Render/Vulkan/Surface/VkRenderSurface.hpp>
 
 #if SA_GLFW
 
@@ -181,13 +182,13 @@ namespace Sa::GLFW
 
 #if SA_VULKAN
 
-	VkSurfaceKHR_T* Window::CreateVkRenderSurface(const Vk::RenderInstance& _instance) const
+	Vk::RenderSurface Window::CreateVkRenderSurface(const Vk::RenderInstance& _instance) const
 	{
 		VkSurfaceKHR vkSurface;
 
 		SA_VK_ASSERT(glfwCreateWindowSurface(_instance, mHandle, nullptr, &vkSurface), L"Failed to create VkRenderSurface from GLFW window!");
 
-		return vkSurface;
+		return Vk::RenderSurface{ vkSurface };
 	}
 
 #endif

@@ -92,7 +92,7 @@ namespace Sa::GLFW
 
 #if SA_VULKAN
 
-		SA_ENGINE_API VkSurfaceKHR_T* CreateVkRenderSurface(const Vk::RenderInstance& _instance) const override final;
+		SA_ENGINE_API Vk::RenderSurface CreateVkRenderSurface(const Vk::RenderInstance& _instance) const override final;
 
 #endif
 

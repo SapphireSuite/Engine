@@ -98,43 +98,6 @@ namespace Sa::Vk
 	}
 
 
-	ARenderSurface* RenderInstance::CreateRenderSurface(const AWindow& _win)
-	{
-		// Create.
-		VkSurfaceKHR vkSurface = _win.CreateVkRenderSurface(*this);
-
-		// Register.
-		RenderSurface* surface = mSurfaces.emplace_back(new RenderSurface(vkSurface));
-
-		return surface;
-	}
-
-	void RenderInstance::DestroyRenderSurface(const ARenderSurface* _surface)
-	{
-		SA_ASSERT(Nullptr, SA/Render/Vulkan, _surface);
-
-		bool bDestroyed = false;
-
-		for (auto it = mSurfaces.begin(); it != mSurfaces.end(); ++it)
-		{
-			if (*it == _surface)
-			{
-				bDestroyed = true;
-				//(*it)->Destroy(*this);
-
-				vkDestroySurfaceKHR(mHandle, **it, nullptr);
-
-				mSurfaces.erase(it);
-
-				break;
-			}
-		}
-
-		(void)bDestroyed;
-		SA_WARN(bDestroyed, SA/Render/Vulkan, L"RenderSurface not registered in instance!");
-	}
-
-
 	RenderInstance::operator VkInstance() const noexcept
 	{
 		return mHandle;

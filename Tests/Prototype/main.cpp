@@ -30,7 +30,7 @@ GLFW::InputSystem inputSys;
 Vk::RenderSystem renderSys;
 Vk::RenderInstance renderInst;
 Vk::Device renderDevice;
-Vk::RenderSurface* renderSurface = nullptr;
+Vk::RenderSurface renderSurface;
 Vk::RenderPass renderPass;
 
 int main()
@@ -68,12 +68,12 @@ int main()
 		{
 			renderSys.Create();
 			renderInst.Create(winSys);
-			renderSurface = renderInst.CreateRenderSurface(win)->AsPtr<Vk::RenderSurface>();
+			renderSurface = win.CreateVkRenderSurface(renderInst);
 			
-			std::vector<Vk::GraphicDeviceInfos> deviceInfos = Vk::Device::QuerySuitableDevices(renderInst, renderSurface);
+			std::vector<Vk::GraphicDeviceInfos> deviceInfos = Vk::Device::QuerySuitableDevices(renderInst, &renderSurface);
 			renderDevice.Create(deviceInfos[0]);
 
-			renderSurface->Create(renderDevice);
+			renderSurface.Create(renderDevice);
 			renderPass.Create(renderDevice, RenderPassDescriptor::DefaultSingle());
 		}
 	}
@@ -97,11 +97,10 @@ int main()
 		// Render
 		{
 			renderPass.Destroy(renderDevice);
-			renderSurface->Destroy(renderDevice);
+			renderSurface.Destroy(renderInst, renderDevice);
 
 			renderDevice.Destroy();
 
-			renderInst.DestroyRenderSurface(renderSurface);
 			renderInst.Destroy();
 			renderSys.Destroy();
 		}

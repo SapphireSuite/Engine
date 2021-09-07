@@ -23,13 +23,16 @@ namespace Sa::Vk
 		SwapChain mSwapChain;
 
 	public:
+		RenderSurface() = default;
 		RenderSurface(VkSurfaceKHR _handle) noexcept;
 
-		Format GetFormat() const override final;
+		SA_ENGINE_API Format GetFormat() const override final;
 
+
+		//SA_ENGINE_API void Init(const AWindow& _win, );
 
 		SA_ENGINE_API void Create(const Device& _device);
-		SA_ENGINE_API void Destroy(const Device& _device);
+		SA_ENGINE_API void Destroy(const RenderInstance& _inst, const Device& _device);
 
 
 		RenderSurfaceSupportDetails QuerySupportDetails(VkPhysicalDevice _device) const;

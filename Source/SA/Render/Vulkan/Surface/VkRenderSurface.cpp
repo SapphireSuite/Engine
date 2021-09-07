@@ -2,6 +2,8 @@
 
 #include <Render/Vulkan/Surface/VkRenderSurface.hpp>
 
+#include <Render/Vulkan/VkRenderInstance.hpp>
+
 #include <Render/Debug.hpp>
 
 #if SA_VULKAN
@@ -31,12 +33,14 @@ namespace Sa::Vk
 		SA_LOG(L"Render Surface created.", Infos, SA/Render/Vulkan);
 	}
 	
-	void RenderSurface::Destroy(const Device& _device)
+	void RenderSurface::Destroy(const RenderInstance& _inst, const Device& _device)
 	{
 		SA_ASSERT(Nullptr, SA/Render/Vulkan, mHandle,
 			L"Handle is nullptr. VkSurfaceKHR must be created first: use VkRenderInstance.CreateRenderSurface()");
 
 		mSwapChain.Destroy(_device);
+
+		vkDestroySurfaceKHR(_inst, mHandle, nullptr);
 
 		SA_LOG(L"Render Surface destroyed.", Infos, SA/Render/Vulkan);
 	}
