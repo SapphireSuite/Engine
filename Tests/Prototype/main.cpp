@@ -20,6 +20,7 @@ using namespace Sa;
 #include <SA/Render/Vulkan/VkRenderInstance.hpp>
 #include <SA/Render/Vulkan/Surface/VkRenderSurface.hpp>
 #include <SA/Render/Vulkan/Device/VkDevice.hpp>
+#include <SA/Render/Vulkan/Pass/VkRenderPass.hpp>
 
 GLFW::WindowSystem winSys;
 GLFW::Window win;
@@ -30,7 +31,7 @@ Vk::RenderSystem renderSys;
 Vk::RenderInstance renderInst;
 Vk::Device renderDevice;
 Vk::RenderSurface* renderSurface = nullptr;
-
+Vk::RenderPass renderPass;
 
 int main()
 {
@@ -73,6 +74,7 @@ int main()
 			renderDevice.Create(deviceInfos[0]);
 
 			renderSurface->Create(renderDevice);
+			renderPass.Create(renderDevice, RenderPassDescriptor::DefaultSingle());
 		}
 	}
 
@@ -94,6 +96,7 @@ int main()
 	{
 		// Render
 		{
+			renderPass.Destroy(renderDevice);
 			renderSurface->Destroy(renderDevice);
 
 			renderDevice.Destroy();

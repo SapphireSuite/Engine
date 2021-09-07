@@ -7,10 +7,14 @@
 
 #include <SA/Core/Types/Abstract.hpp>
 
+#include <SA/Render/Misc/Format.hpp>
+
 namespace Sa
 {
 	class ARenderSurface : public Abstract
 	{
+	public:
+		virtual Format GetFormat() const = 0;
 	};
 }
 

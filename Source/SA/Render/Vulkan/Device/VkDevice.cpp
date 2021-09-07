@@ -195,7 +195,7 @@ namespace Sa::Vk
 				ghDeviceInfos.emplace_back(infos);
 		}
 
-		SA_WARN(ghDeviceInfos.empty(), SA/Render/Vulkan, L"No suitable graphic device found!");
+		SA_WARN(!ghDeviceInfos.empty(), SA/Render/Vulkan, L"No suitable graphic device found!");
 
 		// TODO: Implement score: https://vulkan-tutorial.com/Drawing_a_triangle/Setup/Physical_devices_and_queue_families
 		//std::sort(ghDeviceInfos.begin(), ghDeviceInfos.end(), AGraphicDeviceInfos::SortScore);

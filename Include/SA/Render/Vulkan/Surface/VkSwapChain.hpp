@@ -7,9 +7,9 @@
 
 #include <vector>
 
-#include <SA/Core/Support/API/Vulkan.hpp>
+#include <SA/Maths/Space/Vector2.hpp>
 
-#include <SA/Core/Types/Int.hpp>
+#include <SA/Render/Misc/Format.hpp>
 
 #if SA_VULKAN
 
@@ -22,11 +22,12 @@ namespace Sa::Vk
 	{
 		VkSwapchainKHR mHandle = VK_NULL_HANDLE;
 
-		//Vec2ui mExtent;
+		Vec2ui mExtent;
+		Format mFormat = Format::sRGBA_32;
 
 		uint32 mImageNum = 1u;
-		//uint32 mFrameIndex = 0u;
-		//uint32 mImageIndex = 0u;
+		uint32 mFrameIndex = 0u;
+		uint32 mImageIndex = 0u;
 
 		struct Synchronisation
 		{
@@ -45,6 +46,8 @@ namespace Sa::Vk
 		void DestroySynchronisation(const Device& _device);
 
 	public:
+		Format GetFormat() const;
+
 		void Create(const Device& _device, const RenderSurface& _surface);
 		void Destroy(const Device& _device);
 	};

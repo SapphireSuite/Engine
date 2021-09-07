@@ -14,13 +14,20 @@
 
 namespace Sa::Vk
 {
+	Format SwapChain::GetFormat() const
+	{
+		return mFormat;
+	}
+
 	void SwapChain::CreateSwapChainKHR(const Device& _device, const RenderSurface& _surface)
 	{
 		RenderSurfaceSupportDetails details = _surface.QuerySupportDetails(_device);
 
 		VkSurfaceFormatKHR surfaceFormat = details.ChooseSwapSurfaceFormat();
 		VkPresentModeKHR presentMode = details.ChooseSwapPresentMode();
-		Vec2ui mExtent = details.ChooseSwapExtent();
+		mExtent = details.ChooseSwapExtent();
+
+		mFormat = API_FromFormat(surfaceFormat.format);
 
 		// Min image count to avoid driver blocking.
 		mImageNum = details.capabilities.minImageCount + 1;

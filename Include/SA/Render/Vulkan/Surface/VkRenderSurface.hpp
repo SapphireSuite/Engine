@@ -25,6 +25,9 @@ namespace Sa::Vk
 	public:
 		RenderSurface(VkSurfaceKHR _handle) noexcept;
 
+		Format GetFormat() const override final;
+
+
 		SA_ENGINE_API void Create(const Device& _device);
 		SA_ENGINE_API void Destroy(const Device& _device);
 

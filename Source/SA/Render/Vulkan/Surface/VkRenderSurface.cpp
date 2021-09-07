@@ -13,6 +13,13 @@ namespace Sa::Vk
 	{
 	}
 
+
+	Format RenderSurface::GetFormat() const
+	{
+		return mSwapChain.GetFormat();
+	}
+
+
 	void RenderSurface::Create(const Device& _device)
 	{
 		SA_ASSERT(Nullptr, SA/Render/Vulkan, mHandle,
