@@ -7,7 +7,8 @@
 
 #include <SA/Render/Base/ARenderSurface.hpp>
 
-#include <SA/Core/Support/API/Vulkan.hpp>
+#include <SA/Render/Vulkan/Surface/VkSwapChain.hpp>
+#include <SA/Render/Vulkan/Surface/VkRenderSurfaceSupportDetails.hpp>
 
 #if SA_VULKAN
 
@@ -19,11 +20,16 @@ namespace Sa::Vk
 	{
 		VkSurfaceKHR mHandle = VK_NULL_HANDLE;
 
+		SwapChain mSwapChain;
+
 	public:
 		RenderSurface(VkSurfaceKHR _handle) noexcept;
 
-		SA_ENGINE_API void Create(const RenderInstance& _inst);
-		SA_ENGINE_API void Destroy(const RenderInstance& _inst);
+		SA_ENGINE_API void Create(const Device& _device);
+		SA_ENGINE_API void Destroy(const Device& _device);
+
+
+		RenderSurfaceSupportDetails QuerySupportDetails(VkPhysicalDevice _device) const;
 
 
 		operator VkSurfaceKHR() const noexcept;

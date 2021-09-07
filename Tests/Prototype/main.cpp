@@ -72,7 +72,7 @@ int main()
 			std::vector<Vk::GraphicDeviceInfos> deviceInfos = Vk::Device::QuerySuitableDevices(renderInst, renderSurface);
 			renderDevice.Create(deviceInfos[0]);
 
-			renderSurface->Create(renderInst);
+			renderSurface->Create(renderDevice);
 		}
 	}
 
@@ -94,7 +94,7 @@ int main()
 	{
 		// Render
 		{
-			renderSurface->Destroy(renderInst);
+			renderSurface->Destroy(renderDevice);
 
 			renderDevice.Destroy();
 

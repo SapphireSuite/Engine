@@ -19,8 +19,11 @@ namespace Sa::Vk
 	{
 		VkQueue mHandle = VK_NULL_HANDLE;
 
+		uint32 mFamilyIndex = ~uint32();
+
 	public:
 		bool IsValid() const noexcept;
+		uint32 GetFamilyIndex() const noexcept;
 
 		void Create(const Device& _device, uint32 _queueFamilyIndex, uint32 _queueIndex = 0);
 		void Destroy(const Device& _device);

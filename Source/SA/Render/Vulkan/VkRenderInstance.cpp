@@ -29,7 +29,7 @@ namespace Sa::Vk
 
 	void RenderInstance::Create(const AWindowSystem& _winSys)
 	{
-		VkApplicationInfo appInfos;
+		VkApplicationInfo appInfos{};
 
 		appInfos.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
 		appInfos.pNext = nullptr;
@@ -43,7 +43,7 @@ namespace Sa::Vk
 		const std::vector<const char*> extensions = GetRequiredExtensions(_winSys);
 
 
-		VkInstanceCreateInfo instanceInfos;
+		VkInstanceCreateInfo instanceInfos{};
 
 		instanceInfos.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
 		instanceInfos.pNext = nullptr;
