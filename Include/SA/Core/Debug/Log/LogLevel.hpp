@@ -67,7 +67,7 @@ namespace Sa
 	*
 	*	\return			Name of the enum.
 	*/
-	SA_ENGINE_API const wchar* GetLogLevelName(LogLevel _lvl) noexcept;
+	const wchar* GetLogLevelName(LogLevel _lvl) noexcept;
 
 
 	/**
@@ -94,10 +94,10 @@ namespace Sa
 		*	\param[in] _lvl				LogLevel to disable.
 		*	\param[in] _bJoinOnEnd		Should join logger on section end (RAII destroyed).
 		*/
-		SA_ENGINE_API RAII(LogLvl _lvl, bool _bJoinOnEnd = true) noexcept;
+		RAII(LogLvl _lvl, bool _bJoinOnEnd = true) noexcept;
 
 		/// Re-enable log level.
-		SA_ENGINE_API ~RAII() noexcept;
+		~RAII() noexcept;
 	};
 
 	/// \brief Start disable log level section.

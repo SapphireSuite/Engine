@@ -79,30 +79,30 @@ namespace Sa
 		*
 		*	\param[in] _infos	creation infos.
 		*/
-		SA_ENGINE_API void Create(CreateInfos&& _infos);
+		void Create(CreateInfos&& _infos);
 
 		/// Destroy the created pipeline.
-		SA_ENGINE_API void Destroy();
+		void Destroy();
 
 
 		/**
 		*	Start running the pipeline.
 		*	Only useful if bStartOnCreate = false in CreateInfos.
 		*/
-		SA_ENGINE_API void Start();
+		void Start();
 
 		/**
 		*	Update pipeline from time.
 		*
 		*	\param[in] _deltaTime	delta time.
 		*/
-		SA_ENGINE_API void Update(float _deltaTime);
+		void Update(float _deltaTime);
 
 		/**
 		*	End the running pipeline.
 		*	Stop the running pipeline and join all attached threads.
 		*/
-		SA_ENGINE_API void End();
+		void End();
 //}
 	};
 }

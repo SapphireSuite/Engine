@@ -16,10 +16,10 @@ namespace Sa::GLFW
 	class WindowSystem : public AWindowSystem
 	{
 	public:
-		SA_ENGINE_API void Create() override final;
-		SA_ENGINE_API void Destroy() override final;
+		void Create() override final;
+		void Destroy() override final;
 
-		SA_ENGINE_API bool QueryRequiredExtensions(std::vector<const char*>& _extensions) const override final;
+		bool QueryRequiredExtensions(std::vector<const char*>& _extensions) const override final;
 	};
 }
 

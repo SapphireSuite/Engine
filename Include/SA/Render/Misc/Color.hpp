@@ -18,11 +18,11 @@ namespace Sa
 		float b = 0.0f;
 		float a = 1.0f;
 
-		SA_ENGINE_API static const Color red;
-		SA_ENGINE_API static const Color green;
-		SA_ENGINE_API static const Color blue;
-		SA_ENGINE_API static const Color black;
-		SA_ENGINE_API static const Color white;
+		static const Color red;
+		static const Color green;
+		static const Color blue;
+		static const Color black;
+		static const Color white;
 
 #if SA_VULKAN
 

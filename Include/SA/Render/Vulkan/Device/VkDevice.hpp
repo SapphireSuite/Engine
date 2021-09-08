@@ -31,13 +31,13 @@ namespace Sa::Vk
 
 		const VkPhysicalDeviceMemoryProperties& GetMemoryProperties() const noexcept;
 
-		SA_ENGINE_API void Create(const GraphicDeviceInfos& _infos);
-		SA_ENGINE_API void Destroy();
+		void Create(const GraphicDeviceInfos& _infos);
+		void Destroy();
 
-		SA_ENGINE_API static std::vector<GraphicDeviceInfos> QuerySuitableDevices(const RenderInstance& _inst,
+		static std::vector<GraphicDeviceInfos> QuerySuitableDevices(const RenderInstance& _inst,
 			const QueueRequirements& _queueReq = QueueRequirements{ QueueFamily::OffScreen });
 
-		SA_ENGINE_API static std::vector<GraphicDeviceInfos> QuerySuitableDevices(const RenderInstance& _inst,
+		static std::vector<GraphicDeviceInfos> QuerySuitableDevices(const RenderInstance& _inst,
 			const RenderSurface* _surface, const QueueRequirements& _queueReq = QueueRequirements{ QueueFamily::Max });
 
 

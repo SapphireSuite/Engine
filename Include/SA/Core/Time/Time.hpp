@@ -35,28 +35,28 @@ namespace Sa
 		*
 		*	\return time in seconds.
 		*/
-		SA_ENGINE_API static Second Now();
+		static Second Now();
 
 		/**
 		*	\brief Get the time in \c ticks since the beginning of the program.
 		*
 		*	\return time in ticks.
 		*/
-		SA_ENGINE_API static Tick Ticks();
+		static Tick Ticks();
 
 		/**
 		*	\brief Get the current local date time.
 		*
 		*	\return time in seconds.
 		*/
-		SA_ENGINE_API static DateTime Date() noexcept;
+		static DateTime Date() noexcept;
 
 		/**
 		*	\brief Get the current date time at Greenwich.
 		*
 		*	\return time in seconds.
 		*/
-		SA_ENGINE_API static DateTime GMDate() noexcept;
+		static DateTime GMDate() noexcept;
 
 		/**
 		*	\brief Generate a \b seed based on the time.
@@ -66,14 +66,14 @@ namespace Sa
 		*
 		*	\return Seed based on time.
 		*/
-		SA_ENGINE_API static uint64 Seed() noexcept;
+		static uint64 Seed() noexcept;
 
 		/**
 		*	\brief Sleep the program for an amount of time (in millisecond).
 		*
 		*	\param[in] _ms		Amount of time to sleep in millisecond.
 		*/
-		SA_ENGINE_API static void Sleep(MilliSecond _ms) noexcept;
+		static void Sleep(MilliSecond _ms) noexcept;
 	};
 
 

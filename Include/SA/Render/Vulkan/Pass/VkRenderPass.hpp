@@ -13,7 +13,7 @@ namespace Sa::Vk
 {
 	class Device;
 
-	class SA_ENGINE_API RenderPass : public ARenderPass
+	class RenderPass : public ARenderPass
 	{
 		VkRenderPass mHandle = VK_NULL_HANDLE;
 

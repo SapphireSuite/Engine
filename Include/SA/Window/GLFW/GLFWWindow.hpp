@@ -80,19 +80,19 @@ namespace Sa::GLFW
 		InputWindowContext* inputWinContext = nullptr;
 
 
-		SA_ENGINE_API void SetWindowMode(WindowMode _mode) override final;
+		void SetWindowMode(WindowMode _mode) override final;
 
-		SA_ENGINE_API void Create(const CreateInfos& _infos) override final;
-		SA_ENGINE_API void Destroy() override final;
+		void Create(const CreateInfos& _infos) override final;
+		void Destroy() override final;
 
-		SA_ENGINE_API AInputWindowContext* GetInputWindowContext() const override final;
+		AInputWindowContext* GetInputWindowContext() const override final;
 
-		SA_ENGINE_API void Close() override final;
-		SA_ENGINE_API bool ShouldClose() const override final;
+		void Close() override final;
+		bool ShouldClose() const override final;
 
 #if SA_VULKAN
 
-		SA_ENGINE_API Vk::RenderSurface CreateVkRenderSurface(const Vk::RenderInstance& _instance) const override final;
+		Vk::RenderSurface CreateVkRenderSurface(const Vk::RenderInstance& _instance) const override final;
 
 #endif
 

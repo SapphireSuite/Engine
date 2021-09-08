@@ -16,14 +16,14 @@ namespace Sa::GLFW
 	class InputSystem : public AInputSystem
 	{
 	protected:
-		SA_ENGINE_API AInputWindowContext* InstantiateWindowContext() override final;
-		SA_ENGINE_API void DeleteWindowContext(AInputWindowContext* _winContext) override final;
+		AInputWindowContext* InstantiateWindowContext() override final;
+		void DeleteWindowContext(AInputWindowContext* _winContext) override final;
 
 	public:
-		SA_ENGINE_API void Create() override final;
-		SA_ENGINE_API void Destroy() override final;
+		void Create() override final;
+		void Destroy() override final;
 
-		SA_ENGINE_API void Update() override final;
+		void Update() override final;
 	};
 }
 

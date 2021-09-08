@@ -30,8 +30,8 @@ namespace Sa::Vk
 #endif
 
 	public:
-		SA_ENGINE_API void Create(const AWindowSystem& _winSys);
-		SA_ENGINE_API void Destroy();
+		void Create(const AWindowSystem& _winSys);
+		void Destroy();
 
 		operator VkInstance() const noexcept;
 	};

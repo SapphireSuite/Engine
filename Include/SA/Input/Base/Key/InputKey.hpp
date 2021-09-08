@@ -22,9 +22,9 @@ namespace Sa
 		KeyState state = KeyState::Pressed;
 
 		InputKey() = default;
-		SA_ENGINE_API InputKey(Key _key, KeyState _state) noexcept;
+		InputKey(Key _key, KeyState _state) noexcept;
 
-		SA_ENGINE_API bool operator==(const InputKey& _rhs) const noexcept;
+		bool operator==(const InputKey& _rhs) const noexcept;
 	};
 }
 
@@ -36,7 +36,7 @@ namespace std
 	template<>
 	struct hash<Sa::InputKey>
 	{
-		SA_ENGINE_API std::size_t operator()(Sa::InputKey const& _inKey) const noexcept;
+		std::size_t operator()(Sa::InputKey const& _inKey) const noexcept;
 	};
 }
 

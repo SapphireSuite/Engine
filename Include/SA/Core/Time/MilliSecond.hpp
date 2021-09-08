@@ -59,14 +59,14 @@ namespace Sa
 		*
 		*	\param[in] _time	Time milliseconds as \c float.
 		*/
-		SA_ENGINE_API MilliSecond(float _time) noexcept;
+		MilliSecond(float _time) noexcept;
 
 		/**
 		*	\brief \e Value contructor without conversion.
 		*
 		*	\param[in] _time	Time milliseconds as \c uint64.
 		*/
-		SA_ENGINE_API MilliSecond(uint64 _time) noexcept;
+		MilliSecond(uint64 _time) noexcept;
 
 
 		/**
@@ -74,35 +74,35 @@ namespace Sa
 		*
 		*	\return \c float without conversion.
 		*/
-		SA_ENGINE_API operator float() const noexcept;
+		operator float() const noexcept;
 
 		/**
 		*	\brief \e Cast operator to \c Tick with proper conversion.
 		*
 		*	\return \c Tick converted from \c MilliSecond.
 		*/
-		SA_ENGINE_API operator Tick() const noexcept;
+		operator Tick() const noexcept;
 
 		/**
 		*	\brief \e Cast operator to \c Second with proper conversion.
 		*
 		*	\return \c Second converted from \c MilliSecond.
 		*/
-		SA_ENGINE_API operator Second() const noexcept;
+		operator Second() const noexcept;
 
 		/**
 		*	\brief \e Cast operator to \c Minute with proper conversion.
 		*
 		*	\return \c Minute converted from \c MilliSecond.
 		*/
-		SA_ENGINE_API operator Minute() const noexcept;
+		operator Minute() const noexcept;
 
 		/**
 		*	\brief \e Cast operator to \c Hour with proper conversion.
 		*
 		*	\return \c Hour converted from \c MilliSecond.
 		*/
-		SA_ENGINE_API operator Hour() const noexcept;
+		operator Hour() const noexcept;
 
 
 #if SA_LOGGING
@@ -114,7 +114,7 @@ namespace Sa
 		*
 		*	\return this as a string.
 		*/
-		SA_ENGINE_API std::string ToString() const noexcept;
+		std::string ToString() const noexcept;
 #endif
 	};
 
@@ -125,7 +125,7 @@ namespace Sa
 	*
 	*	\return \c MilliSecond without time-conversion.
 	*/
-	SA_ENGINE_API MilliSecond operator""_ms(uint64 _lit) noexcept;
+	MilliSecond operator""_ms(uint64 _lit) noexcept;
 
 	/**
 	*	\brief _ms \b literal operator.
@@ -134,7 +134,7 @@ namespace Sa
 	*
 	*	\return \c MilliSecond without time-conversion.
 	*/
-	SA_ENGINE_API MilliSecond operator""_ms(long double _lit) noexcept;
+	MilliSecond operator""_ms(long double _lit) noexcept;
 }
 
 

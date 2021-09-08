@@ -68,7 +68,7 @@ namespace Sa
 		*
 		*	\param[in] _log		Log to output.
 		*/
-		SA_ENGINE_API void Output(const LogBase& _log);
+		void Output(const LogBase& _log);
 
 		/**
 		*	\brief Process log.
@@ -78,7 +78,7 @@ namespace Sa
 		*
 		*	\param[in] _log		Log to process.
 		*/
-		SA_ENGINE_API void ProcessLog(const LogBase& _log);
+		void ProcessLog(const LogBase& _log);
 
 	public:
 		/// Enabled level flags for output.
@@ -91,13 +91,13 @@ namespace Sa
 		*	\e Constructor
 		*	Create Log thread.
 		*/
-		SA_ENGINE_API Logger();
+		Logger();
 
 		/**
 		*	\e Destructor
 		*	Join and end Log thread.
 		*/
-		SA_ENGINE_API ~Logger();
+		~Logger();
 
 #endif
 
@@ -109,7 +109,7 @@ namespace Sa
 		* 
 		*	\return registered LogChannel.
 		*/
-		SA_ENGINE_API LogChannel& GetChannel(const std::wstring& _chanName) noexcept;
+		LogChannel& GetChannel(const std::wstring& _chanName) noexcept;
 
 
 		/**
@@ -117,7 +117,7 @@ namespace Sa
 		* 
 		*	\param[in] _stream	Stream to register.
 		*/
-		SA_ENGINE_API void Register(LogStreamBase& _stream);
+		void Register(LogStreamBase& _stream);
 
 		/**
 		*	\brief Unregister a stream from output.
@@ -126,7 +126,7 @@ namespace Sa
 		*
 		*	\return true on success.
 		*/
-		SA_ENGINE_API bool Unregister(LogStreamBase& _stream);
+		bool Unregister(LogStreamBase& _stream);
 
 
 		/**
@@ -144,7 +144,7 @@ namespace Sa
 		* 
 		*	\param[in] _mode	Queue join mode.
 		*/
-		SA_ENGINE_API void Join(ThreadJoinMode _mode = ThreadJoinMode::Complete);
+		void Join(ThreadJoinMode _mode = ThreadJoinMode::Complete);
 
 
 		/**

@@ -55,7 +55,7 @@ namespace Sa
 		*	\param[in] _msg			Message to display on assertion.
 		*	\param[in] _details		Additional details to display on assertion.
 		*/
-		SA_ENGINE_API Exception(
+		Exception(
 			BaseInfos&& _infos,
 			bool _pred,
 			std::string&& _predStr,

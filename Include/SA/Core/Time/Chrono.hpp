@@ -30,21 +30,21 @@ namespace Sa
 	public:
 
 		/// \b Start the chronometer.
-		SA_ENGINE_API void Start() noexcept;
+		void Start() noexcept;
 
 		/**
 		*	\brief \b End the chronometer.
 		*
 		*	\return The mesured time since the \b Start() call.
 		*/
-		SA_ENGINE_API Tick End() noexcept;
+		Tick End() noexcept;
 
 		/**
 		*	\brief \b End the chronometer and instantly call \b Start() again.
 		*
 		*	\return The mesured time since the previous \b Start() call.
 		*/
-		SA_ENGINE_API Tick Restart() noexcept;
+		Tick Restart() noexcept;
 	};
 }
 

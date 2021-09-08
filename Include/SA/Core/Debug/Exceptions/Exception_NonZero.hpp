@@ -32,7 +32,7 @@ namespace Sa
 		*	\param[in] _pred		Evaluated value predicate.
 		*	\param[in] _details		Additional details to display on assertion.
 		*/
-		SA_ENGINE_API Exception_NonZero(
+		Exception_NonZero(
 			BaseInfos&& _infos,
 			bool _pred,
 			std::string&& _predStr,

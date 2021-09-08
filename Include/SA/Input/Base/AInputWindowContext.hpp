@@ -26,8 +26,8 @@ namespace Sa
 		virtual void Create(AWindow* _win) = 0;
 		virtual void Destroy() = 0;
 
-		SA_ENGINE_API InputContext* CreateContext();
-		SA_ENGINE_API bool DestroyContext(const InputContext* _context);
+		InputContext* CreateContext();
+		bool DestroyContext(const InputContext* _context);
 
 		void Clear();
 	};

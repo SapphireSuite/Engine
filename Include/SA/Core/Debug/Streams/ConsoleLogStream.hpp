@@ -62,7 +62,7 @@ namespace Sa
 		*	\param[in] _lvl			log level to set new theme color.
 		*	\param[in] _cslColor	console color mask from ConsoleColor enum.
 		*/
-		SA_ENGINE_API void SetConsoleTheme(LogLevel _lvl, uint8 _cslColor) noexcept;
+		void SetConsoleTheme(LogLevel _lvl, uint8 _cslColor) noexcept;
 
 
 		/**
@@ -72,7 +72,7 @@ namespace Sa
 		* 
 		*	\return handled std::wostream.
 		*/
-		SA_ENGINE_API std::wostream& operator<<(const std::wstring& _str);
+		std::wostream& operator<<(const std::wstring& _str);
 	};
 
 //}

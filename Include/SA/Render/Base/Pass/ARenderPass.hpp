@@ -11,7 +11,7 @@
 
 namespace Sa
 {
-	class SA_ENGINE_API ARenderPass : public Abstract
+	class ARenderPass : public Abstract
 	{
 	};
 }

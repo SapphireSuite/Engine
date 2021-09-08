@@ -139,7 +139,7 @@ namespace Sa
 		* 
 		*	\param[in] _mode	New window mode.
 		*/
-		SA_ENGINE_API virtual void SetWindowMode(WindowMode _mode);
+		virtual void SetWindowMode(WindowMode _mode);
 
 
 		/**
@@ -147,7 +147,7 @@ namespace Sa
 		* 
 		*	\param[in] _infos	Creation arguments.
 		*/
-		SA_ENGINE_API virtual void Create(const CreateInfos& _infos);
+		virtual void Create(const CreateInfos& _infos);
 
 		/**
 		*	\brief Destroy this window.

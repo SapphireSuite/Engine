@@ -15,7 +15,7 @@ namespace Sa
 	public:
 		using InputActionBase<InputKeyBinding>::InputActionBase;
 
-		SA_ENGINE_API bool Execute(KeyState _keyState) override final;
+		bool Execute(KeyState _keyState) override final;
 	};
 }
 

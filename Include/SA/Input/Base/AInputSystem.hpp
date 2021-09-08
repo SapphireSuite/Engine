@@ -24,15 +24,15 @@ namespace Sa
 		virtual void DeleteWindowContext(AInputWindowContext* _winContext) = 0;
 
 	public:
-		SA_ENGINE_API virtual ~AInputSystem();
+		virtual ~AInputSystem();
 
-		SA_ENGINE_API AInputWindowContext* Register(AWindow* _win);
-		SA_ENGINE_API bool UnRegister(const AWindow* _win);
+		AInputWindowContext* Register(AWindow* _win);
+		bool UnRegister(const AWindow* _win);
 
-		SA_ENGINE_API void Clear();
+		void Clear();
 
 
-		SA_ENGINE_API void Destroy() override;
+		void Destroy() override;
 
 		virtual void Update() = 0;
 	};

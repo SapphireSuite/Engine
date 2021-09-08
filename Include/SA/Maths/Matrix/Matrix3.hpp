@@ -588,80 +588,80 @@ namespace Sa
 //{ Row Major
 
 	template <>
-	SA_ENGINE_API RMat3i RMat3i::operator*(int32 _scale) const noexcept;
+	RMat3i RMat3i::operator*(int32 _scale) const noexcept;
 
 #if SA_INTRISC_SVML
 	template <>
-	SA_ENGINE_API RMat3i RMat3i::operator/(int32 _scale) const noexcept;
+	RMat3i RMat3i::operator/(int32 _scale) const noexcept;
 #endif
 
 	template <>
-	SA_ENGINE_API RMat3i RMat3i::operator+(const RMat3i& _rhs) const noexcept;
+	RMat3i RMat3i::operator+(const RMat3i& _rhs) const noexcept;
 
 	template <>
-	SA_ENGINE_API RMat3i RMat3i::operator-(const RMat3i& _rhs) const noexcept;
+	RMat3i RMat3i::operator-(const RMat3i& _rhs) const noexcept;
 
 	template <>
-	SA_ENGINE_API RMat3i RMat3i::operator*(const RMat3i& _rhs) const noexcept;
-
-
-	template <>
-	SA_ENGINE_API Vec3<int32> RMat3i::operator*(const Vec3<int32>& _rhs) const noexcept;
+	RMat3i RMat3i::operator*(const RMat3i& _rhs) const noexcept;
 
 
 	template <>
-	SA_ENGINE_API RMat3i& RMat3i::operator*=(int32 _scale) noexcept;
+	Vec3<int32> RMat3i::operator*(const Vec3<int32>& _rhs) const noexcept;
+
+
+	template <>
+	RMat3i& RMat3i::operator*=(int32 _scale) noexcept;
 
 #if SA_INTRISC_SVML
 	template <>
-	SA_ENGINE_API RMat3i& RMat3i::operator/=(int32 _scale) noexcept;
+	RMat3i& RMat3i::operator/=(int32 _scale) noexcept;
 #endif
 
 	template <>
-	SA_ENGINE_API RMat3i& RMat3i::operator+=(const RMat3i& _rhs) noexcept;
+	RMat3i& RMat3i::operator+=(const RMat3i& _rhs) noexcept;
 
 	template <>
-	SA_ENGINE_API RMat3i& RMat3i::operator-=(const RMat3i& _rhs) noexcept;
+	RMat3i& RMat3i::operator-=(const RMat3i& _rhs) noexcept;
 
 //}
 
 //{ Column Major
 
 	template <>
-	SA_ENGINE_API CMat3i CMat3i::operator*(int32 _scale) const noexcept;
+	CMat3i CMat3i::operator*(int32 _scale) const noexcept;
 
 #if SA_INTRISC_SVML
 	template <>
-	SA_ENGINE_API CMat3i CMat3i::operator/(int32 _scale) const noexcept;
+	CMat3i CMat3i::operator/(int32 _scale) const noexcept;
 #endif
 
 	template <>
-	SA_ENGINE_API CMat3i CMat3i::operator+(const CMat3i& _rhs) const noexcept;
+	CMat3i CMat3i::operator+(const CMat3i& _rhs) const noexcept;
 
 	template <>
-	SA_ENGINE_API CMat3i CMat3i::operator-(const CMat3i& _rhs) const noexcept;
+	CMat3i CMat3i::operator-(const CMat3i& _rhs) const noexcept;
 
 	template <>
-	SA_ENGINE_API CMat3i CMat3i::operator*(const CMat3i& _rhs) const noexcept;
-
-
-	template <>
-	SA_ENGINE_API Vec3<int32> CMat3i::operator*(const Vec3<int32>& _rhs) const noexcept;
+	CMat3i CMat3i::operator*(const CMat3i& _rhs) const noexcept;
 
 
 	template <>
-	SA_ENGINE_API CMat3i& CMat3i::operator*=(int32 _scale) noexcept;
+	Vec3<int32> CMat3i::operator*(const Vec3<int32>& _rhs) const noexcept;
+
+
+	template <>
+	CMat3i& CMat3i::operator*=(int32 _scale) noexcept;
 
 #if SA_INTRISC_SVML
 	template <>
-	SA_ENGINE_API CMat3i& CMat3i::operator/=(int32 _scale) noexcept;
+	CMat3i& CMat3i::operator/=(int32 _scale) noexcept;
 #endif
 
 	template <>
-	SA_ENGINE_API CMat3i& CMat3i::operator+=(const CMat3i& _rhs) noexcept;
+	CMat3i& CMat3i::operator+=(const CMat3i& _rhs) noexcept;
 
 	template <>
-	SA_ENGINE_API CMat3i& CMat3i::operator-=(const CMat3i& _rhs) noexcept;
+	CMat3i& CMat3i::operator-=(const CMat3i& _rhs) noexcept;
 
 //}
 
@@ -672,108 +672,108 @@ namespace Sa
 //{ Row Major
 
 	template <>
-	SA_ENGINE_API float RMat3f::Determinant() const noexcept;
+	float RMat3f::Determinant() const noexcept;
 
 	template <>
-	SA_ENGINE_API RMat3f RMat3f::GetInversed() const noexcept;
-
-
-	template <>
-	SA_ENGINE_API RMat3f RMat3f::MakeRotation(const Quat<float>& _rot) noexcept;
-
-	template <>
-	SA_ENGINE_API RMat3f& RMat3f::ApplyScale(const Vec3<float>& _scale) noexcept;
+	RMat3f RMat3f::GetInversed() const noexcept;
 
 
 	template <>
-	SA_ENGINE_API RMat3f RMat3f::operator*(float _scale) const noexcept;
+	RMat3f RMat3f::MakeRotation(const Quat<float>& _rot) noexcept;
 
 	template <>
-	SA_ENGINE_API RMat3f RMat3f::operator/(float _scale) const noexcept;
-
-	template <>
-	SA_ENGINE_API RMat3f RMat3f::operator+(const RMat3f& _rhs) const noexcept;
-
-	template <>
-	SA_ENGINE_API RMat3f RMat3f::operator-(const RMat3f& _rhs) const noexcept;
-
-	template <>
-	SA_ENGINE_API RMat3f RMat3f::operator*(const RMat3f& _rhs) const noexcept;
+	RMat3f& RMat3f::ApplyScale(const Vec3<float>& _scale) noexcept;
 
 
 	template <>
-	SA_ENGINE_API Vec3<float> RMat3f::operator*(const Vec3<float>& _rhs) const noexcept;
+	RMat3f RMat3f::operator*(float _scale) const noexcept;
+
+	template <>
+	RMat3f RMat3f::operator/(float _scale) const noexcept;
+
+	template <>
+	RMat3f RMat3f::operator+(const RMat3f& _rhs) const noexcept;
+
+	template <>
+	RMat3f RMat3f::operator-(const RMat3f& _rhs) const noexcept;
+
+	template <>
+	RMat3f RMat3f::operator*(const RMat3f& _rhs) const noexcept;
 
 
 	template <>
-	SA_ENGINE_API RMat3f& RMat3f::operator*=(float _scale) noexcept;
-
-	template <>
-	SA_ENGINE_API RMat3f& RMat3f::operator/=(float _scale) noexcept;
-
-	template <>
-	SA_ENGINE_API RMat3f& RMat3f::operator+=(const RMat3f& _rhs) noexcept;
-
-	template <>
-	SA_ENGINE_API RMat3f& RMat3f::operator-=(const RMat3f& _rhs) noexcept;
+	Vec3<float> RMat3f::operator*(const Vec3<float>& _rhs) const noexcept;
 
 
 	template <>
-	SA_ENGINE_API Mat3f operator/(float _lhs, const Mat3f& _rhs) noexcept;
+	RMat3f& RMat3f::operator*=(float _scale) noexcept;
+
+	template <>
+	RMat3f& RMat3f::operator/=(float _scale) noexcept;
+
+	template <>
+	RMat3f& RMat3f::operator+=(const RMat3f& _rhs) noexcept;
+
+	template <>
+	RMat3f& RMat3f::operator-=(const RMat3f& _rhs) noexcept;
+
+
+	template <>
+	Mat3f operator/(float _lhs, const Mat3f& _rhs) noexcept;
 
 //}
 
 //{ Column Major
 
 	template <>
-	SA_ENGINE_API float CMat3f::Determinant() const noexcept;
+	float CMat3f::Determinant() const noexcept;
 
 	template <>
-	SA_ENGINE_API CMat3f CMat3f::GetInversed() const noexcept;
-
-
-	template <>
-	SA_ENGINE_API CMat3f CMat3f::MakeRotation(const Quat<float>& _rot) noexcept;
-
-	template <>
-	SA_ENGINE_API CMat3f& CMat3f::ApplyScale(const Vec3<float>& _scale) noexcept;
+	CMat3f CMat3f::GetInversed() const noexcept;
 
 
 	template <>
-	SA_ENGINE_API CMat3f CMat3f::operator*(float _scale) const noexcept;
+	CMat3f CMat3f::MakeRotation(const Quat<float>& _rot) noexcept;
 
 	template <>
-	SA_ENGINE_API CMat3f CMat3f::operator/(float _scale) const noexcept;
-
-	template <>
-	SA_ENGINE_API CMat3f CMat3f::operator+(const CMat3f& _rhs) const noexcept;
-
-	template <>
-	SA_ENGINE_API CMat3f CMat3f::operator-(const CMat3f& _rhs) const noexcept;
-
-	template <>
-	SA_ENGINE_API CMat3f CMat3f::operator*(const CMat3f& _rhs) const noexcept;
+	CMat3f& CMat3f::ApplyScale(const Vec3<float>& _scale) noexcept;
 
 
 	template <>
-	SA_ENGINE_API Vec3<float> CMat3f::operator*(const Vec3<float>& _rhs) const noexcept;
+	CMat3f CMat3f::operator*(float _scale) const noexcept;
+
+	template <>
+	CMat3f CMat3f::operator/(float _scale) const noexcept;
+
+	template <>
+	CMat3f CMat3f::operator+(const CMat3f& _rhs) const noexcept;
+
+	template <>
+	CMat3f CMat3f::operator-(const CMat3f& _rhs) const noexcept;
+
+	template <>
+	CMat3f CMat3f::operator*(const CMat3f& _rhs) const noexcept;
 
 
 	template <>
-	SA_ENGINE_API CMat3f& CMat3f::operator*=(float _scale) noexcept;
-
-	template <>
-	SA_ENGINE_API CMat3f& CMat3f::operator/=(float _scale) noexcept;
-
-	template <>
-	SA_ENGINE_API CMat3f& CMat3f::operator+=(const CMat3f& _rhs) noexcept;
-
-	template <>
-	SA_ENGINE_API CMat3f& CMat3f::operator-=(const CMat3f& _rhs) noexcept;
+	Vec3<float> CMat3f::operator*(const Vec3<float>& _rhs) const noexcept;
 
 
 	template <>
-	SA_ENGINE_API CMat3f operator/(float _lhs, const CMat3f& _rhs) noexcept;
+	CMat3f& CMat3f::operator*=(float _scale) noexcept;
+
+	template <>
+	CMat3f& CMat3f::operator/=(float _scale) noexcept;
+
+	template <>
+	CMat3f& CMat3f::operator+=(const CMat3f& _rhs) noexcept;
+
+	template <>
+	CMat3f& CMat3f::operator-=(const CMat3f& _rhs) noexcept;
+
+
+	template <>
+	CMat3f operator/(float _lhs, const CMat3f& _rhs) noexcept;
 
 //}
 
@@ -784,108 +784,108 @@ namespace Sa
 //{ Row Major
 
 	template <>
-	SA_ENGINE_API double RMat3d::Determinant() const noexcept;
+	double RMat3d::Determinant() const noexcept;
 
 	template <>
-	SA_ENGINE_API RMat3d RMat3d::GetInversed() const noexcept;
-
-
-	template <>
-	SA_ENGINE_API RMat3d RMat3d::MakeRotation(const Quat<double>& _rot) noexcept;
-
-	template <>
-	SA_ENGINE_API RMat3d& RMat3d::ApplyScale(const Vec3<double>& _scale) noexcept;
+	RMat3d RMat3d::GetInversed() const noexcept;
 
 
 	template <>
-	SA_ENGINE_API RMat3d RMat3d::operator*(double _scale) const noexcept;
+	RMat3d RMat3d::MakeRotation(const Quat<double>& _rot) noexcept;
 
 	template <>
-	SA_ENGINE_API RMat3d RMat3d::operator/(double _scale) const noexcept;
-
-	template <>
-	SA_ENGINE_API RMat3d RMat3d::operator+(const RMat3d& _rhs) const noexcept;
-
-	template <>
-	SA_ENGINE_API RMat3d RMat3d::operator-(const RMat3d& _rhs) const noexcept;
-
-	template <>
-	SA_ENGINE_API RMat3d RMat3d::operator*(const RMat3d& _rhs) const noexcept;
+	RMat3d& RMat3d::ApplyScale(const Vec3<double>& _scale) noexcept;
 
 
 	template <>
-	SA_ENGINE_API Vec3<double> RMat3d::operator*(const Vec3<double>& _rhs) const noexcept;
+	RMat3d RMat3d::operator*(double _scale) const noexcept;
+
+	template <>
+	RMat3d RMat3d::operator/(double _scale) const noexcept;
+
+	template <>
+	RMat3d RMat3d::operator+(const RMat3d& _rhs) const noexcept;
+
+	template <>
+	RMat3d RMat3d::operator-(const RMat3d& _rhs) const noexcept;
+
+	template <>
+	RMat3d RMat3d::operator*(const RMat3d& _rhs) const noexcept;
 
 
 	template <>
-	SA_ENGINE_API RMat3d& RMat3d::operator*=(double _scale) noexcept;
-
-	template <>
-	SA_ENGINE_API RMat3d& RMat3d::operator/=(double _scale) noexcept;
-
-	template <>
-	SA_ENGINE_API RMat3d& RMat3d::operator+=(const RMat3d& _rhs) noexcept;
-
-	template <>
-	SA_ENGINE_API RMat3d& RMat3d::operator-=(const RMat3d& _rhs) noexcept;
+	Vec3<double> RMat3d::operator*(const Vec3<double>& _rhs) const noexcept;
 
 
 	template <>
-	SA_ENGINE_API RMat3d operator/(double _lhs, const RMat3d& _rhs) noexcept;
+	RMat3d& RMat3d::operator*=(double _scale) noexcept;
+
+	template <>
+	RMat3d& RMat3d::operator/=(double _scale) noexcept;
+
+	template <>
+	RMat3d& RMat3d::operator+=(const RMat3d& _rhs) noexcept;
+
+	template <>
+	RMat3d& RMat3d::operator-=(const RMat3d& _rhs) noexcept;
+
+
+	template <>
+	RMat3d operator/(double _lhs, const RMat3d& _rhs) noexcept;
 
 //}
 
 //{ Column Major
 
 	template <>
-	SA_ENGINE_API double CMat3d::Determinant() const noexcept;
+	double CMat3d::Determinant() const noexcept;
 
 	template <>
-	SA_ENGINE_API CMat3d CMat3d::GetInversed() const noexcept;
-
-
-	template <>
-	SA_ENGINE_API CMat3d CMat3d::MakeRotation(const Quat<double>& _rot) noexcept;
-
-	template <>
-	SA_ENGINE_API CMat3d& CMat3d::ApplyScale(const Vec3<double>& _scale) noexcept;
+	CMat3d CMat3d::GetInversed() const noexcept;
 
 
 	template <>
-	SA_ENGINE_API CMat3d CMat3d::operator*(double _scale) const noexcept;
+	CMat3d CMat3d::MakeRotation(const Quat<double>& _rot) noexcept;
 
 	template <>
-	SA_ENGINE_API CMat3d CMat3d::operator/(double _scale) const noexcept;
-
-	template <>
-	SA_ENGINE_API CMat3d CMat3d::operator+(const CMat3d& _rhs) const noexcept;
-
-	template <>
-	SA_ENGINE_API CMat3d CMat3d::operator-(const CMat3d& _rhs) const noexcept;
-
-	template <>
-	SA_ENGINE_API CMat3d CMat3d::operator*(const CMat3d& _rhs) const noexcept;
+	CMat3d& CMat3d::ApplyScale(const Vec3<double>& _scale) noexcept;
 
 
 	template <>
-	SA_ENGINE_API Vec3<double> CMat3d::operator*(const Vec3<double>& _rhs) const noexcept;
+	CMat3d CMat3d::operator*(double _scale) const noexcept;
+
+	template <>
+	CMat3d CMat3d::operator/(double _scale) const noexcept;
+
+	template <>
+	CMat3d CMat3d::operator+(const CMat3d& _rhs) const noexcept;
+
+	template <>
+	CMat3d CMat3d::operator-(const CMat3d& _rhs) const noexcept;
+
+	template <>
+	CMat3d CMat3d::operator*(const CMat3d& _rhs) const noexcept;
 
 
 	template <>
-	SA_ENGINE_API CMat3d& CMat3d::operator*=(double _scale) noexcept;
-
-	template <>
-	SA_ENGINE_API CMat3d& CMat3d::operator/=(double _scale) noexcept;
-
-	template <>
-	SA_ENGINE_API CMat3d& CMat3d::operator+=(const CMat3d& _rhs) noexcept;
-
-	template <>
-	SA_ENGINE_API CMat3d& CMat3d::operator-=(const CMat3d& _rhs) noexcept;
+	Vec3<double> CMat3d::operator*(const Vec3<double>& _rhs) const noexcept;
 
 
 	template <>
-	SA_ENGINE_API CMat3d operator/(double _lhs, const CMat3d& _rhs) noexcept;
+	CMat3d& CMat3d::operator*=(double _scale) noexcept;
+
+	template <>
+	CMat3d& CMat3d::operator/=(double _scale) noexcept;
+
+	template <>
+	CMat3d& CMat3d::operator+=(const CMat3d& _rhs) noexcept;
+
+	template <>
+	CMat3d& CMat3d::operator-=(const CMat3d& _rhs) noexcept;
+
+
+	template <>
+	CMat3d operator/(double _lhs, const CMat3d& _rhs) noexcept;
 
 //}
 

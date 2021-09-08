@@ -14,8 +14,8 @@ namespace Sa::Vk
 	class RenderSystem : public ARenderSystem
 	{
 	public:
-		SA_ENGINE_API void Create() override final;
-		SA_ENGINE_API void Destroy() override final;
+		void Create() override final;
+		void Destroy() override final;
 	};
 }
 

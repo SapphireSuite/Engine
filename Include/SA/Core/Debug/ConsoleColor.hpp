@@ -113,14 +113,14 @@ namespace Sa
 	* 
 	*	\param[in] _cslColor	Console color.
 	*/
-	SA_ENGINE_API void SetConsoleColor(ConsoleColor _cslColor);
+	void SetConsoleColor(ConsoleColor _cslColor);
 
 	/**
 	*	\brief \e Crossplatform implementation of set color in console.
 	* 
 	*	\param[in] _cslColorMask	Console color mask.
 	*/
-	SA_ENGINE_API void SetConsoleColor(uint8 _cslColorMask);
+	void SetConsoleColor(uint8 _cslColorMask);
 
 #endif
 }

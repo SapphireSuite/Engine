@@ -27,8 +27,8 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Libs)	# .dll / .so
 # Parse files.
 file(GLOB_RECURSE SOURCES "Source/*")
 
-# Add dynamic library target.
-add_library(SA-Engine SHARED ${SOURCES})
+# Add static library target.
+add_library(SA-Engine STATIC ${SOURCES})
 
 
 

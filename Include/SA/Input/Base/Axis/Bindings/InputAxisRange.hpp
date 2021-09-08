@@ -20,7 +20,7 @@ namespace Sa
 
 		using InputRangeBase<InputAxisBinding>::InputRangeBase;
 
-		SA_ENGINE_API bool Execute(float _value) override final;
+		bool Execute(float _value) override final;
 	};
 }
 

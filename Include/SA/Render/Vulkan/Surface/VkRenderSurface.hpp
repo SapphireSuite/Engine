@@ -26,13 +26,13 @@ namespace Sa::Vk
 		RenderSurface() = default;
 		RenderSurface(VkSurfaceKHR _handle) noexcept;
 
-		SA_ENGINE_API Format GetFormat() const override final;
+		Format GetFormat() const override final;
 
 
-		//SA_ENGINE_API void Init(const AWindow& _win, );
+		//void Init(const AWindow& _win, );
 
-		SA_ENGINE_API void Create(const Device& _device);
-		SA_ENGINE_API void Destroy(const RenderInstance& _inst, const Device& _device);
+		void Create(const Device& _device);
+		void Destroy(const RenderInstance& _inst, const Device& _device);
 
 
 		RenderSurfaceSupportDetails QuerySupportDetails(VkPhysicalDevice _device) const;

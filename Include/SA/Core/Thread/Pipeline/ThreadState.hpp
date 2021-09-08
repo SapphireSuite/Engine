@@ -260,7 +260,7 @@ namespace Sa
 		* 
 		*	\returns Should thread keep running.
 		*/
-		SA_ENGINE_API bool Submit();
+		bool Submit();
 
 		/**
 		*	\brief Update state from time (called by pipeline).

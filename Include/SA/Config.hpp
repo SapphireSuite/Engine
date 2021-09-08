@@ -14,19 +14,6 @@
 */
 
 
-#if defined(SA_Engine_EXPORTS)
-
-	/// Sapphire Engine API import/export preprocessor.
-	#define SA_ENGINE_API SA_MODUE_EXPORT
-
-#else
-
-	/// Sapphire Engine API import/export preprocessor.
-	#define SA_ENGINE_API SA_MODUE_IMPORT
-
-#endif
-
-
 /// Sapphire Engine global namespace
 namespace Sa
 {

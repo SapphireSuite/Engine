@@ -15,8 +15,8 @@ namespace Sa
 		Axis axis;
 
 		InputAxisBind() = default;
-		SA_ENGINE_API InputAxisBind(Axis _axis) noexcept;
-		SA_ENGINE_API InputAxisBind(const InputAxis& _inAxis) noexcept;
+		InputAxisBind(Axis _axis) noexcept;
+		InputAxisBind(const InputAxis& _inAxis) noexcept;
 	};
 }
 

@@ -16,7 +16,7 @@ namespace Sa
 	class Exception_Vulkan : public Exception
 	{
 	public:
-		SA_ENGINE_API Exception_Vulkan(
+		Exception_Vulkan(
 			BaseInfos&& _infos,
 			VkResult _vkRes,
 			std::string&& _predStr,

@@ -42,7 +42,7 @@ namespace Sa
 		*	\param[in] _level		LogLevel of the log.
 		*	\param[in] _chanName	Channel's name of the Log.
 		*/
-		SA_ENGINE_API LogBase(LogLevel _level, std::wstring&& _chanName);
+		LogBase(LogLevel _level, std::wstring&& _chanName);
 
 		/// \e Default virtual destructor.
 		virtual ~LogBase() = default;
