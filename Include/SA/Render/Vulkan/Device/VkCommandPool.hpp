@@ -27,8 +27,8 @@ namespace Sa::Vk
 
 		void Reset(const Device& _device);
 
-		CommandBuffer Allocate(const Device& _device, VkCommandBufferLevel _level);
-		std::vector<CommandBuffer> AllocateMultiple(const Device& _device, uint32 _num, VkCommandBufferLevel _level);
+		CommandBuffer Allocate(const Device& _device, VkCommandBufferLevel _level = VK_COMMAND_BUFFER_LEVEL_PRIMARY);
+		std::vector<CommandBuffer> AllocateMultiple(const Device& _device, uint32 _num, VkCommandBufferLevel _level = VK_COMMAND_BUFFER_LEVEL_PRIMARY);
 
 		void Free(const Device& _device, CommandBuffer& _buffer);
 		void FreeMultiple(const Device& _device, std::vector<CommandBuffer>& _buffers);

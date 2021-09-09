@@ -23,6 +23,8 @@ namespace Sa::Vk
 		commandPoolCreateInfo.queueFamilyIndex = _queueFamilyIndex;
 
 		SA_VK_ASSERT(vkCreateCommandPool(_device, &commandPoolCreateInfo, nullptr, &mHandle), L"Failed to create command pool!");
+
+		SA_LOG(L"Command pool created.", Infos, SA/Render/Vulkan);
 	}
 
 	void CommandPool::Destroy(const Device& _device)
@@ -32,6 +34,8 @@ namespace Sa::Vk
 		vkDestroyCommandPool(_device, mHandle, nullptr);
 
 		mHandle = VK_NULL_HANDLE;
+
+		SA_LOG(L"Command pool destroyed.", Infos, SA/Render/Vulkan);
 	}
 
 

@@ -3,7 +3,7 @@
 #ifndef SAPPHIRE_RENDER_VK_IMAGE_BUFFER_GUARD
 #define SAPPHIRE_RENDER_VK_IMAGE_BUFFER_GUARD
 
-#include <Render/Vulkan/Buffers/VkImageBufferCreateInfos.hpp>
+#include <SA/Render/Vulkan/Buffers/VkImageBufferCreateInfos.hpp>
 
 #if SA_VULKAN
 

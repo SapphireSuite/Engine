@@ -38,6 +38,12 @@ namespace Sa::Vk
 
 		SA_LOG(L"Queue destroyed", Infos, SA/Render/Vulkan);
 	}
+
+
+	Queue::operator VkQueue() const
+	{
+		return mHandle;
+	}
 }
 
 #endif

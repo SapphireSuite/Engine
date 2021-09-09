@@ -11,6 +11,8 @@
 
 #include <SA/Render/Misc/Format.hpp>
 
+#include <SA/Render/Vulkan/Buffers/VkFrameBuffer.hpp>
+
 #if SA_VULKAN
 
 namespace Sa::Vk
@@ -37,7 +39,7 @@ namespace Sa::Vk
 		};
 
 		std::vector<Synchronisation> mFramesSynch;
-
+		std::vector<FrameBuffer> mFrameBuffers;
 
 		void CreateSwapChainKHR(const Device& _device, const RenderSurface& _surface);
 		void DestroySwapChainKHR(const Device& _device);
@@ -50,6 +52,12 @@ namespace Sa::Vk
 
 		void Create(const Device& _device, const RenderSurface& _surface);
 		void Destroy(const Device& _device);
+
+		void CreateFrameBuffers(const Device& _device, const RenderPass& _renderPass, const RenderPassDescriptor& _renderPassDesc);
+		void DestroyFrameBuffers(const Device& _device);
+
+		FrameBuffer& Begin(const Device& _device);
+		void End(const Device& _device, const std::vector<CommandBuffer>& _cmdBuffers);
 	};
 }
 

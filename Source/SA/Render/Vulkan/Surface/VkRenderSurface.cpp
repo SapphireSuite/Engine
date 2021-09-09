@@ -46,6 +46,32 @@ namespace Sa::Vk
 	}
 
 
+	void RenderSurface::CreateFrameBuffers(const Device& _device, const RenderPass& _renderPass, const RenderPassDescriptor& _renderPassDesc)
+	{
+		mSwapChain.CreateFrameBuffers(_device, _renderPass, _renderPassDesc);
+
+		SA_LOG(L"Render Surface FrameBuffers created.", Infos, SA/Render/Vulkan);
+	}
+
+	void RenderSurface::DestroyFrameBuffers(const Device& _device)
+	{
+		mSwapChain.DestroyFrameBuffers(_device);
+
+		SA_LOG(L"Render Surface FrameBuffers destroyed.", Infos, SA/Render/Vulkan);
+	}
+
+
+	FrameBuffer& RenderSurface::Begin(const Device& _device)
+	{
+		return mSwapChain.Begin(_device);
+	}
+
+	void RenderSurface::End(const Device& _device, const std::vector<CommandBuffer>& _cmdBuffers)
+	{
+		mSwapChain.End(_device, _cmdBuffers);
+	}
+
+
 	RenderSurfaceSupportDetails RenderSurface::QuerySupportDetails(VkPhysicalDevice _device) const
 	{
 		RenderSurfaceSupportDetails details{};

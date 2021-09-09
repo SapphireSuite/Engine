@@ -27,6 +27,8 @@ namespace Sa::Vk
 
 		void Create(const Device& _device, uint32 _queueFamilyIndex, uint32 _queueIndex = 0);
 		void Destroy(const Device& _device);
+
+		operator VkQueue() const;
 	};
 }
 

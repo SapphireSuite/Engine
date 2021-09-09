@@ -3,8 +3,6 @@
 #ifndef SAPPHIRE_RENDER_VK_FRAME_BUFFER_GUARD
 #define SAPPHIRE_RENDER_VK_FRAME_BUFFER_GUARD
 
-#include <SA/Render/Base/AFrameBuffer.hpp>
-
 #include <SA/Render/Base/Pass/RenderPassDescriptor.hpp>
 
 #include <SA/Render/Vulkan/Buffers/VkImageBuffer.hpp>
@@ -16,10 +14,14 @@ namespace Sa::Vk
 {
 	class Device;
 	class RenderPass;
+	class CommandBuffer;
 
-	class FrameBuffer : public AFrameBuffer
+	class FrameBuffer
 	{
 		VkFramebuffer mHandle = VK_NULL_HANDLE;
+		VkRenderPass mRenderPass = VK_NULL_HANDLE;
+
+		Vec2ui mExtent;
 
 		std::vector<ImageBuffer> mAttachments;
 		std::vector<ImageBuffer> mInputAttachments;
@@ -30,12 +32,12 @@ namespace Sa::Vk
 	public:
 		void Create(const Device& _device, const RenderPass& _renderPass,
 			const RenderPassDescriptor& _rpDescriptor,
-			const Vec2ui& _extent, uint32 _poolIndex = 0u, VkImage presentImage = VK_NULL_HANDLE);
+			const Vec2ui& _extent, VkImage presentImage = VK_NULL_HANDLE);
 		void Destroy(const Device& _device);
 
-		void Begin() override final;
-		void NextSubpass() override final;
-		void End() override final;
+		void Begin(CommandBuffer& _cmdBuff);
+		void NextSubpass(CommandBuffer& _cmdBuff);
+		void End(CommandBuffer& _cmdBuff);
 	};
 }
 

@@ -8,6 +8,7 @@
 
 #include <Render/Vulkan/Device/VkDevice.hpp>
 #include <Render/Vulkan/Surface/VkRenderSurface.hpp>
+#include <Render/Vulkan/Buffers/VkCommandBuffer.hpp>
 
 
 #if SA_VULKAN
@@ -139,6 +140,101 @@ namespace Sa::Vk
 	{
 		DestroySynchronisation(_device);
 		DestroySwapChainKHR(_device);
+	}
+
+
+	void SwapChain::CreateFrameBuffers(const Device& _device, const RenderPass& _renderPass, const RenderPassDescriptor& _renderPassDesc)
+	{
+		std::vector<VkImage> swapChainImages(mImageNum);
+		vkGetSwapchainImagesKHR(_device, mHandle, &mImageNum, swapChainImages.data());
+
+		mFrameBuffers.reserve(mImageNum);
+
+		for (uint32 i = 0u; i < mImageNum; ++i)
+		{
+			FrameBuffer& frameBuffer = mFrameBuffers.emplace_back();
+			frameBuffer.Create(_device, _renderPass, _renderPassDesc, mExtent, swapChainImages[i]);
+		}
+
+
+		SA_LOG(L"SwapChain FrameBuffers created.", Infos, SA/Render/Vulkan);
+	}
+
+	void SwapChain::DestroyFrameBuffers(const Device& _device)
+	{
+		for (auto it = mFrameBuffers.begin(); it != mFrameBuffers.end(); ++it)
+			it->Destroy(_device);
+
+		mFrameBuffers.clear();
+
+		SA_LOG(L"SwapChain FrameBuffers destroyed.", Infos, SA/Render/Vulkan);
+	}
+
+
+	FrameBuffer& SwapChain::Begin(const Device& _device)
+	{
+		Synchronisation& synch = mFramesSynch[mFrameIndex];
+		FrameBuffer& frameBuff = mFrameBuffers[mFrameIndex];
+
+
+		// Wait current Fence.
+		vkWaitForFences(_device, 1, &synch.fence, true, UINT64_MAX);
+
+		// Reset current Fence.
+		vkResetFences(_device, 1, &synch.fence);
+
+
+		SA_VK_ASSERT(vkAcquireNextImageKHR(_device, mHandle, UINT64_MAX, synch.acquireSemaphore, VK_NULL_HANDLE, &mImageIndex),
+			L"Failed to aquire next image!");
+
+
+		//frameBuff.Begin();
+		return frameBuff;
+	}
+
+	void SwapChain::End(const Device& _device, const std::vector<CommandBuffer>& _cmdBuffers)
+	{
+		Synchronisation& synch = mFramesSynch[mFrameIndex];
+		//FrameBuffer& frameBuff = mFrameBuffers[mFrameIndex];
+
+		//frameBuff.End();
+
+
+		// Submit graphics.
+		const VkPipelineStageFlags waitStages = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+
+		VkSubmitInfo submitInfo{};
+		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+		submitInfo.pNext = nullptr;
+		submitInfo.waitSemaphoreCount = 1u;
+		submitInfo.pWaitSemaphores = &synch.acquireSemaphore;
+		submitInfo.pWaitDstStageMask = &waitStages;
+		submitInfo.commandBufferCount = SizeOf<uint32>(_cmdBuffers);
+		submitInfo.pCommandBuffers = reinterpret_cast<const VkCommandBuffer*>(_cmdBuffers.data()); // Warning: Unsafe.
+		submitInfo.signalSemaphoreCount = 1u;
+		submitInfo.pSignalSemaphores = &synch.presentSemaphore;
+
+		SA_VK_ASSERT(vkQueueSubmit(_device.queueMgr.graphics.GetQueue(0), 1, &submitInfo, synch.fence),
+			L"Failed to submit graphics queue!");
+
+
+		// Submit present.
+		VkPresentInfoKHR presentInfo{};
+		presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+		presentInfo.pNext = nullptr;
+		presentInfo.waitSemaphoreCount = 1u;
+		presentInfo.pWaitSemaphores = &synch.presentSemaphore;
+		presentInfo.swapchainCount = 1u;
+		presentInfo.pSwapchains = &mHandle;
+		presentInfo.pImageIndices = &mImageIndex;
+		presentInfo.pResults = nullptr;
+
+		SA_VK_ASSERT(vkQueuePresentKHR(_device.queueMgr.present.GetQueue(0), &presentInfo),
+			L"Failed to submit present queue!");
+
+
+		// Increment next frame.
+		mFrameIndex = (mFrameIndex + 1) % mImageNum;
 	}
 }
 

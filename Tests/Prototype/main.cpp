@@ -20,7 +20,10 @@ using namespace Sa;
 #include <SA/Render/Vulkan/VkRenderInstance.hpp>
 #include <SA/Render/Vulkan/Surface/VkRenderSurface.hpp>
 #include <SA/Render/Vulkan/Device/VkDevice.hpp>
+#include <SA/Render/Vulkan/Device/VkCommandPool.hpp>
 #include <SA/Render/Vulkan/Pass/VkRenderPass.hpp>
+#include <SA/Render/Vulkan/Buffers/VkFrameBuffer.hpp>
+#include <SA/Render/Vulkan/Buffers/VkCommandBuffer.hpp>
 
 GLFW::WindowSystem winSys;
 GLFW::Window win;
@@ -29,9 +32,15 @@ GLFW::InputSystem inputSys;
 
 Vk::RenderSystem renderSys;
 Vk::RenderInstance renderInst;
-Vk::Device renderDevice;
-Vk::RenderSurface renderSurface;
+Vk::Device device;
+Vk::RenderSurface surface;
 Vk::RenderPass renderPass;
+Vk::CommandPool cmdPool;
+std::vector<Vk::CommandBuffer> cmdBuffers;
+uint32 imageIndex = 0u;
+//Vk::FrameBuffer frameBuffer;
+
+const Vec2ui winDim{ 1200u, 800u };
 
 int main()
 {
@@ -44,7 +53,7 @@ int main()
 			winSys.Create();
 
 			GLFW::Window::CreateInfos infos;
-			infos.dimension = Vec2ui{ 1200u, 800u };
+			infos.dimension = winDim;
 
 			win.Create(infos);
 		}
@@ -68,13 +77,24 @@ int main()
 		{
 			renderSys.Create();
 			renderInst.Create(winSys);
-			renderSurface = win.CreateVkRenderSurface(renderInst);
+			surface = win.CreateVkRenderSurface(renderInst);
 			
-			std::vector<Vk::GraphicDeviceInfos> deviceInfos = Vk::Device::QuerySuitableDevices(renderInst, &renderSurface);
-			renderDevice.Create(deviceInfos[0]);
+			std::vector<Vk::GraphicDeviceInfos> deviceInfos = Vk::Device::QuerySuitableDevices(renderInst, &surface);
+			device.Create(deviceInfos[0]);
 
-			renderSurface.Create(renderDevice);
-			renderPass.Create(renderDevice, RenderPassDescriptor::DefaultSingle());
+			surface.Create(device);
+
+			const RenderPassDescriptor renderPassDesc = RenderPassDescriptor::DefaultSingle(&surface);
+			renderPass.Create(device, renderPassDesc);
+
+			surface.CreateFrameBuffers(device, renderPass, renderPassDesc);
+
+			cmdPool.Create(device, device.queueMgr.graphics.GetQueue(0).GetFamilyIndex());
+
+			for(uint32 i = 0; i < 3; ++i)
+				cmdBuffers.push_back(cmdPool.Allocate(device, VK_COMMAND_BUFFER_LEVEL_PRIMARY));
+
+			//frameBuffer.Create(device, renderPass, renderPassDesc, winDim, cmdBuffer, );
 		}
 	}
 
@@ -88,6 +108,21 @@ int main()
 	#endif
 		{
 			inputSys.Update();
+
+			Vk::FrameBuffer& frameBuffer = surface.Begin(device);
+
+			Vk::CommandBuffer& cmdBuffer = cmdBuffers[imageIndex];
+
+			cmdBuffer.Begin();
+
+			frameBuffer.Begin(cmdBuffer);
+			frameBuffer.End(cmdBuffer);
+
+			cmdBuffer.End();
+
+			surface.End(device, { cmdBuffer });
+
+			imageIndex = (imageIndex + 1) % 3;
 		}
 	}
 
@@ -96,10 +131,16 @@ int main()
 	{
 		// Render
 		{
-			renderPass.Destroy(renderDevice);
-			renderSurface.Destroy(renderInst, renderDevice);
+			vkDeviceWaitIdle(device);
 
-			renderDevice.Destroy();
+			cmdPool.Destroy(device);
+
+			surface.DestroyFrameBuffers(device);
+
+			renderPass.Destroy(device);
+			surface.Destroy(renderInst, device);
+
+			device.Destroy();
 
 			renderInst.Destroy();
 			renderSys.Destroy();

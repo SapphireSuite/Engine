@@ -34,6 +34,12 @@ namespace Sa::Vk
 		void Create(const Device& _device);
 		void Destroy(const RenderInstance& _inst, const Device& _device);
 
+		void CreateFrameBuffers(const Device& _device, const RenderPass& _renderPass, const RenderPassDescriptor& _renderPassDesc);
+		void DestroyFrameBuffers(const Device& _device);
+
+		FrameBuffer& Begin(const Device& _device);
+		void End(const Device& _device, const std::vector<CommandBuffer>& _cmdBuffers);
+
 
 		RenderSurfaceSupportDetails QuerySupportDetails(VkPhysicalDevice _device) const;
 

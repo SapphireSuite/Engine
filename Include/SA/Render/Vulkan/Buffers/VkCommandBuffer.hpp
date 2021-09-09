@@ -20,6 +20,9 @@ namespace Sa::Vk
 		VkCommandBuffer mHandle = VK_NULL_HANDLE;
 
 	public:
+		void Begin();
+		void End();
+
 		operator VkCommandBuffer() const;
 	};
 }

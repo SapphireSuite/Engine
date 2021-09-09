@@ -7,6 +7,7 @@
 #include <Render/Vulkan/Debug/Debug.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
 #include <Render/Vulkan/Pass/VkRenderPass.hpp>
+#include <Render/Vulkan/Buffers/VkCommandBuffer.hpp>
 
 #if SA_VULKAN
 
@@ -14,7 +15,7 @@ namespace Sa::Vk
 {
 	void FrameBuffer::Create(const Device& _device, const RenderPass& _renderPass,
 		const RenderPassDescriptor& _rpDescriptor,
-		const Vec2ui& _extent, uint32 _poolIndex, VkImage presentImage)
+		const Vec2ui& _extent, VkImage presentImage)
 	{
 		std::vector<VkImageView> attachementCreateInfos;
 
@@ -90,17 +91,12 @@ namespace Sa::Vk
 		SA_VK_ASSERT(vkCreateFramebuffer(_device, &framebufferCreateInfo, nullptr, &mHandle),
 			L"Failed to create framebuffer!");
 
-		//mExtent = _extent;
-		//mRenderPass = _renderPass;
-
-		//// === Create command buffer ===
-		//commandBuffer = CommandBuffer::Allocate(_device, QueueType::Graphics, _poolIndex);
+		mExtent = _extent;
+		mRenderPass = _renderPass;
 	}
 
 	void FrameBuffer::Destroy(const Device& _device)
 	{
-		//CommandBuffer::Free(_device, commandBuffer);
-
 		vkDestroyFramebuffer(_device, mHandle, nullptr);
 
 		// Destroy attachments.
@@ -117,16 +113,30 @@ namespace Sa::Vk
 	}
 
 
-	void FrameBuffer::Begin()
+	void FrameBuffer::Begin(CommandBuffer& _cmdBuff)
 	{
+		// Start RenderPass record.
+		VkRenderPassBeginInfo renderPassBeginInfo{};
+		renderPassBeginInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
+		renderPassBeginInfo.pNext = nullptr;
+		renderPassBeginInfo.renderPass = mRenderPass;
+		renderPassBeginInfo.framebuffer = mHandle;
+		renderPassBeginInfo.renderArea = VkRect2D{ VkOffset2D{}, VkExtent2D{ mExtent.x, mExtent.y } };
+		renderPassBeginInfo.clearValueCount = SizeOf(mClearValues);
+		renderPassBeginInfo.pClearValues = mClearValues.data();
+
+		vkCmdBeginRenderPass(_cmdBuff, &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
 	}
 
-	void FrameBuffer::NextSubpass()
+	void FrameBuffer::NextSubpass(CommandBuffer& _cmdBuff)
 	{
+		vkCmdNextSubpass(_cmdBuff, VK_SUBPASS_CONTENTS_INLINE);
 	}
 
-	void FrameBuffer::End()
+	void FrameBuffer::End(CommandBuffer& _cmdBuff)
 	{
+		// End RenderPass record.
+		vkCmdEndRenderPass(_cmdBuff);
 	}
 
 
