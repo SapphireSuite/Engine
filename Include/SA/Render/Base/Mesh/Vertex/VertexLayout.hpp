@@ -5,6 +5,8 @@
 #ifndef SAPPHIRE_RENDER_VERTEX_LAYOUT_GUARD
 #define SAPPHIRE_RENDER_VERTEX_LAYOUT_GUARD
 
+#include <memory>
+
 #include <SA/Maths/Space/Vector2.hpp>
 #include <SA/Maths/Space/Vector3.hpp>
 
