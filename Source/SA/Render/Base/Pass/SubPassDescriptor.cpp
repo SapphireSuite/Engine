@@ -21,7 +21,7 @@ namespace Sa
 				case AttachmentLoadMode::None:
 					return VK_ATTACHMENT_LOAD_OP_DONT_CARE;
 				default:
-					SA_LOG(L"Unknown AttachmentLoadMode [" << _mode << L"]!", Error, SA/Render/Vulkan);
+					SA_LOG(L"Unknown AttachmentLoadMode [" << _mode << L"]!", Error, SA/Render);
 					return VK_ATTACHMENT_LOAD_OP_CLEAR;
 			}
 		}

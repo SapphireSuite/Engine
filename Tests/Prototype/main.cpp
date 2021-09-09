@@ -38,7 +38,6 @@ Vk::RenderPass renderPass;
 Vk::CommandPool cmdPool;
 std::vector<Vk::CommandBuffer> cmdBuffers;
 uint32 imageIndex = 0u;
-//Vk::FrameBuffer frameBuffer;
 
 const Vec2ui winDim{ 1200u, 800u };
 
@@ -93,8 +92,6 @@ int main()
 
 			for(uint32 i = 0; i < 3; ++i)
 				cmdBuffers.push_back(cmdPool.Allocate(device, VK_COMMAND_BUFFER_LEVEL_PRIMARY));
-
-			//frameBuffer.Create(device, renderPass, renderPassDesc, winDim, cmdBuffer, );
 		}
 	}
 

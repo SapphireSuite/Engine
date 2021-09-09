@@ -37,7 +37,7 @@ namespace Sa
 			case Sa::VertexComp::PNTanC:
 				return std::shared_ptr<VertexLayout>(new VertexLayoutSpec<VertexComp::PNTanC>);
 			default:
-				SA_LOG(L"Vertex Layout with components [" << _comps << "L] is not supported yet!", Error, SA/Render/Vulkan);
+				SA_LOG(L"Vertex Layout with components [" << _comps << "L] is not supported yet!", Error, SA/Render);
 				return std::shared_ptr<VertexLayout>(new VertexLayoutSpec<VertexComp::Position>);
 		}
 	}

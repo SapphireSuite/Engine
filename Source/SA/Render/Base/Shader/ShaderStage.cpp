@@ -22,7 +22,7 @@ namespace Sa
 				return VK_SHADER_STAGE_COMPUTE_BIT;
 			case Sa::ShaderStage::Unknown:
 			default:
-				SA_LOG("Vulkan API GetShaderStage [" << _stage << L"] default or unknown used!", Error, SA/Render/Vulkan);
+				SA_LOG("Vulkan API GetShaderStage [" << _stage << L"] default or unknown used!", Error, SA/Render);
 				return VkShaderStageFlagBits(0);
 		}
 	}

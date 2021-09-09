@@ -24,7 +24,7 @@ namespace Sa
 				case Sa::ShaderBindingType::InputAttachment:
 					return VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT;
 				default:
-					SA_LOG("ShaderBindingType [" << _type << L"] not supported yet!", Error, SA/Render/Vulkan);
+					SA_LOG("ShaderBindingType [" << _type << L"] not supported yet!", Error, SA/Render);
 					return VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
 			}
 		}
