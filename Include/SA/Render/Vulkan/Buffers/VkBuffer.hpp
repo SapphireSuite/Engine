@@ -5,20 +5,22 @@
 #ifndef SAPPHIRE_RENDER_VK_BUFFER_GUARD
 #define SAPPHIRE_RENDER_VK_BUFFER_GUARD
 
-#include <SA/Core/Support/API/Vulkan.hpp>
-
-#include <SA/Core/Types/Int.hpp>
+#include <SA/Render/Vulkan/Buffers/VkBufferBase.hpp>
 
 #if SA_VULKAN
 
 namespace Sa::Vk
 {
-	class Device;
-
-	class Buffer
+	class Buffer : public BufferBase
 	{
 	public:
-		static uint32 FindMemoryType(const Device& _device, uint32 _typeFilter, VkMemoryPropertyFlags _properties);
+		void Create(const Device& _device,
+			uint64 _size,
+			VkBufferUsageFlags _usage,
+			VkMemoryPropertyFlags _properties,
+			const void* _data = nullptr);
+
+		void UpdateData(const Device& _device, const void* _data, uint64 _size, uint64 _offset = 0);
 	};
 }
 
