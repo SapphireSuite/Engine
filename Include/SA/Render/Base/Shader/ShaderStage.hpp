@@ -28,7 +28,7 @@ namespace Sa
 	{
 		VkShaderStageFlagBits API_GetShaderStage(ShaderStage _type) noexcept;
 
-		VkShaderStageFlags API_GetShaderStageFlags(ShaderStage _type) noexcept;
+		VkShaderStageFlags API_GetShaderStageFlags(Flags<ShaderStage> _flags) noexcept;
 	}
 
 #endif

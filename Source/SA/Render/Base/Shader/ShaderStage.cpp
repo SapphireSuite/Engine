@@ -27,20 +27,20 @@ namespace Sa
 		}
 	}
 
-	VkShaderStageFlags API_GetShaderStageFlags(ShaderStage _type) noexcept
+	VkShaderStageFlags API_GetShaderStageFlags(Flags<ShaderStage> _flags) noexcept
 	{
 		VkShaderStageFlags result = 0;
 
-		if (_type & ShaderStage::Vertex)
+		if (_flags & ShaderStage::Vertex)
 			result |= VK_SHADER_STAGE_VERTEX_BIT;
 
-		if (_type & ShaderStage::Fragment)
+		if (_flags & ShaderStage::Fragment)
 			result |= VK_SHADER_STAGE_FRAGMENT_BIT;
 
-		if (_type & ShaderStage::Geometry)
+		if (_flags & ShaderStage::Geometry)
 			result |= VK_SHADER_STAGE_GEOMETRY_BIT;
 
-		if (_type & ShaderStage::Compute)
+		if (_flags & ShaderStage::Compute)
 			result |= VK_SHADER_STAGE_COMPUTE_BIT;
 
 		return result;
