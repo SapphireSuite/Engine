@@ -29,8 +29,6 @@ namespace Sa::Vk
 		Format GetFormat() const override final;
 
 
-		//void Init(const AWindow& _win, );
-
 		void Create(const Device& _device);
 		void Destroy(const RenderInstance& _inst, const Device& _device);
 
