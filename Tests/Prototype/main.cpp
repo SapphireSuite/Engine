@@ -24,6 +24,7 @@ using namespace Sa;
 #include <SA/Render/Vulkan/Pass/VkRenderPass.hpp>
 #include <SA/Render/Vulkan/Buffers/VkFrameBuffer.hpp>
 #include <SA/Render/Vulkan/Buffers/VkCommandBuffer.hpp>
+#include <SA/Render/Vulkan/Mesh/VkStaticMesh.hpp>
 
 GLFW::WindowSystem winSys;
 GLFW::Window win;
@@ -38,6 +39,8 @@ Vk::RenderPass renderPass;
 Vk::CommandPool cmdPool;
 std::vector<Vk::CommandBuffer> cmdBuffers;
 uint32 imageIndex = 0u;
+
+Vk::StaticMesh cubeMesh;
 
 const Vec2ui winDim{ 1200u, 800u };
 
@@ -92,6 +95,32 @@ int main()
 
 			for(uint32 i = 0; i < 3; ++i)
 				cmdBuffers.push_back(cmdPool.Allocate(device, VK_COMMAND_BUFFER_LEVEL_PRIMARY));
+
+			ResourceHolder resHolder;
+			cmdBuffers[0].Begin();
+
+			cubeMesh.Create(device, cmdBuffers[0], resHolder, RawMesh::Triangle());
+			
+			cmdBuffers[0].End();
+
+			VkCommandBuffer bbb = cmdBuffers[0];
+
+			// Submit commands.
+			VkSubmitInfo submitInfo{};
+			submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+			submitInfo.pNext = nullptr;
+			submitInfo.waitSemaphoreCount = 0u;
+			submitInfo.pWaitSemaphores = nullptr;
+			submitInfo.pWaitDstStageMask = nullptr;
+			submitInfo.commandBufferCount = 1u;
+			submitInfo.pCommandBuffers = &bbb;
+			submitInfo.signalSemaphoreCount = 0u;
+			submitInfo.pSignalSemaphores = nullptr;
+
+			vkQueueSubmit(device.queueMgr.transfer.GetQueue(0), 1, &submitInfo, VK_NULL_HANDLE);
+			vkQueueWaitIdle(device.queueMgr.transfer.GetQueue(0));
+
+			resHolder.FreeAll();
 		}
 	}
 
@@ -129,6 +158,8 @@ int main()
 		// Render
 		{
 			vkDeviceWaitIdle(device);
+
+			cubeMesh.Destroy(device);
 
 			cmdPool.Destroy(device);
 
