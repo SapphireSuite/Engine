@@ -122,7 +122,7 @@ namespace Sa::Vk
 		renderPassBeginInfo.renderPass = mRenderPass;
 		renderPassBeginInfo.framebuffer = mHandle;
 		renderPassBeginInfo.renderArea = VkRect2D{ VkOffset2D{}, VkExtent2D{ mExtent.x, mExtent.y } };
-		renderPassBeginInfo.clearValueCount = SizeOf(mClearValues);
+		renderPassBeginInfo.clearValueCount = SizeOf<uint32>(mClearValues);
 		renderPassBeginInfo.pClearValues = mClearValues.data();
 
 		vkCmdBeginRenderPass(_cmdBuff, &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
