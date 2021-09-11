@@ -28,32 +28,29 @@ namespace Sa
 
 		const Vertex<Comps> vertices[] =
 		{
-			Vertex<VertexComp::PNTanTexC>{
+			Vertex<VertexComp::PNTanTex>{
 				Vec3f{ 0.0f, 0.5f, 0.0f },
 				Vec3f::Forward,
 				Vec3f::Zero,
 				{ 0.5f, 0.0f },
-				Vec3f::One
 			},
 
-			Vertex<VertexComp::PNTanTexC>{
+			Vertex<VertexComp::PNTanTex>{
 				Vec3f{ 0.5f, -0.5f, 0.0f },
 				Vec3f::Forward,
 				Vec3f::Zero,
 				{ 1.0f, 1.0f },
-				Vec3f::One
 			},
 
-			Vertex<VertexComp::PNTanTexC>{
+			Vertex<VertexComp::PNTanTex>{
 				Vec3f{ -0.5f, -0.5f, 0.0f },
 				Vec3f::Forward,
 				Vec3f::Zero,
 				{ 0.0f, 1.0f },
-				Vec3f::One
 			},
 		};
 
-		constexpr uint32 totalSize = SizeOf(vertices) * sizeof(Vertex<Comps>);
+		constexpr uint32 totalSize = SizeOf<uint32>(vertices) * sizeof(Vertex<Comps>);
 
 		mesh.vertices.resize(totalSize);
 		MemMove(reinterpret_cast<const char*>(vertices), mesh.vertices.data(), totalSize);
@@ -75,40 +72,36 @@ namespace Sa
 
 		const Vertex<Comps> vertices[] =
 		{
-			Vertex<VertexComp::PNTanTexC>{
+			Vertex<VertexComp::PNTanTex>{
 				Vec3f{ -0.5f, 0.5f, 0.0f },
 				Vec3f::Forward,
 				Vec3f::Zero,
 				{ 0.0f, 0.0f },
-				Vec3f::One
 			},
 
-			Vertex<VertexComp::PNTanTexC>{
+			Vertex<VertexComp::PNTanTex>{
 				Vec3f{ 0.5f, 0.5f, 0.0f },
 				Vec3f::Forward,
 				Vec3f::Zero,
 				{ 1.0f, 0.0f },
-				Vec3f::One
 			},
 
-			Vertex<VertexComp::PNTanTexC>{
+			Vertex<VertexComp::PNTanTex>{
 				Vec3f{ 0.5f, -0.5f, 0.0f },
 				Vec3f::Forward,
 				Vec3f::Zero,
 				{ 1.0f, 1.0f },
-				Vec3f::One
 			},
 
-			Vertex<VertexComp::PNTanTexC>{
+			Vertex<VertexComp::PNTanTex>{
 				Vec3f{ -0.5f, -0.5f, 0.0f },
 				Vec3f::Forward,
 				Vec3f::Zero,
 				{ 0.0f, 1.0f },
-				Vec3f::One
 			},
 		};
 
-		constexpr uint32 totalSize = SizeOf(vertices) * sizeof(Vertex<Comps>);
+		constexpr uint32 totalSize = SizeOf<uint32>(vertices) * sizeof(Vertex<Comps>);
 
 		mesh.vertices.resize(totalSize);
 		MemMove(reinterpret_cast<const char*>(vertices), mesh.vertices.data(), totalSize);
@@ -131,211 +124,187 @@ namespace Sa
 		const Vertex<Comps> vertices[] =
 		{
 			// Front face.
-			Vertex<VertexComp::PNTanTexC>{											// 0.
+			Vertex<VertexComp::PNTanTex>{											// 0.
 				Vec3f{ -0.5f, 0.5f, 0.5f },
 				Vec3f::Forward,
 				Vec3f::Zero,
 				{ 0.0f, 0.0f },
-				Vec3f::One
 			},
 
-			Vertex<VertexComp::PNTanTexC>{											// 1.
+			Vertex<VertexComp::PNTanTex>{											// 1.
 				Vec3f{ 0.5f, 0.5f, 0.5f },
 				Vec3f::Forward,
 				Vec3f::Zero,
 				{ 1.0f, 0.0f },
-				Vec3f::One
 			},
 
-			Vertex<VertexComp::PNTanTexC>{											// 2.
+			Vertex<VertexComp::PNTanTex>{											// 2.
 				Vec3f{ 0.5f, -0.5f, 0.5f },
 				Vec3f::Forward,
 				Vec3f::Zero,
 				{ 1.0f, 1.0f },
-				Vec3f::One
 			},
 
-			Vertex<VertexComp::PNTanTexC>{											// 3.
+			Vertex<VertexComp::PNTanTex>{											// 3.
 				Vec3f{ -0.5f, -0.5f, 0.5f },
 				Vec3f::Forward,
 				Vec3f::Zero,
 				{ 0.0f, 1.0f },
-				Vec3f::One
 			},
 
 
 			// Right face.
-			Vertex<VertexComp::PNTanTexC>{											// 4.
+			Vertex<VertexComp::PNTanTex>{											// 4.
 				Vec3f{ 0.5f, 0.5f, 0.5f },
 				Vec3f::Right,
 				Vec3f::Zero,
 				{ 0.0f, 0.0f },
-				Vec3f::One
 			},
 
-			Vertex<VertexComp::PNTanTexC>{											// 5.
+			Vertex<VertexComp::PNTanTex>{											// 5.
 				Vec3f{ 0.5f, 0.5f, -0.5f },
 				Vec3f::Right,
 				Vec3f::Zero,
 				{ 1.0f, 0.0f },
-				Vec3f::One
 			},
 
-			Vertex<VertexComp::PNTanTexC>{											// 6.
+			Vertex<VertexComp::PNTanTex>{											// 6.
 				Vec3f{ 0.5f, -0.5f, -0.5f },
 				Vec3f::Right,
 				Vec3f::Zero,
 				{ 1.0f, 1.0f },
-				Vec3f::One
 			},
 
-			Vertex<VertexComp::PNTanTexC>{											// 7.
+			Vertex<VertexComp::PNTanTex>{											// 7.
 				Vec3f{ 0.5f, -0.5f, 0.5f },
 				Vec3f::Right,
 				Vec3f::Zero,
 				{ 0.0f, 1.0f },
-				Vec3f::One
 			},
 
 
 			// Back face.
-			Vertex<VertexComp::PNTanTexC>{											// 8
+			Vertex<VertexComp::PNTanTex>{											// 8
 				Vec3f{ 0.5f, 0.5f, -0.5f },
 				-Vec3f::Forward,
 				Vec3f::Zero,
 				{ 0.0f, 0.0f },
-				Vec3f::One
 			},
 
-			Vertex<VertexComp::PNTanTexC>{											// 9.
+			Vertex<VertexComp::PNTanTex>{											// 9.
 				Vec3f{ -0.5f, 0.5f, -0.5f },
 				-Vec3f::Forward,
 				Vec3f::Zero,
 				{ 1.0f, 0.0f },
-				Vec3f::One
 			},
 
-			Vertex<VertexComp::PNTanTexC>{											// 10.
+			Vertex<VertexComp::PNTanTex>{											// 10.
 				Vec3f{ -0.5f, -0.5f, -0.5f },
 				-Vec3f::Forward,
 				Vec3f::Zero,
 				{ 1.0f, 1.0f },
-				Vec3f::One
 			},
 
-			Vertex<VertexComp::PNTanTexC>{											// 11.
+			Vertex<VertexComp::PNTanTex>{											// 11.
 				Vec3f{ 0.5f, -0.5f, -0.5f },
 				-Vec3f::Forward,
 				Vec3f::Zero,
 				{ 0.0f, 1.0f },
-				Vec3f::One
 			},
 
 
 			// Left face.
-			Vertex<VertexComp::PNTanTexC>{											// 12.
+			Vertex<VertexComp::PNTanTex>{											// 12.
 				Vec3f{ -0.5f, 0.5f, -0.5f },
 				-Vec3f::Right,
 				Vec3f::Zero,
 				{ 0.0f, 0.0f },
-				Vec3f::One
 			},
 
-			Vertex<VertexComp::PNTanTexC>{											// 13.
+			Vertex<VertexComp::PNTanTex>{											// 13.
 				Vec3f{ -0.5f, 0.5f, 0.5f },
 				-Vec3f::Right,
 				Vec3f::Zero,
 				{ 1.0f, 0.0f },
-				Vec3f::One
 			},
 
-			Vertex<VertexComp::PNTanTexC>{											// 14.
+			Vertex<VertexComp::PNTanTex>{											// 14.
 				Vec3f{ -0.5f, -0.5f, 0.5f },
 				-Vec3f::Right,
 				Vec3f::Zero,
 				{ 1.0f, 1.0f },
-				Vec3f::One
 			},
 
-			Vertex<VertexComp::PNTanTexC>{											// 15.
+			Vertex<VertexComp::PNTanTex>{											// 15.
 				Vec3f{ -0.5f, -0.5f, -0.5f },
 				-Vec3f::Right,
 				Vec3f::Zero,
 				{ 0.0f, 1.0f },
-				Vec3f::One
 			},
 
 
 			//Top face.
-			Vertex<VertexComp::PNTanTexC>{											// 16.
+			Vertex<VertexComp::PNTanTex>{											// 16.
 				Vec3f{ -0.5f, 0.5f, -0.5f },
 				Vec3f::Up,
 				Vec3f::Zero,
 				{ 0.0f, 0.0f },
-				Vec3f::One
 			},
 
-			Vertex<VertexComp::PNTanTexC>{											// 17.
+			Vertex<VertexComp::PNTanTex>{											// 17.
 				Vec3f{ 0.5f, 0.5f, -0.5f },
 				Vec3f::Up,
 				Vec3f::Zero,
 				{ 1.0f, 0.0f },
-				Vec3f::One
 			},
 
-			Vertex<VertexComp::PNTanTexC>{											// 18.
+			Vertex<VertexComp::PNTanTex>{											// 18.
 				Vec3f{ 0.5f, 0.5f, 0.5f },
 				Vec3f::Up,
 				Vec3f::Zero,
 				{ 1.0f, 1.0f },
-				Vec3f::One
 			},
 
-			Vertex<VertexComp::PNTanTexC>{											// 19.
+			Vertex<VertexComp::PNTanTex>{											// 19.
 				Vec3f{ -0.5f, 0.5f, 0.5f },
 				Vec3f::Up,
 				Vec3f::Zero,
 				{ 0.0f, 1.0f },
-				Vec3f::One
 			},
 
 
 			// Bottom face.
-			Vertex<VertexComp::PNTanTexC>{											// 20.
+			Vertex<VertexComp::PNTanTex>{											// 20.
 				Vec3f{ -0.5f, -0.5f, 0.5f },
 				-Vec3f::Up,
 				Vec3f::Zero,
 				{ 0.0f, 0.0f },
-				Vec3f::One
 			},
 
-			Vertex<VertexComp::PNTanTexC>{											// 21.
+			Vertex<VertexComp::PNTanTex>{											// 21.
 				Vec3f{ 0.5f, -0.5f, 0.5f },
 				-Vec3f::Up,
 				Vec3f::Zero,
 				{ 1.0f, 0.0f },
-				Vec3f::One
 			},
 
-			Vertex<VertexComp::PNTanTexC>{											// 22.
+			Vertex<VertexComp::PNTanTex>{											// 22.
 				Vec3f{ 0.5f, -0.5f, -0.5f },
 				-Vec3f::Up,
 				Vec3f::Zero,
 				{ 1.0f, 1.0f },
-				Vec3f::One
 			},
 
-			Vertex<VertexComp::PNTanTexC>{											// 23.
+			Vertex<VertexComp::PNTanTex>{											// 23.
 				Vec3f{ -0.5f, -0.5f, -0.5f },
 				-Vec3f::Up,
 				Vec3f::Zero,
 				{ 0.0f, 1.0f },
-				Vec3f::One
 			},
 
 		};
 
-		constexpr uint32 totalSize = SizeOf(vertices) * sizeof(Vertex<Comps>);
+		constexpr uint32 totalSize = SizeOf<uint32>(vertices) * sizeof(Vertex<Comps>);
 		mesh.vertices.resize(totalSize);
 		MemMove(reinterpret_cast<const char*>(vertices), mesh.vertices.data(), totalSize);
 

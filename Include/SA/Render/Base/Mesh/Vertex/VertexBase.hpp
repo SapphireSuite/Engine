@@ -26,6 +26,17 @@ namespace Sa
 		{
 			/// Position component of the Vertex.
 			Vec3f position;
+
+
+			/// \e Default constructor.
+			VertexBase() = default;
+
+			/**
+			*	\brief \e Value constructor.
+			*
+			*	\param[in] _pos	Position value.
+			*/
+			VertexBase(const Vec3f& _pos) noexcept;
 		};
 
 
@@ -39,6 +50,18 @@ namespace Sa
 			Vec3f normal;
 
 			static constexpr uint32 normalOffset = sizeof(Vec3f);
+
+
+			/// \e Default constructor.
+			VertexBase() = default;
+
+			/**
+			*	\brief \e Value constructor.
+			*
+			*	\param[in] _pos			Position value.
+			*	\param[in] _normal		Normal value.
+			*/
+			VertexBase(const Vec3f& _pos, const Vec3f& _normal) noexcept;
 		};
 
 
@@ -52,6 +75,18 @@ namespace Sa
 			Vec2f texture;
 
 			static constexpr uint32 textureOffset = sizeof(Vec3f);
+
+
+			/// \e Default constructor.
+			VertexBase() = default;
+
+			/**
+			*	\brief \e Value constructor.
+			*
+			*	\param[in] _pos			Position value.
+			*	\param[in] _texture		Texture value.
+			*/
+			VertexBase(const Vec3f& _pos, const Vec2f & _texture) noexcept;
 		};
 
 
@@ -65,6 +100,18 @@ namespace Sa
 			Vec3f color;
 
 			static constexpr uint32 colorOffset = sizeof(Vec3f);
+
+
+			/// \e Default constructor.
+			VertexBase() = default;
+
+			/**
+			*	\brief \e Value constructor.
+			*
+			*	\param[in] _pos			Position value.
+			*	\param[in] _color		Color value.
+			*/
+			VertexBase(const Vec3f& _pos, const Vec3f& _color) noexcept;
 		};
 
 
@@ -82,6 +129,19 @@ namespace Sa
 
 			static constexpr uint32 normalOffset = sizeof(Vec3f);
 			static constexpr uint32 tangentOffset = 2u * sizeof(Vec3f);
+
+
+			/// \e Default constructor.
+			VertexBase() = default;
+
+			/**
+			*	\brief \e Value constructor.
+			*
+			*	\param[in] _pos			Position value.
+			*	\param[in] _normal		Normal value.
+			*	\param[in] _tangent		Tangent value.
+			*/
+			VertexBase(const Vec3f& _pos, const Vec3f& _normal, const Vec3f& _tangent) noexcept;
 		};
 
 
@@ -99,6 +159,19 @@ namespace Sa
 
 			static constexpr uint32 normalOffset = sizeof(Vec3f);
 			static constexpr uint32 textureOffset = 2u * sizeof(Vec3f);
+
+
+			/// \e Default constructor.
+			VertexBase() = default;
+
+			/**
+			*	\brief \e Value constructor.
+			*
+			*	\param[in] _pos			Position value.
+			*	\param[in] _normal		Normal value.
+			*	\param[in] _texture		Texture value.
+			*/
+			VertexBase(const Vec3f& _pos, const Vec3f& _normal, const Vec2f& _texture) noexcept;
 		};
 
 
@@ -116,6 +189,19 @@ namespace Sa
 
 			static constexpr uint32 normalOffset = sizeof(Vec3f);
 			static constexpr uint32 colorOffset = 2u * sizeof(Vec3f);
+
+
+			/// \e Default constructor.
+			VertexBase() = default;
+
+			/**
+			*	\brief \e Value constructor.
+			*
+			*	\param[in] _pos			Position value.
+			*	\param[in] _normal		Normal value.
+			*	\param[in] _color		Color value.
+			*/
+			VertexBase(const Vec3f& _pos, const Vec3f& _normal, const Vec3f& _color) noexcept;
 		};
 
 
@@ -137,6 +223,20 @@ namespace Sa
 			static constexpr uint32 normalOffset = sizeof(Vec3f);
 			static constexpr uint32 tangentOffset = 2u * sizeof(Vec3f);
 			static constexpr uint32 textureOffset = 3u * sizeof(Vec3f);
+
+
+			/// \e Default constructor.
+			VertexBase() = default;
+
+			/**
+			*	\brief \e Value constructor.
+			*
+			*	\param[in] _pos			Position value.
+			*	\param[in] _normal		Normal value.
+			*	\param[in] _tangent		Tangent value.
+			*	\param[in] _texture		Texture value.
+			*/
+			VertexBase(const Vec3f& _pos, const Vec3f& _normal, const Vec3f& _tangent, const Vec2f& _texture) noexcept;
 		};
 
 
@@ -158,6 +258,20 @@ namespace Sa
 			static constexpr uint32 normalOffset = sizeof(Vec3f);
 			static constexpr uint32 tangentOffset = 2u * sizeof(Vec3f);
 			static constexpr uint32 colorOffset = 3u * sizeof(Vec3f);
+
+
+			/// \e Default constructor.
+			VertexBase() = default;
+
+			/**
+			*	\brief \e Value constructor.
+			*
+			*	\param[in] _pos			Position value.
+			*	\param[in] _normal		Normal value.
+			*	\param[in] _tangent		Tangent value.
+			*	\param[in] _color		Color value.
+			*/
+			VertexBase(const Vec3f& _pos, const Vec3f& _normal, const Vec3f& _tangent, const Vec3f& _color) noexcept;
 		};
 	}
 }
