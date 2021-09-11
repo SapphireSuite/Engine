@@ -4,5 +4,5 @@
 
 # === Entrypoints ===
 
-add_subdirectory(Libs/glfw)
-add_subdirectory(Libs/ImGui)
+add_subdirectory(glfw)
+add_subdirectory(ImGui)

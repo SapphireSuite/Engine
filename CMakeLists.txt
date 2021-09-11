@@ -102,7 +102,7 @@ enable_testing()
 
 # === Entrypoints ===
 
-add_subdirectory(ThirdParty)
+add_subdirectory(ThirdParty/Libs)
 
 if(SA_ENGINE_BUILD_TESTS)
 	add_subdirectory(Tests)

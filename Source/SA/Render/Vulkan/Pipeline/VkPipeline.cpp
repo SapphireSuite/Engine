@@ -153,7 +153,7 @@ namespace Sa::Vk
 		viewportDynamicInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
 		viewportDynamicInfo.pNext = nullptr;
 		viewportDynamicInfo.flags = 0u;
-		viewportDynamicInfo.dynamicStateCount = SizeOf(dynamicState);
+		viewportDynamicInfo.dynamicStateCount = SizeOf<uint32>(dynamicState);
 		viewportDynamicInfo.pDynamicStates = dynamicState;
 
 
@@ -315,7 +315,7 @@ namespace Sa::Vk
 		_renderPassAttInfos.colorBlendingInfo.flags = 0u;
 		_renderPassAttInfos.colorBlendingInfo.logicOpEnable = VK_FALSE;
 		_renderPassAttInfos.colorBlendingInfo.logicOp = VK_LOGIC_OP_COPY;
-		_renderPassAttInfos.colorBlendingInfo.attachmentCount = SizeOf(_renderPassAttInfos.colorBlendAttachments);
+		_renderPassAttInfos.colorBlendingInfo.attachmentCount = SizeOf<uint32>(_renderPassAttInfos.colorBlendAttachments);
 		_renderPassAttInfos.colorBlendingInfo.pAttachments = _renderPassAttInfos.colorBlendAttachments.data();
 		_renderPassAttInfos.colorBlendingInfo.blendConstants[0] = 0.0f;
 		_renderPassAttInfos.colorBlendingInfo.blendConstants[1] = 0.0f;
