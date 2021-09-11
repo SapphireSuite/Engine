@@ -14,6 +14,17 @@ namespace Sa::Vk
 	class Buffer : public BufferBase
 	{
 	public:
+		class Deleter
+		{
+			const Device& mDevice;
+
+		public:
+			Deleter(const Device& _device) noexcept;
+
+			void operator()(Buffer& _buffer);
+		};
+
+
 		void Create(const Device& _device,
 			uint64 _size,
 			VkBufferUsageFlags _usage,

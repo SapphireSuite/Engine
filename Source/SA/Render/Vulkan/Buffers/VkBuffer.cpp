@@ -9,6 +9,17 @@
 
 namespace Sa::Vk
 {
+	Buffer::Deleter::Deleter(const Device& _device) noexcept :
+		mDevice{ _device }
+	{
+	}
+
+	void Buffer::Deleter::operator()(Buffer& _buffer)
+	{
+		_buffer.Destroy(mDevice);
+	}
+
+
 	void Buffer::Create(const Device& _device,
 		uint64 _size, VkBufferUsageFlags _usage,
 		VkMemoryPropertyFlags _properties,
