@@ -24,6 +24,37 @@ namespace Sa
 			static_cast<uint8>(_format) <= static_cast<uint8>(Format::DepthStencil_32);
 	}
 
+
+	uint32 API_GetChannelNum(Format _format)
+	{
+		switch (_format)
+		{
+			case Format::R_8:
+			case Format::sR_8:
+			case Format::Stencil_8:
+				return 1u;
+			case Format::RG_16:
+			case Format::sRG_16:
+			case Format::Depth_16:
+				return 2u;
+			case Format::RGB_32:
+			case Format::BGR_32:
+			case Format::RGBA_32:
+			case Format::BGRA_32:
+			case Format::sRGBA_32:
+			case Format::sBGRA_32:
+			case Format::Depth_32:
+			case Format::DepthStencil_32:
+				return 4u;
+			case Format::RGBA_64:
+				return 8;
+			default:
+				SA_LOG(L"Format [" << _format << L"]not supported yet!", Error, SA / Render / Vulkan);
+				return 4u;
+		}
+	}
+
+
 #if SA_VULKAN
 
 	namespace Vk
@@ -117,36 +148,6 @@ namespace Sa
 				default:
 					SA_LOG("Format [" << _format << L"]not supported yet!", Error, SA/Render/Vulkan);
 					return Format::RGBA_32;
-			}
-		}
-
-
-		uint32 API_GetChannelNum(Format _format)
-		{
-			switch (_format)
-			{
-				case Format::R_8:
-				case Format::sR_8:
-				case Format::Stencil_8:
-					return 1u;
-				case Format::RG_16:
-				case Format::sRG_16:
-				case Format::Depth_16:
-					return 2u;
-				case Format::RGB_32:
-				case Format::BGR_32:
-				case Format::RGBA_32:
-				case Format::BGRA_32:
-				case Format::sRGBA_32:
-				case Format::sBGRA_32:
-				case Format::Depth_32:
-				case Format::DepthStencil_32:
-					return 4u;
-				case Format::RGBA_64:
-					return 8;
-				default:
-					SA_LOG(L"Format [" << _format << L"]not supported yet!", Error, SA/Render/Vulkan);
-					return 4u;
 			}
 		}
 	}

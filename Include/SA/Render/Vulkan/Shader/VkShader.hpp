@@ -8,7 +8,6 @@
 #include <SA/Core/Support/API/Vulkan.hpp>
 
 #include <SA/Render/Base/Shader/AShader.hpp>
-#include <SA/Render/Base/Shader/RawShader.hpp>
 
 #if SA_VULKAN
 

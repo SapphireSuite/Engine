@@ -282,8 +282,8 @@ namespace Sa::Vk
 
 
 		// Color attachments.
-		SA_ASSERT(OutOfRange, SA/Render/Vulkan, _infos.subPassIndex < SizeOf(_infos.renderPassDesc.subPassDescs),
-			0u, SizeOf(_infos.renderPassDesc.subPassDescs), L"Pipeline SubPass index out of RenderPass SubPassDescriptor range!");
+		SA_ASSERT(OutOfRange, SA/Render/Vulkan, _infos.subPassIndex < SizeOf<uint32>(_infos.renderPassDesc.subPassDescs),
+			0u, SizeOf<uint32>(_infos.renderPassDesc.subPassDescs), L"Pipeline SubPass index out of RenderPass SubPassDescriptor range!");
 
 		const SubPassDescriptor& subpassDesc = _infos.renderPassDesc.subPassDescs[_infos.subPassIndex];
 

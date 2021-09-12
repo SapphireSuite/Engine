@@ -7,6 +7,8 @@
 
 #include <SA/Core/Types/Abstract.hpp>
 
+#include <SA/Render/Base/Shader/RawShader.hpp>
+
 namespace Sa
 {
 	class AShader : public Abstract

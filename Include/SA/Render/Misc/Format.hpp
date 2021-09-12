@@ -45,14 +45,15 @@ namespace Sa
 	bool IsPresentFormat(Format _format) noexcept;
 	bool IsDepthFormat(Format _format) noexcept;
 
+
+	uint32 API_GetChannelNum(Format _format);
+
 #if SA_VULKAN
 
 	namespace Vk
 	{
 		VkFormat API_GetFormat(Format _format);
 		Format API_FromFormat(VkFormat _format);
-
-		uint32 API_GetChannelNum(Format _format);
 	}
 	
 #endif
