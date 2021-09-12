@@ -137,10 +137,16 @@ endif()
 option(SA_GLFW "Compile GLFW Window Manager" ON)
 
 if(SA_GLFW)
-	target_link_libraries(SA-Engine PUBLIC glfw ${GLFW_LIBRARIES})
+	target_link_libraries(SA-Engine PUBLIC glfw)
 	target_include_directories(SA-Engine PRIVATE ThirdParty/Libs/glfw/include)
 	target_compile_definitions(SA-Engine PUBLIC SA_GLFW)
 endif()
 
 # ImGUI.
 target_link_libraries(SA-Engine PUBLIC ImGui)
+
+
+# === Assets ===
+
+# Assimp
+target_link_libraries(SA-Engine PUBLIC assimp::assimp)
