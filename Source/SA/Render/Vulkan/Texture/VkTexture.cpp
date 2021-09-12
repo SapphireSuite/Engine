@@ -34,6 +34,7 @@ namespace Sa::Vk
 		if (_rawTexture.mipLevels > 1)
 			imageBufferCreateInfos.usage |= VK_IMAGE_USAGE_TRANSFER_SRC_BIT;
 
+
 		mBuffer.Create(_device, imageBufferCreateInfos);
 
 
