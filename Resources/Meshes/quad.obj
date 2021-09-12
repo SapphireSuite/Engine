@@ -1,24 +1,27 @@
 # Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-# === Vertices ===
+# Vertices
 v -0.5 0.5 0.0
 v 0.5 0.5 0.0
 v 0.5 -0.5 0.0
 v -0.5 -0.5 0.0
 # 4 Vertices
 
-# === Normals ===
+
+# Normals
 vn 0.0 0.0 1.0
 # 1 Normals
 
-# === UV Texture ===
+
+# UV Texture
 vt 0.0 0.0
 vt 1.0 0.0
 vt 1.0 1.0
 vt 0.0 1.0
 # 4 UV Texture
 
-# === Triangles ===
-f 1/1/1 2/1/2 3/1/3
-f 3/1/3 4/1/4 1/1/1
-# 2 Triangles
+
+# Faces v/vt/vn
+f 1/1/1 2/2/1 3/3/1
+f 3/3/1 4/4/1 1/1/1
+# 2 Faces
