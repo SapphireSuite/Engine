@@ -13,6 +13,11 @@
 
 namespace Sa
 {
+	bool ModelAsset::IsValid() const
+	{
+		return !meshes.empty();
+	}
+
 	bool ModelAsset::Load(const std::string& _path)
 	{
 		// TODO: implement.

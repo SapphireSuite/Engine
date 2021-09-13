@@ -8,6 +8,11 @@
 
 namespace Sa
 {
+	bool MeshAsset::IsValid() const
+	{
+		return !rawData.vertices.empty() && !rawData.indices.empty();
+	}
+
 	bool MeshAsset::Load(const std::string& _path)
 	{
 		std::fstream fStream(_path, std::ios::binary | std::ios_base::in);
@@ -103,5 +108,14 @@ namespace Sa
 		}
 
 		return true;
+	}
+
+
+	bool MeshAsset::Import(const std::string& _path)
+	{
+		// TODO: Implement.
+		(void)_path;
+
+		return false;
 	}
 }

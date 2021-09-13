@@ -15,10 +15,16 @@ namespace Sa
 		void CreateDirectory(const std::string& _path) const;
 
 	public:
+		bool Open(const std::string& _path);
+
+		virtual bool IsValid() const = 0;
+
 		virtual bool Load(const std::string& _path) = 0;
 		virtual void UnLoad() = 0;
 
 		virtual bool Save(const std::string& _path) const;
+
+		virtual bool Import(const std::string& _path) = 0;
 	};
 }
 

@@ -103,12 +103,13 @@ int main()
 		{
 			// CUBE.
 			constexpr char* cubeMeshAssetName = "Assets/cube.spha";
+			const std::string cubeMeshResName = "../../../../Resources/Meshes/cube.obj";
 
 			MeshAsset cubeMeshAsset;
 			if (!cubeMeshAsset.Load(cubeMeshAssetName))
 			{
 				ModelAsset cubeAsset;
-				if (cubeAsset.Import("../../../../Resources/Meshes/cube.obj"))
+				if (cubeAsset.Import(cubeMeshResName))
 				{
 					cubeAsset.meshes[0].Save(cubeMeshAssetName);
 					cubeMeshAsset = std::move(cubeAsset.meshes[0]);

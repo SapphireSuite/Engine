@@ -16,10 +16,15 @@ namespace Sa
 	public:
 		RawMesh rawData;
 
+
+		bool IsValid() const override final;
+
 		bool Load(const std::string& _path) override final;
 		void UnLoad() override final;
 
 		bool Save(const std::string& _path) const override final;
+
+		bool Import(const std::string& _path) override final;
 	};
 }
 
