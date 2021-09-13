@@ -26,6 +26,8 @@ using namespace Sa;
 #include <SA/Render/Vulkan/Buffers/VkCommandBuffer.hpp>
 #include <SA/Render/Vulkan/Mesh/VkStaticMesh.hpp>
 
+#include <SA/SDK/Assets/ModelAsset.hpp>
+
 GLFW::WindowSystem winSys;
 GLFW::Window win;
 
@@ -95,12 +97,31 @@ int main()
 
 			for(uint32 i = 0; i < 3; ++i)
 				cmdBuffers.push_back(cmdPool.Allocate(device, VK_COMMAND_BUFFER_LEVEL_PRIMARY));
+		}
 
+		// Assets
+		{
+			// CUBE.
+			constexpr char* cubeMeshAssetName = "Assets/cube.spha";
+
+			MeshAsset cubeMeshAsset;
+			if (!cubeMeshAsset.Load(cubeMeshAssetName))
+			{
+				ModelAsset cubeAsset;
+				if (cubeAsset.Import("../../../../Resources/Meshes/cube.obj"))
+				{
+					cubeAsset.meshes[0].Save(cubeMeshAssetName);
+					cubeMeshAsset = std::move(cubeAsset.meshes[0]);
+				}
+			}
+
+
+			// Submit
 			ResourceHolder resHolder;
 			cmdBuffers[0].Begin();
 
-			cubeMesh.Create(device, cmdBuffers[0], resHolder, RawMesh::Triangle());
-			
+			cubeMesh.Create(device, cmdBuffers[0], resHolder, cubeMeshAsset.rawData);
+
 			cmdBuffers[0].End();
 
 			VkCommandBuffer bbb = cmdBuffers[0];

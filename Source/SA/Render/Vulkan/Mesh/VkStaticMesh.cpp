@@ -2,6 +2,8 @@
 
 #include <Render/Vulkan/Mesh/VkStaticMesh.hpp>
 
+#include <Core/Algorithms/SizeOf.hpp>
+
 #if SA_VULKAN
 
 namespace Sa::Vk

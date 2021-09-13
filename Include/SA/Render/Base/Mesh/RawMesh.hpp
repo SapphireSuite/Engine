@@ -7,10 +7,6 @@
 
 #include <vector>
 
-#include <SA/Core/Algorithms/SizeOf.hpp>
-#include <SA/Core/Algorithms/MemMove.hpp>
-#include <SA/Core/Algorithms/Equals.hpp>
-
 #include <SA/Render/Base/Mesh/Vertex/VertexLayoutSpec.hpp>
 
 namespace Sa
@@ -27,15 +23,6 @@ namespace Sa
 		void SetLayout(VertexComp _comps);
 		template <VertexComp inComps>
 		void SetLayout();
-
-		void ComputeTangents();
-
-		template <VertexComp Comps = VertexComp::Default>
-		static RawMesh Triangle() noexcept;
-		template <VertexComp Comps = VertexComp::Default>
-		static RawMesh Square() noexcept;
-		template <VertexComp Comps = VertexComp::Default>
-		static RawMesh Cube() noexcept;
 	};
 }
 

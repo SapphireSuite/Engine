@@ -84,7 +84,7 @@ namespace Sa
 	template <typename SizeT = uint64, typename T>
 	constexpr SizeT OctSizeOf(const T& _elems)
 	{
-		const SizeT sizeOf = SizeOf(_elems);
+		const SizeT sizeOf = SizeOf<SizeT>(_elems);
 
 		if constexpr (!std::is_arithmetic<T>::value)
 		{
@@ -113,7 +113,7 @@ namespace Sa
 	template <typename SizeT = uint64, typename T, uint32 size>
 	constexpr SizeT OctSizeOf(const T(&_tab)[size])
 	{
-		return SizeOf(_tab) * sizeof(T);
+		return SizeOf<SizeT>(_tab) * sizeof(T);
 	}
 
 
@@ -129,7 +129,7 @@ namespace Sa
 	template <typename SizeT = uint64, typename T>
 	constexpr SizeT BitSizeOf(const T& _elems)
 	{
-		return OctSizeOf(_elems) * 8u;
+		return OctSizeOf<SizeT>(_elems) * 8u;
 	}
 
 	/**
@@ -147,7 +147,7 @@ namespace Sa
 	template <typename SizeT = uint64, typename T, uint32 size>
 	constexpr SizeT BitSizeOf(const T(&_tab)[size])
 	{
-		return OctSizeOf(_tab) * 8u;
+		return OctSizeOf<SizeT>(_tab) * 8u;
 	}
 
 
