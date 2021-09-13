@@ -142,8 +142,6 @@ if(SA_GLFW)
 	target_compile_definitions(SA-Engine PUBLIC SA_GLFW)
 endif()
 
-# ImGUI.
-target_link_libraries(SA-Engine PUBLIC ImGui)
 
 
 # === Assets ===
