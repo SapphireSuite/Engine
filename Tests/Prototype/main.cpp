@@ -2,8 +2,6 @@
 
 #include <iostream>
 
-#define LOG(_str) std::cout << _str << std::endl;
-
 #include <SA/Collections/Debug>
 using namespace Sa;
 
@@ -25,8 +23,10 @@ using namespace Sa;
 #include <SA/Render/Vulkan/Buffers/VkFrameBuffer.hpp>
 #include <SA/Render/Vulkan/Buffers/VkCommandBuffer.hpp>
 #include <SA/Render/Vulkan/Mesh/VkStaticMesh.hpp>
+#include <SA/Render/Vulkan/Shader/VkShader.hpp>
 
 #include <SA/SDK/Assets/ModelAsset.hpp>
+#include <SA/SDK/Assets/ShaderAsset.hpp>
 
 GLFW::WindowSystem winSys;
 GLFW::Window win;
@@ -43,6 +43,8 @@ std::vector<Vk::CommandBuffer> cmdBuffers;
 uint32 imageIndex = 0u;
 
 Vk::StaticMesh cubeMesh;
+Vk::Shader unlitvert;
+Vk::Shader unlitfrag;
 
 const Vec2ui winDim{ 1200u, 800u };
 
@@ -102,7 +104,7 @@ int main()
 		// Assets
 		{
 			// CUBE.
-			constexpr char* cubeMeshAssetName = "Assets/cube.spha";
+			constexpr char* cubeMeshAssetName = "Assets/Meshes/cube.spha";
 			const std::string cubeMeshResName = "../../../../Resources/Meshes/cube.obj";
 
 			MeshAsset cubeMeshAsset;
@@ -143,6 +145,46 @@ int main()
 			vkQueueWaitIdle(device.queueMgr.transfer.GetQueue(0));
 
 			resHolder.FreeAll();
+
+
+			// Shaders
+			{
+				// Unlit vert
+				{
+					constexpr char* assetName = "Assets/Shaders/unlit_vert.spha";
+					const std::string resName = "../../../../Resources/Shaders/Forward/unlit.vert";
+
+					ShaderAsset asset;
+
+					if(!asset.Load(assetName))
+					{
+						if (asset.Import(resName))
+						{
+							asset.Save(assetName);
+						}
+					}
+
+					unlitvert.Create(device, asset.rawData);
+				}
+
+				// Unlit frag
+				{
+					constexpr char* assetName = "Assets/Shaders/unlit_frag.spha";
+					const std::string resName = "../../../../Resources/Shaders/Forward/unlit.frag";
+
+					ShaderAsset asset;
+
+					if (!asset.Load(assetName))
+					{
+						if (asset.Import(resName))
+						{
+							asset.Save(assetName);
+						}
+					}
+
+					unlitfrag.Create(device, asset.rawData);
+				}
+			}
 		}
 	}
 

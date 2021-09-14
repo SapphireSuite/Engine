@@ -11,7 +11,7 @@ namespace Sa
 {
 	struct RawShader
 	{
-		std::vector<char> data;
+		std::vector<uint32> data;
 	};
 }
 

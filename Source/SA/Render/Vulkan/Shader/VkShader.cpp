@@ -2,6 +2,8 @@
 
 #include <Render/Vulkan/Shader/VkShader.hpp>
 
+#include <Core/Algorithms/SizeOf.hpp>
+
 #include <Render/Vulkan/Debug/Debug.hpp>
 
 #include <Render/Vulkan/Device/VkDevice.hpp>
@@ -16,8 +18,8 @@ namespace Sa::Vk
 		shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
 		shaderModuleCreateInfo.pNext = nullptr;
 		shaderModuleCreateInfo.flags = 0u;
-		shaderModuleCreateInfo.codeSize = _rawShader.data.size();
-		shaderModuleCreateInfo.pCode = reinterpret_cast<const uint32*>(_rawShader.data.data());
+		shaderModuleCreateInfo.codeSize = OctSizeOf(_rawShader.data);
+		shaderModuleCreateInfo.pCode = _rawShader.data.data();
 
 		SA_VK_ASSERT(vkCreateShaderModule(_device, &shaderModuleCreateInfo, nullptr, &mHandle), L"Failed to create shader module!");
 	}
