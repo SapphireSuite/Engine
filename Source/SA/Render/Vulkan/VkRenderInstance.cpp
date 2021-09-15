@@ -65,6 +65,7 @@ namespace Sa::Vk
 
 		instanceInfos.enabledLayerCount = ValidationLayers::GetLayerNum();
 		instanceInfos.ppEnabledLayerNames = ValidationLayers::GetLayerNames();
+
 #endif
 
 		SA_VK_ASSERT(vkCreateInstance(&instanceInfos, nullptr, &mHandle), L"Failed to create vulkan instance!");

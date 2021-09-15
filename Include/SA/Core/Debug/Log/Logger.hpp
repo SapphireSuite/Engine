@@ -13,7 +13,7 @@
 #include <thread>
 
 #include <SA/Core/Debug/Log/Log.hpp>
-#include <SA/Core/Debug/Log/LogChannel.hpp>
+#include <SA/Core/Debug/Log/LogChannelFilter.hpp>
 #include <SA/Core/Debug/Streams/LogStreamBase.hpp>
 
 #include <SA/Core/Debug/Exceptions/Exception.hpp>
@@ -51,11 +51,9 @@ namespace Sa
 
 #endif
 
-		/// Registered channels.
-		std::unordered_map<std::wstring, LogChannel> mChannels;
+		/// Channel filter before output in stream.
+		LogChannelFilter mChannelFilter;
 		std::mutex mChannelMutex;
-
-		bool ShouldLogChannel(const std::wstring& _chanName, LogLevel _level, uint32 _offset = 0u);
 
 #if __SA_LOG_THREAD
 
@@ -81,7 +79,7 @@ namespace Sa
 		void ProcessLog(const LogBase& _log);
 
 	public:
-		/// Enabled level flags for output.
+		/// Level flags before output in stream.
 		Flags<LogLevel, std::atomic<UIntOfSize<sizeof(LogLevel)>>> levelFlags = LogLevel::Default;
 
 
