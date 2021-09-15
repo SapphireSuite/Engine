@@ -223,6 +223,9 @@ int main()
 		{
 			vkDeviceWaitIdle(device);
 
+			unlitvert.Destroy(device);
+			unlitfrag.Destroy(device);
+
 			cubeMesh.Destroy(device);
 
 			cmdPool.Destroy(device);

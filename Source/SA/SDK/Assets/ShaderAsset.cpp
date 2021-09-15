@@ -2,8 +2,8 @@
 
 #include <SDK/Assets/ShaderAsset.hpp>
 
-#include <fstream>
 #include <sstream>
+#include <fstream>
 
 // GLSL compiler.
 #include <shaderc/shaderc.hpp>
@@ -53,22 +53,27 @@ namespace Sa
 	{
 		static shaderc::Compiler compiler;
 
-		SA_LOG(L"Compiling shader {" << _resourcePath << L"}", Infos, SA / SDK / Asset);
+		SA_LOG(L"Compiling shader {" << _resourcePath << L"}", Infos, SA/SDK/Asset);
 
 
-		std::stringstream code;
+		std::string code;
 
 		// Query shader code
 		{
-			std::fstream fStream(_resourcePath, std::fstream::binary | std::ios_base::in);
+			std::fstream fStream(_resourcePath, std::ios_base::in);
 
 			if (!fStream.is_open())
 			{
-				SA_LOG(L"Failed to open file {" << _resourcePath << L"}!", Error, SA / SDK / Asset);
+				SA_LOG(L"Failed to open file {" << _resourcePath << L"}!", Error, SA/SDK/Asset);
 				return false;
 			}
 
-			code << fStream.rdbuf();
+
+
+			std::stringstream scode;
+			scode << fStream.rdbuf();
+
+			code = scode.str();
 		}
 
 
@@ -81,19 +86,29 @@ namespace Sa
 #endif
 
 
-			const shaderc::SpvCompilationResult module = compiler.CompileGlslToSpv(_resourcePath, GetShaderKind(_resourcePath), code.str().c_str(), options);
+			shaderc::SpvCompilationResult module =
+				compiler.CompileGlslToSpv(code, GetShaderKind(_resourcePath), _resourcePath.c_str(), options);
+
 
 			if (module.GetCompilationStatus() != shaderc_compilation_status_success)
 			{
-				SA_LOG(L"Shader {" << _resourcePath << L"} compilation failed", Error, SA/SDK/Asset, module.GetErrorMessage());
+				SA_LOG(L"Shader {" << _resourcePath << L"} compilation failed with " <<
+					module.GetNumErrors() << L" Errors and " <<
+					module.GetNumWarnings() << " Warnings.",
+					Error, SA/SDK/Asset, module.GetErrorMessage());
 
 				return false;
+			}
+			else if (module.GetNumWarnings())
+			{
+				SA_LOG(L"Shader {" << _resourcePath << L"} compilation success with " <<
+					module.GetNumWarnings() << " Warnings.",
+					Warning, SA/SDK/Asset, module.GetErrorMessage());
 			}
 
 
 			// Copy data.
 			rawData.data = { module.cbegin(), module.cend() };
-			//std::memmove(rawData.data.data(), module.cbegin(), module.cend() - module.cbegin());
 		}
 
 		return true;
