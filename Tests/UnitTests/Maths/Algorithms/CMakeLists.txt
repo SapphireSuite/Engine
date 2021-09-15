@@ -2,30 +2,27 @@
 
 
 
-# === Projects ===
+# Projects
 
-project(SA-UT_Maths_Algorithms)
+project(SA_UT_Maths_Algorithms)
 
 
 
-# === Inputs ===
+# Inputs
 
-# Parse files.
 file(GLOB_RECURSE SOURCES "*.cpp")
 
-# Add executable target.
-add_executable(SA-UT_Maths_Algorithms ${SOURCES})
+add_executable(SA_UT_Maths_Algorithms ${SOURCES})
 
 
 
-# === Dependencies ===
+# Dependencies
 
-# Unit test module dependency.
-target_link_libraries(SA-UT_Maths_Algorithms PUBLIC SA-UnitTestHelper)
+### Unit test module dependency.
+target_link_libraries(SA_UT_Maths_Algorithms PRIVATE SA_UnitTestHelper)
 
 
 
-# === Tests ===
+# Tests
 
-# Add test.
-add_test(NAME CSA-UT_Maths_Algorithms COMMAND SA-UT_Maths_Algorithms --config $<CONFIGURATION> --exe $<TARGET_FILE:SA-UT_Maths_Algorithms>)
+add_test(NAME CSA_UT_Maths_Algorithms COMMAND SA_UT_Maths_Algorithms)

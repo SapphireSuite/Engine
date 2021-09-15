@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 3.17)
 
 # Project
 
-project(SA-Engine)
+project(SA_Engine)
 
 message("Main directory: ${CMAKE_SOURCE_DIR}")
 
@@ -27,28 +27,28 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Libs)	# .dll / .so
 file(GLOB_RECURSE SOURCES "Source/*")
 
 ### Add static library target.
-add_library(SA-Engine STATIC ${SOURCES})
+add_library(SA_Engine STATIC ${SOURCES})
 
 ### Link dependencies.
-target_link_libraries(SA-Engine PUBLIC Engine_Deps)
+target_link_libraries(SA_Engine PUBLIC SA_EngineDeps)
 
 
 
 # Include directories
 
-target_include_directories(SA-Engine PUBLIC Include)
-target_include_directories(SA-Engine PRIVATE Include/SA)
+target_include_directories(SA_Engine PUBLIC Include)
+target_include_directories(SA_Engine PRIVATE Include/SA)
 
 
 
 # Compile features
 
 ## Standard
-target_compile_features(SA-Engine PUBLIC c_std_11)
-target_compile_features(SA-Engine PUBLIC cxx_std_17)
+target_compile_features(SA_Engine PUBLIC c_std_11)
+target_compile_features(SA_Engine PUBLIC cxx_std_17)
 
 ### SA-Engine module implementation preprocessor.
-target_compile_definitions(SA-Engine PUBLIC SA_ENGINE_IMPL)
+target_compile_definitions(SA_Engine PUBLIC SA_ENGINE_IMPL)
 
 
 
@@ -60,7 +60,7 @@ option(SA_ENGINE_BUILD_TESTS "Should build SA-Engine tests" OFF)
 
 ## Define continuous integration (CI) preprocessor.
 if(SA_CI)
-	target_compile_definitions(SA-Engine PUBLIC SA_CI)
+	target_compile_definitions(SA_Engine PUBLIC SA_CI)
 endif()
 
 

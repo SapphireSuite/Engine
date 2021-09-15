@@ -2,9 +2,9 @@
 
 
 
-# === Entrypoints ===
+# Entrypoints
 
-# Unit Test Helper tool.
+### Unit Test Helper tool.
 add_subdirectory(Helper)
 
 add_subdirectory(Core)
