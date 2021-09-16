@@ -9,13 +9,15 @@
 
 #include <SA/Core/Support/API/Vulkan.hpp>
 
+#include <SA/Render/Base/Buffers/IUniformBuffer.hpp>
+
 #if SA_VULKAN
 
 namespace Sa::Vk
 {
 	class Device;
 
-	class BufferBase
+	class BufferBase : public IUniformBuffer
 	{
 	protected:
 		VkBuffer mHandle = VK_NULL_HANDLE;

@@ -25,6 +25,11 @@ using namespace Sa;
 #include <SA/Render/Vulkan/Mesh/VkStaticMesh.hpp>
 #include <SA/Render/Vulkan/Shader/VkShader.hpp>
 #include <SA/Render/Vulkan/Pipeline/VkPipeline.hpp>
+#include <SA/Render/Vulkan/Material/VkMaterial.hpp>
+#include <SA/Render/Vulkan/Buffers/VkBuffer.hpp>
+
+#include <SA/Render/Base/Material/Bindings/MaterialUBOBinding.hpp>
+#include <SA/Render/Base/Material/Bindings/MaterialIBOBinding.hpp>
 
 #include <SA/SDK/Assets/ModelAsset.hpp>
 #include <SA/SDK/Assets/ShaderAsset.hpp>
@@ -48,6 +53,9 @@ Vk::StaticMesh cubeMesh;
 Vk::Shader unlitvert;
 Vk::Shader unlitfrag;
 Vk::Pipeline unlitPipeline;
+Vk::Material cubeMat;
+Vk::Buffer camUBO;
+Vk::Buffer modelUBO;
 
 const Vec2ui winDim{ 1200u, 800u };
 
@@ -206,6 +214,16 @@ int main()
 
 				unlitPipeline.Create(device, infos);
 			}
+
+
+			// Material.
+			{
+				MaterialCreateInfos infos{ unlitPipeline };
+				//infos.AddBinding<MaterialUBOBinding>(0u, &camUBO);
+				//infos.AddBinding<MaterialUBOBinding>(1u, &modelUBO);
+
+				cubeMat.Create(device, infos);
+			}
 		}
 	}
 
@@ -244,6 +262,7 @@ int main()
 		{
 			vkDeviceWaitIdle(device);
 
+			cubeMat.Destroy(device);
 			unlitPipeline.Destroy(device);
 
 			unlitvert.Destroy(device);
