@@ -108,9 +108,8 @@ namespace Sa::Vk
 		VkPhysicalDeviceFeatures physicalDeviceFeatures{}; // Need braces to ensure C-struct correct initialization.
 		//physicalDeviceFeatures.logicOp = VK_TRUE;
 
-		//// TODO: Enable only if multisampling.
-		//physicalDeviceFeatures.sampleRateShading = VK_TRUE;
-		//physicalDeviceFeatures.samplerAnisotropy = VK_TRUE;
+		physicalDeviceFeatures.sampleRateShading = VK_TRUE;
+		physicalDeviceFeatures.samplerAnisotropy = VK_TRUE;
 
 		//physicalDeviceFeatures.multiViewport = VK_TRUE;
 

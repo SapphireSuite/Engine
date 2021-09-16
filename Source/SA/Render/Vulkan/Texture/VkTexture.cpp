@@ -38,26 +38,45 @@ namespace Sa::Vk
 		mBuffer.Create(_device, imageBufferCreateInfos);
 
 
-		ImageBuffer::CopyBufferImageInfos copyInfos{};
-		copyInfos.buffer = stagingBuffer;
-		copyInfos.extent = _rawTexture.extent;
-		copyInfos.format = _rawTexture.format;
-		copyInfos.mipLevels = _rawTexture.mipLevels;
-		copyInfos.imageType = ImageType::Image2D;
+		// Undef to Dst Transition
+		{
+			ImageBuffer::TransitionInfos infos{};
+			infos.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+			infos.newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+			infos.mipLevels = _rawTexture.mipLevels;
+			infos.imageType = ImageType::Image2D;
 
-		mBuffer.CopyBufferToImage(_cmd, _resHold, copyInfos);
+			mBuffer.TransitionImageLayout(_cmd, _resHold, infos);
+
+		}
+
+
+		// Copy staging to device
+		{
+			ImageBuffer::CopyBufferImageInfos copyInfos{};
+			copyInfos.buffer = stagingBuffer;
+			copyInfos.extent = _rawTexture.extent;
+			copyInfos.format = _rawTexture.format;
+			copyInfos.mipLevels = _rawTexture.mipLevels;
+			copyInfos.imageType = ImageType::Image2D;
+
+			mBuffer.CopyBufferToImage(_cmd, _resHold, copyInfos);
+		}
 
 		// Destroy will be called by ResourceHolder.
 		//stagingBuffer.Destroy(device);
 
 
-		ImageBuffer::TransitionInfos dstToReadTransitionInfos{};
-		dstToReadTransitionInfos.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
-		dstToReadTransitionInfos.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-		dstToReadTransitionInfos.mipLevels = _rawTexture.mipLevels;
-		dstToReadTransitionInfos.imageType = ImageType::Image2D;
+		// Dst to Read Transition
+		{
+			ImageBuffer::TransitionInfos infos{};
+			infos.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+			infos.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+			infos.mipLevels = _rawTexture.mipLevels;
+			infos.imageType = ImageType::Image2D;
 
-		mBuffer.TransitionImageLayout(_cmd, _resHold, dstToReadTransitionInfos);
+			mBuffer.TransitionImageLayout(_cmd, _resHold, infos);
+		}
 
 
 		mSampler.Create(_device, _rawTexture.mipLevels);

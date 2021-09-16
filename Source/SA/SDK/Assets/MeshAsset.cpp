@@ -39,7 +39,7 @@ namespace Sa
 
 			if (vSize == 0)
 			{
-				SA_LOG("Parsing error: Empty vertices.", Error, SA/SDK/Asset);
+				SA_LOG("Parsing file {" << _path << L"} error: Empty vertices.", Error, SA/SDK/Asset);
 				return false;
 			}
 
@@ -55,7 +55,7 @@ namespace Sa
 
 			if (iSize == 0)
 			{
-				SA_LOG("Parsing error: Empty indices.", Error, SA/SDK/Asset);
+				SA_LOG("Parsing file {" << _path << L"} error: Empty indices.", Error, SA/SDK/Asset);
 				return false;
 			}
 

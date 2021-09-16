@@ -27,12 +27,14 @@ using namespace Sa;
 #include <SA/Render/Vulkan/Pipeline/VkPipeline.hpp>
 #include <SA/Render/Vulkan/Material/VkMaterial.hpp>
 #include <SA/Render/Vulkan/Buffers/VkBuffer.hpp>
+#include <SA/Render/Vulkan/Texture/VkTexture.hpp>
 
 #include <SA/Render/Base/Material/Bindings/MaterialUBOBinding.hpp>
 #include <SA/Render/Base/Material/Bindings/MaterialIBOBinding.hpp>
 
 #include <SA/SDK/Assets/ModelAsset.hpp>
 #include <SA/SDK/Assets/ShaderAsset.hpp>
+#include <SA/SDK/Assets/TextureAsset.hpp>
 
 GLFW::WindowSystem winSys;
 GLFW::Window win;
@@ -56,6 +58,7 @@ Vk::Pipeline unlitPipeline;
 Vk::Material cubeMat;
 Vk::Buffer camUBO;
 Vk::Buffer modelUBO;
+Vk::Texture missText;
 
 const Vec2ui winDim{ 1200u, 800u };
 
@@ -117,27 +120,54 @@ int main()
 
 		// Assets
 		{
-			// CUBE.
-			constexpr char* cubeMeshAssetName = "Assets/Meshes/cube.spha";
-			const std::string cubeMeshResName = "../../../../Resources/Meshes/cube.obj";
-
-			MeshAsset cubeMeshAsset;
-			if (!cubeMeshAsset.Load(cubeMeshAssetName))
-			{
-				ModelAsset cubeAsset;
-				if (cubeAsset.Import(cubeMeshResName))
-				{
-					cubeAsset.meshes[0].Save(cubeMeshAssetName);
-					cubeMeshAsset = std::move(cubeAsset.meshes[0]);
-				}
-			}
-
 
 			// Submit
 			ResourceHolder resHolder;
 			cmdBuffers[0].Begin();
 
-			cubeMesh.Create(device, cmdBuffers[0], resHolder, cubeMeshAsset.rawData);
+
+
+			// CUBE.
+			{
+				constexpr char* cubeMeshAssetName = "Assets/Meshes/cube.spha";
+				const std::string cubeMeshResName = "../../../../Resources/Meshes/cube.obj";
+
+				MeshAsset cubeMeshAsset;
+				if (!cubeMeshAsset.Load(cubeMeshAssetName))
+				{
+					ModelAsset cubeAsset;
+					if (cubeAsset.Import(cubeMeshResName))
+					{
+						cubeAsset.meshes[0].Save(cubeMeshAssetName);
+						cubeMeshAsset = std::move(cubeAsset.meshes[0]);
+					}
+				}
+
+				cubeMesh.Create(device, cmdBuffers[0], resHolder, cubeMeshAsset.rawData);
+			}
+
+
+
+
+			// Texture
+			{
+				constexpr char* assetName = "Assets/Textures/missing.spha";
+				const std::string resName = "../../../../Resources/Textures/missing_texture.png";
+
+				TextureAsset asset;
+
+				//if (!asset.Load(assetName))
+				{
+					if (asset.Import(resName))
+					{
+						//asset.Save(assetName);
+					}
+				}
+
+				missText.Create(device, cmdBuffers[0], resHolder, asset.rawData);
+			}
+
+
 
 			cmdBuffers[0].End();
 
@@ -201,6 +231,8 @@ int main()
 			}
 
 
+
+
 			// Pipeline
 			{
 				PipelineCreateInfos infos{ renderPass, renderPassDesc };
@@ -221,6 +253,7 @@ int main()
 				MaterialCreateInfos infos{ unlitPipeline };
 				//infos.AddBinding<MaterialUBOBinding>(0u, &camUBO);
 				//infos.AddBinding<MaterialUBOBinding>(1u, &modelUBO);
+				infos.AddBinding<MaterialIBOBinding>(2u, &missText);
 
 				cubeMat.Create(device, infos);
 			}
@@ -268,6 +301,7 @@ int main()
 			unlitvert.Destroy(device);
 			unlitfrag.Destroy(device);
 
+			missText.Destroy(device);
 			cubeMesh.Destroy(device);
 
 			cmdPool.Destroy(device);
