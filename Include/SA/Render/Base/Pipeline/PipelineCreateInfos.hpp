@@ -21,8 +21,8 @@ namespace Sa
 {
 	struct PipelineShaderInfos
 	{
-		const AShader* shader = nullptr;
-		const ShaderStage stage = ShaderStage::Unknown;
+		const AShader* shader;
+		ShaderStage stage = ShaderStage::Unknown;
 	};
 
 

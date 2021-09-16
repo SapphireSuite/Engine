@@ -5,9 +5,9 @@
 #ifndef SAPPHIRE_RENDER_VK_PIPELINE_GUARD
 #define SAPPHIRE_RENDER_VK_PIPELINE_GUARD
 
-#include <SA/Core/Support/API/Vulkan.hpp>
+#include <SA/Render/Base/Pipeline/APipeline.hpp>
 
-#include <SA/Render/Base/Pipeline/PipelineCreateInfos.hpp>
+#include <SA/Core/Support/API/Vulkan.hpp>
 
 #if SA_VULKAN
 
@@ -15,7 +15,7 @@ namespace Sa::Vk
 {
 	class Device;
 
-	class Pipeline
+	class Pipeline : public APipeline
 	{
 		VkPipeline mHandle = VK_NULL_HANDLE;
 		VkPipelineLayout mPipelineLayout = VK_NULL_HANDLE;
@@ -42,6 +42,9 @@ namespace Sa::Vk
 		static void FillRenderPassAttachments(struct RenderPassAttachmentInfos& _renderPassAttInfos, const PipelineCreateInfos& _infos) noexcept;
 
 	public:
+		VkPipelineLayout GetLayout() const noexcept;
+		VkDescriptorSetLayout GetDescriptorSetLayout() const noexcept;
+
 		void Create(const Device& _device, const PipelineCreateInfos& _infos);
 		void Destroy(const Device& _device);
 	};

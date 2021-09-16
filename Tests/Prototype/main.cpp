@@ -24,6 +24,7 @@ using namespace Sa;
 #include <SA/Render/Vulkan/Buffers/VkCommandBuffer.hpp>
 #include <SA/Render/Vulkan/Mesh/VkStaticMesh.hpp>
 #include <SA/Render/Vulkan/Shader/VkShader.hpp>
+#include <SA/Render/Vulkan/Pipeline/VkPipeline.hpp>
 
 #include <SA/SDK/Assets/ModelAsset.hpp>
 #include <SA/SDK/Assets/ShaderAsset.hpp>
@@ -37,6 +38,7 @@ Vk::RenderSystem renderSys;
 Vk::RenderInstance renderInst;
 Vk::Device device;
 Vk::RenderSurface surface;
+RenderPassDescriptor renderPassDesc;
 Vk::RenderPass renderPass;
 Vk::CommandPool cmdPool;
 std::vector<Vk::CommandBuffer> cmdBuffers;
@@ -45,6 +47,7 @@ uint32 imageIndex = 0u;
 Vk::StaticMesh cubeMesh;
 Vk::Shader unlitvert;
 Vk::Shader unlitfrag;
+Vk::Pipeline unlitPipeline;
 
 const Vec2ui winDim{ 1200u, 800u };
 
@@ -90,7 +93,10 @@ int main()
 
 			surface.Create(device);
 
-			const RenderPassDescriptor renderPassDesc = RenderPassDescriptor::DefaultSingle(&surface);
+
+			renderPassDesc = RenderPassDescriptor::DefaultSingle(&surface);
+			renderPassDesc.subPassDescs[0].sampling = SampleBits::Sample1Bit;
+
 			renderPass.Create(device, renderPassDesc);
 
 			surface.CreateFrameBuffers(device, renderPass, renderPassDesc);
@@ -185,6 +191,21 @@ int main()
 					unlitfrag.Create(device, asset.rawData);
 				}
 			}
+
+
+			// Pipeline
+			{
+				PipelineCreateInfos infos{ renderPass, renderPassDesc };
+				infos.vertexBindingLayout = VertexBindingLayout{ VertexLayout::Make<VertexComp::PTex>(), cubeMesh.GetLayout() };
+				infos.shaders = { { &unlitvert, ShaderStage::Vertex }, { &unlitfrag, ShaderStage::Fragment } };
+				infos.bindings = {
+					{ 0u, ShaderStage::Vertex, ShaderBindingType::UniformBuffer },
+					{ 1u, ShaderStage::Vertex, ShaderBindingType::UniformBuffer },
+					{ 2u, ShaderStage::Fragment, ShaderBindingType::ImageSampler2D }
+				};
+
+				unlitPipeline.Create(device, infos);
+			}
 		}
 	}
 
@@ -222,6 +243,8 @@ int main()
 		// Render
 		{
 			vkDeviceWaitIdle(device);
+
+			unlitPipeline.Destroy(device);
 
 			unlitvert.Destroy(device);
 			unlitfrag.Destroy(device);

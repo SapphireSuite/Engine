@@ -24,6 +24,17 @@ namespace Sa::Vk
 	};
 
 
+	VkPipelineLayout Pipeline::GetLayout() const noexcept
+	{
+		return mPipelineLayout;
+	}
+
+	VkDescriptorSetLayout Pipeline::GetDescriptorSetLayout() const noexcept
+	{
+		return mDescriptorSetLayout;
+	}
+
+
 	void Pipeline::Create(const Device& _device, const PipelineCreateInfos& _infos)
 	{
 		CreateDescriptorSetLayout(_device, _infos);
@@ -202,7 +213,7 @@ namespace Sa::Vk
 	}
 
 
-	void FillShaderStages(std::vector<VkPipelineShaderStageCreateInfo>& _stages, const std::vector<PipelineShaderInfos>& _shaders)
+	void Pipeline::FillShaderStages(std::vector<VkPipelineShaderStageCreateInfo>& _stages, const std::vector<PipelineShaderInfos>& _shaders)
 	{
 		_stages.reserve(_shaders.size());
 
@@ -221,7 +232,7 @@ namespace Sa::Vk
 		}
 	}
 
-	void FillVertexBindings(VkPipelineVertexInputStateCreateInfo& _vertexInputInfo, std::unique_ptr<VkVertexInputBindingDescription>& _bindingDesc,
+	void Pipeline::FillVertexBindings(VkPipelineVertexInputStateCreateInfo& _vertexInputInfo, std::unique_ptr<VkVertexInputBindingDescription>& _bindingDesc,
 		std::unique_ptr<VkVertexInputAttributeDescription[]>& _attribDescs, const VertexBindingLayout& _vertexBindingLayout) noexcept
 	{
 		_bindingDesc = _vertexBindingLayout.GetBindingDescription();
@@ -236,7 +247,7 @@ namespace Sa::Vk
 		_vertexInputInfo.pVertexAttributeDescriptions = _attribDescs.get();
 	}
 
-	void FillRasterization(VkPipelineRasterizationStateCreateInfo& _rasterizerInfo, const PipelineRenderModes& _modes) noexcept
+	void Pipeline::FillRasterization(VkPipelineRasterizationStateCreateInfo& _rasterizerInfo, const PipelineRenderModes& _modes) noexcept
 	{
 		_rasterizerInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
 		_rasterizerInfo.pNext = nullptr;
@@ -253,14 +264,16 @@ namespace Sa::Vk
 		_rasterizerInfo.lineWidth = 1.0f;
 	}
 
-	void FillRenderPassAttachments(struct RenderPassAttachmentInfos& _renderPassAttInfos, const PipelineCreateInfos& _infos) noexcept
+	void Pipeline::FillRenderPassAttachments(struct RenderPassAttachmentInfos& _renderPassAttInfos, const PipelineCreateInfos& _infos) noexcept
 	{
+		const VkSampleCountFlagBits sampleCount = API_GetSampleCount(_infos.renderPassDesc.subPassDescs[_infos.subPassIndex].sampling);
+
 		// MultiSampling.
 		_renderPassAttInfos.multisamplingInfos.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
 		_renderPassAttInfos.multisamplingInfos.pNext = nullptr;
 		_renderPassAttInfos.multisamplingInfos.flags = 0u;
-		_renderPassAttInfos.multisamplingInfos.rasterizationSamples = API_GetSampleCount(_infos.renderPassDesc.subPassDescs[_infos.subPassIndex].sampling);
-		_renderPassAttInfos.multisamplingInfos.sampleShadingEnable = VK_TRUE;
+		_renderPassAttInfos.multisamplingInfos.rasterizationSamples = sampleCount;
+		_renderPassAttInfos.multisamplingInfos.sampleShadingEnable = sampleCount != VK_SAMPLE_COUNT_1_BIT;
 		_renderPassAttInfos.multisamplingInfos.minSampleShading = 0.2f;
 		_renderPassAttInfos.multisamplingInfos.pSampleMask = nullptr;
 		_renderPassAttInfos.multisamplingInfos.alphaToCoverageEnable = VK_FALSE;
