@@ -64,6 +64,18 @@ if(SA_CI)
 endif()
 
 
+## Force no sanitizer option
+if(MSVC)
+	option(SA_FORCE_NO_SANITIZER "Should force disable sanitizer flag" OFF)
+
+	# MSVC add sanitizer by default if installed.
+	if(SA_FORCE_NO_SANITIZER)
+		string(REPLACE "-fsanitize=address" "" CMAKE_C_FLAGS ${CMAKE_C_FLAGS})
+		string(REPLACE "-fsanitize=address" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
+	endif()
+endif()
+
+
 
 # Tests
 
