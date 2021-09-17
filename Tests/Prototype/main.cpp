@@ -69,8 +69,8 @@ const Vec2ui winDim{ 1200u, 800u };
 
 struct camUBOData
 {
-	Mat4f proj = Mat4f::Identity;
-	Mat4f viewInv = Mat4f::Identity;
+	CMat4f proj = Mat4f::Identity;
+	CMat4f viewInv = Mat4f::Identity;
 	Vec3f viewPosition;
 };
 
@@ -79,7 +79,7 @@ camUBOData camUBOd;
 
 struct modelUBOData
 {
-	Mat4f modelMat = Mat4f::Identity;
+	CMat4f modelMat = Mat4f::Identity;
 
 	float uvTilling = 1.0f;
 	float uvOffset = 0.0f;
@@ -391,9 +391,9 @@ int main()
 
 			frameBuffer.Begin(cmdBuffer);
 
-			//unlitPipeline.Bind();
-			//cubeMat.Bind();
-			//cubeMesh.Draw();
+			unlitPipeline.Bind(cmdBuffer);
+			cubeMat.Bind(cmdBuffer, unlitPipeline);
+			cubeMesh.Draw(cmdBuffer);
 
 
 			frameBuffer.End(cmdBuffer);

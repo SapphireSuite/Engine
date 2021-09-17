@@ -4,6 +4,8 @@
 
 #include <Core/Algorithms/SizeOf.hpp>
 
+#include <Render/Vulkan/Buffers/VkCommandBuffer.hpp>
+
 #if SA_VULKAN
 
 namespace Sa::Vk
@@ -33,6 +35,22 @@ namespace Sa::Vk
 		mIndexBuffer.Destroy(_device);
 
 		mIndicesSize = ~uint32();
+	}
+
+
+	void StaticMesh::Draw(CommandBuffer& _cmd)
+	{
+		VkDeviceSize offsets[] = { 0 };
+		VkBuffer vkVertBuff = mVertexBuffer;
+
+		vkCmdBindVertexBuffers(_cmd, 0, 1, &vkVertBuff, offsets);
+
+		vkCmdBindIndexBuffer(_cmd, mIndexBuffer, 0, VK_INDEX_TYPE_UINT32);
+
+		vkCmdDrawIndexed(_cmd, mIndicesSize, 1, 0, 0, 0);
+
+		// TODO: add instance draw num.
+		//vkCmdDrawIndexed(_cmd, mIndicesSize, _infos.instanceNum, 0, 0, 0);
 	}
 }
 

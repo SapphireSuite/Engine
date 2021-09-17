@@ -14,6 +14,7 @@
 namespace Sa::Vk
 {
 	class Device;
+	class CommandBuffer;
 
 	class Pipeline : public APipeline
 	{
@@ -47,6 +48,8 @@ namespace Sa::Vk
 
 		void Create(const Device& _device, const PipelineCreateInfos& _infos);
 		void Destroy(const Device& _device);
+
+		void Bind(CommandBuffer& _cmd);
 	};
 }
 

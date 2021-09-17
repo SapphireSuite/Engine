@@ -7,6 +7,7 @@
 #include <Render/Vulkan/Debug/Debug.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
 #include <Render/Vulkan/Pipeline/VkPipeline.hpp>
+#include <Render/Vulkan/Buffers/VkCommandBuffer.hpp>
 
 #if SA_VULKAN
 
@@ -22,6 +23,15 @@ namespace Sa::Vk
 	{
 		DestroyDescriptorSets(_device);
 		DestroyDescriptorPool(_device);
+	}
+
+	void Material::Bind(CommandBuffer& _cmd, const APipeline& _pipeline)
+	{
+		const Pipeline& vkPipeline = _pipeline.As<Pipeline>();
+
+		// TODO: Add frame index.
+		vkCmdBindDescriptorSets(_cmd, VK_PIPELINE_BIND_POINT_GRAPHICS, vkPipeline.GetLayout(),
+			0, 1, /*&mDescriptorSets[_frame.index % SizeOf(mDescriptorSets)]*/ &mDescriptorSets[0], 0, nullptr);
 	}
 
 

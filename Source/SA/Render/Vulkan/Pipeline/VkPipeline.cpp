@@ -9,6 +9,7 @@
 #include <Render/Vulkan/Device/VkDevice.hpp>
 #include <Render/Vulkan/Shader/VkShader.hpp>
 #include <Render/Vulkan/Pass/VkRenderPass.hpp>
+#include <Render/Vulkan/Buffers/VkCommandBuffer.hpp>
 
 #if SA_VULKAN
 
@@ -49,6 +50,11 @@ namespace Sa::Vk
 		DestroyPipelineLayout(_device);
 
 		DestroyDescriptorSetLayout(_device);
+	}
+
+	void Pipeline::Bind(CommandBuffer& _cmd)
+	{
+		vkCmdBindPipeline(_cmd, VK_PIPELINE_BIND_POINT_GRAPHICS, mHandle);
 	}
 
 

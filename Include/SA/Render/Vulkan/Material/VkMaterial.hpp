@@ -14,6 +14,7 @@
 namespace Sa::Vk
 {
 	class Device;
+	class CommandBuffer;
 
 	class Material : public AMaterial
 	{
@@ -31,6 +32,8 @@ namespace Sa::Vk
 	public:
 		void Create(const Device& _device, const MaterialCreateInfos& _infos);
 		void Destroy(const Device& _device);
+
+		void Bind(CommandBuffer& _cmd, const APipeline& _pipeline);
 	};
 }
 
