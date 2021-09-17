@@ -68,6 +68,22 @@ namespace Sa::GLFW
 		AWindow::SetWindowMode(_mode);
 	}
 
+	void Window::SetCursorMode(Flags<CursorMode> _flags)
+	{
+		if (_flags & CursorMode::Hidden)
+		{
+			if (_flags & CursorMode::Capture)
+				glfwSetInputMode(mHandle, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			else
+				glfwSetInputMode(mHandle, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+		}
+		else if (_flags & CursorMode::Capture)
+		{
+			// TODO: Implement
+		}
+		else
+			glfwSetInputMode(mHandle, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	}
 
 	void Window::Create(const CreateInfos& _infos)
 	{
@@ -83,6 +99,7 @@ namespace Sa::GLFW
 		glfwSetWindowIconifyCallback(mHandle, MinimizedCallback);
 		glfwSetWindowMaximizeCallback(mHandle, MaximizedCallback);
 
+		SetCursorMode(_infos.cursorFlags);
 		SetWindowMode(_infos.mode);
 
 		SA_LOG(L"Window created", Infos, SA/Window/GLFW);

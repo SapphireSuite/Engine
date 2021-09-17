@@ -81,6 +81,7 @@ namespace Sa::GLFW
 
 
 		void SetWindowMode(WindowMode _mode) override final;
+		void SetCursorMode(Flags<CursorMode> _flags) override final;
 
 		void Create(const CreateInfos& _infos) override final;
 		void Destroy() override final;

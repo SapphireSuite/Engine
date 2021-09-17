@@ -13,6 +13,7 @@
 #include <SA/Maths/Space/Vector2.hpp>
 
 #include <SA/Window/Base/WindowMode.hpp>
+#include <SA/Window/Base/CursorMode.hpp>
 
 /**
 *	\file AWindow.hpp
@@ -88,6 +89,8 @@ namespace Sa
 			/// Window mode.
 			WindowMode mode = WindowMode::Windowed;
 
+			Flags<CursorMode> cursorFlags;
+
 			/// Window name.
 			std::string name = "Main Window";
 		};
@@ -140,6 +143,13 @@ namespace Sa
 		*	\param[in] _mode	New window mode.
 		*/
 		virtual void SetWindowMode(WindowMode _mode);
+
+		/**
+		*	\brief \e Setter of window's cursor mode.
+		* 
+		*	\param[in] _flags	New cursor mode.
+		*/
+		virtual void SetCursorMode(Flags<CursorMode> _flags) = 0;
 
 
 		/**

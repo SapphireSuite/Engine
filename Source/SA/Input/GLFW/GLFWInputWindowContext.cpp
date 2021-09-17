@@ -11,7 +11,7 @@
 
 namespace Sa::GLFW
 {
-	void WindowKeyCallback(struct GLFWwindow* _handle, int _key, int _scancode, int _action, int _mods)
+	void WindowKeyCallback(GLFWwindow* _handle, int _key, int _scancode, int _action, int _mods)
 	{
 		(void)_scancode;
 		(void)_mods;
@@ -41,6 +41,12 @@ namespace Sa::GLFW
 		win->inputWinContext->WindowKeyCallback(key);
 	}
 
+	void WindowMouseCallback(GLFWwindow* _handle, int _button, int _action, int _mods)
+	{
+		// TODO: Better implementation: Split key and button?
+		WindowKeyCallback(_handle, _button, 0, _action, _mods);
+	}
+
 	void CursorPositionCallback(GLFWwindow* _handle, double _posX, double _posY)
 	{
 		GLFW::Window* const win = static_cast<GLFW::Window*>(glfwGetWindowUserPointer(_handle));
@@ -62,6 +68,7 @@ namespace Sa::GLFW
 		glfwWin.inputWinContext = this;
 
 		glfwSetKeyCallback(winHandle, GLFW::WindowKeyCallback);
+		glfwSetMouseButtonCallback(winHandle, GLFW::WindowMouseCallback);
 		glfwSetCursorPosCallback(winHandle, GLFW::CursorPositionCallback);
 
 

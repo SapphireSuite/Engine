@@ -129,6 +129,10 @@ namespace Sa::GLFW
 		{ GLFW_KEY_PRINT_SCREEN, Key::PrintScreen },
 		{ GLFW_KEY_HOME, Key::Home },
 
+		{ GLFW_MOUSE_BUTTON_LEFT, Key::MouseLeft },
+		{ GLFW_MOUSE_BUTTON_RIGHT, Key::MouseRight },
+		{ GLFW_MOUSE_BUTTON_MIDDLE, Key::MouseMiddle },
+
 	};
 
 	KeyState GetKeyState(int _action)
