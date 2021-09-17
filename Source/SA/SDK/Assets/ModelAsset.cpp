@@ -115,7 +115,7 @@ namespace Sa
 						reinterpret_cast<const Vec3f&>(aiMesh->mVertices[j]),
 						reinterpret_cast<const Vec3f&>(aiMesh->mNormals[j]),
 						reinterpret_cast<const Vec3f&>(aiMesh->mTangents[j]),
-						reinterpret_cast<const Vec3f&>(aiMesh->mTextureCoords[j])
+						reinterpret_cast<const Vec3f&>(aiMesh->mTextureCoords[0][j])
 					));
 
 					// TODO: Parsing.
