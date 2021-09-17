@@ -148,12 +148,12 @@ int main()
 
 			inputContext->axis.Bind<InputAxisRange>(Axis::MouseX, [](float _inX) {
 				if (!bCamEnabled) return;
-				dx += _inX * winDim.x * deltaTime * 0.1f;
+				dx -= _inX * winDim.x * deltaTime * 0.25f;
 				dx = dx > Maths::Pi ? dx - Maths::Pi : dx < -Maths::Pi ? dx + Maths::Pi : dx;
 			});
 			inputContext->axis.Bind<InputAxisRange>(Axis::MouseY, [](float _inY) {
 				if (!bCamEnabled) return;
-				dy += _inY * winDim.y * deltaTime * 0.1f;
+				dy -= _inY * winDim.y * deltaTime * 0.25f;
 				dy = dy > Maths::Pi ? dy - Maths::Pi : dy < -Maths::Pi ? dy + Maths::Pi : dy;
 			});
 		}
@@ -172,7 +172,6 @@ int main()
 
 
 			renderPassDesc = RenderPassDescriptor::DefaultSingle(&surface);
-			renderPassDesc.subPassDescs[0].sampling = SampleBits::Sample1Bit;
 
 			renderPass.Create(device, renderPassDesc);
 
@@ -373,7 +372,7 @@ int main()
 				if (upSign)
 					camTr.position += upSign * deltaTime * camTr.Up();
 				if (forwardSign)
-					camTr.position += forwardSign * deltaTime * camTr.Forward();
+					camTr.position += -1 * forwardSign * deltaTime * camTr.Forward();
 
 				camTr.rotation = Quatf(cos(dx), 0, sin(dx), 0) * Quatf(cos(dy), sin(dy), 0, 0);
 

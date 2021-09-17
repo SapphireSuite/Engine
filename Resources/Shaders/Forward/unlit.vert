@@ -54,6 +54,9 @@ void main()
 
     gl_Position = cameraUBO.proj * cameraUBO.viewInv * modelPosition;
 
+    // Vulkan coordinate system.
+    gl_Position.y = -gl_Position.y;
+
 
     // Texture
     vsOut.texture = inTexture * objectUBO.uvTilling + objectUBO.uvOffset;
