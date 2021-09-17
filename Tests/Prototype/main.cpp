@@ -5,6 +5,10 @@
 #include <SA/Collections/Debug>
 using namespace Sa;
 
+#include <SA/Core/Time/Chrono.hpp>
+
+#include <SA/Maths/Transform/Transform.hpp>
+
 #include <SA/Window/GLFW/GLFWWindow.hpp>
 #include <SA/Window/GLFW/GLFWWindowSystem.hpp>
 
@@ -62,6 +66,32 @@ Vk::Texture missText;
 
 const Vec2ui winDim{ 1200u, 800u };
 
+
+struct camUBOData
+{
+	Mat4f proj = Mat4f::Identity;
+	Mat4f viewInv = Mat4f::Identity;
+	Vec3f viewPosition;
+};
+
+TransffPR camTr;
+camUBOData camUBOd;
+
+struct modelUBOData
+{
+	Mat4f modelMat = Mat4f::Identity;
+
+	float uvTilling = 1.0f;
+	float uvOffset = 0.0f;
+};
+
+float deltaTime = 0.0f;
+
+static float mouseX = 0.0f;
+static float mouseY = 0.0f;
+static float dx = 0.0f;
+static float dy = 0.0f;
+
 int main()
 {
 	// Init.
@@ -88,8 +118,38 @@ int main()
 
 			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::Esc, KeyState::Pressed }, &win, &GLFW::Window::Close);
 
-			//inputContext->axis.Bind<InputAxisRange>(Axis::MouseX, [](float _inX) { SA_LOG("MouseX: " << _inX); });
-			//inputContext->axis.Bind<InputAxisRange>(Axis::MouseY, [](float _inY) { SA_LOG("MouseY: " << _inY); });
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::D, KeyState::Pressed | KeyState::Hold }, [](){
+				camTr.position += deltaTime * camTr.Right();
+			});
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::A, KeyState::Pressed | KeyState::Hold }, [](){
+				camTr.position -= deltaTime * camTr.Right();
+			});
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::E, KeyState::Pressed | KeyState::Hold }, [](){
+				camTr.position += deltaTime * camTr.Up();
+			});
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::Q, KeyState::Pressed | KeyState::Hold }, [](){
+				camTr.position -= deltaTime * camTr.Up();
+			});
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::W, KeyState::Pressed | KeyState::Hold }, [](){
+				camTr.position += deltaTime * camTr.Forward();
+			});
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::S, KeyState::Pressed | KeyState::Hold }, [](){
+				camTr.position -= deltaTime * camTr.Forward();
+			});
+
+
+			inputContext->axis.Bind<InputAxisRange>(Axis::MouseX, [](float _inX) {
+				dx -= (_inX - mouseX) * deltaTime * 10.0f * Maths::DegToRad;
+				mouseX = _inX;
+				dx = dx > Maths::Pi ? dx - Maths::Pi : dx < -Maths::Pi ? dx + Maths::Pi : dx;
+
+				camTr.rotation = Quatf(cos(dx), 0, sin(dx), 0) * Quatf(cos(dy), sin(dy), 0, 0);
+			});
+			inputContext->axis.Bind<InputAxisRange>(Axis::MouseY, [](float _inY) {
+				dy -= (_inY - mouseY) * deltaTime * 10.0f * Maths::DegToRad;
+				mouseY = _inY;
+				dy = dy > Maths::Pi ? dy - Maths::Pi : dy < -Maths::Pi ? dy + Maths::Pi : dy;
+			});
 		}
 
 
@@ -117,6 +177,27 @@ int main()
 			for(uint32 i = 0; i < 3; ++i)
 				cmdBuffers.push_back(cmdPool.Allocate(device, VK_COMMAND_BUFFER_LEVEL_PRIMARY));
 		}
+
+
+		// UBO
+		{
+			modelUBOData modelUBOd;
+			modelUBO.Create(device, sizeof(modelUBOData),
+				VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
+				VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
+				VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+				&modelUBOd);
+
+
+			camTr.position = Vec3f(0.0f, 0.0f, 10.0f);
+			camUBOd.proj = Mat4f::MakePerspective(90.0f, 1200.0f / 800.0f);
+			camUBO.Create(device, sizeof(camUBOData),
+				VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
+				VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
+				VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+				&camUBOd);
+		}
+
 
 		// Assets
 		{
@@ -156,11 +237,11 @@ int main()
 
 				TextureAsset asset;
 
-				//if (!asset.Load(assetName))
+				if (!asset.Load(assetName))
 				{
 					if (asset.Import(resName))
 					{
-						//asset.Save(assetName);
+						asset.Save(assetName);
 					}
 				}
 
@@ -200,7 +281,7 @@ int main()
 
 					ShaderAsset asset;
 
-					if(!asset.Load(assetName))
+					if (!asset.Load(assetName))
 					{
 						if (asset.Import(resName))
 						{
@@ -251,8 +332,8 @@ int main()
 			// Material.
 			{
 				MaterialCreateInfos infos{ unlitPipeline };
-				//infos.AddBinding<MaterialUBOBinding>(0u, &camUBO);
-				//infos.AddBinding<MaterialUBOBinding>(1u, &modelUBO);
+				infos.AddBinding<MaterialUBOBinding>(0u, &camUBO);
+				infos.AddBinding<MaterialUBOBinding>(1u, &modelUBO);
 				infos.AddBinding<MaterialIBOBinding>(2u, &missText);
 
 				cubeMat.Create(device, infos);
@@ -263,13 +344,24 @@ int main()
 
 	// Loop.
 	{
+		Chrono chrono;
+
 	#if !SA_CI
 
 		while (!win.ShouldClose())
 
 	#endif
 		{
+			deltaTime = chrono.Restart() * 0.00005f;
+
+
 			inputSys.Update();
+
+			// Update Camera
+			camUBOd.viewInv = camTr.Matrix().GetInversed();
+			camUBOd.viewPosition = camTr.position;
+			camUBO.UpdateData(device, &camUBOd, sizeof(camUBOd));
+
 
 			Vk::FrameBuffer& frameBuffer = surface.Begin(device);
 
@@ -278,6 +370,12 @@ int main()
 			cmdBuffer.Begin();
 
 			frameBuffer.Begin(cmdBuffer);
+
+			//unlitPipeline.Bind();
+			//cubeMat.Bind();
+			//cubeMesh.Draw();
+
+
 			frameBuffer.End(cmdBuffer);
 
 			cmdBuffer.End();
@@ -294,6 +392,9 @@ int main()
 		// Render
 		{
 			vkDeviceWaitIdle(device);
+
+			camUBO.Destroy(device);
+			modelUBO.Destroy(device);
 
 			cubeMat.Destroy(device);
 			unlitPipeline.Destroy(device);
