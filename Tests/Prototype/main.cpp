@@ -87,10 +87,14 @@ struct modelUBOData
 
 float deltaTime = 0.0f;
 
-static float mouseX = 0.0f;
-static float mouseY = 0.0f;
+
+bool bCamEnabled = false;
 static float dx = 0.0f;
 static float dy = 0.0f;
+
+int32 rightSign = 0;
+int32 upSign = 0;
+int32 forwardSign = 0;
 
 int main()
 {
@@ -118,36 +122,38 @@ int main()
 
 			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::Esc, KeyState::Pressed }, &win, &GLFW::Window::Close);
 
-			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::D, KeyState::Pressed | KeyState::Hold }, [](){
-				camTr.position += deltaTime * camTr.Right();
-			});
-			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::A, KeyState::Pressed | KeyState::Hold }, [](){
-				camTr.position -= deltaTime * camTr.Right();
-			});
-			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::E, KeyState::Pressed | KeyState::Hold }, [](){
-				camTr.position += deltaTime * camTr.Up();
-			});
-			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::Q, KeyState::Pressed | KeyState::Hold }, [](){
-				camTr.position -= deltaTime * camTr.Up();
-			});
-			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::W, KeyState::Pressed | KeyState::Hold }, [](){
-				camTr.position += deltaTime * camTr.Forward();
-			});
-			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::S, KeyState::Pressed | KeyState::Hold }, [](){
-				camTr.position -= deltaTime * camTr.Forward();
-			});
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::D, KeyState::Pressed }, []() { rightSign = 1; });
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::D, KeyState::Released }, [](){ if(rightSign == 1) rightSign = 0; });
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::A, KeyState::Pressed }, []() { rightSign = -1; });
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::A, KeyState::Released }, []() { if (rightSign == -1) rightSign = 0; });
 
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::E, KeyState::Pressed }, []() { upSign = 1; });
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::E, KeyState::Released }, []() { if (upSign == 1) upSign = 0; });
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::Q, KeyState::Pressed }, []() { upSign = -1; });
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::Q, KeyState::Released }, []() { if (upSign == -1) upSign = 0; });
+
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::W, KeyState::Pressed }, []() { forwardSign = 1; });
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::W, KeyState::Released }, []() { if (forwardSign == 1) forwardSign = 0; });
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::S, KeyState::Pressed }, []() { forwardSign = -1; });
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::S, KeyState::Released }, []() { if (forwardSign == -1) forwardSign = 0; });
+
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::MouseRight, KeyState::Pressed }, []() {
+				bCamEnabled = true;
+				win.SetCursorMode(CursorMode::Capture | CursorMode::Hidden);
+			});
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::MouseRight, KeyState::Released }, []() {
+				bCamEnabled = false;
+				win.SetCursorMode(CursorMode::None);
+			});
 
 			inputContext->axis.Bind<InputAxisRange>(Axis::MouseX, [](float _inX) {
-				dx -= (_inX - mouseX) * deltaTime * 10.0f * Maths::DegToRad;
-				mouseX = _inX;
+				if (!bCamEnabled) return;
+				dx += _inX * winDim.x * deltaTime * 0.1f;
 				dx = dx > Maths::Pi ? dx - Maths::Pi : dx < -Maths::Pi ? dx + Maths::Pi : dx;
-
-				camTr.rotation = Quatf(cos(dx), 0, sin(dx), 0) * Quatf(cos(dy), sin(dy), 0, 0);
 			});
 			inputContext->axis.Bind<InputAxisRange>(Axis::MouseY, [](float _inY) {
-				dy -= (_inY - mouseY) * deltaTime * 10.0f * Maths::DegToRad;
-				mouseY = _inY;
+				if (!bCamEnabled) return;
+				dy += _inY * winDim.y * deltaTime * 0.1f;
 				dy = dy > Maths::Pi ? dy - Maths::Pi : dy < -Maths::Pi ? dy + Maths::Pi : dy;
 			});
 		}
@@ -189,8 +195,10 @@ int main()
 				&modelUBOd);
 
 
-			camTr.position = Vec3f(0.0f, 0.0f, 10.0f);
+			camTr.position = Vec3f(0.0f, 0.0f, 5.0f);
 			camUBOd.proj = Mat4f::MakePerspective(90.0f, 1200.0f / 800.0f);
+			camUBOd.viewInv = camTr.Matrix().GetInversed();
+			camUBOd.viewPosition = camTr.position;
 			camUBO.Create(device, sizeof(camUBOData),
 				VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
 				VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
@@ -352,15 +360,27 @@ int main()
 
 	#endif
 		{
-			deltaTime = chrono.Restart() * 0.00005f;
+			deltaTime = chrono.Restart() * 0.000005f;
 
 
 			inputSys.Update();
 
 			// Update Camera
-			camUBOd.viewInv = camTr.Matrix().GetInversed();
-			camUBOd.viewPosition = camTr.position;
-			camUBO.UpdateData(device, &camUBOd, sizeof(camUBOd));
+			if(bCamEnabled)
+			{
+				if (rightSign)
+					camTr.position += rightSign * deltaTime * camTr.Right();
+				if (upSign)
+					camTr.position += upSign * deltaTime * camTr.Up();
+				if (forwardSign)
+					camTr.position += forwardSign * deltaTime * camTr.Forward();
+
+				camTr.rotation = Quatf(cos(dx), 0, sin(dx), 0) * Quatf(cos(dy), sin(dy), 0, 0);
+
+				camUBOd.viewInv = camTr.Matrix().GetInversed();
+				camUBOd.viewPosition = camTr.position;
+				camUBO.UpdateData(device, &camUBOd, sizeof(camUBOd));
+			}
 
 
 			Vk::FrameBuffer& frameBuffer = surface.Begin(device);
