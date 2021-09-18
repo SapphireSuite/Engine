@@ -2,8 +2,8 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_RENDER_AMATERIAL_BINDING_GUARD
-#define SAPPHIRE_RENDER_AMATERIAL_BINDING_GUARD
+#ifndef SAPPHIRE_RENDER_ASHADER_BINDING_GUARD
+#define SAPPHIRE_RENDER_ASHADER_BINDING_GUARD
 
 #include <SA/Core/Types/Abstract.hpp>
 
@@ -11,20 +11,20 @@
 
 namespace Sa
 {
-	class AMaterialBinding : public Abstract
+	class AShaderBinding : public Abstract
 	{
 	public:
 		/// Binding number in shader.
 		const uint32 binding = 0u;
 
-		/// Descriptor Index.
+		/// Descriptor Index (if used with DescriptorMultiSet).
 		const uint32 descriptor = ~uint32();
 
 
-		AMaterialBinding(uint32 _binding, uint32 _descriptor) noexcept;
+		AShaderBinding(uint32 _binding, uint32 _descriptor) noexcept;
 
 
-		virtual ~AMaterialBinding() = default;
+		virtual ~AShaderBinding() = default;
 
 
 #if SA_VULKAN

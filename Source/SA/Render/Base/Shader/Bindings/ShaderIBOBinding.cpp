@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Render/Base/Material/Bindings/MaterialIBOBinding.hpp>
+#include <Render/Base/Shader/Bindings/ShaderIBOBinding.hpp>
 
 #include <Core/Algorithms/SizeOf.hpp>
 
@@ -8,14 +8,14 @@
 
 namespace Sa
 {
-	MaterialIBOBinding::MaterialIBOBinding(uint32 _binding, const ATexture* _IBO, uint32 _descriptor) noexcept :
-		AMaterialBinding(_binding, _descriptor),
+	ShaderIBOBinding::ShaderIBOBinding(uint32 _binding, const ATexture* _IBO, uint32 _descriptor) noexcept :
+		AShaderBinding(_binding, _descriptor),
 		IBOs{ _IBO }
 	{
 	}
 
-	MaterialIBOBinding::MaterialIBOBinding(uint32 _binding, std::vector<const ATexture*> _IBOs, uint32 _descriptor) noexcept :
-		AMaterialBinding(_binding, _descriptor),
+	ShaderIBOBinding::ShaderIBOBinding(uint32 _binding, std::vector<const ATexture*> _IBOs, uint32 _descriptor) noexcept :
+		AShaderBinding(_binding, _descriptor),
 		IBOs{ std::move(_IBOs) }
 	{
 	}
@@ -23,12 +23,12 @@ namespace Sa
 
 #if SA_VULKAN
 
-	VkDescriptorType MaterialIBOBinding::GetVkDescriptorType() const noexcept
+	VkDescriptorType ShaderIBOBinding::GetVkDescriptorType() const noexcept
 	{
 		return VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 	}
 
-	VkWriteDescriptorSet MaterialIBOBinding::MakeVkDescriptors(
+	VkWriteDescriptorSet ShaderIBOBinding::MakeVkDescriptors(
 		std::list<std::vector<VkDescriptorBufferInfo>>& _bufferDescs,
 		std::list<std::vector<VkDescriptorImageInfo>>& _imageDescs) const
 	{

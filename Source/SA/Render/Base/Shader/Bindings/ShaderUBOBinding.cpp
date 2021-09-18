@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Render/Base/Material/Bindings/MaterialUBOBinding.hpp>
+#include <Render/Base/Shader/Bindings/ShaderUBOBinding.hpp>
 
 #include <Core/Algorithms/SizeOf.hpp>
 
@@ -8,14 +8,14 @@
 
 namespace Sa
 {
-	MaterialUBOBinding::MaterialUBOBinding(uint32 _binding, const IUniformBuffer* _UBO, uint32 _descriptor) noexcept :
-		AMaterialBinding(_binding, _descriptor),
+	ShaderUBOBinding::ShaderUBOBinding(uint32 _binding, const IUniformBuffer* _UBO, uint32 _descriptor) noexcept :
+		AShaderBinding(_binding, _descriptor),
 		UBOs{ _UBO }
 	{
 	}
 
-	MaterialUBOBinding::MaterialUBOBinding(uint32 _binding, std::vector<const IUniformBuffer*> _UBOs, uint32 _descriptor) noexcept :
-		AMaterialBinding(_binding, _descriptor),
+	ShaderUBOBinding::ShaderUBOBinding(uint32 _binding, std::vector<const IUniformBuffer*> _UBOs, uint32 _descriptor) noexcept :
+		AShaderBinding(_binding, _descriptor),
 		UBOs{ std::move(_UBOs) }
 	{
 	}
@@ -23,12 +23,12 @@ namespace Sa
 
 #if SA_VULKAN
 
-	VkDescriptorType MaterialUBOBinding::GetVkDescriptorType() const noexcept
+	VkDescriptorType ShaderUBOBinding::GetVkDescriptorType() const noexcept
 	{
 		return VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
 	}
 
-	VkWriteDescriptorSet MaterialUBOBinding::MakeVkDescriptors(
+	VkWriteDescriptorSet ShaderUBOBinding::MakeVkDescriptors(
 		std::list<std::vector<VkDescriptorBufferInfo>>& _bufferDescs,
 		std::list<std::vector<VkDescriptorImageInfo>>& _imageDescs) const
 	{
