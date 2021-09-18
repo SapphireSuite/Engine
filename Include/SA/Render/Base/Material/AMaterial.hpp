@@ -11,8 +11,12 @@
 
 namespace Sa
 {
+	class ARenderFrame;
+
 	class AMaterial : public Abstract
 	{
+	public:
+		virtual void Bind(const ARenderFrame& _frame, const APipeline& _pipeline) const = 0;
 	};
 }
 

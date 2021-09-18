@@ -24,7 +24,7 @@ namespace Sa::Vk
 		void Create(const Device& _device, CommandBuffer& _cmd, ResourceHolder& _resHold, const RawMesh& _rawMesh);
 		void Destroy(const Device& _device);
 
-		void Draw(CommandBuffer& _cmd);
+		void Draw(const ARenderFrame& _frame, const MeshDrawInfos& _infos = MeshDrawInfos()) const override final;
 	};
 }
 

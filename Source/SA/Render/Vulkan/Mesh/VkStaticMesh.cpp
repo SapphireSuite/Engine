@@ -4,7 +4,7 @@
 
 #include <Core/Algorithms/SizeOf.hpp>
 
-#include <Render/Vulkan/Buffers/VkCommandBuffer.hpp>
+#include <Render/Vulkan/VkRenderFrame.hpp>
 
 #if SA_VULKAN
 
@@ -38,19 +38,18 @@ namespace Sa::Vk
 	}
 
 
-	void StaticMesh::Draw(CommandBuffer& _cmd)
+	void StaticMesh::Draw(const ARenderFrame& _frame, const MeshDrawInfos& _infos) const
 	{
+		const RenderFrame& vkFrame = _frame.As<RenderFrame>();
+
 		VkDeviceSize offsets[] = { 0 };
 		VkBuffer vkVertBuff = mVertexBuffer;
 
-		vkCmdBindVertexBuffers(_cmd, 0, 1, &vkVertBuff, offsets);
+		vkCmdBindVertexBuffers(vkFrame.cmd, 0, 1, &vkVertBuff, offsets);
 
-		vkCmdBindIndexBuffer(_cmd, mIndexBuffer, 0, VK_INDEX_TYPE_UINT32);
+		vkCmdBindIndexBuffer(vkFrame.cmd, mIndexBuffer, 0, VK_INDEX_TYPE_UINT32);
 
-		vkCmdDrawIndexed(_cmd, mIndicesSize, 1, 0, 0, 0);
-
-		// TODO: add instance draw num.
-		//vkCmdDrawIndexed(_cmd, mIndicesSize, _infos.instanceNum, 0, 0, 0);
+		vkCmdDrawIndexed(vkFrame.cmd, mIndicesSize, _infos.instanceNum, 0, 0, 0);
 	}
 }
 

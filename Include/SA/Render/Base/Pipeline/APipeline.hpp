@@ -11,8 +11,12 @@
 
 namespace Sa
 {
+	class ARenderFrame;
+
 	class APipeline : public Abstract
 	{
+	public:
+		virtual void Bind(const ARenderFrame& _frame) const = 0;
 	};
 }
 

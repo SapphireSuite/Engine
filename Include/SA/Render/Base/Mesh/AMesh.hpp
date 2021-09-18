@@ -8,9 +8,12 @@
 #include <SA/Core/Types/Abstract.hpp>
 
 #include <SA/Render/Base/Mesh/RawMesh.hpp>
+#include <SA/Render/Base/Mesh/MeshDrawInfos.hpp>
 
 namespace Sa
 {
+	class ARenderFrame;
+
 	class AMesh : public Abstract
 	{
 	protected:
@@ -20,6 +23,8 @@ namespace Sa
 		std::shared_ptr<VertexLayout> GetLayout() const noexcept;
 
 		void Create(const RawMesh& _rawMesh);
+
+		virtual void Draw(const ARenderFrame& _frame, const MeshDrawInfos& _infos = MeshDrawInfos()) const = 0;
 	};
 }
 

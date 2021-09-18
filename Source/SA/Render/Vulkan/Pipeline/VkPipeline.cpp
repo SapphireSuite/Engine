@@ -9,7 +9,7 @@
 #include <Render/Vulkan/Device/VkDevice.hpp>
 #include <Render/Vulkan/Shader/VkShader.hpp>
 #include <Render/Vulkan/Pass/VkRenderPass.hpp>
-#include <Render/Vulkan/Buffers/VkCommandBuffer.hpp>
+#include <Render/Vulkan/VkRenderFrame.hpp>
 
 #if SA_VULKAN
 
@@ -52,9 +52,11 @@ namespace Sa::Vk
 		DestroyDescriptorSetLayout(_device);
 	}
 
-	void Pipeline::Bind(CommandBuffer& _cmd)
+	void Pipeline::Bind(const ARenderFrame& _frame) const
 	{
-		vkCmdBindPipeline(_cmd, VK_PIPELINE_BIND_POINT_GRAPHICS, mHandle);
+		const RenderFrame& vkFrame = _frame.As<RenderFrame>();
+
+		vkCmdBindPipeline(vkFrame.cmd, VK_PIPELINE_BIND_POINT_GRAPHICS, mHandle);
 	}
 
 

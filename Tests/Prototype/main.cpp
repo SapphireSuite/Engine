@@ -32,6 +32,7 @@ using namespace Sa;
 #include <SA/Render/Vulkan/Material/VkMaterial.hpp>
 #include <SA/Render/Vulkan/Buffers/VkBuffer.hpp>
 #include <SA/Render/Vulkan/Texture/VkTexture.hpp>
+#include <SA/Render/Vulkan/VkRenderFrame.hpp>
 
 #include <SA/Render/Base/Material/Bindings/MaterialUBOBinding.hpp>
 #include <SA/Render/Base/Material/Bindings/MaterialIBOBinding.hpp>
@@ -386,13 +387,15 @@ int main()
 
 			Vk::CommandBuffer& cmdBuffer = cmdBuffers[imageIndex];
 
+			Vk::RenderFrame frame{ cmdBuffer };
+
 			cmdBuffer.Begin();
 
 			frameBuffer.Begin(cmdBuffer);
 
-			unlitPipeline.Bind(cmdBuffer);
-			cubeMat.Bind(cmdBuffer, unlitPipeline);
-			cubeMesh.Draw(cmdBuffer);
+			unlitPipeline.Bind(frame);
+			cubeMat.Bind(frame, unlitPipeline);
+			cubeMesh.Draw(frame);
 
 
 			frameBuffer.End(cmdBuffer);

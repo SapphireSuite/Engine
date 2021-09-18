@@ -49,7 +49,7 @@ namespace Sa::Vk
 		void Create(const Device& _device, const PipelineCreateInfos& _infos);
 		void Destroy(const Device& _device);
 
-		void Bind(CommandBuffer& _cmd);
+		void Bind(const ARenderFrame& _frame) const override final;
 	};
 }
 
