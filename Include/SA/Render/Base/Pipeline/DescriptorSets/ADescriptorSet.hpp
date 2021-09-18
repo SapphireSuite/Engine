@@ -7,10 +7,16 @@
 
 #include <SA/Core/Types/Abstract.hpp>
 
+#include <SA/Render/Base/Pipeline/DescriptorSets/DescriptorSetCreateInfos.hpp>
+
 namespace Sa
 {
+	class ARenderFrame;
+
 	class ADescriptorSet : public Abstract
 	{
+	public:
+		virtual void Bind(const ARenderFrame& _frame, const APipeline& _pipeline) const = 0;
 	};
 }
 

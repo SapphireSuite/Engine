@@ -14,7 +14,7 @@ namespace Sa
 	struct DescriptorSetCreateInfos
 	{
 		const APipeline& pipeline;
-		const uint32 descriptorSetNum = 1u;
+		//const uint32 descriptorSetNum = 1u;
 
 		std::vector<AShaderBinding*> bindings;
 
@@ -22,7 +22,7 @@ namespace Sa
 		~DescriptorSetCreateInfos();
 
 		template <typename T, typename... Args>
-		void AddBinding(Args&&... _args);
+		T* AddBinding(Args&&... _args);
 	};
 }
 

@@ -8,14 +8,14 @@
 
 namespace Sa
 {
-	ShaderUBOBinding::ShaderUBOBinding(uint32 _binding, const IUniformBuffer* _UBO, uint32 _descriptor) noexcept :
-		AShaderBinding(_binding, _descriptor),
+	ShaderUBOBinding::ShaderUBOBinding(uint32 _binding, const IUniformBuffer* _UBO, uint32 _set) noexcept :
+		AShaderBinding(_binding, _set),
 		UBOs{ _UBO }
 	{
 	}
 
-	ShaderUBOBinding::ShaderUBOBinding(uint32 _binding, std::vector<const IUniformBuffer*> _UBOs, uint32 _descriptor) noexcept :
-		AShaderBinding(_binding, _descriptor),
+	ShaderUBOBinding::ShaderUBOBinding(uint32 _binding, std::vector<const IUniformBuffer*> _UBOs, uint32 _set) noexcept :
+		AShaderBinding(_binding, _set),
 		UBOs{ std::move(_UBOs) }
 	{
 	}

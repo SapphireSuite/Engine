@@ -8,14 +8,14 @@
 
 namespace Sa
 {
-	ShaderIBOBinding::ShaderIBOBinding(uint32 _binding, const ATexture* _IBO, uint32 _descriptor) noexcept :
-		AShaderBinding(_binding, _descriptor),
+	ShaderIBOBinding::ShaderIBOBinding(uint32 _binding, const ATexture* _IBO, uint32 _set) noexcept :
+		AShaderBinding(_binding, _set),
 		IBOs{ _IBO }
 	{
 	}
 
-	ShaderIBOBinding::ShaderIBOBinding(uint32 _binding, std::vector<const ATexture*> _IBOs, uint32 _descriptor) noexcept :
-		AShaderBinding(_binding, _descriptor),
+	ShaderIBOBinding::ShaderIBOBinding(uint32 _binding, std::vector<const ATexture*> _IBOs, uint32 _set) noexcept :
+		AShaderBinding(_binding, _set),
 		IBOs{ std::move(_IBOs) }
 	{
 	}

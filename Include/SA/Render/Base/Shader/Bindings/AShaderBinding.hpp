@@ -14,14 +14,14 @@ namespace Sa
 	class AShaderBinding : public Abstract
 	{
 	public:
-		/// Binding number in shader.
-		const uint32 binding = 0u;
+		/// Binding index in shader.
+		uint32 binding = 0u;
 
-		/// Descriptor Index (if used with DescriptorMultiSet).
-		const uint32 descriptor = ~uint32();
+		/// Descriptor set index in shader.
+		uint32 set = 0;
 
 
-		AShaderBinding(uint32 _binding, uint32 _descriptor) noexcept;
+		AShaderBinding(uint32 _binding, uint32 _set = 0u) noexcept;
 
 
 		virtual ~AShaderBinding() = default;

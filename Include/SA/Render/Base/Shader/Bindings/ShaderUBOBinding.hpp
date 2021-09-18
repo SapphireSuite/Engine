@@ -17,8 +17,8 @@ namespace Sa
 		std::vector<const IUniformBuffer*> UBOs;
 
 
-		ShaderUBOBinding(uint32 _binding, const IUniformBuffer* _UBO, uint32 _descriptor = ~uint32()) noexcept;
-		ShaderUBOBinding(uint32 _binding, std::vector<const IUniformBuffer*> _UBOs, uint32 _descriptor = ~uint32()) noexcept;
+		ShaderUBOBinding(uint32 _binding, const IUniformBuffer* _UBO, uint32 _set = 0u) noexcept;
+		ShaderUBOBinding(uint32 _binding, std::vector<const IUniformBuffer*> _UBOs, uint32 _set = 0u) noexcept;
 
 
 #if SA_VULKAN

@@ -4,9 +4,9 @@
 
 namespace Sa
 {
-	AShaderBinding::AShaderBinding(uint32 _binding, uint32 _descriptor) noexcept :
+	AShaderBinding::AShaderBinding(uint32 _binding, uint32 _set) noexcept :
 		binding{ _binding },
-		descriptor{ _descriptor }
+		set{ _set }
 	{
 	}
 }

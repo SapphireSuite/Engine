@@ -17,8 +17,8 @@ namespace Sa
 		std::vector<const ATexture*> IBOs;
 
 
-		ShaderIBOBinding(uint32 _binding, const ATexture* _IBO, uint32 _descriptor = ~uint32()) noexcept;
-		ShaderIBOBinding(uint32 _binding, std::vector<const ATexture*> _IBOs, uint32 _descriptor = ~uint32()) noexcept;
+		ShaderIBOBinding(uint32 _binding, const ATexture* _IBO, uint32 _set = 0u) noexcept;
+		ShaderIBOBinding(uint32 _binding, std::vector<const ATexture*> _IBOs, uint32 _set = 0u) noexcept;
 
 
 #if SA_VULKAN
