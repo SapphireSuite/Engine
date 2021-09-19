@@ -124,8 +124,10 @@ namespace Sa::Vk
 	
 	void Pipeline::CreatePipelineHandle(const Device& _device, const PipelineCreateInfos& _infos)
 	{
+		std::vector<VkSpecializationInfo> specInfos;
+		std::vector<VkSpecializationMapEntry> specMapEntries;
 		std::vector<VkPipelineShaderStageCreateInfo> shaderStages;
-		FillShaderStages(shaderStages, _infos.shaders);
+		FillShaderStages(shaderStages, specInfos, specMapEntries, _infos.shaders);
 
 
 		// Vertex input infos.
@@ -221,27 +223,71 @@ namespace Sa::Vk
 	}
 
 
-	void Pipeline::FillShaderStages(std::vector<VkPipelineShaderStageCreateInfo>& _stages, const std::vector<PipelineShaderInfos>& _shaders)
+	void Pipeline::FillShaderStages(std::vector<VkPipelineShaderStageCreateInfo>& _stages,
+		std::vector<VkSpecializationInfo>& _specInfos,
+		std::vector<VkSpecializationMapEntry>& _specMapEntries,
+		const std::vector<PipelineShaderInfos>& _shaders)
 	{
 		_stages.reserve(_shaders.size());
 
 		for (auto it = _shaders.begin(); it != _shaders.end(); ++it)
 		{
-			VkPipelineShaderStageCreateInfo stage;
-			stage.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-			stage.pNext = nullptr;
-			stage.flags = 0u;
-			stage.stage = API_GetShaderStage(it->stage);
-			stage.module = it->shader->As<Shader>();
-			stage.pName = "main";
-			stage.pSpecializationInfo = nullptr;
+			const VkSpecializationInfo* pSpecInfo = nullptr;
 
-			_stages.push_back(stage);
+
+			// Specialization constants.
+			if(!it->specConstInfos.Empty())
+			{
+				const uint32 entriesOffset = SizeOf<uint32>(_specMapEntries);
+
+				// Fill map entries.
+				{
+					uint32 offset = 0u;
+
+					for (auto specIt = it->specConstInfos.descs.begin(); specIt != it->specConstInfos.descs.end(); ++specIt)
+					{
+						VkSpecializationMapEntry& entry = _specMapEntries.emplace_back();
+						entry.constantID = specIt->id;
+						entry.size = specIt->size;
+						entry.offset = offset;
+
+						offset += specIt->size;
+					}
+				}
+
+
+				// Fill Spec infos.
+				{
+					VkSpecializationInfo& specInfo = _specInfos.emplace_back();
+					specInfo.mapEntryCount = SizeOf<uint32>(it->specConstInfos.descs);
+					specInfo.pMapEntries = _specMapEntries.data() + entriesOffset;
+					specInfo.dataSize = SizeOf<uint32>(it->specConstInfos.data);
+					specInfo.pData = it->specConstInfos.data.data();
+
+					pSpecInfo = &specInfo;
+				}
+			}
+
+
+			// Shader Stage.
+			{
+
+				VkPipelineShaderStageCreateInfo& stage = _stages.emplace_back();
+				stage.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+				stage.pNext = nullptr;
+				stage.flags = 0u;
+				stage.stage = API_GetShaderStage(it->stage);
+				stage.module = it->shader->As<Shader>();
+				stage.pName = "main";
+				stage.pSpecializationInfo = pSpecInfo;
+			}
 		}
 	}
 
-	void Pipeline::FillVertexBindings(VkPipelineVertexInputStateCreateInfo& _vertexInputInfo, std::unique_ptr<VkVertexInputBindingDescription>& _bindingDesc,
-		std::unique_ptr<VkVertexInputAttributeDescription[]>& _attribDescs, const VertexBindingLayout& _vertexBindingLayout) noexcept
+	void Pipeline::FillVertexBindings(VkPipelineVertexInputStateCreateInfo& _vertexInputInfo,
+		std::unique_ptr<VkVertexInputBindingDescription>& _bindingDesc,
+		std::unique_ptr<VkVertexInputAttributeDescription[]>& _attribDescs,
+		const VertexBindingLayout& _vertexBindingLayout) noexcept
 	{
 		_bindingDesc = _vertexBindingLayout.GetBindingDescription();
 		_attribDescs = _vertexBindingLayout.GetAttributeDescriptions();

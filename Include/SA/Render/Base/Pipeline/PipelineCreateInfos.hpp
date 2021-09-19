@@ -10,6 +10,7 @@
 #include <SA/Render/Base/Shader/AShader.hpp>
 #include <SA/Render/Base/Shader/ShaderStage.hpp>
 #include <SA/Render/Base/Shader/ShaderBindingType.hpp>
+#include <SA/Render/Base/Shader/SpecConstantInfos.hpp>
 
 #include <SA/Render/Base/Mesh/Vertex/VertexBindingLayout.hpp>
 
@@ -23,6 +24,8 @@ namespace Sa
 	{
 		const AShader* shader;
 		ShaderStage stage = ShaderStage::Unknown;
+
+		SpecConstantInfos specConstInfos;
 	};
 
 

@@ -33,10 +33,15 @@ namespace Sa::Vk
 		void DestroyPipelineHandle(const Device& _device);
 
 
-		static void FillShaderStages(std::vector<VkPipelineShaderStageCreateInfo>& _stages, const std::vector<PipelineShaderInfos>& _shaders);
+		static void FillShaderStages(std::vector<VkPipelineShaderStageCreateInfo>& _stages,
+			std::vector<VkSpecializationInfo>& _specInfos,
+			std::vector<VkSpecializationMapEntry>& _specMapEntries,
+			const std::vector<PipelineShaderInfos>& _shaders);
 
-		static void FillVertexBindings(VkPipelineVertexInputStateCreateInfo& _vertexInputInfo, std::unique_ptr<VkVertexInputBindingDescription>& _bindingDesc,
-			std::unique_ptr<VkVertexInputAttributeDescription[]>& _attribDescs, const VertexBindingLayout& _vertexBindingLayout) noexcept;
+		static void FillVertexBindings(VkPipelineVertexInputStateCreateInfo& _vertexInputInfo,
+			std::unique_ptr<VkVertexInputBindingDescription>& _bindingDesc,
+			std::unique_ptr<VkVertexInputAttributeDescription[]>& _attribDescs,
+			const VertexBindingLayout& _vertexBindingLayout) noexcept;
 
 		static void FillRasterization(VkPipelineRasterizationStateCreateInfo& _rasterizerInfo, const PipelineRenderModes& _modes) noexcept;
 
