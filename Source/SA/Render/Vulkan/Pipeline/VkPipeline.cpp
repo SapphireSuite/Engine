@@ -4,10 +4,12 @@
 
 #include <Core/Algorithms/SizeOf.hpp>
 
-#include <Render/Vulkan/Debug/Debug.hpp>
+#include <Render/Base/Shader/SpecConstants/DefaultSpecConstant.hpp>
 
+#include <Render/Vulkan/Debug/Debug.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
 #include <Render/Vulkan/Shader/VkShader.hpp>
+#include <Render/Vulkan/Shader/VkSpecConstantData.hpp>
 #include <Render/Vulkan/Pass/VkRenderPass.hpp>
 #include <Render/Vulkan/VkRenderFrame.hpp>
 
@@ -89,16 +91,16 @@ namespace Sa::Vk
 		SA_VK_ASSERT(vkCreateDescriptorSetLayout(_device, &descriptorSetLayoutInfo, nullptr, &mDescriptorSetLayout),
 			L"Failed to create descriptor set layout!");
 	}
-	
+
 	void Pipeline::DestroyDescriptorSetLayout(const Device& _device)
 	{
-		SA_ASSERT(Nullptr, SA/Render/Vulkan, mDescriptorSetLayout, L"Destroy pipeline with null DescriptorSet Layout!");
+		SA_ASSERT(Nullptr, SA / Render / Vulkan, mDescriptorSetLayout, L"Destroy pipeline with null DescriptorSet Layout!");
 
 		vkDestroyDescriptorSetLayout(_device, mDescriptorSetLayout, nullptr);
 		mDescriptorSetLayout = VK_NULL_HANDLE;
 	}
 
-	
+
 	void Pipeline::CreatePipelineLayout(const Device& _device)
 	{
 		VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo{};
@@ -112,22 +114,22 @@ namespace Sa::Vk
 
 		SA_VK_ASSERT(vkCreatePipelineLayout(_device, &pipelineLayoutCreateInfo, nullptr, &mPipelineLayout), L"Failed to create pipeline layout!");
 	}
-	
+
 	void Pipeline::DestroyPipelineLayout(const Device& _device)
 	{
-		SA_ASSERT(Nullptr, SA/Render/Vulkan, mPipelineLayout, L"Destroy pipeline with null Pipeline Layout!");
+		SA_ASSERT(Nullptr, SA / Render / Vulkan, mPipelineLayout, L"Destroy pipeline with null Pipeline Layout!");
 
 		vkDestroyPipelineLayout(_device, mPipelineLayout, nullptr);
 		mPipelineLayout = VK_NULL_HANDLE;
 	}
 
-	
+
 	void Pipeline::CreatePipelineHandle(const Device& _device, const PipelineCreateInfos& _infos)
 	{
-		std::vector<VkSpecializationInfo> specInfos;
-		std::vector<VkSpecializationMapEntry> specMapEntries;
+		// Shaders
+		std::vector<SpecConstantData> specConstDatas;
 		std::vector<VkPipelineShaderStageCreateInfo> shaderStages;
-		FillShaderStages(shaderStages, specInfos, specMapEntries, _infos.shaders);
+		FillShaderStages(shaderStages, specConstDatas, _infos.shaders);
 
 
 		// Vertex input infos.
@@ -213,10 +215,10 @@ namespace Sa::Vk
 		SA_VK_ASSERT(vkCreateGraphicsPipelines(_device, VK_NULL_HANDLE, 1, &pipelineCreateInfo, nullptr, &mHandle),
 			L"Failed to create graphics pipeline!");
 	}
-	
+
 	void Pipeline::DestroyPipelineHandle(const Device& _device)
 	{
-		SA_ASSERT(Nullptr, SA/Render/Vulkan, mHandle, L"Destroy null Pipeline!");
+		SA_ASSERT(Nullptr, SA / Render / Vulkan, mHandle, L"Destroy null Pipeline!");
 
 		vkDestroyPipeline(_device, mHandle, nullptr);
 		mHandle = VK_NULL_HANDLE;
@@ -224,63 +226,31 @@ namespace Sa::Vk
 
 
 	void Pipeline::FillShaderStages(std::vector<VkPipelineShaderStageCreateInfo>& _stages,
-		std::vector<VkSpecializationInfo>& _specInfos,
-		std::vector<VkSpecializationMapEntry>& _specMapEntries,
+		std::vector<SpecConstantData>& _specConstDatas,
 		const std::vector<PipelineShaderInfos>& _shaders)
 	{
 		_stages.reserve(_shaders.size());
+		_specConstDatas.reserve(_shaders.size());
 
+
+		// Spec constant data.
 		for (auto it = _shaders.begin(); it != _shaders.end(); ++it)
+			SpecConstantData& specData = _specConstDatas.emplace_back(it->specConstInfos);
+
+
+		// Shader Stages.
+		for (uint32 i = 0u; i < _shaders.size(); ++i)
 		{
-			const VkSpecializationInfo* pSpecInfo = nullptr;
+			const PipelineShaderInfos& it = _shaders[i];
 
-
-			// Specialization constants.
-			if(!it->specConstInfos.Empty())
-			{
-				const uint32 entriesOffset = SizeOf<uint32>(_specMapEntries);
-
-				// Fill map entries.
-				{
-					uint32 offset = 0u;
-
-					for (auto specIt = it->specConstInfos.descs.begin(); specIt != it->specConstInfos.descs.end(); ++specIt)
-					{
-						VkSpecializationMapEntry& entry = _specMapEntries.emplace_back();
-						entry.constantID = specIt->id;
-						entry.size = specIt->size;
-						entry.offset = offset;
-
-						offset += specIt->size;
-					}
-				}
-
-
-				// Fill Spec infos.
-				{
-					VkSpecializationInfo& specInfo = _specInfos.emplace_back();
-					specInfo.mapEntryCount = SizeOf<uint32>(it->specConstInfos.descs);
-					specInfo.pMapEntries = _specMapEntries.data() + entriesOffset;
-					specInfo.dataSize = SizeOf<uint32>(it->specConstInfos.data);
-					specInfo.pData = it->specConstInfos.data.data();
-
-					pSpecInfo = &specInfo;
-				}
-			}
-
-
-			// Shader Stage.
-			{
-
-				VkPipelineShaderStageCreateInfo& stage = _stages.emplace_back();
-				stage.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-				stage.pNext = nullptr;
-				stage.flags = 0u;
-				stage.stage = API_GetShaderStage(it->stage);
-				stage.module = it->shader->As<Shader>();
-				stage.pName = "main";
-				stage.pSpecializationInfo = pSpecInfo;
-			}
+			VkPipelineShaderStageCreateInfo& stage = _stages.emplace_back();
+			stage.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+			stage.pNext = nullptr;
+			stage.flags = 0u;
+			stage.stage = API_GetShaderStage(it.stage);
+			stage.module = it.shader->As<Shader>();
+			stage.pName = "main";
+			stage.pSpecializationInfo = &_specConstDatas[i].specInfo;
 		}
 	}
 

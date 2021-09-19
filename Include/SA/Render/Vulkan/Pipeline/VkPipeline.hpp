@@ -15,6 +15,7 @@ namespace Sa::Vk
 {
 	class Device;
 	class CommandBuffer;
+	class SpecConstantData;
 
 	class Pipeline : public APipeline
 	{
@@ -34,8 +35,7 @@ namespace Sa::Vk
 
 
 		static void FillShaderStages(std::vector<VkPipelineShaderStageCreateInfo>& _stages,
-			std::vector<VkSpecializationInfo>& _specInfos,
-			std::vector<VkSpecializationMapEntry>& _specMapEntries,
+			std::vector<SpecConstantData>& _specConstDatas,
 			const std::vector<PipelineShaderInfos>& _shaders);
 
 		static void FillVertexBindings(VkPipelineVertexInputStateCreateInfo& _vertexInputInfo,

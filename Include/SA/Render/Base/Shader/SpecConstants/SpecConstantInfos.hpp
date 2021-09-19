@@ -7,29 +7,23 @@
 
 #include <vector>
 
-#include <SA/Core/Types/Int.hpp>
+#include <SA/Render/Base/Shader/SpecConstants/SpecConstant.hpp>
+#include <SA/Render/Base/Shader/SpecConstants/DefaultSpecConstant.hpp>
 
 namespace Sa
 {
 	class SpecConstantInfos
 	{
 	public:
-		struct Descriptor
-		{
-			uint32 id = 0u;
-			uint32 size = 0u;
-		};
+		std::vector<Intl::SpecConstantBase*> specConsts;
 
-		std::vector<char> data;
-		std::vector<Descriptor> descs;
+		~SpecConstantInfos();
 
 		template <typename T>
 		void Add(uint32 _id, T _specConst);
-
-		bool Empty() const { return descs.empty(); }
 	};
 }
 
-#include <SA/Render/Base/Shader/SpecConstantInfos.inl>
+#include <SA/Render/Base/Shader/SpecConstants/SpecConstantInfos.inl>
 
 #endif // GUARD
