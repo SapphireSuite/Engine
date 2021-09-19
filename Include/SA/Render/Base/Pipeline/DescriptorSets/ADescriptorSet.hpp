@@ -2,18 +2,18 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_RENDER_AMATERIAL_GUARD
-#define SAPPHIRE_RENDER_AMATERIAL_GUARD
+#ifndef SAPPHIRE_RENDER_ADESCRIPTOR_SET_GUARD
+#define SAPPHIRE_RENDER_ADESCRIPTOR_SET_GUARD
 
 #include <SA/Core/Types/Abstract.hpp>
 
-#include <SA/Render/Base/Material/MaterialCreateInfos.hpp>
+#include <SA/Render/Base/Pipeline/DescriptorSets/DescriptorSetCreateInfos.hpp>
 
 namespace Sa
 {
 	class ARenderFrame;
 
-	class AMaterial : public Abstract
+	class ADescriptorSet : public Abstract
 	{
 	public:
 		virtual void Bind(const ARenderFrame& _frame, const APipeline& _pipeline) const = 0;

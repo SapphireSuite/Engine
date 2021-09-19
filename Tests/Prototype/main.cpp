@@ -29,13 +29,13 @@ using namespace Sa;
 #include <SA/Render/Vulkan/Mesh/VkStaticMesh.hpp>
 #include <SA/Render/Vulkan/Shader/VkShader.hpp>
 #include <SA/Render/Vulkan/Pipeline/VkPipeline.hpp>
-#include <SA/Render/Vulkan/Material/VkMaterial.hpp>
+#include <SA/Render/Vulkan/Pipeline/VkDescriptorSet.hpp>
 #include <SA/Render/Vulkan/Buffers/VkBuffer.hpp>
 #include <SA/Render/Vulkan/Texture/VkTexture.hpp>
 #include <SA/Render/Vulkan/VkRenderFrame.hpp>
 
-#include <SA/Render/Base/Material/Bindings/MaterialUBOBinding.hpp>
-#include <SA/Render/Base/Material/Bindings/MaterialIBOBinding.hpp>
+#include <SA/Render/Base/Shader/Bindings/ShaderUBOBinding.hpp>
+#include <SA/Render/Base/Shader/Bindings/ShaderIBOBinding.hpp>
 
 #include <SA/SDK/Assets/ModelAsset.hpp>
 #include <SA/SDK/Assets/ShaderAsset.hpp>
@@ -60,7 +60,7 @@ Vk::StaticMesh cubeMesh;
 Vk::Shader unlitvert;
 Vk::Shader unlitfrag;
 Vk::Pipeline unlitPipeline;
-Vk::Material cubeMat;
+Vk::DescriptorSet cubeDescSet;
 Vk::Buffer camUBO;
 Vk::Buffer modelUBO;
 Vk::Texture missText;
@@ -337,14 +337,14 @@ int main()
 			}
 
 
-			// Material.
+			// DescSet.
 			{
-				MaterialCreateInfos infos{ unlitPipeline };
-				infos.AddBinding<MaterialUBOBinding>(0u, &camUBO);
-				infos.AddBinding<MaterialUBOBinding>(1u, &modelUBO);
-				infos.AddBinding<MaterialIBOBinding>(2u, &missText);
+				DescriptorSetCreateInfos infos{ unlitPipeline };
+				infos.AddBinding<ShaderUBOBinding>(0u, &camUBO);
+				infos.AddBinding<ShaderUBOBinding>(1u, &modelUBO);
+				infos.AddBinding<ShaderIBOBinding>(2u, &missText);
 
-				cubeMat.Create(device, infos);
+				cubeDescSet.Create(device, infos);
 			}
 		}
 	}
@@ -394,7 +394,7 @@ int main()
 			frameBuffer.Begin(cmdBuffer);
 
 			unlitPipeline.Bind(frame);
-			cubeMat.Bind(frame, unlitPipeline);
+			cubeDescSet.Bind(frame, unlitPipeline);
 			cubeMesh.Draw(frame);
 
 
@@ -418,7 +418,7 @@ int main()
 			camUBO.Destroy(device);
 			modelUBO.Destroy(device);
 
-			cubeMat.Destroy(device);
+			cubeDescSet.Destroy(device);
 			unlitPipeline.Destroy(device);
 
 			unlitvert.Destroy(device);

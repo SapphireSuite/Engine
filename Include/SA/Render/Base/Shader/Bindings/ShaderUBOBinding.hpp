@@ -2,23 +2,23 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_RENDER_MATERIAL_UBO_BINDING_GUARD
-#define SAPPHIRE_RENDER_MATERIAL_UBO_BINDING_GUARD
+#ifndef SAPPHIRE_RENDER_SHADER_UBO_BINDING_GUARD
+#define SAPPHIRE_RENDER_SHADER_UBO_BINDING_GUARD
 
-#include <SA/Render/Base/Material/Bindings/AMaterialBinding.hpp>
+#include <SA/Render/Base/Shader/Bindings/AShaderBinding.hpp>
 
 #include <SA/Render/Base/Buffers/IUniformBuffer.hpp>
 
 namespace Sa
 {
-	class MaterialUBOBinding : public AMaterialBinding
+	class ShaderUBOBinding : public AShaderBinding
 	{
 	public:
 		std::vector<const IUniformBuffer*> UBOs;
 
 
-		MaterialUBOBinding(uint32 _binding, const IUniformBuffer* _UBO, uint32 _descriptor = ~uint32()) noexcept;
-		MaterialUBOBinding(uint32 _binding, std::vector<const IUniformBuffer*> _UBOs, uint32 _descriptor = ~uint32()) noexcept;
+		ShaderUBOBinding(uint32 _binding, const IUniformBuffer* _UBO, uint32 _set = 0u) noexcept;
+		ShaderUBOBinding(uint32 _binding, std::vector<const IUniformBuffer*> _UBOs, uint32 _set = 0u) noexcept;
 
 
 #if SA_VULKAN
