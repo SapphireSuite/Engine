@@ -1,7 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
 #version 450
-#extension GL_ARB_separate_shader_objects : enable
 
 
 // Uniform.

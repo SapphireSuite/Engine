@@ -1,7 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
 #version 450
-#extension GL_ARB_separate_shader_objects : enable
 
 
 // Uniform.
@@ -53,9 +52,6 @@ void main()
     vec4 modelPosition = objectUBO.modelMat * vec4(inPosition, 1.0);
 
     gl_Position = cameraUBO.proj * cameraUBO.viewInv * modelPosition;
-
-    // Vulkan coordinate system.
-    gl_Position.y = -gl_Position.y;
 
 
     // Texture
