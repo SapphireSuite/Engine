@@ -6,11 +6,10 @@
 
 #include <Collections/Debug>
 
+#include <SDK/EnvironmentVariable.hpp>
+
 namespace Sa
 {
-	const std::string shaderLibPath = std::string(getenv("SA_ENGINE_PATH")) + "\\Resources\\Shaders\\Lib";
-
-
 	shaderc_include_result* MakeError(const std::string& message)
 	{
 		return new shaderc_include_result{ nullptr, 0u, message.c_str(), message.size() };
@@ -32,6 +31,8 @@ namespace Sa
 			}
 			case shaderc_include_type_standard:		// include <file.glsl>
 			{
+				static const std::string shaderLibPath = EnvVar::path + "\\Resources\\Shaders\\Lib";
+
 				return shaderLibPath + "\\" + _requestedSrc;
 			}
 			default:
@@ -47,6 +48,8 @@ namespace Sa
 		const std::string& _requestingSrc,
 		size_t _includeDepth)
 	{
+		(void)_includeDepth;
+
 		std::string fullPath = GetFullPath(_requestedSrc, _requestingSrc, _type);
 
 		if (fullPath.empty())

@@ -10,8 +10,9 @@
 #include <Collections/Debug>
 
 #include <Render/Base/Shader/ShaderStage.hpp>
-#include <SDK/Assets/Shader/ShaderFileIncluder.hpp>
 
+#include <SDK/EnvironmentVariable.hpp>
+#include <SDK/Assets/Shader/ShaderFileIncluder.hpp>
 
 namespace Sa
 {
@@ -110,7 +111,7 @@ namespace Sa
 
 		// Rename use main() by main_user()
 		{
-			const uint32 index = code.find("main");
+			const uint64 index = code.find("main");
 
 			if (index == std::string::npos)
 			{
@@ -124,7 +125,9 @@ namespace Sa
 
 		// Append engine main().
 		{
-			std::fstream fStream(std::string(getenv("SA_ENGINE_PATH")) + "\\Resources\\Shaders\\Lib\\main_engine.glsl", std::ios_base::in);
+			static std::string mainEnginePath = EnvVar::path + "\\Resources\\Shaders\\Lib\\main_engine.glsl";
+
+			std::fstream fStream(mainEnginePath, std::ios_base::in);
 
 			if (!fStream.is_open())
 			{

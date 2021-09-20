@@ -235,7 +235,7 @@ namespace Sa::Vk
 
 		// Spec constant data.
 		for (auto it = _shaders.begin(); it != _shaders.end(); ++it)
-			SpecConstantData& specData = _specConstDatas.emplace_back(it->specConstInfos);
+			_specConstDatas.emplace_back(it->specConstInfos);
 
 
 		// Shader Stages.
