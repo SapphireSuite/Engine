@@ -2,42 +2,17 @@
 
 #include <SDK/Assets/ShaderAsset.hpp>
 
-#include <sstream>
 #include <fstream>
-
-// GLSL compiler.
-#include <shaderc/shaderc.hpp>
 
 #include <Core/Algorithms/SizeOf.hpp>
 
+#include <SDK/Assets/Shader/ShaderCompiler.hpp>
+
+
 namespace Sa
 {
-	shaderc_shader_kind GetShaderKind(const std::string& _resourcePath)
-	{
-		const uint32 extIndex = static_cast<uint32>(_resourcePath.find_last_of('.'));
-		SA_ASSERT(Default, SA/SDK/Asset, extIndex != ~uint32(), L"Invalid resource extension {" << _resourcePath << L"}");
-		
-		const std::string extension = _resourcePath.substr(extIndex + 1);
+	ShaderCompiler compiler;
 
-		if (extension == "vert")
-			return shaderc_glsl_vertex_shader;
-		else if(extension == "frag")
-			return shaderc_glsl_fragment_shader;
-		else if (extension == "comp")
-			return shaderc_glsl_compute_shader;
-		else if (extension == "geom")
-			return shaderc_glsl_geometry_shader;
-		else if (extension == "tesc")
-			return shaderc_glsl_tess_control_shader;
-		else if (extension == "tese")
-			return shaderc_glsl_tess_evaluation_shader;
-		else
-		{
-			SA_LOG("Invalid shader extension {"<< extension << L"}", Error, SA/SDK/Asset);
-			return shaderc_shader_kind(0);
-		}
-	}
-	
 
 	bool ShaderAsset::ShouldCompileShader(const std::string& _resourcePath, const std::string& _assetPath) noexcept
 	{
@@ -47,71 +22,6 @@ namespace Sa
 		return stat(_assetPath.c_str(), &assetStat) != 0 ||
 			stat(_resourcePath.c_str(), &resourceStat) != 0 ||
 			assetStat.st_mtime < resourceStat.st_mtime;
-	}
-	
-	bool ShaderAsset::CompileShader(const std::string& _resourcePath)
-	{
-		static shaderc::Compiler compiler;
-
-		SA_LOG(L"Compiling shader {" << _resourcePath << L"}", Infos, SA/SDK/Asset);
-
-
-		std::string code;
-
-		// Query shader code
-		{
-			std::fstream fStream(_resourcePath, std::ios_base::in);
-
-			if (!fStream.is_open())
-			{
-				SA_LOG(L"Failed to open file {" << _resourcePath << L"}!", Error, SA/SDK/Asset);
-				return false;
-			}
-
-
-
-			std::stringstream scode;
-			scode << fStream.rdbuf();
-
-			code = scode.str();
-		}
-
-
-		// Compilation
-		{
-			shaderc::CompileOptions options;
-
-#if !SA_DEBUG
-			options.SetOptimizationLevel(shaderc_optimization_level_performance);
-#endif
-
-
-			shaderc::SpvCompilationResult module =
-				compiler.CompileGlslToSpv(code, GetShaderKind(_resourcePath), _resourcePath.c_str(), options);
-
-
-			if (module.GetCompilationStatus() != shaderc_compilation_status_success)
-			{
-				SA_LOG(L"Shader {" << _resourcePath << L"} compilation failed with " <<
-					module.GetNumErrors() << L" Errors and " <<
-					module.GetNumWarnings() << " Warnings.",
-					Error, SA/SDK/Asset, module.GetErrorMessage());
-
-				return false;
-			}
-			else if (module.GetNumWarnings())
-			{
-				SA_LOG(L"Shader {" << _resourcePath << L"} compilation success with " <<
-					module.GetNumWarnings() << " Warnings.",
-					Warning, SA/SDK/Asset, module.GetErrorMessage());
-			}
-
-
-			// Copy data.
-			rawData.data = { module.cbegin(), module.cend() };
-		}
-
-		return true;
 	}
 
 
@@ -139,7 +49,7 @@ namespace Sa
 
 			if (resourcePathSize == 0u)
 			{
-				SA_LOG("Shader resource path invalid!", Error, SA / SDK / Asset);
+				SA_LOG("Shader resource path invalid!", Error, SA/SDK/Asset);
 				return false;
 			}
 
@@ -223,6 +133,6 @@ namespace Sa
 	{
 		mResourcePath = _path;
 
-		return CompileShader(_path);
+		return compiler.Compile(_path, rawData.data);
 	}
 }

@@ -16,7 +16,6 @@ namespace Sa
 		std::string mResourcePath;
 
 		static bool ShouldCompileShader(const std::string& _resourcePath, const std::string& _assetPath) noexcept;
-		bool CompileShader(const std::string& _resourcePath);
 
 	public:
 		RawShader rawData;
