@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <SDK/Assets/ShaderAsset.hpp>
+#include <SDK/Assets/Shader/ShaderAsset.hpp>
 
 #include <fstream>
 
@@ -64,6 +64,9 @@ namespace Sa
 		// Stage.
 		{
 			fStream.read(reinterpret_cast<char*>(&rawData.stage), sizeof(ShaderStage));
+
+			if(rawData.stage == ShaderStage::Vertex)
+				fStream.read(reinterpret_cast<char*>(&rawData.vertexLayout), sizeof(VertexComp));
 		}
 
 
@@ -149,7 +152,10 @@ namespace Sa
 
 		// Stage.
 		{
-			fStream.write(reinterpret_cast<const char*>(rawData.stage), sizeof(ShaderStage));
+			fStream.write(reinterpret_cast<const char*>(&rawData.stage), sizeof(ShaderStage));
+
+			if (rawData.stage == ShaderStage::Vertex)
+				fStream.write(reinterpret_cast<const char*>(&rawData.vertexLayout), sizeof(VertexComp));
 		}
 
 

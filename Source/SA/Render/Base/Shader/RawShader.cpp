@@ -8,6 +8,8 @@ namespace Sa
 	{
 		stage = ShaderStage::Unknown;
 
+		vertexLayout = 0u;
+
 		data.clear();
 		bindings.clear();
 	}

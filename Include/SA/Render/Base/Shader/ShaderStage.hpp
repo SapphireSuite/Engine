@@ -22,6 +22,9 @@ namespace Sa
 	SA_DEFINE_ENUM_FLAGS(ShaderStage);
 
 
+	ShaderStage ShaderStageFromFile(const std::string& _path);
+
+
 #if SA_VULKAN
 
 	namespace Vk

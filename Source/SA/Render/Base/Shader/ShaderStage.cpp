@@ -6,6 +6,34 @@
 
 namespace Sa
 {
+	ShaderStage ShaderStageFromFile(const std::string& _path)
+	{
+		const size_t extIndex = static_cast<uint32>(_path.find_last_of('.'));
+		SA_ASSERT(Default, SA/SDK/Asset, extIndex != std::string::npos,
+			L"Invalid resource extension {" << _path << L"}");
+
+		const std::string extension = _path.substr(extIndex + 1);
+
+		if (extension == "vert")
+			return ShaderStage::Vertex;
+		else if (extension == "frag")
+			return ShaderStage::Fragment;
+		else if (extension == "comp")
+			return ShaderStage::Compute;
+		else if (extension == "geom")
+			return ShaderStage::Geometry;
+		//else if (extension == "tesc")
+		//	return shaderc_glsl_tess_control_shader;
+		//else if (extension == "tese")
+		//	return shaderc_glsl_tess_evaluation_shader;
+		else
+		{
+			SA_LOG(L"Invalid shader extension {" << extension << L"}", Error, SA / SDK / Asset);
+			return ShaderStage(0);
+		}
+	}
+
+
 #if SA_VULKAN
 
 	namespace Vk

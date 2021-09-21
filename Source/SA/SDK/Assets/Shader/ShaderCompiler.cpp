@@ -2,46 +2,18 @@
 
 #include <SDK/Assets/Shader/ShaderCompiler.hpp>
 
-
 #include <sstream>
 #include <fstream>
 
-
 #include <Collections/Debug>
 
-#include <Render/Base/Shader/ShaderStage.hpp>
+#include <Render/Base/Shader/RawShader.hpp>
 
 #include <SDK/EnvironmentVariable.hpp>
 #include <SDK/Assets/Shader/ShaderFileIncluder.hpp>
 
 namespace Sa
 {
-	ShaderStage GetShaderStage(const std::string& _path)
-	{
-		const uint32 extIndex = static_cast<uint32>(_path.find_last_of('.'));
-		SA_ASSERT(Default, SA/SDK/Asset, extIndex != ~uint32(), L"Invalid resource extension {" << _path << L"}");
-
-		const std::string extension = _path.substr(extIndex + 1);
-
-		if (extension == "vert")
-			return ShaderStage::Vertex;
-		else if (extension == "frag")
-			return ShaderStage::Fragment;
-		else if (extension == "comp")
-			return ShaderStage::Compute;
-		else if (extension == "geom")
-			return ShaderStage::Geometry;
-		//else if (extension == "tesc")
-		//	return shaderc_glsl_tess_control_shader;
-		//else if (extension == "tese")
-		//	return shaderc_glsl_tess_evaluation_shader;
-		else
-		{
-			SA_LOG(L"Invalid shader extension {" << extension << L"}", Error, SA / SDK / Asset);
-			return ShaderStage(0);
-		}
-	}
-
 	shaderc_shader_kind GetShaderKind(ShaderStage _stage)
 	{
 		switch (_stage)
@@ -146,15 +118,14 @@ namespace Sa
 		return code;
 	}
 
-	bool ShaderCompiler::Compile(const std::string& _path, std::vector<uint32>& _outCode)
+	bool ShaderCompiler::Compile(const std::string& _path, RawShader& _raw)
 	{
 		SA_LOG(L"Compiling shader {" << _path << L"}", Infos, SA/SDK/Asset);
 
 		const std::string code = AssembleShader(_path);
-		const ShaderStage stage = GetShaderStage(_path);
 
 		shaderc::CompileOptions options;
-		SetStageOptions(options, stage);
+		SetStageOptions(options, _raw.stage);
 		options.SetIncluder(std::make_unique<ShaderFileIncluder>());
 
 #if !SA_DEBUG
@@ -163,7 +134,7 @@ namespace Sa
 
 
 		shaderc::SpvCompilationResult module =
-			mCompiler.CompileGlslToSpv(code.data(), code.size(), GetShaderKind(stage), _path.c_str(), options);
+			mHandle.CompileGlslToSpv(code.data(), code.size(), GetShaderKind(_raw.stage), _path.c_str(), options);
 
 		if (module.GetCompilationStatus() != shaderc_compilation_status_success)
 		{
@@ -183,7 +154,7 @@ namespace Sa
 
 
 		// Copy data.
-		_outCode = { module.cbegin(), module.cend() };
+		_raw.data = { module.cbegin(), module.cend() };
 
 		return true;
 	}

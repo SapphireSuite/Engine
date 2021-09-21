@@ -9,7 +9,7 @@
 
 #include <SA/Render/Base/Shader/AShader.hpp>
 #include <SA/Render/Base/Shader/ShaderStage.hpp>
-#include <SA/Render/Base/Shader/ShaderBindingType.hpp>
+#include <SA/Render/Base/Shader/Bindings/ShaderBindingType.hpp>
 #include <SA/Render/Base/Shader/SpecConstants/SpecConstantInfos.hpp>
 
 #include <SA/Render/Base/Mesh/Vertex/VertexBindingLayout.hpp>

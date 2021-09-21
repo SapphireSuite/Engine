@@ -5,11 +5,13 @@
 #ifndef SAPPHIRE_RENDER_SHADER_BINDING_TYPE_GUARD
 #define SAPPHIRE_RENDER_SHADER_BINDING_TYPE_GUARD
 
+#include <SA/Core/Types/Int.hpp>
+
 #include <SA/Core/Support/API/Vulkan.hpp>
 
 namespace Sa
 {
-	enum class ShaderBindingType
+	enum class ShaderBindingType : uint8
 	{
 		UniformBuffer,
 

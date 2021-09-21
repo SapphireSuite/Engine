@@ -7,18 +7,18 @@
 
 #include <shaderc/shaderc.hpp>
 
-#include <SA/Core/Types/Int.hpp>
-
 namespace Sa
 {
+	struct RawShader;
+
 	class ShaderCompiler
 	{
-		shaderc::Compiler mCompiler;
+		shaderc::Compiler mHandle;
 
 		std::string AssembleShader(const std::string& _path);
 
 	public:
-		bool Compile(const std::string& _path, std::vector<uint32>& _outCode);
+		bool Compile(const std::string& _path, RawShader& _raw);
 	};
 }
 

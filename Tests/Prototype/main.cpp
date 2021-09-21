@@ -38,7 +38,7 @@ using namespace Sa;
 #include <SA/Render/Base/Shader/Bindings/ShaderIBOBinding.hpp>
 
 #include <SA/SDK/Assets/ModelAsset.hpp>
-#include <SA/SDK/Assets/ShaderAsset.hpp>
+#include <SA/SDK/Assets/Shader/ShaderAsset.hpp>
 #include <SA/SDK/Assets/TextureAsset.hpp>
 
 GLFW::WindowSystem winSys;
