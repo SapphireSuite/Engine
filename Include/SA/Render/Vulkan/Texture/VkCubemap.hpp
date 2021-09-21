@@ -23,7 +23,7 @@ namespace Sa::Vk
 		TextureSampler mSampler;
 
 	public:
-		void Create(const Device& _device, CommandBuffer& _cmd, ResourceHolder& _resHold, const RawCubemap& _rawCubemap);
+		void Create(const Device& _device, CommandBuffer& _cmd, ResourceHolder& _resHold, const RawCubemap& _raw);
 		void Destroy(const Device& _device);
 
 		VkDescriptorImageInfo CreateDescriptorImageInfo() const noexcept;

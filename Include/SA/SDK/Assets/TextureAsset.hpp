@@ -14,7 +14,7 @@ namespace Sa
 	class TextureAsset : public AAsset
 	{
 	public:
-		RawTexture rawData;
+		RawTexture raw;
 
 
 		bool IsValid() const override final;

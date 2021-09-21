@@ -20,7 +20,7 @@ namespace Sa::Vk
 		VkShaderModule mHandle = VK_NULL_HANDLE;
 
 	public:
-		void Create(const Device& _device, const RawShader& _rawShader);
+		void Create(const Device& _device, const RawShader& _raw);
 		void Destroy(const Device& _device);
 
 		operator VkShaderModule() const;

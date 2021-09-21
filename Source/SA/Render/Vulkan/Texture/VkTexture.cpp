@@ -10,14 +10,14 @@
 
 namespace Sa::Vk
 {
-	void Texture::Create(const Device& _device, CommandBuffer& _cmd, ResourceHolder& _resHold, const RawTexture& _rawTexture)
+	void Texture::Create(const Device& _device, CommandBuffer& _cmd, ResourceHolder& _resHold, const RawTexture& _raw)
 	{
-		uint64 dataSize = _rawTexture.GetTotalSize();
+		uint64 dataSize = _raw.GetTotalSize();
 
 		Buffer& stagingBuffer = _resHold.Make<Buffer>(Buffer::Deleter(_device));
 		stagingBuffer.Create(_device, dataSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
-			_rawTexture.data.data());
+			_raw.data.data());
 
 
 		ImageBufferCreateInfos imageBufferCreateInfos;
@@ -25,13 +25,13 @@ namespace Sa::Vk
 		imageBufferCreateInfos.imageFlags = 0u;
 		imageBufferCreateInfos.imageType = ImageType::Image2D;
 
-		imageBufferCreateInfos.format = _rawTexture.format;
-		imageBufferCreateInfos.extent = _rawTexture.extent;
+		imageBufferCreateInfos.format = _raw.format;
+		imageBufferCreateInfos.extent = _raw.extent;
 
 		imageBufferCreateInfos.usage = VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
-		imageBufferCreateInfos.mipLevels = _rawTexture.mipLevels;
+		imageBufferCreateInfos.mipLevels = _raw.mipLevels;
 
-		if (_rawTexture.mipLevels > 1)
+		if (_raw.mipLevels > 1)
 			imageBufferCreateInfos.usage |= VK_IMAGE_USAGE_TRANSFER_SRC_BIT;
 
 
@@ -43,7 +43,7 @@ namespace Sa::Vk
 			ImageBuffer::TransitionInfos infos{};
 			infos.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 			infos.newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
-			infos.mipLevels = _rawTexture.mipLevels;
+			infos.mipLevels = _raw.mipLevels;
 			infos.imageType = ImageType::Image2D;
 
 			mBuffer.TransitionImageLayout(_cmd, _resHold, infos);
@@ -55,9 +55,9 @@ namespace Sa::Vk
 		{
 			ImageBuffer::CopyBufferImageInfos copyInfos{};
 			copyInfos.buffer = stagingBuffer;
-			copyInfos.extent = _rawTexture.extent;
-			copyInfos.format = _rawTexture.format;
-			copyInfos.mipLevels = _rawTexture.mipLevels;
+			copyInfos.extent = _raw.extent;
+			copyInfos.format = _raw.format;
+			copyInfos.mipLevels = _raw.mipLevels;
 			copyInfos.imageType = ImageType::Image2D;
 
 			mBuffer.CopyBufferToImage(_cmd, _resHold, copyInfos);
@@ -72,14 +72,14 @@ namespace Sa::Vk
 			ImageBuffer::TransitionInfos infos{};
 			infos.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
 			infos.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-			infos.mipLevels = _rawTexture.mipLevels;
+			infos.mipLevels = _raw.mipLevels;
 			infos.imageType = ImageType::Image2D;
 
 			mBuffer.TransitionImageLayout(_cmd, _resHold, infos);
 		}
 
 
-		mSampler.Create(_device, _rawTexture.mipLevels);
+		mSampler.Create(_device, _raw.mipLevels);
 	}
 
 	void Texture::Destroy(const Device& _device)

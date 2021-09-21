@@ -10,7 +10,7 @@ namespace Sa
 {
 	bool MeshAsset::IsValid() const
 	{
-		return !rawData.vertices.empty() && !rawData.indices.empty();
+		return !raw.vertices.empty() && !raw.indices.empty();
 	}
 
 	bool MeshAsset::Load(const std::string& _path)
@@ -28,7 +28,7 @@ namespace Sa
 		{
 			VertexComp layout = VertexComp::None;
 			fStream.read(reinterpret_cast<char*>(&layout), sizeof(VertexComp));
-			rawData.SetLayout(layout);
+			raw.SetLayout(layout);
 		}
 
 
@@ -43,8 +43,8 @@ namespace Sa
 				return false;
 			}
 
-			rawData.vertices.resize(vSize);
-			fStream.read(rawData.vertices.data(), vSize);
+			raw.vertices.resize(vSize);
+			fStream.read(raw.vertices.data(), vSize);
 		}
 
 
@@ -59,8 +59,8 @@ namespace Sa
 				return false;
 			}
 
-			rawData.indices.resize(iSize / sizeof(uint32));
-			fStream.read(reinterpret_cast<char*>(rawData.indices.data()), iSize);
+			raw.indices.resize(iSize / sizeof(uint32));
+			fStream.read(reinterpret_cast<char*>(raw.indices.data()), iSize);
 		}
 
 		return true;
@@ -68,7 +68,7 @@ namespace Sa
 	
 	void MeshAsset::UnLoad()
 	{
-		rawData.Reset();
+		raw.Reset();
 	}
 
 
@@ -88,22 +88,22 @@ namespace Sa
 
 
 		// Layout.
-		fStream.write(reinterpret_cast<const char*>(&rawData.GetLayout()->comps), sizeof(VertexComp));
+		fStream.write(reinterpret_cast<const char*>(&raw.GetLayout()->comps), sizeof(VertexComp));
 
 
 		// Vertices.
 		{
-			const uint32 vSize = OctSizeOf<uint32>(rawData.vertices);
+			const uint32 vSize = OctSizeOf<uint32>(raw.vertices);
 			fStream.write(reinterpret_cast<const char*>(&vSize), sizeof(uint32));
-			fStream.write(rawData.vertices.data(), vSize);
+			fStream.write(raw.vertices.data(), vSize);
 		}
 
 
 		// Indices.
 		{
-			const uint32 iSize = OctSizeOf<uint32>(rawData.indices);
+			const uint32 iSize = OctSizeOf<uint32>(raw.indices);
 			fStream.write(reinterpret_cast<const char*>(&iSize), sizeof(uint32));
-			fStream.write(reinterpret_cast<const char*>(rawData.indices.data()), iSize);
+			fStream.write(reinterpret_cast<const char*>(raw.indices.data()), iSize);
 		}
 
 		return true;

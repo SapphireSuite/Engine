@@ -14,7 +14,7 @@ namespace Sa
 	class MeshAsset : public AAsset
 	{
 	public:
-		RawMesh rawData;
+		RawMesh raw;
 
 
 		bool IsValid() const override final;

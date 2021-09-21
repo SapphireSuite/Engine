@@ -12,14 +12,14 @@
 
 namespace Sa::Vk
 {
-	void Shader::Create(const Device& _device, const RawShader& _rawShader)
+	void Shader::Create(const Device& _device, const RawShader& _raw)
 	{
 		VkShaderModuleCreateInfo shaderModuleCreateInfo{};
 		shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
 		shaderModuleCreateInfo.pNext = nullptr;
 		shaderModuleCreateInfo.flags = 0u;
-		shaderModuleCreateInfo.codeSize = OctSizeOf(_rawShader.data);
-		shaderModuleCreateInfo.pCode = _rawShader.data.data();
+		shaderModuleCreateInfo.codeSize = OctSizeOf(_raw.data);
+		shaderModuleCreateInfo.pCode = _raw.data.data();
 
 		SA_VK_ASSERT(vkCreateShaderModule(_device, &shaderModuleCreateInfo, nullptr, &mHandle), L"Failed to create shader module!");
 	}

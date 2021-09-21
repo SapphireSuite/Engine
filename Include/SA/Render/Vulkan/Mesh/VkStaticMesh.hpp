@@ -21,7 +21,7 @@ namespace Sa::Vk
 		uint32 mIndicesSize = ~uint32();
 
 	public:
-		void Create(const Device& _device, CommandBuffer& _cmd, ResourceHolder& _resHold, const RawMesh& _rawMesh);
+		void Create(const Device& _device, CommandBuffer& _cmd, ResourceHolder& _resHold, const RawMesh& _raw);
 		void Destroy(const Device& _device);
 
 		void Draw(const ARenderFrame& _frame, const MeshDrawInfos& _infos = MeshDrawInfos()) const override final;

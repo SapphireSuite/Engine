@@ -18,7 +18,7 @@ namespace Sa
 		static bool ShouldCompileShader(const std::string& _resourcePath, const std::string& _assetPath) noexcept;
 
 	public:
-		RawShader rawData;
+		RawShader raw;
 
 
 		bool IsValid() const override final;

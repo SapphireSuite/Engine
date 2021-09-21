@@ -10,23 +10,23 @@
 
 namespace Sa::Vk
 {
-	void StaticMesh::Create(const Device& _device, CommandBuffer& _cmd, ResourceHolder& _resHold, const RawMesh& _rawMesh)
+	void StaticMesh::Create(const Device& _device, CommandBuffer& _cmd, ResourceHolder& _resHold, const RawMesh& _raw)
 	{
-		AMesh::Create(_rawMesh);
+		AMesh::Create(_raw);
 
 		// Create Vertex buffer.
 		mVertexBuffer.Create(_device, _cmd, _resHold,
-			SizeOf(_rawMesh.vertices),
+			SizeOf(_raw.vertices),
 			VK_BUFFER_USAGE_VERTEX_BUFFER_BIT,
-			_rawMesh.vertices.data());
+			_raw.vertices.data());
 
 
 		// Create Index buffer.
-		mIndicesSize = SizeOf<uint32>(_rawMesh.indices);
+		mIndicesSize = SizeOf<uint32>(_raw.indices);
 		mIndexBuffer.Create(_device, _cmd, _resHold,
 			sizeof(uint32) * mIndicesSize,
 			VK_BUFFER_USAGE_INDEX_BUFFER_BIT,
-			_rawMesh.indices.data());
+			_raw.indices.data());
 	}
 	
 	void StaticMesh::Destroy(const Device& _device)

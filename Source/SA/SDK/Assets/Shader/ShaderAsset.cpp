@@ -29,7 +29,7 @@ namespace Sa
 
 	bool ShaderAsset::IsValid() const
 	{
-		return !rawData.data.empty();
+		return !raw.data.empty();
 	}
 
 	
@@ -39,7 +39,7 @@ namespace Sa
 
 		if (!fStream.is_open())
 		{
-			SA_LOG("Failed to open file {" << _path << L"}!", Error, SA / SDK / Asset);
+			SA_LOG("Failed to open file {" << _path << L"}!", Error, SA/SDK/Asset);
 			return false;
 		}
 
@@ -88,8 +88,8 @@ namespace Sa
 					return false;
 				}
 
-				rawData.data.resize(dataSize / sizeof(uint32));
-				fStream.read(reinterpret_cast<char*>(rawData.data.data()), dataSize);
+				raw.data.resize(dataSize / sizeof(uint32));
+				fStream.read(reinterpret_cast<char*>(raw.data.data()), dataSize);
 			}
 		}
 
@@ -98,10 +98,10 @@ namespace Sa
 		{
 			// Stage.
 			{
-				fStream.read(reinterpret_cast<char*>(&rawData.descriptor.stage), sizeof(ShaderStage));
+				fStream.read(reinterpret_cast<char*>(&raw.descriptor.stage), sizeof(ShaderStage));
 
-				if (rawData.descriptor.stage == ShaderStage::Vertex)
-					fStream.read(reinterpret_cast<char*>(&rawData.descriptor.vertexLayout), sizeof(VertexComp));
+				if (raw.descriptor.stage == ShaderStage::Vertex)
+					fStream.read(reinterpret_cast<char*>(&raw.descriptor.vertexLayout), sizeof(VertexComp));
 			}
 
 
@@ -116,8 +116,8 @@ namespace Sa
 					return false;
 				}
 
-				rawData.descriptor.bindings.resize(dataSize / sizeof(ShaderBindingDescriptor));
-				fStream.read(reinterpret_cast<char*>(rawData.descriptor.bindings.data()), dataSize);
+				raw.descriptor.bindings.resize(dataSize / sizeof(ShaderBindingDescriptor));
+				fStream.read(reinterpret_cast<char*>(raw.descriptor.bindings.data()), dataSize);
 			}
 
 
@@ -132,8 +132,8 @@ namespace Sa
 					return false;
 				}
 
-				rawData.descriptor.specConstants.resize(dataSize / sizeof(SpecConstantDescriptor));
-				fStream.read(reinterpret_cast<char*>(rawData.descriptor.specConstants.data()), dataSize);
+				raw.descriptor.specConstants.resize(dataSize / sizeof(SpecConstantDescriptor));
+				fStream.read(reinterpret_cast<char*>(raw.descriptor.specConstants.data()), dataSize);
 			}
 		}
 
@@ -143,7 +143,7 @@ namespace Sa
 	void ShaderAsset::UnLoad()
 	{
 		mResourcePath.clear();
-		rawData.Reset();
+		raw.Reset();
 	}
 
 	
@@ -173,10 +173,10 @@ namespace Sa
 
 		// Data.
 		{
-			const uint32 dataSize = OctSizeOf<uint32>(rawData.data);
+			const uint32 dataSize = OctSizeOf<uint32>(raw.data);
 			fStream.write(reinterpret_cast<const char*>(&dataSize), sizeof(uint32));
 
-			fStream.write(reinterpret_cast<const char*>(rawData.data.data()), dataSize);
+			fStream.write(reinterpret_cast<const char*>(raw.data.data()), dataSize);
 		}
 
 
@@ -184,25 +184,25 @@ namespace Sa
 		{
 			// Stage.
 			{
-				fStream.write(reinterpret_cast<const char*>(&rawData.descriptor.stage), sizeof(ShaderStage));
+				fStream.write(reinterpret_cast<const char*>(&raw.descriptor.stage), sizeof(ShaderStage));
 
-				if (rawData.descriptor.stage == ShaderStage::Vertex)
-					fStream.write(reinterpret_cast<const char*>(&rawData.descriptor.vertexLayout), sizeof(VertexComp));
+				if (raw.descriptor.stage == ShaderStage::Vertex)
+					fStream.write(reinterpret_cast<const char*>(&raw.descriptor.vertexLayout), sizeof(VertexComp));
 			}
 
 
 			// Bindings.
 			{
-				const uint32 dataSize = OctSizeOf<uint32>(rawData.descriptor.bindings);
+				const uint32 dataSize = OctSizeOf<uint32>(raw.descriptor.bindings);
 				fStream.write(reinterpret_cast<const char*>(&dataSize), sizeof(uint32));
-				fStream.write(reinterpret_cast<const char*>(rawData.descriptor.bindings.data()), dataSize);
+				fStream.write(reinterpret_cast<const char*>(raw.descriptor.bindings.data()), dataSize);
 			}
 
 			// SpecConstants.
 			{
-				const uint32 dataSize = OctSizeOf<uint32>(rawData.descriptor.specConstants);
+				const uint32 dataSize = OctSizeOf<uint32>(raw.descriptor.specConstants);
 				fStream.write(reinterpret_cast<const char*>(&dataSize), sizeof(uint32));
-				fStream.write(reinterpret_cast<const char*>(rawData.descriptor.specConstants.data()), dataSize);
+				fStream.write(reinterpret_cast<const char*>(raw.descriptor.specConstants.data()), dataSize);
 			}
 		}
 
@@ -213,12 +213,12 @@ namespace Sa
 	bool ShaderAsset::Import(const std::string& _path)
 	{
 		mResourcePath = _path;
-		rawData.descriptor.stage = ShaderStageFromFile(_path);
+		raw.descriptor.stage = ShaderStageFromFile(_path);
 
-		if (!compiler.Compile(_path, rawData))
+		if (!compiler.Compile(_path, raw))
 			return false;
 
-		if (!reflector.Reflect(rawData))
+		if (!reflector.Reflect(raw))
 			return false;
 
 		return true;

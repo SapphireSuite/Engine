@@ -232,7 +232,7 @@ int main()
 					}
 				}
 
-				cubeMesh.Create(device, cmdBuffers[0], resHolder, cubeMeshAsset.rawData);
+				cubeMesh.Create(device, cmdBuffers[0], resHolder, cubeMeshAsset.raw);
 			}
 
 
@@ -253,7 +253,7 @@ int main()
 					}
 				}
 
-				missText.Create(device, cmdBuffers[0], resHolder, asset.rawData);
+				missText.Create(device, cmdBuffers[0], resHolder, asset.raw);
 			}
 
 
@@ -297,7 +297,7 @@ int main()
 						}
 					}
 
-					unlitvert.Create(device, asset.rawData);
+					unlitvert.Create(device, asset.raw);
 				}
 
 				// Unlit frag
@@ -315,7 +315,7 @@ int main()
 						}
 					}
 
-					unlitfrag.Create(device, asset.rawData);
+					unlitfrag.Create(device, asset.raw);
 				}
 			}
 

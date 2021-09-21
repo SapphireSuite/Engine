@@ -100,7 +100,7 @@ namespace Sa
 		// Parsing meshes of this node.
 		for (uint32 i = 0u; i < _node->mNumMeshes; ++i)
 		{
-			RawMesh& rawMesh = meshes.emplace_back().rawData;
+			RawMesh& rawMesh = meshes.emplace_back().raw;
 			const aiMesh* aiMesh = _scene->mMeshes[_node->mMeshes[i]];
 
 			SA_ASSERT(Default, SA/SDK/Asset, aiMesh->mPrimitiveTypes == aiPrimitiveType_TRIANGLE, L"Mesh must be triangle!");

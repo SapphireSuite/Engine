@@ -10,7 +10,7 @@ namespace Sa
 {
 	bool TextureAsset::IsValid() const
 	{
-		return !rawData.data.empty();
+		return !raw.data.empty();
 	}
 
 	
@@ -26,9 +26,9 @@ namespace Sa
 
 
 		{
-			fStream.read(reinterpret_cast<char*>(&rawData.extent), sizeof(Vec2ui));
-			fStream.read(reinterpret_cast<char*>(&rawData.mipLevels), sizeof(uint32));
-			fStream.read(reinterpret_cast<char*>(&rawData.format), sizeof(Format));
+			fStream.read(reinterpret_cast<char*>(&raw.extent), sizeof(Vec2ui));
+			fStream.read(reinterpret_cast<char*>(&raw.mipLevels), sizeof(uint32));
+			fStream.read(reinterpret_cast<char*>(&raw.format), sizeof(Format));
 		}
 
 
@@ -43,8 +43,8 @@ namespace Sa
 				return false;
 			}
 
-			rawData.data.resize(size);
-			fStream.read(rawData.data.data(), size);
+			raw.data.resize(size);
+			fStream.read(raw.data.data(), size);
 		}
 
 		return true;
@@ -52,7 +52,7 @@ namespace Sa
 	
 	void TextureAsset::UnLoad()
 	{
-		rawData.Reset();
+		raw.Reset();
 	}
 
 	
@@ -72,17 +72,17 @@ namespace Sa
 
 
 		{
-			fStream.write(reinterpret_cast<const char*>(&rawData.extent), sizeof(Vec2ui));
-			fStream.write(reinterpret_cast<const char*>(&rawData.mipLevels), sizeof(uint32));
-			fStream.write(reinterpret_cast<const char*>(&rawData.format), sizeof(Format));
+			fStream.write(reinterpret_cast<const char*>(&raw.extent), sizeof(Vec2ui));
+			fStream.write(reinterpret_cast<const char*>(&raw.mipLevels), sizeof(uint32));
+			fStream.write(reinterpret_cast<const char*>(&raw.format), sizeof(Format));
 		}
 
 
 		// Data
 		{
-			const uint32 dataSize = SizeOf<uint32>(rawData.data);
+			const uint32 dataSize = SizeOf<uint32>(raw.data);
 			fStream.write(reinterpret_cast<const char*>(&dataSize), sizeof(uint32));
-			fStream.write(rawData.data.data(), dataSize);
+			fStream.write(raw.data.data(), dataSize);
 		}
 
 		return true;
@@ -91,6 +91,6 @@ namespace Sa
 	
 	bool TextureAsset::Import(const std::string& _path)
 	{
-		return StbImage::Import(_path, rawData);
+		return StbImage::Import(_path, raw);
 	}
 }
