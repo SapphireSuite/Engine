@@ -11,12 +11,6 @@ namespace Sa
 {
 	struct ShaderBindingDescriptor
 	{
-		/// Name as written in the shader.
-		std::string name;
-
-		// Name first for block serialization.
-
-
 		/// Type of binding.
 		ShaderBindingType type = ShaderBindingType::UniformBuffer;
 

@@ -6,6 +6,7 @@
 #define SAPPHIRE_RENDER_SHADER_DESCRIPTOR_GUARD
 
 #include <vector>
+#include <unordered_map>
 
 #include <SA/Render/Base/Shader/ShaderStage.hpp>
 #include <SA/Render/Base/Shader/Bindings/ShaderBindingDescriptor.hpp>
@@ -22,8 +23,8 @@ namespace Sa
 		/// Vertex layout (valid only if stage == Vertex).
 		Flags<VertexComp> vertexLayout;
 
-		std::vector<ShaderBindingDescriptor> bindings;
-		std::vector<SpecConstantDescriptor> specConstants;
+		std::unordered_map<std::string, ShaderBindingDescriptor> bindings;
+		std::unordered_map<std::string, SpecConstantDescriptor> specConstants;
 	};
 }
 
