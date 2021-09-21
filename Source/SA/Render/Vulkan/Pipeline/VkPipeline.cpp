@@ -66,18 +66,20 @@ namespace Sa::Vk
 	{
 		// Fill descriptor set layout bindings.
 		std::vector<VkDescriptorSetLayoutBinding> layoutBindings;
-		layoutBindings.reserve(_infos.bindings.size());
 
-		for (auto it = _infos.bindings.begin(); it != _infos.bindings.end(); ++it)
+		for (auto& shader : _infos.shaders)
 		{
-			VkDescriptorSetLayoutBinding binding{};
-			binding.binding = it->binding;
-			binding.descriptorType = API_GetDescriptorType(it->type);
-			binding.descriptorCount = it->num;
-			binding.stageFlags = API_GetShaderStageFlags(it->stageFlags);
-			binding.pImmutableSamplers = nullptr;
+			for (auto& bind : shader.descriptor.bindings)
+			{
+				VkDescriptorSetLayoutBinding binding{};
+				binding.binding = bind.second.binding;
+				binding.descriptorType = API_GetDescriptorType(bind.second.type);
+				binding.descriptorCount = bind.second.num;
+				binding.stageFlags = API_GetShaderStageFlags(shader.descriptor.stage);
+				binding.pImmutableSamplers = nullptr;
 
-			layoutBindings.push_back(binding);
+				layoutBindings.push_back(binding);
+			}
 		}
 
 
@@ -129,6 +131,7 @@ namespace Sa::Vk
 		// Shaders
 		std::vector<SpecConstantData> specConstDatas;
 		std::vector<VkPipelineShaderStageCreateInfo> shaderStages;
+		FillShaderSpecConstants(specConstDatas, _infos.shaders);
 		FillShaderStages(shaderStages, specConstDatas, _infos.shaders);
 
 
@@ -225,20 +228,39 @@ namespace Sa::Vk
 	}
 
 
+	void Pipeline::FillShaderSpecConstants(std::vector<SpecConstantData>& _specConstDatas,
+		const std::vector<PipelineShaderInfos>& _shaders)
+	{
+		_specConstDatas.reserve(_shaders.size());
+
+		for (auto& shaderInfos : _shaders)
+		{
+			SpecConstantData& data = _specConstDatas.emplace_back();
+
+			for (auto& specPair : shaderInfos.descriptor.specConstants)
+			{
+				// Engine Spec.
+				if (specPair.second.id > 100)
+				{
+					if (specPair.second.id == SpecConstantID::RenderAPI)
+						data.Add(SpecConstantID::RenderAPI, SpecConstantValue::Vulkan);
+					else
+					{
+						SA_LOG(L"Shader Engine specialization constant [" << specPair.second.id << L"] not supported yet!", Warning, SA/Render/Vulkan);
+					}
+				}
+				else // User spec.
+					data.Add(specPair.second);
+			}
+		}
+	}
+
 	void Pipeline::FillShaderStages(std::vector<VkPipelineShaderStageCreateInfo>& _stages,
-		std::vector<SpecConstantData>& _specConstDatas,
+		const std::vector<SpecConstantData>& _specConstDatas,
 		const std::vector<PipelineShaderInfos>& _shaders)
 	{
 		_stages.reserve(_shaders.size());
-		_specConstDatas.reserve(_shaders.size());
 
-
-		// Spec constant data.
-		for (auto it = _shaders.begin(); it != _shaders.end(); ++it)
-			_specConstDatas.emplace_back(it->specConstInfos);
-
-
-		// Shader Stages.
 		for (uint32 i = 0u; i < _shaders.size(); ++i)
 		{
 			const PipelineShaderInfos& it = _shaders[i];
@@ -247,7 +269,7 @@ namespace Sa::Vk
 			stage.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 			stage.pNext = nullptr;
 			stage.flags = 0u;
-			stage.stage = API_GetShaderStage(it.stage);
+			stage.stage = API_GetShaderStage(it.descriptor.stage);
 			stage.module = it.shader->As<Shader>();
 			stage.pName = "main";
 			stage.pSpecializationInfo = &_specConstDatas[i].specInfo;

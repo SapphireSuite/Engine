@@ -34,8 +34,11 @@ namespace Sa::Vk
 		void DestroyPipelineHandle(const Device& _device);
 
 
+		static void FillShaderSpecConstants(std::vector<SpecConstantData>& _specConstDatas,
+			const std::vector<PipelineShaderInfos>& _shaders);
+
 		static void FillShaderStages(std::vector<VkPipelineShaderStageCreateInfo>& _stages,
-			std::vector<SpecConstantData>& _specConstDatas,
+			const std::vector<SpecConstantData>& _specConstDatas,
 			const std::vector<PipelineShaderInfos>& _shaders);
 
 		static void FillVertexBindings(VkPipelineVertexInputStateCreateInfo& _vertexInputInfo,

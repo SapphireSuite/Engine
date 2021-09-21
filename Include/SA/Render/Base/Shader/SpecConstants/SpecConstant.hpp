@@ -9,30 +9,31 @@
 
 namespace Sa
 {
-	namespace Intl
+	class SpecConstantBase
 	{
-		class SpecConstantBase
-		{
-		public:
-			const uint32 id = 0u;
-			const uint32 size = 0u;
+	protected:
+		SpecConstantBase(uint32 _size) noexcept;
 
-			SpecConstantBase(uint32 _id, uint32 _size) noexcept;
-			virtual ~SpecConstantBase() = default;
+	public:
+		const uint32 size = 0u;
 
-			virtual const void* Data() const = 0;
-		};
-	}
+
+		virtual ~SpecConstantBase() = default;
+
+
+		virtual const void* Data() const = 0;
+	};
 
 
 	template <typename T>
-	class SpecConstant : public Intl::SpecConstantBase
+	class SpecConstant : public SpecConstantBase
 	{
 	public:
 		T data = T();
 
 
-		SpecConstant(uint32 _id, T _data) noexcept;
+		SpecConstant(T _data) noexcept;
+
 
 		const void* Data() const override final;
 	};

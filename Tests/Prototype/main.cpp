@@ -59,6 +59,7 @@ uint32 imageIndex = 0u;
 Vk::StaticMesh cubeMesh;
 Vk::Shader unlitvert;
 Vk::Shader unlitfrag;
+PipelineCreateInfos unlitPipelineInfos{ renderPass, renderPassDesc };
 Vk::Pipeline unlitPipeline;
 Vk::DescriptorSet cubeDescSet;
 Vk::Buffer camUBO;
@@ -298,6 +299,8 @@ int main()
 					}
 
 					unlitvert.Create(device, asset.raw);
+
+					unlitPipelineInfos.AddShader(unlitvert, asset.raw.descriptor);
 				}
 
 				// Unlit frag
@@ -316,6 +319,8 @@ int main()
 					}
 
 					unlitfrag.Create(device, asset.raw);
+
+					unlitPipelineInfos.AddShader(unlitfrag, asset.raw.descriptor);
 				}
 			}
 
@@ -324,16 +329,8 @@ int main()
 
 			// Pipeline
 			{
-				PipelineCreateInfos infos{ renderPass, renderPassDesc };
-				infos.vertexBindingLayout = VertexBindingLayout{ VertexLayout::Make<VertexComp::PTex>(), cubeMesh.GetLayout() };
-				infos.shaders = { { &unlitvert, ShaderStage::Vertex }, { &unlitfrag, ShaderStage::Fragment } };
-				infos.bindings = {
-					{ 0u, ShaderStage::Vertex, ShaderBindingType::UniformBuffer },
-					{ 1u, ShaderStage::Vertex, ShaderBindingType::UniformBuffer },
-					{ 2u, ShaderStage::Fragment, ShaderBindingType::ImageSampler2D }
-				};
-
-				unlitPipeline.Create(device, infos);
+				unlitPipelineInfos.vertexBindingLayout.meshLayout = cubeMesh.GetLayout();
+				unlitPipeline.Create(device, unlitPipelineInfos);
 			}
 
 

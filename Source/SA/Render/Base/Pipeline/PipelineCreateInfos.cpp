@@ -10,38 +10,14 @@ namespace Sa
 	{
 	}
 
-
-	void PipelineCreateInfos::AddBinding(PipelineBindingInfos _bindingInfos)
+	void PipelineCreateInfos::AddShader(const AShader& _shader, ShaderDescriptor _descriptor)
 	{
-		// Try find binding.
-		for (auto it = bindings.begin(); it != bindings.end(); ++it)
-		{
-			if (it->binding == _bindingInfos.binding)
-			{
-				SA_ASSERT(Default, SA/Render, it->type == _bindingInfos.type, L"Binding redifinition with different types!");
+		if (_descriptor.stage == ShaderStage::Vertex)
+			vertexBindingLayout.desiredLayout = VertexLayout::Make(static_cast<VertexComp>((uint8)_descriptor.vertexLayout)); // TODO: Clean.
 
-				// Add shader stage.
-				it->stageFlags |= _bindingInfos.stageFlags;
-
-				return;
-			}
-		}
-
-		// Not found.
-		bindings.push_back(_bindingInfos);
-	}
-
-	void PipelineCreateInfos::RemoveBinding(uint32 _binding)
-	{
-		for (auto it = bindings.begin(); it != bindings.end(); ++it)
-		{
-			if (it->binding == _binding)
-			{
-				bindings.erase(it);
-				return;
-			}
-		}
-
-		SA_LOG("Try to remove invalid binding!", Warning, SA/Render);
+		PipelineShaderInfos& infos = shaders.emplace_back();
+		infos.shader = &_shader;
+		infos.descriptor = std::move(_descriptor);
+		//shaders.emplace_back(&_shader, std::move(_descriptor));
 	}
 }

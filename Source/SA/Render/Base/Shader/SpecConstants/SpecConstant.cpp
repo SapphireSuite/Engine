@@ -4,12 +4,8 @@
 
 namespace Sa
 {
-	namespace Intl
+	SpecConstantBase::SpecConstantBase(uint32 _size) noexcept :
+		size{ _size }
 	{
-		SpecConstantBase::SpecConstantBase(uint32 _id, uint32 _size) noexcept :
-			id{ _id },
-			size{ _size }
-		{
-		}
 	}
 }

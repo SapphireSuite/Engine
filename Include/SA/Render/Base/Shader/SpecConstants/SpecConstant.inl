@@ -3,8 +3,8 @@
 namespace Sa
 {
 	template <typename T>
-	SpecConstant<T>::SpecConstant(uint32 _id, T _data) noexcept :
-		SpecConstantBase(_id, sizeof(_data)),
+	SpecConstant<T>::SpecConstant(T _data) noexcept :
+		SpecConstantBase(sizeof(_data)),
 		data{ _data }
 	{
 	}

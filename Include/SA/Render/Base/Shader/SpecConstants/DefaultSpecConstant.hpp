@@ -9,16 +9,19 @@
 
 namespace Sa
 {
+	enum SpecConstantID : uint8
+	{
+		RenderAPI = 101,
+	};
+
+
 	enum class SpecConstantValue : uint32 // Must be size 32 for correct binding.
 	{
+		// SpecConstantID::RenderAPI
+		
 		Vulkan = 1,
 		OpenGL = 2,
 		DirectX = 3,
-	};
-
-	enum class SpecConstantID : uint8
-	{
-		RenderAPI = 101,
 	};
 }
 

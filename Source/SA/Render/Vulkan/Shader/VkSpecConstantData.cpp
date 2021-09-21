@@ -2,45 +2,40 @@
 
 #include <Render/Vulkan/Shader/VkSpecConstantData.hpp>
 
+#include <Collections/Debug>
+
 #if SA_VULKAN
 
 namespace Sa::Vk
 {
-	SpecConstantData::SpecConstantData(const SpecConstantInfos& _infos)
+	void SpecConstantData::Add(const SpecConstantDescriptor& _desc)
 	{
-		uint32 offset = 0u;
-
-		for (auto it = _infos.specConsts.begin(); it != _infos.specConsts.end(); ++it)
+		if (_desc.value == nullptr)
 		{
-			const uint32 size = (*it)->size;
-
-
-			// Create vk entry.
-			{
-				VkSpecializationMapEntry& entry = entries.emplace_back();
-				entry.constantID = (*it)->id;
-				entry.size = size;
-				entry.offset = offset;
-			}
-
-
-			// Copy data.
-			{
-				uint32 oldSize = SizeOf<uint32>(data);
-				data.resize(data.size() + size);
-				std::memcpy(data.data() + oldSize, (*it)->Data(), size);
-			}
-
-			offset += size;
+			SA_LOG(L"Try add descriptor with null value!", Warning, SA/Render/Vulkan);
+			return;
 		}
 
+		Add(_desc.id, _desc.value->size, _desc.value->Data());
+	}
 
-		// API Spec.
-		Add(SpecConstantID::RenderAPI, SpecConstantValue::Vulkan);
+
+	void SpecConstantData::Add(uint32 _id, uint32 _size, const void* _data)
+	{
+		const uint32 oldSize = SizeOf<uint32>(data);
+
+		data.resize(oldSize + _size);
+		std::memcpy(&data[oldSize], _data, _size);
 
 
-		// Called  by Add.
-		//FillSpecInfos();
+		VkSpecializationMapEntry& entry = entries.emplace_back();
+		entry.constantID = _id;
+		entry.size = _size;
+		entry.offset = oldSize;
+
+
+		// Re-fill infos in case vector had re-allocate.
+		FillSpecInfos();
 	}
 
 

@@ -8,9 +8,7 @@
 #include <SA/Render/Base/Pass/ARenderPass.hpp>
 
 #include <SA/Render/Base/Shader/AShader.hpp>
-#include <SA/Render/Base/Shader/ShaderStage.hpp>
-#include <SA/Render/Base/Shader/Bindings/ShaderBindingType.hpp>
-#include <SA/Render/Base/Shader/SpecConstants/SpecConstantInfos.hpp>
+#include <SA/Render/Base/Shader/ShaderDescriptor.hpp>
 
 #include <SA/Render/Base/Mesh/Vertex/VertexBindingLayout.hpp>
 
@@ -20,28 +18,6 @@
 
 namespace Sa
 {
-	struct PipelineShaderInfos
-	{
-		const AShader* shader;
-		ShaderStage stage = ShaderStage::Unknown;
-
-		SpecConstantInfos specConstInfos;
-	};
-
-
-	struct PipelineBindingInfos
-	{
-		uint32 binding = 0u;
-
-		Flags<ShaderStage> stageFlags = ShaderStage::Unknown;
-
-		ShaderBindingType type = ShaderBindingType::UniformBuffer;
-
-		// Number of elements (array).
-		uint32 num = 1u;
-	};
-
-
 	struct PipelineRenderModes
 	{
 		PolygonMode polygon = PolygonMode::Fill;
@@ -49,27 +25,41 @@ namespace Sa
 		FrontFaceMode frontFace = FrontFaceMode::Clockwise;
 	};
 
+	struct PipelineShaderInfos
+	{
+		const AShader* shader;
+		ShaderDescriptor descriptor;
+	};
 
 	struct PipelineCreateInfos
 	{
-		VertexBindingLayout vertexBindingLayout;
+//{ RenderPass
 
-		std::vector<PipelineShaderInfos> shaders;
-		std::vector<PipelineBindingInfos> bindings;
-
-		PipelineRenderModes modes;
-
+		/// Associated renderpass.
 		const ARenderPass& renderPass;
+
+		/// Descriptor of the bound renderpass.
 		const RenderPassDescriptor& renderPassDesc;
 
-		// Index of the associated subpass.
+		/// Index of the associated subpass.
 		uint32 subPassIndex = 0u;
+
+//}
+
+		/// Rendering modes.
+		PipelineRenderModes modes;
+
+
+		VertexBindingLayout vertexBindingLayout;
+
+
+		/// Used shaders + descriptors.
+		std::vector<PipelineShaderInfos> shaders;
+
 
 		PipelineCreateInfos(const ARenderPass& _renderPass, const RenderPassDescriptor& _renderPassDesc) noexcept;
 
-		// Helper functions.
-		void AddBinding(PipelineBindingInfos _bindingInfos);
-		void RemoveBinding(uint32 _binding);
+		void AddShader(const AShader& _shader, ShaderDescriptor _descriptor);
 	};
 }
 
