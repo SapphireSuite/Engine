@@ -27,6 +27,9 @@ namespace Sa
 
 		// Compute total image size (including mipmaps) in format unit.
 		uint64 GetTotalSize() const noexcept;
+
+
+		virtual void Reset();
 	};
 }
 

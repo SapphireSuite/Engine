@@ -6,6 +6,7 @@ namespace Sa
 {
 	const uint32 RawCubemap::maxRoughLevel = 5u;
 
+
 	uint64 RawCubemap::GetMapSize() const noexcept
 	{
 		return GetMainSize() * 6u;
@@ -14,5 +15,13 @@ namespace Sa
 	uint64 RawCubemap::GetTotalMapSize() const noexcept
 	{
 		return GetTotalSize() * 6u;
+	}
+
+
+	void RawCubemap::Reset()
+	{
+		RawTexture::Reset();
+
+		irradiancemapData.clear();
 	}
 }

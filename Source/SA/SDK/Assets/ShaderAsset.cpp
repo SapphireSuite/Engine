@@ -7,11 +7,13 @@
 #include <Core/Algorithms/SizeOf.hpp>
 
 #include <SDK/Assets/Shader/ShaderCompiler.hpp>
+#include <SDK/Assets/Shader/ShaderReflector.hpp>
 
 
 namespace Sa
 {
 	ShaderCompiler compiler;
+	ShaderReflector reflector;
 
 
 	bool ShaderAsset::ShouldCompileShader(const std::string& _resourcePath, const std::string& _assetPath) noexcept
@@ -59,9 +61,26 @@ namespace Sa
 		}
 
 
+		// Stage.
+		{
+			fStream.read(reinterpret_cast<char*>(&rawData.stage), sizeof(ShaderStage));
+		}
+
+
 		// Data
 		{
-			if (!ShouldCompileShader(mResourcePath, _path)) // Read saved shader.
+			if (ShouldCompileShader(mResourcePath, _path))
+			{
+				if (!Import(mResourcePath))
+				{
+					SA_LOG("Shader Re-import compilation failed!", Error, SA/SDK/Asset);
+					return false;
+				}
+
+				// Stop parsing on re-import success.
+				return true;
+			}
+			else // Read saved shader.
 			{
 				// Data.
 				uint32 dataSize = 0u;
@@ -76,11 +95,22 @@ namespace Sa
 				rawData.data.resize(dataSize / sizeof(uint32));
 				fStream.read(reinterpret_cast<char*>(rawData.data.data()), dataSize);
 			}
-			else if (!Import(mResourcePath))
+		}
+
+
+		// Bindings.
+		{
+			uint32 dataSize = 0u;
+			fStream.read(reinterpret_cast<char*>(&dataSize), sizeof(uint32));
+
+			if (dataSize == 0u)
 			{
-				SA_LOG("Shader Re-import compilation failed!", Error, SA/SDK/Asset);
+				SA_LOG("Shader binding data invalid!", Error, SA/SDK/Asset);
 				return false;
 			}
+
+			rawData.bindings.resize(dataSize / sizeof(ShaderBindingDescriptor));
+			fStream.read(reinterpret_cast<char*>(rawData.bindings.data()), dataSize);
 		}
 
 		return true;
@@ -89,7 +119,7 @@ namespace Sa
 	void ShaderAsset::UnLoad()
 	{
 		mResourcePath.clear();
-		rawData.data.clear();
+		rawData.Reset();
 	}
 
 	
@@ -117,12 +147,26 @@ namespace Sa
 		}
 
 
+		// Stage.
+		{
+			fStream.write(reinterpret_cast<const char*>(rawData.stage), sizeof(ShaderStage));
+		}
+
+
 		// Data.
 		{
 			const uint32 dataSize = OctSizeOf<uint32>(rawData.data);
 			fStream.write(reinterpret_cast<const char*>(&dataSize), sizeof(uint32));
 
 			fStream.write(reinterpret_cast<const char*>(rawData.data.data()), dataSize);
+		}
+
+
+		// Bindings.
+		{
+			const uint32 dataSize = OctSizeOf<uint32>(rawData.bindings);
+			fStream.write(reinterpret_cast<const char*>(&dataSize), sizeof(uint32));
+			fStream.write(reinterpret_cast<const char*>(rawData.bindings.data()), dataSize);
 		}
 
 		return true;
@@ -132,7 +176,14 @@ namespace Sa
 	bool ShaderAsset::Import(const std::string& _path)
 	{
 		mResourcePath = _path;
+		rawData.stage = ShaderStageFromFile(_path);
 
-		return compiler.Compile(_path, rawData.data);
+		if (!compiler.Compile(_path, rawData))
+			return false;
+
+		if (!reflector.Reflect(rawData))
+			return false;
+
+		return true;
 	}
 }

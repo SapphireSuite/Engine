@@ -28,8 +28,10 @@ namespace Sa
 
 	void ModelAsset::UnLoad()
 	{
-		// TODO: implement.
-		SA_LOG(L"IMPLEMENT", Error, SA/SDK/Asset);
+		for (auto mesh : meshes)
+			mesh.UnLoad();
+
+		meshes.clear();
 	}
 
 

@@ -23,4 +23,11 @@ namespace Sa
 
 		mLayout = VertexLayout::Make(_comps);
 	}
+
+
+	void RawMesh::Reset()
+	{
+		vertices.clear();
+		indices.clear();
+	}
 }

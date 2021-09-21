@@ -52,11 +52,7 @@ namespace Sa
 	
 	void TextureAsset::UnLoad()
 	{
-		rawData.extent = Vec2ui::Zero;
-		rawData.mipLevels = 1u;
-		rawData.format = Format::RGBA_32;
-
-		rawData.data.clear();
+		rawData.Reset();
 	}
 
 	

@@ -68,8 +68,7 @@ namespace Sa
 	
 	void MeshAsset::UnLoad()
 	{
-		rawData.vertices.clear();
-		rawData.indices.clear();
+		rawData.Reset();
 	}
 
 

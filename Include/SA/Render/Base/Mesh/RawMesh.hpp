@@ -23,6 +23,8 @@ namespace Sa
 		void SetLayout(VertexComp _comps);
 		template <VertexComp inComps>
 		void SetLayout();
+
+		void Reset();
 	};
 }
 

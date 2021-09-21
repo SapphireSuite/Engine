@@ -16,4 +16,14 @@ namespace Sa
 	{
 		return Mipmap::ComputeTotalSize(extent, mipLevels) * API_GetChannelNum(format);
 	}
+
+
+	void RawTexture::Reset()
+	{
+		data.clear();
+		
+		mipLevels = 1u;
+		extent = Vec2ui::Zero;
+		format = Format::RGBA_32;
+	}
 }

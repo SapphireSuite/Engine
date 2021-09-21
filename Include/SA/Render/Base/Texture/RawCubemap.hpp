@@ -23,6 +23,9 @@ namespace Sa
 
 		// Compute total map size (including mipmaps) in format unit.
 		uint64 GetTotalMapSize() const noexcept;
+
+
+		void Reset() override final;
 	};
 }
 
