@@ -6,11 +6,10 @@ namespace Sa
 {
 	void RawShader::Reset()
 	{
-		stage = ShaderStage::Unknown;
-
-		vertexLayout = 0u;
-
 		data.clear();
-		bindings.clear();
+
+		descriptor.stage = ShaderStage::Unknown;
+		descriptor.vertexLayout = 0u;
+		descriptor.bindings.clear();
 	}
 }

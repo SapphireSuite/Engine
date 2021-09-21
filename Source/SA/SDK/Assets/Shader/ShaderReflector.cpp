@@ -15,7 +15,7 @@ namespace Sa
 	{
 		for (auto& res : _resources)
 		{
-			ShaderBindingDescriptor& desc = _raw.bindings.emplace_back();
+			ShaderBindingDescriptor& desc = _raw.descriptor.bindings.emplace_back();
 			
 			desc.type = _type;
 			desc.name = res.name;
@@ -38,13 +38,26 @@ namespace Sa
 			const uint32 location = _comp.get_decoration(res.id, spv::DecorationLocation);
 
 			if (location == 0u)
-				_raw.vertexLayout |= VertexComp::Position;
+				_raw.descriptor.vertexLayout |= VertexComp::Position;
 			else if (location == 1u)
-				_raw.vertexLayout |= VertexComp::Normal;
+				_raw.descriptor.vertexLayout |= VertexComp::Normal;
 			else if (location == 2u)
-				_raw.vertexLayout |= VertexComp::Tangent;
+				_raw.descriptor.vertexLayout |= VertexComp::Tangent;
 			else if (location == 3u)
-				_raw.vertexLayout |= VertexComp::Texture;
+				_raw.descriptor.vertexLayout |= VertexComp::Texture;
+		}
+	}
+
+	void ParseSpecConstants(RawShader& _raw, const spirv_cross::Compiler& _comp)
+	{
+		for (auto& spec : _comp.get_specialization_constants())
+		{
+			SpecConstantDescriptor& specConst = _raw.descriptor.specConstants.emplace_back();
+			
+			specConst.id = spec.constant_id;
+			specConst.name = _comp.get_name(spec.id);
+
+			//const spirv_cross::SPIRConstant& value = _comp.get_constant(spec.id);
 		}
 	}
 
@@ -69,9 +82,10 @@ namespace Sa
 
 
 		// Vertex binding layout.
-		if (_raw.stage == ShaderStage::Vertex)
+		if (_raw.descriptor.stage == ShaderStage::Vertex)
 			ParseVertexLayout(_raw, glsl, resources.stage_inputs);
 
+		ParseSpecConstants(_raw, glsl);
 
 		return true;
 	}

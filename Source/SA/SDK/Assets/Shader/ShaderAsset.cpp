@@ -61,19 +61,12 @@ namespace Sa
 		}
 
 
-		// Stage.
-		{
-			fStream.read(reinterpret_cast<char*>(&rawData.stage), sizeof(ShaderStage));
-
-			if(rawData.stage == ShaderStage::Vertex)
-				fStream.read(reinterpret_cast<char*>(&rawData.vertexLayout), sizeof(VertexComp));
-		}
-
-
 		// Data
 		{
 			if (ShouldCompileShader(mResourcePath, _path))
 			{
+				// Re-import shader for compilation.
+
 				if (!Import(mResourcePath))
 				{
 					SA_LOG("Shader Re-import compilation failed!", Error, SA/SDK/Asset);
@@ -86,10 +79,10 @@ namespace Sa
 			else // Read saved shader.
 			{
 				// Data.
-				uint32 dataSize = 0u;
+				uint32 dataSize = ~uint32();
 				fStream.read(reinterpret_cast<char*>(&dataSize), sizeof(uint32));
 
-				if (dataSize == 0u)
+				if (dataSize == ~uint32())
 				{
 					SA_LOG("Shader data invalid!", Error, SA/SDK/Asset);
 					return false;
@@ -101,19 +94,47 @@ namespace Sa
 		}
 
 
-		// Bindings.
+		// Layout
 		{
-			uint32 dataSize = 0u;
-			fStream.read(reinterpret_cast<char*>(&dataSize), sizeof(uint32));
-
-			if (dataSize == 0u)
+			// Stage.
 			{
-				SA_LOG("Shader binding data invalid!", Error, SA/SDK/Asset);
-				return false;
+				fStream.read(reinterpret_cast<char*>(&rawData.descriptor.stage), sizeof(ShaderStage));
+
+				if (rawData.descriptor.stage == ShaderStage::Vertex)
+					fStream.read(reinterpret_cast<char*>(&rawData.descriptor.vertexLayout), sizeof(VertexComp));
 			}
 
-			rawData.bindings.resize(dataSize / sizeof(ShaderBindingDescriptor));
-			fStream.read(reinterpret_cast<char*>(rawData.bindings.data()), dataSize);
+
+			// Bindings.
+			{
+				uint32 dataSize = ~uint32();
+				fStream.read(reinterpret_cast<char*>(&dataSize), sizeof(uint32));
+
+				if (dataSize == ~uint32())
+				{
+					SA_LOG("Shader binding data invalid!", Error, SA / SDK / Asset);
+					return false;
+				}
+
+				rawData.descriptor.bindings.resize(dataSize / sizeof(ShaderBindingDescriptor));
+				fStream.read(reinterpret_cast<char*>(rawData.descriptor.bindings.data()), dataSize);
+			}
+
+
+			// SpecConstants.
+			{
+				uint32 dataSize = ~uint32();
+				fStream.read(reinterpret_cast<char*>(&dataSize), sizeof(uint32));
+
+				if (dataSize == ~uint32())
+				{
+					SA_LOG("Shader spec constants data invalid!", Error, SA/SDK/Asset);
+					return false;
+				}
+
+				rawData.descriptor.specConstants.resize(dataSize / sizeof(SpecConstantDescriptor));
+				fStream.read(reinterpret_cast<char*>(rawData.descriptor.specConstants.data()), dataSize);
+			}
 		}
 
 		return true;
@@ -150,15 +171,6 @@ namespace Sa
 		}
 
 
-		// Stage.
-		{
-			fStream.write(reinterpret_cast<const char*>(&rawData.stage), sizeof(ShaderStage));
-
-			if (rawData.stage == ShaderStage::Vertex)
-				fStream.write(reinterpret_cast<const char*>(&rawData.vertexLayout), sizeof(VertexComp));
-		}
-
-
 		// Data.
 		{
 			const uint32 dataSize = OctSizeOf<uint32>(rawData.data);
@@ -168,11 +180,30 @@ namespace Sa
 		}
 
 
-		// Bindings.
+		// Layout
 		{
-			const uint32 dataSize = OctSizeOf<uint32>(rawData.bindings);
-			fStream.write(reinterpret_cast<const char*>(&dataSize), sizeof(uint32));
-			fStream.write(reinterpret_cast<const char*>(rawData.bindings.data()), dataSize);
+			// Stage.
+			{
+				fStream.write(reinterpret_cast<const char*>(&rawData.descriptor.stage), sizeof(ShaderStage));
+
+				if (rawData.descriptor.stage == ShaderStage::Vertex)
+					fStream.write(reinterpret_cast<const char*>(&rawData.descriptor.vertexLayout), sizeof(VertexComp));
+			}
+
+
+			// Bindings.
+			{
+				const uint32 dataSize = OctSizeOf<uint32>(rawData.descriptor.bindings);
+				fStream.write(reinterpret_cast<const char*>(&dataSize), sizeof(uint32));
+				fStream.write(reinterpret_cast<const char*>(rawData.descriptor.bindings.data()), dataSize);
+			}
+
+			// SpecConstants.
+			{
+				const uint32 dataSize = OctSizeOf<uint32>(rawData.descriptor.specConstants);
+				fStream.write(reinterpret_cast<const char*>(&dataSize), sizeof(uint32));
+				fStream.write(reinterpret_cast<const char*>(rawData.descriptor.specConstants.data()), dataSize);
+			}
 		}
 
 		return true;
@@ -182,7 +213,7 @@ namespace Sa
 	bool ShaderAsset::Import(const std::string& _path)
 	{
 		mResourcePath = _path;
-		rawData.stage = ShaderStageFromFile(_path);
+		rawData.descriptor.stage = ShaderStageFromFile(_path);
 
 		if (!compiler.Compile(_path, rawData))
 			return false;

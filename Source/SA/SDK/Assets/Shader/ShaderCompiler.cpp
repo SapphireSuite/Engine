@@ -125,7 +125,7 @@ namespace Sa
 		const std::string code = AssembleShader(_path);
 
 		shaderc::CompileOptions options;
-		SetStageOptions(options, _raw.stage);
+		SetStageOptions(options, _raw.descriptor.stage);
 		options.SetIncluder(std::make_unique<ShaderFileIncluder>());
 
 #if !SA_DEBUG
@@ -134,7 +134,7 @@ namespace Sa
 
 
 		shaderc::SpvCompilationResult module =
-			mHandle.CompileGlslToSpv(code.data(), code.size(), GetShaderKind(_raw.stage), _path.c_str(), options);
+			mHandle.CompileGlslToSpv(code.data(), code.size(), GetShaderKind(_raw.descriptor.stage), _path.c_str(), options);
 
 		if (module.GetCompilationStatus() != shaderc_compilation_status_success)
 		{
