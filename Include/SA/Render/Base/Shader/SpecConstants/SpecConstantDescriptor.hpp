@@ -13,9 +13,11 @@ namespace Sa
 {
 	struct SpecConstantDescriptor
 	{
-		uint32 id = 0u;
-
 		std::string name;
+
+		// Name first for block serialization.
+
+		uint32 id = 0u;
 	};
 }
 

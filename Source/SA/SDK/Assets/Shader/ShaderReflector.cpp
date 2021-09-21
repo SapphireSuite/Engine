@@ -25,7 +25,7 @@ namespace Sa
 
 
 			const spirv_cross::SPIRType& type = _comp.get_type(res.type_id);
-			desc.num = type.array[0];
+			desc.num = std::min(1u, type.array[0]);	// Always at least 1 object (non array).
 		}
 	}
 

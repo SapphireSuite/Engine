@@ -94,7 +94,7 @@ namespace Sa
 		}
 
 
-		// Layout
+		// Descriptor
 		{
 			// Stage.
 			{
@@ -117,7 +117,25 @@ namespace Sa
 				}
 
 				raw.descriptor.bindings.resize(dataSize / sizeof(ShaderBindingDescriptor));
-				fStream.read(reinterpret_cast<char*>(raw.descriptor.bindings.data()), dataSize);
+
+				for (auto& bind : raw.descriptor.bindings)
+				{
+					uint32 nameSize = ~uint32();
+					fStream.read(reinterpret_cast<char*>(&nameSize), sizeof(uint32));
+
+					if (nameSize == ~uint32())
+					{
+						SA_LOG("Shader binding name invalid!", Error, SA/SDK/Asset);
+						return false;
+					}
+
+
+					bind.name.resize(nameSize);
+					fStream.read(bind.name.data(), nameSize);
+
+
+					fStream.read(reinterpret_cast<char*>(&bind.type), sizeof(ShaderBindingDescriptor) - sizeof(std::string));
+				}
 			}
 
 
@@ -133,7 +151,25 @@ namespace Sa
 				}
 
 				raw.descriptor.specConstants.resize(dataSize / sizeof(SpecConstantDescriptor));
-				fStream.read(reinterpret_cast<char*>(raw.descriptor.specConstants.data()), dataSize);
+
+
+				for (auto& spec : raw.descriptor.specConstants)
+				{
+					uint32 nameSize = ~uint32();
+					fStream.read(reinterpret_cast<char*>(&nameSize), sizeof(uint32));
+
+					if (nameSize == ~uint32())
+					{
+						SA_LOG("Shader spec constants name invalid!", Error, SA/SDK/Asset);
+						return false;
+					}
+
+
+					spec.name.resize(nameSize);
+					fStream.read(spec.name.data(), nameSize);
+
+					fStream.read(reinterpret_cast<char*>(&spec.id), sizeof(SpecConstantDescriptor) - sizeof(std::string));
+				}
 			}
 		}
 
@@ -180,7 +216,7 @@ namespace Sa
 		}
 
 
-		// Layout
+		// Descriptor.
 		{
 			// Stage.
 			{
@@ -195,14 +231,30 @@ namespace Sa
 			{
 				const uint32 dataSize = OctSizeOf<uint32>(raw.descriptor.bindings);
 				fStream.write(reinterpret_cast<const char*>(&dataSize), sizeof(uint32));
-				fStream.write(reinterpret_cast<const char*>(raw.descriptor.bindings.data()), dataSize);
+
+				for (auto& bind : raw.descriptor.bindings)
+				{
+					const uint32 nameSize = OctSizeOf<uint32>(bind.name);
+					fStream.write(reinterpret_cast<const char*>(&nameSize), sizeof(uint32));
+					fStream.write(bind.name.c_str(), nameSize);
+
+					fStream.write(reinterpret_cast<const char*>(&bind.type), sizeof(ShaderBindingDescriptor) - sizeof(std::string));
+				}
 			}
 
 			// SpecConstants.
 			{
 				const uint32 dataSize = OctSizeOf<uint32>(raw.descriptor.specConstants);
 				fStream.write(reinterpret_cast<const char*>(&dataSize), sizeof(uint32));
-				fStream.write(reinterpret_cast<const char*>(raw.descriptor.specConstants.data()), dataSize);
+
+				for (auto& spec : raw.descriptor.specConstants)
+				{
+					const uint32 nameSize = OctSizeOf<uint32>(spec.name);
+					fStream.write(reinterpret_cast<const char*>(&nameSize), sizeof(uint32));
+					fStream.write(spec.name.c_str(), nameSize);
+					
+					fStream.write(reinterpret_cast<const char*>(&spec.id), sizeof(SpecConstantDescriptor) - sizeof(std::string));
+				}
 			}
 		}
 
