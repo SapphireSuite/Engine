@@ -14,14 +14,12 @@ namespace Sa::Vk
 {
 	class Device;
 	class RenderPass;
-	class CommandBuffer;
 
 	class FrameBuffer
 	{
 		VkFramebuffer mHandle = VK_NULL_HANDLE;
-		VkRenderPass mRenderPass = VK_NULL_HANDLE;
 
-		Vec2ui mExtent;
+		Vec2ui mExtents;
 
 		std::vector<ImageBuffer> mAttachments;
 		std::vector<ImageBuffer> mInputAttachments;
@@ -30,14 +28,15 @@ namespace Sa::Vk
 		void AddClearColor(Format _format, const Color& _clearColor);
 
 	public:
+		const Vec2ui& GetExtents() const;
+		const std::vector<VkClearValue>& GetClearValues() const;
+
 		void Create(const Device& _device, const RenderPass& _renderPass,
 			const RenderPassDescriptor& _rpDescriptor,
 			const Vec2ui& _extent, VkImage presentImage = VK_NULL_HANDLE);
 		void Destroy(const Device& _device);
 
-		void Begin(CommandBuffer& _cmdBuff);
-		void NextSubpass(CommandBuffer& _cmdBuff);
-		void End(CommandBuffer& _cmdBuff);
+		operator VkFramebuffer() const;
 	};
 }
 

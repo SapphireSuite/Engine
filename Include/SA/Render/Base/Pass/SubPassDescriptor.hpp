@@ -25,7 +25,7 @@ namespace Sa
 
 	struct SubPassAttachmentDescriptor
 	{
-		Format format;
+		Format format = Format::RGBA_32;
 
 		// Used as input attachment in next subpass.
 		bool bInputNext = false;

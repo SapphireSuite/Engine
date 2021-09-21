@@ -391,14 +391,14 @@ int main()
 
 			cmdBuffer.Begin();
 
-			frameBuffer.Begin(cmdBuffer);
+			renderPass.Begin(cmdBuffer, frameBuffer);
 
 			unlitPipeline.Bind(frame);
 			cubeDescSet.Bind(frame, unlitPipeline);
 			cubeMesh.Draw(frame);
 
 
-			frameBuffer.End(cmdBuffer);
+			renderPass.End(cmdBuffer);
 
 			cmdBuffer.End();
 

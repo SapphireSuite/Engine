@@ -6,6 +6,8 @@
 
 #include <Render/Vulkan/Debug/Debug.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
+#include <Render/Vulkan/Buffers/VkCommandBuffer.hpp>
+#include <Render/Vulkan/Buffers/VkFrameBuffer.hpp>
 
 #if SA_VULKAN
 
@@ -217,6 +219,34 @@ namespace Sa::Vk
 		vkDestroyRenderPass(_device, mHandle, nullptr);
 
 		SA_LOG(L"Render pass destroyed.", Infos, SA/Render/Vulkan);
+	}
+
+
+	void RenderPass::Begin(CommandBuffer& _cmdBuff, const FrameBuffer& _frameBuff)
+	{
+		const Vec2ui& extents = _frameBuff.GetExtents();
+		const std::vector<VkClearValue>& clearValues = _frameBuff.GetClearValues();
+
+		VkRenderPassBeginInfo renderPassBeginInfo{};
+		renderPassBeginInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
+		renderPassBeginInfo.pNext = nullptr;
+		renderPassBeginInfo.renderPass = mHandle;
+		renderPassBeginInfo.framebuffer = _frameBuff;
+		renderPassBeginInfo.renderArea = VkRect2D{ VkOffset2D{}, VkExtent2D{ extents.x, extents.y } };
+		renderPassBeginInfo.clearValueCount = SizeOf<uint32>(clearValues);
+		renderPassBeginInfo.pClearValues = clearValues.data();
+
+		vkCmdBeginRenderPass(_cmdBuff, &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
+	}
+
+	void RenderPass::NextSubpass(CommandBuffer& _cmdBuff)
+	{
+		vkCmdNextSubpass(_cmdBuff, VK_SUBPASS_CONTENTS_INLINE);
+	}
+
+	void RenderPass::End(CommandBuffer& _cmdBuff)
+	{
+		vkCmdEndRenderPass(_cmdBuff);
 	}
 
 

@@ -12,6 +12,8 @@
 namespace Sa::Vk
 {
 	class Device;
+	class CommandBuffer;
+	class FrameBuffer;
 
 	class RenderPass : public ARenderPass
 	{
@@ -20,6 +22,10 @@ namespace Sa::Vk
 	public:
 		void Create(const Device& _device, const RenderPassDescriptor& _descriptor);
 		void Destroy(const Device& _device);
+
+		void Begin(CommandBuffer& _cmdBuff, const FrameBuffer& _frameBuff);
+		void NextSubpass(CommandBuffer& _cmdBuff);
+		void End(CommandBuffer& _cmdBuff);
 
 		operator VkRenderPass() const noexcept;
 	};

@@ -7,12 +7,31 @@
 #include <Render/Vulkan/Debug/Debug.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
 #include <Render/Vulkan/Pass/VkRenderPass.hpp>
-#include <Render/Vulkan/Buffers/VkCommandBuffer.hpp>
 
 #if SA_VULKAN
 
 namespace Sa::Vk
 {
+	void FrameBuffer::AddClearColor(Format _format, const Color& _clearColor)
+	{
+		if (IsDepthFormat(_format))
+			mClearValues.emplace_back(VkClearValue{ { { 1.f, 0u } } });
+		else
+			mClearValues.emplace_back(_clearColor);
+	}
+
+
+	const Vec2ui& FrameBuffer::GetExtents() const
+	{
+		return mExtents;
+	}
+
+	const std::vector<VkClearValue>& FrameBuffer::GetClearValues() const
+	{
+		return mClearValues;
+	}
+
+
 	void FrameBuffer::Create(const Device& _device, const RenderPass& _renderPass,
 		const RenderPassDescriptor& _rpDescriptor,
 		const Vec2ui& _extent, VkImage presentImage)
@@ -91,8 +110,7 @@ namespace Sa::Vk
 		SA_VK_ASSERT(vkCreateFramebuffer(_device, &framebufferCreateInfo, nullptr, &mHandle),
 			L"Failed to create framebuffer!");
 
-		mExtent = _extent;
-		mRenderPass = _renderPass;
+		mExtents = _extent;
 	}
 
 	void FrameBuffer::Destroy(const Device& _device)
@@ -113,39 +131,9 @@ namespace Sa::Vk
 	}
 
 
-	void FrameBuffer::Begin(CommandBuffer& _cmdBuff)
+	FrameBuffer::operator VkFramebuffer() const
 	{
-		// Start RenderPass record.
-		VkRenderPassBeginInfo renderPassBeginInfo{};
-		renderPassBeginInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-		renderPassBeginInfo.pNext = nullptr;
-		renderPassBeginInfo.renderPass = mRenderPass;
-		renderPassBeginInfo.framebuffer = mHandle;
-		renderPassBeginInfo.renderArea = VkRect2D{ VkOffset2D{}, VkExtent2D{ mExtent.x, mExtent.y } };
-		renderPassBeginInfo.clearValueCount = SizeOf<uint32>(mClearValues);
-		renderPassBeginInfo.pClearValues = mClearValues.data();
-
-		vkCmdBeginRenderPass(_cmdBuff, &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
-	}
-
-	void FrameBuffer::NextSubpass(CommandBuffer& _cmdBuff)
-	{
-		vkCmdNextSubpass(_cmdBuff, VK_SUBPASS_CONTENTS_INLINE);
-	}
-
-	void FrameBuffer::End(CommandBuffer& _cmdBuff)
-	{
-		// End RenderPass record.
-		vkCmdEndRenderPass(_cmdBuff);
-	}
-
-
-	void FrameBuffer::AddClearColor(Format _format, const Color& _clearColor)
-	{
-		if (IsDepthFormat(_format))
-			mClearValues.emplace_back(VkClearValue{ { { 1.f, 0u } } });
-		else
-			mClearValues.emplace_back(_clearColor);
+		return mHandle;
 	}
 }
 
