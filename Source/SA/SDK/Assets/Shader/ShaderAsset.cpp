@@ -36,19 +36,14 @@ namespace Sa
 	
 	bool ShaderAsset::Load(const std::string& _path)
 	{
-		std::fstream fStream(_path, std::ios::binary | std::ios_base::in);
+		std::string bin;
 
-		if (!fStream.is_open())
-		{
-			SA_LOG("Failed to open file {" << _path << L"}!", Error, SA/SDK/Asset);
+		if (!ReadFile(_path, bin))
 			return false;
-		}
-
-		std::stringstream ssrc;
-		ssrc << fStream.rdbuf();
 
 
-		Serialize::Reader read = ssrc.str();
+		Serialize::Reader read = std::move(bin);
+
 		Serialize::FromBinary(mResourcePath, read);
 		Serialize::FromBinary(raw, read);
 

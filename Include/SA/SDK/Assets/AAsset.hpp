@@ -14,6 +14,8 @@ namespace Sa
 	protected:
 		void CreateDirectory(const std::string& _path) const;
 
+		bool ReadFile(const std::string& _path, std::string& _out);
+
 	public:
 		bool Open(const std::string& _path);
 

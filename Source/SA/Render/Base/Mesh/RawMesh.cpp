@@ -30,4 +30,24 @@ namespace Sa
 		vertices.clear();
 		indices.clear();
 	}
+
+
+	namespace Serialize
+	{
+		void ToBinary(const RawMesh& _obj, std::string& _str)
+		{
+			ToBinary(_obj.GetLayout()->comps, _str);
+
+			ToBinary(_obj.vertices, _str);
+			ToBinary(_obj.indices, _str);
+		}
+
+		void FromBinary(RawMesh& _obj, Reader& _read)
+		{
+			_obj.SetLayout(FromBinary<VertexComp>(_read));
+
+			FromBinary(_obj.vertices, _read);
+			FromBinary(_obj.indices, _read);
+		}
+	}
 }

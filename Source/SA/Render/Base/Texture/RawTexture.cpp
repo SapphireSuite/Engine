@@ -26,4 +26,23 @@ namespace Sa
 		extent = Vec2ui::Zero;
 		format = Format::RGBA_32;
 	}
+
+
+	namespace Serialize
+	{
+		void ToBinary(const RawTexture& _obj, std::string& _str)
+		{
+			// Raw serialize until data.
+			Intl::ToBinary(&_obj, offsetof(RawTexture, data), _str);
+
+			ToBinary(_obj.data, _str);
+		}
+
+		void FromBinary(RawTexture& _obj, Reader& _read)
+		{
+			Intl::FromBinary(&_obj, offsetof(RawTexture, data), _read);
+
+			FromBinary(_obj.data, _read);
+		}
+	}
 }

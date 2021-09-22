@@ -5,6 +5,8 @@
 #ifndef SAPPHIRE_RENDER_RAW_TEXTURE_GUARD
 #define SAPPHIRE_RENDER_RAW_TEXTURE_GUARD
 
+#include <SA/Core/Serialize/Serializer.hpp>
+
 #include <SA/Maths/Space/Vector2.hpp>
 
 #include <SA/Render/Misc/Format.hpp>
@@ -15,11 +17,11 @@ namespace Sa
 	{
 		Vec2ui extent;
 
-		std::vector<char> data;
-
 		uint32 mipLevels = 1u;
 
 		Format format = Format::RGBA_32;
+
+		std::vector<char> data;
 
 
 		// Compute original image size in format unit.
@@ -31,6 +33,13 @@ namespace Sa
 
 		virtual void Reset();
 	};
+
+
+	namespace Serialize
+	{
+		void ToBinary(const RawTexture& _obj, std::string& _str);
+		void FromBinary(RawTexture& _obj, Reader& _read);
+	}
 }
 
 #endif // GUARD

@@ -2,10 +2,45 @@
 
 #include <SDK/Assets/AAsset.hpp>
 
+#include <sstream>
+#include <fstream>
 #include <filesystem>
 
 namespace Sa
 {
+	void AAsset::CreateDirectory(const std::string& _path) const
+	{
+		// Create Directory.
+		const uint32 dirIndex = static_cast<uint32>(_path.find_last_of('/'));
+
+		if (dirIndex != uint32(-1))
+		{
+			const std::string dirPath = _path.substr(0, dirIndex);
+
+			if (!dirPath.empty())
+				std::filesystem::create_directories(dirPath);
+		}
+	}
+
+	bool AAsset::ReadFile(const std::string& _path, std::string& _out)
+	{
+		std::fstream fStream(_path, std::ios::binary | std::ios_base::in);
+
+		if (!fStream.is_open())
+		{
+			SA_LOG("Failed to open file {" << _path << L"}!", Error, SA/SDK/Asset);
+			return false;
+		}
+
+		std::stringstream sstream;
+		sstream << fStream.rdbuf();
+
+		_out = sstream.str();
+
+		return true;
+	}
+
+
 	bool AAsset::Open(const std::string& _path)
 	{
 		const uint32 extIndex = static_cast<uint32>(_path.find_last_of('.'));
@@ -25,20 +60,6 @@ namespace Sa
 			return Import(_path);
 	}
 
-
-	void AAsset::CreateDirectory(const std::string& _path) const
-	{
-		// Create Directory.
-		const uint32 dirIndex = static_cast<uint32>(_path.find_last_of('/'));
-
-		if (dirIndex != uint32(-1))
-		{
-			const std::string dirPath = _path.substr(0, dirIndex);
-
-			if (!dirPath.empty())
-				std::filesystem::create_directories(dirPath);
-		}
-	}
 
 	bool AAsset::Save(const std::string& _path) const
 	{

@@ -16,36 +16,15 @@ namespace Sa
 	
 	bool TextureAsset::Load(const std::string& _path)
 	{
-		std::fstream fStream(_path, std::ios::binary | std::ios_base::in);
+		std::string bin;
 
-		if (!fStream.is_open())
-		{
-			SA_LOG("Failed to open file {" << _path << L"}!", Error, SA/SDK/Asset);
+		if (!ReadFile(_path, bin))
 			return false;
-		}
 
 
-		{
-			fStream.read(reinterpret_cast<char*>(&raw.extent), sizeof(Vec2ui));
-			fStream.read(reinterpret_cast<char*>(&raw.mipLevels), sizeof(uint32));
-			fStream.read(reinterpret_cast<char*>(&raw.format), sizeof(Format));
-		}
+		Serialize::Reader read = std::move(bin);
 
-
-		// Data
-		{
-			uint32 size = 0u;
-			fStream.read(reinterpret_cast<char*>(&size), sizeof(uint32));
-
-			if (size == 0)
-			{
-				SA_LOG("Parsing file {" << _path << L"} error: Empty indices.", Error, SA/SDK/Asset);
-				return false;
-			}
-
-			raw.data.resize(size);
-			fStream.read(raw.data.data(), size);
-		}
+		Serialize::FromBinary(raw, read);
 
 		return true;
 	}
@@ -71,19 +50,7 @@ namespace Sa
 		}
 
 
-		{
-			fStream.write(reinterpret_cast<const char*>(&raw.extent), sizeof(Vec2ui));
-			fStream.write(reinterpret_cast<const char*>(&raw.mipLevels), sizeof(uint32));
-			fStream.write(reinterpret_cast<const char*>(&raw.format), sizeof(Format));
-		}
-
-
-		// Data
-		{
-			const uint32 dataSize = SizeOf<uint32>(raw.data);
-			fStream.write(reinterpret_cast<const char*>(&dataSize), sizeof(uint32));
-			fStream.write(raw.data.data(), dataSize);
-		}
+		fStream << Serialize::ToBinary(raw);
 
 		return true;
 	}
