@@ -1,13 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#pragma once
-
-#ifndef SAPPHIRE_CORE_PAIR_SERIALIZER_GUARD
-#define SAPPHIRE_CORE_PAIR_SERIALIZER_GUARD
-
 #include <utility>
-
-#include <SA/Core/Serialize/Serializer.hpp>
 
 namespace Sa::Serialize
 {
@@ -19,11 +12,9 @@ namespace Sa::Serialize
 	}
 
 	template <typename T1, typename T2>
-	void FromBinary(std::string& _str, std::pair<T1, T2>& _obj)
+	void FromBinary(std::pair<T1, T2>& _obj, Reader& _read)
 	{
-		FromBinary(_str, _obj.first);
-		FromBinary(_str, _obj.second);
+		FromBinary(_obj.first, _read);
+		FromBinary(_obj.second, _read);
 	}
 }
-
-#endif // GUARD

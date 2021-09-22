@@ -5,6 +5,16 @@ namespace Sa::Serialize
 //{ To Binary
 
 	template <typename T>
+	std::string ToBinary(const T& _obj)
+	{
+		std::string res;
+
+		ToBinary(_obj, res);
+
+		return res;
+	}
+
+	template <typename T>
 	void ToBinary(const T& _obj, std::string& _str)
 	{
 		Intl::ToBinary(&_obj, sizeof(T), _str);
@@ -30,20 +40,30 @@ namespace Sa::Serialize
 //{ From Binary
 
 	template <typename T>
-	void FromBinary(std::string& _str, T& _obj)
+	T FromBinary(Reader& _read)
 	{
-		Intl::FromBinary(_str, &_obj, sizeof(T));
+		T res;
+
+		FromBinary(res, _read);
+
+		return res;
 	}
 
 	template <typename T>
-	void FromBinary(std::string& _str, T* _objs, uint32 _size)
+	void FromBinary(T& _obj, Reader& _read)
+	{
+		Intl::FromBinary(&_obj, sizeof(T), _read);
+	}
+
+	template <typename T>
+	void FromBinary(T* _objs, uint32 _size, Reader& _read)
 	{
 		if (Specs<T>::bContinuousData)
-			Intl::FromBinary(_str, _objs, sizeof(T) * _size);
+			Intl::FromBinary(_objs, sizeof(T) * _size, _read);
 		else
 		{
 			for (auto it = _objs; it != _objs + _size; ++it)
-				FromBinary(_str, *it);
+				FromBinary(*it, _read);
 		}
 	}
 

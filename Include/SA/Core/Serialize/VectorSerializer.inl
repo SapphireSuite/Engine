@@ -1,14 +1,8 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#pragma once
-
-#ifndef SAPPHIRE_CORE_VECTOR_SERIALIZER_GUARD
-#define SAPPHIRE_CORE_VECTOR_SERIALIZER_GUARD
-
 #include <vector>
 
 #include <SA/Core/Algorithms/SizeOf.hpp>
-#include <SA/Core/Serialize/Serializer.hpp>
 
 namespace Sa::Serialize
 {
@@ -19,14 +13,12 @@ namespace Sa::Serialize
 	}
 
 	template <typename T>
-	void FromBinary(std::string& _str, std::vector<T>& _obj)
+	void FromBinary(std::vector<T>& _obj, Reader& _read)
 	{
 		uint32 size = 0u;
-		FromBinary(_str, size);
+		FromBinary(size, _read);
 
 		_obj.resize(size);
-		FromBinary(_str, _obj.data(), size);
+		FromBinary(_obj.data(), size, _read);
 	}
 }
-
-#endif // GUARD

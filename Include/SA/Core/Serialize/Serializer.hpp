@@ -5,16 +5,14 @@
 #ifndef SAPPHIRE_CORE_SERIALIZER_GUARD
 #define SAPPHIRE_CORE_SERIALIZER_GUARD
 
-#include <string>
-
-#include <SA/Core/Types/Int.hpp>
+#include <SA/Core/Serialize/SerializeReader.hpp>
 
 namespace Sa::Serialize
 {
 	namespace Intl
 	{
 		void ToBinary(const void* _data, uint32 _size, std::string& _str);
-		void FromBinary(std::string& _str, void* _data, uint32 _size);
+		void FromBinary(void* _data, uint32 _size, Reader& _read);
 	}
 		
 
@@ -28,6 +26,9 @@ namespace Sa::Serialize
 //{ To Binary
 
 	template <typename T>
+	std::string ToBinary(const T& _obj);
+
+	template <typename T>
 	void ToBinary(const T& _obj, std::string& _str);
 
 	template <typename T>
@@ -39,14 +40,20 @@ namespace Sa::Serialize
 //{ From Binary
 
 	template <typename T>
-	void FromBinary(std::string& _str, T& _obj);
+	T FromBinary(Reader& _read);
 
 	template <typename T>
-	void FromBinary(std::string& _str, T* _objs, uint32 _size);
+	void FromBinary(T& _obj, Reader& _read);
+
+	template <typename T>
+	void FromBinary(T* _objs, uint32 _size, Reader& _read);
 
 //}
 }
 
 #include <SA/Core/Serialize/Serializer.inl>
+#include <SA/Core/Serialize/StringSerializer.inl>
+#include <SA/Core/Serialize/VectorSerializer.inl>
+#include <SA/Core/Serialize/MapSerializer.inl>
 
 #endif // GUARD

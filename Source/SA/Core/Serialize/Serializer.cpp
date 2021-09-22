@@ -17,11 +17,11 @@ namespace Sa::Serialize
 			std::memcpy(_str.data() + prevSize, _data, _size);
 		}
 
-		void FromBinary(std::string& _str, void* _data, uint32 _size)
+		void FromBinary(void* _data, uint32 _size, Reader& _read)
 		{
-			std::memcpy(_data, _str.data(), _size);
+			std::memcpy(_data, _read.Data(), _size);
 
-			_str.erase(0u, _size);
+			_read.Increment(_size);
 		}
 	}
 }
