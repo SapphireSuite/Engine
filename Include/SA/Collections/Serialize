@@ -10,5 +10,6 @@
 // Specs.
 #include <SA/Core/Serialize/VectorSerializer.hpp>
 #include <SA/Core/Serialize/StringSerializer.hpp>
+#include <SA/Core/Serialize/MapSerializer.hpp>
 
 #endif // GUARD
