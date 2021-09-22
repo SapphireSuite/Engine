@@ -26,6 +26,13 @@ namespace Sa
 		std::unordered_map<std::string, ShaderBindingDescriptor> bindings;
 		std::unordered_map<std::string, SpecConstantDescriptor> specConstants;
 	};
+
+
+	namespace Serialize
+	{
+		void ToBinary(const ShaderDescriptor& _obj, std::string& _str);
+		void FromBinary(ShaderDescriptor& _obj, Reader& _read);
+	}
 }
 
 #endif // GUARD

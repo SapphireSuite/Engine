@@ -16,6 +16,13 @@ namespace Sa
 
 		void Reset();
 	};
+
+
+	namespace Serialize
+	{
+		void ToBinary(const RawShader& _obj, std::string& _str);
+		void FromBinary(RawShader& _obj, Reader& _read);
+	}
 }
 
 #endif // GUARD

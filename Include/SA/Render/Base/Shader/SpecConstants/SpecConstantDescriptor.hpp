@@ -6,7 +6,7 @@
 #define SAPPHIRE_RENDER_SPEC_CONSTANT_DESCRIPTOR_GUARD
 
 #include <string>
-#include <memory>
+//#include <memory>
 
 #include <SA/Render/Base/Shader/SpecConstants/SpecConstant.hpp>
 
@@ -23,6 +23,13 @@ namespace Sa
 
 		uint32 id = 0u;
 	};
+
+
+	namespace Serialize
+	{
+		void ToBinary(const SpecConstantDescriptor& _obj, std::string& _str);
+		void FromBinary(SpecConstantDescriptor& _obj, class Reader& _read);
+	}
 }
 
 #endif // GUARD

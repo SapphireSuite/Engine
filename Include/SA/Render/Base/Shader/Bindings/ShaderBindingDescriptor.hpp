@@ -5,6 +5,8 @@
 #ifndef SAPPHIRE_RENDER_SHADER_BINDING_DESCRIPTOR_GUARD
 #define SAPPHIRE_RENDER_SHADER_BINDING_DESCRIPTOR_GUARD
 
+#include <SA/Core/Serialize/Serializer.hpp>
+
 #include <SA/Render/Base/Shader/Bindings/ShaderBindingType.hpp>
 
 namespace Sa
@@ -28,6 +30,16 @@ namespace Sa
 		/// Input Attachment index (valid only if type == InputAttachment).
 		uint32 inAttachIndex = ~uint32();
 	};
+
+
+	namespace Serialize
+	{
+		template <>
+		struct Specs<ShaderBindingDescriptor>
+		{
+			static constexpr bool bContinuousData = true;
+		};
+	}
 }
 
 #endif // GUARD
