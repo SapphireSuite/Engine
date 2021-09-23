@@ -80,9 +80,9 @@ namespace Sa::Serialize
 	_str);
 
 
-#include <SA/Core/Serialize/Serializer.inl>
 #include <SA/Core/Serialize/StringSerializer.inl>
 #include <SA/Core/Serialize/VectorSerializer.inl>
 #include <SA/Core/Serialize/MapSerializer.inl>
+#include <SA/Core/Serialize/Serializer.inl>
 
 #endif // GUARD

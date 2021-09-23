@@ -2,7 +2,6 @@
 
 #include <SDK/Assets/Shader/ShaderAsset.hpp>
 
-#include <sstream>
 #include <fstream>
 
 #include <Core/Algorithms/SizeOf.hpp>
@@ -35,15 +34,9 @@ namespace Sa
 	}
 
 	
-	bool ShaderAsset::Load(const std::string& _path)
+	bool ShaderAsset::Load_Internal(std::string&& _bin)
 	{
-		std::string bin;
-
-		if (!ReadFile(_path, bin))
-			return false;
-
-
-		Serialize::Reader read = std::move(bin);
+		Serialize::Reader read = std::move(_bin);
 
 		Serialize::FromBinary(mResourcePath, read);
 		Serialize::FromBinary(raw, read);
@@ -58,29 +51,16 @@ namespace Sa
 	}
 
 	
-	bool ShaderAsset::Save(const std::string& _path) const
+	bool ShaderAsset::Save_Internal(std::fstream& _fStream) const
 	{
-		if (!AAsset::Save(_path))
-			return false;
-
-
-		std::fstream fStream(_path, std::fstream::binary | std::fstream::out | std::fstream::trunc);
-
-		if (!fStream.is_open())
-		{
-			SA_LOG(L"Failed to open file {" << _path << L"}!", Error, SA/SDK/Asset);
-			return false;
-		}
-
-
-		fStream << Serialize::ToBinary(mResourcePath);
-		fStream << Serialize::ToBinary(raw);
+		_fStream << Serialize::ToBinary(mResourcePath);
+		_fStream << Serialize::ToBinary(raw);
 
 		return true;
 	}
 
 	
-	bool ShaderAsset::Import(const std::string& _path)
+	bool ShaderAsset::Import_Internal(const std::string& _path)
 	{
 		mResourcePath = _path;
 		raw.descriptor.stage = ShaderStageFromFile(_path);

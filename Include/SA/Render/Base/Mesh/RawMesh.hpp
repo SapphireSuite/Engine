@@ -5,8 +5,6 @@
 #ifndef SAPPHIRE_RENDER_RAW_MESH_GUARD
 #define SAPPHIRE_RENDER_RAW_MESH_GUARD
 
-#include <SA/Core/Serialize/Serializer.hpp>
-
 #include <SA/Render/Base/Mesh/Vertex/VertexLayoutSpec.hpp>
 
 namespace Sa
@@ -35,7 +33,7 @@ namespace Sa
 	namespace Serialize
 	{
 		void ToBinary(const RawMesh& _obj, std::string& _str);
-		void FromBinary(RawMesh& _obj, Reader& _read);
+		void FromBinary(RawMesh& _obj, class Reader& _read);
 	}
 }
 

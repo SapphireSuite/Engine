@@ -3,6 +3,7 @@
 #include <SDK/Assets/TextureAsset.hpp>
 
 #include <Core/Algorithms/SizeOf.hpp>
+#include <Core/Serialize/Serializer.hpp>
 
 #include <SDK/Wrappers/StbImage.hpp>
 
@@ -14,15 +15,9 @@ namespace Sa
 	}
 
 	
-	bool TextureAsset::Load(const std::string& _path)
+	bool TextureAsset::Load_Internal(std::string&& _bin)
 	{
-		std::string bin;
-
-		if (!ReadFile(_path, bin))
-			return false;
-
-
-		Serialize::Reader read = std::move(bin);
+		Serialize::Reader read = std::move(_bin);
 
 		Serialize::FromBinary(raw, read);
 
@@ -35,28 +30,15 @@ namespace Sa
 	}
 
 	
-	bool TextureAsset::Save(const std::string& _path) const
+	bool TextureAsset::Save_Internal(std::fstream& _fStream) const
 	{
-		if (!AAsset::Save(_path))
-			return false;
-
-
-		std::fstream fStream(_path, std::fstream::binary | std::fstream::out | std::fstream::trunc);
-
-		if (!fStream.is_open())
-		{
-			SA_LOG(L"Failed to open file {" << _path << L"}!", Error, SA/SDK/Asset);
-			return false;
-		}
-
-
-		fStream << Serialize::ToBinary(raw);
+		_fStream << Serialize::ToBinary(raw);
 
 		return true;
 	}
 
 	
-	bool TextureAsset::Import(const std::string& _path)
+	bool TextureAsset::Import_Internal(const std::string& _path)
 	{
 		return StbImage::Import(_path, raw);
 	}

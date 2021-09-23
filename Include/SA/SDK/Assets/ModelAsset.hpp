@@ -19,18 +19,18 @@ namespace Sa
 		bool ParseScene(const aiScene* _scene);
 		bool ParseNode(const aiScene* _scene, const aiNode* _node);
 
+	protected:
+		bool Load_Internal(std::string&& _bin) override final;
+		bool Save_Internal(std::fstream& _fStream) const override final;
+		bool Import_Internal(const std::string& _path) override final;
+
 	public:
 		std::vector<MeshAsset> meshes;
 
 
 		bool IsValid() const override final;
 
-		bool Load(const std::string& _path) override final;
 		void UnLoad() override final;
-
-		bool Save(const std::string& _path) const override final;
-
-		bool Import(const std::string& _path) override final;
 	};
 }
 

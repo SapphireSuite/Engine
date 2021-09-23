@@ -2,6 +2,8 @@
 
 #include <Render/Base/Texture/RawTexture.hpp>
 
+#include <Core/Serialize/Serializer.hpp>
+
 #include <Render/Base/Texture/Mipmap.hpp>
 
 namespace Sa

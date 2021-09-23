@@ -219,21 +219,21 @@ int main()
 
 			// CUBE.
 			{
-				constexpr char* cubeMeshAssetName = "Assets/Meshes/cube.spha";
-				const std::string cubeMeshResName = "../../../../Resources/Meshes/cube.obj";
+				const std::string assetName = "Assets/Meshes/cube.spha";
+				const std::string resName = "/Engine/Resources/Meshes/cube.obj";
 
-				MeshAsset cubeMeshAsset;
-				if (!cubeMeshAsset.Load(cubeMeshAssetName))
+				MeshAsset meshAsset;
+				if (!meshAsset.Load(assetName))
 				{
-					ModelAsset cubeAsset;
-					if (cubeAsset.Import(cubeMeshResName))
+					ModelAsset modelAsset;
+					if (modelAsset.Import(resName))
 					{
-						cubeAsset.meshes[0].Save(cubeMeshAssetName);
-						cubeMeshAsset = std::move(cubeAsset.meshes[0]);
+						modelAsset.meshes[0].Save(assetName);
+						meshAsset = std::move(modelAsset.meshes[0]);
 					}
 				}
 
-				cubeMesh.Create(device, cmdBuffers[0], resHolder, cubeMeshAsset.raw);
+				cubeMesh.Create(device, cmdBuffers[0], resHolder, meshAsset.raw);
 			}
 
 
@@ -241,8 +241,8 @@ int main()
 
 			// Texture
 			{
-				constexpr char* assetName = "Assets/Textures/missing.spha";
-				const std::string resName = "../../../../Resources/Textures/missing_texture.png";
+				const std::string assetName = "Assets/Textures/missing.spha";
+				const std::string resName = "/Engine/Resources/Textures/missing_texture.png";
 
 				TextureAsset asset;
 
@@ -285,8 +285,8 @@ int main()
 			{
 				// Unlit vert
 				{
-					constexpr char* assetName = "Assets/Shaders/unlit_vert.spha";
-					const std::string resName = "../../../../Resources/Shaders/Forward/unlit.vert";
+					const std::string assetName = "Assets/Shaders/unlit_vert.spha";
+					const std::string resName = "/Engine/Resources/Shaders/Forward/unlit.vert";
 
 					ShaderAsset asset;
 
@@ -305,8 +305,8 @@ int main()
 
 				// Unlit frag
 				{
-					constexpr char* assetName = "Assets/Shaders/unlit_frag.spha";
-					const std::string resName = "../../../../Resources/Shaders/Forward/unlit.frag";
+					const std::string assetName = "Assets/Shaders/unlit_frag.spha";
+					const std::string resName = "/Engine/Resources/Shaders/Forward/unlit.frag";
 
 					ShaderAsset asset;
 

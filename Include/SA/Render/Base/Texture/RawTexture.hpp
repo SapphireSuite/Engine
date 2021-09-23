@@ -5,8 +5,6 @@
 #ifndef SAPPHIRE_RENDER_RAW_TEXTURE_GUARD
 #define SAPPHIRE_RENDER_RAW_TEXTURE_GUARD
 
-#include <SA/Core/Serialize/Serializer.hpp>
-
 #include <SA/Maths/Space/Vector2.hpp>
 
 #include <SA/Render/Misc/Format.hpp>
@@ -38,7 +36,7 @@ namespace Sa
 	namespace Serialize
 	{
 		void ToBinary(const RawTexture& _obj, std::string& _str);
-		void FromBinary(RawTexture& _obj, Reader& _read);
+		void FromBinary(RawTexture& _obj, class Reader& _read);
 	}
 }
 

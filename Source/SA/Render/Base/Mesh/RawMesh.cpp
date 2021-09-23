@@ -2,6 +2,8 @@
 
 #include <Render/Base/Mesh/RawMesh.hpp>
 
+#include <Core/Serialize/Serializer.hpp>
+
 namespace Sa
 {
 	std::shared_ptr<VertexLayout> RawMesh::GetLayout() const noexcept

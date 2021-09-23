@@ -3,11 +3,17 @@
 #include <SDK/Assets/AAsset.hpp>
 
 #include <sstream>
-#include <fstream>
 #include <filesystem>
+
+#include <SDK/EnvironmentVariable.hpp>
 
 namespace Sa
 {
+	std::string AAsset::GetFullPath(const std::string& _path) const
+	{
+		return _path.starts_with("/Engine") ? EnvVar::path + _path.substr(7u) : _path;
+	}
+
 	void AAsset::CreateDirectory(const std::string& _path) const
 	{
 		// Create Directory.
@@ -22,13 +28,15 @@ namespace Sa
 		}
 	}
 
-	bool AAsset::ReadFile(const std::string& _path, std::string& _out)
+	bool AAsset::ReadFile(const std::string& _path, std::string& _out) const
 	{
-		std::fstream fStream(_path, std::ios::binary | std::ios_base::in);
+		const std::string fullpath = GetFullPath(_path);
+
+		std::fstream fStream(fullpath, std::ios::binary | std::ios_base::in);
 
 		if (!fStream.is_open())
 		{
-			SA_LOG("Failed to open file {" << _path << L"}!", Error, SA/SDK/Asset);
+			SA_LOG("Failed to open file {" << fullpath << L"}!", Error, SA/SDK/Asset);
 			return false;
 		}
 
@@ -61,6 +69,18 @@ namespace Sa
 	}
 
 
+	bool AAsset::Load(const std::string& _path)
+	{
+		const std::string fullPath = GetFullPath(_path);
+
+		std::string bin;
+
+		if (!ReadFile(fullPath, bin))
+			return false;
+
+		return Load_Internal(std::move(bin));
+	}
+
 	bool AAsset::Save(const std::string& _path) const
 	{
 		if (_path.empty())
@@ -69,8 +89,26 @@ namespace Sa
 			return false;
 		}
 
-		CreateDirectory(_path);
+		const std::string fullPath = GetFullPath(_path);
 
-		return true;
+		CreateDirectory(fullPath);
+
+
+		std::fstream fStream(fullPath, std::fstream::binary | std::fstream::out | std::fstream::trunc);
+
+		if (!fStream.is_open())
+		{
+			SA_LOG(L"Failed to open file {" << fullPath << L"}!", Error, SA/SDK/Asset);
+			return false;
+		}
+
+		return Save_Internal(fStream);
+	}
+
+	bool AAsset::Import(const std::string& _path)
+	{
+		const std::string fullPath = GetFullPath(_path);
+
+		return Import_Internal(fullPath);
 	}
 }

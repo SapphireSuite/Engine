@@ -18,10 +18,10 @@ namespace Sa
 		return !meshes.empty();
 	}
 
-	bool ModelAsset::Load(const std::string& _path)
+	bool ModelAsset::Load_Internal(std::string&& _bin)
 	{
 		// TODO: implement.
-		(void)_path;
+		(void)_bin;
 		SA_LOG(L"IMPLEMENT", Error, SA/SDK/Asset);
 		return false;
 	}
@@ -35,18 +35,16 @@ namespace Sa
 	}
 
 
-	bool ModelAsset::Save(const std::string& _path) const
+	bool ModelAsset::Save_Internal(std::fstream& _fStream) const
 	{
-		if (!AAsset::Save(_path))
-			return false;
-
 		// TODO: implement.
+		(void)_fStream;
 		SA_LOG(L"IMPLEMENT", Error, SA/SDK/Asset);
 		return false;
 	}
 
 
-	bool ModelAsset::Import(const std::string& _path)
+	bool ModelAsset::Import_Internal(const std::string& _path)
 	{
 		SA_LOG(L"Importing model {" << _path << L"}", Infos, SA/SDK/Asset);
 
