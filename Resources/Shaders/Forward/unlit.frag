@@ -4,7 +4,7 @@
 
 
 // Uniform.
-layout(binding = 2) uniform sampler2D texSampler;
+layout(binding = 2) uniform sampler2D albedo;
 
 
 // In.
@@ -21,7 +21,7 @@ layout(location = 0) out vec4 outColor;
 // Code.
 void main()
 {
-	outColor = texture(texSampler, fsIn.texture);
+	outColor = texture(albedo, fsIn.texture);
 
 	if(outColor.a < 0.001)
 		discard;

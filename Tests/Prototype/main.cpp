@@ -338,7 +338,7 @@ int main()
 			{
 				DescriptorSetCreateInfos infos{ unlitPipeline };
 				infos.AddBinding<ShaderUBOBinding>(0u, &camUBO, 1);
-				infos.AddBinding<ShaderUBOBinding>(1u, &modelUBO);
+				infos.AddBinding<ShaderUBOBinding>(1u, &modelUBO, 1);
 				infos.AddBinding<ShaderIBOBinding>(2u, &missText);
 
 				cubeDescSet.Create(device, infos);

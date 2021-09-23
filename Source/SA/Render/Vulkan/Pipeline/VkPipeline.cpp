@@ -2,6 +2,8 @@
 
 #include <Render/Vulkan/Pipeline/VkPipeline.hpp>
 
+#include <map>
+
 #include <Core/Algorithms/SizeOf.hpp>
 
 #include <Render/Base/Shader/SpecConstants/DefaultSpecConstant.hpp>
@@ -65,7 +67,7 @@ namespace Sa::Vk
 	void Pipeline::CreateDescriptorSetLayouts(const Device& _device, const PipelineCreateInfos& _infos)
 	{
 		// Record bindings for each descritor set.
-		std::unordered_map<uint32, std::vector<VkDescriptorSetLayoutBinding>> layoutBindingsMap;
+		std::map<uint32, std::vector<VkDescriptorSetLayoutBinding>> layoutBindingsMap;
 
 		for (auto& shader : _infos.shaders)
 		{

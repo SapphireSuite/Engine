@@ -16,6 +16,13 @@ layout(set = 1, binding = 0) uniform Camera
 
     // Camera position.
     vec3 viewPosition;
+
 } cameraUBO;
+
+
+vec4 ComputeViewPosition(vec4 _modelPosition)
+{
+    return cameraUBO.proj * cameraUBO.viewInv * _modelPosition;
+}
 
 //}

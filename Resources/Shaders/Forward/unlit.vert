@@ -3,22 +3,7 @@
 #version 450
 
 #include <camera.glsl>
-
-// Uniform.
-
-// Object UBO: specific to this shader instance.
-layout(binding = 1) uniform ObjectUniformBuffer
-{
-	// Model transformation matrix.
-    mat4 modelMat;
-
-	// Material UV tilling.
-    float uvTilling;
-
-	// Material UV offset.
-    float uvOffset;
-
-} objectUBO;
+#include <model.glsl>
 
 
 // In.
@@ -37,11 +22,10 @@ layout(location = 0) out DataBlock
 void main()
 {
     // Position.
-    vec4 modelPosition = objectUBO.modelMat * vec4(inPosition, 1.0);
-
-    gl_Position = cameraUBO.proj * cameraUBO.viewInv * modelPosition;
+    vec4 modelPosition = ComputeModelPosition(inPosition);
+    gl_Position = ComputeViewPosition(modelPosition);
 
 
     // Texture
-    vsOut.texture = inTexture * objectUBO.uvTilling + objectUBO.uvOffset;
+    vsOut.texture = inTexture;
 }
