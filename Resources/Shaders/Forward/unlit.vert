@@ -2,21 +2,9 @@
 
 #version 450
 
+#include <camera.glsl>
 
 // Uniform.
-// CameraUBO: shared across shader instances.
-layout(binding = 0) uniform Camera
-{
-	// Camera projection matrix.
-    mat4 proj;
-    
-	// Camera inverse transformation matrix.
-    mat4 viewInv;
-
-    // Camera position.
-    vec3 viewPosition;
-} cameraUBO;
-
 
 // Object UBO: specific to this shader instance.
 layout(binding = 1) uniform ObjectUniformBuffer

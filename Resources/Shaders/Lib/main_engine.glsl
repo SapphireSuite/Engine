@@ -1,8 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-//{ main_engine scrap
-
-#include <engine_constants.glsl>
+//{ main_engine glsl
 
 #ifdef VERTEX
 
@@ -23,6 +21,5 @@ void main()
 
 #endif
 }
-
 
 //}
