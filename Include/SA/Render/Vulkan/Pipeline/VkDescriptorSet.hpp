@@ -19,11 +19,11 @@ namespace Sa::Vk
 		std::vector<VkDescriptorSet> mDescriptorSets;
 
 
-		void CreateDescriptorPool(const Device& _device, const DescriptorSetCreateInfos& _infos, uint32 _descSetNum);
+		void CreateDescriptorPool(const Device& _device, const DescriptorSetCreateInfos& _infos);
 		void DestroyDescriptorPool(const Device& _device);
 
 
-		void CreateDescriptorSets(const Device& _device, const DescriptorSetCreateInfos& _infos, uint32 _descSetNum);
+		void CreateDescriptorSets(const Device& _device, const DescriptorSetCreateInfos& _infos);
 		void UpdateDescriptorSets(const Device& _device, const std::vector<AShaderBinding*>& _bindings);
 		void DestroyDescriptorSets(const Device& _device);
 

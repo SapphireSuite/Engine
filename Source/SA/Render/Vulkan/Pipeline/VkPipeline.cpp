@@ -32,15 +32,15 @@ namespace Sa::Vk
 		return mPipelineLayout;
 	}
 
-	VkDescriptorSetLayout Pipeline::GetDescriptorSetLayout() const noexcept
+	const std::vector<VkDescriptorSetLayout>& Pipeline::GetDescriptorSetLayouts() const noexcept
 	{
-		return mDescriptorSetLayout;
+		return mDescriptorSetLayouts;
 	}
 
 
 	void Pipeline::Create(const Device& _device, const PipelineCreateInfos& _infos)
 	{
-		CreateDescriptorSetLayout(_device, _infos);
+		CreateDescriptorSetLayouts(_device, _infos);
 
 		CreatePipelineLayout(_device);
 		CreatePipelineHandle(_device, _infos);
@@ -51,7 +51,7 @@ namespace Sa::Vk
 		DestroyPipelineHandle(_device);
 		DestroyPipelineLayout(_device);
 
-		DestroyDescriptorSetLayout(_device);
+		DestroyDescriptorSetLayouts(_device);
 	}
 
 	void Pipeline::Bind(const ARenderFrame& _frame) const
@@ -62,44 +62,53 @@ namespace Sa::Vk
 	}
 
 
-	void Pipeline::CreateDescriptorSetLayout(const Device& _device, const PipelineCreateInfos& _infos)
+	void Pipeline::CreateDescriptorSetLayouts(const Device& _device, const PipelineCreateInfos& _infos)
 	{
-		// Fill descriptor set layout bindings.
-		std::vector<VkDescriptorSetLayoutBinding> layoutBindings;
+		// Record bindings for each descritor set.
+		std::unordered_map<uint32, std::vector<VkDescriptorSetLayoutBinding>> layoutBindingsMap;
 
 		for (auto& shader : _infos.shaders)
 		{
 			for (auto& bind : shader.descriptor.bindings)
 			{
-				VkDescriptorSetLayoutBinding binding{};
+				std::vector<VkDescriptorSetLayoutBinding>& layoutBindings = layoutBindingsMap[bind.second.set];
+
+				VkDescriptorSetLayoutBinding& binding = layoutBindings.emplace_back();
 				binding.binding = bind.second.binding;
 				binding.descriptorType = API_GetDescriptorType(bind.second.type);
 				binding.descriptorCount = bind.second.num;
 				binding.stageFlags = API_GetShaderStageFlags(shader.descriptor.stage);
 				binding.pImmutableSamplers = nullptr;
-
-				layoutBindings.push_back(binding);
 			}
 		}
 
+
+		// Create descriptor set layouts.
+		mDescriptorSetLayouts.resize(layoutBindingsMap.size());
 
 		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutInfo{};
 		descriptorSetLayoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
 		descriptorSetLayoutInfo.pNext = nullptr;
 		descriptorSetLayoutInfo.flags = 0u;
-		descriptorSetLayoutInfo.bindingCount = SizeOf<uint32>(layoutBindings);
-		descriptorSetLayoutInfo.pBindings = layoutBindings.data();
 
-		SA_VK_ASSERT(vkCreateDescriptorSetLayout(_device, &descriptorSetLayoutInfo, nullptr, &mDescriptorSetLayout),
-			L"Failed to create descriptor set layout!");
+		uint32 index = 0u;
+
+		for (auto bindPair : layoutBindingsMap)
+		{
+			descriptorSetLayoutInfo.bindingCount = SizeOf<uint32>(bindPair.second);
+			descriptorSetLayoutInfo.pBindings = bindPair.second.data();
+
+			SA_VK_ASSERT(vkCreateDescriptorSetLayout(_device, &descriptorSetLayoutInfo, nullptr, &mDescriptorSetLayouts[index++]),
+				L"Failed to create descriptor set layout!");
+		}
 	}
 
-	void Pipeline::DestroyDescriptorSetLayout(const Device& _device)
+	void Pipeline::DestroyDescriptorSetLayouts(const Device& _device)
 	{
-		SA_ASSERT(Nullptr, SA / Render / Vulkan, mDescriptorSetLayout, L"Destroy pipeline with null DescriptorSet Layout!");
+		for(auto it = mDescriptorSetLayouts.begin(); it != mDescriptorSetLayouts.end(); ++it)
+			vkDestroyDescriptorSetLayout(_device, *it, nullptr);
 
-		vkDestroyDescriptorSetLayout(_device, mDescriptorSetLayout, nullptr);
-		mDescriptorSetLayout = VK_NULL_HANDLE;
+		mDescriptorSetLayouts.clear();
 	}
 
 
@@ -109,8 +118,8 @@ namespace Sa::Vk
 		pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
 		pipelineLayoutCreateInfo.pNext = nullptr;
 		pipelineLayoutCreateInfo.flags = 0u;
-		pipelineLayoutCreateInfo.setLayoutCount = 1u;
-		pipelineLayoutCreateInfo.pSetLayouts = &mDescriptorSetLayout;
+		pipelineLayoutCreateInfo.setLayoutCount = SizeOf<uint32>(mDescriptorSetLayouts);
+		pipelineLayoutCreateInfo.pSetLayouts = mDescriptorSetLayouts.data();
 		pipelineLayoutCreateInfo.pushConstantRangeCount = 0u;
 		pipelineLayoutCreateInfo.pPushConstantRanges = nullptr;
 

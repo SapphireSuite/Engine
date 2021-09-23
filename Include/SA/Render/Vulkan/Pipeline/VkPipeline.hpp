@@ -22,10 +22,10 @@ namespace Sa::Vk
 		VkPipeline mHandle = VK_NULL_HANDLE;
 		VkPipelineLayout mPipelineLayout = VK_NULL_HANDLE;
 
-		VkDescriptorSetLayout mDescriptorSetLayout = VK_NULL_HANDLE;
+		std::vector<VkDescriptorSetLayout> mDescriptorSetLayouts;
 
-		void CreateDescriptorSetLayout(const Device& _device, const PipelineCreateInfos& _infos);
-		void DestroyDescriptorSetLayout(const Device& _device);
+		void CreateDescriptorSetLayouts(const Device& _device, const PipelineCreateInfos& _infos);
+		void DestroyDescriptorSetLayouts(const Device& _device);
 
 		void CreatePipelineLayout(const Device& _device);
 		void DestroyPipelineLayout(const Device& _device);
@@ -52,7 +52,7 @@ namespace Sa::Vk
 
 	public:
 		VkPipelineLayout GetLayout() const noexcept;
-		VkDescriptorSetLayout GetDescriptorSetLayout() const noexcept;
+		const std::vector<VkDescriptorSetLayout>& GetDescriptorSetLayouts() const noexcept;
 
 		void Create(const Device& _device, const PipelineCreateInfos& _infos);
 		void Destroy(const Device& _device);

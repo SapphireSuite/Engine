@@ -15,24 +15,11 @@
 
 namespace Sa::Vk
 {
-	uint32 CountDescriptorSets(const DescriptorSetCreateInfos& _infos)
-	{
-		std::set<uint32> descSetIndices;
-
-		for (auto it = _infos.bindings.begin(); it != _infos.bindings.end(); ++it)
-			descSetIndices.emplace((*it)->set);
-
-		return SizeOf<uint32>(descSetIndices);
-	}
-
-
 	void DescriptorSet::Create(const Device& _device, const DescriptorSetCreateInfos& _infos)
 	{
-		const uint32 descSetNum = CountDescriptorSets(_infos);
+		CreateDescriptorPool(_device, _infos);
 
-		CreateDescriptorPool(_device, _infos, descSetNum);
-
-		CreateDescriptorSets(_device, _infos, descSetNum);
+		CreateDescriptorSets(_device, _infos);
 		UpdateDescriptorSets(_device, _infos.bindings);
 	}
 
@@ -43,8 +30,10 @@ namespace Sa::Vk
 	}
 
 
-	void DescriptorSet::CreateDescriptorPool(const Device& _device, const DescriptorSetCreateInfos& _infos, uint32 _descSetNum)
+	void DescriptorSet::CreateDescriptorPool(const Device& _device, const DescriptorSetCreateInfos& _infos)
 	{
+		const Pipeline& vkPipeline = _infos.pipeline.As<Vk::Pipeline>();
+
 		std::vector<VkDescriptorPoolSize> poolSizes;
 
 		for (auto it = _infos.bindings.begin(); it != _infos.bindings.end(); ++it)
@@ -64,7 +53,7 @@ namespace Sa::Vk
 		descriptorPoolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
 		descriptorPoolInfo.pNext = nullptr;
 		descriptorPoolInfo.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
-		descriptorPoolInfo.maxSets = _descSetNum;
+		descriptorPoolInfo.maxSets = SizeOf<uint32>(vkPipeline.GetDescriptorSetLayouts());
 		descriptorPoolInfo.poolSizeCount = SizeOf<uint32>(poolSizes);
 		descriptorPoolInfo.pPoolSizes = poolSizes.data();
 
@@ -78,18 +67,18 @@ namespace Sa::Vk
 	}
 
 
-	void DescriptorSet::CreateDescriptorSets(const Device& _device, const DescriptorSetCreateInfos& _infos, uint32 _descSetNum)
+	void DescriptorSet::CreateDescriptorSets(const Device& _device, const DescriptorSetCreateInfos& _infos)
 	{
 		const Pipeline& vkPipeline = _infos.pipeline.As<Pipeline>();
+		const std::vector<VkDescriptorSetLayout>& descriptorSetLayouts = vkPipeline.GetDescriptorSetLayouts();
 
-		mDescriptorSets.resize(_descSetNum);
-		std::vector<VkDescriptorSetLayout> descriptorSetLayouts(_descSetNum, vkPipeline.GetDescriptorSetLayout());
+		mDescriptorSets.resize(descriptorSetLayouts.size());
 
 		VkDescriptorSetAllocateInfo descriptorSetAllocInfo{};
 		descriptorSetAllocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
 		descriptorSetAllocInfo.pNext = nullptr;
 		descriptorSetAllocInfo.descriptorPool = mDescriptorPool;
-		descriptorSetAllocInfo.descriptorSetCount = _descSetNum;
+		descriptorSetAllocInfo.descriptorSetCount = SizeOf<uint32>(descriptorSetLayouts);
 		descriptorSetAllocInfo.pSetLayouts = descriptorSetLayouts.data();
 
 		SA_VK_ASSERT(vkAllocateDescriptorSets(_device, &descriptorSetAllocInfo, mDescriptorSets.data()), L"Failed to allocate descriptor set!");
