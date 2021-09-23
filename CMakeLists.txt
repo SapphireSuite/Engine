@@ -67,12 +67,6 @@ endif()
 ## Enable sanitizer
 option(SA_USE_SANITIZER "Use sanitizer" OFF)
 
-if(NOT SA_USE_SANITIZER AND MSVC)
-	# MSVC add sanitizer by default if installed.
-	string(REPLACE "-fsanitize=address" "" CMAKE_C_FLAGS ${CMAKE_C_FLAGS})
-	string(REPLACE "-fsanitize=address" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
-endif()
-
 
 
 # Tests
