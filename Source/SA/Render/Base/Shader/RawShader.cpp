@@ -2,15 +2,15 @@
 
 #include <Render/Base/Shader/RawShader.hpp>
 
+#include <Core/Serialize/Serializer.hpp>
+
 namespace Sa
 {
 	void RawShader::Reset()
 	{
 		data.clear();
 
-		descriptor.stage = ShaderStage::Unknown;
-		descriptor.vertexLayout = 0u;
-		descriptor.bindings.clear();
+		descriptor.Reset();
 	}
 
 

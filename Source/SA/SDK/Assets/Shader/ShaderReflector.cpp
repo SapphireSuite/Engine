@@ -15,10 +15,12 @@ namespace Sa
 	{
 		for (auto& res : _resources)
 		{
-			ShaderBindingDescriptor& desc = _raw.descriptor.bindings[res.name];
+			const uint32 set = _comp.get_decoration(res.id, spv::DecorationDescriptorSet);
+
+			ShaderBindingDescriptor& desc = _raw.descriptor.EmplaceBinding(set);
 			
+			desc.name = res.name;
 			desc.type = _type;
-			desc.set = _comp.get_decoration(res.id, spv::DecorationDescriptorSet);
 			desc.binding = _comp.get_decoration(res.id, spv::DecorationBinding);
 			desc.inAttachIndex = _comp.get_decoration(res.id, spv::DecorationInputAttachmentIndex);
 
@@ -51,10 +53,10 @@ namespace Sa
 	{
 		for (auto& spec : _comp.get_specialization_constants())
 		{
-			SpecConstantDescriptor& specConst = _raw.descriptor.specConstants[_comp.get_name(spec.id)];
-			
-			specConst.id = spec.constant_id;
+			SpecConstantDescriptor& specConst = _raw.descriptor.EmplaceSpecConstants(spec.constant_id);
 
+			specConst.name = _comp.get_name(spec.id);
+			
 			//const spirv_cross::SPIRConstant& value = _comp.get_constant(spec.id);
 		}
 	}

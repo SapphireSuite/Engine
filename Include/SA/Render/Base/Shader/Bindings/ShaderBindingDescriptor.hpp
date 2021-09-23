@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_RENDER_SHADER_BINDING_DESCRIPTOR_GUARD
 #define SAPPHIRE_RENDER_SHADER_BINDING_DESCRIPTOR_GUARD
 
-#include <SA/Core/Serialize/Serializer.hpp>
+#include <string>
 
 #include <SA/Render/Base/Shader/Bindings/ShaderBindingType.hpp>
 
@@ -13,6 +13,13 @@ namespace Sa
 {
 	struct ShaderBindingDescriptor
 	{
+		/// Binding name (as written in shader).
+		std::string name;
+
+
+		// Block serialize
+
+
 		/// Type of binding.
 		ShaderBindingType type = ShaderBindingType::UniformBuffer;
 
@@ -34,11 +41,8 @@ namespace Sa
 
 	namespace Serialize
 	{
-		template <>
-		struct Specs<ShaderBindingDescriptor>
-		{
-			static constexpr bool bContinuousData = true;
-		};
+		void ToBinary(const ShaderBindingDescriptor& _obj, std::string& _str);
+		void FromBinary(ShaderBindingDescriptor& _obj, class Reader& _read);
 	}
 }
 

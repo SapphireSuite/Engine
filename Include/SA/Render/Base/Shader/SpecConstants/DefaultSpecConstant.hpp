@@ -11,7 +11,11 @@ namespace Sa
 {
 	enum SpecConstantID : uint8
 	{
+		Min = 100,
+
 		RenderAPI = 101,
+
+		Max,
 	};
 
 

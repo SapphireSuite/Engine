@@ -64,24 +64,31 @@ namespace Sa::Vk
 	}
 
 
+	void EmplaceLayoutBindingMap(std::map<uint32, std::vector<VkDescriptorSetLayoutBinding>>& _map,
+		const PipelineShaderInfos& _shader,
+		const ShaderBindingDescriptor& _bind)
+	{
+		std::vector<VkDescriptorSetLayoutBinding>& layoutBindings = _map[_bind.set];
+
+		VkDescriptorSetLayoutBinding& binding = layoutBindings.emplace_back();
+		binding.binding = _bind.binding;
+		binding.descriptorType = API_GetDescriptorType(_bind.type);
+		binding.descriptorCount = _bind.num;
+		binding.stageFlags = API_GetShaderStageFlags(_shader.descriptor.stage);
+		binding.pImmutableSamplers = nullptr;
+	}
+
 	void Pipeline::CreateDescriptorSetLayouts(const Device& _device, const PipelineCreateInfos& _infos)
 	{
 		// Record bindings for each descritor set.
 		std::map<uint32, std::vector<VkDescriptorSetLayoutBinding>> layoutBindingsMap;
-
 		for (auto& shader : _infos.shaders)
 		{
-			for (auto& bind : shader.descriptor.bindings)
-			{
-				std::vector<VkDescriptorSetLayoutBinding>& layoutBindings = layoutBindingsMap[bind.second.set];
+			for (auto& bind : shader.descriptor.userBindings)
+				EmplaceLayoutBindingMap(layoutBindingsMap, shader, bind);
 
-				VkDescriptorSetLayoutBinding& binding = layoutBindings.emplace_back();
-				binding.binding = bind.second.binding;
-				binding.descriptorType = API_GetDescriptorType(bind.second.type);
-				binding.descriptorCount = bind.second.num;
-				binding.stageFlags = API_GetShaderStageFlags(shader.descriptor.stage);
-				binding.pImmutableSamplers = nullptr;
-			}
+			for (auto& bind : shader.descriptor.engineBindings)
+				EmplaceLayoutBindingMap(layoutBindingsMap, shader, bind);
 		}
 
 
@@ -248,20 +255,20 @@ namespace Sa::Vk
 		{
 			SpecConstantData& data = _specConstDatas.emplace_back();
 
-			for (auto& specPair : shaderInfos.descriptor.specConstants)
+			for (auto& specPair : shaderInfos.descriptor.userSpecConstants)
+				data.Add(specPair);
+
+			for (auto& specPair : shaderInfos.descriptor.engineSpecConstants)
 			{
-				// Engine Spec.
-				if (specPair.second.id > 100)
+				switch (specPair.id)
 				{
-					if (specPair.second.id == SpecConstantID::RenderAPI)
+					case SpecConstantID::RenderAPI:
 						data.Add(SpecConstantID::RenderAPI, SpecConstantValue::Vulkan);
-					else
-					{
-						SA_LOG(L"Shader Engine specialization constant [" << specPair.second.id << L"] not supported yet!", Warning, SA/Render/Vulkan);
-					}
+						break;
+					default:
+						SA_LOG(L"Shader Engine specialization constant [" << specPair.id << L"] not supported yet!", Warning, SA/Render/Vulkan);
+						break;
 				}
-				else // User spec.
-					data.Add(specPair.second);
 			}
 		}
 	}

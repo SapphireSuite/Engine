@@ -21,6 +21,8 @@ namespace Sa
 
 		// Serialized
 
+		std::string name;
+
 		uint32 id = 0u;
 	};
 

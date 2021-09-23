@@ -10,11 +10,13 @@ namespace Sa
 	{
 		void ToBinary(const SpecConstantDescriptor& _obj, std::string& _str)
 		{
+			ToBinary(_obj.name, _str);
 			ToBinary(_obj.id, _str);
 		}
 
 		void FromBinary(SpecConstantDescriptor& _obj, Reader& _read)
 		{
+			FromBinary(_obj.name, _read);
 			FromBinary(_obj.id, _read);
 		}
 	}

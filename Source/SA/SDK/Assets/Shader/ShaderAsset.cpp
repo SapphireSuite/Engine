@@ -6,6 +6,7 @@
 #include <fstream>
 
 #include <Core/Algorithms/SizeOf.hpp>
+#include <Core/Serialize/Serializer.hpp>
 
 #include <SDK/Assets/Shader/ShaderCompiler.hpp>
 #include <SDK/Assets/Shader/ShaderReflector.hpp>
