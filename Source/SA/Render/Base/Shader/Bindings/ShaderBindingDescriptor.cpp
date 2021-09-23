@@ -11,13 +11,15 @@ namespace Sa
 		void ToBinary(const ShaderBindingDescriptor& _obj, std::string& _str)
 		{
 			ToBinary(_obj.name, _str);
-			Intl::ToBinary(&_obj.type, sizeof(ShaderBindingDescriptor) - offsetof(ShaderBindingDescriptor, type), _str);
+
+			SA_SerializeEndBlock(ToBinary, _obj, type, _str);
 		}
 
 		void FromBinary(ShaderBindingDescriptor& _obj, Reader& _read)
 		{
 			FromBinary(_obj.name, _read);
-			Intl::FromBinary(&_obj.type, sizeof(ShaderBindingDescriptor) - offsetof(ShaderBindingDescriptor, type), _read);
+
+			SA_SerializeEndBlock(FromBinary, _obj, type, _read);
 		}
 	}
 }
