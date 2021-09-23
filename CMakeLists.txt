@@ -45,7 +45,7 @@ target_include_directories(SA_Engine PRIVATE Include/SA)
 
 ## Standard
 target_compile_features(SA_Engine PUBLIC c_std_11)
-target_compile_features(SA_Engine PUBLIC cxx_std_17)
+target_compile_features(SA_Engine PUBLIC cxx_std_20)
 
 ### SA-Engine module implementation preprocessor.
 target_compile_definitions(SA_Engine PUBLIC SA_ENGINE_IMPL)

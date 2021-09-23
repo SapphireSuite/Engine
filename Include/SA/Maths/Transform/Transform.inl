@@ -9,25 +9,25 @@ namespace Sa
 	{
 		if constexpr (Comps & TrComp::Position)
 		{
-			if (!position.IsZero())
+			if (!Base::position.IsZero())
 				return false;
 		}
 
 		if constexpr (Comps & TrComp::Rotation)
 		{
-			if (!rotation.IsZero())
+			if (!Base::rotation.IsZero())
 				return false;
 		}
 
 		if constexpr (Comps & TrComp::Scale)
 		{
-			if (!scale.IsZero())
+			if (!Base::scale.IsZero())
 				return false;
 		}
 
 		if constexpr (Comps & TrComp::UScale)
 		{
-			if (uScale != T())
+			if (Base::uScale != T())
 				return false;
 		}
 
@@ -39,25 +39,25 @@ namespace Sa
 	{
 		if constexpr (Comps & TrComp::Position)
 		{
-			if (!position.IsZero())
+			if (!Base::position.IsZero())
 				return false;
 		}
 
 		if constexpr (Comps & TrComp::Rotation)
 		{
-			if (!rotation.IsIdentity())
+			if (!Base::rotation.IsIdentity())
 				return false;
 		}
 
 		if constexpr (Comps & TrComp::Scale)
 		{
-			if (scale != Vec3<T>::One)
+			if (Base::scale != Vec3<T>::One)
 				return false;
 		}
 
 		if constexpr (Comps & TrComp::UScale)
 		{
-			if (uScale != T(1))
+			if (Base::uScale != T(1))
 				return false;
 		}
 
@@ -69,25 +69,25 @@ namespace Sa
 	{
 		if constexpr (Comps & TrComp::Position)
 		{
-			if (position.Equals(_other.position, _epsilon))
+			if (Base::position.Equals(_other.position, _epsilon))
 				return false;
 		}
 
 		if constexpr (Comps & TrComp::Rotation)
 		{
-			if (rotation.Equals(_other.rotation, _epsilon))
+			if (Base::rotation.Equals(_other.rotation, _epsilon))
 				return false;
 		}
 
 		if constexpr (Comps & TrComp::Scale)
 		{
-			if (scale.Equals(_other.scale, _epsilon))
+			if (Base::scale.Equals(_other.scale, _epsilon))
 				return false;
 		}
 
 		if constexpr (Comps & TrComp::UScale)
 		{
-			if (uScale.Equals(_other.uScale, _epsilon))
+			if (Base::uScale.Equals(_other.uScale, _epsilon))
 				return false;
 		}
 
@@ -116,7 +116,7 @@ namespace Sa
 	Vec3<T> Transf<T, Comps>::Right() const
 	{
 		if constexpr (Comps & TrComp::Rotation)
-			return rotation.RightVector();
+			return Base::rotation.RightVector();
 		else
 			return Vec3<T>::Right;
 	}
@@ -125,7 +125,7 @@ namespace Sa
 	Vec3<T> Transf<T, Comps>::Up() const
 	{
 		if constexpr (Comps & TrComp::Rotation)
-			return rotation.UpVector();
+			return Base::rotation.UpVector();
 		else
 			return Vec3<T>::Up;
 	}
@@ -134,7 +134,7 @@ namespace Sa
 	Vec3<T> Transf<T, Comps>::Forward() const
 	{
 		if constexpr (Comps & TrComp::Rotation)
-			return rotation.ForwardVector();
+			return Base::rotation.ForwardVector();
 		else
 			return Vec3<T>::Forward;
 	}
@@ -143,19 +143,19 @@ namespace Sa
 	Mat4<T> Transf<T, Comps>::Matrix() const
 	{
 		if constexpr (Comps == TrComp::PRUS)
-			return Mat4<T>::MakeTransform(position, rotation, Vec3<T>(uScale));
+			return Mat4<T>::MakeTransform(Base::position, Base::rotation, Vec3<T>(Base::uScale));
 		else if constexpr (Comps == TrComp::PRS)
-			return Mat4<T>::MakeTransform(position, rotation, scale);
+			return Mat4<T>::MakeTransform(Base::position, Base::rotation, Base::scale);
 		else if constexpr (Comps == TrComp::PR)
-			return Mat4<T>::MakeTransform(position, rotation);
+			return Mat4<T>::MakeTransform(Base::position, Base::rotation);
 		else if constexpr (Comps == TrComp::PS)
-			return Mat4<T>::MakeTransform(position, scale);
+			return Mat4<T>::MakeTransform(Base::position, Base::scale);
 		else if constexpr (Comps == TrComp::PUS)
-			return Mat4<T>::MakeTransform(position, Vec3<T>(uScale));
+			return Mat4<T>::MakeTransform(Base::position, Vec3<T>(Base::uScale));
 		else if constexpr (Comps == TrComp::RS)
-			return Mat4<T>::MakeTransform(rotation, scale);
+			return Mat4<T>::MakeTransform(Base::rotation, Base::scale);
 		else if constexpr (Comps == TrComp::RUS)
-			return Mat4<T>::MakeTransform(rotation, Vec3<T>(uScale));
+			return Mat4<T>::MakeTransform(Base::rotation, Vec3<T>(Base::uScale));
 		else
 			return Mat4<T>::Identity;
 	}
@@ -226,7 +226,7 @@ namespace Sa
 		if constexpr (Comps & TrComp::Rotation)
 		{
 			if constexpr (Comps & CIn & TrComp::Position)
-				res.position += rotation.Rotate(_other.position);
+				res.position += Base::rotation.Rotate(_other.position);
 
 			if constexpr (CIn & TrComp::Rotaion)
 				res.rotation *= _other.rotation;
@@ -264,7 +264,7 @@ namespace Sa
 		if constexpr (Comps & TrComp::Rotation)
 		{
 			if constexpr (Comps & CIn & TrComp::Position)
-				res.position -= rotation.Rotate(_other.position);
+				res.position -= Base::rotation.Rotate(_other.position);
 
 			if constexpr (CIn & TrComp::Rotaion)
 				res.rotation /= _other.rotation;
@@ -312,16 +312,16 @@ namespace Sa
 		Transf<TIn, CIn> res;
 
 		if constexpr (Comps & CIn & TrComp::Position)
-			res.position = position;
+			res.position = Base::position;
 
 		if constexpr (Comps & CIn & TrComp::Rotation)
-			res.rotation = rotation;
+			res.rotation = Base::rotation;
 
 		if constexpr (Comps & CIn & TrComp::Scale)
-			res.scale = scale;
+			res.scale = Base::scale;
 
 		if constexpr (Comps & CIn & TrComp::UScale)
-			res.uScale = uScale;
+			res.uScale = Base::uScale;
 
 		return res;
 	}
@@ -337,16 +337,16 @@ namespace Sa
 		std::string res;
 
 		if constexpr (Comps & TrComp::Position)
-			res += "Pos: " + position.ToString() + "\n\t";
+			res += "Pos: " + Base::position.ToString() + "\n\t";
 
 		if constexpr (Comps & TrComp::Rotation)
-			res += "Rot: " + rotation.ToString() + "\n\t";
+			res += "Rot: " + Base::rotation.ToString() + "\n\t";
 
 		if constexpr (Comps & TrComp::Scale)
-			res += "Scale: " + scale.ToString() + "\n\t";
+			res += "Scale: " + Base::scale.ToString() + "\n\t";
 
 		if constexpr (Comps & TrComp::UScale)
-			res += "UScale: " + Sa::ToString(uScale);
+			res += "UScale: " + Sa::ToString(Base::uScale);
 
 		return res;
 	}

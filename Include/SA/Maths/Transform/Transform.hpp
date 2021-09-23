@@ -13,6 +13,8 @@ namespace Sa
 	template <typename T, TrComp Comps>
 	struct Transf : public Intl::TransfBaseT<T, Comps>
 	{
+		using Base = Intl::TransfBaseT<T, Comps>;
+
 //{ Constructors
 
 		// No defined constructors to keep default struct init constructor.

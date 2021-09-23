@@ -6,7 +6,7 @@ namespace Sa
 	void RawMesh::SetLayout()
 	{
 		// No conversion to perform.
-		if (mLayout->comps == VertexComp::None || mLayout->comps == _comps || vertices.empty())
+		if (mLayout->comps == VertexComp::None || mLayout->comps == inComps || vertices.empty())
 		{
 			mLayout = VertexLayout::Make<inComps>();
 			return;
