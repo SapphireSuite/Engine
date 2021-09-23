@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_UTH_UNIT_TEST_HELPER_GUARD
 #define SAPPHIRE_UTH_UNIT_TEST_HELPER_GUARD
 
-#include <SA/Collections/Debug>
+#include <SA/Core/Debug.hpp>
 
 #include <SA/Core/Algorithms/Equals.hpp>
 #include <SA/Core/Algorithms/SizeOf.hpp>

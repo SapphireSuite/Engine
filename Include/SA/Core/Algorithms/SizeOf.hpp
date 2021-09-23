@@ -38,8 +38,8 @@ namespace Sa
 	* 
 	*	\return number of elements in param.
 	*/
-	template <typename T>
-	uint64 SizeOf(const T& _elems)
+	template <typename SizeT = uint64, typename T>
+	SizeT SizeOf(const T& _elems)
 	{
 		if constexpr (!std::is_arithmetic<T>::value)
 		{
@@ -64,8 +64,8 @@ namespace Sa
 	* 
 	*	\return number of elements in tab.
 	*/
-	template <typename T, uint32 size>
-	constexpr uint64 SizeOf(const T(&_tab)[size])
+	template <typename SizeT = uint64, typename T, uint32 size>
+	constexpr SizeT SizeOf(const T(&_tab)[size])
 	{
 		(void)_tab;
 
@@ -81,10 +81,10 @@ namespace Sa
 	* 
 	*	\return octets number of _elems.
 	*/
-	template <typename T>
-	constexpr uint64 OctSizeOf(const T& _elems)
+	template <typename SizeT = uint64, typename T>
+	constexpr SizeT OctSizeOf(const T& _elems)
 	{
-		const uint64 sizeOf = SizeOf(_elems);
+		const SizeT sizeOf = SizeOf<SizeT>(_elems);
 
 		if constexpr (!std::is_arithmetic<T>::value)
 		{
@@ -110,10 +110,10 @@ namespace Sa
 	* 
 	*	\return octets number of tab.
 	*/
-	template <typename T, uint32 size>
-	constexpr uint64 OctSizeOf(const T(&_tab)[size])
+	template <typename SizeT = uint64, typename T, uint32 size>
+	constexpr SizeT OctSizeOf(const T(&_tab)[size])
 	{
-		return SizeOf(_tab) * sizeof(T);
+		return SizeOf<SizeT>(_tab) * sizeof(T);
 	}
 
 
@@ -126,10 +126,10 @@ namespace Sa
 	* 
 	*	\return bits number of _elems.
 	*/
-	template <typename T>
-	constexpr uint64 BitSizeOf(const T& _elems)
+	template <typename SizeT = uint64, typename T>
+	constexpr SizeT BitSizeOf(const T& _elems)
 	{
-		return OctSizeOf(_elems) * 8u;
+		return OctSizeOf<SizeT>(_elems) * 8u;
 	}
 
 	/**
@@ -144,10 +144,10 @@ namespace Sa
 	* 
 	*	\return bits number of tab.
 	*/
-	template <typename T, uint32 size>
-	constexpr uint64 BitSizeOf(const T(&_tab)[size])
+	template <typename SizeT = uint64, typename T, uint32 size>
+	constexpr SizeT BitSizeOf(const T(&_tab)[size])
 	{
-		return OctSizeOf(_tab) * 8u;
+		return OctSizeOf<SizeT>(_tab) * 8u;
 	}
 
 
@@ -162,8 +162,8 @@ namespace Sa
 	* 
 	*	\return	Size of argument pack.
 	*/
-	template <typename... Args>
-	constexpr uint64 SizeOfArgs(const Args&... _args)
+	template <typename SizeT = uint64, typename... Args>
+	constexpr SizeT SizeOfArgs(const Args&... _args)
 	{
 		return sizeof...(_args);
 	}

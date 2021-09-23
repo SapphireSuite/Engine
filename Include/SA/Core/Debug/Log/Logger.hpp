@@ -13,7 +13,7 @@
 #include <thread>
 
 #include <SA/Core/Debug/Log/Log.hpp>
-#include <SA/Core/Debug/Log/LogChannel.hpp>
+#include <SA/Core/Debug/Log/LogChannelFilter.hpp>
 #include <SA/Core/Debug/Streams/LogStreamBase.hpp>
 
 #include <SA/Core/Debug/Exceptions/Exception.hpp>
@@ -41,28 +41,32 @@ namespace Sa
 		std::vector<LogStreamBase*> mOutStreams;
 		std::mutex mStreamMutex;
 
+#if __SA_LOG_THREAD
+
 		std::thread mThread;
 		std::queue<const LogBase*> mLogQueue;
 		std::mutex mLogQueueMutex;
 		std::atomic<bool> mIsRunning = true;
 		std::atomic<uint32> mQueueSize = 0u;
 
+#endif
 
-		/// Registered channels.
-		std::unordered_map<std::wstring, LogChannel> mChannels;
+		/// Channel filter before output in stream.
+		LogChannelFilter mChannelFilter;
 		std::mutex mChannelMutex;
 
-		bool ShouldLogChannel(const std::wstring& _chanName, LogLevel _level, uint32 _offset = 0u);
-
+#if __SA_LOG_THREAD
 
 		const LogBase* Pop();
+
+#endif
 
 		/**
 		*	\brief Output a log into registered streams.
 		*
 		*	\param[in] _log		Log to output.
 		*/
-		SA_ENGINE_API void Output(const LogBase& _log);
+		void Output(const LogBase& _log);
 
 		/**
 		*	\brief Process log.
@@ -75,20 +79,25 @@ namespace Sa
 		void ProcessLog(const LogBase& _log);
 
 	public:
-		/// Enabled level flags for output.
+		/// Level flags before output in stream.
 		Flags<LogLevel, std::atomic<UIntOfSize<sizeof(LogLevel)>>> levelFlags = LogLevel::Default;
+
+
+#if __SA_LOG_THREAD
 
 		/**
 		*	\e Constructor
 		*	Create Log thread.
 		*/
-		SA_ENGINE_API Logger();
+		Logger();
 
 		/**
 		*	\e Destructor
 		*	Join and end Log thread.
 		*/
-		SA_ENGINE_API ~Logger();
+		~Logger();
+
+#endif
 
 
 		/**
@@ -98,7 +107,7 @@ namespace Sa
 		* 
 		*	\return registered LogChannel.
 		*/
-		SA_ENGINE_API LogChannel& GetChannel(const std::wstring& _chanName) noexcept;
+		LogChannel& GetChannel(const std::wstring& _chanName) noexcept;
 
 
 		/**
@@ -106,7 +115,7 @@ namespace Sa
 		* 
 		*	\param[in] _stream	Stream to register.
 		*/
-		SA_ENGINE_API void Register(LogStreamBase& _stream);
+		void Register(LogStreamBase& _stream);
 
 		/**
 		*	\brief Unregister a stream from output.
@@ -115,7 +124,7 @@ namespace Sa
 		*
 		*	\return true on success.
 		*/
-		SA_ENGINE_API bool Unregister(LogStreamBase& _stream);
+		bool Unregister(LogStreamBase& _stream);
 
 
 		/**
@@ -127,12 +136,13 @@ namespace Sa
 		template <typename LogT>
 		void Push(LogT&& _log);
 
+
 		/**
-		*	\brief Join current queue.
+		*	\brief Join current queue. Only if __SA_LOG_THREAD = 1.
 		* 
 		*	\param[in] _mode	Queue join mode.
 		*/
-		SA_ENGINE_API void Join(ThreadJoinMode _mode = ThreadJoinMode::Complete);
+		void Join(ThreadJoinMode _mode = ThreadJoinMode::Complete);
 
 
 		/**

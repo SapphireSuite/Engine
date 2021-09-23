@@ -217,6 +217,18 @@ namespace Sa
 	}
 
 	template <typename R, typename... Args>
+	Event<R(Args...)>& Event<R(Args...)>::operator=(Event&& _other)
+	{
+		Clear();
+
+		mFunctions = std::move(_other.mFunctions);
+		mMemberFunctions = std::move(_other.mMemberFunctions);
+
+		return *this;
+	}
+
+
+	template <typename R, typename... Args>
 	Event<R(Args...)>& Event<R(Args...)>::operator+=(R(*_func)(Args...))
 	{
 		Add(_func);

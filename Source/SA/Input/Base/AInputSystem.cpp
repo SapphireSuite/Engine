@@ -2,21 +2,13 @@
 
 #include <Input/Base/AInputSystem.hpp>
 
-#include <Collections/Debug>
+#include <Core/Debug.hpp>
 
 namespace Sa
 {
 	AInputSystem::~AInputSystem()
 	{
 		Clear();
-	}
-
-
-	void AInputSystem::DestroyWindowContext(AInputWindowContext* _winContext)
-	{
-		SA_ASSERT(Nullptr, SA/Input, _winContext, L"Destroy null window context!");
-
-		delete _winContext;
 	}
 
 
@@ -32,7 +24,8 @@ namespace Sa
 			return itFind->second;
 		}
 
-		AInputWindowContext* const winContext = InstantiateWindowContext(_win);
+		AInputWindowContext* const winContext = InstantiateWindowContext();
+		winContext->Create(_win);
 
 		mWindowContextMap.emplace(_win, winContext);
 
@@ -51,7 +44,9 @@ namespace Sa
 			return false;
 		}
 
-		DestroyWindowContext(itFind->second);
+		itFind->second->Destroy();
+		DeleteWindowContext(itFind->second);
+
 		mWindowContextMap.erase(itFind);
 
 		return true;
@@ -61,8 +56,17 @@ namespace Sa
 	void AInputSystem::Clear()
 	{
 		for (auto it = mWindowContextMap.begin(); it != mWindowContextMap.end(); ++it)
-			delete it->second;
+		{
+			it->second->Destroy();
+			DeleteWindowContext(it->second);
+		}
 
 		mWindowContextMap.clear();
+	}
+
+
+	void AInputSystem::Destroy()
+	{
+		Clear();
 	}
 }

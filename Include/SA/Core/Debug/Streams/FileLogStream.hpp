@@ -48,12 +48,12 @@ namespace Sa
 		* 
 		*	\param[in] _fileName	Name of file.
 		*/
-		SA_ENGINE_API FileLogStream(const std::string& _fileName = "log") noexcept;
+		FileLogStream(const std::string& _fileName = "log") noexcept;
 
 		/**
 		*	\e Destructor. Close the file stream.
 		*/
-		SA_ENGINE_API ~FileLogStream() noexcept;
+		~FileLogStream() noexcept;
 
 		/**
 		*	\brief Output wstring into the stream.
@@ -62,7 +62,7 @@ namespace Sa
 		* 
 		*	\return handled std::wostream.
 		*/
-		SA_ENGINE_API std::wostream& operator<<(const std::wstring& _str);
+		std::wostream& operator<<(const std::wstring& _str);
 	};
 
 //}

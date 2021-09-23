@@ -6,11 +6,11 @@
 
 #include <Core/Time/MilliSecond.hpp>
 
-#include <Collections/Debug>
+#include <Core/Debug.hpp>
 
 #if SA_WIN
 
-	#include <Core/Support/Windows.hpp>
+	#include <Core/Support/API/Windows.hpp>
 
 #else
 

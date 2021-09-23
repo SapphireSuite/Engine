@@ -11,9 +11,9 @@ namespace Sa::Debug
 #if SA_LOGGING
 
 	FileLogStream gLogFile;
-	SA_ENGINE_API ConsoleLogStream csl;
+	ConsoleLogStream csl;
 
-	SA_ENGINE_API Logger logger;
+	Logger logger;
 
 	bool loggerInitializer = []()
 	{

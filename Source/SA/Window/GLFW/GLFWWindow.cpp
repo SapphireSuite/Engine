@@ -4,6 +4,10 @@
 
 #include <Input/GLFW/GLFWInputWindowContext.hpp>
 
+#include <Render/Vulkan/Debug/Debug.hpp>
+#include <Render/Vulkan/VkRenderInstance.hpp>
+#include <Render/Vulkan/Surface/VkRenderSurface.hpp>
+
 #if SA_GLFW
 
 namespace Sa::GLFW
@@ -64,12 +68,26 @@ namespace Sa::GLFW
 		AWindow::SetWindowMode(_mode);
 	}
 
+	void Window::SetCursorMode(Flags<CursorMode> _flags)
+	{
+		if (_flags & CursorMode::Hidden)
+		{
+			if (_flags & CursorMode::Capture)
+				glfwSetInputMode(mHandle, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			else
+				glfwSetInputMode(mHandle, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+		}
+		else if (_flags & CursorMode::Capture)
+		{
+			// TODO: Implement
+		}
+		else
+			glfwSetInputMode(mHandle, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	}
 
 	void Window::Create(const CreateInfos& _infos)
 	{
 		AWindow::Create(_infos);
-
-		GLFW::Init();
 
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 		mHandle = glfwCreateWindow(_infos.dimension.x, _infos.dimension.y, _infos.name.c_str(), nullptr, nullptr);
@@ -81,7 +99,10 @@ namespace Sa::GLFW
 		glfwSetWindowIconifyCallback(mHandle, MinimizedCallback);
 		glfwSetWindowMaximizeCallback(mHandle, MaximizedCallback);
 
+		SetCursorMode(_infos.cursorFlags);
 		SetWindowMode(_infos.mode);
+
+		SA_LOG(L"Window created", Infos, SA/Window/GLFW);
 	}
 	
 	void Window::Destroy()
@@ -91,7 +112,7 @@ namespace Sa::GLFW
 		glfwDestroyWindow(mHandle);
 		mHandle = nullptr;
 
-		GLFW::UnInit();
+		SA_LOG(L"Window destroyed", Infos, SA/Window/GLFW);
 	}
 
 	AInputWindowContext* Window::GetInputWindowContext() const
@@ -174,6 +195,20 @@ namespace Sa::GLFW
 
 		return bestMonitor;
 	}
+
+
+#if SA_VULKAN
+
+	Vk::RenderSurface Window::CreateVkRenderSurface(const Vk::RenderInstance& _instance) const
+	{
+		VkSurfaceKHR vkSurface;
+
+		SA_VK_ASSERT(glfwCreateWindowSurface(_instance, mHandle, nullptr, &vkSurface), L"Failed to create VkRenderSurface from GLFW window!");
+
+		return Vk::RenderSurface{ vkSurface };
+	}
+
+#endif
 
 
 	GLFWwindow* Window::GetHandle() const

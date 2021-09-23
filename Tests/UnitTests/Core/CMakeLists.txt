@@ -2,7 +2,7 @@
 
 
 
-# === Entrypoints ===
+# Entrypoints
 
 add_subdirectory(Algorithms)
 add_subdirectory(Debug)

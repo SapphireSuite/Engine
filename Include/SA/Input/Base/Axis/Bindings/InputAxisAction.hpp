@@ -18,7 +18,7 @@ namespace Sa
 
 		using InputActionBase<InputAxisBinding>::InputActionBase;
 
-		SA_ENGINE_API bool Execute(float _value) override final;
+		bool Execute(float _value) override final;
 	};
 }
 

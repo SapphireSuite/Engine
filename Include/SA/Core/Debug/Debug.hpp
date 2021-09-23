@@ -39,7 +39,7 @@ namespace Sa::Debug
 		*
 		*	\returns pointer to the file name in _filePath.
 		*/
-		SA_ENGINE_API const wchar* GetFileNameFromPath(const wchar* _filePath) noexcept;
+		const wchar* GetFileNameFromPath(const wchar* _filePath) noexcept;
 
 		/**
 		*	\brief Remove spaces in string.
@@ -48,7 +48,7 @@ namespace Sa::Debug
 		* 
 		*	\return New string without spaces.
 		*/
-		SA_ENGINE_API std::wstring RemoveSpaces(std::wstring _str) noexcept;
+		std::wstring RemoveSpaces(std::wstring _str) noexcept;
 	}
 
 #if SA_GNU || SA_CLANG && !SA_MSVC
@@ -92,10 +92,10 @@ namespace Sa::Debug
 	/// \endcond Internal
 
 	/// Console log stream instance.
-	SA_ENGINE_API extern ConsoleLogStream csl;
+	extern ConsoleLogStream csl;
 
 	/// Logger instance.
-	SA_ENGINE_API extern Logger logger;
+	extern Logger logger;
 
 
 	/// \cond Internal

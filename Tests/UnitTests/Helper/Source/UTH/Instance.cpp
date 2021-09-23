@@ -8,7 +8,7 @@
 #include <UTH/Log/GroupLog.hpp>
 #include <UTH/Log/MessageLog.hpp>
 
-#include <SA/Collections/Debug>
+#include <SA/Core/Debug.hpp>
 
 namespace Sa::UTH
 {

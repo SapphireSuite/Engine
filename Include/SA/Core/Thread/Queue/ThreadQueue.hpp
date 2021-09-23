@@ -53,7 +53,7 @@ namespace Sa
 		* 
 		*	\param[in] _task	Task to add to queue.
 		*/
-		SA_ENGINE_API void AddTask(ThreadQueueTask&& _task);
+		void AddTask(ThreadQueueTask&& _task);
 
 	public:
 		/// Create infos struct.
@@ -68,12 +68,12 @@ namespace Sa
 		* 
 		*	\param[in] _infos	Infos used for creation.
 		*/
-		SA_ENGINE_API void Create(const CreateInfos& _infos);
+		void Create(const CreateInfos& _infos);
 
 		/**
 		*	\brief Join and destroy the queue.
 		*/
-		SA_ENGINE_API void Destroy();
+		void Destroy();
 
 		/**
 		*	\brief Current running state.
@@ -155,7 +155,7 @@ namespace Sa
 		* 
 		*	\param[in] _mode	Join mode.
 		*/
-		SA_ENGINE_API void Join(ThreadJoinMode _mode = ThreadJoinMode::Complete);
+		void Join(ThreadJoinMode _mode = ThreadJoinMode::Complete);
 	};
 }
 

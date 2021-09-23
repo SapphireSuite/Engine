@@ -17,7 +17,7 @@ namespace Sa
 
 		using InputRangeBase<InputKeyBinding>::InputRangeBase;
 
-		SA_ENGINE_API bool Execute(KeyState _keyState) override final;
+		bool Execute(KeyState _keyState) override final;
 	};
 }
 

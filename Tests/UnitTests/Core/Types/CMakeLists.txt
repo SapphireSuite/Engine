@@ -2,30 +2,27 @@
 
 
 
-# === Projects ===
+# Projects
 
-project(SA-UT_Core_Types)
+project(SA_UT_Core_Types)
 
 
 
-# === Inputs ===
+# Inputs
 
-# Parse files.
 file(GLOB_RECURSE SOURCES "*.cpp")
 
-# Add executable target.
-add_executable(SA-UT_Core_Types ${SOURCES})
+add_executable(SA_UT_Core_Types ${SOURCES})
 
 
 
-# === Dependencies ===
+# Dependencies
 
-# Unit test module dependency.
-target_link_libraries(SA-UT_Core_Types PUBLIC SA-UnitTestHelper)
+### Unit test module dependency.
+target_link_libraries(SA_UT_Core_Types PRIVATE SA_UnitTestHelper)
 
 
 
-# === Tests ===
+# Tests
 
-# Add test.
-add_test(NAME CSA-UT_Core_Types COMMAND SA-UT_Core_Types --config $<CONFIGURATION> --exe $<TARGET_FILE:SA-UT_Core_Types>)
+add_test(NAME CSA_UT_Core_Types COMMAND SA_UT_Core_Types)

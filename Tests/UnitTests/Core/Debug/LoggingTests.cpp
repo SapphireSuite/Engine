@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include <SA/Collections/Debug>
+#include <SA/Core/Debug.hpp>
 using namespace Sa;
 
 #if SA_LOGGING

@@ -2,7 +2,7 @@
 
 #include <Core/Debug/ArgsStr.hpp>
 
-#include <Collections/Debug>
+#include <Core/Debug.hpp>
 
 namespace Sa
 {

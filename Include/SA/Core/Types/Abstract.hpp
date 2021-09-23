@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_CORE_ABSTRACT_GUARD
 #define SAPPHIRE_CORE_ABSTRACT_GUARD
 
-#include <SA/Collections/Debug>
+#include <SA/Core/Debug.hpp>
 
 
 /**

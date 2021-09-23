@@ -8,7 +8,7 @@
 #include <memory>
 #include <unordered_map>
 
-#include <SA/Collections/Debug>
+#include <SA/Core/Debug.hpp>
 
 #include <SA/Input/Base/Axis/InputAxisBind.hpp>
 #include <SA/Input/Base/Axis/Bindings/InputAxisBinding.hpp>
@@ -23,8 +23,8 @@ namespace Sa
 		template <typename InBindT, typename... Args>
 		std::shared_ptr<InputAxisBinding> Bind(const InputAxisBind& _inAxisBind, Args&&... _args);
 
-		SA_ENGINE_API void UnBind(Axis _axis);
-		SA_ENGINE_API void UnBind(std::shared_ptr<InputAxisBinding> _inBinding);
+		void UnBind(Axis _axis);
+		void UnBind(std::shared_ptr<InputAxisBinding> _inBinding);
 
 		bool Process(const InputAxis& _inAxis);
 	};

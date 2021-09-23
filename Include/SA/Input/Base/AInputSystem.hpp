@@ -7,27 +7,32 @@
 
 #include <vector>
 
+#include <SA/Core/Types/ASystem.hpp>
+
 #include <SA/Input/Base/AInputWindowContext.hpp>
 
 namespace Sa
 {
 	class AWindow;
 
-	class AInputSystem : public Abstract
+	class AInputSystem : public ASystem
 	{
 		std::unordered_map<const AWindow*, AInputWindowContext*> mWindowContextMap;
 
 	protected:
-		virtual AInputWindowContext* InstantiateWindowContext(AWindow* _win) = 0;
-		SA_ENGINE_API virtual void DestroyWindowContext(AInputWindowContext* _winContext);
+		virtual AInputWindowContext* InstantiateWindowContext() = 0;
+		virtual void DeleteWindowContext(AInputWindowContext* _winContext) = 0;
 
 	public:
-		SA_ENGINE_API virtual ~AInputSystem();
+		virtual ~AInputSystem();
 
-		SA_ENGINE_API AInputWindowContext* Register(AWindow* _win);
-		SA_ENGINE_API bool UnRegister(const AWindow* _win);
+		AInputWindowContext* Register(AWindow* _win);
+		bool UnRegister(const AWindow* _win);
 
-		SA_ENGINE_API void Clear();
+		void Clear();
+
+
+		void Destroy() override;
 
 		virtual void Update() = 0;
 	};

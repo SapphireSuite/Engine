@@ -84,15 +84,15 @@ namespace Sa
 
 	/// ToString spec for single char.
 	template <>
-	SA_ENGINE_API std::string ToString(const char& _char) noexcept;
+	std::string ToString(const char& _char) noexcept;
 
 	/// ToString spec for cstr char*.
 	template <>
-	SA_ENGINE_API std::string ToString(const char* _cstr) noexcept;
+	std::string ToString(const char* _cstr) noexcept;
 
 	/// ToString spec for c++ str.
 	template <>
-	SA_ENGINE_API std::string ToString(const std::string& _str) noexcept;
+	std::string ToString(const std::string& _str) noexcept;
 
 
 	/// ToString stream operator for string.
@@ -152,29 +152,29 @@ namespace Sa
 
 	/// ToString spec for single char.
 	template <>
-	SA_ENGINE_API std::wstring ToWString(const char& _char) noexcept;
+	std::wstring ToWString(const char& _char) noexcept;
 
 	/// ToWString spec for cstr char*.
 	template <>
-	SA_ENGINE_API std::wstring ToWString(const char* _cstr) noexcept;
+	std::wstring ToWString(const char* _cstr) noexcept;
 
 
 	/// ToString spec for single wchar.
 	template <>
-	SA_ENGINE_API std::wstring ToWString(const wchar& _char) noexcept;
+	std::wstring ToWString(const wchar& _char) noexcept;
 
 	/// ToWString spec for cstr wchar*.
 	template <>
-	SA_ENGINE_API std::wstring ToWString(const wchar* _cwstr) noexcept;
+	std::wstring ToWString(const wchar* _cwstr) noexcept;
 
 
 	/// ToWString spec for c++ str.
 	template <>
-	SA_ENGINE_API std::wstring ToWString(const std::string& _str) noexcept;
+	std::wstring ToWString(const std::string& _str) noexcept;
 
 	/// ToWString spec for c++ wstr.
 	template <>
-	SA_ENGINE_API std::wstring ToWString(const std::wstring& _wstr) noexcept;
+	std::wstring ToWString(const std::wstring& _wstr) noexcept;
 
 
 	/// ToWString stream operator for wstring.

@@ -18,7 +18,7 @@ namespace Sa
 		Axis axis = Axis::None;
 		float value = 0.0f;
 
-		SA_ENGINE_API InputAxis(Axis _axis, float _value = 0.0f) noexcept;
+		InputAxis(Axis _axis, float _value = 0.0f) noexcept;
 	};
 }
 

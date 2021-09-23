@@ -59,14 +59,14 @@ namespace Sa
 		*
 		*	\param[in] _time	Time hours as \c float.
 		*/
-		SA_ENGINE_API Hour(float _time) noexcept;
+		Hour(float _time) noexcept;
 
 		/**
 		*	\brief \e Value contructor without conversion.
 		*
 		*	\param[in] _time	Time hours as \c float.
 		*/
-		SA_ENGINE_API Hour(uint64 _time) noexcept;
+		Hour(uint64 _time) noexcept;
 
 
 		/**
@@ -74,35 +74,35 @@ namespace Sa
 		*
 		*	\return hours as \c float without conversion.
 		*/
-		SA_ENGINE_API operator float() const noexcept;
+		operator float() const noexcept;
 
 		/**
 		*	\brief \e Cast operator to \c Tick with proper conversion.
 		*
 		*	\return \c Tick converted from \c Hour.
 		*/
-		SA_ENGINE_API operator Tick() const noexcept;
+		operator Tick() const noexcept;
 
 		/**
 		*	\brief \e Cast operator to \c MilliSecond with proper conversion.
 		*
 		*	\return \c MilliSecond converted from \c Hour.
 		*/
-		SA_ENGINE_API operator MilliSecond() const noexcept;
+		operator MilliSecond() const noexcept;
 
 		/**
 		*	\brief \e Cast operator to \c Second with proper conversion.
 		*
 		*	\return \c Second converted from \c Hour.
 		*/
-		SA_ENGINE_API operator Second() const noexcept;
+		operator Second() const noexcept;
 
 		/**
 		*	\brief \e Cast operator to \c Minute with proper conversion.
 		*
 		*	\return \c Minute converted from \c Hour.
 		*/
-		SA_ENGINE_API operator Minute() const noexcept;
+		operator Minute() const noexcept;
 
 
 #if SA_LOGGING
@@ -114,7 +114,7 @@ namespace Sa
 		* 
 		*	\return this as a string.
 		*/
-		SA_ENGINE_API std::string ToString() const noexcept;
+		std::string ToString() const noexcept;
 #endif
 	};
 
@@ -125,7 +125,7 @@ namespace Sa
 	*
 	*	\return \c Hour without time-conversion.
 	*/
-	SA_ENGINE_API Hour operator""_hr(uint64 _lit) noexcept;
+	Hour operator""_hr(uint64 _lit) noexcept;
 
 	/**
 	*	\brief _hr \b literal operator.
@@ -134,7 +134,7 @@ namespace Sa
 	*
 	*	\return \c Hour without time-conversion.
 	*/
-	SA_ENGINE_API Hour operator""_hr(long double _lit) noexcept;
+	Hour operator""_hr(long double _lit) noexcept;
 }
 
 

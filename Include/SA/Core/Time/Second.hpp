@@ -59,14 +59,14 @@ namespace Sa
 		*
 		*	\param[in] _time	Time seconds as \c float.
 		*/
-		SA_ENGINE_API Second(float _time) noexcept;
+		Second(float _time) noexcept;
 
 		/**
 		*	\brief \e Value contructor without conversion.
 		*
 		*	\param[in] _time	Time seconds as \c uint64.
 		*/
-		SA_ENGINE_API Second(uint64 _time) noexcept;
+		Second(uint64 _time) noexcept;
 
 
 		/**
@@ -74,35 +74,35 @@ namespace Sa
 		*
 		*	\return seconds as \c float without conversion.
 		*/
-		SA_ENGINE_API operator float() const noexcept;
+		operator float() const noexcept;
 
 		/**
 		*	\brief \e Cast operator to \c Tick with proper conversion.
 		*
 		*	\return \c Tick converted from \c Second.
 		*/
-		SA_ENGINE_API operator Tick() const noexcept;
+		operator Tick() const noexcept;
 
 		/**
 		*	\brief \e Cast operator to \c MilliSecond with proper conversion.
 		*
 		*	\return \c MilliSecond converted from \c Second.
 		*/
-		SA_ENGINE_API operator MilliSecond() const noexcept;
+		operator MilliSecond() const noexcept;
 
 		/**
 		*	\brief \e Cast operator to \c Minute with proper conversion.
 		*
 		*	\return \c Minute converted from \c Second.
 		*/
-		SA_ENGINE_API operator Minute() const noexcept;
+		operator Minute() const noexcept;
 
 		/**
 		*	\brief \e Cast operator to \c Hour with proper conversion.
 		*
 		*	\return \c Hour converted from \c Second.
 		*/
-		SA_ENGINE_API operator Hour() const noexcept;
+		operator Hour() const noexcept;
 
 
 #if SA_LOGGING
@@ -114,7 +114,7 @@ namespace Sa
 		*
 		*	\return this as a string.
 		*/
-		SA_ENGINE_API std::string ToString() const noexcept;
+		std::string ToString() const noexcept;
 #endif
 	};
 
@@ -125,7 +125,7 @@ namespace Sa
 	*
 	*	\return \c Second without time-conversion.
 	*/
-	SA_ENGINE_API Second operator""_sec(uint64 _lit) noexcept;
+	Second operator""_sec(uint64 _lit) noexcept;
 
 	/**
 	*	\brief _sec \b literal operator.
@@ -134,7 +134,7 @@ namespace Sa
 	*
 	*	\return \c Second without time-conversion.
 	*/
-	SA_ENGINE_API Second operator""_sec(long double _lit) noexcept;
+	Second operator""_sec(long double _lit) noexcept;
 }
 
 

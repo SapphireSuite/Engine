@@ -5,14 +5,7 @@
 #ifndef SAPPHIRE_COLLECTIONS_DEBUG_GUARD
 #define SAPPHIRE_COLLECTIONS_DEBUG_GUARD
 
-#include <SA/Core/Debug/Debug.hpp>
-
-// Logs.
-#include <SA/Core/Debug/Log/Log.hpp>
-
-// Exceptions.
-#include <SA/Core/Debug/Exceptions/Exception_NonZero.hpp>
-#include <SA/Core/Debug/Exceptions/Exception_Nullptr.hpp>
-#include <SA/Core/Debug/Exceptions/Exception_OutOfRange.hpp>
+#include <SA/Core/Debug.hpp>
+#include <SA/Render/Debug.hpp>
 
 #endif // GUARD

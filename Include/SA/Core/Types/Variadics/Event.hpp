@@ -127,8 +127,8 @@ namespace Sa
 		/// Default constructor.
 		Event() = default;
 
-		/// Deleted move constructor.
-		Event(Event&&) = delete;
+		/// Default Move constructor.
+		Event(Event&& _other) = default;
 
 		/// Deleted copy constructor.
 		Event(const Event&) = delete;
@@ -246,11 +246,11 @@ namespace Sa
 
 
 		/**
-		*	\brief Deleted move operator.
+		*	\brief Move operator.
 		* 
 		*	\return this.
 		*/
-		Event& operator=(Event&&) = delete;
+		Event& operator=(Event&& _other);
 
 		/**
 		*	\brief Deleted copy operator.

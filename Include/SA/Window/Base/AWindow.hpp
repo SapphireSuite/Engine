@@ -8,9 +8,12 @@
 #include <SA/Core/Types/Abstract.hpp>
 #include <SA/Core/Types/Variadics/Event.hpp>
 
+#include <SA/Core/Support/API/Vulkan.hpp>
+
 #include <SA/Maths/Space/Vector2.hpp>
 
 #include <SA/Window/Base/WindowMode.hpp>
+#include <SA/Window/Base/CursorMode.hpp>
 
 /**
 *	\file AWindow.hpp
@@ -24,6 +27,13 @@
 namespace Sa
 {
 	class AInputWindowContext;
+
+	namespace Vk
+	{
+		class RenderInstance;
+		class RenderSurface;
+	}
+
 
 	/**
 	*	\brief Window \e Abstract class
@@ -79,6 +89,8 @@ namespace Sa
 			/// Window mode.
 			WindowMode mode = WindowMode::Windowed;
 
+			Flags<CursorMode> cursorFlags;
+
 			/// Window name.
 			std::string name = "Main Window";
 		};
@@ -130,7 +142,14 @@ namespace Sa
 		* 
 		*	\param[in] _mode	New window mode.
 		*/
-		SA_ENGINE_API virtual void SetWindowMode(WindowMode _mode);
+		virtual void SetWindowMode(WindowMode _mode);
+
+		/**
+		*	\brief \e Setter of window's cursor mode.
+		* 
+		*	\param[in] _flags	New cursor mode.
+		*/
+		virtual void SetCursorMode(Flags<CursorMode> _flags) = 0;
 
 
 		/**
@@ -138,7 +157,7 @@ namespace Sa
 		* 
 		*	\param[in] _infos	Creation arguments.
 		*/
-		SA_ENGINE_API virtual void Create(const CreateInfos& _infos);
+		virtual void Create(const CreateInfos& _infos);
 
 		/**
 		*	\brief Destroy this window.
@@ -164,6 +183,13 @@ namespace Sa
 		*	\returns current closed state.
 		*/
 		virtual bool ShouldClose() const = 0;
+
+
+#if SA_VULKAN
+
+		virtual Vk::RenderSurface CreateVkRenderSurface(const Vk::RenderInstance& _instance) const = 0;
+
+#endif
 	};
 }
 

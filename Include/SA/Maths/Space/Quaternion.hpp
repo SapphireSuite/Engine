@@ -744,115 +744,115 @@ namespace Sa
 #if SA_INTRISC_SSE	// SIMD float
 
 	template <>
-	SA_ENGINE_API float Quatf::SqrLength() const noexcept;
+	float Quatf::SqrLength() const noexcept;
 
 	template <>
-	SA_ENGINE_API Quatf& Quatf::Normalize() noexcept;
+	Quatf& Quatf::Normalize() noexcept;
 
 	template <>
-	SA_ENGINE_API Quatf Quatf::GetNormalized() const noexcept;
-
-
-	template <>
-	SA_ENGINE_API Quatf Quatf::Rotate(const Quatf& _other) const noexcept;
+	Quatf Quatf::GetNormalized() const noexcept;
 
 
 	template <>
-	SA_ENGINE_API float Quatf::Dot(const Quatf& _lhs, const Quatf& _rhs) noexcept;
-
-	template <>
-	SA_ENGINE_API Vec3<Degf> Quatf::ToEuler() const noexcept;
-
-	template <>
-	SA_ENGINE_API Quatf Quatf::FromEuler(const Vec3<Degf>& _angles) noexcept;
+	Quatf Quatf::Rotate(const Quatf& _other) const noexcept;
 
 
 	template <>
-	SA_ENGINE_API Quatf Quatf::operator*(float _scale) const noexcept;
+	float Quatf::Dot(const Quatf& _lhs, const Quatf& _rhs) noexcept;
 
 	template <>
-	SA_ENGINE_API Quatf Quatf::operator/(float _scale) const noexcept;
+	Vec3<Degf> Quatf::ToEuler() const noexcept;
 
 	template <>
-	SA_ENGINE_API Quatf Quatf::operator+(const Quatf& _rhs) const noexcept;
-
-	template <>
-	SA_ENGINE_API Quatf Quatf::operator-(const Quatf& _rhs) const noexcept;
+	Quatf Quatf::FromEuler(const Vec3<Degf>& _angles) noexcept;
 
 
 	template <>
-	SA_ENGINE_API Quatf& Quatf::operator*=(float _scale) noexcept;
+	Quatf Quatf::operator*(float _scale) const noexcept;
 
 	template <>
-	SA_ENGINE_API Quatf& Quatf::operator/=(float _scale) noexcept;
+	Quatf Quatf::operator/(float _scale) const noexcept;
 
 	template <>
-	SA_ENGINE_API Quatf& Quatf::operator+=(const Quatf& _rhs) noexcept;
+	Quatf Quatf::operator+(const Quatf& _rhs) const noexcept;
 
 	template <>
-	SA_ENGINE_API Quatf& Quatf::operator-=(const Quatf& _rhs) noexcept;
+	Quatf Quatf::operator-(const Quatf& _rhs) const noexcept;
 
 
 	template <>
-	SA_ENGINE_API Quatf operator/(float _lhs, const Quatf& _rhs) noexcept;
+	Quatf& Quatf::operator*=(float _scale) noexcept;
+
+	template <>
+	Quatf& Quatf::operator/=(float _scale) noexcept;
+
+	template <>
+	Quatf& Quatf::operator+=(const Quatf& _rhs) noexcept;
+
+	template <>
+	Quatf& Quatf::operator-=(const Quatf& _rhs) noexcept;
+
+
+	template <>
+	Quatf operator/(float _lhs, const Quatf& _rhs) noexcept;
 
 #endif
 
 #if SA_INTRISC_AVX // SIMD double
 
 	template <>
-	SA_ENGINE_API double Quatd::SqrLength() const noexcept;
+	double Quatd::SqrLength() const noexcept;
 
 	template <>
-	SA_ENGINE_API Quatd& Quatd::Normalize() noexcept;
+	Quatd& Quatd::Normalize() noexcept;
 
 	template <>
-	SA_ENGINE_API Quatd Quatd::GetNormalized() const noexcept;
-
-
-	template <>
-	SA_ENGINE_API Quatd Quatd::Rotate(const Quatd& _other) const noexcept;
+	Quatd Quatd::GetNormalized() const noexcept;
 
 
 	template <>
-	SA_ENGINE_API double Quatd::Dot(const Quatd& _lhs, const Quatd& _rhs) noexcept;
+	Quatd Quatd::Rotate(const Quatd& _other) const noexcept;
 
 
 	template <>
-	SA_ENGINE_API Vec3<Degd> Quatd::ToEuler() const noexcept;
-
-	template <>
-	SA_ENGINE_API Quatd Quatd::FromEuler(const Vec3<Degd>& _angles) noexcept;
+	double Quatd::Dot(const Quatd& _lhs, const Quatd& _rhs) noexcept;
 
 
 	template <>
-	SA_ENGINE_API Quatd Quatd::operator*(double _scale) const noexcept;
+	Vec3<Degd> Quatd::ToEuler() const noexcept;
 
 	template <>
-	SA_ENGINE_API Quatd Quatd::operator/(double _scale) const noexcept;
-
-	template <>
-	SA_ENGINE_API Quatd Quatd::operator+(const Quatd& _rhs) const noexcept;
-
-	template <>
-	SA_ENGINE_API Quatd Quatd::operator-(const Quatd& _rhs) const noexcept;
+	Quatd Quatd::FromEuler(const Vec3<Degd>& _angles) noexcept;
 
 
 	template <>
-	SA_ENGINE_API Quatd& Quatd::operator*=(double _scale) noexcept;
+	Quatd Quatd::operator*(double _scale) const noexcept;
 
 	template <>
-	SA_ENGINE_API Quatd& Quatd::operator/=(double _scale) noexcept;
+	Quatd Quatd::operator/(double _scale) const noexcept;
 
 	template <>
-	SA_ENGINE_API Quatd& Quatd::operator+=(const Quatd& _rhs) noexcept;
+	Quatd Quatd::operator+(const Quatd& _rhs) const noexcept;
 
 	template <>
-	SA_ENGINE_API Quatd& Quatd::operator-=(const Quatd& _rhs) noexcept;
+	Quatd Quatd::operator-(const Quatd& _rhs) const noexcept;
 
 
 	template <>
-	SA_ENGINE_API Quatd operator/(double _lhs, const Quatd& _rhs) noexcept;
+	Quatd& Quatd::operator*=(double _scale) noexcept;
+
+	template <>
+	Quatd& Quatd::operator/=(double _scale) noexcept;
+
+	template <>
+	Quatd& Quatd::operator+=(const Quatd& _rhs) noexcept;
+
+	template <>
+	Quatd& Quatd::operator-=(const Quatd& _rhs) noexcept;
+
+
+	template <>
+	Quatd operator/(double _lhs, const Quatd& _rhs) noexcept;
 
 #endif
 

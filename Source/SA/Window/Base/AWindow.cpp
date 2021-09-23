@@ -2,6 +2,8 @@
 
 #include <Window/Base/AWindow.hpp>
 
+#include <Window/GLFW/GLFWWindow.hpp>
+
 namespace Sa
 {
 	bool AWindow::IsMinimized() const

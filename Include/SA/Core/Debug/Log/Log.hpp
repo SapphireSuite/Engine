@@ -64,7 +64,7 @@ namespace Sa
 		*	\param[in] _chanName	Channel's name of the Log.
 		*	\param[in] _details		Additional details to display.
 		*/
-		SA_ENGINE_API Log(
+		Log(
 			std::wstring&& _file,
 			uint32 _line,
 			std::string&& _function,
@@ -82,10 +82,10 @@ namespace Sa
 		* 
 		*	\return this as a wstring.
 		*/
-		SA_ENGINE_API std::wstring ToWString() const;
+		std::wstring ToWString() const;
 
-		SA_ENGINE_API void Output(ConsoleLogStream& _stream) const override;
-		SA_ENGINE_API void Output(FileLogStream& _stream) const override;
+		void Output(ConsoleLogStream& _stream) const override;
+		void Output(FileLogStream& _stream) const override;
 	};
 
 #endif

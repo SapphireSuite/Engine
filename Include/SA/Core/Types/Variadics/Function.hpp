@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_CORE_FUNCTION_GUARD
 #define SAPPHIRE_CORE_FUNCTION_GUARD
 
-#include <SA/Collections/Debug>
+#include <SA/Core/Debug.hpp>
 
 /**
 *	\file Function.hpp

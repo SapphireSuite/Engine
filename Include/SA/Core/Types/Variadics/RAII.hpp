@@ -86,10 +86,10 @@ namespace Sa
 		*	\param[in, out] _handle		Bool to handle.
 		*	\param[in] _value			Value to assign to the handle.
 		*/
-		SA_ENGINE_API RAII(bool& _handle, bool _value = true) noexcept;
+		RAII(bool& _handle, bool _value = true) noexcept;
 
 		/// \b Reset handle to !value.
-		SA_ENGINE_API ~RAII() noexcept;
+		~RAII() noexcept;
 	};
 }
 

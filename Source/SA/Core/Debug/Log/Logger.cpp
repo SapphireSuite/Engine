@@ -2,14 +2,17 @@
 
 #include <Core/Debug/Log/Logger.hpp>
 
-#include <Collections/Debug>
+#include <Core/Debug.hpp>
 
 namespace Sa
 {
 #if SA_LOGGING
 
+#if __SA_LOG_THREAD
+
 	Logger::Logger()
 	{
+
 		// if mQueueSize: dequeue, else yield.
 		mThread = std::thread([this]()
 		{
@@ -29,6 +32,7 @@ namespace Sa
 				}
 			}
 		});
+
 	}
 
 	Logger::~Logger()
@@ -41,32 +45,13 @@ namespace Sa
 			mThread.join();
 	}
 
-
-	bool Logger::ShouldLogChannel(const std::wstring& _chanName, LogLevel _level, uint32 _offset)
-	{
-		int32 fIndex = static_cast<int32>(_chanName.find('/', _offset));
-
-		if (fIndex == -1)
-		{
-			const LogChannel& channel = mChannels[_chanName];
-			return channel.levelFlags & _level;
-		}
-		else
-		{
-			const LogChannel& channel = mChannels[_chanName.substr(0u, fIndex)];
-
-			if (channel.levelFlags & _level)
-				return ShouldLogChannel(_chanName, _level, fIndex + 1);
-
-			return false;
-		}
-	}
+#endif
 
 	LogChannel& Logger::GetChannel(const std::wstring& _chanName) noexcept
 	{
 		std::lock_guard lk(mChannelMutex);
 
-		return mChannels[_chanName];
+		return mChannelFilter.channels[_chanName];
 	}
 
 	void Logger::Register(LogStreamBase& _stream)
@@ -108,7 +93,7 @@ namespace Sa
 		{
 			mChannelMutex.lock();
 
-			bool bShouldLogChan = ShouldLogChannel(_log.chanName, _log.level);
+			bool bShouldLogChan = mChannelFilter.IsChannelEnabled(_log.chanName, _log.level);
 
 			mChannelMutex.unlock();
 
@@ -117,13 +102,18 @@ namespace Sa
 				Output(_log);
 		}
 
+#if __SA_LOG_THREAD
 		/**
 		*	Decrement after process
 		*	Ensure correct Join.
 		*	no error because only 1 thread running (mProcessingCount not needed).
 		*/
 		--mQueueSize;
+
+#endif
 	}
+
+#if __SA_LOG_THREAD
 
 	const LogBase* Logger::Pop()
 	{
@@ -141,8 +131,13 @@ namespace Sa
 		return log;
 	}
 
+#endif
+
+
 	void Logger::Join(ThreadJoinMode _mode)
 	{
+#if __SA_LOG_THREAD
+
 		switch (_mode)
 		{
 			case ThreadJoinMode::Complete:
@@ -170,6 +165,12 @@ namespace Sa
 				break;
 			}
 		}
+
+#else
+
+		(void)_mode;
+
+#endif
 	}
 
 #endif

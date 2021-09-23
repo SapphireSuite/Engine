@@ -52,7 +52,7 @@ namespace Sa
 		*
 		*	\param[in] _paramNames	String containing all parameters' names.
 		*/
-		SA_ENGINE_API ArgsStr(const std::string& _paramNames);
+		ArgsStr(const std::string& _paramNames);
 
 		/**
 		*	\brief \e Value constructor
@@ -75,7 +75,7 @@ namespace Sa
 		*
 		*	\param[in] _paramNames	String containing all parameters' names.
 		*/
-		SA_ENGINE_API void Append(const std::string& _paramNames);
+		void Append(const std::string& _paramNames);
 
 		/**
 		*	\brief \e Append parameters at the end.
@@ -98,14 +98,14 @@ namespace Sa
 		* 
 		*	\return handled params.
 		*/
-		SA_ENGINE_API std::vector<Param>* operator->() noexcept;
+		std::vector<Param>* operator->() noexcept;
 
 		/**
 		*	\brief \b params \e member access operator.
 		* 
 		*	\return handled params.
 		*/
-		SA_ENGINE_API const std::vector<Param>* operator->() const noexcept;
+		const std::vector<Param>* operator->() const noexcept;
 
 
 		/**
@@ -115,7 +115,7 @@ namespace Sa
 		* 
 		*	\return handled param at index.
 		*/
-		SA_ENGINE_API Param& operator[](uint32 _index);
+		Param& operator[](uint32 _index);
 
 		/**
 		*	\brief \b param \e member access operator.
@@ -124,7 +124,7 @@ namespace Sa
 		*
 		*	\return handled param at index.
 		*/
-		SA_ENGINE_API const Param& operator[](uint32 _index) const;
+		const Param& operator[](uint32 _index) const;
 	};
 
 

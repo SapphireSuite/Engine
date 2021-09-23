@@ -4,119 +4,88 @@ cmake_minimum_required(VERSION 3.17)
 
 
 
-# === Projects ===
+# Project
 
-# Create CMake project.
-project(SA-Engine)
+project(SA_Engine)
 
 message("Main directory: ${CMAKE_SOURCE_DIR}")
 
 
 
-# === Outputs ===
+# Outputs
 
-# Setup output directory
+### Setup output directory
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Bin)		# .exe
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Libs)	# .lib / .a
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Libs)	# .dll / .so
 
 
 
-# === Inputs ===
+# Inputs
 
-# Parse files.
+### Parse files.
 file(GLOB_RECURSE SOURCES "Source/*")
 
-# Add dynamic library target.
-add_library(SA-Engine SHARED ${SOURCES})
+### Add static library target.
+add_library(SA_Engine STATIC ${SOURCES})
+
+### Link dependencies.
+target_link_libraries(SA_Engine PUBLIC SA_EngineDeps)
 
 
 
-# === Include directories ===
+# Include directories
 
-target_include_directories(SA-Engine PUBLIC Include)
-target_include_directories(SA-Engine PRIVATE Include/SA)
-
-
-# === Compile features ===
-
-# Standard
-target_compile_features(SA-Engine PUBLIC c_std_11)
-target_compile_features(SA-Engine PUBLIC cxx_std_17)
-
-# SA-Engine module implementation preprocessor.
-target_compile_definitions(SA-Engine PUBLIC SA_ENGINE_IMPL)
-
-
-# Thread
-set(THREADS_PREFER_PTHREAD_FLAG ON)
-find_package(Threads REQUIRED)
-target_link_libraries(SA-Engine PUBLIC Threads::Threads)
-
-
-# std::filesystem.
-if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU" AND ${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS "9.0.0")
-	target_link_libraries(SA-Engine PUBLIC stdc++fs)
-endif()
-
-
-# SIMD support
-if("${CMAKE_CXX_COMPILER_ID}" MATCHES "MSVC")
-	target_compile_options(SA-Engine PUBLIC /arch:AVX2)
-else()
-	target_compile_options(SA-Engine PUBLIC -mavx -mavx2)
-endif()
-
-
-# Advanced MSVC preprocessor required for Core::Debug
-# https://docs.microsoft.com/en-us/cpp/preprocessor/preprocessor-experimental-overview
-if("${CMAKE_CXX_COMPILER_ID}" MATCHES "MSVC")
-	if(${MSVC_TOOLSET_VERSION} LESS 142)
-		target_compile_options(SA-Engine PUBLIC /experimental:preprocessor)
-	else()
-		target_compile_options(SA-Engine PUBLIC /Zc:preprocessor)
-	endif()
-endif()
+target_include_directories(SA_Engine PUBLIC Include)
+target_include_directories(SA_Engine PRIVATE Include/SA)
 
 
 
-# === Options ===
+# Compile features
 
-# Add SA-Engine's tests to build tree.
+## Standard
+target_compile_features(SA_Engine PUBLIC c_std_11)
+target_compile_features(SA_Engine PUBLIC cxx_std_20)
+
+### SA-Engine module implementation preprocessor.
+target_compile_definitions(SA_Engine PUBLIC SA_ENGINE_IMPL)
+
+
+
+# Options
+
+## Add SA-Engine's tests to build tree.
 option(SA_ENGINE_BUILD_TESTS "Should build SA-Engine tests" OFF)
 
 
-# Define continuous integration (CI) preprocessor.
+## Define continuous integration (CI) preprocessor.
 if(SA_CI)
-	target_compile_definitions(SA-Engine PUBLIC SA_CI)
+	target_compile_definitions(SA_Engine PUBLIC SA_CI)
+endif()
+
+
+## Enable sanitizer
+option(SA_USE_SANITIZER "Use sanitizer" OFF)
+
+if(NOT SA_USE_SANITIZER AND MSVC)
+	# MSVC add sanitizer by default if installed.
+	string(REPLACE "-fsanitize=address" "" CMAKE_C_FLAGS ${CMAKE_C_FLAGS})
+	string(REPLACE "-fsanitize=address" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
 endif()
 
 
 
-# === Tests ===
+# Tests
 
-# Enable testing for this directory and below.
+### Enable testing for this directory and below.
 enable_testing()
 
 
 
-# === Entrypoints ===
+# Entrypoints
 
 add_subdirectory(ThirdParty)
 
 if(SA_ENGINE_BUILD_TESTS)
 	add_subdirectory(Tests)
 endif()
-
-
-
-# === Input Libs ===
-
-# GLFW.
-# TODO: Add if GLFW compilation.
-target_link_libraries(SA-Engine PUBLIC glfw ${GLFW_LIBRARIES})
-target_include_directories(SA-Engine PRIVATE ThirdParty/Libs/glfw/include)
-
-# ImGUI.
-# TODO: Add if ImGUI compilation.
-target_link_libraries(SA-Engine PUBLIC ImGui)

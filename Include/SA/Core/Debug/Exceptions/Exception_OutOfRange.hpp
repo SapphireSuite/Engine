@@ -43,7 +43,7 @@ namespace Sa
 		*	\param[in] _maxBound	Maximum bound allowed.
 		*	\param[in] _details		Additional details to display on assertion.
 		*/
-		SA_ENGINE_API Exception_OutOfRange(
+		Exception_OutOfRange(
 			BaseInfos&& _infos,
 			uint32 _currIndex,
 			uint32 _minBound,

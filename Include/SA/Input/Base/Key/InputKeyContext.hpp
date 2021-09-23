@@ -8,7 +8,7 @@
 #include <memory>
 #include <unordered_map>
 
-#include <SA/Collections/Debug>
+#include <SA/Core/Debug.hpp>
 
 #include <SA/Input/Base/Key/InputKeyBind.hpp>
 #include <SA/Input/Base/Key/Bindings/InputKeyBinding.hpp>
@@ -23,9 +23,9 @@ namespace Sa
 		template <typename InBindT, typename... Args>
 		std::shared_ptr<InputKeyBinding> Bind(const InputKeyBind& _inKeyBind, Args&&... _args);
 
-		SA_ENGINE_API void UnBind(const InputKeyBind& _inKeyBind);
-		SA_ENGINE_API void UnBind(const InputKey& _inKey);
-		SA_ENGINE_API void UnBind(std::shared_ptr<InputKeyBinding> _inBinding);
+		void UnBind(const InputKeyBind& _inKeyBind);
+		void UnBind(const InputKey& _inKey);
+		void UnBind(std::shared_ptr<InputKeyBinding> _inBinding);
 
 		bool Process(const InputKey& _inKey);
 	};

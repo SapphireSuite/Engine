@@ -2,27 +2,26 @@
 
 
 
-# === Projects ===
+# Projects
 
-project(SA-Engine_Prototype)
-
-
-
-# === Inputs ===
-
-# Add executable target.
-add_executable(SA-Engine_Prototype "main.cpp")
+project(SA_EngineProto)
 
 
 
-# === Dependencies ===
+# Inputs
 
-# Add library dependencies.
-target_link_libraries(SA-Engine_Prototype PRIVATE SA-Engine)
+### Add executable target.
+add_executable(SA_EngineProto "main.cpp")
 
 
 
-# === Tests ===
+# Dependencies
 
-# Add test.
-add_test(NAME CSA-Engine_Prototype COMMAND SA-Engine_Prototype --config $<CONFIGURATION> --exe $<TARGET_FILE:SA-Engine_Prototype>)
+### Add library dependencies.
+target_link_libraries(SA_EngineProto PRIVATE SA_Engine)
+
+
+
+# Tests
+
+add_test(NAME CSA_EngineProto COMMAND SA_EngineProto)

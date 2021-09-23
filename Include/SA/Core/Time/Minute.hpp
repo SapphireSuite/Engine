@@ -59,14 +59,14 @@ namespace Sa
 		*
 		*	\param[in] _time	Time minutes as \c float.
 		*/
-		SA_ENGINE_API Minute(float _time) noexcept;
+		Minute(float _time) noexcept;
 
 		/**
 		*	\brief \e Value contructor without conversion.
 		*
 		*	\param[in] _time	Time minutes as \c uint64.
 		*/
-		SA_ENGINE_API Minute(uint64 _time) noexcept;
+		Minute(uint64 _time) noexcept;
 
 
 		/**
@@ -74,35 +74,35 @@ namespace Sa
 		*
 		*	\return minutes as \c float without conversion.
 		*/
-		SA_ENGINE_API operator float() const noexcept;
+		operator float() const noexcept;
 
 		/**
 		*	\brief \e Cast operator to \c Tick with proper conversion.
 		*
 		*	\return \c Tick converted from \c Minute.
 		*/
-		SA_ENGINE_API operator Tick() const noexcept;
+		operator Tick() const noexcept;
 
 		/**
 		*	\brief \e Cast operator to \c MilliSecond with proper conversion.
 		*
 		*	\return \c MilliSecond converted from \c Minute.
 		*/
-		SA_ENGINE_API operator MilliSecond() const noexcept;
+		operator MilliSecond() const noexcept;
 
 		/**
 		*	\brief \e Cast operator to \c Second with proper conversion.
 		*
 		*	\return \c Second converted from \c Minute.
 		*/
-		SA_ENGINE_API operator Second() const noexcept;
+		operator Second() const noexcept;
 
 		/**
 		*	\brief \e Cast operator to \c Hour with proper conversion.
 		*
 		*	\return \c Hour converted from \c Minute.
 		*/
-		SA_ENGINE_API operator Hour() const noexcept;
+		operator Hour() const noexcept;
 
 
 #if SA_LOGGING
@@ -114,7 +114,7 @@ namespace Sa
 		*
 		*	\return this as a string.
 		*/
-		SA_ENGINE_API std::string ToString() const noexcept;
+		std::string ToString() const noexcept;
 #endif
 	};
 
@@ -125,7 +125,7 @@ namespace Sa
 	*
 	*	\return \c Minute without time-conversion.
 	*/
-	SA_ENGINE_API Minute operator""_min(uint64 _lit) noexcept;
+	Minute operator""_min(uint64 _lit) noexcept;
 
 	/**
 	*	\brief _ms \b literal operator.
@@ -134,7 +134,7 @@ namespace Sa
 	*
 	*	\return \c Minute without time-conversion.
 	*/
-	SA_ENGINE_API Minute operator""_min(long double _lit) noexcept;
+	Minute operator""_min(long double _lit) noexcept;
 }
 
 

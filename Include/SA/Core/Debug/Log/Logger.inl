@@ -7,6 +7,8 @@ namespace Sa
 	template <typename LogT>
 	void Logger::Push(LogT&& _log)
 	{
+#if __SA_LOG_THREAD
+
 		mLogQueueMutex.lock();
 
 		mLogQueue.push(new LogT(std::forward<LogT>(_log)));
@@ -14,6 +16,12 @@ namespace Sa
 		mLogQueueMutex.unlock();
 
 		++mQueueSize;
+
+#else
+
+		ProcessLog(std::forward<LogT>(_log));
+
+#endif
 	}
 
 	template <typename ExcepT>

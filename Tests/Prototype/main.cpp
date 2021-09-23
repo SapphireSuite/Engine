@@ -2,92 +2,458 @@
 
 #include <iostream>
 
-#define LOG(_str) std::cout << _str << std::endl;
-
 #include <SA/Collections/Debug>
 using namespace Sa;
 
-#include <SA/Window/GLFW/GLFWWindow.hpp>
-#include <SA/Input/GLFW/GLFWInputSystem.hpp>
+#include <SA/Core/Time/Chrono.hpp>
 
+#include <SA/Maths/Transform/Transform.hpp>
+
+#include <SA/Window/GLFW/GLFWWindow.hpp>
+#include <SA/Window/GLFW/GLFWWindowSystem.hpp>
+
+#include <SA/Input/GLFW/GLFWInputSystem.hpp>
 #include <SA/Input/Base/Key/Bindings/InputKeyAction.hpp>
 #include <SA/Input/Base/Key/Bindings/InputKeyRange.hpp>
 #include <SA/Input/Base/Axis/Bindings/InputAxisAction.hpp>
 #include <SA/Input/Base/Axis/Bindings/InputAxisRange.hpp>
 
+#include <SA/Render/Vulkan/VkRenderSystem.hpp>
+#include <SA/Render/Vulkan/VkRenderInstance.hpp>
+#include <SA/Render/Vulkan/Surface/VkRenderSurface.hpp>
+#include <SA/Render/Vulkan/Device/VkDevice.hpp>
+#include <SA/Render/Vulkan/Device/VkCommandPool.hpp>
+#include <SA/Render/Vulkan/Pass/VkRenderPass.hpp>
+#include <SA/Render/Vulkan/Buffers/VkFrameBuffer.hpp>
+#include <SA/Render/Vulkan/Buffers/VkCommandBuffer.hpp>
+#include <SA/Render/Vulkan/Mesh/VkStaticMesh.hpp>
+#include <SA/Render/Vulkan/Shader/VkShader.hpp>
+#include <SA/Render/Vulkan/Pipeline/VkPipeline.hpp>
+#include <SA/Render/Vulkan/Pipeline/VkDescriptorSet.hpp>
+#include <SA/Render/Vulkan/Buffers/VkBuffer.hpp>
+#include <SA/Render/Vulkan/Texture/VkTexture.hpp>
+#include <SA/Render/Vulkan/VkRenderFrame.hpp>
+
+#include <SA/Render/Base/Shader/Bindings/ShaderUBOBinding.hpp>
+#include <SA/Render/Base/Shader/Bindings/ShaderIBOBinding.hpp>
+
+#include <SA/SDK/Assets/ModelAsset.hpp>
+#include <SA/SDK/Assets/Shader/ShaderAsset.hpp>
+#include <SA/SDK/Assets/TextureAsset.hpp>
+
+GLFW::WindowSystem winSys;
 GLFW::Window win;
+
 GLFW::InputSystem inputSys;
 
-InputContext* inputContext = nullptr;
+Vk::RenderSystem renderSys;
+Vk::RenderInstance renderInst;
+Vk::Device device;
+Vk::RenderSurface surface;
+RenderPassDescriptor renderPassDesc;
+Vk::RenderPass renderPass;
+Vk::CommandPool cmdPool;
+std::vector<Vk::CommandBuffer> cmdBuffers;
+uint32 imageIndex = 0u;
 
-std::shared_ptr<InputKeyBinding> yHoldBind;
+Vk::StaticMesh cubeMesh;
+Vk::Shader unlitvert;
+Vk::Shader unlitfrag;
+PipelineCreateInfos unlitPipelineInfos{ renderPass, renderPassDesc };
+Vk::Pipeline unlitPipeline;
+Vk::DescriptorSet cubeDescSet;
+Vk::Buffer camUBO;
+Vk::Buffer modelUBO;
+Vk::Texture missText;
+
+const Vec2ui winDim{ 1200u, 800u };
+
+
+struct camUBOData
+{
+	CMat4f proj = Mat4f::Identity;
+	CMat4f viewInv = Mat4f::Identity;
+	Vec3f viewPosition;
+};
+
+TransffPR camTr;
+camUBOData camUBOd;
+
+struct modelUBOData
+{
+	CMat4f modelMat = Mat4f::Identity;
+
+	float uvTilling = 1.0f;
+	float uvOffset = 0.0f;
+};
+
+float deltaTime = 0.0f;
+
+
+bool bCamEnabled = false;
+static float dx = 0.0f;
+static float dy = 0.0f;
+
+int32 rightSign = 0;
+int32 upSign = 0;
+int32 forwardSign = 0;
 
 int main()
 {
-	// Window Creation.
+	// Init.
 	{
-		GLFW::Window::CreateInfos infos;
-		infos.dimension = Vec2ui{ 1200u, 800u };
-		//infos.mode = WindowMode::Borderless;
+		Debug::logger.GetChannel(L"SA/Render/Vulkan/VLayers").levelFlags.Remove(LogLevel::Normal);
 
-		win.Create(infos);
-	}
-
-
-	// Input context creation.
-	{
-		AInputWindowContext* const inWinContext = inputSys.Register(&win);
-
-		inputContext = inWinContext->Create();
-	}
-
-
-	// Input Binding.
-	{
-		inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::Q, KeyState::Pressed }, []() { SA_LOG("Q Pressed"); });
-		inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::Q, KeyState::Released }, []() { SA_LOG("Q Released"); });
-		inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::Esc, KeyState::Pressed }, &win, &GLFW::Window::Close);
-
-		inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::Y, KeyState::Pressed }, []() { SA_LOG("Y Pressed:"); });
-
-
-		inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::O, KeyState::Pressed }, []()
+		// Window.
 		{
-			inputContext->axis.Bind<InputAxisRange>(Axis::MouseX, [](float _inX) { SA_LOG("MouseX: " << _inX); });
-			inputContext->axis.Bind<InputAxisRange>(Axis::MouseY, [](float _inY) { SA_LOG("MouseY: " << _inY); });
+			winSys.Create();
+
+			GLFW::Window::CreateInfos infos;
+			infos.dimension = winDim;
+
+			win.Create(infos);
+		}
+
+
+		// Input.
+		{
+			inputSys.Create();
+
+			AInputWindowContext* const inWinContext = inputSys.Register(&win);
+			InputContext* const inputContext = inWinContext->CreateContext();
+
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::Esc, KeyState::Pressed }, &win, &GLFW::Window::Close);
+
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::D, KeyState::Pressed }, []() { rightSign = 1; });
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::D, KeyState::Released }, [](){ if(rightSign == 1) rightSign = 0; });
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::A, KeyState::Pressed }, []() { rightSign = -1; });
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::A, KeyState::Released }, []() { if (rightSign == -1) rightSign = 0; });
+
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::E, KeyState::Pressed }, []() { upSign = 1; });
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::E, KeyState::Released }, []() { if (upSign == 1) upSign = 0; });
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::Q, KeyState::Pressed }, []() { upSign = -1; });
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::Q, KeyState::Released }, []() { if (upSign == -1) upSign = 0; });
+
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::W, KeyState::Pressed }, []() { forwardSign = 1; });
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::W, KeyState::Released }, []() { if (forwardSign == 1) forwardSign = 0; });
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::S, KeyState::Pressed }, []() { forwardSign = -1; });
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::S, KeyState::Released }, []() { if (forwardSign == -1) forwardSign = 0; });
+
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::MouseRight, KeyState::Pressed }, []() {
+				bCamEnabled = true;
+				win.SetCursorMode(CursorMode::Capture | CursorMode::Hidden);
+			});
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::MouseRight, KeyState::Released }, []() {
+				bCamEnabled = false;
+				win.SetCursorMode(CursorMode::None);
+			});
+
+			inputContext->axis.Bind<InputAxisRange>(Axis::MouseX, [](float _inX) {
+				if (!bCamEnabled) return;
+				dx -= _inX * winDim.x * deltaTime * 0.25f;
+				dx = dx > Maths::Pi ? dx - Maths::Pi : dx < -Maths::Pi ? dx + Maths::Pi : dx;
+			});
+			inputContext->axis.Bind<InputAxisRange>(Axis::MouseY, [](float _inY) {
+				if (!bCamEnabled) return;
+				dy -= _inY * winDim.y * deltaTime * 0.25f;
+				dy = dy > Maths::Pi ? dy - Maths::Pi : dy < -Maths::Pi ? dy + Maths::Pi : dy;
+			});
+		}
+
+
+		// Render
+		{
+			renderSys.Create();
+			renderInst.Create(winSys);
+			surface = win.CreateVkRenderSurface(renderInst);
 			
-			yHoldBind = inputContext->key.Bind<InputKeyRange>(InputKeyBind{ Key::Y, KeyState::Pressed | KeyState::Hold },
-				[](float _inX) { SA_LOG("Y Pressed Or Hold:" << _inX); });
-		});
+			std::vector<Vk::GraphicDeviceInfos> deviceInfos = Vk::Device::QuerySuitableDevices(renderInst, &surface);
+			device.Create(deviceInfos[0]);
 
-		inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::P, KeyState::Pressed }, []()
+			surface.Create(device);
+
+
+			renderPassDesc = RenderPassDescriptor::DefaultSingle(&surface);
+
+			renderPass.Create(device, renderPassDesc);
+
+			surface.CreateFrameBuffers(device, renderPass, renderPassDesc);
+
+			cmdPool.Create(device, device.queueMgr.graphics.GetQueue(0).GetFamilyIndex());
+
+			for(uint32 i = 0; i < 3; ++i)
+				cmdBuffers.push_back(cmdPool.Allocate(device, VK_COMMAND_BUFFER_LEVEL_PRIMARY));
+		}
+
+
+		// UBO
 		{
-			inputContext->axis.UnBind(Axis::MouseX);
-			inputContext->axis.UnBind(Axis::MouseY);
+			modelUBOData modelUBOd;
+			modelUBO.Create(device, sizeof(modelUBOData),
+				VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
+				VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
+				VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+				&modelUBOd);
 
-			inputContext->key.UnBind(yHoldBind);
-		});
+
+			camTr.position = Vec3f(0.0f, 0.0f, 5.0f);
+			camUBOd.proj = Mat4f::MakePerspective(90.0f, 1200.0f / 800.0f);
+			camUBOd.viewInv = camTr.Matrix().GetInversed();
+			camUBOd.viewPosition = camTr.position;
+			camUBO.Create(device, sizeof(camUBOData),
+				VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
+				VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
+				VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+				&camUBOd);
+		}
 
 
-		inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::J, KeyState::Pressed }, []() { win.SetWindowMode(WindowMode::Windowed); });
-		inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::K, KeyState::Pressed }, []() { win.SetWindowMode(WindowMode::FullScreen); });
-		inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::L, KeyState::Pressed }, []() { win.SetWindowMode(WindowMode::Borderless); });
+		// Assets
+		{
+
+			// Submit
+			ResourceHolder resHolder;
+			cmdBuffers[0].Begin();
+
+
+
+			// CUBE.
+			{
+				const std::string assetName = "Assets/Meshes/cube.spha";
+				const std::string resName = "/Engine/Resources/Meshes/cube.obj";
+
+				MeshAsset meshAsset;
+				if (!meshAsset.Load(assetName))
+				{
+					ModelAsset modelAsset;
+					if (modelAsset.Import(resName))
+					{
+						modelAsset.meshes[0].Save(assetName);
+						meshAsset = std::move(modelAsset.meshes[0]);
+					}
+				}
+
+				cubeMesh.Create(device, cmdBuffers[0], resHolder, meshAsset.raw);
+			}
+
+
+
+
+			// Texture
+			{
+				const std::string assetName = "Assets/Textures/missing.spha";
+				const std::string resName = "/Engine/Resources/Textures/missing_texture.png";
+
+				TextureAsset asset;
+
+				if (!asset.Load(assetName))
+				{
+					if (asset.Import(resName))
+					{
+						asset.Save(assetName);
+					}
+				}
+
+				missText.Create(device, cmdBuffers[0], resHolder, asset.raw);
+			}
+
+
+
+			cmdBuffers[0].End();
+
+			VkCommandBuffer bbb = cmdBuffers[0];
+
+			// Submit commands.
+			VkSubmitInfo submitInfo{};
+			submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+			submitInfo.pNext = nullptr;
+			submitInfo.waitSemaphoreCount = 0u;
+			submitInfo.pWaitSemaphores = nullptr;
+			submitInfo.pWaitDstStageMask = nullptr;
+			submitInfo.commandBufferCount = 1u;
+			submitInfo.pCommandBuffers = &bbb;
+			submitInfo.signalSemaphoreCount = 0u;
+			submitInfo.pSignalSemaphores = nullptr;
+
+			vkQueueSubmit(device.queueMgr.transfer.GetQueue(0), 1, &submitInfo, VK_NULL_HANDLE);
+			vkQueueWaitIdle(device.queueMgr.transfer.GetQueue(0));
+
+			resHolder.FreeAll();
+
+
+			// Shaders
+			{
+				// Unlit vert
+				{
+					const std::string assetName = "Assets/Shaders/unlit_vert.spha";
+					const std::string resName = "/Engine/Resources/Shaders/Forward/unlit.vert";
+
+					ShaderAsset asset;
+
+					if (!asset.Load(assetName))
+					{
+						if (asset.Import(resName))
+						{
+							asset.Save(assetName);
+						}
+					}
+
+					unlitvert.Create(device, asset.raw);
+
+					unlitPipelineInfos.AddShader(unlitvert, asset.raw.descriptor);
+				}
+
+				// Unlit frag
+				{
+					const std::string assetName = "Assets/Shaders/unlit_frag.spha";
+					const std::string resName = "/Engine/Resources/Shaders/Forward/unlit.frag";
+
+					ShaderAsset asset;
+
+					if (!asset.Load(assetName))
+					{
+						if (asset.Import(resName))
+						{
+							asset.Save(assetName);
+						}
+					}
+
+					unlitfrag.Create(device, asset.raw);
+
+					unlitPipelineInfos.AddShader(unlitfrag, asset.raw.descriptor);
+				}
+			}
+
+
+
+
+			// Pipeline
+			{
+				unlitPipelineInfos.vertexBindingLayout.meshLayout = cubeMesh.GetLayout();
+				unlitPipeline.Create(device, unlitPipelineInfos);
+			}
+
+
+			// DescSet.
+			{
+				DescriptorSetCreateInfos infos{ unlitPipeline };
+				infos.AddBinding<ShaderUBOBinding>(0u, &camUBO, 1);
+				infos.AddBinding<ShaderUBOBinding>(1u, &modelUBO, 1);
+				infos.AddBinding<ShaderIBOBinding>(2u, &missText);
+
+				cubeDescSet.Create(device, infos);
+			}
+		}
 	}
 
+
+	// Loop.
+	{
+		Chrono chrono;
+
+	#if !SA_CI
+
+		while (!win.ShouldClose())
+
+	#endif
+		{
+			deltaTime = chrono.Restart() * 0.000005f;
+
+
+			inputSys.Update();
+
+			// Update Camera
+			if(bCamEnabled)
+			{
+				if (rightSign)
+					camTr.position += rightSign * deltaTime * camTr.Right();
+				if (upSign)
+					camTr.position += upSign * deltaTime * camTr.Up();
+				if (forwardSign)
+					camTr.position += -1 * forwardSign * deltaTime * camTr.Forward();
+
+				camTr.rotation = Quatf(cos(dx), 0, sin(dx), 0) * Quatf(cos(dy), sin(dy), 0, 0);
+
+				camUBOd.viewInv = camTr.Matrix().GetInversed();
+				camUBOd.viewPosition = camTr.position;
+				camUBO.UpdateData(device, &camUBOd, sizeof(camUBOd));
+			}
+
+
+			Vk::FrameBuffer& frameBuffer = surface.Begin(device);
+
+			Vk::CommandBuffer& cmdBuffer = cmdBuffers[imageIndex];
+
+			Vk::RenderFrame frame{ cmdBuffer };
+
+			cmdBuffer.Begin();
+
+			renderPass.Begin(cmdBuffer, frameBuffer);
+
+			unlitPipeline.Bind(frame);
+			cubeDescSet.Bind(frame, unlitPipeline);
+			cubeMesh.Draw(frame);
+
+
+			renderPass.End(cmdBuffer);
+
+			cmdBuffer.End();
+
+			surface.End(device, { cmdBuffer });
+
+			imageIndex = (imageIndex + 1) % 3;
+		}
+	}
+
+
+	// Uninit
+	{
+		// Render
+		{
+			vkDeviceWaitIdle(device);
+
+			camUBO.Destroy(device);
+			modelUBO.Destroy(device);
+
+			cubeDescSet.Destroy(device);
+			unlitPipeline.Destroy(device);
+
+			unlitvert.Destroy(device);
+			unlitfrag.Destroy(device);
+
+			missText.Destroy(device);
+			cubeMesh.Destroy(device);
+
+			cmdPool.Destroy(device);
+
+			surface.DestroyFrameBuffers(device);
+
+			renderPass.Destroy(device);
+			surface.Destroy(renderInst, device);
+
+			device.Destroy();
+
+			renderInst.Destroy();
+			renderSys.Destroy();
+		}
+
+
+		// Input.
+		{
+			inputSys.Destroy();
+		}
+
+
+		// Window
+		{
+			win.Destroy();
+			winSys.Destroy();
+		}
+	}
 
 #if !SA_CI
 
-	while (!win.ShouldClose())
-
-#endif
-	{
-		inputSys.Update();
-	}
-
-
-#if SA_LOGGING
-
-	Debug::logger.Join(ThreadJoinMode::Abandon);
+	std::cin.get();
 
 #endif
 

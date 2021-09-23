@@ -19,7 +19,7 @@ namespace Sa
 
 		InputKeyBind() = default;
 		InputKeyBind(const InputKey& _inRawKey) noexcept;
-		SA_ENGINE_API InputKeyBind(Key _key, Flags<KeyState> _stateFlags) noexcept;
+		InputKeyBind(Key _key, Flags<KeyState> _stateFlags) noexcept;
 	};
 }
 

@@ -4,9 +4,9 @@
 
 #include <Core/Debug/ConsoleColor.hpp>
 
-#include <Collections/Debug>
+#include <Core/Debug.hpp>
 
-#include <Core/Support/Windows.hpp>
+#include <Core/Support/API/Windows.hpp>
 
 namespace Sa
 {

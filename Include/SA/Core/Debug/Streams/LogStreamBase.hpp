@@ -45,7 +45,7 @@ namespace Sa
 		*
 		*	\return this.
 		*/
-		SA_ENGINE_API LogStreamBase& operator<<(const LogBase& _log);
+		LogStreamBase& operator<<(const LogBase& _log);
 	};
 
 

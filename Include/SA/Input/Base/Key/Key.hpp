@@ -127,6 +127,16 @@ namespace Sa
 
 //}
 
+
+//{ Mouse
+
+		// TODO: Split Key / Mouse Buttons
+		MouseLeft,
+		MouseRight,
+		MouseMiddle,
+
+//}
+
 		Max
 	};
 }

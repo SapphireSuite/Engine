@@ -5,9 +5,9 @@
 #ifndef SAPPHIRE_WINDOW_GLFW_WINDOW_GUARD
 #define SAPPHIRE_WINDOW_GLFW_WINDOW_GUARD
 
-#include <SA/API/GLFW.hpp>
-
 #include <SA/Window/Base/AWindow.hpp>
+
+#include <SA/Core/Support/API/GLFW.hpp>
 
 #if SA_GLFW
 
@@ -80,15 +80,22 @@ namespace Sa::GLFW
 		InputWindowContext* inputWinContext = nullptr;
 
 
-		SA_ENGINE_API void SetWindowMode(WindowMode _mode) override final;
+		void SetWindowMode(WindowMode _mode) override final;
+		void SetCursorMode(Flags<CursorMode> _flags) override final;
 
-		SA_ENGINE_API void Create(const CreateInfos& _infos) override final;
-		SA_ENGINE_API void Destroy() override final;
+		void Create(const CreateInfos& _infos) override final;
+		void Destroy() override final;
 
-		SA_ENGINE_API AInputWindowContext* GetInputWindowContext() const override final;
+		AInputWindowContext* GetInputWindowContext() const override final;
 
-		SA_ENGINE_API void Close() override final;
-		SA_ENGINE_API bool ShouldClose() const override final;
+		void Close() override final;
+		bool ShouldClose() const override final;
+
+#if SA_VULKAN
+
+		Vk::RenderSurface CreateVkRenderSurface(const Vk::RenderInstance& _instance) const override final;
+
+#endif
 
 		/**
 		*	\brief \e Getter of GLFW internal handle.

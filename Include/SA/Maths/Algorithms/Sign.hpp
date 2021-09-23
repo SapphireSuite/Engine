@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_MATHS_SIGN_GUARD
 #define SAPPHIRE_MATHS_SIGN_GUARD
 
-#include <SA/Collections/Debug>
+#include <SA/Core/Debug.hpp>
 
 /**
 *	\file Sign.hpp

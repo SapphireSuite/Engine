@@ -32,10 +32,10 @@ namespace Sa
 	struct DateTime
 	{
 		/// Week days 3-char8 name.
-		SA_ENGINE_API static constexpr const char8* sDays[7]{ "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
+		static constexpr const char8* sDays[7]{ "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
 
 		/// Month 3-char8 name.
-		SA_ENGINE_API static constexpr const char8* sMonths[12]{ "Jan", "Fev", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+		static constexpr const char8* sMonths[12]{ "Jan", "Fev", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
 
 		/// second number [0, 59].
 		uint8 second = 0;
@@ -73,7 +73,7 @@ namespace Sa
 		*	\param[in] _year	year values.
 		*	\param[in] _weekday	weekday values.
 		*/
-		SA_ENGINE_API DateTime(uint8 _second,
+		DateTime(uint8 _second,
 			uint8 _minute = 0_ui8,
 			uint8 _hour = 0_ui8,
 			uint8 _day = 0_ui8,
@@ -87,7 +87,7 @@ namespace Sa
 		* 
 		*	\param[in] _time	tm values.
 		*/
-		SA_ENGINE_API DateTime(const struct tm& _time) noexcept;
+		DateTime(const struct tm& _time) noexcept;
 
 
 		/**
@@ -95,14 +95,14 @@ namespace Sa
 		*
 		*	\return 3 char8 of day name.
 		*/
-		SA_ENGINE_API const char8* GetDayName() const;
+		const char8* GetDayName() const;
 
 		/**
 		*	\brief \e Getter of month name.
 		*
 		*	\return 3 char8 of month name.
 		*/
-		SA_ENGINE_API const char8* GetMonthName() const;
+		const char8* GetMonthName() const;
 		
 		
 		/**
@@ -112,7 +112,7 @@ namespace Sa
 		* 
 		*	\return DateTime stats of the file at path.
 		*/
-		SA_ENGINE_API static DateTime FileStats(const std::string _path);
+		static DateTime FileStats(const std::string _path);
 
 
 #if SA_LOGGING
@@ -125,7 +125,7 @@ namespace Sa
 		*
 		*	\return this as a string.
 		*/
-		SA_ENGINE_API std::string ToString() const;
+		std::string ToString() const;
 
 #endif
 	};
