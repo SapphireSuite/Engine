@@ -9,8 +9,9 @@
 
 namespace Sa
 {
-	class RawMesh
+	struct RawMesh
 	{
+	protected:
 		std::shared_ptr<VertexLayout> mLayout = VertexLayout::Make<VertexComp::Default>();
 
 	public:

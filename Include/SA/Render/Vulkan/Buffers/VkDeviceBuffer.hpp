@@ -19,12 +19,12 @@ namespace Sa::Vk
 			uint64 _size,
 			VkBufferUsageFlags _usage);
 
-		void Create(ResourceInitializer* _init,
+		void Create(ResourceInitializer& _init,
 			uint64 _size,
 			VkBufferUsageFlags _usage,
 			const void* _data);
 
-		void UpdateData(ResourceInitializer* _init, const void* _data, uint64 _size, uint64 _offset = 0);
+		void UpdateData(ResourceInitializer& _init, const void* _data, uint64 _size, uint64 _offset = 0);
 	};
 }
 

@@ -28,6 +28,9 @@ namespace Sa
 	class AShader;
 	struct RawShader;
 
+	class AStaticMesh;
+	struct RawMesh;
+
 	class ATexture;
 	struct RawTexture;
 
@@ -52,17 +55,24 @@ namespace Sa
 		virtual ARenderPipeline* CreatePipeline(ARenderDevice* _device, const RenderPipelineCreateInfos& _infos) = 0;
 		virtual void DestroyPipeline(ARenderDevice* _device, ARenderPipeline* _pipeline) = 0;
 
+//{ Resources
+
 		virtual ARenderResourceInitializer* CreateResourceInitializer(ARenderDevice* _device);
 		virtual void DestroyResourceInitializer(ARenderResourceInitializer* _init);
 
 		virtual AShader* CreateShader(ARenderResourceInitializer* _init, const RawShader& _raw) = 0;
 		virtual void DestroyShader(ARenderDevice* _device, AShader* _shader) = 0;
 
+		virtual AStaticMesh* CreateStaticMesh(ARenderResourceInitializer* _init, const RawMesh& _raw) = 0;
+		virtual void DestroyStaticMesh(ARenderDevice* _device, AStaticMesh* _mesh) = 0;
+
 		virtual ATexture* CreateTexture(ARenderResourceInitializer* _init, const RawTexture& _raw) = 0;
 		virtual void DestroyTexture(ARenderDevice* _device, ATexture* _texture) = 0;
 
 		virtual ACubemap* CreateCubemap(ARenderResourceInitializer* _init, const RawCubemap& _raw) = 0;
 		virtual void DestroyCubemap(ARenderDevice* _device, ACubemap* _cubemap) = 0;
+
+//}
 	};
 }
 

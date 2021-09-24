@@ -22,19 +22,17 @@ using namespace Sa;
 
 #include <SA/SDK/Assets/Shader/ShaderAsset.hpp>
 #include <SA/SDK/Assets/TextureAsset.hpp>
+#include <SA/SDK/Assets/ModelAsset.hpp>
 
 //#include <SA/Render/Vulkan/Device/VkCommandPool.hpp>
 //#include <SA/Render/Vulkan/Buffers/VkFrameBuffer.hpp>
 //#include <SA/Render/Vulkan/Buffers/VkCommandBuffer.hpp>
-//#include <SA/Render/Vulkan/Mesh/VkStaticMesh.hpp>
 //#include <SA/Render/Vulkan/Pipeline/VkDescriptorSet.hpp>
 //#include <SA/Render/Vulkan/Buffers/VkBuffer.hpp>
 //#include <SA/Render/Vulkan/VkRenderFrame.hpp>
 
 //#include <SA/Render/Base/Shader/Bindings/ShaderUBOBinding.hpp>
 //#include <SA/Render/Base/Shader/Bindings/ShaderIBOBinding.hpp>
-
-//#include <SA/SDK/Assets/ModelAsset.hpp>
 
 GLFW::WindowSystem winSys;
 GLFW::Window win;
@@ -52,6 +50,7 @@ ARenderPipeline* unlitPipeline = nullptr;
 AShader* unlitvert = nullptr;
 AShader* unlitfrag = nullptr;
 ATexture* missText = nullptr;
+AStaticMesh* cubeMesh = nullptr;
 
 //Vk::CommandPool cmdPool;
 //std::vector<Vk::CommandBuffer> cmdBuffers;
@@ -205,6 +204,7 @@ int main()
 		{
 			ARenderResourceInitializer* const resInit = renderSys.CreateResourceInitializer(device);
 
+
 			// Shaders
 			{
 				// Unlit vert
@@ -246,6 +246,7 @@ int main()
 				}
 			}
 
+
 			// Texture
 			{
 				const std::string assetName = "Assets/Textures/missing.spha";
@@ -264,67 +265,30 @@ int main()
 				missText = renderSys.CreateTexture(resInit, asset.raw);
 			}
 
+
+			// CUBE.
+			{
+				const std::string assetName = "Assets/Meshes/cube.spha";
+				const std::string resName = "/Engine/Resources/Meshes/cube.obj";
+
+				MeshAsset meshAsset;
+				if (!meshAsset.Load(assetName))
+				{
+					ModelAsset modelAsset;
+					if (modelAsset.Import(resName))
+					{
+						modelAsset.meshes[0].Save(assetName);
+						meshAsset = std::move(modelAsset.meshes[0]);
+					}
+				}
+
+				cubeMesh = renderSys.CreateStaticMesh(resInit, meshAsset.raw);
+			}
+
+
 			resInit->Submit();
 
 			renderSys.DestroyResourceInitializer(resInit);
-
-			//// Submit
-			//ResourceHolder resHolder;
-			//cmdBuffers[0].Begin();
-
-
-
-			//// CUBE.
-			//{
-			//	const std::string assetName = "Assets/Meshes/cube.spha";
-			//	const std::string resName = "/Engine/Resources/Meshes/cube.obj";
-
-			//	MeshAsset meshAsset;
-			//	if (!meshAsset.Load(assetName))
-			//	{
-			//		ModelAsset modelAsset;
-			//		if (modelAsset.Import(resName))
-			//		{
-			//			modelAsset.meshes[0].Save(assetName);
-			//			meshAsset = std::move(modelAsset.meshes[0]);
-			//		}
-			//	}
-
-			//	cubeMesh.Create(device, cmdBuffers[0], resHolder, meshAsset.raw);
-			//}
-
-
-
-
-
-
-
-
-			//cmdBuffers[0].End();
-
-			//VkCommandBuffer bbb = cmdBuffers[0];
-
-			//// Submit commands.
-			//VkSubmitInfo submitInfo{};
-			//submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-			//submitInfo.pNext = nullptr;
-			//submitInfo.waitSemaphoreCount = 0u;
-			//submitInfo.pWaitSemaphores = nullptr;
-			//submitInfo.pWaitDstStageMask = nullptr;
-			//submitInfo.commandBufferCount = 1u;
-			//submitInfo.pCommandBuffers = &bbb;
-			//submitInfo.signalSemaphoreCount = 0u;
-			//submitInfo.pSignalSemaphores = nullptr;
-
-			//vkQueueSubmit(device.queueMgr.transfer.GetQueue(0), 1, &submitInfo, VK_NULL_HANDLE);
-			//vkQueueWaitIdle(device.queueMgr.transfer.GetQueue(0));
-
-			//resHolder.FreeAll();
-
-
-
-
-
 
 
 			//// Pipeline
@@ -419,12 +383,9 @@ int main()
 
 			cubeDescSet.Destroy(device);
 			unlitPipeline.Destroy(device);
-
-			missText.Destroy(device);
-			cubeMesh.Destroy(device);
-
-			cmdPool.Destroy(device);
 			*/
+
+			renderSys.DestroyStaticMesh(device, cubeMesh);
 
 			renderSys.DestroyTexture(device, missText);
 

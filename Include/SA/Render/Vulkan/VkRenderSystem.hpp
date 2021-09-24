@@ -14,6 +14,7 @@
 #include <SA/Render/Vulkan/Pipeline/VkPipeline.hpp>
 #include <SA/Render/Vulkan/VkResourceInitializer.hpp>
 #include <SA/Render/Vulkan/Shader/VkShader.hpp>
+#include <SA/Render/Vulkan/Mesh/VkStaticMesh.hpp>
 #include <SA/Render/Vulkan/Texture/VkTexture.hpp>
 #include <SA/Render/Vulkan/Texture/VkCubemap.hpp>
 
@@ -41,11 +42,17 @@ namespace Sa::Vk
 		ARenderPipeline* CreatePipeline(ARenderDevice* _device, const RenderPipelineCreateInfos& _infos) override final;
 		void DestroyPipeline(ARenderDevice* _device, ARenderPipeline* _pipeline) override final;
 
+
+//{ Resources
+
 		ARenderResourceInitializer* CreateResourceInitializer(ARenderDevice* _device) override final;
 		void DestroyResourceInitializer(ARenderResourceInitializer* _init) override final;
 
 		AShader* CreateShader(ARenderResourceInitializer* _init, const RawShader& _raw) override final;
 		void DestroyShader(ARenderDevice* _device, AShader* _shader) override final;
+
+		virtual AStaticMesh* CreateStaticMesh(ARenderResourceInitializer* _init, const RawMesh& _raw) override final;
+		virtual void DestroyStaticMesh(ARenderDevice* _device, AStaticMesh* _mesh) override final;
 
 		ATexture* CreateTexture(ARenderResourceInitializer* _init, const RawTexture& _raw) override final;
 		void DestroyTexture(ARenderDevice* _device, ATexture* _texture) override final;
@@ -53,6 +60,7 @@ namespace Sa::Vk
 		ACubemap* CreateCubemap(ARenderResourceInitializer* _init, const RawCubemap& _raw) override final;
 		void DestroyCubemap(ARenderDevice* _device, ACubemap* _cubemap) override final;
 
+//}
 
 		operator const Instance& () const;
 	};

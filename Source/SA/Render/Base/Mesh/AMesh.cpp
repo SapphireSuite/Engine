@@ -9,8 +9,10 @@ namespace Sa
 		return mLayout;
 	}
 
-	void AMesh::Create(const RawMesh& _rawMesh)
+	void AMesh::Create(ARenderResourceInitializer* _init, const RawMesh& _raw)
 	{
-		mLayout = _rawMesh.GetLayout();
+		(void)_init;
+
+		mLayout = _raw.GetLayout();
 	}
 }

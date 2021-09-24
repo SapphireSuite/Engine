@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_RENDER_VK_STATIC_MESH_GUARD
 #define SAPPHIRE_RENDER_VK_STATIC_MESH_GUARD
 
-#include <SA/Render/Base/Mesh/AMesh.hpp>
+#include <SA/Render/Base/Mesh/AStaticMesh.hpp>
 
 #include <SA/Render/Vulkan/Buffers/VkDeviceBuffer.hpp>
 
@@ -13,7 +13,7 @@
 
 namespace Sa::Vk
 {
-	class StaticMesh : public AMesh
+	class StaticMesh : public AStaticMesh
 	{
 		DeviceBuffer mVertexBuffer;
 		DeviceBuffer mIndexBuffer;
@@ -21,8 +21,8 @@ namespace Sa::Vk
 		uint32 mIndicesSize = ~uint32();
 
 	public:
-		void Create(const Device& _device, CommandBuffer& _cmd, ResourceHolder& _resHold, const RawMesh& _raw);
-		void Destroy(const Device& _device);
+		void Create(ARenderResourceInitializer* _init, const RawMesh& _raw) override final;
+		void Destroy(const ARenderDevice* _device) override final;
 
 		void Draw(const ARenderFrame& _frame, const MeshDrawInfos& _infos = MeshDrawInfos()) const override final;
 	};

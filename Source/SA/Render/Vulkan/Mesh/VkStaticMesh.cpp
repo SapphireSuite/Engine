@@ -5,34 +5,40 @@
 #include <Core/Algorithms/SizeOf.hpp>
 
 #include <Render/Vulkan/VkFrame.hpp>
+#include <Render/Vulkan/VkResourceInitializer.hpp>
+#include <Render/Vulkan/Device/VkDevice.hpp>
 
 #if SA_VULKAN
 
 namespace Sa::Vk
 {
-	void StaticMesh::Create(const Device& _device, CommandBuffer& _cmd, ResourceHolder& _resHold, const RawMesh& _raw)
+	void StaticMesh::Create(ARenderResourceInitializer* _init, const RawMesh& _raw)
 	{
-		AMesh::Create(_raw);
+		AStaticMesh::Create(_init, _raw);
 
-		//// Create Vertex buffer.
-		//mVertexBuffer.Create(_device, _cmd, _resHold,
-		//	SizeOf(_raw.vertices),
-		//	VK_BUFFER_USAGE_VERTEX_BUFFER_BIT,
-		//	_raw.vertices.data());
+		ResourceInitializer& vkInit = _init->As<ResourceInitializer>();
+
+		// Create Vertex buffer.
+		mVertexBuffer.Create(vkInit,
+			SizeOf(_raw.vertices),
+			VK_BUFFER_USAGE_VERTEX_BUFFER_BIT,
+			_raw.vertices.data());
 
 
-		//// Create Index buffer.
-		//mIndicesSize = SizeOf<uint32>(_raw.indices);
-		//mIndexBuffer.Create(_device, _cmd, _resHold,
-		//	sizeof(uint32) * mIndicesSize,
-		//	VK_BUFFER_USAGE_INDEX_BUFFER_BIT,
-		//	_raw.indices.data());
+		// Create Index buffer.
+		mIndicesSize = SizeOf<uint32>(_raw.indices);
+		mIndexBuffer.Create(vkInit,
+			sizeof(uint32) * mIndicesSize,
+			VK_BUFFER_USAGE_INDEX_BUFFER_BIT,
+			_raw.indices.data());
 	}
 	
-	void StaticMesh::Destroy(const Device& _device)
+	void StaticMesh::Destroy(const ARenderDevice* _device)
 	{
-		mVertexBuffer.Destroy(_device);
-		mIndexBuffer.Destroy(_device);
+		const Device& vkDevice = _device->As<Device>();
+
+		mVertexBuffer.Destroy(vkDevice);
+		mIndexBuffer.Destroy(vkDevice);
 
 		mIndicesSize = ~uint32();
 	}

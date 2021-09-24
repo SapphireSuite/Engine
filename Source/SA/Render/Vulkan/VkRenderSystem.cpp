@@ -99,6 +99,8 @@ namespace Sa::Vk
 	}
 
 
+//{ Resources
+
 	ARenderResourceInitializer* RenderSystem::CreateResourceInitializer(ARenderDevice* _device)
 	{
 		ResourceInitializer* const context = new ResourceInitializer();
@@ -136,6 +138,23 @@ namespace Sa::Vk
 	}
 
 
+	AStaticMesh* RenderSystem::CreateStaticMesh(ARenderResourceInitializer* _init, const RawMesh& _raw)
+	{
+		StaticMesh* const mesh = new StaticMesh();
+
+		mesh->Create(_init, _raw);
+
+		return mesh;
+	}
+
+	void RenderSystem::DestroyStaticMesh(ARenderDevice* _device, AStaticMesh* _mesh)
+	{
+		_mesh->Destroy(_device);
+
+		delete _mesh;
+	}
+
+
 	ATexture* RenderSystem::CreateTexture(ARenderResourceInitializer* _init, const RawTexture& _raw)
 	{
 		Texture* const texture = new Texture();
@@ -168,6 +187,8 @@ namespace Sa::Vk
 
 		delete _cubemap;
 	}
+
+//}
 
 
 	RenderSystem::operator const Instance& () const
