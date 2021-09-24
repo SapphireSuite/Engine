@@ -7,8 +7,6 @@
 
 #include <vector>
 
-#include <SA/Config.hpp>
-
 #include <SA/Render/Base/Device/ARenderDevice.hpp>
 #include <SA/Render/Vulkan/Device/VkQueueMgr.hpp>
 

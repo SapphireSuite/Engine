@@ -5,12 +5,16 @@
 #ifndef SAPPHIRE_RENDER_ARENDER_SYSTEM_GUARD
 #define SAPPHIRE_RENDER_ARENDER_SYSTEM_GUARD
 
+#include <SA/Core/Types/Abstract.hpp>
+
 namespace Sa
 {
 	class AWindowSystem;
 	class AWindow;
 
 	class ARenderDevice;
+	struct AGraphicDeviceInfos;
+
 	class ARenderSurface;
 
 	class ARenderSystem : public Abstract

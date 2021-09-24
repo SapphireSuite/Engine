@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_RENDER_VK_GRAPHIC_DEVICE_INFOS_GUARD
 #define SAPPHIRE_RENDER_VK_GRAPHIC_DEVICE_INFOS_GUARD
 
-#include <SA/Render/Base/AGraphicDeviceInfos.hpp>
+#include <SA/Render/Base/Device/AGraphicDeviceInfos.hpp>
 
 #include <SA/Render/Vulkan/Device/VkQueueRequirements.hpp>
 
