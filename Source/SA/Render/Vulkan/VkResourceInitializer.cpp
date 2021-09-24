@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Render/Vulkan/VkResourceContext.hpp>
+#include <Render/Vulkan/VkResourceInitializer.hpp>
 
 #include <Render/Vulkan/Device/VkDevice.hpp>
 
@@ -8,7 +8,7 @@
 
 namespace Sa::Vk
 {
-	void ResourceContext::Create(const ARenderDevice* _device)
+	void ResourceInitializer::Create(const ARenderDevice* _device)
 	{
 		device = _device->AsPtr<Device>();
 
@@ -19,7 +19,7 @@ namespace Sa::Vk
 		cmd.Begin();
 	}
 
-	void ResourceContext::Destroy()
+	void ResourceInitializer::Destroy()
 	{
 		mCmdPool.Destroy(*device);
 		device = nullptr;
@@ -28,7 +28,7 @@ namespace Sa::Vk
 	}
 
 
-	void ResourceContext::Submit()
+	void ResourceInitializer::Submit()
 	{
 		cmd.End();
 

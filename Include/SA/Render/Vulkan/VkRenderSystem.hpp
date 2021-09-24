@@ -12,7 +12,7 @@
 #include <SA/Render/Vulkan/Surface/VkSurface.hpp>
 #include <SA/Render/Vulkan/Pass/VkRenderPass.hpp>
 #include <SA/Render/Vulkan/Pipeline/VkPipeline.hpp>
-#include <SA/Render/Vulkan/VkResourceContext.hpp>
+#include <SA/Render/Vulkan/VkResourceInitializer.hpp>
 #include <SA/Render/Vulkan/Shader/VkShader.hpp>
 
 #if SA_VULKAN
@@ -39,10 +39,10 @@ namespace Sa::Vk
 		ARenderPipeline* CreatePipeline(ARenderDevice* _device, const RenderPipelineCreateInfos& _infos) override final;
 		void DestroyPipeline(ARenderDevice* _device, ARenderPipeline* _pipeline) override final;
 
-		ARenderResourceContext* CreateResourceContext(ARenderDevice* _device) override final;
-		void DestroyResourceContext(ARenderResourceContext* _context) override final;
+		ARenderResourceInitializer* CreateResourceInitializer(ARenderDevice* _device) override final;
+		void DestroyResourceInitializer(ARenderResourceInitializer* _init) override final;
 
-		AShader* CreateShader(ARenderResourceContext* _context, const RawShader& _raw) override final;
+		AShader* CreateShader(ARenderResourceInitializer* _init, const RawShader& _raw) override final;
 		void DestroyShader(ARenderDevice* _device, AShader* _shader) override final;
 
 

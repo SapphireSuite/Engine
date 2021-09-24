@@ -12,12 +12,12 @@
 namespace Sa
 {
 	class ARenderDevice;
-	class ARenderResourceContext;
+	class ARenderResourceInitializer;
 
 	class AShader : public Abstract
 	{
 	public:
-		virtual void Create(const ARenderResourceContext* _context, const RawShader& _raw) = 0;
+		virtual void Create(const ARenderResourceInitializer* _init, const RawShader& _raw) = 0;
 		virtual void Destroy(const ARenderDevice* _device) = 0;
 	};
 }

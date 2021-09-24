@@ -2,8 +2,8 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_RENDER_ARENDER_RESOURCE_CONTEXT_GUARD
-#define SAPPHIRE_RENDER_ARENDER_RESOURCE_CONTEXT_GUARD
+#ifndef SAPPHIRE_RENDER_ARENDER_RESOURCE_INITIALIZER_GUARD
+#define SAPPHIRE_RENDER_ARENDER_RESOURCE_INITIALIZER_GUARD
 
 #include <SA/Core/Types/Abstract.hpp>
 
@@ -11,7 +11,7 @@ namespace Sa
 {
 	class ARenderDevice;
 
-	class ARenderResourceContext : public Abstract
+	class ARenderResourceInitializer : public Abstract
 	{
 	public:
 		virtual void Create(const ARenderDevice* _device) = 0;

@@ -204,7 +204,7 @@ int main()
 
 		// Assets
 		{
-			ARenderResourceContext* const resContext = renderSys.CreateResourceContext(device);
+			ARenderResourceInitializer* const resInit = renderSys.CreateResourceInitializer(device);
 
 			// Shaders
 			{
@@ -223,7 +223,7 @@ int main()
 						}
 					}
 
-					unlitvert = renderSys.CreateShader(resContext, asset.raw);
+					unlitvert = renderSys.CreateShader(resInit, asset.raw);
 					unlitPipelineInfos.AddShader(unlitvert, asset.raw.descriptor);
 				}
 
@@ -242,14 +242,14 @@ int main()
 						}
 					}
 
-					unlitfrag = renderSys.CreateShader(resContext, asset.raw);
+					unlitfrag = renderSys.CreateShader(resInit, asset.raw);
 					unlitPipelineInfos.AddShader(unlitfrag, asset.raw.descriptor);
 				}
 			}
 
-			resContext->Submit();
+			resInit->Submit();
 
-			renderSys.DestroyResourceContext(resContext);
+			renderSys.DestroyResourceInitializer(resInit);
 
 			//// Submit
 			//ResourceHolder resHolder;

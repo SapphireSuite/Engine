@@ -99,29 +99,29 @@ namespace Sa::Vk
 	}
 
 
-	ARenderResourceContext* RenderSystem::CreateResourceContext(ARenderDevice* _device)
+	ARenderResourceInitializer* RenderSystem::CreateResourceInitializer(ARenderDevice* _device)
 	{
-		ResourceContext* const context = new ResourceContext();
+		ResourceInitializer* const context = new ResourceInitializer();
 
 		context->Create(_device);
 
 		return context;
 	}
 
-	void RenderSystem::DestroyResourceContext(ARenderResourceContext* _context)
+	void RenderSystem::DestroyResourceInitializer(ARenderResourceInitializer* _init)
 	{
-		SA_ASSERT(Nullptr, SA/Render/Vulkan, _context);
+		SA_ASSERT(Nullptr, SA/Render/Vulkan, _init);
 
-		_context->Destroy();
-		delete _context;
+		_init->Destroy();
+		delete _init;
 	}
 
 
-	AShader* RenderSystem::CreateShader(ARenderResourceContext* _context, const RawShader& _raw)
+	AShader* RenderSystem::CreateShader(ARenderResourceInitializer* _init, const RawShader& _raw)
 	{
 		Shader* const shader = new Shader();
 
-		shader->Create(_context, _raw);
+		shader->Create(_init, _raw);
 
 		return shader;
 	}

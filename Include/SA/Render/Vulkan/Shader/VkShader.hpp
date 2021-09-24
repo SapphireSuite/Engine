@@ -18,7 +18,7 @@ namespace Sa::Vk
 		VkShaderModule mHandle = VK_NULL_HANDLE;
 
 	public:
-		void Create(const ARenderResourceContext* _context, const RawShader& _raw) override final;
+		void Create(const ARenderResourceInitializer* _init, const RawShader& _raw) override final;
 		void Destroy(const ARenderDevice* _device) override final;
 
 		operator VkShaderModule() const;

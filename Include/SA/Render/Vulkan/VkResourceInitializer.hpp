@@ -2,10 +2,10 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_RENDER_VK_RESOURCE_CONTEXT_GUARD
-#define SAPPHIRE_RENDER_VK_RESOURCE_CONTEXT_GUARD
+#ifndef SAPPHIRE_RENDER_VK_RESOURCE_INITIALIZER_GUARD
+#define SAPPHIRE_RENDER_VK_RESOURCE_INITIALIZER_GUARD
 
-#include <SA/Render/Base/ARenderResourceContext.hpp>
+#include <SA/Render/Base/ARenderResourceInitializer.hpp>
 
 #include <SA/Core/Types/Variadics/ResourceHolder.hpp>
 
@@ -17,10 +17,10 @@ namespace Sa::Vk
 {
 	class Device;
 
-	class ResourceContext : public ARenderResourceContext
+	class ResourceInitializer : public ARenderResourceInitializer
 	{
-
 		CommandPool mCmdPool;
+
 	public:
 		const Device* device = nullptr;
 
