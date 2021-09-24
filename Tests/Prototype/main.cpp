@@ -44,7 +44,7 @@ ARenderDevice* device = nullptr;
 ARenderSurface* surface = nullptr;
 RenderPassDescriptor renderPassDesc;
 ARenderPass* renderPass = nullptr;
-RenderPipelineCreateInfos unlitPipelineInfos{ *renderPass, renderPassDesc };
+RenderPipelineCreateInfos unlitPipelineInfos;
 ARenderPipeline* unlitPipeline = nullptr;
 
 AShader* unlitvert = nullptr;
@@ -291,11 +291,13 @@ int main()
 			renderSys.DestroyResourceInitializer(resInit);
 
 
-			//// Pipeline
-			//{
-			//	unlitPipelineInfos.vertexBindingLayout.meshLayout = cubeMesh.GetLayout();
-			//	unlitPipeline = renderSys.CreatePipeline(device, unlitPipelineInfos);
-			//}
+			// Pipeline
+			{
+				unlitPipelineInfos.SetRenderPass(renderPass, renderPassDesc, 0u);
+				unlitPipelineInfos.vertexBindingLayout.meshLayout = cubeMesh->GetLayout();
+
+				unlitPipeline = renderSys.CreatePipeline(device, unlitPipelineInfos);
+			}
 
 
 			//// DescSet.
@@ -382,8 +384,9 @@ int main()
 			modelUBO.Destroy(device);
 
 			cubeDescSet.Destroy(device);
-			unlitPipeline.Destroy(device);
 			*/
+
+			renderSys.DestroyPipeline(device, unlitPipeline);
 
 			renderSys.DestroyStaticMesh(device, cubeMesh);
 

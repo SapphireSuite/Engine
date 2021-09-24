@@ -36,10 +36,10 @@ namespace Sa
 //{ RenderPass
 
 		/// Associated renderpass.
-		const ARenderPass& renderPass;
+		const ARenderPass* renderPass;
 
-		/// Descriptor of the bound renderpass.
-		const RenderPassDescriptor& renderPassDesc;
+		/// Descriptor of the bound subpass of the renderpass.
+		SubPassDescriptor subPassDesc;
 
 		/// Index of the associated subpass.
 		uint32 subPassIndex = 0u;
@@ -57,7 +57,10 @@ namespace Sa
 		std::vector<PipelineShaderInfos> shaders;
 
 
-		RenderPipelineCreateInfos(const ARenderPass& _renderPass, const RenderPassDescriptor& _renderPassDesc) noexcept;
+		RenderPipelineCreateInfos() = default;
+		RenderPipelineCreateInfos(const ARenderPass* _renderPass, const RenderPassDescriptor& _renderPassDesc, uint32 _subPassIndex = 0u);
+
+		void SetRenderPass(const ARenderPass* _renderPass, const RenderPassDescriptor& _renderPassDesc, uint32 _subPassIndex = 0u);
 
 		void AddShader(const AShader* _shader, ShaderDescriptor _descriptor);
 	};

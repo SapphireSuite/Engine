@@ -232,7 +232,7 @@ namespace Sa::Vk
 		pipelineCreateInfo.pColorBlendState = &renderPassAttInfos.colorBlendingInfo;
 		pipelineCreateInfo.pDynamicState = nullptr;
 		pipelineCreateInfo.layout = mPipelineLayout;
-		pipelineCreateInfo.renderPass = _infos.renderPass.As<RenderPass>();
+		pipelineCreateInfo.renderPass = _infos.renderPass->As<RenderPass>();
 		pipelineCreateInfo.subpass = _infos.subPassIndex;
 		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 		pipelineCreateInfo.basePipelineIndex = -1;
@@ -334,7 +334,7 @@ namespace Sa::Vk
 
 	void Pipeline::FillRenderPassAttachments(struct RenderPassAttachmentInfos& _renderPassAttInfos, const RenderPipelineCreateInfos& _infos) noexcept
 	{
-		const VkSampleCountFlagBits sampleCount = API_GetSampleCount(_infos.renderPassDesc.subPassDescs[_infos.subPassIndex].sampling);
+		const VkSampleCountFlagBits sampleCount = API_GetSampleCount(_infos.subPassDesc.sampling);
 
 		// MultiSampling.
 		_renderPassAttInfos.multisamplingInfos.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
@@ -363,11 +363,6 @@ namespace Sa::Vk
 
 
 		// Color attachments.
-		SA_ASSERT(OutOfRange, SA/Render/Vulkan, _infos.subPassIndex < SizeOf<uint32>(_infos.renderPassDesc.subPassDescs),
-			0u, SizeOf<uint32>(_infos.renderPassDesc.subPassDescs), L"Pipeline SubPass index out of RenderPass SubPassDescriptor range!");
-
-		const SubPassDescriptor& subpassDesc = _infos.renderPassDesc.subPassDescs[_infos.subPassIndex];
-
 		VkPipelineColorBlendAttachmentState colorBlendAttachment{};
 		colorBlendAttachment.blendEnable = VK_TRUE;
 		colorBlendAttachment.srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
@@ -381,7 +376,7 @@ namespace Sa::Vk
 		// Query color attachments only.
 		uint32 colorAttachmentNum = 0u;
 
-		for (auto it = subpassDesc.attachmentDescs.begin(); it != subpassDesc.attachmentDescs.end(); ++it)
+		for (auto it = _infos.subPassDesc.attachmentDescs.begin(); it != _infos.subPassDesc.attachmentDescs.end(); ++it)
 		{
 			if (!IsDepthFormat(it->format))
 				++colorAttachmentNum;
