@@ -40,7 +40,7 @@ namespace Sa::Vk
 	}
 
 
-	void Pipeline::Create(const ARenderDevice* _device, const PipelineCreateInfos& _infos)
+	void Pipeline::Create(const ARenderDevice* _device, const RenderPipelineCreateInfos& _infos)
 	{
 		const Device& vkDevice = _device->As<Device>();
 
@@ -82,7 +82,7 @@ namespace Sa::Vk
 		binding.pImmutableSamplers = nullptr;
 	}
 
-	void Pipeline::CreateDescriptorSetLayouts(const Device& _device, const PipelineCreateInfos& _infos)
+	void Pipeline::CreateDescriptorSetLayouts(const Device& _device, const RenderPipelineCreateInfos& _infos)
 	{
 		// Record bindings for each descritor set.
 		std::map<uint32, std::vector<VkDescriptorSetLayoutBinding>> layoutBindingsMap;
@@ -148,7 +148,7 @@ namespace Sa::Vk
 	}
 
 
-	void Pipeline::CreatePipelineHandle(const Device& _device, const PipelineCreateInfos& _infos)
+	void Pipeline::CreatePipelineHandle(const Device& _device, const RenderPipelineCreateInfos& _infos)
 	{
 		// Shaders
 		std::vector<SpecConstantData> specConstDatas;
@@ -332,7 +332,7 @@ namespace Sa::Vk
 		_rasterizerInfo.lineWidth = 1.0f;
 	}
 
-	void Pipeline::FillRenderPassAttachments(struct RenderPassAttachmentInfos& _renderPassAttInfos, const PipelineCreateInfos& _infos) noexcept
+	void Pipeline::FillRenderPassAttachments(struct RenderPassAttachmentInfos& _renderPassAttInfos, const RenderPipelineCreateInfos& _infos) noexcept
 	{
 		const VkSampleCountFlagBits sampleCount = API_GetSampleCount(_infos.renderPassDesc.subPassDescs[_infos.subPassIndex].sampling);
 

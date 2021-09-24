@@ -16,7 +16,7 @@ namespace Sa
 	class ADescriptorSet : public Abstract
 	{
 	public:
-		virtual void Bind(const ARenderFrame& _frame, const APipeline& _pipeline) const = 0;
+		virtual void Bind(const ARenderFrame& _frame, const ARenderPipeline& _pipeline) const = 0;
 	};
 }
 

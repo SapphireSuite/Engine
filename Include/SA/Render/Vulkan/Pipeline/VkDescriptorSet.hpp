@@ -31,7 +31,7 @@ namespace Sa::Vk
 		void Create(const Device& _device, const DescriptorSetCreateInfos& _infos);
 		void Destroy(const Device& _device);
 
-		void Bind(const ARenderFrame& _frame, const APipeline& _pipeline) const override final;
+		void Bind(const ARenderFrame& _frame, const ARenderPipeline& _pipeline) const override final;
 	};
 }
 

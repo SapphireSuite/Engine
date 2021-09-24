@@ -34,8 +34,8 @@ namespace Sa::Vk
 		ARenderPass* CreateRenderPass(ARenderDevice* _device, const RenderPassDescriptor& _descriptor) override final;
 		void DestroyRenderPass(ARenderDevice* _device, ARenderPass* _pass) override final;
 
-		APipeline* CreatePipeline(ARenderDevice* _device, const PipelineCreateInfos& _infos) override final;
-		void DestroyPipeline(ARenderDevice* _device, APipeline* _pipeline) override final;
+		ARenderPipeline* CreatePipeline(ARenderDevice* _device, const RenderPipelineCreateInfos& _infos) override final;
+		void DestroyPipeline(ARenderDevice* _device, ARenderPipeline* _pipeline) override final;
 
 
 		operator const Instance& () const;

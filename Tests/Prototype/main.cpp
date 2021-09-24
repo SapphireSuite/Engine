@@ -47,8 +47,8 @@ ARenderDevice* device = nullptr;
 ARenderSurface* surface = nullptr;
 RenderPassDescriptor renderPassDesc;
 ARenderPass* renderPass = nullptr;
-PipelineCreateInfos unlitPipelineInfos{ *renderPass, renderPassDesc };
-APipeline* unlitPipeline = nullptr;
+RenderPipelineCreateInfos unlitPipelineInfos{ *renderPass, renderPassDesc };
+ARenderPipeline* unlitPipeline = nullptr;
 
 //Vk::CommandPool cmdPool;
 //std::vector<Vk::CommandBuffer> cmdBuffers;

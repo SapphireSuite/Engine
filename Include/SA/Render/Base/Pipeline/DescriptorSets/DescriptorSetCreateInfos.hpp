@@ -9,11 +9,11 @@
 
 namespace Sa
 {
-	class APipeline;
+	class ARenderPipeline;
 
 	struct DescriptorSetCreateInfos
 	{
-		const APipeline& pipeline;
+		const ARenderPipeline& pipeline;
 		//const uint32 descriptorSetNum = 1u;
 
 		std::vector<AShaderBinding*> bindings;

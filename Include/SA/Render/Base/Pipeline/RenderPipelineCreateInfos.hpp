@@ -2,8 +2,8 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_RENDER_PIPELINE_CREATE_INFOS_GUARD
-#define SAPPHIRE_RENDER_PIPELINE_CREATE_INFOS_GUARD
+#ifndef SAPPHIRE_RENDER_RENDER_PIPELINE_CREATE_INFOS_GUARD
+#define SAPPHIRE_RENDER_RENDER_PIPELINE_CREATE_INFOS_GUARD
 
 #include <SA/Render/Base/Pass/ARenderPass.hpp>
 
@@ -31,7 +31,7 @@ namespace Sa
 		ShaderDescriptor descriptor;
 	};
 
-	struct PipelineCreateInfos
+	struct RenderPipelineCreateInfos
 	{
 //{ RenderPass
 
@@ -57,7 +57,7 @@ namespace Sa
 		std::vector<PipelineShaderInfos> shaders;
 
 
-		PipelineCreateInfos(const ARenderPass& _renderPass, const RenderPassDescriptor& _renderPassDesc) noexcept;
+		RenderPipelineCreateInfos(const ARenderPass& _renderPass, const RenderPassDescriptor& _renderPassDesc) noexcept;
 
 		void AddShader(const AShader& _shader, ShaderDescriptor _descriptor);
 	};

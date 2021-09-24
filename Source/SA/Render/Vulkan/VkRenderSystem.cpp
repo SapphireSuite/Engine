@@ -81,7 +81,7 @@ namespace Sa::Vk
 	}
 
 
-	APipeline* RenderSystem::CreatePipeline(ARenderDevice* _device, const PipelineCreateInfos& _infos)
+	ARenderPipeline* RenderSystem::CreatePipeline(ARenderDevice* _device, const RenderPipelineCreateInfos& _infos)
 	{
 		Pipeline* const pipeline = new Pipeline();
 
@@ -90,7 +90,7 @@ namespace Sa::Vk
 		return pipeline;
 	}
 
-	void RenderSystem::DestroyPipeline(ARenderDevice* _device, APipeline* _pipeline)
+	void RenderSystem::DestroyPipeline(ARenderDevice* _device, ARenderPipeline* _pipeline)
 	{
 		SA_ASSERT(Nullptr, SA/Render/Vulkan, _pipeline);
 

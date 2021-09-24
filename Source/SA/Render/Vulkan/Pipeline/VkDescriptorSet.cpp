@@ -114,7 +114,7 @@ namespace Sa::Vk
 	}
 
 
-	void DescriptorSet::Bind(const ARenderFrame& _frame, const APipeline& _pipeline) const
+	void DescriptorSet::Bind(const ARenderFrame& _frame, const ARenderPipeline& _pipeline) const
 	{
 		const RenderFrame& vkFrame = _frame.As<RenderFrame>();
 		const Pipeline& vkPipeline = _pipeline.As<Pipeline>();

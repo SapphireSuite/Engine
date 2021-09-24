@@ -20,8 +20,8 @@ namespace Sa
 	class ARenderPass;
 	struct RenderPassDescriptor;
 
-	class APipeline;
-	struct PipelineCreateInfos;
+	class ARenderPipeline;
+	struct RenderPipelineCreateInfos;
 
 
 	class ARenderSystem : public Abstract
@@ -39,8 +39,8 @@ namespace Sa
 		virtual ARenderPass* CreateRenderPass(ARenderDevice* _device, const RenderPassDescriptor& _descriptor) = 0;
 		virtual void DestroyRenderPass(ARenderDevice* _device, ARenderPass* _pass) = 0;
 
-		virtual APipeline* CreatePipeline(ARenderDevice* _device, const PipelineCreateInfos& _infos) = 0;
-		virtual void DestroyPipeline(ARenderDevice* _device, APipeline* _pipeline) = 0;
+		virtual ARenderPipeline* CreatePipeline(ARenderDevice* _device, const RenderPipelineCreateInfos& _infos) = 0;
+		virtual void DestroyPipeline(ARenderDevice* _device, ARenderPipeline* _pipeline) = 0;
 	};
 }
 

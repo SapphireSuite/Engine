@@ -1,16 +1,16 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Render/Base/Pipeline/PipelineCreateInfos.hpp>
+#include <Render/Base/Pipeline/RenderPipelineCreateInfos.hpp>
 
 namespace Sa
 {
-	PipelineCreateInfos::PipelineCreateInfos(const ARenderPass& _renderPass, const RenderPassDescriptor& _renderPassDesc) noexcept :
+	RenderPipelineCreateInfos::RenderPipelineCreateInfos(const ARenderPass& _renderPass, const RenderPassDescriptor& _renderPassDesc) noexcept :
 		renderPass{ _renderPass },
 		renderPassDesc{ _renderPassDesc }
 	{
 	}
 
-	void PipelineCreateInfos::AddShader(const AShader& _shader, ShaderDescriptor _descriptor)
+	void RenderPipelineCreateInfos::AddShader(const AShader& _shader, ShaderDescriptor _descriptor)
 	{
 		if (_descriptor.stage == ShaderStage::Vertex)
 			vertexBindingLayout.desiredLayout = VertexLayout::Make(static_cast<VertexComp>((uint8)_descriptor.vertexLayout)); // TODO: Clean.
