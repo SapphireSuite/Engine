@@ -14,19 +14,19 @@ namespace Sa::Vk
 	{
 		AMesh::Create(_raw);
 
-		// Create Vertex buffer.
-		mVertexBuffer.Create(_device, _cmd, _resHold,
-			SizeOf(_raw.vertices),
-			VK_BUFFER_USAGE_VERTEX_BUFFER_BIT,
-			_raw.vertices.data());
+		//// Create Vertex buffer.
+		//mVertexBuffer.Create(_device, _cmd, _resHold,
+		//	SizeOf(_raw.vertices),
+		//	VK_BUFFER_USAGE_VERTEX_BUFFER_BIT,
+		//	_raw.vertices.data());
 
 
-		// Create Index buffer.
-		mIndicesSize = SizeOf<uint32>(_raw.indices);
-		mIndexBuffer.Create(_device, _cmd, _resHold,
-			sizeof(uint32) * mIndicesSize,
-			VK_BUFFER_USAGE_INDEX_BUFFER_BIT,
-			_raw.indices.data());
+		//// Create Index buffer.
+		//mIndicesSize = SizeOf<uint32>(_raw.indices);
+		//mIndexBuffer.Create(_device, _cmd, _resHold,
+		//	sizeof(uint32) * mIndicesSize,
+		//	VK_BUFFER_USAGE_INDEX_BUFFER_BIT,
+		//	_raw.indices.data());
 	}
 	
 	void StaticMesh::Destroy(const Device& _device)

@@ -28,6 +28,9 @@ namespace Sa
 	class AShader;
 	struct RawShader;
 
+	class ATexture;
+	struct RawTexture;
+
 
 	class ARenderSystem : public Abstract
 	{
@@ -52,6 +55,9 @@ namespace Sa
 
 		virtual AShader* CreateShader(ARenderResourceInitializer* _init, const RawShader& _raw) = 0;
 		virtual void DestroyShader(ARenderDevice* _device, AShader* _shader) = 0;
+
+		virtual ATexture* CreateTexture(ARenderResourceInitializer* _init, const RawTexture& _raw) = 0;
+		virtual void DestroyTexture(ARenderDevice* _device, ATexture* _texture) = 0;
 	};
 }
 

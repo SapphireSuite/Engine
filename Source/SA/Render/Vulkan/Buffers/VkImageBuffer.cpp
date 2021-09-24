@@ -76,9 +76,9 @@ namespace Sa::Vk
 	}
 
 
-	void ImageBuffer::TransitionImageLayout(CommandBuffer& _cmd, ResourceHolder& _resHold, const ImageBuffer::TransitionInfos& _infos)
+	void ImageBuffer::TransitionImageLayout(ResourceInitializer& _init, const ImageBuffer::TransitionInfos& _infos)
 	{
-		VkImageMemoryBarrier& barrier = _resHold.Make<VkImageMemoryBarrier>();
+		VkImageMemoryBarrier& barrier = _init.resHolder.Make<VkImageMemoryBarrier>();
 		barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
 		barrier.pNext = nullptr;
 		barrier.srcAccessMask = 0; // Set later.
@@ -130,17 +130,17 @@ namespace Sa::Vk
 		else
 			SA_LOG(L"Unsupported image layout transition from [" << _infos.oldLayout << L"] to [" << _infos.newLayout << L"]!", Error, SA/Render/Vulkan);
 
-		vkCmdPipelineBarrier(_cmd, srcStage, dstStage, 0, 0, nullptr, 0, nullptr, 1, &barrier);
+		vkCmdPipelineBarrier(_init.cmd, srcStage, dstStage, 0, 0, nullptr, 0, nullptr, 1, &barrier);
 	}
 	
-	void ImageBuffer::CopyBufferToImage(CommandBuffer& _cmd, ResourceHolder& _resHold, const ImageBuffer::CopyBufferImageInfos& _infos)
+	void ImageBuffer::CopyBufferToImage(ResourceInitializer& _init, const ImageBuffer::CopyBufferImageInfos& _infos)
 	{
 		uint64 offset = 0u;
 		VkExtent3D extent{ _infos.extent.x, _infos.extent.y, 1 };
 		uint32 layerCount = API_GetLayerNum(_infos.imageType);
 		uint32 channelNum = API_GetChannelNum(_infos.format);
 
-		std::vector<VkBufferImageCopy>& bufferImageCopies = _resHold.Make<std::vector<VkBufferImageCopy>>();
+		std::vector<VkBufferImageCopy>& bufferImageCopies = _init.resHolder.Make<std::vector<VkBufferImageCopy>>();
 
 		for (uint32 currMipLevel = 0u; currMipLevel < _infos.mipLevels; ++currMipLevel)
 		{
@@ -168,7 +168,7 @@ namespace Sa::Vk
 				extent.height >>= 1;
 		}
 
-		vkCmdCopyBufferToImage(_cmd, _infos.buffer, mImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, SizeOf<uint32>(bufferImageCopies), bufferImageCopies.data());
+		vkCmdCopyBufferToImage(_init.cmd, _infos.buffer, mImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, SizeOf<uint32>(bufferImageCopies), bufferImageCopies.data());
 	}
 
 

@@ -11,8 +11,14 @@
 
 namespace Sa
 {
+	class ARenderDevice;
+	class ARenderResourceInitializer;
+
 	class ATexture : public Abstract
 	{
+	public:
+		virtual void Create(ARenderResourceInitializer* _init, const RawTexture& _raw) = 0;
+		virtual void Destroy(const ARenderDevice* _device) = 0;
 	};
 }
 

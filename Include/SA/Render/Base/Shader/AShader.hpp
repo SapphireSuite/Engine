@@ -17,7 +17,7 @@ namespace Sa
 	class AShader : public Abstract
 	{
 	public:
-		virtual void Create(const ARenderResourceInitializer* _init, const RawShader& _raw) = 0;
+		virtual void Create(ARenderResourceInitializer* _init, const RawShader& _raw) = 0;
 		virtual void Destroy(const ARenderDevice* _device) = 0;
 	};
 }

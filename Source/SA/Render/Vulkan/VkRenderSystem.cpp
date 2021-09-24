@@ -136,6 +136,23 @@ namespace Sa::Vk
 	}
 
 
+	ATexture* RenderSystem::CreateTexture(ARenderResourceInitializer* _init, const RawTexture& _raw)
+	{
+		Texture* const texture = new Texture();
+
+		texture->Create(_init, _raw);
+
+		return texture;
+	}
+
+	void RenderSystem::DestroyTexture(ARenderDevice* _device, ATexture* _texture)
+	{
+		_texture->Destroy(_device);
+
+		delete _texture;
+	}
+
+
 	RenderSystem::operator const Instance& () const
 	{
 		return mInstance;

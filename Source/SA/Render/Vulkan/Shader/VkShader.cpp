@@ -13,7 +13,7 @@
 
 namespace Sa::Vk
 {
-	void Shader::Create(const ARenderResourceInitializer* _init, const RawShader& _raw)
+	void Shader::Create(ARenderResourceInitializer* _init, const RawShader& _raw)
 	{
 		const Device& vkDevice = *_init->As<ResourceInitializer>().device;
 

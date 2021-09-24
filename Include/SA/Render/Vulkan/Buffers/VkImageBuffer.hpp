@@ -7,6 +7,7 @@
 
 #include <SA/Core/Types/Variadics/ResourceHolder.hpp>
 
+#include <SA/Render/Vulkan/VkResourceInitializer.hpp>
 #include <SA/Render/Vulkan/Buffers/VkImageBufferCreateInfos.hpp>
 
 #if SA_VULKAN
@@ -55,8 +56,8 @@ namespace Sa::Vk
 		void Destroy(const Device& _device);
 
 
-		void TransitionImageLayout(CommandBuffer& _cmd, ResourceHolder& _resHold, const ImageBuffer::TransitionInfos& _infos);
-		void CopyBufferToImage(CommandBuffer& _cmd, ResourceHolder& _resHold, const ImageBuffer::CopyBufferImageInfos& _infos);
+		void TransitionImageLayout(ResourceInitializer& _init, const ImageBuffer::TransitionInfos& _infos);
+		void CopyBufferToImage(ResourceInitializer& _init, const ImageBuffer::CopyBufferImageInfos& _infos);
 
 		operator VkImage() const noexcept;
 		operator VkImageView() const noexcept;

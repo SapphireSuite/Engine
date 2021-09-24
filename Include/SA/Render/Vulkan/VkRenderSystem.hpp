@@ -14,6 +14,7 @@
 #include <SA/Render/Vulkan/Pipeline/VkPipeline.hpp>
 #include <SA/Render/Vulkan/VkResourceInitializer.hpp>
 #include <SA/Render/Vulkan/Shader/VkShader.hpp>
+#include <SA/Render/Vulkan/Texture/VkTexture.hpp>
 
 #if SA_VULKAN
 
@@ -44,6 +45,9 @@ namespace Sa::Vk
 
 		AShader* CreateShader(ARenderResourceInitializer* _init, const RawShader& _raw) override final;
 		void DestroyShader(ARenderDevice* _device, AShader* _shader) override final;
+
+		ATexture* CreateTexture(ARenderResourceInitializer* _init, const RawTexture& _raw) override final;
+		void DestroyTexture(ARenderDevice* _device, ATexture* _texture) override final;
 
 
 		operator const Instance& () const;

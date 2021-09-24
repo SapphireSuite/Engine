@@ -21,6 +21,7 @@ using namespace Sa;
 #include <SA/Render/Vulkan/VkRenderSystem.hpp>
 
 #include <SA/SDK/Assets/Shader/ShaderAsset.hpp>
+#include <SA/SDK/Assets/TextureAsset.hpp>
 
 //#include <SA/Render/Vulkan/Device/VkCommandPool.hpp>
 //#include <SA/Render/Vulkan/Buffers/VkFrameBuffer.hpp>
@@ -28,14 +29,12 @@ using namespace Sa;
 //#include <SA/Render/Vulkan/Mesh/VkStaticMesh.hpp>
 //#include <SA/Render/Vulkan/Pipeline/VkDescriptorSet.hpp>
 //#include <SA/Render/Vulkan/Buffers/VkBuffer.hpp>
-//#include <SA/Render/Vulkan/Texture/VkTexture.hpp>
 //#include <SA/Render/Vulkan/VkRenderFrame.hpp>
 
 //#include <SA/Render/Base/Shader/Bindings/ShaderUBOBinding.hpp>
 //#include <SA/Render/Base/Shader/Bindings/ShaderIBOBinding.hpp>
 
 //#include <SA/SDK/Assets/ModelAsset.hpp>
-//#include <SA/SDK/Assets/TextureAsset.hpp>
 
 GLFW::WindowSystem winSys;
 GLFW::Window win;
@@ -52,6 +51,7 @@ ARenderPipeline* unlitPipeline = nullptr;
 
 AShader* unlitvert = nullptr;
 AShader* unlitfrag = nullptr;
+ATexture* missText = nullptr;
 
 //Vk::CommandPool cmdPool;
 //std::vector<Vk::CommandBuffer> cmdBuffers;
@@ -61,7 +61,6 @@ AShader* unlitfrag = nullptr;
 //Vk::DescriptorSet cubeDescSet;
 //Vk::Buffer camUBO;
 //Vk::Buffer modelUBO;
-//Vk::Texture missText;
 
 const Vec2ui winDim{ 1200u, 800u };
 
@@ -247,6 +246,24 @@ int main()
 				}
 			}
 
+			// Texture
+			{
+				const std::string assetName = "Assets/Textures/missing.spha";
+				const std::string resName = "/Engine/Resources/Textures/missing_texture.png";
+
+				TextureAsset asset;
+
+				if (!asset.Load(assetName))
+				{
+					if (asset.Import(resName))
+					{
+						asset.Save(assetName);
+					}
+				}
+
+				missText = renderSys.CreateTexture(resInit, asset.raw);
+			}
+
 			resInit->Submit();
 
 			renderSys.DestroyResourceInitializer(resInit);
@@ -279,23 +296,7 @@ int main()
 
 
 
-			//// Texture
-			//{
-			//	const std::string assetName = "Assets/Textures/missing.spha";
-			//	const std::string resName = "/Engine/Resources/Textures/missing_texture.png";
 
-			//	TextureAsset asset;
-
-			//	if (!asset.Load(assetName))
-			//	{
-			//		if (asset.Import(resName))
-			//		{
-			//			asset.Save(assetName);
-			//		}
-			//	}
-
-			//	missText.Create(device, cmdBuffers[0], resHolder, asset.raw);
-			//}
 
 
 
@@ -424,6 +425,8 @@ int main()
 
 			cmdPool.Destroy(device);
 			*/
+
+			renderSys.DestroyTexture(device, missText);
 
 			renderSys.DestroyShader(device, unlitvert);
 			renderSys.DestroyShader(device, unlitfrag);

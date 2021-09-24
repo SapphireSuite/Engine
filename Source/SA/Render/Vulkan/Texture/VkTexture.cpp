@@ -4,18 +4,22 @@
 
 #include <Render/Base/Texture/Mipmap.hpp>
 
+#include <Render/Vulkan/VkResourceInitializer.hpp>
+#include <Render/Vulkan/Device/VkDevice.hpp>
 #include <Render/Vulkan/Buffers/VkBuffer.hpp>
 
 #if SA_VULKAN
 
 namespace Sa::Vk
 {
-	void Texture::Create(const Device& _device, CommandBuffer& _cmd, ResourceHolder& _resHold, const RawTexture& _raw)
+	void Texture::Create(ARenderResourceInitializer* _init, const RawTexture& _raw)
 	{
+		ResourceInitializer& vkInit = _init->As<ResourceInitializer>();
+
 		uint64 dataSize = _raw.GetTotalSize();
 
-		Buffer& stagingBuffer = _resHold.Make<Buffer>(Buffer::Deleter(_device));
-		stagingBuffer.Create(_device, dataSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+		Buffer& stagingBuffer = vkInit.resHolder.Make<Buffer>(Buffer::Deleter(*vkInit.device));
+		stagingBuffer.Create(*vkInit.device, dataSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
 			_raw.data.data());
 
@@ -35,7 +39,7 @@ namespace Sa::Vk
 			imageBufferCreateInfos.usage |= VK_IMAGE_USAGE_TRANSFER_SRC_BIT;
 
 
-		mBuffer.Create(_device, imageBufferCreateInfos);
+		mBuffer.Create(*vkInit.device, imageBufferCreateInfos);
 
 
 		// Undef to Dst Transition
@@ -46,7 +50,7 @@ namespace Sa::Vk
 			infos.mipLevels = _raw.mipLevels;
 			infos.imageType = ImageType::Image2D;
 
-			mBuffer.TransitionImageLayout(_cmd, _resHold, infos);
+			mBuffer.TransitionImageLayout(vkInit, infos);
 
 		}
 
@@ -60,7 +64,7 @@ namespace Sa::Vk
 			copyInfos.mipLevels = _raw.mipLevels;
 			copyInfos.imageType = ImageType::Image2D;
 
-			mBuffer.CopyBufferToImage(_cmd, _resHold, copyInfos);
+			mBuffer.CopyBufferToImage(vkInit, copyInfos);
 		}
 
 		// Destroy will be called by ResourceHolder.
@@ -75,18 +79,20 @@ namespace Sa::Vk
 			infos.mipLevels = _raw.mipLevels;
 			infos.imageType = ImageType::Image2D;
 
-			mBuffer.TransitionImageLayout(_cmd, _resHold, infos);
+			mBuffer.TransitionImageLayout(vkInit, infos);
 		}
 
 
-		mSampler.Create(_device, _raw.mipLevels);
+		mSampler.Create(*vkInit.device, _raw.mipLevels);
 	}
 
-	void Texture::Destroy(const Device& _device)
+	void Texture::Destroy(const ARenderDevice* _device)
 	{
-		mSampler.Destroy(_device);
+		const Device& vkDevice = _device->As<Device>();
 
-		mBuffer.Destroy(_device);
+		mSampler.Destroy(vkDevice);
+
+		mBuffer.Destroy(vkDevice);
 	}
 
 	VkDescriptorImageInfo Texture::CreateDescriptorImageInfo() const noexcept
