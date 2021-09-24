@@ -4,6 +4,8 @@
 
 #include <Render/Vulkan/Debug/VkValidationLayers.hpp>
 
+#include <Window/Base/AWindow.hpp>
+
 #if SA_VULKAN
 
 namespace Sa::Vk
@@ -27,7 +29,7 @@ namespace Sa::Vk
 
 	ARenderDevice* RenderSystem::CreateDevice(const AGraphicDeviceInfos& _infos)
 	{
-		Device* device = mDevices.emplace_back(new Device());
+		Device* device = new Device();
 
 		device->Create(_infos.As<GraphicDeviceInfos>());
 
@@ -38,17 +40,25 @@ namespace Sa::Vk
 	{
 		SA_ASSERT(Nullptr, SA/Render/Vulkan, _device);
 
-		for (auto it = mDevices.begin(); it != mDevices.end(); ++it)
-		{
-			if (_device == *it)
-			{
-				_device->Destroy();
-				mDevices.erase(it);
-				return;
-			}
-		}
+		_device->Destroy();
 
-		SA_LOG(L"Can't find device in RenderSystem", Error, SA/Render/Vulkan);
+		delete _device;
+	}
+
+
+	ARenderSurface* RenderSystem::CreateWindowSurface(AWindow& _win)
+	{
+		RenderSurface* const vkSurface = new RenderSurface(_win.CreateVkRenderSurface(mInstance));
+
+		return vkSurface;
+	}
+
+	void RenderSystem::DestroyWindowSurface(AWindow& _win, ARenderSurface*& _surface)
+	{
+		_win.DestroyVkRenderSurface(mInstance, _surface->As<RenderSurface>());
+
+		delete _surface;
+		_surface = nullptr;
 	}
 
 

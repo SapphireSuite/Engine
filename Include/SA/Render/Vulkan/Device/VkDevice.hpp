@@ -35,6 +35,9 @@ namespace Sa::Vk
 		void Create(const AGraphicDeviceInfos& _infos) override final;
 		void Destroy() override final;
 
+		void WaitIdle() override final;
+
+
 		static std::vector<GraphicDeviceInfos> QuerySuitableDevices(const RenderInstance& _inst,
 			const QueueRequirements& _queueReq = QueueRequirements{ QueueFamily::OffScreen });
 

@@ -19,27 +19,25 @@ using namespace Sa;
 #include <SA/Input/Base/Axis/Bindings/InputAxisRange.hpp>
 
 #include <SA/Render/Vulkan/VkRenderSystem.hpp>
-#include <SA/Render/Vulkan/VkRenderInstance.hpp>
-#include <SA/Render/Vulkan/Surface/VkRenderSurface.hpp>
-#include <SA/Render/Vulkan/Device/VkDevice.hpp>
-#include <SA/Render/Vulkan/Device/VkCommandPool.hpp>
-#include <SA/Render/Vulkan/Pass/VkRenderPass.hpp>
-#include <SA/Render/Vulkan/Buffers/VkFrameBuffer.hpp>
-#include <SA/Render/Vulkan/Buffers/VkCommandBuffer.hpp>
-#include <SA/Render/Vulkan/Mesh/VkStaticMesh.hpp>
-#include <SA/Render/Vulkan/Shader/VkShader.hpp>
-#include <SA/Render/Vulkan/Pipeline/VkPipeline.hpp>
-#include <SA/Render/Vulkan/Pipeline/VkDescriptorSet.hpp>
-#include <SA/Render/Vulkan/Buffers/VkBuffer.hpp>
-#include <SA/Render/Vulkan/Texture/VkTexture.hpp>
-#include <SA/Render/Vulkan/VkRenderFrame.hpp>
-
-#include <SA/Render/Base/Shader/Bindings/ShaderUBOBinding.hpp>
-#include <SA/Render/Base/Shader/Bindings/ShaderIBOBinding.hpp>
-
-#include <SA/SDK/Assets/ModelAsset.hpp>
-#include <SA/SDK/Assets/Shader/ShaderAsset.hpp>
-#include <SA/SDK/Assets/TextureAsset.hpp>
+//#include <SA/Render/Vulkan/Surface/VkRenderSurface.hpp>
+//#include <SA/Render/Vulkan/Device/VkCommandPool.hpp>
+//#include <SA/Render/Vulkan/Pass/VkRenderPass.hpp>
+//#include <SA/Render/Vulkan/Buffers/VkFrameBuffer.hpp>
+//#include <SA/Render/Vulkan/Buffers/VkCommandBuffer.hpp>
+//#include <SA/Render/Vulkan/Mesh/VkStaticMesh.hpp>
+//#include <SA/Render/Vulkan/Shader/VkShader.hpp>
+//#include <SA/Render/Vulkan/Pipeline/VkPipeline.hpp>
+//#include <SA/Render/Vulkan/Pipeline/VkDescriptorSet.hpp>
+//#include <SA/Render/Vulkan/Buffers/VkBuffer.hpp>
+//#include <SA/Render/Vulkan/Texture/VkTexture.hpp>
+//#include <SA/Render/Vulkan/VkRenderFrame.hpp>
+//
+//#include <SA/Render/Base/Shader/Bindings/ShaderUBOBinding.hpp>
+//#include <SA/Render/Base/Shader/Bindings/ShaderIBOBinding.hpp>
+//
+//#include <SA/SDK/Assets/ModelAsset.hpp>
+//#include <SA/SDK/Assets/Shader/ShaderAsset.hpp>
+//#include <SA/SDK/Assets/TextureAsset.hpp>
 
 GLFW::WindowSystem winSys;
 GLFW::Window win;
@@ -47,24 +45,23 @@ GLFW::Window win;
 GLFW::InputSystem inputSys;
 
 Vk::RenderSystem renderSys;
-Vk::RenderInstance renderInst;
-Vk::Device device;
-Vk::RenderSurface surface;
-RenderPassDescriptor renderPassDesc;
-Vk::RenderPass renderPass;
-Vk::CommandPool cmdPool;
-std::vector<Vk::CommandBuffer> cmdBuffers;
-uint32 imageIndex = 0u;
-
-Vk::StaticMesh cubeMesh;
-Vk::Shader unlitvert;
-Vk::Shader unlitfrag;
-PipelineCreateInfos unlitPipelineInfos{ renderPass, renderPassDesc };
-Vk::Pipeline unlitPipeline;
-Vk::DescriptorSet cubeDescSet;
-Vk::Buffer camUBO;
-Vk::Buffer modelUBO;
-Vk::Texture missText;
+ARenderDevice* device = nullptr;
+ARenderSurface* surface = nullptr;
+//RenderPassDescriptor renderPassDesc;
+//Vk::RenderPass renderPass;
+//Vk::CommandPool cmdPool;
+//std::vector<Vk::CommandBuffer> cmdBuffers;
+//uint32 imageIndex = 0u;
+//
+//Vk::StaticMesh cubeMesh;
+//Vk::Shader unlitvert;
+//Vk::Shader unlitfrag;
+//PipelineCreateInfos unlitPipelineInfos{ renderPass, renderPassDesc };
+//Vk::Pipeline unlitPipeline;
+//Vk::DescriptorSet cubeDescSet;
+//Vk::Buffer camUBO;
+//Vk::Buffer modelUBO;
+//Vk::Texture missText;
 
 const Vec2ui winDim{ 1200u, 800u };
 
@@ -163,29 +160,28 @@ int main()
 
 		// Render
 		{
-			renderSys.Create();
-			renderInst.Create(winSys);
-			surface = win.CreateVkRenderSurface(renderInst);
+			renderSys.Create(winSys);
+			surface = renderSys.CreateWindowSurface(win);
 			
-			std::vector<Vk::GraphicDeviceInfos> deviceInfos = Vk::Device::QuerySuitableDevices(renderInst, &surface);
-			device.Create(deviceInfos[0]);
+			std::vector<Vk::GraphicDeviceInfos> deviceInfos = Vk::Device::QuerySuitableDevices(renderSys, surface->AsPtr<Vk::RenderSurface>());
+			device = renderSys.CreateDevice(deviceInfos[0]);
 
-			surface.Create(device);
+			surface->Create(*device);
 
 
-			renderPassDesc = RenderPassDescriptor::DefaultSingle(&surface);
+			//renderPassDesc = RenderPassDescriptor::DefaultSingle(&surface);
 
-			renderPass.Create(device, renderPassDesc);
+			//renderPass.Create(device, renderPassDesc);
 
-			surface.CreateFrameBuffers(device, renderPass, renderPassDesc);
+			//surface.CreateFrameBuffers(device, renderPass, renderPassDesc);
 
-			cmdPool.Create(device, device.queueMgr.graphics.GetQueue(0).GetFamilyIndex());
+			//cmdPool.Create(device, device.queueMgr.graphics.GetQueue(0).GetFamilyIndex());
 
-			for(uint32 i = 0; i < 3; ++i)
-				cmdBuffers.push_back(cmdPool.Allocate(device, VK_COMMAND_BUFFER_LEVEL_PRIMARY));
+			//for(uint32 i = 0; i < 3; ++i)
+			//	cmdBuffers.push_back(cmdPool.Allocate(device, VK_COMMAND_BUFFER_LEVEL_PRIMARY));
 		}
 
-
+		/*
 		// UBO
 		{
 			modelUBOData modelUBOd;
@@ -344,10 +340,12 @@ int main()
 				cubeDescSet.Create(device, infos);
 			}
 		}
+		*/
 	}
 
 
 	// Loop.
+	/*
 	{
 		Chrono chrono;
 
@@ -404,14 +402,15 @@ int main()
 			imageIndex = (imageIndex + 1) % 3;
 		}
 	}
-
+	*/
 
 	// Uninit
 	{
 		// Render
 		{
-			vkDeviceWaitIdle(device);
+			device->WaitIdle();
 
+			/*
 			camUBO.Destroy(device);
 			modelUBO.Destroy(device);
 
@@ -430,10 +429,14 @@ int main()
 
 			renderPass.Destroy(device);
 			surface.Destroy(renderInst, device);
+			*/
 
-			device.Destroy();
 
-			renderInst.Destroy();
+			surface->Destroy(*device);
+			renderSys.DestroyWindowSurface(win, surface);
+
+			renderSys.DestroyDevice(device);
+
 			renderSys.Destroy();
 		}
 

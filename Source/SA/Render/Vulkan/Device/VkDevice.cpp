@@ -164,6 +164,11 @@ namespace Sa::Vk
 		SA_LOG(L"Graphic device destroyed.", Infos, SA/Render/Vulkan);
 	}
 
+	void Device::WaitIdle()
+	{
+		vkDeviceWaitIdle(mLogicalDevice);
+	}
+
 
 	std::vector<GraphicDeviceInfos> QuerySuitableDevices(const RenderInstance& _inst, const QueueRequirements& _queueReq)
 	{

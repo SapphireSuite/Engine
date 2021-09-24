@@ -3,6 +3,7 @@
 #include <Render/Vulkan/Surface/VkRenderSurface.hpp>
 
 #include <Render/Vulkan/VkRenderInstance.hpp>
+#include <Render/Vulkan/Device/VkDevice.hpp>
 
 #include <Render/Debug.hpp>
 
@@ -21,28 +22,28 @@ namespace Sa::Vk
 		return mSwapChain.GetFormat();
 	}
 
-
-	void RenderSurface::Create(const Device& _device)
+	void RenderSurface::Create(const ARenderDevice& _device)
 	{
+		const Device& vkDevice = _device.As<Device>();
+
 		SA_ASSERT(Nullptr, SA/Render/Vulkan, mHandle,
-			L"Handle is nullptr. VkSurfaceKHR must be created first: use VkRenderInstance.CreateRenderSurface()");
+			L"Handle is nullptr. VkSurfaceKHR must be created first: use window.CreateVkRenderSurface()");
 
-		mSwapChain.Create(_device, *this);
-
+		mSwapChain.Create(vkDevice, *this);
 
 		SA_LOG(L"Render Surface created.", Infos, SA/Render/Vulkan);
 	}
 	
-	void RenderSurface::Destroy(const RenderInstance& _inst, const Device& _device)
+	void RenderSurface::Destroy(const ARenderDevice& _device)
 	{
+		const Device& vkDevice = _device.As<Device>();
+
 		SA_ASSERT(Nullptr, SA/Render/Vulkan, mHandle,
-			L"Handle is nullptr. VkSurfaceKHR must be created first: use VkRenderInstance.CreateRenderSurface()");
+			L"Handle is nullptr. VkSurfaceKHR must be created first: use window.CreateVkRenderSurface()");
 
-		mSwapChain.Destroy(_device);
+		mSwapChain.Destroy(vkDevice);
 
-		vkDestroySurfaceKHR(_inst, mHandle, nullptr);
-
-		SA_LOG(L"Render Surface destroyed.", Infos, SA/Render/Vulkan);
+		// Log "Surface Destroyed" in window.DestroyVkRenderSurface().
 	}
 
 

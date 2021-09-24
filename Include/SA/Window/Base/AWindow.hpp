@@ -188,6 +188,7 @@ namespace Sa
 #if SA_VULKAN
 
 		virtual Vk::RenderSurface CreateVkRenderSurface(const Vk::RenderInstance& _instance) const = 0;
+		virtual void DestroyVkRenderSurface(const Vk::RenderInstance& _instance, Vk::RenderSurface& _surface) const = 0;
 
 #endif
 	};

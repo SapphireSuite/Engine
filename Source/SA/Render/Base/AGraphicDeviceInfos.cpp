@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Render/Base/AGraphicDeviceInfos.hpp>
+#include <Render/Base/Device/AGraphicDeviceInfos.hpp>
 
 namespace Sa
 {

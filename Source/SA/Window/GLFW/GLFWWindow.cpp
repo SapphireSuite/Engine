@@ -208,6 +208,13 @@ namespace Sa::GLFW
 		return Vk::RenderSurface{ vkSurface };
 	}
 
+	void Window::DestroyVkRenderSurface(const Vk::RenderInstance& _instance, Vk::RenderSurface& _surface) const
+	{
+		vkDestroySurfaceKHR(_instance, _surface, nullptr);
+
+		SA_LOG(L"Render Surface destroyed.", Infos, SA/Render/Vulkan);
+	}
+
 #endif
 
 

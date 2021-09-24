@@ -29,8 +29,8 @@ namespace Sa::Vk
 		Format GetFormat() const override final;
 
 
-		void Create(const Device& _device);
-		void Destroy(const RenderInstance& _inst, const Device& _device);
+		void Create(const ARenderDevice& _device) override final;
+		void Destroy(const ARenderDevice& _device) override final;
 
 		void CreateFrameBuffers(const Device& _device, const RenderPass& _renderPass, const RenderPassDescriptor& _renderPassDesc);
 		void DestroyFrameBuffers(const Device& _device);

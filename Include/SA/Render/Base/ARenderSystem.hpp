@@ -5,11 +5,13 @@
 #ifndef SAPPHIRE_RENDER_ARENDER_SYSTEM_GUARD
 #define SAPPHIRE_RENDER_ARENDER_SYSTEM_GUARD
 
-#include <SA/Render/Base/Device/ARenderDevice.hpp>
-
 namespace Sa
 {
 	class AWindowSystem;
+	class AWindow;
+
+	class ARenderDevice;
+	class ARenderSurface;
 
 	class ARenderSystem : public Abstract
 	{
@@ -19,6 +21,9 @@ namespace Sa
 
 		virtual ARenderDevice* CreateDevice(const AGraphicDeviceInfos& _infos) = 0;
 		virtual void DestroyDevice(ARenderDevice* _device) = 0;
+
+		virtual ARenderSurface* CreateWindowSurface(AWindow& _win);
+		virtual void DestroyWindowSurface(AWindow& _win, ARenderSurface*& _surface);
 	};
 }
 

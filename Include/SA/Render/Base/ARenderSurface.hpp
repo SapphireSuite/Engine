@@ -11,10 +11,16 @@
 
 namespace Sa
 {
+	class ARenderSystem;
+	class ARenderDevice;
+
 	class ARenderSurface : public Abstract
 	{
 	public:
 		virtual Format GetFormat() const = 0;
+
+		virtual void Create(const ARenderDevice& _device) = 0;
+		virtual void Destroy(const ARenderDevice& _device) = 0;
 	};
 }
 

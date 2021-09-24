@@ -94,6 +94,7 @@ namespace Sa::GLFW
 #if SA_VULKAN
 
 		Vk::RenderSurface CreateVkRenderSurface(const Vk::RenderInstance& _instance) const override final;
+		void DestroyVkRenderSurface(const Vk::RenderInstance& _instance, Vk::RenderSurface& _surface) const override final;
 
 #endif
 
