@@ -164,15 +164,15 @@ int main()
 			renderSys.Create(winSys);
 			surface = renderSys.CreateWindowSurface(win);
 			
-			std::vector<Vk::GraphicDeviceInfos> deviceInfos = Vk::Device::QuerySuitableDevices(renderSys, surface->AsPtr<Vk::Surface>());
+			const std::vector<Vk::GraphicDeviceInfos> deviceInfos = Vk::Device::QuerySuitableDevices(renderSys, surface->AsPtr<Vk::Surface>());
 			device = renderSys.CreateDevice(deviceInfos[0]);
 
-			surface->Create(*device);
+			surface->Create(device);
 
 			renderPassDesc = RenderPassDescriptor::DefaultSingle(surface);
 			renderPass = renderSys.CreateRenderPass(device, renderPassDesc);
 
-			//surface.CreateFrameBuffers(device, renderPass, renderPassDesc);
+			surface->CreateFrameBuffers(device, renderPass, renderPassDesc);
 
 			//cmdPool.Create(device, device.queueMgr.graphics.GetQueue(0).GetFamilyIndex());
 
@@ -344,7 +344,6 @@ int main()
 
 
 	// Loop.
-	/*
 	{
 		Chrono chrono;
 
@@ -359,24 +358,25 @@ int main()
 
 			inputSys.Update();
 
-			// Update Camera
-			if(bCamEnabled)
-			{
-				if (rightSign)
-					camTr.position += rightSign * deltaTime * camTr.Right();
-				if (upSign)
-					camTr.position += upSign * deltaTime * camTr.Up();
-				if (forwardSign)
-					camTr.position += -1 * forwardSign * deltaTime * camTr.Forward();
+			//// Update Camera
+			//if(bCamEnabled)
+			//{
+			//	if (rightSign)
+			//		camTr.position += rightSign * deltaTime * camTr.Right();
+			//	if (upSign)
+			//		camTr.position += upSign * deltaTime * camTr.Up();
+			//	if (forwardSign)
+			//		camTr.position += -1 * forwardSign * deltaTime * camTr.Forward();
 
-				camTr.rotation = Quatf(cos(dx), 0, sin(dx), 0) * Quatf(cos(dy), sin(dy), 0, 0);
+			//	camTr.rotation = Quatf(cos(dx), 0, sin(dx), 0) * Quatf(cos(dy), sin(dy), 0, 0);
 
-				camUBOd.viewInv = camTr.Matrix().GetInversed();
-				camUBOd.viewPosition = camTr.position;
-				camUBO.UpdateData(device, &camUBOd, sizeof(camUBOd));
-			}
+			//	camUBOd.viewInv = camTr.Matrix().GetInversed();
+			//	camUBOd.viewPosition = camTr.position;
+			//	camUBO.UpdateData(device, &camUBOd, sizeof(camUBOd));
+			//}
 
 
+			/*
 			Vk::FrameBuffer& frameBuffer = surface.Begin(device);
 
 			Vk::CommandBuffer& cmdBuffer = cmdBuffers[imageIndex];
@@ -399,9 +399,9 @@ int main()
 			surface.End(device, { cmdBuffer });
 
 			imageIndex = (imageIndex + 1) % 3;
+			*/
 		}
 	}
-	*/
 
 	// Uninit
 	{
@@ -423,13 +423,13 @@ int main()
 			cubeMesh.Destroy(device);
 
 			cmdPool.Destroy(device);
-
-			surface.DestroyFrameBuffers(device);
 			*/
+
+			surface->DestroyFrameBuffers(device);
 
 			renderSys.DestroyRenderPass(device, renderPass);
 
-			surface->Destroy(*device);
+			surface->Destroy(device);
 			renderSys.DestroyWindowSurface(win, surface);
 
 			renderSys.DestroyDevice(device);

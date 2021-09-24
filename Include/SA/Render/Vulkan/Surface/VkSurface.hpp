@@ -27,14 +27,14 @@ namespace Sa::Vk
 		Format GetFormat() const override final;
 
 
-		void Create(const ARenderDevice& _device) override final;
-		void Destroy(const ARenderDevice& _device) override final;
+		void Create(const ARenderDevice* _device) override final;
+		void Destroy(const ARenderDevice* _device) override final;
 
-		void CreateFrameBuffers(const Device& _device, const RenderPass& _renderPass, const RenderPassDescriptor& _renderPassDesc);
-		void DestroyFrameBuffers(const Device& _device);
+		void CreateFrameBuffers(const ARenderDevice* _device, const ARenderPass* _renderPass, const RenderPassDescriptor& _renderPassDesc) override final;
+		void DestroyFrameBuffers(const ARenderDevice* _device) override final;
 
-		FrameBuffer& Begin(const Device& _device);
-		void End(const Device& _device, const std::vector<CommandBuffer>& _cmdBuffers);
+		FrameBuffer& Begin(const ARenderDevice& _device);
+		void End(const ARenderDevice& _device, const std::vector<CommandBuffer>& _cmdBuffers);
 
 
 		SurfaceSupportDetails QuerySupportDetails(VkPhysicalDevice _device) const;

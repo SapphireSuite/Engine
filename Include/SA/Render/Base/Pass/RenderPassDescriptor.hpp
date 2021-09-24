@@ -11,9 +11,8 @@ namespace Sa
 {
 	class ARenderSurface;
 
-	class RenderPassDescriptor
+	struct RenderPassDescriptor
 	{
-	public:
 		std::vector<SubPassDescriptor> subPassDescs;
 
 		/**

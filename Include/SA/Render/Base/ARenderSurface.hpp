@@ -14,13 +14,19 @@ namespace Sa
 	class ARenderSystem;
 	class ARenderDevice;
 
+	class ARenderPass;
+	struct RenderPassDescriptor;
+
 	class ARenderSurface : public Abstract
 	{
 	public:
 		virtual Format GetFormat() const = 0;
 
-		virtual void Create(const ARenderDevice& _device) = 0;
-		virtual void Destroy(const ARenderDevice& _device) = 0;
+		virtual void Create(const ARenderDevice* _device) = 0;
+		virtual void Destroy(const ARenderDevice* _device) = 0;
+
+		virtual void CreateFrameBuffers(const ARenderDevice* _device, const ARenderPass* _renderPass, const RenderPassDescriptor& _renderPassDesc) = 0;
+		virtual void DestroyFrameBuffers(const ARenderDevice* _device) = 0;
 	};
 }
 
