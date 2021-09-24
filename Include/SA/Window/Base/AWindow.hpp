@@ -30,8 +30,8 @@ namespace Sa
 
 	namespace Vk
 	{
-		class RenderInstance;
-		class RenderSurface;
+		class Instance;
+		class Surface;
 	}
 
 
@@ -187,8 +187,8 @@ namespace Sa
 
 #if SA_VULKAN
 
-		virtual Vk::RenderSurface CreateVkRenderSurface(const Vk::RenderInstance& _instance) const = 0;
-		virtual void DestroyVkRenderSurface(const Vk::RenderInstance& _instance, Vk::RenderSurface& _surface) const = 0;
+		virtual Vk::Surface CreateVkRenderSurface(const Vk::Instance& _instance) const = 0;
+		virtual void DestroyVkRenderSurface(const Vk::Instance& _instance, Vk::Surface& _surface) const = 0;
 
 #endif
 	};

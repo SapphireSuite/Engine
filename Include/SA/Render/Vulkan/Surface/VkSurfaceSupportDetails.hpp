@@ -2,8 +2,8 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_RENDER_VK_RENDER_SURFACE_SUPPORT_DETAILS_GUARD
-#define SAPPHIRE_RENDER_VK_RENDER_SURFACE_SUPPORT_DETAILS_GUARD
+#ifndef SAPPHIRE_RENDER_VK_SURFACE_SUPPORT_DETAILS_GUARD
+#define SAPPHIRE_RENDER_VK_SURFACE_SUPPORT_DETAILS_GUARD
 
 #include <vector>
 
@@ -15,7 +15,7 @@
 
 namespace Sa::Vk
 {
-	struct RenderSurfaceSupportDetails
+	struct SurfaceSupportDetails
 	{
 		VkSurfaceCapabilitiesKHR capabilities;
 		std::vector<VkSurfaceFormatKHR> formats;

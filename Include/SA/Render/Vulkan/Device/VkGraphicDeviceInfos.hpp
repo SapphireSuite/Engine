@@ -13,7 +13,7 @@
 
 namespace Sa::Vk
 {
-	class RenderSurface;
+	class Surface;
 
 	struct GraphicDeviceInfos : public AGraphicDeviceInfos
 	{
@@ -50,8 +50,8 @@ namespace Sa::Vk
 
 		GraphicDeviceInfos(VkPhysicalDevice _device, const QueueRequirements& _reqs) noexcept;
 
-		void QueryQueueFamilies(const RenderSurface* _surface) noexcept;
-		void AddFamily(const RenderSurface* _surface, const VkQueueFamilyProperties& _family, uint32 _famIndex) noexcept;
+		void QueryQueueFamilies(const Surface* _surface) noexcept;
+		void AddFamily(const Surface* _surface, const VkQueueFamilyProperties& _family, uint32 _famIndex) noexcept;
 
 		bool QueueFamiliesCompleted() const noexcept;
 

@@ -14,8 +14,8 @@
 
 namespace Sa::Vk
 {
-	class RenderInstance;
-	class RenderSurface;
+	class Instance;
+	class Surface;
 
 	class Device : public ARenderDevice
 	{
@@ -36,11 +36,11 @@ namespace Sa::Vk
 		void WaitIdle() override final;
 
 
-		static std::vector<GraphicDeviceInfos> QuerySuitableDevices(const RenderInstance& _inst,
+		static std::vector<GraphicDeviceInfos> QuerySuitableDevices(const Instance& _inst,
 			const QueueRequirements& _queueReq = QueueRequirements{ QueueFamily::OffScreen });
 
-		static std::vector<GraphicDeviceInfos> QuerySuitableDevices(const RenderInstance& _inst,
-			const RenderSurface* _surface, const QueueRequirements& _queueReq = QueueRequirements{ QueueFamily::Max });
+		static std::vector<GraphicDeviceInfos> QuerySuitableDevices(const Instance& _inst,
+			const Surface* _surface, const QueueRequirements& _queueReq = QueueRequirements{ QueueFamily::Max });
 
 
 		operator VkDevice() const noexcept;

@@ -2,29 +2,27 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_RENDER_VK_RENDER_SURFACE_GUARD
-#define SAPPHIRE_RENDER_VK_RENDER_SURFACE_GUARD
+#ifndef SAPPHIRE_RENDER_VK_SURFACE_GUARD
+#define SAPPHIRE_RENDER_VK_SURFACE_GUARD
 
 #include <SA/Render/Base/ARenderSurface.hpp>
 
 #include <SA/Render/Vulkan/Surface/VkSwapChain.hpp>
-#include <SA/Render/Vulkan/Surface/VkRenderSurfaceSupportDetails.hpp>
+#include <SA/Render/Vulkan/Surface/VkSurfaceSupportDetails.hpp>
 
 #if SA_VULKAN
 
 namespace Sa::Vk
 {
-	class RenderInstance;
-
-	class RenderSurface : public ARenderSurface
+	class Surface : public ARenderSurface
 	{
 		VkSurfaceKHR mHandle = VK_NULL_HANDLE;
 
 		SwapChain mSwapChain;
 
 	public:
-		RenderSurface() = default;
-		RenderSurface(VkSurfaceKHR _handle) noexcept;
+		Surface() = default;
+		Surface(VkSurfaceKHR _handle) noexcept;
 
 		Format GetFormat() const override final;
 
@@ -39,7 +37,7 @@ namespace Sa::Vk
 		void End(const Device& _device, const std::vector<CommandBuffer>& _cmdBuffers);
 
 
-		RenderSurfaceSupportDetails QuerySupportDetails(VkPhysicalDevice _device) const;
+		SurfaceSupportDetails QuerySupportDetails(VkPhysicalDevice _device) const;
 
 
 		operator VkSurfaceKHR() const noexcept;

@@ -5,8 +5,8 @@
 #include <Input/GLFW/GLFWInputWindowContext.hpp>
 
 #include <Render/Vulkan/Debug/Debug.hpp>
-#include <Render/Vulkan/VkRenderInstance.hpp>
-#include <Render/Vulkan/Surface/VkRenderSurface.hpp>
+#include <Render/Vulkan/VkInstance.hpp>
+#include <Render/Vulkan/Surface/VkSurface.hpp>
 
 #if SA_GLFW
 
@@ -199,16 +199,16 @@ namespace Sa::GLFW
 
 #if SA_VULKAN
 
-	Vk::RenderSurface Window::CreateVkRenderSurface(const Vk::RenderInstance& _instance) const
+	Vk::Surface Window::CreateVkRenderSurface(const Vk::Instance& _instance) const
 	{
 		VkSurfaceKHR vkSurface;
 
 		SA_VK_ASSERT(glfwCreateWindowSurface(_instance, mHandle, nullptr, &vkSurface), L"Failed to create VkRenderSurface from GLFW window!");
 
-		return Vk::RenderSurface{ vkSurface };
+		return Vk::Surface{ vkSurface };
 	}
 
-	void Window::DestroyVkRenderSurface(const Vk::RenderInstance& _instance, Vk::RenderSurface& _surface) const
+	void Window::DestroyVkRenderSurface(const Vk::Instance& _instance, Vk::Surface& _surface) const
 	{
 		vkDestroySurfaceKHR(_instance, _surface, nullptr);
 

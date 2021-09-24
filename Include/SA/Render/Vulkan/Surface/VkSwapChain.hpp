@@ -18,7 +18,7 @@
 namespace Sa::Vk
 {
 	class Device;
-	class RenderSurface;
+	class Surface;
 
 	class SwapChain
 	{
@@ -41,7 +41,7 @@ namespace Sa::Vk
 		std::vector<Synchronisation> mFramesSynch;
 		std::vector<FrameBuffer> mFrameBuffers;
 
-		void CreateSwapChainKHR(const Device& _device, const RenderSurface& _surface);
+		void CreateSwapChainKHR(const Device& _device, const Surface& _surface);
 		void DestroySwapChainKHR(const Device& _device);
 
 		void CreateSynchronisation(const Device& _device);
@@ -50,7 +50,7 @@ namespace Sa::Vk
 	public:
 		Format GetFormat() const;
 
-		void Create(const Device& _device, const RenderSurface& _surface);
+		void Create(const Device& _device, const Surface& _surface);
 		void Destroy(const Device& _device);
 
 		void CreateFrameBuffers(const Device& _device, const RenderPass& _renderPass, const RenderPassDescriptor& _renderPassDesc);

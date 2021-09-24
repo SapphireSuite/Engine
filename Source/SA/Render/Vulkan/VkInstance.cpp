@@ -1,10 +1,9 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Render/Vulkan/VkRenderInstance.hpp>
+#include <Render/Vulkan/VkInstance.hpp>
 
 #include <Render/Vulkan/Debug/VkValidationLayers.hpp>
 
-#include <Window/Base/AWindow.hpp>
 #include <Window/Base/AWindowSystem.hpp>
 
 #if SA_VULKAN
@@ -27,7 +26,7 @@ namespace Sa::Vk
 	}
 
 
-	void RenderInstance::Create(const AWindowSystem& _winSys)
+	void Instance::Create(const AWindowSystem& _winSys)
 	{
 		VkApplicationInfo appInfos{};
 
@@ -82,7 +81,7 @@ namespace Sa::Vk
 		SA_LOG(L"Render Instance created.", Infos, SA/Render/Vulkan);
 	}
 
-	void RenderInstance::Destroy()
+	void Instance::Destroy()
 	{
 #if SA_VK_VALIDATION_LAYERS
 
@@ -99,7 +98,7 @@ namespace Sa::Vk
 	}
 
 
-	RenderInstance::operator VkInstance() const noexcept
+	Instance::operator VkInstance() const noexcept
 	{
 		return mHandle;
 	}

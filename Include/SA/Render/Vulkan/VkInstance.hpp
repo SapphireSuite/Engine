@@ -2,12 +2,10 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_RENDER_VK_RENDER_INSTANCE_GUARD
-#define SAPPHIRE_RENDER_VK_RENDER_INSTANCE_GUARD
+#ifndef SAPPHIRE_RENDER_VK_INSTANCE_GUARD
+#define SAPPHIRE_RENDER_VK_INSTANCE_GUARD
 
 #include <SA/Render/Vulkan/Debug/Debug.hpp>
-
-#include <SA/Render/Vulkan/Surface/VkRenderSurface.hpp>
 
 #if SA_VULKAN
 
@@ -18,7 +16,7 @@ namespace Sa
 
 namespace Sa::Vk
 {
-	class RenderInstance
+	class Instance
 	{
 		VkInstance mHandle = VK_NULL_HANDLE;
 

@@ -1,8 +1,8 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Render/Vulkan/Surface/VkRenderSurface.hpp>
+#include <Render/Vulkan/Surface/VkSurface.hpp>
 
-#include <Render/Vulkan/VkRenderInstance.hpp>
+#include <Render/Vulkan/VkInstance.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
 
 #include <Render/Debug.hpp>
@@ -11,50 +11,50 @@
 
 namespace Sa::Vk
 {
-	RenderSurface::RenderSurface(VkSurfaceKHR _handle) noexcept :
+	Surface::Surface(VkSurfaceKHR _handle) noexcept :
 		mHandle{ _handle }
 	{
 	}
 
 
-	Format RenderSurface::GetFormat() const
+	Format Surface::GetFormat() const
 	{
 		return mSwapChain.GetFormat();
 	}
 
-	void RenderSurface::Create(const ARenderDevice& _device)
+	void Surface::Create(const ARenderDevice& _device)
 	{
 		const Device& vkDevice = _device.As<Device>();
 
 		SA_ASSERT(Nullptr, SA/Render/Vulkan, mHandle,
-			L"Handle is nullptr. VkSurfaceKHR must be created first: use window.CreateVkRenderSurface()");
+			L"Handle is nullptr. VkSurfaceKHR must be created first: use window.CreateVkSurface()");
 
 		mSwapChain.Create(vkDevice, *this);
 
 		SA_LOG(L"Render Surface created.", Infos, SA/Render/Vulkan);
 	}
 	
-	void RenderSurface::Destroy(const ARenderDevice& _device)
+	void Surface::Destroy(const ARenderDevice& _device)
 	{
 		const Device& vkDevice = _device.As<Device>();
 
 		SA_ASSERT(Nullptr, SA/Render/Vulkan, mHandle,
-			L"Handle is nullptr. VkSurfaceKHR must be created first: use window.CreateVkRenderSurface()");
+			L"Handle is nullptr. VkSurfaceKHR must be created first: use window.CreateVkSurface()");
 
 		mSwapChain.Destroy(vkDevice);
 
-		// Log "Surface Destroyed" in window.DestroyVkRenderSurface().
+		// Log "Surface Destroyed" in window.DestroyVkSurface().
 	}
 
 
-	void RenderSurface::CreateFrameBuffers(const Device& _device, const RenderPass& _renderPass, const RenderPassDescriptor& _renderPassDesc)
+	void Surface::CreateFrameBuffers(const Device& _device, const RenderPass& _renderPass, const RenderPassDescriptor& _renderPassDesc)
 	{
 		mSwapChain.CreateFrameBuffers(_device, _renderPass, _renderPassDesc);
 
 		SA_LOG(L"Render Surface FrameBuffers created.", Infos, SA/Render/Vulkan);
 	}
 
-	void RenderSurface::DestroyFrameBuffers(const Device& _device)
+	void Surface::DestroyFrameBuffers(const Device& _device)
 	{
 		mSwapChain.DestroyFrameBuffers(_device);
 
@@ -62,20 +62,20 @@ namespace Sa::Vk
 	}
 
 
-	FrameBuffer& RenderSurface::Begin(const Device& _device)
+	FrameBuffer& Surface::Begin(const Device& _device)
 	{
 		return mSwapChain.Begin(_device);
 	}
 
-	void RenderSurface::End(const Device& _device, const std::vector<CommandBuffer>& _cmdBuffers)
+	void Surface::End(const Device& _device, const std::vector<CommandBuffer>& _cmdBuffers)
 	{
 		mSwapChain.End(_device, _cmdBuffers);
 	}
 
 
-	RenderSurfaceSupportDetails RenderSurface::QuerySupportDetails(VkPhysicalDevice _device) const
+	SurfaceSupportDetails Surface::QuerySupportDetails(VkPhysicalDevice _device) const
 	{
-		RenderSurfaceSupportDetails details{};
+		SurfaceSupportDetails details{};
 
 		// KHR Capabilities.
 		vkGetPhysicalDeviceSurfaceCapabilitiesKHR(_device, mHandle, &details.capabilities);
@@ -106,7 +106,7 @@ namespace Sa::Vk
 	}
 
 
-	RenderSurface::operator VkSurfaceKHR() const noexcept
+	Surface::operator VkSurfaceKHR() const noexcept
 	{
 		return mHandle;
 	}

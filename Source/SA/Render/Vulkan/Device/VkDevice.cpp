@@ -6,7 +6,7 @@
 
 #include <Render/Vulkan/Debug/VkValidationLayers.hpp>
 
-#include <Render/Vulkan/VkRenderInstance.hpp>
+#include <Render/Vulkan/VkInstance.hpp>
 #include <Render/Vulkan/Device/VkGraphicDeviceInfos.hpp>
 
 #if SA_VULKAN
@@ -65,7 +65,7 @@ namespace Sa::Vk
 		return true;
 	}
 
-	bool IsPhysicalDeviceSuitable(GraphicDeviceInfos& _infos, const RenderSurface* _surface)
+	bool IsPhysicalDeviceSuitable(GraphicDeviceInfos& _infos, const Surface* _surface)
 	{
 		// Check requiered extensions.
 		if (!CheckExtensionSupport(_infos.device, _infos.reqs.familyFlags))
@@ -170,12 +170,12 @@ namespace Sa::Vk
 	}
 
 
-	std::vector<GraphicDeviceInfos> QuerySuitableDevices(const RenderInstance& _inst, const QueueRequirements& _queueReq)
+	std::vector<GraphicDeviceInfos> QuerySuitableDevices(const Instance& _inst, const QueueRequirements& _queueReq)
 	{
 		return Device::QuerySuitableDevices(_inst, nullptr, _queueReq);
 	}
 
-	std::vector<GraphicDeviceInfos> Device::QuerySuitableDevices(const RenderInstance& _inst, const RenderSurface* _surface, const QueueRequirements& _queueReq)
+	std::vector<GraphicDeviceInfos> Device::QuerySuitableDevices(const Instance& _inst, const Surface* _surface, const QueueRequirements& _queueReq)
 	{
 		SA_ASSERT(Default, SA/Render/Vulkan, !((bool)(_queueReq.familyFlags & QueueFamily::Present) ^ (_surface != nullptr)),
 			L"QueueType::Present requiere a valid RenderSurface as parameter!");

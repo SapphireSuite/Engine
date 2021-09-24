@@ -19,7 +19,8 @@ using namespace Sa;
 #include <SA/Input/Base/Axis/Bindings/InputAxisRange.hpp>
 
 #include <SA/Render/Vulkan/VkRenderSystem.hpp>
-//#include <SA/Render/Vulkan/Surface/VkRenderSurface.hpp>
+
+//#include <SA/Render/Vulkan/Surface/VkSurface.hpp>
 //#include <SA/Render/Vulkan/Device/VkCommandPool.hpp>
 //#include <SA/Render/Vulkan/Pass/VkRenderPass.hpp>
 //#include <SA/Render/Vulkan/Buffers/VkFrameBuffer.hpp>
@@ -163,7 +164,7 @@ int main()
 			renderSys.Create(winSys);
 			surface = renderSys.CreateWindowSurface(win);
 			
-			std::vector<Vk::GraphicDeviceInfos> deviceInfos = Vk::Device::QuerySuitableDevices(renderSys, surface->AsPtr<Vk::RenderSurface>());
+			std::vector<Vk::GraphicDeviceInfos> deviceInfos = Vk::Device::QuerySuitableDevices(renderSys, surface->AsPtr<Vk::Surface>());
 			device = renderSys.CreateDevice(deviceInfos[0]);
 
 			surface->Create(*device);

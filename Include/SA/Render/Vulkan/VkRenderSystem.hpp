@@ -7,9 +7,9 @@
 
 #include <SA/Render/Base/ARenderSystem.hpp>
 
-#include <SA/Render/Vulkan/VkRenderInstance.hpp>
+#include <SA/Render/Vulkan/VkInstance.hpp>
 #include <SA/Render/Vulkan/Device/VkDevice.hpp>
-#include <SA/Render/Vulkan/Surface/VkRenderSurface.hpp>
+#include <SA/Render/Vulkan/Surface/VkSurface.hpp>
 
 #if SA_VULKAN
 
@@ -17,7 +17,7 @@ namespace Sa::Vk
 {
 	class RenderSystem : public ARenderSystem
 	{
-		RenderInstance mInstance;
+		Instance mInstance;
 
 	public:
 		void Create(const AWindowSystem& _winSys) override final;
@@ -30,7 +30,7 @@ namespace Sa::Vk
 		void DestroyWindowSurface(AWindow& _win, ARenderSurface*& _surface) override final;
 
 
-		operator const RenderInstance& () const;
+		operator const Instance& () const;
 	};
 }
 

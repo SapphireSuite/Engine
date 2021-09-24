@@ -1,10 +1,10 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <SA/Render/Vulkan/Surface/VkRenderSurfaceSupportDetails.hpp>
+#include <SA/Render/Vulkan/Surface/VkSurfaceSupportDetails.hpp>
 
 namespace Sa::Vk
 {
-	VkSurfaceFormatKHR RenderSurfaceSupportDetails::ChooseSwapSurfaceFormat() const
+	VkSurfaceFormatKHR SurfaceSupportDetails::ChooseSwapSurfaceFormat() const
 	{
 		// Prefered
 		for (uint32 i = 0; i < formats.size(); ++i)
@@ -17,7 +17,7 @@ namespace Sa::Vk
 		return formats[0];
 	}
 
-	VkPresentModeKHR RenderSurfaceSupportDetails::ChooseSwapPresentMode() const
+	VkPresentModeKHR SurfaceSupportDetails::ChooseSwapPresentMode() const
 	{
 		// Prefered.
 		for (uint32 i = 0; i < presentModes.size(); ++i)
@@ -30,7 +30,7 @@ namespace Sa::Vk
 		return VK_PRESENT_MODE_FIFO_KHR;
 	}
 
-	Vec2ui RenderSurfaceSupportDetails::ChooseSwapExtent() const
+	Vec2ui SurfaceSupportDetails::ChooseSwapExtent() const
 	{
 		if (capabilities.currentExtent.width != UINT32_MAX)
 			return Vec2ui(capabilities.currentExtent.width, capabilities.currentExtent.height);

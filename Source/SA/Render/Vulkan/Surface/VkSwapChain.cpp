@@ -7,7 +7,7 @@
 #include <Render/Vulkan/Debug/Debug.hpp>
 
 #include <Render/Vulkan/Device/VkDevice.hpp>
-#include <Render/Vulkan/Surface/VkRenderSurface.hpp>
+#include <Render/Vulkan/Surface/VkSurface.hpp>
 #include <Render/Vulkan/Buffers/VkCommandBuffer.hpp>
 
 
@@ -20,9 +20,9 @@ namespace Sa::Vk
 		return mFormat;
 	}
 
-	void SwapChain::CreateSwapChainKHR(const Device& _device, const RenderSurface& _surface)
+	void SwapChain::CreateSwapChainKHR(const Device& _device, const Surface& _surface)
 	{
-		RenderSurfaceSupportDetails details = _surface.QuerySupportDetails(_device);
+		SurfaceSupportDetails details = _surface.QuerySupportDetails(_device);
 
 		VkSurfaceFormatKHR surfaceFormat = details.ChooseSwapSurfaceFormat();
 		VkPresentModeKHR presentMode = details.ChooseSwapPresentMode();
@@ -130,7 +130,7 @@ namespace Sa::Vk
 	}
 
 
-	void SwapChain::Create(const Device& _device, const RenderSurface& _surface)
+	void SwapChain::Create(const Device& _device, const Surface& _surface)
 	{
 		CreateSwapChainKHR(_device, _surface);
 		CreateSynchronisation(_device);
