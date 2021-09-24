@@ -7,7 +7,7 @@
 #include <Core/Algorithms/SizeOf.hpp>
 
 #include <Render/Vulkan/Debug/Debug.hpp>
-#include <Render/Vulkan/VkRenderFrame.hpp>
+#include <Render/Vulkan/VkFrame.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
 #include <Render/Vulkan/Pipeline/VkPipeline.hpp>
 
@@ -116,7 +116,7 @@ namespace Sa::Vk
 
 	void DescriptorSet::Bind(const ARenderFrame& _frame, const ARenderPipeline& _pipeline) const
 	{
-		const RenderFrame& vkFrame = _frame.As<RenderFrame>();
+		const Frame& vkFrame = _frame.As<Frame>();
 		const Pipeline& vkPipeline = _pipeline.As<Pipeline>();
 
 		vkCmdBindDescriptorSets(vkFrame.cmd, VK_PIPELINE_BIND_POINT_GRAPHICS, vkPipeline.GetLayout(),

@@ -13,7 +13,7 @@
 #include <Render/Vulkan/Shader/VkShader.hpp>
 #include <Render/Vulkan/Shader/VkSpecConstantData.hpp>
 #include <Render/Vulkan/Pass/VkRenderPass.hpp>
-#include <Render/Vulkan/VkRenderFrame.hpp>
+#include <Render/Vulkan/VkFrame.hpp>
 
 #if SA_VULKAN
 
@@ -62,7 +62,7 @@ namespace Sa::Vk
 
 	void Pipeline::Bind(const ARenderFrame& _frame) const
 	{
-		const RenderFrame& vkFrame = _frame.As<RenderFrame>();
+		const Frame& vkFrame = _frame.As<Frame>();
 
 		vkCmdBindPipeline(vkFrame.cmd, VK_PIPELINE_BIND_POINT_GRAPHICS, mHandle);
 	}

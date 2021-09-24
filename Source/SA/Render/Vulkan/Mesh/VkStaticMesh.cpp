@@ -4,7 +4,7 @@
 
 #include <Core/Algorithms/SizeOf.hpp>
 
-#include <Render/Vulkan/VkRenderFrame.hpp>
+#include <Render/Vulkan/VkFrame.hpp>
 
 #if SA_VULKAN
 
@@ -40,7 +40,7 @@ namespace Sa::Vk
 
 	void StaticMesh::Draw(const ARenderFrame& _frame, const MeshDrawInfos& _infos) const
 	{
-		const RenderFrame& vkFrame = _frame.As<RenderFrame>();
+		const Frame& vkFrame = _frame.As<Frame>();
 
 		VkDeviceSize offsets[] = { 0 };
 		VkBuffer vkVertBuff = mVertexBuffer;

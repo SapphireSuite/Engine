@@ -2,8 +2,8 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_RENDER_VK_RENDER_FRAME_GUARD
-#define SAPPHIRE_RENDER_VK_RENDER_FRAME_GUARD
+#ifndef SAPPHIRE_RENDER_VK_FRAME_GUARD
+#define SAPPHIRE_RENDER_VK_FRAME_GUARD
 
 #include <SA/Render/Base/ARenderFrame.hpp>
 
@@ -13,12 +13,12 @@
 
 namespace Sa::Vk
 {
-	class RenderFrame : public ARenderFrame
+	class Frame : public ARenderFrame
 	{
 	public:
 		CommandBuffer& cmd;
 
-		RenderFrame(CommandBuffer& _cmd) noexcept;
+		Frame(CommandBuffer& _cmd) noexcept;
 	};
 }
 
