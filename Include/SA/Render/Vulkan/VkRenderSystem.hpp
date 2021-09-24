@@ -10,6 +10,7 @@
 #include <SA/Render/Vulkan/VkInstance.hpp>
 #include <SA/Render/Vulkan/Device/VkDevice.hpp>
 #include <SA/Render/Vulkan/Surface/VkSurface.hpp>
+#include <SA/Render/Vulkan/Pass/VkRenderPass.hpp>
 
 #if SA_VULKAN
 
@@ -28,6 +29,9 @@ namespace Sa::Vk
 
 		ARenderSurface* CreateWindowSurface(AWindow& _win) override final;
 		void DestroyWindowSurface(AWindow& _win, ARenderSurface*& _surface) override final;
+
+		ARenderPass* CreateRenderPass(ARenderDevice* _device, const RenderPassDescriptor& _descriptor) override final;
+		void DestroyRenderPass(ARenderDevice* _device, ARenderPass* _pass) override final;
 
 
 		operator const Instance& () const;

@@ -11,8 +11,13 @@
 
 namespace Sa
 {
+	class ARenderDevice;
+
 	class ARenderPass : public Abstract
 	{
+	public:
+		virtual void Create(const ARenderDevice& _device, const RenderPassDescriptor& _desc) = 0;
+		virtual void Destroy(const ARenderDevice& _device) = 0;
 	};
 }
 

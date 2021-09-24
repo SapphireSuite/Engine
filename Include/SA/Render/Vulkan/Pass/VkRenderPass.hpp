@@ -11,7 +11,6 @@
 
 namespace Sa::Vk
 {
-	class Device;
 	class CommandBuffer;
 	class FrameBuffer;
 
@@ -20,8 +19,8 @@ namespace Sa::Vk
 		VkRenderPass mHandle = VK_NULL_HANDLE;
 
 	public:
-		void Create(const Device& _device, const RenderPassDescriptor& _descriptor);
-		void Destroy(const Device& _device);
+		void Create(const ARenderDevice& _device, const RenderPassDescriptor& _descriptor) override final;
+		void Destroy(const ARenderDevice& _device) override final;
 
 		void Begin(CommandBuffer& _cmdBuff, const FrameBuffer& _frameBuff);
 		void NextSubpass(CommandBuffer& _cmdBuff);

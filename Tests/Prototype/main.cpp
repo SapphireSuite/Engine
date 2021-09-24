@@ -20,9 +20,7 @@ using namespace Sa;
 
 #include <SA/Render/Vulkan/VkRenderSystem.hpp>
 
-//#include <SA/Render/Vulkan/Surface/VkSurface.hpp>
 //#include <SA/Render/Vulkan/Device/VkCommandPool.hpp>
-//#include <SA/Render/Vulkan/Pass/VkRenderPass.hpp>
 //#include <SA/Render/Vulkan/Buffers/VkFrameBuffer.hpp>
 //#include <SA/Render/Vulkan/Buffers/VkCommandBuffer.hpp>
 //#include <SA/Render/Vulkan/Mesh/VkStaticMesh.hpp>
@@ -48,7 +46,9 @@ GLFW::InputSystem inputSys;
 Vk::RenderSystem renderSys;
 ARenderDevice* device = nullptr;
 ARenderSurface* surface = nullptr;
-//RenderPassDescriptor renderPassDesc;
+RenderPassDescriptor renderPassDesc;
+ARenderPass* renderPass = nullptr;
+
 //Vk::RenderPass renderPass;
 //Vk::CommandPool cmdPool;
 //std::vector<Vk::CommandBuffer> cmdBuffers;
@@ -169,10 +169,8 @@ int main()
 
 			surface->Create(*device);
 
-
-			//renderPassDesc = RenderPassDescriptor::DefaultSingle(&surface);
-
-			//renderPass.Create(device, renderPassDesc);
+			renderPassDesc = RenderPassDescriptor::DefaultSingle(surface);
+			renderPass = renderSys.CreateRenderPass(device, renderPassDesc);
 
 			//surface.CreateFrameBuffers(device, renderPass, renderPassDesc);
 
@@ -427,11 +425,9 @@ int main()
 			cmdPool.Destroy(device);
 
 			surface.DestroyFrameBuffers(device);
-
-			renderPass.Destroy(device);
-			surface.Destroy(renderInst, device);
 			*/
 
+			renderSys.DestroyRenderPass(device, renderPass);
 
 			surface->Destroy(*device);
 			renderSys.DestroyWindowSurface(win, surface);

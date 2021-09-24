@@ -55,10 +55,34 @@ namespace Sa::Vk
 
 	void RenderSystem::DestroyWindowSurface(AWindow& _win, ARenderSurface*& _surface)
 	{
+		SA_ASSERT(Nullptr, SA/Render/Vulkan, _surface);
+
 		_win.DestroyVkRenderSurface(mInstance, _surface->As<Surface>());
 
 		delete _surface;
 		_surface = nullptr;
+	}
+
+
+	ARenderPass* RenderSystem::CreateRenderPass(ARenderDevice* _device, const RenderPassDescriptor& _descriptor)
+	{
+		SA_ASSERT(Nullptr, SA / Render / Vulkan, _device);
+
+		RenderPass* const pass = new RenderPass();
+
+		pass->Create(*_device, _descriptor);
+
+		return pass;
+	}
+
+	void RenderSystem::DestroyRenderPass(ARenderDevice* _device, ARenderPass* _pass)
+	{
+		SA_ASSERT(Nullptr, SA/Render/Vulkan, _device);
+		SA_ASSERT(Nullptr, SA/Render/Vulkan, _pass);
+
+		_pass->Destroy(*_device);
+
+		delete _pass;
 	}
 
 
