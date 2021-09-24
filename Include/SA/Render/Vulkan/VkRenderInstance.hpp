@@ -13,7 +13,6 @@
 
 namespace Sa
 {
-	class AWindow;
 	class AWindowSystem;
 }
 
