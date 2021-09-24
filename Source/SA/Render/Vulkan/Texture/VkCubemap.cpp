@@ -2,110 +2,116 @@
 
 #include <Render/Vulkan/Texture/VkCubemap.hpp>
 
+#include <Render/Vulkan/VkResourceInitializer.hpp>
+#include <Render/Vulkan/Device/VkDevice.hpp>
 #include <Render/Vulkan/Buffers/VkBuffer.hpp>
 
 #if SA_VULKAN
 
 namespace Sa::Vk
 {
-	void Cubemap::Create(const Device& _device, CommandBuffer& _cmd, ResourceHolder& _resHold, const RawCubemap& _raw)
+	void Cubemap::Create(ARenderResourceInitializer* _init, const RawCubemap& _raw)
 	{
-		//uint64 dataSize = _raw.GetTotalMapSize();
-		//uint64 irradianceSize = _raw.GetMapSize();
+		ResourceInitializer& vkInit = _init->As<ResourceInitializer>();
 
-		//Buffer& stagingBuffer = _resHold.Make<Buffer>(Buffer::Deleter(_device));
-		//stagingBuffer.Create(_device, dataSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-		//	VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
-		//	_raw.data.data());
+		uint64 dataSize = _raw.GetTotalMapSize();
+		uint64 irradianceSize = _raw.GetMapSize();
 
-
-		//ImageBufferCreateInfos imageBufferCreateInfos;
-
-		//imageBufferCreateInfos.imageType = ImageType::Cube;
-
-		//imageBufferCreateInfos.format = _raw.format;
-		//imageBufferCreateInfos.extent = _raw.extent;
-
-		//imageBufferCreateInfos.usage = VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
-		//imageBufferCreateInfos.mipLevels = _raw.mipLevels;
-
-		//if (_raw.mipLevels > 1)
-		//	imageBufferCreateInfos.usage |= VK_IMAGE_USAGE_TRANSFER_SRC_BIT;
-
-		//
-		//// === Create buffer ===
-		//mBuffer.Create(_device, imageBufferCreateInfos);
-
-		//// Copy image to shader.
-		//ImageBuffer::TransitionInfos undefToDstTransitionInfos{};
-		//undefToDstTransitionInfos.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-		//undefToDstTransitionInfos.newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
-		//undefToDstTransitionInfos.mipLevels = _raw.mipLevels;
-		//undefToDstTransitionInfos.imageType = ImageType::Cube;
-
-		//mBuffer.TransitionImageLayout(_cmd, _resHold, undefToDstTransitionInfos);
+		Buffer& stagingBuffer = vkInit.resHolder.Make<Buffer>(Buffer::Deleter(*vkInit.device));
+		stagingBuffer.Create(*vkInit.device, dataSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+			_raw.data.data());
 
 
-		//ImageBuffer::CopyBufferImageInfos copyInfos{};
-		//copyInfos.buffer = stagingBuffer;
-		//copyInfos.extent = _raw.extent;
-		//copyInfos.format = _raw.format;
-		//copyInfos.mipLevels = _raw.mipLevels;
-		//copyInfos.imageType = ImageType::Cube;
+		ImageBufferCreateInfos imageBufferCreateInfos;
 
-		//mBuffer.CopyBufferToImage(_cmd, _resHold, copyInfos);
+		imageBufferCreateInfos.imageType = ImageType::Cube;
 
+		imageBufferCreateInfos.format = _raw.format;
+		imageBufferCreateInfos.extent = _raw.extent;
 
-		//ImageBuffer::TransitionInfos dstToReadTransitionInfos{};
-		//dstToReadTransitionInfos.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
-		//dstToReadTransitionInfos.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-		//dstToReadTransitionInfos.mipLevels = _raw.mipLevels;
-		//dstToReadTransitionInfos.imageType = ImageType::Cube;
+		imageBufferCreateInfos.usage = VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
+		imageBufferCreateInfos.mipLevels = _raw.mipLevels;
 
-		//mBuffer.TransitionImageLayout(_cmd, _resHold, dstToReadTransitionInfos);
+		if (_raw.mipLevels > 1)
+			imageBufferCreateInfos.usage |= VK_IMAGE_USAGE_TRANSFER_SRC_BIT;
 
+		
+		// === Create buffer ===
+		mBuffer.Create(*vkInit.device, imageBufferCreateInfos);
 
-		//// Destroy will be called by ResourceHolder.
-		////stagingBuffer.Destroy(device);
+		// Copy image to shader.
+		ImageBuffer::TransitionInfos undefToDstTransitionInfos{};
+		undefToDstTransitionInfos.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+		undefToDstTransitionInfos.newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+		undefToDstTransitionInfos.mipLevels = _raw.mipLevels;
+		undefToDstTransitionInfos.imageType = ImageType::Cube;
 
-
-		//// === Create irradiance buffer ===
-		//Buffer& irrStagingBuffer = _resHold.Make<Buffer>(Buffer::Deleter(_device));
-		//irrStagingBuffer.Create(_device, irradianceSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-		//	VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
-		//	_raw.data.data());
-
-		//imageBufferCreateInfos.mipLevels = 1u;
-		//imageBufferCreateInfos.usage = VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
-
-		//copyInfos.mipLevels = 1u;
-		//copyInfos.buffer = irrStagingBuffer;
-		//undefToDstTransitionInfos.mipLevels = 1u;
-		//dstToReadTransitionInfos.mipLevels = 1u;
+		mBuffer.TransitionImageLayout(vkInit, undefToDstTransitionInfos);
 
 
-		//mIrradianceBuffer.Create(_device, imageBufferCreateInfos);
+		ImageBuffer::CopyBufferImageInfos copyInfos{};
+		copyInfos.buffer = stagingBuffer;
+		copyInfos.extent = _raw.extent;
+		copyInfos.format = _raw.format;
+		copyInfos.mipLevels = _raw.mipLevels;
+		copyInfos.imageType = ImageType::Cube;
 
-		//mIrradianceBuffer.TransitionImageLayout(_cmd, _resHold, undefToDstTransitionInfos);
+		mBuffer.CopyBufferToImage(vkInit, copyInfos);
 
-		//mIrradianceBuffer.CopyBufferToImage(_cmd, _resHold, copyInfos);
 
-		//mIrradianceBuffer.TransitionImageLayout(_cmd, _resHold, dstToReadTransitionInfos);
+		ImageBuffer::TransitionInfos dstToReadTransitionInfos{};
+		dstToReadTransitionInfos.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+		dstToReadTransitionInfos.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+		dstToReadTransitionInfos.mipLevels = _raw.mipLevels;
+		dstToReadTransitionInfos.imageType = ImageType::Cube;
+
+		mBuffer.TransitionImageLayout(vkInit, dstToReadTransitionInfos);
+
+
+		// Destroy will be called by ResourceHolder.
+		//stagingBuffer.Destroy(device);
+
+
+		// === Create irradiance buffer ===
+		Buffer& irrStagingBuffer = vkInit.resHolder.Make<Buffer>(Buffer::Deleter(*vkInit.device));
+		irrStagingBuffer.Create(*vkInit.device, irradianceSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+			_raw.data.data());
+
+		imageBufferCreateInfos.mipLevels = 1u;
+		imageBufferCreateInfos.usage = VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
+
+		copyInfos.mipLevels = 1u;
+		copyInfos.buffer = irrStagingBuffer;
+		undefToDstTransitionInfos.mipLevels = 1u;
+		dstToReadTransitionInfos.mipLevels = 1u;
+
+
+		mIrradianceBuffer.Create(*vkInit.device, imageBufferCreateInfos);
+
+		mIrradianceBuffer.TransitionImageLayout(vkInit, undefToDstTransitionInfos);
+
+		mIrradianceBuffer.CopyBufferToImage(vkInit, copyInfos);
+
+		mIrradianceBuffer.TransitionImageLayout(vkInit, dstToReadTransitionInfos);
 
 
 		// Destroy will be called by ResourceHolder.
 		//irrStagingBuffer.Destroy(device);
 
 
-		mSampler.Create(_device, _raw.mipLevels);
+		mSampler.Create(*vkInit.device, _raw.mipLevels);
 	}
 
-	void Cubemap::Destroy(const Device& _device)
+	void Cubemap::Destroy(const ARenderDevice* _device)
 	{
-		mSampler.Destroy(_device);
+		const Device& vkDevice = _device->As<Device>();
 
-		mBuffer.Destroy(_device);
-		mIrradianceBuffer.Destroy(_device);
+		mSampler.Destroy(vkDevice);
+
+		mBuffer.Destroy(vkDevice);
+		mIrradianceBuffer.Destroy(vkDevice);
 	}
 
 

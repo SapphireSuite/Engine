@@ -152,6 +152,23 @@ namespace Sa::Vk
 		delete _texture;
 	}
 
+	
+	ACubemap* RenderSystem::CreateCubemap(ARenderResourceInitializer* _init, const RawCubemap& _raw)
+	{
+		Cubemap* const cubemap = new Cubemap();
+
+		cubemap->Create(_init, _raw);
+
+		return cubemap;
+	}
+
+	void RenderSystem::DestroyCubemap(ARenderDevice* _device, ACubemap* _cubemap)
+	{
+		_cubemap->Destroy(_device);
+
+		delete _cubemap;
+	}
+
 
 	RenderSystem::operator const Instance& () const
 	{

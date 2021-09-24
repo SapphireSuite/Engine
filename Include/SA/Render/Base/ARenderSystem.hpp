@@ -31,6 +31,8 @@ namespace Sa
 	class ATexture;
 	struct RawTexture;
 
+	class ACubemap;
+	struct RawCubemap;
 
 	class ARenderSystem : public Abstract
 	{
@@ -58,6 +60,9 @@ namespace Sa
 
 		virtual ATexture* CreateTexture(ARenderResourceInitializer* _init, const RawTexture& _raw) = 0;
 		virtual void DestroyTexture(ARenderDevice* _device, ATexture* _texture) = 0;
+
+		virtual ACubemap* CreateCubemap(ARenderResourceInitializer* _init, const RawCubemap& _raw) = 0;
+		virtual void DestroyCubemap(ARenderDevice* _device, ACubemap* _cubemap) = 0;
 	};
 }
 
