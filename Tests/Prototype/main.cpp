@@ -20,21 +20,21 @@ using namespace Sa;
 
 #include <SA/Render/Vulkan/VkRenderSystem.hpp>
 
+#include <SA/SDK/Assets/Shader/ShaderAsset.hpp>
+
 //#include <SA/Render/Vulkan/Device/VkCommandPool.hpp>
 //#include <SA/Render/Vulkan/Buffers/VkFrameBuffer.hpp>
 //#include <SA/Render/Vulkan/Buffers/VkCommandBuffer.hpp>
 //#include <SA/Render/Vulkan/Mesh/VkStaticMesh.hpp>
-//#include <SA/Render/Vulkan/Shader/VkShader.hpp>
 //#include <SA/Render/Vulkan/Pipeline/VkDescriptorSet.hpp>
 //#include <SA/Render/Vulkan/Buffers/VkBuffer.hpp>
 //#include <SA/Render/Vulkan/Texture/VkTexture.hpp>
 //#include <SA/Render/Vulkan/VkRenderFrame.hpp>
-//
+
 //#include <SA/Render/Base/Shader/Bindings/ShaderUBOBinding.hpp>
 //#include <SA/Render/Base/Shader/Bindings/ShaderIBOBinding.hpp>
-//
+
 //#include <SA/SDK/Assets/ModelAsset.hpp>
-//#include <SA/SDK/Assets/Shader/ShaderAsset.hpp>
 //#include <SA/SDK/Assets/TextureAsset.hpp>
 
 GLFW::WindowSystem winSys;
@@ -50,13 +50,14 @@ ARenderPass* renderPass = nullptr;
 RenderPipelineCreateInfos unlitPipelineInfos{ *renderPass, renderPassDesc };
 ARenderPipeline* unlitPipeline = nullptr;
 
+AShader* unlitvert = nullptr;
+AShader* unlitfrag = nullptr;
+
 //Vk::CommandPool cmdPool;
 //std::vector<Vk::CommandBuffer> cmdBuffers;
 //uint32 imageIndex = 0u;
 //
 //Vk::StaticMesh cubeMesh;
-//Vk::Shader unlitvert;
-//Vk::Shader unlitfrag;
 //Vk::DescriptorSet cubeDescSet;
 //Vk::Buffer camUBO;
 //Vk::Buffer modelUBO;
@@ -178,100 +179,100 @@ int main()
 			//	cmdBuffers.push_back(cmdPool.Allocate(device, VK_COMMAND_BUFFER_LEVEL_PRIMARY));
 		}
 
-		/*
-		// UBO
-		{
-			modelUBOData modelUBOd;
-			modelUBO.Create(device, sizeof(modelUBOData),
-				VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
-				VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
-				VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
-				&modelUBOd);
+
+		//// UBO
+		//{
+		//	modelUBOData modelUBOd;
+		//	modelUBO.Create(device, sizeof(modelUBOData),
+		//		VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
+		//		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
+		//		VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+		//		&modelUBOd);
 
 
-			camTr.position = Vec3f(0.0f, 0.0f, 5.0f);
-			camUBOd.proj = Mat4f::MakePerspective(90.0f, 1200.0f / 800.0f);
-			camUBOd.viewInv = camTr.Matrix().GetInversed();
-			camUBOd.viewPosition = camTr.position;
-			camUBO.Create(device, sizeof(camUBOData),
-				VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
-				VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
-				VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
-				&camUBOd);
-		}
+		//	camTr.position = Vec3f(0.0f, 0.0f, 5.0f);
+		//	camUBOd.proj = Mat4f::MakePerspective(90.0f, 1200.0f / 800.0f);
+		//	camUBOd.viewInv = camTr.Matrix().GetInversed();
+		//	camUBOd.viewPosition = camTr.position;
+		//	camUBO.Create(device, sizeof(camUBOData),
+		//		VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
+		//		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
+		//		VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+		//		&camUBOd);
+		//}
 
 
 		// Assets
 		{
 
-			// Submit
-			ResourceHolder resHolder;
-			cmdBuffers[0].Begin();
+			//// Submit
+			//ResourceHolder resHolder;
+			//cmdBuffers[0].Begin();
 
 
 
-			// CUBE.
-			{
-				const std::string assetName = "Assets/Meshes/cube.spha";
-				const std::string resName = "/Engine/Resources/Meshes/cube.obj";
+			//// CUBE.
+			//{
+			//	const std::string assetName = "Assets/Meshes/cube.spha";
+			//	const std::string resName = "/Engine/Resources/Meshes/cube.obj";
 
-				MeshAsset meshAsset;
-				if (!meshAsset.Load(assetName))
-				{
-					ModelAsset modelAsset;
-					if (modelAsset.Import(resName))
-					{
-						modelAsset.meshes[0].Save(assetName);
-						meshAsset = std::move(modelAsset.meshes[0]);
-					}
-				}
+			//	MeshAsset meshAsset;
+			//	if (!meshAsset.Load(assetName))
+			//	{
+			//		ModelAsset modelAsset;
+			//		if (modelAsset.Import(resName))
+			//		{
+			//			modelAsset.meshes[0].Save(assetName);
+			//			meshAsset = std::move(modelAsset.meshes[0]);
+			//		}
+			//	}
 
-				cubeMesh.Create(device, cmdBuffers[0], resHolder, meshAsset.raw);
-			}
-
-
-
-
-			// Texture
-			{
-				const std::string assetName = "Assets/Textures/missing.spha";
-				const std::string resName = "/Engine/Resources/Textures/missing_texture.png";
-
-				TextureAsset asset;
-
-				if (!asset.Load(assetName))
-				{
-					if (asset.Import(resName))
-					{
-						asset.Save(assetName);
-					}
-				}
-
-				missText.Create(device, cmdBuffers[0], resHolder, asset.raw);
-			}
+			//	cubeMesh.Create(device, cmdBuffers[0], resHolder, meshAsset.raw);
+			//}
 
 
 
-			cmdBuffers[0].End();
 
-			VkCommandBuffer bbb = cmdBuffers[0];
+			//// Texture
+			//{
+			//	const std::string assetName = "Assets/Textures/missing.spha";
+			//	const std::string resName = "/Engine/Resources/Textures/missing_texture.png";
 
-			// Submit commands.
-			VkSubmitInfo submitInfo{};
-			submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-			submitInfo.pNext = nullptr;
-			submitInfo.waitSemaphoreCount = 0u;
-			submitInfo.pWaitSemaphores = nullptr;
-			submitInfo.pWaitDstStageMask = nullptr;
-			submitInfo.commandBufferCount = 1u;
-			submitInfo.pCommandBuffers = &bbb;
-			submitInfo.signalSemaphoreCount = 0u;
-			submitInfo.pSignalSemaphores = nullptr;
+			//	TextureAsset asset;
 
-			vkQueueSubmit(device.queueMgr.transfer.GetQueue(0), 1, &submitInfo, VK_NULL_HANDLE);
-			vkQueueWaitIdle(device.queueMgr.transfer.GetQueue(0));
+			//	if (!asset.Load(assetName))
+			//	{
+			//		if (asset.Import(resName))
+			//		{
+			//			asset.Save(assetName);
+			//		}
+			//	}
 
-			resHolder.FreeAll();
+			//	missText.Create(device, cmdBuffers[0], resHolder, asset.raw);
+			//}
+
+
+
+			//cmdBuffers[0].End();
+
+			//VkCommandBuffer bbb = cmdBuffers[0];
+
+			//// Submit commands.
+			//VkSubmitInfo submitInfo{};
+			//submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+			//submitInfo.pNext = nullptr;
+			//submitInfo.waitSemaphoreCount = 0u;
+			//submitInfo.pWaitSemaphores = nullptr;
+			//submitInfo.pWaitDstStageMask = nullptr;
+			//submitInfo.commandBufferCount = 1u;
+			//submitInfo.pCommandBuffers = &bbb;
+			//submitInfo.signalSemaphoreCount = 0u;
+			//submitInfo.pSignalSemaphores = nullptr;
+
+			//vkQueueSubmit(device.queueMgr.transfer.GetQueue(0), 1, &submitInfo, VK_NULL_HANDLE);
+			//vkQueueWaitIdle(device.queueMgr.transfer.GetQueue(0));
+
+			//resHolder.FreeAll();
 
 
 			// Shaders
@@ -291,8 +292,7 @@ int main()
 						}
 					}
 
-					unlitvert.Create(device, asset.raw);
-
+					unlitvert = renderSys.CreateShader(device, asset.raw);
 					unlitPipelineInfos.AddShader(unlitvert, asset.raw.descriptor);
 				}
 
@@ -311,8 +311,7 @@ int main()
 						}
 					}
 
-					unlitfrag.Create(device, asset.raw);
-
+					unlitfrag = renderSys.CreateShader(device, asset.raw);
 					unlitPipelineInfos.AddShader(unlitfrag, asset.raw.descriptor);
 				}
 			}
@@ -320,24 +319,23 @@ int main()
 
 
 
-			// Pipeline
-			{
-				unlitPipelineInfos.vertexBindingLayout.meshLayout = cubeMesh.GetLayout();
-				unlitPipeline = renderSys.CreatePipeline(device, unlitPipelineInfos);
-			}
+			//// Pipeline
+			//{
+			//	unlitPipelineInfos.vertexBindingLayout.meshLayout = cubeMesh.GetLayout();
+			//	unlitPipeline = renderSys.CreatePipeline(device, unlitPipelineInfos);
+			//}
 
 
-			// DescSet.
-			{
-				DescriptorSetCreateInfos infos{ unlitPipeline };
-				infos.AddBinding<ShaderUBOBinding>(0u, &camUBO, 1);
-				infos.AddBinding<ShaderUBOBinding>(1u, &modelUBO, 1);
-				infos.AddBinding<ShaderIBOBinding>(2u, &missText);
+			//// DescSet.
+			//{
+			//	DescriptorSetCreateInfos infos{ unlitPipeline };
+			//	infos.AddBinding<ShaderUBOBinding>(0u, &camUBO, 1);
+			//	infos.AddBinding<ShaderUBOBinding>(1u, &modelUBO, 1);
+			//	infos.AddBinding<ShaderIBOBinding>(2u, &missText);
 
-				cubeDescSet.Create(device, infos);
-			}
+			//	cubeDescSet.Create(device, infos);
+			//}
 		}
-		*/
 	}
 
 
@@ -414,14 +412,14 @@ int main()
 			cubeDescSet.Destroy(device);
 			unlitPipeline.Destroy(device);
 
-			unlitvert.Destroy(device);
-			unlitfrag.Destroy(device);
-
 			missText.Destroy(device);
 			cubeMesh.Destroy(device);
 
 			cmdPool.Destroy(device);
 			*/
+
+			renderSys.DestroyShader(device, unlitvert);
+			renderSys.DestroyShader(device, unlitfrag);
 
 			surface->DestroyFrameBuffers(device);
 

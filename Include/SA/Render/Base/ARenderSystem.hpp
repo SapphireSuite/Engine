@@ -23,6 +23,9 @@ namespace Sa
 	class ARenderPipeline;
 	struct RenderPipelineCreateInfos;
 
+	class AShader;
+	struct RawShader;
+
 
 	class ARenderSystem : public Abstract
 	{
@@ -34,13 +37,16 @@ namespace Sa
 		virtual void DestroyDevice(ARenderDevice* _device) = 0;
 
 		virtual ARenderSurface* CreateWindowSurface(AWindow& _win) = 0;
-		virtual void DestroyWindowSurface(AWindow& _win, ARenderSurface*& _surface) = 0;
+		virtual void DestroyWindowSurface(AWindow& _win, ARenderSurface* _surface) = 0;
 
 		virtual ARenderPass* CreateRenderPass(ARenderDevice* _device, const RenderPassDescriptor& _descriptor) = 0;
 		virtual void DestroyRenderPass(ARenderDevice* _device, ARenderPass* _pass) = 0;
 
 		virtual ARenderPipeline* CreatePipeline(ARenderDevice* _device, const RenderPipelineCreateInfos& _infos) = 0;
 		virtual void DestroyPipeline(ARenderDevice* _device, ARenderPipeline* _pipeline) = 0;
+
+		virtual AShader* CreateShader(ARenderDevice* _device, const RawShader& _raw) = 0;
+		virtual void DestroyShader(ARenderDevice* _device, AShader* _shader) = 0;
 	};
 }
 

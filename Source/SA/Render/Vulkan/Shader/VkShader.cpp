@@ -12,8 +12,10 @@
 
 namespace Sa::Vk
 {
-	void Shader::Create(const Device& _device, const RawShader& _raw)
+	void Shader::Create(const ARenderDevice* _device, const RawShader& _raw)
 	{
+		const Device& vkDevice = _device->As<Device>();
+
 		VkShaderModuleCreateInfo shaderModuleCreateInfo{};
 		shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
 		shaderModuleCreateInfo.pNext = nullptr;
@@ -21,14 +23,16 @@ namespace Sa::Vk
 		shaderModuleCreateInfo.codeSize = OctSizeOf(_raw.data);
 		shaderModuleCreateInfo.pCode = _raw.data.data();
 
-		SA_VK_ASSERT(vkCreateShaderModule(_device, &shaderModuleCreateInfo, nullptr, &mHandle), L"Failed to create shader module!");
+		SA_VK_ASSERT(vkCreateShaderModule(vkDevice, &shaderModuleCreateInfo, nullptr, &mHandle), L"Failed to create shader module!");
 	}
 
-	void Shader::Destroy(const Device& _device)
+	void Shader::Destroy(const ARenderDevice* _device)
 	{
 		SA_ASSERT(Nullptr, SA/Render/Vulkan, mHandle, L"Destroy a null Shader!");
+		
+		const Device& vkDevice = _device->As<Device>();
 
-		vkDestroyShaderModule(_device, mHandle, nullptr);
+		vkDestroyShaderModule(vkDevice, mHandle, nullptr);
 
 		mHandle = VK_NULL_HANDLE;
 	}

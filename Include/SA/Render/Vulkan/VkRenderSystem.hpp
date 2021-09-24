@@ -12,6 +12,7 @@
 #include <SA/Render/Vulkan/Surface/VkSurface.hpp>
 #include <SA/Render/Vulkan/Pass/VkRenderPass.hpp>
 #include <SA/Render/Vulkan/Pipeline/VkPipeline.hpp>
+#include <SA/Render/Vulkan/Shader/VkShader.hpp>
 
 #if SA_VULKAN
 
@@ -29,13 +30,16 @@ namespace Sa::Vk
 		void DestroyDevice(ARenderDevice* _device) override final;
 
 		ARenderSurface* CreateWindowSurface(AWindow& _win) override final;
-		void DestroyWindowSurface(AWindow& _win, ARenderSurface*& _surface) override final;
+		void DestroyWindowSurface(AWindow& _win, ARenderSurface* _surface) override final;
 
 		ARenderPass* CreateRenderPass(ARenderDevice* _device, const RenderPassDescriptor& _descriptor) override final;
 		void DestroyRenderPass(ARenderDevice* _device, ARenderPass* _pass) override final;
 
 		ARenderPipeline* CreatePipeline(ARenderDevice* _device, const RenderPipelineCreateInfos& _infos) override final;
 		void DestroyPipeline(ARenderDevice* _device, ARenderPipeline* _pipeline) override final;
+
+		AShader* CreateShader(ARenderDevice* _device, const RawShader& _raw) override final;
+		void DestroyShader(ARenderDevice* _device, AShader* _shader) override final;
 
 
 		operator const Instance& () const;

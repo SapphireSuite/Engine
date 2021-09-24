@@ -59,7 +59,7 @@ namespace Sa
 
 		RenderPipelineCreateInfos(const ARenderPass& _renderPass, const RenderPassDescriptor& _renderPassDesc) noexcept;
 
-		void AddShader(const AShader& _shader, ShaderDescriptor _descriptor);
+		void AddShader(const AShader* _shader, ShaderDescriptor _descriptor);
 	};
 }
 

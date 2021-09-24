@@ -53,12 +53,11 @@ namespace Sa::Vk
 		return vkSurface;
 	}
 
-	void RenderSystem::DestroyWindowSurface(AWindow& _win, ARenderSurface*& _surface)
+	void RenderSystem::DestroyWindowSurface(AWindow& _win, ARenderSurface* _surface)
 	{
 		_win.DestroyVkRenderSurface(mInstance, _surface->As<Surface>());
 
 		delete _surface;
-		_surface = nullptr;
 	}
 
 
@@ -97,6 +96,25 @@ namespace Sa::Vk
 		_pipeline->Destroy(_device);
 
 		delete _pipeline;
+	}
+
+
+	AShader* RenderSystem::CreateShader(ARenderDevice* _device, const RawShader& _raw)
+	{
+		Shader* const shader = new Shader();
+
+		shader->Create(_device, _raw);
+
+		return shader;
+	}
+	
+	void RenderSystem::DestroyShader(ARenderDevice* _device, AShader* _shader)
+	{
+		SA_ASSERT(Nullptr, SA/Render/Vulkan, _shader);
+
+		_shader->Destroy(_device);
+
+		delete _shader;
 	}
 
 
