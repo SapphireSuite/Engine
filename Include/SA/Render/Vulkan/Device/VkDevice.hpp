@@ -9,6 +9,7 @@
 
 #include <SA/Config.hpp>
 
+#include <SA/Render/Base/Device/ARenderDevice.hpp>
 #include <SA/Render/Vulkan/Device/VkQueueMgr.hpp>
 
 #if SA_VULKAN
@@ -18,7 +19,7 @@ namespace Sa::Vk
 	class RenderInstance;
 	class RenderSurface;
 
-	class Device
+	class Device : public ARenderDevice
 	{
 		VkDevice mLogicalDevice = VK_NULL_HANDLE;
 		VkPhysicalDevice mPhysicalDevice = VK_NULL_HANDLE;
@@ -31,8 +32,8 @@ namespace Sa::Vk
 
 		const VkPhysicalDeviceMemoryProperties& GetMemoryProperties() const noexcept;
 
-		void Create(const GraphicDeviceInfos& _infos);
-		void Destroy();
+		void Create(const AGraphicDeviceInfos& _infos) override final;
+		void Destroy() override final;
 
 		static std::vector<GraphicDeviceInfos> QuerySuitableDevices(const RenderInstance& _inst,
 			const QueueRequirements& _queueReq = QueueRequirements{ QueueFamily::OffScreen });

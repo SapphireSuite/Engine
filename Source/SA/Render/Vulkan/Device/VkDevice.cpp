@@ -103,8 +103,10 @@ namespace Sa::Vk
 		return mMemProperties;
 	}
 
-	void Device::Create(const GraphicDeviceInfos& _infos)
+	void Device::Create(const AGraphicDeviceInfos& _infos)
 	{
+		const GraphicDeviceInfos& vkInfos = _infos.As<GraphicDeviceInfos>();
+
 		VkPhysicalDeviceFeatures physicalDeviceFeatures{}; // Need braces to ensure C-struct correct initialization.
 		//physicalDeviceFeatures.logicOp = VK_TRUE;
 
@@ -113,8 +115,8 @@ namespace Sa::Vk
 
 		//physicalDeviceFeatures.multiViewport = VK_TRUE;
 
-		std::vector<const char*> extensions = GetRequiredExtensions(_infos.reqs.familyFlags);
-		std::vector<VkDeviceQueueCreateInfo> queueCreateInfos = _infos.GetDeviceCreateInfos();
+		std::vector<const char*> extensions = GetRequiredExtensions(vkInfos.reqs.familyFlags);
+		std::vector<VkDeviceQueueCreateInfo> queueCreateInfos = vkInfos.GetDeviceCreateInfos();
 
 		VkDeviceCreateInfo deviceCreateInfo{};
 		deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
@@ -135,7 +137,7 @@ namespace Sa::Vk
 
 #endif
 
-		mPhysicalDevice = _infos.device;
+		mPhysicalDevice = vkInfos.device;
 
 		SA_VK_ASSERT(vkCreateDevice(mPhysicalDevice, &deviceCreateInfo, nullptr, &mLogicalDevice),
 			L"Failed to create logical device!");
@@ -143,7 +145,7 @@ namespace Sa::Vk
 		// Query properties.
 		vkGetPhysicalDeviceMemoryProperties(mPhysicalDevice, &mMemProperties);
 
-		queueMgr.Create(*this, _infos);
+		queueMgr.Create(*this, vkInfos);
 
 		SA_LOG(L"Graphic device created.", Infos, SA/Render/Vulkan);
 	}
