@@ -204,6 +204,11 @@ int main()
 
 		// Assets
 		{
+			ARenderResourceContext* const resContext = renderSys.CreateResourceContext(device);
+
+			resContext->Submit();
+
+			renderSys.DestroyResourceContext(resContext);
 
 			//// Submit
 			//ResourceHolder resHolder;

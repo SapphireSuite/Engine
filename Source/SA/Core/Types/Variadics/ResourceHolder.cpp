@@ -4,6 +4,12 @@
 
 namespace Sa
 {
+	ResourceHolder::~ResourceHolder()
+	{
+		FreeAll();
+	}
+
+
 	void ResourceHolder::Free(void* _res)
 	{
 		for (auto it = handles.begin(); it != handles.end(); ++it)

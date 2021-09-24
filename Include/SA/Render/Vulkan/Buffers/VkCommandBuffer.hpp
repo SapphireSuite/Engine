@@ -11,8 +11,6 @@
 
 namespace Sa::Vk
 {
-	class Device;
-
 	class CommandBuffer
 	{
 		friend class CommandPool;

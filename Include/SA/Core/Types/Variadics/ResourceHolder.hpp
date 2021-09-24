@@ -54,6 +54,8 @@ namespace Sa
 		std::vector<Intl::ResourceHandleBase*> handles;
 
 	public:
+		~ResourceHolder();
+
 		template <typename T, typename... Args>
 		T& Make(Args&&... _args);
 

@@ -23,6 +23,8 @@ namespace Sa
 	class ARenderPipeline;
 	struct RenderPipelineCreateInfos;
 
+	class ARenderResourceContext;
+
 	class AShader;
 	struct RawShader;
 
@@ -44,6 +46,9 @@ namespace Sa
 
 		virtual ARenderPipeline* CreatePipeline(ARenderDevice* _device, const RenderPipelineCreateInfos& _infos) = 0;
 		virtual void DestroyPipeline(ARenderDevice* _device, ARenderPipeline* _pipeline) = 0;
+
+		virtual ARenderResourceContext* CreateResourceContext(ARenderDevice* _device);
+		virtual void DestroyResourceContext(ARenderResourceContext* _context);
 
 		virtual AShader* CreateShader(ARenderDevice* _device, const RawShader& _raw) = 0;
 		virtual void DestroyShader(ARenderDevice* _device, AShader* _shader) = 0;
