@@ -11,11 +11,15 @@
 
 namespace Sa
 {
+	class ARenderDevice;
 	class ARenderFrame;
 
 	class APipeline : public Abstract
 	{
 	public:
+		virtual void Create(const ARenderDevice* _device, const PipelineCreateInfos& _infos) = 0;
+		virtual void Destroy(const ARenderDevice* _device) = 0;
+
 		virtual void Bind(const ARenderFrame& _frame) const = 0;
 	};
 }

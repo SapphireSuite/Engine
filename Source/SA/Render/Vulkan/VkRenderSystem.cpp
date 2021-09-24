@@ -81,6 +81,25 @@ namespace Sa::Vk
 	}
 
 
+	APipeline* RenderSystem::CreatePipeline(ARenderDevice* _device, const PipelineCreateInfos& _infos)
+	{
+		Pipeline* const pipeline = new Pipeline();
+
+		pipeline->Create(_device, _infos);
+
+		return pipeline;
+	}
+
+	void RenderSystem::DestroyPipeline(ARenderDevice* _device, APipeline* _pipeline)
+	{
+		SA_ASSERT(Nullptr, SA/Render/Vulkan, _pipeline);
+
+		_pipeline->Destroy(_device);
+
+		delete _pipeline;
+	}
+
+
 	RenderSystem::operator const Instance& () const
 	{
 		return mInstance;

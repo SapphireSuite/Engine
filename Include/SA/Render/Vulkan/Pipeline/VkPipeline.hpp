@@ -14,7 +14,6 @@
 namespace Sa::Vk
 {
 	class Device;
-	class CommandBuffer;
 	class SpecConstantData;
 
 	class Pipeline : public APipeline
@@ -54,8 +53,8 @@ namespace Sa::Vk
 		VkPipelineLayout GetLayout() const noexcept;
 		const std::vector<VkDescriptorSetLayout>& GetDescriptorSetLayouts() const noexcept;
 
-		void Create(const Device& _device, const PipelineCreateInfos& _infos);
-		void Destroy(const Device& _device);
+		void Create(const ARenderDevice* _device, const PipelineCreateInfos& _infos) override final;
+		void Destroy(const ARenderDevice* _device) override final;
 
 		void Bind(const ARenderFrame& _frame) const override final;
 	};

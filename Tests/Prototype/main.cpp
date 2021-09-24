@@ -25,7 +25,6 @@ using namespace Sa;
 //#include <SA/Render/Vulkan/Buffers/VkCommandBuffer.hpp>
 //#include <SA/Render/Vulkan/Mesh/VkStaticMesh.hpp>
 //#include <SA/Render/Vulkan/Shader/VkShader.hpp>
-//#include <SA/Render/Vulkan/Pipeline/VkPipeline.hpp>
 //#include <SA/Render/Vulkan/Pipeline/VkDescriptorSet.hpp>
 //#include <SA/Render/Vulkan/Buffers/VkBuffer.hpp>
 //#include <SA/Render/Vulkan/Texture/VkTexture.hpp>
@@ -48,8 +47,9 @@ ARenderDevice* device = nullptr;
 ARenderSurface* surface = nullptr;
 RenderPassDescriptor renderPassDesc;
 ARenderPass* renderPass = nullptr;
+PipelineCreateInfos unlitPipelineInfos{ *renderPass, renderPassDesc };
+APipeline* unlitPipeline = nullptr;
 
-//Vk::RenderPass renderPass;
 //Vk::CommandPool cmdPool;
 //std::vector<Vk::CommandBuffer> cmdBuffers;
 //uint32 imageIndex = 0u;
@@ -57,8 +57,6 @@ ARenderPass* renderPass = nullptr;
 //Vk::StaticMesh cubeMesh;
 //Vk::Shader unlitvert;
 //Vk::Shader unlitfrag;
-//PipelineCreateInfos unlitPipelineInfos{ renderPass, renderPassDesc };
-//Vk::Pipeline unlitPipeline;
 //Vk::DescriptorSet cubeDescSet;
 //Vk::Buffer camUBO;
 //Vk::Buffer modelUBO;
@@ -325,7 +323,7 @@ int main()
 			// Pipeline
 			{
 				unlitPipelineInfos.vertexBindingLayout.meshLayout = cubeMesh.GetLayout();
-				unlitPipeline.Create(device, unlitPipelineInfos);
+				unlitPipeline = renderSys.CreatePipeline(device, unlitPipelineInfos);
 			}
 
 

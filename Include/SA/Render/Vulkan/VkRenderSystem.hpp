@@ -11,6 +11,7 @@
 #include <SA/Render/Vulkan/Device/VkDevice.hpp>
 #include <SA/Render/Vulkan/Surface/VkSurface.hpp>
 #include <SA/Render/Vulkan/Pass/VkRenderPass.hpp>
+#include <SA/Render/Vulkan/Pipeline/VkPipeline.hpp>
 
 #if SA_VULKAN
 
@@ -32,6 +33,9 @@ namespace Sa::Vk
 
 		ARenderPass* CreateRenderPass(ARenderDevice* _device, const RenderPassDescriptor& _descriptor) override final;
 		void DestroyRenderPass(ARenderDevice* _device, ARenderPass* _pass) override final;
+
+		APipeline* CreatePipeline(ARenderDevice* _device, const PipelineCreateInfos& _infos) override final;
+		void DestroyPipeline(ARenderDevice* _device, APipeline* _pipeline) override final;
 
 
 		operator const Instance& () const;

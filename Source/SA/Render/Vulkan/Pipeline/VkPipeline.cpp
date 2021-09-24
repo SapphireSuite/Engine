@@ -40,20 +40,24 @@ namespace Sa::Vk
 	}
 
 
-	void Pipeline::Create(const Device& _device, const PipelineCreateInfos& _infos)
+	void Pipeline::Create(const ARenderDevice* _device, const PipelineCreateInfos& _infos)
 	{
-		CreateDescriptorSetLayouts(_device, _infos);
+		const Device& vkDevice = _device->As<Device>();
 
-		CreatePipelineLayout(_device);
-		CreatePipelineHandle(_device, _infos);
+		CreateDescriptorSetLayouts(vkDevice, _infos);
+
+		CreatePipelineLayout(vkDevice);
+		CreatePipelineHandle(vkDevice, _infos);
 	}
 
-	void Pipeline::Destroy(const Device& _device)
+	void Pipeline::Destroy(const ARenderDevice* _device)
 	{
-		DestroyPipelineHandle(_device);
-		DestroyPipelineLayout(_device);
+		const Device& vkDevice = _device->As<Device>();
 
-		DestroyDescriptorSetLayouts(_device);
+		DestroyPipelineHandle(vkDevice);
+		DestroyPipelineLayout(vkDevice);
+
+		DestroyDescriptorSetLayouts(vkDevice);
 	}
 
 	void Pipeline::Bind(const ARenderFrame& _frame) const
