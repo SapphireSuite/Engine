@@ -42,7 +42,7 @@ namespace Sa::Vk
 		ARenderResourceContext* CreateResourceContext(ARenderDevice* _device) override final;
 		void DestroyResourceContext(ARenderResourceContext* _context) override final;
 
-		AShader* CreateShader(ARenderDevice* _device, const RawShader& _raw) override final;
+		AShader* CreateShader(ARenderResourceContext* _context, const RawShader& _raw) override final;
 		void DestroyShader(ARenderDevice* _device, AShader* _shader) override final;
 
 

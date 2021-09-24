@@ -6,15 +6,16 @@
 
 #include <Render/Vulkan/Debug/Debug.hpp>
 
+#include <Render/Vulkan/VkResourceContext.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
 
 #if SA_VULKAN
 
 namespace Sa::Vk
 {
-	void Shader::Create(const ARenderDevice* _device, const RawShader& _raw)
+	void Shader::Create(const ARenderResourceContext* _context, const RawShader& _raw)
 	{
-		const Device& vkDevice = _device->As<Device>();
+		const Device& vkDevice = *_context->As<ResourceContext>().device;
 
 		VkShaderModuleCreateInfo shaderModuleCreateInfo{};
 		shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;

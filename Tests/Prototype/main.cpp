@@ -206,6 +206,47 @@ int main()
 		{
 			ARenderResourceContext* const resContext = renderSys.CreateResourceContext(device);
 
+			// Shaders
+			{
+				// Unlit vert
+				{
+					const std::string assetName = "Assets/Shaders/unlit_vert.spha";
+					const std::string resName = "/Engine/Resources/Shaders/Forward/unlit.vert";
+
+					ShaderAsset asset;
+
+					if (!asset.Load(assetName))
+					{
+						if (asset.Import(resName))
+						{
+							asset.Save(assetName);
+						}
+					}
+
+					unlitvert = renderSys.CreateShader(resContext, asset.raw);
+					unlitPipelineInfos.AddShader(unlitvert, asset.raw.descriptor);
+				}
+
+				// Unlit frag
+				{
+					const std::string assetName = "Assets/Shaders/unlit_frag.spha";
+					const std::string resName = "/Engine/Resources/Shaders/Forward/unlit.frag";
+
+					ShaderAsset asset;
+
+					if (!asset.Load(assetName))
+					{
+						if (asset.Import(resName))
+						{
+							asset.Save(assetName);
+						}
+					}
+
+					unlitfrag = renderSys.CreateShader(resContext, asset.raw);
+					unlitPipelineInfos.AddShader(unlitfrag, asset.raw.descriptor);
+				}
+			}
+
 			resContext->Submit();
 
 			renderSys.DestroyResourceContext(resContext);
@@ -280,46 +321,7 @@ int main()
 			//resHolder.FreeAll();
 
 
-			// Shaders
-			{
-				// Unlit vert
-				{
-					const std::string assetName = "Assets/Shaders/unlit_vert.spha";
-					const std::string resName = "/Engine/Resources/Shaders/Forward/unlit.vert";
 
-					ShaderAsset asset;
-
-					if (!asset.Load(assetName))
-					{
-						if (asset.Import(resName))
-						{
-							asset.Save(assetName);
-						}
-					}
-
-					unlitvert = renderSys.CreateShader(device, asset.raw);
-					unlitPipelineInfos.AddShader(unlitvert, asset.raw.descriptor);
-				}
-
-				// Unlit frag
-				{
-					const std::string assetName = "Assets/Shaders/unlit_frag.spha";
-					const std::string resName = "/Engine/Resources/Shaders/Forward/unlit.frag";
-
-					ShaderAsset asset;
-
-					if (!asset.Load(assetName))
-					{
-						if (asset.Import(resName))
-						{
-							asset.Save(assetName);
-						}
-					}
-
-					unlitfrag = renderSys.CreateShader(device, asset.raw);
-					unlitPipelineInfos.AddShader(unlitfrag, asset.raw.descriptor);
-				}
-			}
 
 
 

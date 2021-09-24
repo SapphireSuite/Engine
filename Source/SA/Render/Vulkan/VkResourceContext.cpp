@@ -10,19 +10,19 @@ namespace Sa::Vk
 {
 	void ResourceContext::Create(const ARenderDevice* _device)
 	{
-		mDevice = _device->AsPtr<Device>();
+		device = _device->AsPtr<Device>();
 
 		// TODO: Clean queue.
-		mCmdPool.Create(*mDevice, mDevice->queueMgr.transfer.GetQueue(0).GetFamilyIndex());
+		mCmdPool.Create(*device, device->queueMgr.transfer.GetQueue(0).GetFamilyIndex());
 
-		cmd = mCmdPool.Allocate(*mDevice);
+		cmd = mCmdPool.Allocate(*device);
 		cmd.Begin();
 	}
 
 	void ResourceContext::Destroy()
 	{
-		mCmdPool.Destroy(*mDevice);
-		mDevice = nullptr;
+		mCmdPool.Destroy(*device);
+		device = nullptr;
 
 		resHolder.FreeAll();
 	}
@@ -47,8 +47,8 @@ namespace Sa::Vk
 		submitInfo.pSignalSemaphores = nullptr;
 
 		// TODO: Clean queue.
-		vkQueueSubmit(mDevice->queueMgr.transfer.GetQueue(0), 1, &submitInfo, VK_NULL_HANDLE);
-		vkQueueWaitIdle(mDevice->queueMgr.transfer.GetQueue(0));
+		vkQueueSubmit(device->queueMgr.transfer.GetQueue(0), 1, &submitInfo, VK_NULL_HANDLE);
+		vkQueueWaitIdle(device->queueMgr.transfer.GetQueue(0));
 
 		resHolder.FreeAll();
 

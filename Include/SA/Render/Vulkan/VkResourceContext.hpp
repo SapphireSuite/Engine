@@ -19,10 +19,11 @@ namespace Sa::Vk
 
 	class ResourceContext : public ARenderResourceContext
 	{
-		const Device* mDevice = nullptr;
 
 		CommandPool mCmdPool;
 	public:
+		const Device* device = nullptr;
+
 		CommandBuffer cmd;
 		ResourceHolder resHolder;
 

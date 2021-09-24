@@ -117,11 +117,11 @@ namespace Sa::Vk
 	}
 
 
-	AShader* RenderSystem::CreateShader(ARenderDevice* _device, const RawShader& _raw)
+	AShader* RenderSystem::CreateShader(ARenderResourceContext* _context, const RawShader& _raw)
 	{
 		Shader* const shader = new Shader();
 
-		shader->Create(_device, _raw);
+		shader->Create(_context, _raw);
 
 		return shader;
 	}

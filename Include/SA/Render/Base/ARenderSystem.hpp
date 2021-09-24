@@ -50,7 +50,7 @@ namespace Sa
 		virtual ARenderResourceContext* CreateResourceContext(ARenderDevice* _device);
 		virtual void DestroyResourceContext(ARenderResourceContext* _context);
 
-		virtual AShader* CreateShader(ARenderDevice* _device, const RawShader& _raw) = 0;
+		virtual AShader* CreateShader(ARenderResourceContext* _context, const RawShader& _raw) = 0;
 		virtual void DestroyShader(ARenderDevice* _device, AShader* _shader) = 0;
 	};
 }
