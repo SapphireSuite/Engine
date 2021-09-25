@@ -3,10 +3,10 @@
 //{ model glsl
 
 /**
-*   set 1 is engine-reserved.
+*   set 2 is engine pre-defined for Model bindings.
 */
 
-layout(set = 1, binding = 1) uniform Model
+layout(set = 2, binding = 0) uniform Model
 {
 	// Model transformation matrix.
     mat4 transform;

@@ -8,7 +8,7 @@
 #include <vector>
 
 #include <SA/Render/Base/Shader/ShaderStage.hpp>
-#include <SA/Render/Base/Shader/Bindings/ShaderBindingDescriptor.hpp>
+#include <SA/Render/Base/Shader/Bindings/ShaderBindingSetDescriptor.hpp>
 #include <SA/Render/Base/Shader/SpecConstants/SpecConstantDescriptor.hpp>
 
 #include <SA/Render/Base/Mesh/Vertex/VertexComp.hpp>
@@ -22,8 +22,7 @@ namespace Sa
 		/// Vertex layout (valid only if stage == Vertex).
 		Flags<VertexComp> vertexLayout;
 
-		std::vector<ShaderBindingDescriptor> userBindings;
-		std::vector<ShaderBindingDescriptor> engineBindings;
+		std::vector<ShaderBindingSetDescriptor> bindingSets;
 
 		std::vector<SpecConstantDescriptor> userSpecConstants;
 		std::vector<SpecConstantDescriptor> engineSpecConstants;

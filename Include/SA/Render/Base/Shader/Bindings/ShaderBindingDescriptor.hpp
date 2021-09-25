@@ -27,9 +27,6 @@ namespace Sa
 		/// Binding index in shader.
 		uint32 binding = 0u;
 
-		/// Descriptor set index in shader.
-		uint32 set = 0;
-
 		/// Number of elements (array).
 		uint32 num = 1u;
 

@@ -68,50 +68,47 @@ namespace Sa::Vk
 	}
 
 
-	void EmplaceLayoutBindingMap(std::map<uint32, std::vector<VkDescriptorSetLayoutBinding>>& _map,
-		const PipelineShaderInfos& _shader,
-		const ShaderBindingDescriptor& _bind)
-	{
-		std::vector<VkDescriptorSetLayoutBinding>& layoutBindings = _map[_bind.set];
-
-		VkDescriptorSetLayoutBinding& binding = layoutBindings.emplace_back();
-		binding.binding = _bind.binding;
-		binding.descriptorType = API_GetDescriptorType(_bind.type);
-		binding.descriptorCount = _bind.num;
-		binding.stageFlags = API_GetShaderStageFlags(_shader.descriptor.stage);
-		binding.pImmutableSamplers = nullptr;
-	}
-
 	void Pipeline::CreateDescriptorSetLayouts(const Device& _device, const RenderPipelineCreateInfos& _infos)
 	{
-		// Record bindings for each descritor set.
-		std::map<uint32, std::vector<VkDescriptorSetLayoutBinding>> layoutBindingsMap;
-		for (auto& shader : _infos.shaders)
-		{
-			for (auto& bind : shader.descriptor.userBindings)
-				EmplaceLayoutBindingMap(layoutBindingsMap, shader, bind);
+		std::vector<std::vector<VkDescriptorSetLayoutBinding>> descSetLayouts;
+		descSetLayouts.reserve(5); // Default is 3.
 
-			for (auto& bind : shader.descriptor.engineBindings)
-				EmplaceLayoutBindingMap(layoutBindingsMap, shader, bind);
+		for(auto& shader : _infos.shaders)
+		{
+			auto& descriptor = shader.descriptor;
+
+			for(uint32 i = 0; i < descriptor.bindingSets.size(); ++i)
+			{
+				auto& set = descriptor.bindingSets[i];
+				std::vector<VkDescriptorSetLayoutBinding>& descSetLayout = descSetLayouts.size() > i ? descSetLayouts[i] : descSetLayouts.emplace_back();
+
+				for (auto& bind : set.bindings)
+				{
+					VkDescriptorSetLayoutBinding& descBinding = descSetLayout.emplace_back();
+
+					descBinding.binding = bind.binding;
+					descBinding.descriptorType = API_GetDescriptorType(bind.type);
+					descBinding.descriptorCount = bind.num;
+					descBinding.stageFlags = API_GetShaderStageFlags(descriptor.stage);
+					descBinding.pImmutableSamplers = nullptr;
+				}
+			}
 		}
 
-
 		// Create descriptor set layouts.
-		mDescriptorSetLayouts.resize(layoutBindingsMap.size());
+		mDescriptorSetLayouts.resize(descSetLayouts.size());
 
 		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutInfo{};
 		descriptorSetLayoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
 		descriptorSetLayoutInfo.pNext = nullptr;
 		descriptorSetLayoutInfo.flags = 0u;
 
-		uint32 index = 0u;
-
-		for (auto bindPair : layoutBindingsMap)
+		for (uint32 i = 0; i < descSetLayouts.size(); ++i)
 		{
-			descriptorSetLayoutInfo.bindingCount = SizeOf<uint32>(bindPair.second);
-			descriptorSetLayoutInfo.pBindings = bindPair.second.data();
+			descriptorSetLayoutInfo.bindingCount = SizeOf<uint32>(descSetLayouts[i]);
+			descriptorSetLayoutInfo.pBindings = descSetLayouts[i].data();
 
-			SA_VK_ASSERT(vkCreateDescriptorSetLayout(_device, &descriptorSetLayoutInfo, nullptr, &mDescriptorSetLayouts[index++]),
+			SA_VK_ASSERT(vkCreateDescriptorSetLayout(_device, &descriptorSetLayoutInfo, nullptr, &mDescriptorSetLayouts[i]),
 				L"Failed to create descriptor set layout!");
 		}
 	}
