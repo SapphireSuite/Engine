@@ -46,8 +46,8 @@ namespace Sa
 		virtual ARenderDevice* CreateDevice(const AGraphicDeviceInfos& _infos) = 0;
 		virtual void DestroyDevice(ARenderDevice* _device) = 0;
 
-		virtual ARenderSurface* CreateWindowSurface(AWindow& _win) = 0;
-		virtual void DestroyWindowSurface(AWindow& _win, ARenderSurface* _surface) = 0;
+		virtual ARenderSurface* MakeWindowSurface(AWindow& _win) = 0;
+		virtual void DestroyWindowSurface(AWindow& _win, ARenderDevice* _device, ARenderSurface* _surface) = 0;
 
 		virtual ARenderPass* CreateRenderPass(ARenderDevice* _device, const RenderPassDescriptor& _descriptor) = 0;
 		virtual void DestroyRenderPass(ARenderDevice* _device, ARenderPass* _pass) = 0;

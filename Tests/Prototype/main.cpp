@@ -56,7 +56,6 @@ AStaticMesh* cubeMesh = nullptr;
 //std::vector<Vk::CommandBuffer> cmdBuffers;
 //uint32 imageIndex = 0u;
 //
-//Vk::StaticMesh cubeMesh;
 //Vk::DescriptorSet cubeDescSet;
 //Vk::Buffer camUBO;
 //Vk::Buffer modelUBO;
@@ -159,7 +158,7 @@ int main()
 		// Render
 		{
 			renderSys.Create(winSys);
-			surface = renderSys.CreateWindowSurface(win);
+			surface = renderSys.MakeWindowSurface(win);
 			
 			const std::vector<Vk::GraphicDeviceInfos> deviceInfos = Vk::Device::QuerySuitableDevices(renderSys, surface->AsPtr<Vk::Surface>());
 			device = renderSys.CreateDevice(deviceInfos[0]);
@@ -399,8 +398,7 @@ int main()
 
 			renderSys.DestroyRenderPass(device, renderPass);
 
-			surface->Destroy(device);
-			renderSys.DestroyWindowSurface(win, surface);
+			renderSys.DestroyWindowSurface(win, device, surface);
 
 			renderSys.DestroyDevice(device);
 

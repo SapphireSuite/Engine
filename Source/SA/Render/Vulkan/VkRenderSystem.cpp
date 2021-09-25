@@ -46,15 +46,19 @@ namespace Sa::Vk
 	}
 
 
-	ARenderSurface* RenderSystem::CreateWindowSurface(AWindow& _win)
+	ARenderSurface* RenderSystem::MakeWindowSurface(AWindow& _win)
 	{
 		Surface* const vkSurface = new Surface(_win.CreateVkRenderSurface(mInstance));
 
 		return vkSurface;
 	}
 
-	void RenderSystem::DestroyWindowSurface(AWindow& _win, ARenderSurface* _surface)
+	void RenderSystem::DestroyWindowSurface(AWindow& _win, ARenderDevice* _device, ARenderSurface* _surface)
 	{
+		SA_ASSERT(Nullptr, SA/Render/Vulkan, _surface);
+
+		_surface->Destroy(_device);
+
 		_win.DestroyVkRenderSurface(mInstance, _surface->As<Surface>());
 
 		delete _surface;
