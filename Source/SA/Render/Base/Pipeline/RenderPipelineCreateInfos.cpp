@@ -20,14 +20,8 @@ namespace Sa
 		subPassDesc = _renderPassDesc.subPassDescs[_subPassIndex];
 	}
 
-	void RenderPipelineCreateInfos::AddShader(const AShader* _shader, ShaderDescriptor _descriptor)
+	void RenderPipelineCreateInfos::AddShader(const AShader* _shader, const ShaderDescriptor& _descriptor)
 	{
-		if (_descriptor.stage == ShaderStage::Vertex)
-			vertexBindingLayout.desiredLayout = VertexLayout::Make(static_cast<VertexComp>((uint8)_descriptor.vertexLayout)); // TODO: Clean.
-
-		PipelineShaderInfos& infos = shaders.emplace_back();
-		infos.shader = _shader;
-		infos.descriptor = std::move(_descriptor);
-		//shaders.emplace_back(&_shader, std::move(_descriptor));
+		shaderInfos.AddShader(_shader, _descriptor);
 	}
 }

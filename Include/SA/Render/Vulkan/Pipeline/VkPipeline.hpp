@@ -34,11 +34,11 @@ namespace Sa::Vk
 
 
 		static void FillShaderSpecConstants(std::vector<SpecConstantData>& _specConstDatas,
-			const std::vector<PipelineShaderInfos>& _shaders);
+			const std::vector<PipelineShaderStage>& _shaders);
 
 		static void FillShaderStages(std::vector<VkPipelineShaderStageCreateInfo>& _stages,
 			const std::vector<SpecConstantData>& _specConstDatas,
-			const std::vector<PipelineShaderInfos>& _shaders);
+			const std::vector<PipelineShaderStage>& _shaders);
 
 		static void FillVertexBindings(VkPipelineVertexInputStateCreateInfo& _vertexInputInfo,
 			std::unique_ptr<VkVertexInputBindingDescription>& _bindingDesc,

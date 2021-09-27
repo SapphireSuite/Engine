@@ -293,7 +293,7 @@ int main()
 			// Pipeline
 			{
 				unlitPipelineInfos.SetRenderPass(renderPass, renderPassDesc, 0u);
-				unlitPipelineInfos.vertexBindingLayout.meshLayout = cubeMesh->GetLayout();
+				unlitPipelineInfos.shaderInfos.vertexBindingLayout.meshLayout = cubeMesh->GetLayout();
 
 				unlitPipeline = renderSys.CreatePipeline(device, unlitPipelineInfos);
 			}

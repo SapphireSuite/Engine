@@ -73,25 +73,20 @@ namespace Sa::Vk
 		std::vector<std::vector<VkDescriptorSetLayoutBinding>> descSetLayouts;
 		descSetLayouts.reserve(5); // Default is 3.
 
-		for(auto& shader : _infos.shaders)
+		for(uint32 i = 0; i < _infos.shaderInfos.bindingSets.size(); ++i)
 		{
-			auto& descriptor = shader.descriptor;
+			auto& setDesc = _infos.shaderInfos.bindingSets[i];
+			std::vector<VkDescriptorSetLayoutBinding>& descSetLayout = descSetLayouts.size() > i ? descSetLayouts[i] : descSetLayouts.emplace_back();
 
-			for(uint32 i = 0; i < descriptor.bindingSets.size(); ++i)
+			for (auto& bind : setDesc.bindings)
 			{
-				auto& set = descriptor.bindingSets[i];
-				std::vector<VkDescriptorSetLayoutBinding>& descSetLayout = descSetLayouts.size() > i ? descSetLayouts[i] : descSetLayouts.emplace_back();
+				VkDescriptorSetLayoutBinding& descBinding = descSetLayout.emplace_back();
 
-				for (auto& bind : set.bindings)
-				{
-					VkDescriptorSetLayoutBinding& descBinding = descSetLayout.emplace_back();
-
-					descBinding.binding = bind.binding;
-					descBinding.descriptorType = API_GetDescriptorType(bind.type);
-					descBinding.descriptorCount = bind.num;
-					descBinding.stageFlags = API_GetShaderStageFlags(descriptor.stage);
-					descBinding.pImmutableSamplers = nullptr;
-				}
+				descBinding.binding = bind.binding;
+				descBinding.descriptorType = API_GetDescriptorType(bind.type);
+				descBinding.descriptorCount = bind.num;
+				descBinding.stageFlags = API_GetShaderStageFlags(bind.stageFlags);
+				descBinding.pImmutableSamplers = nullptr;
 			}
 		}
 
@@ -150,15 +145,15 @@ namespace Sa::Vk
 		// Shaders
 		std::vector<SpecConstantData> specConstDatas;
 		std::vector<VkPipelineShaderStageCreateInfo> shaderStages;
-		FillShaderSpecConstants(specConstDatas, _infos.shaders);
-		FillShaderStages(shaderStages, specConstDatas, _infos.shaders);
+		FillShaderSpecConstants(specConstDatas, _infos.shaderInfos.stages);
+		FillShaderStages(shaderStages, specConstDatas, _infos.shaderInfos.stages);
 
 
 		// Vertex input infos.
 		std::unique_ptr<VkVertexInputBindingDescription> bindingDesc;
 		std::unique_ptr<VkVertexInputAttributeDescription[]> attribDescs;
 		VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
-		FillVertexBindings(vertexInputInfo, bindingDesc, attribDescs, _infos.vertexBindingLayout);
+		FillVertexBindings(vertexInputInfo, bindingDesc, attribDescs, _infos.shaderInfos.vertexBindingLayout);
 
 
 		VkPipelineInputAssemblyStateCreateInfo inputAssemblyInfo{};
@@ -248,7 +243,7 @@ namespace Sa::Vk
 
 
 	void Pipeline::FillShaderSpecConstants(std::vector<SpecConstantData>& _specConstDatas,
-		const std::vector<PipelineShaderInfos>& _shaders)
+		const std::vector<PipelineShaderStage>& _shaders)
 	{
 		_specConstDatas.reserve(_shaders.size());
 
@@ -256,10 +251,10 @@ namespace Sa::Vk
 		{
 			SpecConstantData& data = _specConstDatas.emplace_back();
 
-			for (auto& specPair : shaderInfos.descriptor.userSpecConstants)
+			for (auto& specPair : shaderInfos.userSpecConstants)
 				data.Add(specPair);
 
-			for (auto& specPair : shaderInfos.descriptor.engineSpecConstants)
+			for (auto& specPair : shaderInfos.engineSpecConstants)
 			{
 				switch (specPair.id)
 				{
@@ -276,19 +271,19 @@ namespace Sa::Vk
 
 	void Pipeline::FillShaderStages(std::vector<VkPipelineShaderStageCreateInfo>& _stages,
 		const std::vector<SpecConstantData>& _specConstDatas,
-		const std::vector<PipelineShaderInfos>& _shaders)
+		const std::vector<PipelineShaderStage>& _shaders)
 	{
 		_stages.reserve(_shaders.size());
 
 		for (uint32 i = 0u; i < _shaders.size(); ++i)
 		{
-			const PipelineShaderInfos& it = _shaders[i];
+			const PipelineShaderStage& it = _shaders[i];
 
 			VkPipelineShaderStageCreateInfo& stage = _stages.emplace_back();
 			stage.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 			stage.pNext = nullptr;
 			stage.flags = 0u;
-			stage.stage = API_GetShaderStage(it.descriptor.stage);
+			stage.stage = API_GetShaderStage(it.stage);
 			stage.module = it.shader->As<Shader>();
 			stage.pName = "main";
 			stage.pSpecializationInfo = &_specConstDatas[i].specInfo;

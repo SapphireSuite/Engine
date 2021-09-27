@@ -7,36 +7,17 @@
 
 #include <SA/Render/Base/Pass/ARenderPass.hpp>
 
-#include <SA/Render/Base/Shader/AShader.hpp>
-#include <SA/Render/Base/Shader/ShaderDescriptor.hpp>
-
-#include <SA/Render/Base/Mesh/Vertex/VertexBindingLayout.hpp>
-
-#include <SA/Render/Base/Pipeline/CullingMode.hpp>
-#include <SA/Render/Base/Pipeline/FrontFaceMode.hpp>
-#include <SA/Render/Base/Pipeline/PolygonMode.hpp>
+#include <SA/Render/Base/Pipeline/PipelineRenderModes.hpp>
+#include <SA/Render/Base/Pipeline/PipelineShaderInfos.hpp>
 
 namespace Sa
 {
-	struct PipelineRenderModes
-	{
-		PolygonMode polygon = PolygonMode::Fill;
-		CullingMode culling = CullingMode::Back;
-		FrontFaceMode frontFace = FrontFaceMode::Clockwise;
-	};
-
-	struct PipelineShaderInfos
-	{
-		const AShader* shader;
-		ShaderDescriptor descriptor;
-	};
-
 	struct RenderPipelineCreateInfos
 	{
 //{ RenderPass
 
 		/// Associated renderpass.
-		const ARenderPass* renderPass;
+		const ARenderPass* renderPass = nullptr;
 
 		/// Descriptor of the bound subpass of the renderpass.
 		SubPassDescriptor subPassDesc;
@@ -50,11 +31,8 @@ namespace Sa
 		PipelineRenderModes modes;
 
 
-		VertexBindingLayout vertexBindingLayout;
-
-
-		/// Used shaders + descriptors.
-		std::vector<PipelineShaderInfos> shaders;
+		/// Bound shader infos.
+		PipelineShaderInfos shaderInfos;
 
 
 		RenderPipelineCreateInfos() = default;
@@ -62,7 +40,7 @@ namespace Sa
 
 		void SetRenderPass(const ARenderPass* _renderPass, const RenderPassDescriptor& _renderPassDesc, uint32 _subPassIndex = 0u);
 
-		void AddShader(const AShader* _shader, ShaderDescriptor _descriptor);
+		void AddShader(const AShader* _shader, const ShaderDescriptor& _descriptor);
 	};
 }
 
