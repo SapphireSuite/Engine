@@ -6,6 +6,12 @@
 
 namespace Sa
 {
+	bool SpecConstantDescriptor::operator<(const SpecConstantDescriptor& _rhs) const noexcept
+	{
+		return id < _rhs.id;
+	}
+
+
 	namespace Serialize
 	{
 		void ToBinary(const SpecConstantDescriptor& _obj, std::string& _str)

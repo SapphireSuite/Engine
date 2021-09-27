@@ -2,18 +2,14 @@
 
 #include <Render/Vulkan/Pipeline/VkPipeline.hpp>
 
-#include <map>
-
 #include <Core/Algorithms/SizeOf.hpp>
-
-#include <Render/Base/Shader/SpecConstants/DefaultSpecConstant.hpp>
 
 #include <Render/Vulkan/Debug/Debug.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
 #include <Render/Vulkan/Shader/VkShader.hpp>
-#include <Render/Vulkan/Shader/VkSpecConstantData.hpp>
 #include <Render/Vulkan/Pass/VkRenderPass.hpp>
 #include <Render/Vulkan/VkFrame.hpp>
+#include <Render/Vulkan/Pipeline/VkSpecConstantData.hpp>
 
 #if SA_VULKAN
 
@@ -143,10 +139,10 @@ namespace Sa::Vk
 	void Pipeline::CreatePipelineHandle(const Device& _device, const RenderPipelineCreateInfos& _infos)
 	{
 		// Shaders
-		std::vector<SpecConstantData> specConstDatas;
+		SpecConstantData specConstData;
 		std::vector<VkPipelineShaderStageCreateInfo> shaderStages;
-		FillShaderSpecConstants(specConstDatas, _infos.shaderInfos.stages);
-		FillShaderStages(shaderStages, specConstDatas, _infos.shaderInfos.stages);
+		FillShaderSpecConstants(specConstData, _infos.shaderInfos);
+		FillShaderStages(shaderStages, specConstData, _infos.shaderInfos.stages);
 
 
 		// Vertex input infos.
@@ -242,51 +238,42 @@ namespace Sa::Vk
 	}
 
 
-	void Pipeline::FillShaderSpecConstants(std::vector<SpecConstantData>& _specConstDatas,
-		const std::vector<PipelineShaderStage>& _shaders)
+	void Pipeline::FillShaderSpecConstants(SpecConstantData& _specConstData,
+		const PipelineShaderInfos& _shaderInfos)
 	{
-		_specConstDatas.reserve(_shaders.size());
+		for (auto& specPair : _shaderInfos.userSpecConstants)
+			_specConstData.Add(specPair);
 
-		for (auto& shaderInfos : _shaders)
+		for (auto& specPair : _shaderInfos.engineSpecConstants)
 		{
-			SpecConstantData& data = _specConstDatas.emplace_back();
-
-			for (auto& specPair : shaderInfos.userSpecConstants)
-				data.Add(specPair);
-
-			for (auto& specPair : shaderInfos.engineSpecConstants)
+			switch (specPair.id)
 			{
-				switch (specPair.id)
-				{
-					case SpecConstantID::RenderAPI:
-						data.Add(SpecConstantID::RenderAPI, SpecConstantValue::Vulkan);
-						break;
-					default:
-						SA_LOG(L"Shader Engine specialization constant [" << specPair.id << L"] not supported yet!", Warning, SA/Render/Vulkan);
-						break;
-				}
+				case SpecConstantID::RenderAPI:
+					_specConstData.Add(SpecConstantID::RenderAPI, SpecConstantValue::Vulkan);
+					break;
+				default:
+					SA_LOG(L"Shader Engine specialization constant [" << specPair.id << L"] not supported yet!", Warning, SA/Render/Vulkan);
+					break;
 			}
 		}
 	}
 
 	void Pipeline::FillShaderStages(std::vector<VkPipelineShaderStageCreateInfo>& _stages,
-		const std::vector<SpecConstantData>& _specConstDatas,
+		const SpecConstantData& _specConstData,
 		const std::vector<PipelineShaderStage>& _shaders)
 	{
 		_stages.reserve(_shaders.size());
 
-		for (uint32 i = 0u; i < _shaders.size(); ++i)
+		for(auto& stage : _shaders)
 		{
-			const PipelineShaderStage& it = _shaders[i];
-
-			VkPipelineShaderStageCreateInfo& stage = _stages.emplace_back();
-			stage.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-			stage.pNext = nullptr;
-			stage.flags = 0u;
-			stage.stage = API_GetShaderStage(it.stage);
-			stage.module = it.shader->As<Shader>();
-			stage.pName = "main";
-			stage.pSpecializationInfo = &_specConstDatas[i].specInfo;
+			VkPipelineShaderStageCreateInfo& vkStage = _stages.emplace_back();
+			vkStage.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+			vkStage.pNext = nullptr;
+			vkStage.flags = 0u;
+			vkStage.stage = API_GetShaderStage(stage.stage);
+			vkStage.module = stage.shader->As<Shader>();
+			vkStage.pName = "main";
+			vkStage.pSpecializationInfo = &_specConstData.specInfo;
 		}
 	}
 

@@ -12,8 +12,8 @@ namespace Sa
 		PipelineShaderStage& stage = stages.emplace_back();
 		stage.shader = _shader;
 		stage.stage = _descriptor.stage;
-		stage.userSpecConstants = _descriptor.userSpecConstants;
-		stage.engineSpecConstants = _descriptor.engineSpecConstants;
+		//stage.userSpecConstants = _descriptor.userSpecConstants;
+		//stage.engineSpecConstants = _descriptor.engineSpecConstants;
 
 
 		// Bindings
@@ -46,54 +46,15 @@ namespace Sa
 			}
 		}
 
-		/*
+
 		// Spec constants.
 		{
 			// User
 			for (auto& specCst : _descriptor.userSpecConstants)
-			{
-				bool bFound = false;
+				userSpecConstants.emplace(specCst);
 
-				for (auto& pipSpecCst : userSpecConstants)
-				{
-					if (specCst.id == pipSpecCst.id)
-					{
-						pipSpecCst.stageFlags |= _descriptor.stage;
-						bFound = true;
-						break;
-					}
-				}
-
-				if (!bFound)
-				{
-					auto& pipSpecCst = userSpecConstants.emplace_back(specCst);
-					pipSpecCst.stageFlags = _descriptor.stage;
-				}
-			}
-
-
-			// Engine
 			for (auto& specCst : _descriptor.engineSpecConstants)
-			{
-				bool bFound = false;
-
-				for (auto& pipSpecCst : engineSpecConstants)
-				{
-					if (specCst.id == pipSpecCst.id)
-					{
-						pipSpecCst.stageFlags |= _descriptor.stage;
-						bFound = true;
-						break;
-					}
-				}
-
-				if (!bFound)
-				{
-					auto& pipSpecCst = engineSpecConstants.emplace_back(specCst);
-					pipSpecCst.stageFlags = _descriptor.stage;
-				}
-			}
+				engineSpecConstants.emplace(specCst);
 		}
-		*/
 	}
 }

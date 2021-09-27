@@ -1,22 +1,24 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Render/Vulkan/Shader/VkSpecConstantData.hpp>
+#include <Render/Vulkan/Pipeline/VkSpecConstantData.hpp>
 
 #include <Collections/Debug>
+
+#include <Core/Algorithms/SizeOf.hpp>
 
 #if SA_VULKAN
 
 namespace Sa::Vk
 {
-	void SpecConstantData::Add(const SpecConstantDescriptor& _desc)
+	void SpecConstantData::Add(const PipelineSpecConstant& _specCst)
 	{
-		if (_desc.value == nullptr)
+		if (_specCst.value == nullptr)
 		{
 			SA_LOG(L"Try add descriptor with null value!", Warning, SA/Render/Vulkan);
 			return;
 		}
 
-		Add(_desc.id, _desc.value->size, _desc.value->Data());
+		Add(_specCst.id, _specCst.value->size, _specCst.value->Data());
 	}
 
 

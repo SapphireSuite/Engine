@@ -5,14 +5,8 @@
 #ifndef SAPPHIRE_RENDER_VK_SPEC_CONSTANT_DATA_GUARD
 #define SAPPHIRE_RENDER_VK_SPEC_CONSTANT_DATA_GUARD
 
-#include <vector>
-
-#include <SA/Core/Support/API/Vulkan.hpp>
-
-#include <SA/Core/Algorithms/SizeOf.hpp>
-
 #include <SA/Render/Base/Shader/SpecConstants/DefaultSpecConstant.hpp>
-#include <SA/Render/Base/Shader/SpecConstants/SpecConstantDescriptor.hpp>
+#include <SA/Render/Base/Pipeline/PipelineShaderInfos.hpp>
 
 #if SA_VULKAN
 
@@ -28,7 +22,7 @@ namespace Sa::Vk
 
 		std::vector<char> data;
 
-		void Add(const SpecConstantDescriptor& _desc);
+		void Add(const PipelineSpecConstant& _specCst);
 		void Add(uint32 _id, uint32 _size, const void* _data);
 
 		template <typename T>
