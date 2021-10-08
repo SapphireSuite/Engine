@@ -7,7 +7,7 @@
 
 #include <SA/Render/Base/Mesh/AStaticMesh.hpp>
 
-#include <SA/Render/Vulkan/Buffers/VkDeviceBuffer.hpp>
+#include <SA/Render/Vulkan/Buffers/VkGPUBuffer.hpp>
 
 #if SA_VULKAN
 
@@ -15,8 +15,8 @@ namespace Sa::Vk
 {
 	class StaticMesh : public AStaticMesh
 	{
-		DeviceBuffer mVertexBuffer;
-		DeviceBuffer mIndexBuffer;
+		GPUBuffer mVertexBuffer;
+		GPUBuffer mIndexBuffer;
 
 		uint32 mIndicesSize = ~uint32();
 

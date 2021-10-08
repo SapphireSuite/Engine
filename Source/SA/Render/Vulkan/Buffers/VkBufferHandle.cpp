@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Render/Vulkan/Buffers/VkBufferBase.hpp>
+#include <Render/Vulkan/Buffers/VkBufferHandle.hpp>
 
 #include <Render/Vulkan/Debug/Debug.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
@@ -9,25 +9,13 @@
 
 namespace Sa::Vk
 {
-	bool BufferBase::IsValid() const noexcept
+	bool BufferHandle::IsValid() const noexcept
 	{
 		return mHandle != VK_NULL_HANDLE && mDeviceMemory != VK_NULL_HANDLE;
 	}
 
-	void BufferBase::Destroy(const Device& _device)
-	{
-		SA_ASSERT(Default, SA/Render/Vulkan, IsValid(), L"Destroy a null Buffer!");
 
-		vkDestroyBuffer(_device, mHandle, nullptr);
-		vkFreeMemory(_device, mDeviceMemory, nullptr); // Should be freed after destroying buffer.
-
-		mHandle = VK_NULL_HANDLE;
-		mDeviceMemory = VK_NULL_HANDLE;
-		mDeviceSize = 0u;
-	}
-
-
-	void BufferBase::Create_Internal(const Device& _device,
+	void BufferHandle::Create(const Device& _device,
 		uint64 _size, VkBufferUsageFlags _usage,
 		VkMemoryPropertyFlags _properties)
 	{
@@ -63,8 +51,20 @@ namespace Sa::Vk
 		vkBindBufferMemory(_device, mHandle, mDeviceMemory, 0);
 	}
 
+	void BufferHandle::Destroy(const Device& _device)
+	{
+		SA_ASSERT(Default, SA / Render / Vulkan, IsValid(), L"Destroy a null Buffer!");
 
-	VkDescriptorBufferInfo BufferBase::CreateDescriptorBufferInfo() const noexcept
+		vkDestroyBuffer(_device, mHandle, nullptr);
+		vkFreeMemory(_device, mDeviceMemory, nullptr); // Should be freed after destroying buffer.
+
+		mHandle = VK_NULL_HANDLE;
+		mDeviceMemory = VK_NULL_HANDLE;
+		mDeviceSize = 0u;
+	}
+
+
+	VkDescriptorBufferInfo BufferHandle::CreateDescriptorBufferInfo() const noexcept
 	{
 		VkDescriptorBufferInfo descInfos{};
 		descInfos.buffer = mHandle;
@@ -75,7 +75,7 @@ namespace Sa::Vk
 	}
 
 
-	uint32 BufferBase::FindMemoryType(const Device& _device, uint32 _typeFilter, VkMemoryPropertyFlags _properties)
+	uint32 BufferHandle::FindMemoryType(const Device& _device, uint32 _typeFilter, VkMemoryPropertyFlags _properties)
 	{
 		const VkPhysicalDeviceMemoryProperties& memProperties = _device.GetMemoryProperties();
 
@@ -91,12 +91,12 @@ namespace Sa::Vk
 	}
 
 
-	BufferBase::operator VkBuffer() const noexcept
+	BufferHandle::operator VkBuffer() const noexcept
 	{
 		return mHandle;
 	}
 
-	BufferBase::operator VkDeviceMemory() const noexcept
+	BufferHandle::operator VkDeviceMemory() const noexcept
 	{
 		return mDeviceMemory;
 	}

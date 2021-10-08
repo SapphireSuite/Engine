@@ -14,13 +14,8 @@ namespace Sa::Vk
 	{
 		ResourceInitializer& vkInit = _init->As<ResourceInitializer>();
 
-		uint64 dataSize = _raw.GetTotalMapSize();
-		uint64 irradianceSize = _raw.GetMapSize();
 
-		Buffer& stagingBuffer = vkInit.resHolder.Make<Buffer>(Buffer::Deleter(*vkInit.device));
-		stagingBuffer.Create(*vkInit.device, dataSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
-			_raw.data.data());
+		Buffer& stagingBuffer = Buffer::CreateStaging(vkInit, _raw.data.data(), _raw.GetTotalMapSize());
 
 
 		ImageBufferCreateInfos imageBufferCreateInfos;
@@ -74,10 +69,7 @@ namespace Sa::Vk
 
 
 		// === Create irradiance buffer ===
-		Buffer& irrStagingBuffer = vkInit.resHolder.Make<Buffer>(Buffer::Deleter(*vkInit.device));
-		irrStagingBuffer.Create(*vkInit.device, irradianceSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
-			_raw.data.data());
+		Buffer& irrStagingBuffer = Buffer::CreateStaging(vkInit, _raw.data.data(), _raw.GetMapSize());
 
 		imageBufferCreateInfos.mipLevels = 1u;
 		imageBufferCreateInfos.usage = VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;

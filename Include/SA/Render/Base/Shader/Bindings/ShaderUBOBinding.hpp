@@ -7,18 +7,18 @@
 
 #include <SA/Render/Base/Shader/Bindings/AShaderBinding.hpp>
 
-#include <SA/Render/Base/Buffers/IUniformBuffer.hpp>
+//#include <SA/Render/Base/Buffers/IUniformBuffer.hpp>
 
 namespace Sa
 {
 	class ShaderUBOBinding : public AShaderBinding
 	{
 	public:
-		std::vector<const IUniformBuffer*> UBOs;
+		//std::vector<const IUniformBuffer*> UBOs;
 
 
-		ShaderUBOBinding(uint32 _binding, const IUniformBuffer* _UBO, uint32 _set = 0u) noexcept;
-		ShaderUBOBinding(uint32 _binding, std::vector<const IUniformBuffer*> _UBOs, uint32 _set = 0u) noexcept;
+		//ShaderUBOBinding(uint32 _binding, const IUniformBuffer* _UBO, uint32 _set = 0u) noexcept;
+		//ShaderUBOBinding(uint32 _binding, std::vector<const IUniformBuffer*> _UBOs, uint32 _set = 0u) noexcept;
 
 
 #if SA_VULKAN

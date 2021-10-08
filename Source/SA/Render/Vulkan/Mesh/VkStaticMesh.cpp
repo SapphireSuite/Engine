@@ -20,25 +20,23 @@ namespace Sa::Vk
 
 		// Create Vertex buffer.
 		mVertexBuffer.Create(vkInit,
+			RenderBufferType::Vertex,
 			SizeOf(_raw.vertices),
-			VK_BUFFER_USAGE_VERTEX_BUFFER_BIT,
 			_raw.vertices.data());
 
 
 		// Create Index buffer.
 		mIndicesSize = SizeOf<uint32>(_raw.indices);
 		mIndexBuffer.Create(vkInit,
+			RenderBufferType::Index,
 			sizeof(uint32) * mIndicesSize,
-			VK_BUFFER_USAGE_INDEX_BUFFER_BIT,
 			_raw.indices.data());
 	}
 	
 	void StaticMesh::Destroy(const ARenderDevice* _device)
 	{
-		const Device& vkDevice = _device->As<Device>();
-
-		mVertexBuffer.Destroy(vkDevice);
-		mIndexBuffer.Destroy(vkDevice);
+		mVertexBuffer.Destroy(_device);
+		mIndexBuffer.Destroy(_device);
 
 		mIndicesSize = ~uint32();
 	}
