@@ -4,6 +4,8 @@
 
 #include <Core/Algorithms/SizeOf.hpp>
 
+#include <Render/Base/Material/Bindings/ARenderMaterialBinding.hpp>
+
 #include <Render/Vulkan/Debug/Debug.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
 #include <Render/Vulkan/Pipeline/VkPipeline.hpp>
@@ -17,13 +19,33 @@ namespace Sa::Vk
 		CreateDescriptorPool(_device, _infos);
 
 		CreateDescriptorSet(_device, _descSetLayout);
-		//UpdateDescriptorSet(_device, _infos.bindings);
 	}
 
 	void DescriptorSet::Destroy(const Device& _device)
 	{
 		DestroyDescriptorSet(_device);
 		DestroyDescriptorPool(_device);
+	}
+
+
+	void DescriptorSet::Update(const Device& _device, const std::vector<const ARenderMaterialBinding*>& _bindings)
+	{
+		std::list<std::vector<VkDescriptorBufferInfo>> bufferDescs;
+		std::list<std::vector<VkDescriptorImageInfo>> imageDescs;
+		std::vector<VkWriteDescriptorSet> descWrites;
+
+
+		for (auto it = _bindings.cbegin(); it != _bindings.cend(); ++it)
+		{
+			const ARenderMaterialBinding& bind = **it;
+
+			VkWriteDescriptorSet descWrite = bind.MakeVkDescriptors(bufferDescs, imageDescs);
+			descWrite.dstSet = mHandle;
+
+			descWrites.push_back(descWrite);
+		}
+
+		vkUpdateDescriptorSets(_device, SizeOf<uint32>(descWrites), descWrites.data(), 0, nullptr);
 	}
 
 
@@ -73,26 +95,6 @@ namespace Sa::Vk
 
 		SA_VK_ASSERT(vkAllocateDescriptorSets(_device, &descriptorSetAllocInfo, &mHandle), L"Failed to allocate descriptor set!");
 	}
-
-	//void DescriptorSet::UpdateDescriptorSet(const Device& _device, const std::vector<AShaderBinding*>& _bindings)
-	//{
-	//	std::list<std::vector<VkDescriptorBufferInfo>> bufferDescs;
-	//	std::list<std::vector<VkDescriptorImageInfo>> imageDescs;
-	//	std::vector<VkWriteDescriptorSet> descWrites;
-
-
-	//	for (auto it = _bindings.cbegin(); it != _bindings.cend(); ++it)
-	//	{
-	//		const AShaderBinding& bind = **it;
-
-	//		VkWriteDescriptorSet descWrite = bind.MakeVkDescriptors(bufferDescs, imageDescs);
-	//		descWrite.dstSet = mDescriptorSets[bind.set];
-
-	//		descWrites.push_back(descWrite);
-	//	}
-
-	//	vkUpdateDescriptorSets(_device, SizeOf<uint32>(descWrites), descWrites.data(), 0, nullptr);
-	//}
 
 	void DescriptorSet::DestroyDescriptorSet(const Device& _device)
 	{

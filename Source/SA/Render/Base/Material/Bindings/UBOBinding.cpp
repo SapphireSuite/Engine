@@ -45,7 +45,9 @@ namespace Sa
 		descWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 		descWrite.pNext = nullptr;
 
-		descWrite.dstSet = 0u;
+		// Set by VkMaterial.
+		// descWrite.dstSet = 
+
 		descWrite.dstBinding = binding;
 		descWrite.descriptorCount = SizeOf<uint32>(descs);
 		descWrite.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;

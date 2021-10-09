@@ -5,6 +5,8 @@
 #ifndef SAPPHIRE_RENDER_VK_DESCRIPTOR_SET_GUARD
 #define SAPPHIRE_RENDER_VK_DESCRIPTOR_SET_GUARD
 
+#include <vector>
+
 #include <SA/Core/Support/API/Vulkan.hpp>
 
 #if SA_VULKAN
@@ -12,6 +14,7 @@
 namespace Sa
 {
 	struct PipelineBindingSetDescriptor;
+	class ARenderMaterialBinding;
 }
 
 namespace Sa::Vk
@@ -30,12 +33,13 @@ namespace Sa::Vk
 
 
 		void CreateDescriptorSet(const Device& _device, VkDescriptorSetLayout _descSetLayout);
-		//void UpdateDescriptorSet(const Device& _device, const std::vector<AShaderBinding*>& _bindings);
 		void DestroyDescriptorSet(const Device& _device);
 
 	public:
 		void Create(const Device& _device, const PipelineBindingSetDescriptor& _infos, VkDescriptorSetLayout _descSetLayout);
 		void Destroy(const Device& _device);
+
+		void Update(const Device& _device, const std::vector<const ARenderMaterialBinding*>& _bindings);
 	};
 }
 
