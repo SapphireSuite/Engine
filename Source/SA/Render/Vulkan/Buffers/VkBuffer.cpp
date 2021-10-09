@@ -53,6 +53,12 @@ namespace Sa::Vk
 	}
 
 
+	VkDescriptorBufferInfo Buffer::CreateDescriptorBufferInfo() const noexcept
+	{
+		return mHandle.CreateDescriptorBufferInfo();
+	}
+
+
 	Buffer& Buffer::CreateStaging(ResourceInitializer& _init, const void* _data, uint64 _size)
 	{
 		Buffer& stagingBuffer = _init.resHolder.Make<Buffer>(Buffer::Deleter(_init.device));

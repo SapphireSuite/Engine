@@ -7,12 +7,13 @@
 
 #include <SA/Render/Base/Buffers/ARenderGPUBuffer.hpp>
 #include <SA/Render/Vulkan/Buffers/VkBufferHandle.hpp>
+#include <SA/Render/Vulkan/Buffers/IVkBufferBinding.hpp>
 
 #if SA_VULKAN
 
 namespace Sa::Vk
 {
-	class GPUBuffer : public ARenderGPUBuffer
+	class GPUBuffer : public ARenderGPUBuffer, public IBufferBinding
 	{
 		BufferHandle mHandle;
 
@@ -33,6 +34,9 @@ namespace Sa::Vk
 
 
 		void UpdateData(ARenderResourceInitializer& _init, const void* _data, uint64 _size, uint64 _offset = 0) override final;
+
+
+		VkDescriptorBufferInfo CreateDescriptorBufferInfo() const noexcept override final;
 
 
 		operator VkBuffer() const noexcept;

@@ -65,6 +65,12 @@ namespace Sa::Vk
 	}
 
 
+	VkDescriptorBufferInfo GPUBuffer::CreateDescriptorBufferInfo() const noexcept
+	{
+		return mHandle.CreateDescriptorBufferInfo();
+	}
+
+
 	GPUBuffer::operator VkBuffer() const noexcept
 	{
 		return mHandle;

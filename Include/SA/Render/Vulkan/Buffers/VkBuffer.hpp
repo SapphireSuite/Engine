@@ -7,6 +7,7 @@
 
 #include <SA/Render/Base/Buffers/ARenderBuffer.hpp>
 #include <SA/Render/Vulkan/Buffers/VkBufferHandle.hpp>
+#include <SA/Render/Vulkan/Buffers/IVkBufferBinding.hpp>
 
 #if SA_VULKAN
 
@@ -14,7 +15,7 @@ namespace Sa::Vk
 {
 	class ResourceInitializer;
 	
-	class Buffer : public ARenderBuffer
+	class Buffer : public ARenderBuffer, public IBufferBinding
 	{
 		BufferHandle mHandle;
 
@@ -31,6 +32,9 @@ namespace Sa::Vk
 
 
 		void UpdateData(const ARenderDevice* _device, const void* _data, uint64 _size, uint64 _offset = 0u) override final;
+
+
+		VkDescriptorBufferInfo CreateDescriptorBufferInfo() const noexcept override final;
 
 
 		static Buffer& CreateStaging(ResourceInitializer& _init, const void* _data, uint64 _size);
