@@ -4,7 +4,6 @@
 
 #include <Core/Serialize/Serializer.hpp>
 
-#include <Render/Base/Shader/Bindings/DefaultShaderBindings.hpp>
 #include <Render/Base/Shader/SpecConstants/DefaultSpecConstant.hpp>
 
 namespace Sa
