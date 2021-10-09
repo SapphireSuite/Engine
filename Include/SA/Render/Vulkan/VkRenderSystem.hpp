@@ -62,15 +62,12 @@ namespace Sa::Vk
 		void DestroyCubemap(const ARenderDevice* _device, ACubemap* _cubemap) override final;
 
 
-		ARenderMaterial* CreateMaterial(const ARenderDevice* _device,
-			const ARenderPipeline* _pipeline,
-			const RenderPipelineDescriptor& _infos,
-			uint32 setIndex = 0) override final;
+		ARenderMaterial* CreateMaterial(const ARenderDevice* _device, const RenderMaterialCreateInfos& _infos) override final;
 		void DestroyMaterial(const ARenderDevice* _device, ARenderMaterial* _material) override final;
 
 //}
 
-		operator const Instance& () const;
+		operator const Instance&() const;
 	};
 }
 

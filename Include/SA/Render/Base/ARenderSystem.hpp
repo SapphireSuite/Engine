@@ -38,6 +38,7 @@ namespace Sa
 	struct RawCubemap;
 
 	class ARenderMaterial;
+	struct RenderMaterialCreateInfos;
 
 
 	class ARenderSystem : public Abstract
@@ -76,10 +77,7 @@ namespace Sa
 		virtual void DestroyCubemap(const ARenderDevice* _device, ACubemap* _cubemap) = 0;
 
 
-		virtual ARenderMaterial* CreateMaterial(const ARenderDevice* _device,
-			const ARenderPipeline* _pipeline,
-			const RenderPipelineDescriptor& _infos,
-			uint32 setIndex = 0) = 0;
+		virtual ARenderMaterial* CreateMaterial(const ARenderDevice* _device, const RenderMaterialCreateInfos& _infos) = 0;
 		virtual void DestroyMaterial(const ARenderDevice* _device, ARenderMaterial* _material) = 0;
 //}
 	};

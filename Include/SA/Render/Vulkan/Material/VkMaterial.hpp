@@ -18,11 +18,10 @@ namespace Sa::Vk
 		DescriptorSet mDescSet;
 
 	public:
-		void Create(const ARenderDevice* _device,
-			const ARenderPipeline* _pipeline,
-			const RenderPipelineDescriptor& _desc,
-			uint32 setIndex = 0) override final;
+		void Create(const ARenderDevice* _device, const RenderMaterialCreateInfos& _infos) override final;
 		void Destroy(const ARenderDevice* _device) override final;
+
+		void UpdateBinding(const ARenderDevice* _device, const ARenderMaterialBinding* _bind) override final;
 	};
 }
 

@@ -200,14 +200,11 @@ namespace Sa::Vk
 	}
 
 
-	ARenderMaterial* RenderSystem::CreateMaterial(const ARenderDevice* _device,
-		const ARenderPipeline* _pipeline,
-		const RenderPipelineDescriptor& _infos,
-		uint32 setIndex)
+	ARenderMaterial* RenderSystem::CreateMaterial(const ARenderDevice* _device, const RenderMaterialCreateInfos& _infos)
 	{
 		Material* const mat = new Material();
 
-		mat->Create(_device, _pipeline, _infos, setIndex);
+		mat->Create(_device, _infos);
 
 		return mat;
 	}
@@ -224,7 +221,7 @@ namespace Sa::Vk
 //}
 
 
-	RenderSystem::operator const Instance& () const
+	RenderSystem::operator const Instance&() const
 	{
 		return mInstance;
 	}

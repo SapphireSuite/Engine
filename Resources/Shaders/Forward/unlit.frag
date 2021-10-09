@@ -4,7 +4,7 @@
 
 
 // Uniform.
-layout(binding = 2) uniform sampler2D albedo;
+layout(binding = 0) uniform sampler2D albedo;
 
 
 // In.

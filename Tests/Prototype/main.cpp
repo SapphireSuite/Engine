@@ -302,18 +302,10 @@ int main()
 
 			// Material.
 			{
-				cubeMat = renderSys.CreateMaterial(device, unlitPipeline, unlitPipelineDesc);
+				RenderMaterialCreateInfos infos{ unlitPipeline, &unlitPipelineDesc };
+				infos.AddBinding<IBOBinding>(0u, missText);
+				cubeMat = renderSys.CreateMaterial(device, infos);
 			}
-
-			//// DescSet.
-			//{
-			//	DescriptorSetCreateInfos infos{ unlitPipeline };
-			//	infos.AddBinding<ShaderUBOBinding>(0u, &camUBO, 1);
-			//	infos.AddBinding<ShaderUBOBinding>(1u, &modelUBO, 1);
-			//	infos.AddBinding<ShaderIBOBinding>(2u, &missText);
-
-			//	cubeDescSet.Create(device, infos);
-			//}
 		}
 	}
 
