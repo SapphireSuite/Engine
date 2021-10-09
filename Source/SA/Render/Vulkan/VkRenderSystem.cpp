@@ -53,7 +53,7 @@ namespace Sa::Vk
 		return vkSurface;
 	}
 
-	void RenderSystem::DestroyWindowSurface(AWindow& _win, ARenderDevice* _device, ARenderSurface* _surface)
+	void RenderSystem::DestroyWindowSurface(AWindow& _win, const ARenderDevice* _device, ARenderSurface* _surface)
 	{
 		SA_ASSERT(Nullptr, SA/Render/Vulkan, _surface);
 
@@ -65,7 +65,7 @@ namespace Sa::Vk
 	}
 
 
-	ARenderPass* RenderSystem::CreateRenderPass(ARenderDevice* _device, const RenderPassDescriptor& _descriptor)
+	ARenderPass* RenderSystem::CreateRenderPass(const ARenderDevice* _device, const RenderPassDescriptor& _descriptor)
 	{
 		RenderPass* const pass = new RenderPass();
 
@@ -74,7 +74,7 @@ namespace Sa::Vk
 		return pass;
 	}
 
-	void RenderSystem::DestroyRenderPass(ARenderDevice* _device, ARenderPass* _pass)
+	void RenderSystem::DestroyRenderPass(const ARenderDevice* _device, ARenderPass* _pass)
 	{
 		SA_ASSERT(Nullptr, SA/Render/Vulkan, _pass);
 
@@ -84,7 +84,7 @@ namespace Sa::Vk
 	}
 
 
-	ARenderPipeline* RenderSystem::CreatePipeline(ARenderDevice* _device, const RenderPipelineCreateInfos& _infos)
+	ARenderPipeline* RenderSystem::CreatePipeline(const ARenderDevice* _device, const RenderPipelineCreateInfos& _infos)
 	{
 		Pipeline* const pipeline = new Pipeline();
 
@@ -93,7 +93,7 @@ namespace Sa::Vk
 		return pipeline;
 	}
 
-	void RenderSystem::DestroyPipeline(ARenderDevice* _device, ARenderPipeline* _pipeline)
+	void RenderSystem::DestroyPipeline(const ARenderDevice* _device, ARenderPipeline* _pipeline)
 	{
 		SA_ASSERT(Nullptr, SA/Render/Vulkan, _pipeline);
 
@@ -105,13 +105,13 @@ namespace Sa::Vk
 
 //{ Resources
 
-	ARenderResourceInitializer* RenderSystem::CreateResourceInitializer(ARenderDevice* _device)
+	ARenderResourceInitializer* RenderSystem::CreateResourceInitializer(const ARenderDevice* _device)
 	{
-		ResourceInitializer* const context = new ResourceInitializer();
+		ResourceInitializer* const init = new ResourceInitializer();
 
-		context->Create(_device);
+		init->Create(_device);
 
-		return context;
+		return init;
 	}
 
 	void RenderSystem::DestroyResourceInitializer(ARenderResourceInitializer* _init)
@@ -132,7 +132,7 @@ namespace Sa::Vk
 		return shader;
 	}
 	
-	void RenderSystem::DestroyShader(ARenderDevice* _device, AShader* _shader)
+	void RenderSystem::DestroyShader(const ARenderDevice* _device, AShader* _shader)
 	{
 		SA_ASSERT(Nullptr, SA/Render/Vulkan, _shader);
 
@@ -151,8 +151,11 @@ namespace Sa::Vk
 		return mesh;
 	}
 
-	void RenderSystem::DestroyStaticMesh(ARenderDevice* _device, AStaticMesh* _mesh)
+	void RenderSystem::DestroyStaticMesh(const ARenderDevice* _device, AStaticMesh* _mesh)
 	{
+		SA_ASSERT(Nullptr, SA/Render/Vulkan, _mesh);
+
+
 		_mesh->Destroy(_device);
 
 		delete _mesh;
@@ -168,8 +171,10 @@ namespace Sa::Vk
 		return texture;
 	}
 
-	void RenderSystem::DestroyTexture(ARenderDevice* _device, ATexture* _texture)
+	void RenderSystem::DestroyTexture(const ARenderDevice* _device, ATexture* _texture)
 	{
+		SA_ASSERT(Nullptr, SA/Render/Vulkan, _texture);
+
 		_texture->Destroy(_device);
 
 		delete _texture;
@@ -185,8 +190,10 @@ namespace Sa::Vk
 		return cubemap;
 	}
 
-	void RenderSystem::DestroyCubemap(ARenderDevice* _device, ACubemap* _cubemap)
+	void RenderSystem::DestroyCubemap(const ARenderDevice* _device, ACubemap* _cubemap)
 	{
+		SA_ASSERT(Nullptr, SA/Render/Vulkan, _cubemap);
+
 		_cubemap->Destroy(_device);
 
 		delete _cubemap;
