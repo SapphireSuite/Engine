@@ -36,14 +36,14 @@ namespace Sa::Vk
 	}
 
 
-	void Pipeline::Create(const ARenderDevice* _device, const RenderPipelineCreateInfos& _infos)
+	void Pipeline::Create(const ARenderDevice* _device, const RenderPipelineDescriptor& _desc)
 	{
 		const Device& vkDevice = _device->As<Device>();
 
-		CreateDescriptorSetLayouts(vkDevice, _infos);
+		CreateDescriptorSetLayouts(vkDevice, _desc);
 
 		CreatePipelineLayout(vkDevice);
-		CreatePipelineHandle(vkDevice, _infos);
+		CreatePipelineHandle(vkDevice, _desc);
 	}
 
 	void Pipeline::Destroy(const ARenderDevice* _device)
@@ -64,14 +64,14 @@ namespace Sa::Vk
 	}
 
 
-	void Pipeline::CreateDescriptorSetLayouts(const Device& _device, const RenderPipelineCreateInfos& _infos)
+	void Pipeline::CreateDescriptorSetLayouts(const Device& _device, const RenderPipelineDescriptor& _desc)
 	{
 		std::vector<std::vector<VkDescriptorSetLayoutBinding>> descSetLayouts;
 		descSetLayouts.reserve(5); // Default is 3.
 
-		for(uint32 i = 0; i < _infos.shaderInfos.bindingSets.size(); ++i)
+		for(uint32 i = 0; i < _desc.shaderInfos.bindingSets.size(); ++i)
 		{
-			auto& setDesc = _infos.shaderInfos.bindingSets[i];
+			auto& setDesc = _desc.shaderInfos.bindingSets[i];
 			std::vector<VkDescriptorSetLayoutBinding>& descSetLayout = descSetLayouts.size() > i ? descSetLayouts[i] : descSetLayouts.emplace_back();
 
 			for (auto& bind : setDesc.bindings)
@@ -136,20 +136,20 @@ namespace Sa::Vk
 	}
 
 
-	void Pipeline::CreatePipelineHandle(const Device& _device, const RenderPipelineCreateInfos& _infos)
+	void Pipeline::CreatePipelineHandle(const Device& _device, const RenderPipelineDescriptor& _desc)
 	{
 		// Shaders
 		SpecConstantData specConstData;
 		std::vector<VkPipelineShaderStageCreateInfo> shaderStages;
-		FillShaderSpecConstants(specConstData, _infos.shaderInfos);
-		FillShaderStages(shaderStages, specConstData, _infos.shaderInfos.stages);
+		FillShaderSpecConstants(specConstData, _desc.shaderInfos);
+		FillShaderStages(shaderStages, specConstData, _desc.shaderInfos.stages);
 
 
 		// Vertex input infos.
 		std::unique_ptr<VkVertexInputBindingDescription> bindingDesc;
 		std::unique_ptr<VkVertexInputAttributeDescription[]> attribDescs;
 		VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
-		FillVertexBindings(vertexInputInfo, bindingDesc, attribDescs, _infos.shaderInfos.vertexBindingLayout);
+		FillVertexBindings(vertexInputInfo, bindingDesc, attribDescs, _desc.shaderInfos.vertexBindingLayout);
 
 
 		VkPipelineInputAssemblyStateCreateInfo inputAssemblyInfo{};
@@ -195,12 +195,12 @@ namespace Sa::Vk
 
 		// Rasterization
 		VkPipelineRasterizationStateCreateInfo rasterizerInfo{};
-		FillRasterization(rasterizerInfo, _infos.modes);
+		FillRasterization(rasterizerInfo, _desc.modes);
 
 
 		// Multisampling.
 		RenderPassAttachmentInfos renderPassAttInfos{};
-		FillRenderPassAttachments(renderPassAttInfos, _infos);
+		FillRenderPassAttachments(renderPassAttInfos, _desc);
 
 
 		// Create handle.
@@ -220,8 +220,8 @@ namespace Sa::Vk
 		pipelineCreateInfo.pColorBlendState = &renderPassAttInfos.colorBlendingInfo;
 		pipelineCreateInfo.pDynamicState = nullptr;
 		pipelineCreateInfo.layout = mPipelineLayout;
-		pipelineCreateInfo.renderPass = _infos.renderPass->As<RenderPass>();
-		pipelineCreateInfo.subpass = _infos.subPassIndex;
+		pipelineCreateInfo.renderPass = _desc.renderPass->As<RenderPass>();
+		pipelineCreateInfo.subpass = _desc.subPassIndex;
 		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 		pipelineCreateInfo.basePipelineIndex = -1;
 
@@ -311,9 +311,9 @@ namespace Sa::Vk
 		_rasterizerInfo.lineWidth = 1.0f;
 	}
 
-	void Pipeline::FillRenderPassAttachments(struct RenderPassAttachmentInfos& _renderPassAttInfos, const RenderPipelineCreateInfos& _infos) noexcept
+	void Pipeline::FillRenderPassAttachments(struct RenderPassAttachmentInfos& _renderPassAttInfos, const RenderPipelineDescriptor& _desc) noexcept
 	{
-		const VkSampleCountFlagBits sampleCount = API_GetSampleCount(_infos.subPassDesc.sampling);
+		const VkSampleCountFlagBits sampleCount = API_GetSampleCount(_desc.subPassDesc.sampling);
 
 		// MultiSampling.
 		_renderPassAttInfos.multisamplingInfos.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
@@ -355,7 +355,7 @@ namespace Sa::Vk
 		// Query color attachments only.
 		uint32 colorAttachmentNum = 0u;
 
-		for (auto it = _infos.subPassDesc.attachmentDescs.begin(); it != _infos.subPassDesc.attachmentDescs.end(); ++it)
+		for (auto it = _desc.subPassDesc.attachmentDescs.begin(); it != _desc.subPassDesc.attachmentDescs.end(); ++it)
 		{
 			if (!IsDepthFormat(it->format))
 				++colorAttachmentNum;

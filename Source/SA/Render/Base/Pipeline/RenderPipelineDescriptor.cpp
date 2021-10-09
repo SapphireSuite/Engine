@@ -1,15 +1,15 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Render/Base/Pipeline/RenderPipelineCreateInfos.hpp>
+#include <Render/Base/Pipeline/RenderPipelineDescriptor.hpp>
 
 namespace Sa
 {
-	RenderPipelineCreateInfos::RenderPipelineCreateInfos(const ARenderPass* _renderPass, const RenderPassDescriptor& _renderPassDesc, uint32 _subPassIndex)
+	RenderPipelineDescriptor::RenderPipelineDescriptor(const ARenderPass* _renderPass, const RenderPassDescriptor& _renderPassDesc, uint32 _subPassIndex)
 	{
 		SetRenderPass(_renderPass, _renderPassDesc, _subPassIndex);
 	}
 
-	void RenderPipelineCreateInfos::SetRenderPass(const ARenderPass* _renderPass, const RenderPassDescriptor& _renderPassDesc, uint32 _subPassIndex)
+	void RenderPipelineDescriptor::SetRenderPass(const ARenderPass* _renderPass, const RenderPassDescriptor& _renderPassDesc, uint32 _subPassIndex)
 	{
 		renderPass = _renderPass;
 		subPassIndex = _subPassIndex;
@@ -20,7 +20,7 @@ namespace Sa
 		subPassDesc = _renderPassDesc.subPassDescs[_subPassIndex];
 	}
 
-	void RenderPipelineCreateInfos::AddShader(const AShader* _shader, const ShaderDescriptor& _descriptor)
+	void RenderPipelineDescriptor::AddShader(const AShader* _shader, const ShaderDescriptor& _descriptor)
 	{
 		shaderInfos.AddShader(_shader, _descriptor);
 	}

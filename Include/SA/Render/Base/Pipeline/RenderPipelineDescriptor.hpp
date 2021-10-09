@@ -2,8 +2,8 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_RENDER_RENDER_PIPELINE_CREATE_INFOS_GUARD
-#define SAPPHIRE_RENDER_RENDER_PIPELINE_CREATE_INFOS_GUARD
+#ifndef SAPPHIRE_RENDER_RENDER_PIPELINE_DESCRIPTOR_GUARD
+#define SAPPHIRE_RENDER_RENDER_PIPELINE_DESCRIPTOR_GUARD
 
 #include <SA/Render/Base/Pass/ARenderPass.hpp>
 
@@ -12,7 +12,7 @@
 
 namespace Sa
 {
-	struct RenderPipelineCreateInfos
+	struct RenderPipelineDescriptor
 	{
 //{ RenderPass
 
@@ -35,8 +35,8 @@ namespace Sa
 		PipelineShaderInfos shaderInfos;
 
 
-		RenderPipelineCreateInfos() = default;
-		RenderPipelineCreateInfos(const ARenderPass* _renderPass, const RenderPassDescriptor& _renderPassDesc, uint32 _subPassIndex = 0u);
+		RenderPipelineDescriptor() = default;
+		RenderPipelineDescriptor(const ARenderPass* _renderPass, const RenderPassDescriptor& _renderPassDesc, uint32 _subPassIndex = 0u);
 
 		void SetRenderPass(const ARenderPass* _renderPass, const RenderPassDescriptor& _renderPassDesc, uint32 _subPassIndex = 0u);
 

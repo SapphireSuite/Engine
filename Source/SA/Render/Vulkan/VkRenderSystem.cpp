@@ -84,11 +84,11 @@ namespace Sa::Vk
 	}
 
 
-	ARenderPipeline* RenderSystem::CreatePipeline(const ARenderDevice* _device, const RenderPipelineCreateInfos& _infos)
+	ARenderPipeline* RenderSystem::CreatePipeline(const ARenderDevice* _device, const RenderPipelineDescriptor& _desc)
 	{
 		Pipeline* const pipeline = new Pipeline();
 
-		pipeline->Create(_device, _infos);
+		pipeline->Create(_device, _desc);
 
 		return pipeline;
 	}
@@ -202,7 +202,7 @@ namespace Sa::Vk
 
 	ARenderMaterial* RenderSystem::CreateMaterial(const ARenderDevice* _device,
 		const ARenderPipeline* _pipeline,
-		const RenderPipelineCreateInfos& _infos,
+		const RenderPipelineDescriptor& _infos,
 		uint32 setIndex)
 	{
 		Material* const mat = new Material();

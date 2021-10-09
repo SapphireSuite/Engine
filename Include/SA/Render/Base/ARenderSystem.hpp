@@ -21,7 +21,7 @@ namespace Sa
 	struct RenderPassDescriptor;
 
 	class ARenderPipeline;
-	struct RenderPipelineCreateInfos;
+	struct RenderPipelineDescriptor;
 
 	class ARenderResourceInitializer;
 
@@ -55,7 +55,7 @@ namespace Sa
 		virtual ARenderPass* CreateRenderPass(const ARenderDevice* _device, const RenderPassDescriptor& _descriptor) = 0;
 		virtual void DestroyRenderPass(const ARenderDevice* _device, ARenderPass* _pass) = 0;
 
-		virtual ARenderPipeline* CreatePipeline(const ARenderDevice* _device, const RenderPipelineCreateInfos& _infos) = 0;
+		virtual ARenderPipeline* CreatePipeline(const ARenderDevice* _device, const RenderPipelineDescriptor& _desc) = 0;
 		virtual void DestroyPipeline(const ARenderDevice* _device, ARenderPipeline* _pipeline) = 0;
 
 //{ Resources
@@ -78,7 +78,7 @@ namespace Sa
 
 		virtual ARenderMaterial* CreateMaterial(const ARenderDevice* _device,
 			const ARenderPipeline* _pipeline,
-			const RenderPipelineCreateInfos& _infos,
+			const RenderPipelineDescriptor& _infos,
 			uint32 setIndex = 0) = 0;
 		virtual void DestroyMaterial(const ARenderDevice* _device, ARenderMaterial* _material) = 0;
 //}

@@ -11,15 +11,15 @@ namespace Sa::Vk
 {
 	void Material::Create(const ARenderDevice* _device,
 		const ARenderPipeline* _pipeline,
-		const RenderPipelineCreateInfos& _infos,
+		const RenderPipelineDescriptor& _desc,
 		uint32 setIndex)
 	{
 		const Device& vkDevice = _device->As<Device>();
 		const Pipeline& vkPipeline = _pipeline->As<Pipeline>();
 
-		SA_ASSERT(OutOfRange, SA/Render/Vulkan, setIndex, 0u, (uint32)_infos.shaderInfos.bindingSets.size(), L"Set index is out of pipeline range!");
+		SA_ASSERT(OutOfRange, SA/Render/Vulkan, setIndex, 0u, (uint32)_desc.shaderInfos.bindingSets.size(), L"Set index is out of pipeline range!");
 
-		mDescSet.Create(vkDevice, _infos.shaderInfos.bindingSets[setIndex], vkPipeline.GetDescriptorSetLayouts()[setIndex]);
+		mDescSet.Create(vkDevice, _desc.shaderInfos.bindingSets[setIndex], vkPipeline.GetDescriptorSetLayouts()[setIndex]);
 
 		SA_LOG(L"Material created.", Infos, SA/Render/Vulkan);
 	}

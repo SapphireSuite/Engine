@@ -20,7 +20,7 @@ namespace Sa::Vk
 	public:
 		void Create(const ARenderDevice* _device,
 			const ARenderPipeline* _pipeline,
-			const RenderPipelineCreateInfos& _infos,
+			const RenderPipelineDescriptor& _desc,
 			uint32 setIndex = 0) override final;
 		void Destroy(const ARenderDevice* _device) override final;
 	};

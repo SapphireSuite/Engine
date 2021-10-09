@@ -11,14 +11,14 @@ namespace Sa
 {
 	class ARenderDevice;
 	class ARenderPipeline;
-	struct RenderPipelineCreateInfos;
+	struct RenderPipelineDescriptor;
 
 	class ARenderMaterial : public Abstract
 	{
 	public:
 		virtual void Create(const ARenderDevice* _device,
 			const ARenderPipeline* _pipeline,
-			const RenderPipelineCreateInfos& _infos,
+			const RenderPipelineDescriptor& _desc,
 			uint32 setIndex = 0) = 0;
 		virtual void Destroy(const ARenderDevice* _device) = 0;
 	};

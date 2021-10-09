@@ -44,7 +44,7 @@ ARenderDevice* device = nullptr;
 ARenderSurface* surface = nullptr;
 RenderPassDescriptor renderPassDesc;
 ARenderPass* renderPass = nullptr;
-RenderPipelineCreateInfos unlitPipelineInfos;
+RenderPipelineDescriptor unlitPipelineDesc;
 ARenderPipeline* unlitPipeline = nullptr;
 
 AShader* unlitvert = nullptr;
@@ -223,7 +223,7 @@ int main()
 					}
 
 					unlitvert = renderSys.CreateShader(resInit, asset.raw);
-					unlitPipelineInfos.AddShader(unlitvert, asset.raw.descriptor);
+					unlitPipelineDesc.AddShader(unlitvert, asset.raw.descriptor);
 				}
 
 				// Unlit frag
@@ -242,7 +242,7 @@ int main()
 					}
 
 					unlitfrag = renderSys.CreateShader(resInit, asset.raw);
-					unlitPipelineInfos.AddShader(unlitfrag, asset.raw.descriptor);
+					unlitPipelineDesc.AddShader(unlitfrag, asset.raw.descriptor);
 				}
 			}
 
@@ -293,16 +293,16 @@ int main()
 
 			// Pipeline
 			{
-				unlitPipelineInfos.SetRenderPass(renderPass, renderPassDesc, 0u);
-				unlitPipelineInfos.shaderInfos.vertexBindingLayout.meshLayout = cubeMesh->GetLayout();
+				unlitPipelineDesc.SetRenderPass(renderPass, renderPassDesc, 0u);
+				unlitPipelineDesc.shaderInfos.vertexBindingLayout.meshLayout = cubeMesh->GetLayout();
 
-				unlitPipeline = renderSys.CreatePipeline(device, unlitPipelineInfos);
+				unlitPipeline = renderSys.CreatePipeline(device, unlitPipelineDesc);
 			}
 
 
 			// Material.
 			{
-				cubeMat = renderSys.CreateMaterial(device, unlitPipeline, unlitPipelineInfos);
+				cubeMat = renderSys.CreateMaterial(device, unlitPipeline, unlitPipelineDesc);
 			}
 
 			//// DescSet.

@@ -23,13 +23,13 @@ namespace Sa::Vk
 
 		std::vector<VkDescriptorSetLayout> mDescriptorSetLayouts;
 
-		void CreateDescriptorSetLayouts(const Device& _device, const RenderPipelineCreateInfos& _infos);
+		void CreateDescriptorSetLayouts(const Device& _device, const RenderPipelineDescriptor& _desc);
 		void DestroyDescriptorSetLayouts(const Device& _device);
 
 		void CreatePipelineLayout(const Device& _device);
 		void DestroyPipelineLayout(const Device& _device);
 
-		void CreatePipelineHandle(const Device& _device, const RenderPipelineCreateInfos& _infos);
+		void CreatePipelineHandle(const Device& _device, const RenderPipelineDescriptor& _desc);
 		void DestroyPipelineHandle(const Device& _device);
 
 
@@ -47,13 +47,13 @@ namespace Sa::Vk
 
 		static void FillRasterization(VkPipelineRasterizationStateCreateInfo& _rasterizerInfo, const PipelineRenderModes& _modes) noexcept;
 
-		static void FillRenderPassAttachments(struct RenderPassAttachmentInfos& _renderPassAttInfos, const RenderPipelineCreateInfos& _infos) noexcept;
+		static void FillRenderPassAttachments(struct RenderPassAttachmentInfos& _renderPassAttInfos, const RenderPipelineDescriptor& _desc) noexcept;
 
 	public:
 		VkPipelineLayout GetLayout() const noexcept;
 		const std::vector<VkDescriptorSetLayout>& GetDescriptorSetLayouts() const noexcept;
 
-		void Create(const ARenderDevice* _device, const RenderPipelineCreateInfos& _infos) override final;
+		void Create(const ARenderDevice* _device, const RenderPipelineDescriptor& _desc) override final;
 		void Destroy(const ARenderDevice* _device) override final;
 
 		void Bind(const ARenderFrame& _frame) const override final;

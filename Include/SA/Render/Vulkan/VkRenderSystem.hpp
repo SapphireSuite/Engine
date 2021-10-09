@@ -40,7 +40,7 @@ namespace Sa::Vk
 		ARenderPass* CreateRenderPass(const ARenderDevice* _device, const RenderPassDescriptor& _descriptor) override final;
 		void DestroyRenderPass(const ARenderDevice* _device, ARenderPass* _pass) override final;
 
-		ARenderPipeline* CreatePipeline(const ARenderDevice* _device, const RenderPipelineCreateInfos& _infos) override final;
+		ARenderPipeline* CreatePipeline(const ARenderDevice* _device, const RenderPipelineDescriptor& _desc) override final;
 		void DestroyPipeline(const ARenderDevice* _device, ARenderPipeline* _pipeline) override final;
 
 
@@ -64,7 +64,7 @@ namespace Sa::Vk
 
 		ARenderMaterial* CreateMaterial(const ARenderDevice* _device,
 			const ARenderPipeline* _pipeline,
-			const RenderPipelineCreateInfos& _infos,
+			const RenderPipelineDescriptor& _infos,
 			uint32 setIndex = 0) override final;
 		void DestroyMaterial(const ARenderDevice* _device, ARenderMaterial* _material) override final;
 
