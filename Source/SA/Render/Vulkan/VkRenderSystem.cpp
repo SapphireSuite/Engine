@@ -199,6 +199,28 @@ namespace Sa::Vk
 		delete _cubemap;
 	}
 
+
+	ARenderMaterial* RenderSystem::CreateMaterial(const ARenderDevice* _device,
+		const ARenderPipeline* _pipeline,
+		const RenderPipelineCreateInfos& _infos,
+		uint32 setIndex)
+	{
+		Material* const mat = new Material();
+
+		mat->Create(_device, _pipeline, _infos, setIndex);
+
+		return mat;
+	}
+
+	void RenderSystem::DestroyMaterial(const ARenderDevice* _device, ARenderMaterial* _material)
+	{
+		SA_ASSERT(Nullptr, SA/Render/Vulkan, _material);
+
+		_material->Destroy(_device);
+
+		delete _material;
+	}
+
 //}
 
 

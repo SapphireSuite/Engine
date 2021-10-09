@@ -17,6 +17,7 @@
 #include <SA/Render/Vulkan/Mesh/VkStaticMesh.hpp>
 #include <SA/Render/Vulkan/Texture/VkTexture.hpp>
 #include <SA/Render/Vulkan/Texture/VkCubemap.hpp>
+#include <SA/Render/Vulkan/Material/VkMaterial.hpp>
 
 #if SA_VULKAN
 
@@ -59,6 +60,13 @@ namespace Sa::Vk
 
 		ACubemap* CreateCubemap(ARenderResourceInitializer* _init, const RawCubemap& _raw) override final;
 		void DestroyCubemap(const ARenderDevice* _device, ACubemap* _cubemap) override final;
+
+
+		ARenderMaterial* CreateMaterial(const ARenderDevice* _device,
+			const ARenderPipeline* _pipeline,
+			const RenderPipelineCreateInfos& _infos,
+			uint32 setIndex = 0) override final;
+		void DestroyMaterial(const ARenderDevice* _device, ARenderMaterial* _material) override final;
 
 //}
 

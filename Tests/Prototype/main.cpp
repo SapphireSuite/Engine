@@ -51,6 +51,7 @@ AShader* unlitvert = nullptr;
 AShader* unlitfrag = nullptr;
 ATexture* missText = nullptr;
 AStaticMesh* cubeMesh = nullptr;
+ARenderMaterial* cubeMat = nullptr;
 
 //Vk::CommandPool cmdPool;
 //std::vector<Vk::CommandBuffer> cmdBuffers;
@@ -299,6 +300,11 @@ int main()
 			}
 
 
+			// Material.
+			{
+				cubeMat = renderSys.CreateMaterial(device, unlitPipeline, unlitPipelineInfos);
+			}
+
 			//// DescSet.
 			//{
 			//	DescriptorSetCreateInfos infos{ unlitPipeline };
@@ -384,6 +390,8 @@ int main()
 
 			cubeDescSet.Destroy(device);
 			*/
+
+			renderSys.DestroyMaterial(device, cubeMat);
 
 			renderSys.DestroyPipeline(device, unlitPipeline);
 

@@ -6,9 +6,13 @@
 #define SAPPHIRE_RENDER_VK_DESCRIPTOR_SET_GUARD
 
 #include <SA/Core/Support/API/Vulkan.hpp>
-#include <SA/Render/Base/Shader/Bindings/ShaderBindingSetDescriptor.hpp>
 
 #if SA_VULKAN
+
+namespace Sa
+{
+	struct PipelineBindingSetDescriptor;
+}
 
 namespace Sa::Vk
 {
@@ -21,7 +25,7 @@ namespace Sa::Vk
 		VkDescriptorPool mDescriptorPool = VK_NULL_HANDLE;
 
 
-		void CreateDescriptorPool(const Device& _device, const ShaderBindingSetDescriptor& _infos);
+		void CreateDescriptorPool(const Device& _device, const PipelineBindingSetDescriptor& _infos);
 		void DestroyDescriptorPool(const Device& _device);
 
 
@@ -30,7 +34,7 @@ namespace Sa::Vk
 		void DestroyDescriptorSet(const Device& _device);
 
 	public:
-		void Create(const Device& _device, const ShaderBindingSetDescriptor& _infos);
+		void Create(const Device& _device, const PipelineBindingSetDescriptor& _infos, VkDescriptorSetLayout _descSetLayout);
 		void Destroy(const Device& _device);
 	};
 }

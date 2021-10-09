@@ -12,22 +12,22 @@
 
 namespace Sa::Vk
 {
-	void DescriptorSet::Create(const Device& _device, const ShaderBindingSetDescriptor& _infos)
+	void DescriptorSet::Create(const Device& _device, const PipelineBindingSetDescriptor& _infos, VkDescriptorSetLayout _descSetLayout)
 	{
 		CreateDescriptorPool(_device, _infos);
 
-		//CreateDescriptorSet(_device, _infos);
+		CreateDescriptorSet(_device, _descSetLayout);
 		//UpdateDescriptorSet(_device, _infos.bindings);
 	}
 
 	void DescriptorSet::Destroy(const Device& _device)
 	{
-		//DestroyDescriptorSet(_device);
+		DestroyDescriptorSet(_device);
 		DestroyDescriptorPool(_device);
 	}
 
 
-	void DescriptorSet::CreateDescriptorPool(const Device& _device, const ShaderBindingSetDescriptor& _infos)
+	void DescriptorSet::CreateDescriptorPool(const Device& _device, const PipelineBindingSetDescriptor& _infos)
 	{
 		std::vector<VkDescriptorPoolSize> poolSizes;
 
