@@ -6,24 +6,20 @@
 #define SAPPHIRE_RENDER_SPEC_CONSTANT_DESCRIPTOR_GUARD
 
 #include <string>
-//#include <memory>
 
-#include <SA/Render/Base/Shader/SpecConstants/SpecConstant.hpp>
+#include <SA/Core/Types/Int.hpp>
 
 namespace Sa
 {
 	struct SpecConstantDescriptor
 	{
-		// non-serialized
-
-		SpecConstantBase* value;
-		//std::unique_ptr<SpecConstantBase> value;
-
 		// Serialized
 
 		std::string name;
 
 		uint32 id = 0u;
+
+		bool operator<(const SpecConstantDescriptor& _rhs) const noexcept;
 	};
 
 

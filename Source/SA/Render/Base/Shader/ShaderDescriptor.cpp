@@ -4,14 +4,13 @@
 
 #include <Core/Serialize/Serializer.hpp>
 
-#include <Render/Base/Shader/Bindings/DefaultShaderBindings.hpp>
 #include <Render/Base/Shader/SpecConstants/DefaultSpecConstant.hpp>
 
 namespace Sa
 {
 	ShaderBindingDescriptor& ShaderDescriptor::EmplaceBinding(uint32 _set)
 	{
-		// Emplace empty set descriptors
+		// Emplace empty set descriptors.
 		while (_set >= bindingSets.size())
 			bindingSets.emplace_back();
 

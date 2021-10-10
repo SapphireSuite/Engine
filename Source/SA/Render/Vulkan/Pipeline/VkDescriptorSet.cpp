@@ -2,12 +2,11 @@
 
 #include <Render/Vulkan/Pipeline/VkDescriptorSet.hpp>
 
-#include <set>
-
 #include <Core/Algorithms/SizeOf.hpp>
 
+#include <Render/Base/Material/Bindings/ARenderMaterialBinding.hpp>
+
 #include <Render/Vulkan/Debug/Debug.hpp>
-#include <Render/Vulkan/VkFrame.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
 #include <Render/Vulkan/Pipeline/VkPipeline.hpp>
 
@@ -15,25 +14,43 @@
 
 namespace Sa::Vk
 {
-	void DescriptorSet::Create(const Device& _device, const DescriptorSetCreateInfos& _infos)
+	void DescriptorSet::Create(const Device& _device, const PipelineBindingSetDescriptor& _infos, VkDescriptorSetLayout _descSetLayout)
 	{
 		CreateDescriptorPool(_device, _infos);
 
-		CreateDescriptorSets(_device, _infos);
-		UpdateDescriptorSets(_device, _infos.bindings);
+		CreateDescriptorSet(_device, _descSetLayout);
 	}
 
 	void DescriptorSet::Destroy(const Device& _device)
 	{
-		DestroyDescriptorSets(_device);
+		DestroyDescriptorSet(_device);
 		DestroyDescriptorPool(_device);
 	}
 
 
-	void DescriptorSet::CreateDescriptorPool(const Device& _device, const DescriptorSetCreateInfos& _infos)
+	void DescriptorSet::Update(const Device& _device, const std::vector<const ARenderMaterialBinding*>& _bindings)
 	{
-		const Pipeline& vkPipeline = _infos.pipeline.As<Vk::Pipeline>();
+		std::list<std::vector<VkDescriptorBufferInfo>> bufferDescs;
+		std::list<std::vector<VkDescriptorImageInfo>> imageDescs;
+		std::vector<VkWriteDescriptorSet> descWrites;
 
+
+		for (auto it = _bindings.cbegin(); it != _bindings.cend(); ++it)
+		{
+			const ARenderMaterialBinding& bind = **it;
+
+			VkWriteDescriptorSet descWrite = bind.MakeVkDescriptors(bufferDescs, imageDescs);
+			descWrite.dstSet = mHandle;
+
+			descWrites.push_back(descWrite);
+		}
+
+		vkUpdateDescriptorSets(_device, SizeOf<uint32>(descWrites), descWrites.data(), 0, nullptr);
+	}
+
+
+	void DescriptorSet::CreateDescriptorPool(const Device& _device, const PipelineBindingSetDescriptor& _infos)
+	{
 		std::vector<VkDescriptorPoolSize> poolSizes;
 
 		for (auto it = _infos.bindings.begin(); it != _infos.bindings.end(); ++it)
@@ -44,7 +61,7 @@ namespace Sa::Vk
 			*/
 
 			VkDescriptorPoolSize& poolSize = poolSizes.emplace_back();
-			poolSize.type = (*it)->GetVkDescriptorType();
+			poolSize.type = API_GetDescriptorType(it->type);
 			poolSize.descriptorCount = 1u;
 		}
 
@@ -53,7 +70,7 @@ namespace Sa::Vk
 		descriptorPoolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
 		descriptorPoolInfo.pNext = nullptr;
 		descriptorPoolInfo.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
-		descriptorPoolInfo.maxSets = SizeOf<uint32>(vkPipeline.GetDescriptorSetLayouts());
+		descriptorPoolInfo.maxSets = 1u;
 		descriptorPoolInfo.poolSizeCount = SizeOf<uint32>(poolSizes);
 		descriptorPoolInfo.pPoolSizes = poolSizes.data();
 
@@ -67,60 +84,24 @@ namespace Sa::Vk
 	}
 
 
-	void DescriptorSet::CreateDescriptorSets(const Device& _device, const DescriptorSetCreateInfos& _infos)
+	void DescriptorSet::CreateDescriptorSet(const Device& _device, VkDescriptorSetLayout _descSetLayout)
 	{
-		const Pipeline& vkPipeline = _infos.pipeline.As<Pipeline>();
-		const std::vector<VkDescriptorSetLayout>& descriptorSetLayouts = vkPipeline.GetDescriptorSetLayouts();
-
-		mDescriptorSets.resize(descriptorSetLayouts.size());
-
 		VkDescriptorSetAllocateInfo descriptorSetAllocInfo{};
 		descriptorSetAllocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
 		descriptorSetAllocInfo.pNext = nullptr;
 		descriptorSetAllocInfo.descriptorPool = mDescriptorPool;
-		descriptorSetAllocInfo.descriptorSetCount = SizeOf<uint32>(descriptorSetLayouts);
-		descriptorSetAllocInfo.pSetLayouts = descriptorSetLayouts.data();
+		descriptorSetAllocInfo.descriptorSetCount = 1u;
+		descriptorSetAllocInfo.pSetLayouts = &_descSetLayout;
 
-		SA_VK_ASSERT(vkAllocateDescriptorSets(_device, &descriptorSetAllocInfo, mDescriptorSets.data()), L"Failed to allocate descriptor set!");
+		SA_VK_ASSERT(vkAllocateDescriptorSets(_device, &descriptorSetAllocInfo, &mHandle), L"Failed to allocate descriptor set!");
 	}
 
-	void DescriptorSet::UpdateDescriptorSets(const Device& _device, const std::vector<AShaderBinding*>& _bindings)
-	{
-		std::list<std::vector<VkDescriptorBufferInfo>> bufferDescs;
-		std::list<std::vector<VkDescriptorImageInfo>> imageDescs;
-		std::vector<VkWriteDescriptorSet> descWrites;
-
-
-		for (auto it = _bindings.cbegin(); it != _bindings.cend(); ++it)
-		{
-			const AShaderBinding& bind = **it;
-
-			VkWriteDescriptorSet descWrite = bind.MakeVkDescriptors(bufferDescs, imageDescs);
-			descWrite.dstSet = mDescriptorSets[bind.set];
-
-			descWrites.push_back(descWrite);
-		}
-
-		vkUpdateDescriptorSets(_device, SizeOf<uint32>(descWrites), descWrites.data(), 0, nullptr);
-	}
-
-	void DescriptorSet::DestroyDescriptorSets(const Device& _device)
+	void DescriptorSet::DestroyDescriptorSet(const Device& _device)
 	{
 		(void)_device;
 
 		// Not needed when vkDestroyDescriptorPool() is called. Otherwise, requiere VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT flag.
-		//vkFreeDescriptorSets(_device, mDescriptorPool, SizeOf<uint32>(mDescriptorSets), mDescriptorSets.data());
-		mDescriptorSets.clear();
-	}
-
-
-	void DescriptorSet::Bind(const ARenderFrame& _frame, const ARenderPipeline& _pipeline) const
-	{
-		const Frame& vkFrame = _frame.As<Frame>();
-		const Pipeline& vkPipeline = _pipeline.As<Pipeline>();
-
-		vkCmdBindDescriptorSets(vkFrame.cmd, VK_PIPELINE_BIND_POINT_GRAPHICS, vkPipeline.GetLayout(),
-			0u, SizeOf<uint32>(mDescriptorSets), mDescriptorSets.data(), 0, nullptr);
+		//vkFreeDescriptorSets(_device, mDescriptorPool, 1u, mDescriptorSets);
 	}
 }
 

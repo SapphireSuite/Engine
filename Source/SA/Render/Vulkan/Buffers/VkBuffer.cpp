@@ -4,47 +4,78 @@
 
 #include <Render/Vulkan/Debug/Debug.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
+#include <Render/Vulkan/VkResourceInitializer.hpp>
 
 #if SA_VULKAN
 
 namespace Sa::Vk
 {
-	Buffer::Deleter::Deleter(const Device& _device) noexcept :
-		mDevice{ _device }
+	bool Buffer::IsValid() const noexcept
 	{
-	}
-
-	void Buffer::Deleter::operator()(Buffer& _buffer)
-	{
-		_buffer.Destroy(mDevice);
+		return mHandle.IsValid();
 	}
 
 
-	void Buffer::Create(const Device& _device,
-		uint64 _size, VkBufferUsageFlags _usage,
-		VkMemoryPropertyFlags _properties,
+	void Buffer::Create(const ARenderDevice* _device,
+		RenderBufferType _type,
+		uint64 _size,
 		const void* _data)
 	{
-		SA_ASSERT(Default, SA/Render/Vulkan, _properties != VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, L"Use Vk::DeviceBuffer for local device buffer.");
-
-		Create_Internal(_device, _size, _usage, _properties);
+		mHandle.Create(_device->As<Device>(),
+			_size,
+			API_GetBufferUsage(_type),
+			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT
+		);
 
 		UpdateData(_device, _data, _size);
 	}
 
-
-	void Buffer::UpdateData(const Device& _device, const void* _data, uint64 _size, uint64 _offset)
+	void Buffer::Destroy(const ARenderDevice* _device)
 	{
+		mHandle.Destroy(_device->As<Device>());
+	}
+
+
+	void Buffer::UpdateData(const ARenderDevice* _device, const void* _data, uint64 _size, uint64 _offset)
+	{
+		const Device& vkDevice = _device->As<Device>();
+
 		void* bufferData = nullptr;
 
-		SA_VK_ASSERT(vkMapMemory(_device, mDeviceMemory, _offset, _size, 0, &bufferData), L"Fail to map memory");
+		SA_VK_ASSERT(vkMapMemory(vkDevice, mHandle, _offset, _size, 0, &bufferData), L"Fail to map memory");
 
 		if(_data)
 			std::memcpy(bufferData, _data, _size);
 		else
 			std::memset(bufferData, 0, _size);
 
-		vkUnmapMemory(_device, mDeviceMemory);
+		vkUnmapMemory(vkDevice, mHandle);
+	}
+
+
+	VkDescriptorBufferInfo Buffer::CreateDescriptorBufferInfo() const noexcept
+	{
+		return mHandle.CreateDescriptorBufferInfo();
+	}
+
+
+	Buffer& Buffer::CreateStaging(ResourceInitializer& _init, const void* _data, uint64 _size)
+	{
+		Buffer& stagingBuffer = _init.resHolder.Make<Buffer>(Buffer::Deleter(_init.device));
+
+		stagingBuffer.Create(_init.device,
+			RenderBufferType::TransferSRC,
+			_size,
+			_data
+		);
+
+		return stagingBuffer;
+	}
+
+
+	Buffer::operator VkBuffer() const noexcept
+	{
+		return mHandle;
 	}
 }
 

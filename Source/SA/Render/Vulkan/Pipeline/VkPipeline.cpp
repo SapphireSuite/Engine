@@ -2,18 +2,14 @@
 
 #include <Render/Vulkan/Pipeline/VkPipeline.hpp>
 
-#include <map>
-
 #include <Core/Algorithms/SizeOf.hpp>
-
-#include <Render/Base/Shader/SpecConstants/DefaultSpecConstant.hpp>
 
 #include <Render/Vulkan/Debug/Debug.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
 #include <Render/Vulkan/Shader/VkShader.hpp>
-#include <Render/Vulkan/Shader/VkSpecConstantData.hpp>
 #include <Render/Vulkan/Pass/VkRenderPass.hpp>
 #include <Render/Vulkan/VkFrame.hpp>
+#include <Render/Vulkan/Pipeline/VkSpecConstantData.hpp>
 
 #if SA_VULKAN
 
@@ -40,14 +36,14 @@ namespace Sa::Vk
 	}
 
 
-	void Pipeline::Create(const ARenderDevice* _device, const RenderPipelineCreateInfos& _infos)
+	void Pipeline::Create(const ARenderDevice* _device, const RenderPipelineDescriptor& _desc)
 	{
 		const Device& vkDevice = _device->As<Device>();
 
-		CreateDescriptorSetLayouts(vkDevice, _infos);
+		CreateDescriptorSetLayouts(vkDevice, _desc);
 
 		CreatePipelineLayout(vkDevice);
-		CreatePipelineHandle(vkDevice, _infos);
+		CreatePipelineHandle(vkDevice, _desc);
 	}
 
 	void Pipeline::Destroy(const ARenderDevice* _device)
@@ -68,30 +64,25 @@ namespace Sa::Vk
 	}
 
 
-	void Pipeline::CreateDescriptorSetLayouts(const Device& _device, const RenderPipelineCreateInfos& _infos)
+	void Pipeline::CreateDescriptorSetLayouts(const Device& _device, const RenderPipelineDescriptor& _desc)
 	{
 		std::vector<std::vector<VkDescriptorSetLayoutBinding>> descSetLayouts;
 		descSetLayouts.reserve(5); // Default is 3.
 
-		for(auto& shader : _infos.shaders)
+		for(uint32 i = 0; i < _desc.shaderInfos.bindingSets.size(); ++i)
 		{
-			auto& descriptor = shader.descriptor;
+			auto& setDesc = _desc.shaderInfos.bindingSets[i];
+			std::vector<VkDescriptorSetLayoutBinding>& descSetLayout = descSetLayouts.size() > i ? descSetLayouts[i] : descSetLayouts.emplace_back();
 
-			for(uint32 i = 0; i < descriptor.bindingSets.size(); ++i)
+			for (auto& bind : setDesc.bindings)
 			{
-				auto& set = descriptor.bindingSets[i];
-				std::vector<VkDescriptorSetLayoutBinding>& descSetLayout = descSetLayouts.size() > i ? descSetLayouts[i] : descSetLayouts.emplace_back();
+				VkDescriptorSetLayoutBinding& descBinding = descSetLayout.emplace_back();
 
-				for (auto& bind : set.bindings)
-				{
-					VkDescriptorSetLayoutBinding& descBinding = descSetLayout.emplace_back();
-
-					descBinding.binding = bind.binding;
-					descBinding.descriptorType = API_GetDescriptorType(bind.type);
-					descBinding.descriptorCount = bind.num;
-					descBinding.stageFlags = API_GetShaderStageFlags(descriptor.stage);
-					descBinding.pImmutableSamplers = nullptr;
-				}
+				descBinding.binding = bind.binding;
+				descBinding.descriptorType = API_GetDescriptorType(bind.type);
+				descBinding.descriptorCount = bind.num;
+				descBinding.stageFlags = API_GetShaderStageFlags(bind.stageFlags);
+				descBinding.pImmutableSamplers = nullptr;
 			}
 		}
 
@@ -145,20 +136,20 @@ namespace Sa::Vk
 	}
 
 
-	void Pipeline::CreatePipelineHandle(const Device& _device, const RenderPipelineCreateInfos& _infos)
+	void Pipeline::CreatePipelineHandle(const Device& _device, const RenderPipelineDescriptor& _desc)
 	{
 		// Shaders
-		std::vector<SpecConstantData> specConstDatas;
+		SpecConstantData specConstData;
 		std::vector<VkPipelineShaderStageCreateInfo> shaderStages;
-		FillShaderSpecConstants(specConstDatas, _infos.shaders);
-		FillShaderStages(shaderStages, specConstDatas, _infos.shaders);
+		FillShaderSpecConstants(specConstData, _desc.shaderInfos);
+		FillShaderStages(shaderStages, specConstData, _desc.shaderInfos.stages);
 
 
 		// Vertex input infos.
 		std::unique_ptr<VkVertexInputBindingDescription> bindingDesc;
 		std::unique_ptr<VkVertexInputAttributeDescription[]> attribDescs;
 		VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
-		FillVertexBindings(vertexInputInfo, bindingDesc, attribDescs, _infos.vertexBindingLayout);
+		FillVertexBindings(vertexInputInfo, bindingDesc, attribDescs, _desc.shaderInfos.vertexBindingLayout);
 
 
 		VkPipelineInputAssemblyStateCreateInfo inputAssemblyInfo{};
@@ -204,12 +195,12 @@ namespace Sa::Vk
 
 		// Rasterization
 		VkPipelineRasterizationStateCreateInfo rasterizerInfo{};
-		FillRasterization(rasterizerInfo, _infos.modes);
+		FillRasterization(rasterizerInfo, _desc.modes);
 
 
 		// Multisampling.
 		RenderPassAttachmentInfos renderPassAttInfos{};
-		FillRenderPassAttachments(renderPassAttInfos, _infos);
+		FillRenderPassAttachments(renderPassAttInfos, _desc);
 
 
 		// Create handle.
@@ -229,8 +220,8 @@ namespace Sa::Vk
 		pipelineCreateInfo.pColorBlendState = &renderPassAttInfos.colorBlendingInfo;
 		pipelineCreateInfo.pDynamicState = nullptr;
 		pipelineCreateInfo.layout = mPipelineLayout;
-		pipelineCreateInfo.renderPass = _infos.renderPass->As<RenderPass>();
-		pipelineCreateInfo.subpass = _infos.subPassIndex;
+		pipelineCreateInfo.renderPass = _desc.renderPass->As<RenderPass>();
+		pipelineCreateInfo.subpass = _desc.subPassIndex;
 		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 		pipelineCreateInfo.basePipelineIndex = -1;
 
@@ -247,51 +238,42 @@ namespace Sa::Vk
 	}
 
 
-	void Pipeline::FillShaderSpecConstants(std::vector<SpecConstantData>& _specConstDatas,
-		const std::vector<PipelineShaderInfos>& _shaders)
+	void Pipeline::FillShaderSpecConstants(SpecConstantData& _specConstData,
+		const PipelineShaderInfos& _shaderInfos)
 	{
-		_specConstDatas.reserve(_shaders.size());
+		for (auto& specPair : _shaderInfos.userSpecConstants)
+			_specConstData.Add(specPair);
 
-		for (auto& shaderInfos : _shaders)
+		for (auto& specPair : _shaderInfos.engineSpecConstants)
 		{
-			SpecConstantData& data = _specConstDatas.emplace_back();
-
-			for (auto& specPair : shaderInfos.descriptor.userSpecConstants)
-				data.Add(specPair);
-
-			for (auto& specPair : shaderInfos.descriptor.engineSpecConstants)
+			switch (specPair.id)
 			{
-				switch (specPair.id)
-				{
-					case SpecConstantID::RenderAPI:
-						data.Add(SpecConstantID::RenderAPI, SpecConstantValue::Vulkan);
-						break;
-					default:
-						SA_LOG(L"Shader Engine specialization constant [" << specPair.id << L"] not supported yet!", Warning, SA/Render/Vulkan);
-						break;
-				}
+				case SpecConstantID::RenderAPI:
+					_specConstData.Add(SpecConstantID::RenderAPI, SpecConstantValue::Vulkan);
+					break;
+				default:
+					SA_LOG(L"Shader Engine specialization constant [" << specPair.id << L"] not supported yet!", Warning, SA/Render/Vulkan);
+					break;
 			}
 		}
 	}
 
 	void Pipeline::FillShaderStages(std::vector<VkPipelineShaderStageCreateInfo>& _stages,
-		const std::vector<SpecConstantData>& _specConstDatas,
-		const std::vector<PipelineShaderInfos>& _shaders)
+		const SpecConstantData& _specConstData,
+		const std::vector<PipelineShaderStage>& _shaders)
 	{
 		_stages.reserve(_shaders.size());
 
-		for (uint32 i = 0u; i < _shaders.size(); ++i)
+		for(auto& stage : _shaders)
 		{
-			const PipelineShaderInfos& it = _shaders[i];
-
-			VkPipelineShaderStageCreateInfo& stage = _stages.emplace_back();
-			stage.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-			stage.pNext = nullptr;
-			stage.flags = 0u;
-			stage.stage = API_GetShaderStage(it.descriptor.stage);
-			stage.module = it.shader->As<Shader>();
-			stage.pName = "main";
-			stage.pSpecializationInfo = &_specConstDatas[i].specInfo;
+			VkPipelineShaderStageCreateInfo& vkStage = _stages.emplace_back();
+			vkStage.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+			vkStage.pNext = nullptr;
+			vkStage.flags = 0u;
+			vkStage.stage = API_GetShaderStage(stage.stage);
+			vkStage.module = stage.shader->As<Shader>();
+			vkStage.pName = "main";
+			vkStage.pSpecializationInfo = &_specConstData.specInfo;
 		}
 	}
 
@@ -329,9 +311,9 @@ namespace Sa::Vk
 		_rasterizerInfo.lineWidth = 1.0f;
 	}
 
-	void Pipeline::FillRenderPassAttachments(struct RenderPassAttachmentInfos& _renderPassAttInfos, const RenderPipelineCreateInfos& _infos) noexcept
+	void Pipeline::FillRenderPassAttachments(struct RenderPassAttachmentInfos& _renderPassAttInfos, const RenderPipelineDescriptor& _desc) noexcept
 	{
-		const VkSampleCountFlagBits sampleCount = API_GetSampleCount(_infos.subPassDesc.sampling);
+		const VkSampleCountFlagBits sampleCount = API_GetSampleCount(_desc.subPassDesc.sampling);
 
 		// MultiSampling.
 		_renderPassAttInfos.multisamplingInfos.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
@@ -373,7 +355,7 @@ namespace Sa::Vk
 		// Query color attachments only.
 		uint32 colorAttachmentNum = 0u;
 
-		for (auto it = _infos.subPassDesc.attachmentDescs.begin(); it != _infos.subPassDesc.attachmentDescs.end(); ++it)
+		for (auto it = _desc.subPassDesc.attachmentDescs.begin(); it != _desc.subPassDesc.attachmentDescs.end(); ++it)
 		{
 			if (!IsDepthFormat(it->format))
 				++colorAttachmentNum;

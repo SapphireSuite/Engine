@@ -7,7 +7,7 @@
 
 #include <SA/Core/Types/Abstract.hpp>
 
-#include <SA/Render/Base/Pipeline/RenderPipelineCreateInfos.hpp>
+#include <SA/Render/Base/Pipeline/RenderPipelineDescriptor.hpp>
 
 namespace Sa
 {
@@ -17,7 +17,7 @@ namespace Sa
 	class ARenderPipeline : public Abstract
 	{
 	public:
-		virtual void Create(const ARenderDevice* _device, const RenderPipelineCreateInfos& _infos) = 0;
+		virtual void Create(const ARenderDevice* _device, const RenderPipelineDescriptor& _desc) = 0;
 		virtual void Destroy(const ARenderDevice* _device) = 0;
 
 		virtual void Bind(const ARenderFrame& _frame) const = 0;

@@ -25,7 +25,7 @@ namespace Sa::Vk
 		VkMemoryRequirements memRequirements;
 		vkGetImageMemoryRequirements(_device, mImage, &memRequirements);
 
-		uint32 memoryTypeIndex = Buffer::FindMemoryType(_device, memRequirements.memoryTypeBits, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+		const uint32 memoryTypeIndex = BufferHandle::FindMemoryType(_device, memRequirements.memoryTypeBits, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
 
 		VkMemoryAllocateInfo memoryAllocInfo{};
 		memoryAllocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;

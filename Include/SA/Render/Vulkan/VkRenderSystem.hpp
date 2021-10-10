@@ -17,6 +17,8 @@
 #include <SA/Render/Vulkan/Mesh/VkStaticMesh.hpp>
 #include <SA/Render/Vulkan/Texture/VkTexture.hpp>
 #include <SA/Render/Vulkan/Texture/VkCubemap.hpp>
+#include <SA/Render/Vulkan/Material/VkMaterial.hpp>
+#include <SA/Render/Vulkan/Camera/VkCamera.hpp>
 
 #if SA_VULKAN
 
@@ -34,35 +36,42 @@ namespace Sa::Vk
 		void DestroyDevice(ARenderDevice* _device) override final;
 
 		ARenderSurface* MakeWindowSurface(AWindow& _win) override final;
-		void DestroyWindowSurface(AWindow& _win, ARenderDevice* _device, ARenderSurface* _surface) override final;
+		void DestroyWindowSurface(AWindow& _win, const ARenderDevice* _device, ARenderSurface* _surface) override final;
 
-		ARenderPass* CreateRenderPass(ARenderDevice* _device, const RenderPassDescriptor& _descriptor) override final;
-		void DestroyRenderPass(ARenderDevice* _device, ARenderPass* _pass) override final;
+		ARenderPass* CreateRenderPass(const ARenderDevice* _device, const RenderPassDescriptor& _descriptor) override final;
+		void DestroyRenderPass(const ARenderDevice* _device, ARenderPass* _pass) override final;
 
-		ARenderPipeline* CreatePipeline(ARenderDevice* _device, const RenderPipelineCreateInfos& _infos) override final;
-		void DestroyPipeline(ARenderDevice* _device, ARenderPipeline* _pipeline) override final;
+		ARenderPipeline* CreatePipeline(const ARenderDevice* _device, const RenderPipelineDescriptor& _desc) override final;
+		void DestroyPipeline(const ARenderDevice* _device, ARenderPipeline* _pipeline) override final;
 
 
 //{ Resources
 
-		ARenderResourceInitializer* CreateResourceInitializer(ARenderDevice* _device) override final;
+		ARenderResourceInitializer* CreateResourceInitializer(const ARenderDevice* _device) override final;
 		void DestroyResourceInitializer(ARenderResourceInitializer* _init) override final;
 
 		AShader* CreateShader(ARenderResourceInitializer* _init, const RawShader& _raw) override final;
-		void DestroyShader(ARenderDevice* _device, AShader* _shader) override final;
+		void DestroyShader(const ARenderDevice* _device, AShader* _shader) override final;
 
-		virtual AStaticMesh* CreateStaticMesh(ARenderResourceInitializer* _init, const RawMesh& _raw) override final;
-		virtual void DestroyStaticMesh(ARenderDevice* _device, AStaticMesh* _mesh) override final;
+		AStaticMesh* CreateStaticMesh(ARenderResourceInitializer* _init, const RawMesh& _raw) override final;
+		void DestroyStaticMesh(const ARenderDevice* _device, AStaticMesh* _mesh) override final;
 
 		ATexture* CreateTexture(ARenderResourceInitializer* _init, const RawTexture& _raw) override final;
-		void DestroyTexture(ARenderDevice* _device, ATexture* _texture) override final;
+		void DestroyTexture(const ARenderDevice* _device, ATexture* _texture) override final;
 
 		ACubemap* CreateCubemap(ARenderResourceInitializer* _init, const RawCubemap& _raw) override final;
-		void DestroyCubemap(ARenderDevice* _device, ACubemap* _cubemap) override final;
+		void DestroyCubemap(const ARenderDevice* _device, ACubemap* _cubemap) override final;
+
+
+		ARenderMaterial* CreateMaterial(const ARenderDevice* _device, const RenderMaterialCreateInfos& _infos) override final;
+		void DestroyMaterial(const ARenderDevice* _device, ARenderMaterial* _material) override final;
+
+		ARenderCamera* CreateCamera(const ARenderDevice* _device) override final;
+		void DestroyCamera(const ARenderDevice* _device, ARenderCamera* _camera) override final;
 
 //}
 
-		operator const Instance& () const;
+		operator const Instance&() const;
 	};
 }
 
