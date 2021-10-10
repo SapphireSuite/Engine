@@ -36,6 +36,8 @@ namespace Sa::GLFW
 
 		window->Create(_infos);
 
+		SA_LOG(L"Window created.", Infos, SA/Window/GLFW);
+
 		return window;
 	}
 
@@ -44,6 +46,8 @@ namespace Sa::GLFW
 		_window->Destroy();
 
 		delete _window;
+
+		SA_LOG(L"Window destroyed.", Infos, SA/Window/GLFW);
 	}
 
 

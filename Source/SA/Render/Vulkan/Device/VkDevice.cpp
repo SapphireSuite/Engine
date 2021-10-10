@@ -146,8 +146,6 @@ namespace Sa::Vk
 		vkGetPhysicalDeviceMemoryProperties(mPhysicalDevice, &mMemProperties);
 
 		queueMgr.Create(*this, vkInfos);
-
-		SA_LOG(L"Graphic device created.", Infos, SA/Render/Vulkan);
 	}
 	
 	void Device::Destroy()
@@ -160,8 +158,6 @@ namespace Sa::Vk
 
 		mLogicalDevice = VK_NULL_HANDLE;
 		mPhysicalDevice = VK_NULL_HANDLE;
-
-		SA_LOG(L"Graphic device destroyed.", Infos, SA/Render/Vulkan);
 	}
 
 	void Device::WaitIdle()

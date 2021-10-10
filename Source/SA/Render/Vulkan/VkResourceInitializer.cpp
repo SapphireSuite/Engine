@@ -17,8 +17,6 @@ namespace Sa::Vk
 
 		cmd = mCmdPool.Allocate(*device);
 		cmd.Begin();
-
-		SA_LOG(L"Resource Initializer created.", Infos, SA/Render/Vulkan);
 	}
 
 	void ResourceInitializer::Destroy()
@@ -27,8 +25,6 @@ namespace Sa::Vk
 		device = nullptr;
 
 		resHolder.FreeAll();
-
-		SA_LOG(L"Resource Initializer destroyed.", Infos, SA/Render/Vulkan);
 	}
 
 

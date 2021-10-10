@@ -33,6 +33,8 @@ namespace Sa::Vk
 
 		device->Create(_infos.As<GraphicDeviceInfos>());
 
+		SA_LOG(L"Render Device created.", Infos, SA/Render/Vulkan);
+
 		return device;
 	}
 
@@ -43,6 +45,8 @@ namespace Sa::Vk
 		_device->Destroy();
 
 		delete _device;
+
+		SA_LOG(L"Render Device destroyed.", Infos, SA/Render/Vulkan);
 	}
 
 
@@ -51,6 +55,8 @@ namespace Sa::Vk
 		SA_ASSERT(Nullptr, SA/Render/Vulkan, _win);
 
 		Surface* const vkSurface = new Surface(_win->CreateVkRenderSurface(mInstance));
+
+		SA_LOG(L"Window Surface created.", Infos, SA/Render/Vulkan);
 
 		return vkSurface;
 	}
@@ -62,7 +68,11 @@ namespace Sa::Vk
 
 		_surface->Destroy(_device);
 
+		SA_LOG(L"Render Surface destroyed.", Infos, SA/Render/Vulkan);
+
 		_win->DestroyVkRenderSurface(mInstance, _surface->As<Surface>());
+
+		SA_LOG(L"Window Surface destroyed.", Infos, SA/Render/Vulkan);
 
 		delete _surface;
 	}
@@ -74,6 +84,8 @@ namespace Sa::Vk
 
 		pass->Create(_device, _descriptor);
 
+		SA_LOG(L"RenderPass created.", Infos, SA/Render/Vulkan);
+
 		return pass;
 	}
 
@@ -84,6 +96,8 @@ namespace Sa::Vk
 		_pass->Destroy(_device);
 
 		delete _pass;
+
+		SA_LOG(L"RenderPass destroyed.", Infos, SA/Render/Vulkan);
 	}
 
 
@@ -92,6 +106,8 @@ namespace Sa::Vk
 		Pipeline* const pipeline = new Pipeline();
 
 		pipeline->Create(_device, _desc);
+
+		SA_LOG(L"Render Pipeline created.", Infos, SA/Render/Vulkan);
 
 		return pipeline;
 	}
@@ -103,6 +119,8 @@ namespace Sa::Vk
 		_pipeline->Destroy(_device);
 
 		delete _pipeline;
+
+		SA_LOG(L"Render Pipeline destroyed.", Infos, SA/Render/Vulkan);
 	}
 
 
@@ -114,6 +132,8 @@ namespace Sa::Vk
 
 		init->Create(_device);
 
+		SA_LOG(L"Render Resource Initializer created.", Infos, SA/Render/Vulkan);
+
 		return init;
 	}
 
@@ -123,6 +143,8 @@ namespace Sa::Vk
 
 		_init->Destroy();
 		delete _init;
+
+		SA_LOG(L"Render Resource Initializer destroyed.", Infos, SA/Render/Vulkan);
 	}
 
 
@@ -131,6 +153,8 @@ namespace Sa::Vk
 		Shader* const shader = new Shader();
 
 		shader->Create(_init, _raw);
+
+		SA_LOG(L"Shader created.", Infos, SA/Render/Vulkan);
 
 		return shader;
 	}
@@ -142,6 +166,8 @@ namespace Sa::Vk
 		_shader->Destroy(_device);
 
 		delete _shader;
+
+		SA_LOG(L"Shader destroyed.", Infos, SA/Render/Vulkan);
 	}
 
 
@@ -151,6 +177,8 @@ namespace Sa::Vk
 
 		mesh->Create(_init, _raw);
 
+		SA_LOG(L"Mesh created.", Infos, SA/Render/Vulkan);
+
 		return mesh;
 	}
 
@@ -158,10 +186,11 @@ namespace Sa::Vk
 	{
 		SA_ASSERT(Nullptr, SA/Render/Vulkan, _mesh);
 
-
 		_mesh->Destroy(_device);
 
 		delete _mesh;
+
+		SA_LOG(L"Mesh destroyed.", Infos, SA/Render/Vulkan);
 	}
 
 
@@ -170,6 +199,8 @@ namespace Sa::Vk
 		Texture* const texture = new Texture();
 
 		texture->Create(_init, _raw);
+
+		SA_LOG(L"Texture created.", Infos, SA/Render/Vulkan);
 
 		return texture;
 	}
@@ -181,6 +212,8 @@ namespace Sa::Vk
 		_texture->Destroy(_device);
 
 		delete _texture;
+
+		SA_LOG(L"Texture destroyed.", Infos, SA/Render/Vulkan);
 	}
 
 	
@@ -189,6 +222,8 @@ namespace Sa::Vk
 		Cubemap* const cubemap = new Cubemap();
 
 		cubemap->Create(_init, _raw);
+
+		SA_LOG(L"Cubemap created.", Infos, SA/Render/Vulkan);
 
 		return cubemap;
 	}
@@ -200,6 +235,8 @@ namespace Sa::Vk
 		_cubemap->Destroy(_device);
 
 		delete _cubemap;
+
+		SA_LOG(L"Cubemap destroyed.", Infos, SA/Render/Vulkan);
 	}
 
 
@@ -208,6 +245,8 @@ namespace Sa::Vk
 		Material* const mat = new Material();
 
 		mat->Create(_device, _infos);
+
+		SA_LOG(L"Render Material created.", Infos, SA/Render/Vulkan);
 
 		return mat;
 	}
@@ -219,6 +258,8 @@ namespace Sa::Vk
 		_material->Destroy(_device);
 
 		delete _material;
+
+		SA_LOG(L"Render Material destroyed.", Infos, SA/Render/Vulkan);
 	}
 
 
@@ -227,6 +268,8 @@ namespace Sa::Vk
 		Camera* const camera = new Camera();
 
 		camera->Create(_device);
+
+		SA_LOG(L"Camera created.", Infos, SA/Render/Vulkan);
 
 		return camera;
 	}
@@ -238,6 +281,8 @@ namespace Sa::Vk
 		_camera->Destroy(_device);
 
 		delete _camera;
+
+		SA_LOG(L"Camera destroyed.", Infos, SA/Render/Vulkan);
 	}
 
 //}

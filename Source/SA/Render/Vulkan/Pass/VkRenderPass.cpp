@@ -210,8 +210,6 @@ namespace Sa::Vk
 		renderPassCreateInfo.pDependencies = subpassDependencies.data();
 
 		SA_VK_ASSERT(vkCreateRenderPass(vkDevice, &renderPassCreateInfo, nullptr, &mHandle), L"Failed to create render pass!");
-
-		SA_LOG(L"Render pass created.", Infos, SA/Render/Vulkan);
 	}
 	
 	void RenderPass::Destroy(const ARenderDevice* _device)
@@ -221,8 +219,6 @@ namespace Sa::Vk
 		const Device& vkDevice = _device->As<Device>();
 
 		vkDestroyRenderPass(vkDevice, mHandle, nullptr);
-
-		SA_LOG(L"Render pass destroyed.", Infos, SA/Render/Vulkan);
 	}
 
 

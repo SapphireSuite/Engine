@@ -231,7 +231,7 @@ namespace Sa::Vk
 
 	void Pipeline::DestroyPipelineHandle(const Device& _device)
 	{
-		SA_ASSERT(Nullptr, SA / Render / Vulkan, mHandle, L"Destroy null Pipeline!");
+		SA_ASSERT(Nullptr, SA/Render/Vulkan, mHandle, L"Destroy null Pipeline!");
 
 		vkDestroyPipeline(_device, mHandle, nullptr);
 		mHandle = VK_NULL_HANDLE;
