@@ -218,6 +218,25 @@ namespace Sa::Vk
 		delete _material;
 	}
 
+
+	ARenderCamera* RenderSystem::CreateCamera(const ARenderDevice* _device)
+	{
+		Camera* const camera = new Camera();
+
+		camera->Create(_device);
+
+		return camera;
+	}
+
+	void RenderSystem::DestroyCamera(const ARenderDevice* _device, ARenderCamera* _camera)
+	{
+		SA_ASSERT(Nullptr, SA/Render/Vulkan, _camera);
+
+		_camera->Destroy(_device);
+
+		delete _camera;
+	}
+
 //}
 
 

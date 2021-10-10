@@ -53,26 +53,16 @@ ATexture* missText = nullptr;
 AStaticMesh* cubeMesh = nullptr;
 ARenderMaterial* cubeMat = nullptr;
 
+TransffPR camTr;
+ARenderCamera* camera = nullptr;
+
 //Vk::CommandPool cmdPool;
 //std::vector<Vk::CommandBuffer> cmdBuffers;
 //uint32 imageIndex = 0u;
 //
-//Vk::DescriptorSet cubeDescSet;
-//Vk::Buffer camUBO;
 //Vk::Buffer modelUBO;
 
 const Vec2ui winDim{ 1200u, 800u };
-
-
-struct camUBOData
-{
-	CMat4f proj = Mat4f::Identity;
-	CMat4f viewInv = Mat4f::Identity;
-	Vec3f viewPosition;
-};
-
-TransffPR camTr;
-camUBOData camUBOd;
 
 struct modelUBOData
 {
@@ -186,17 +176,6 @@ int main()
 		//		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
 		//		VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
 		//		&modelUBOd);
-
-
-		//	camTr.position = Vec3f(0.0f, 0.0f, 5.0f);
-		//	camUBOd.proj = Mat4f::MakePerspective(90.0f, 1200.0f / 800.0f);
-		//	camUBOd.viewInv = camTr.Matrix().GetInversed();
-		//	camUBOd.viewPosition = camTr.position;
-		//	camUBO.Create(device, sizeof(camUBOData),
-		//		VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
-		//		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
-		//		VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
-		//		&camUBOd);
 		//}
 
 
@@ -306,6 +285,17 @@ int main()
 				infos.AddBinding<IBOBinding>(0u, missText);
 				cubeMat = renderSys.CreateMaterial(device, infos);
 			}
+
+
+			// Camera
+			{
+				camera = renderSys.CreateCamera(device);
+				
+				camera->SetProjection(Mat4f::MakePerspective(90.0f, 1200.0f / 800.0f));
+				
+				camTr.position = Vec3f(0.0f, 0.0f, 5.0f);
+				camera->SetTransform(camTr);
+			}
 		}
 	}
 
@@ -325,22 +315,21 @@ int main()
 
 			inputSys.Update();
 
-			//// Update Camera
-			//if(bCamEnabled)
-			//{
-			//	if (rightSign)
-			//		camTr.position += rightSign * deltaTime * camTr.Right();
-			//	if (upSign)
-			//		camTr.position += upSign * deltaTime * camTr.Up();
-			//	if (forwardSign)
-			//		camTr.position += -1 * forwardSign * deltaTime * camTr.Forward();
+			// Update Camera
+			if(bCamEnabled)
+			{
+				if (rightSign)
+					camTr.position += rightSign * deltaTime * camTr.Right();
+				if (upSign)
+					camTr.position += upSign * deltaTime * camTr.Up();
+				if (forwardSign)
+					camTr.position += -1 * forwardSign * deltaTime * camTr.Forward();
 
-			//	camTr.rotation = Quatf(cos(dx), 0, sin(dx), 0) * Quatf(cos(dy), sin(dy), 0, 0);
+				camTr.rotation = Quatf(cos(dx), 0, sin(dx), 0) * Quatf(cos(dy), sin(dy), 0, 0);
 
-			//	camUBOd.viewInv = camTr.Matrix().GetInversed();
-			//	camUBOd.viewPosition = camTr.position;
-			//	camUBO.UpdateData(device, &camUBOd, sizeof(camUBOd));
-			//}
+				camera->SetTransform(camTr);
+				camera->Update(device);
+			}
 
 
 			/*
@@ -382,6 +371,8 @@ int main()
 
 			cubeDescSet.Destroy(device);
 			*/
+
+			renderSys.DestroyCamera(device, camera);
 
 			renderSys.DestroyMaterial(device, cubeMat);
 
