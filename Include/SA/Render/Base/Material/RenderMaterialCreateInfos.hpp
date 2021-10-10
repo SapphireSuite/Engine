@@ -13,7 +13,7 @@
 namespace Sa
 {
 	class ARenderPipeline;
-	class RenderPipelineDescriptor;
+	struct RenderPipelineDescriptor;
 
 	struct RenderMaterialCreateInfos
 	{

@@ -54,7 +54,7 @@ AStaticMesh* cubeMesh = nullptr;
 ARenderMaterial* cubeMat = nullptr;
 
 TransffPR camTr;
-ARenderCamera* camera = nullptr;
+ACamera* camera = nullptr;
 
 //Vk::CommandPool cmdPool;
 //std::vector<Vk::CommandBuffer> cmdBuffers;

@@ -40,7 +40,7 @@ namespace Sa
 	class ARenderMaterial;
 	struct RenderMaterialCreateInfos;
 
-	class ARenderCamera;
+	class ACamera;
 
 
 	class ARenderSystem : public Abstract
@@ -82,8 +82,8 @@ namespace Sa
 		virtual ARenderMaterial* CreateMaterial(const ARenderDevice* _device, const RenderMaterialCreateInfos& _infos) = 0;
 		virtual void DestroyMaterial(const ARenderDevice* _device, ARenderMaterial* _material) = 0;
 
-		virtual ARenderCamera* CreateCamera(const ARenderDevice* _device);
-		virtual void DestroyCamera(const ARenderDevice* _device, ARenderCamera* _camera);
+		virtual ACamera* CreateCamera(const ARenderDevice* _device);
+		virtual void DestroyCamera(const ARenderDevice* _device, ACamera* _camera);
 
 //}
 	};

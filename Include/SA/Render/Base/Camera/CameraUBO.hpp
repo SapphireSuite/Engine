@@ -10,7 +10,7 @@
 
 namespace Sa
 {
-	struct RenderCameraUBO
+	struct CameraUBO
 	{
 		CMat4f proj = Mat4f::Identity;
 		CMat4f viewInv = Mat4f::Identity;

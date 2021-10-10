@@ -12,7 +12,7 @@ namespace Sa::Vk
 	{
 		//const Device& vkDevice = _device->As<Device>();
 
-		mCameraUBO.Create(_device, RenderBufferType::Uniform, sizeof(RenderCameraUBO), &mUBOData);
+		mCameraUBO.Create(_device, RenderBufferType::Uniform, sizeof(CameraUBO), &mUBOData);
 
 		SA_LOG(L"Camera created", Infos, SA/Render/Vulkan);
 	}
@@ -42,7 +42,7 @@ namespace Sa::Vk
 			if (bTransformDirty)
 			{
 				// Update whole buffer.
-				mCameraUBO.UpdateData(_device, &mUBOData, sizeof(RenderCameraUBO));
+				mCameraUBO.UpdateData(_device, &mUBOData, sizeof(CameraUBO));
 			}
 			else
 			{

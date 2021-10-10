@@ -66,8 +66,8 @@ namespace Sa::Vk
 		ARenderMaterial* CreateMaterial(const ARenderDevice* _device, const RenderMaterialCreateInfos& _infos) override final;
 		void DestroyMaterial(const ARenderDevice* _device, ARenderMaterial* _material) override final;
 
-		ARenderCamera* CreateCamera(const ARenderDevice* _device) override final;
-		void DestroyCamera(const ARenderDevice* _device, ARenderCamera* _camera) override final;
+		ACamera* CreateCamera(const ARenderDevice* _device) override final;
+		void DestroyCamera(const ARenderDevice* _device, ACamera* _camera) override final;
 
 //}
 

@@ -219,7 +219,7 @@ namespace Sa::Vk
 	}
 
 
-	ARenderCamera* RenderSystem::CreateCamera(const ARenderDevice* _device)
+	ACamera* RenderSystem::CreateCamera(const ARenderDevice* _device)
 	{
 		Camera* const camera = new Camera();
 
@@ -228,7 +228,7 @@ namespace Sa::Vk
 		return camera;
 	}
 
-	void RenderSystem::DestroyCamera(const ARenderDevice* _device, ARenderCamera* _camera)
+	void RenderSystem::DestroyCamera(const ARenderDevice* _device, ACamera* _camera)
 	{
 		SA_ASSERT(Nullptr, SA/Render/Vulkan, _camera);
 

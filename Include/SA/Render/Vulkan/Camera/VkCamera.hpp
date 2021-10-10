@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_RENDER_VK_CAMERA_GUARD
 #define SAPPHIRE_RENDER_VK_CAMERA_GUARD
 
-#include <SA/Render/Base/Camera/ARenderCamera.hpp>
+#include <SA/Render/Base/Camera/ACamera.hpp>
 
 #include <SA/Render/Vulkan/Buffers/VkBuffer.hpp>
 
@@ -15,7 +15,7 @@ namespace Sa::Vk
 {
 	class Device;
 
-	class Camera : public ARenderCamera
+	class Camera : public ACamera
 	{
 		Buffer mCameraUBO;
 

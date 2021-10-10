@@ -2,22 +2,22 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_RENDER_ARENDER_CAMERA_GUARD
-#define SAPPHIRE_RENDER_ARENDER_CAMERA_GUARD
+#ifndef SAPPHIRE_RENDER_ACAMERA_GUARD
+#define SAPPHIRE_RENDER_ACAMERA_GUARD
 
 #include <SA/Core/Types/Abstract.hpp>
 
 #include <SA/Maths/Transform/Transform.hpp>
-#include <SA/Render/Base/Camera/RenderCameraUBO.hpp>
+#include <SA/Render/Base/Camera/CameraUBO.hpp>
 
 namespace Sa
 {
 	class ARenderDevice;
 
-	class ARenderCamera : public Abstract
+	class ACamera : public Abstract
 	{
 	protected:
-		RenderCameraUBO mUBOData;
+		CameraUBO mUBOData;
 
 		bool bProjDirty = false;
 		bool bTransformDirty = false;

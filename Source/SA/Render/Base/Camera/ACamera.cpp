@@ -1,22 +1,22 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Render/Base/Camera/ARenderCamera.hpp>
+#include <Render/Base/Camera/ACamera.hpp>
 
 namespace Sa
 {
-	const CMat4f& ARenderCamera::GetProjection() const noexcept
+	const CMat4f& ACamera::GetProjection() const noexcept
 	{
 		return mUBOData.proj;
 	}
 
-	void ARenderCamera::SetProjection(const CMat4f& _proj) noexcept
+	void ACamera::SetProjection(const CMat4f& _proj) noexcept
 	{
 		bProjDirty = true;
 		mUBOData.proj = _proj;
 	}
 
 
-	void ARenderCamera::SetTransform(const TransffPR& _tr)
+	void ACamera::SetTransform(const TransffPR& _tr)
 	{
 		bTransformDirty = true;
 
