@@ -35,8 +35,8 @@ namespace Sa::Vk
 		ARenderDevice* CreateDevice(const AGraphicDeviceInfos& _infos) override final;
 		void DestroyDevice(ARenderDevice* _device) override final;
 
-		ARenderSurface* MakeWindowSurface(AWindow& _win) override final;
-		void DestroyWindowSurface(AWindow& _win, const ARenderDevice* _device, ARenderSurface* _surface) override final;
+		ARenderSurface* MakeWindowSurface(AWindow* _win) override final;
+		void DestroyWindowSurface(AWindow* _win, const ARenderDevice* _device, ARenderSurface* _surface) override final;
 
 		ARenderPass* CreateRenderPass(const ARenderDevice* _device, const RenderPassDescriptor& _descriptor) override final;
 		void DestroyRenderPass(const ARenderDevice* _device, ARenderPass* _pass) override final;

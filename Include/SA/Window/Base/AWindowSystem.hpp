@@ -9,11 +9,17 @@
 
 namespace Sa
 {
+	class AWindow;
+	struct WindowCreateInfos;
+
 	class AWindowSystem : public Abstract
 	{
 	public:
 		virtual void Create() = 0;
 		virtual void Destroy() = 0;
+
+		virtual AWindow* CreateWindow(const WindowCreateInfos& _infos) = 0;
+		virtual void DestroyWindow(AWindow* _window) = 0;
 
 		virtual bool QueryRequiredExtensions(std::vector<const char*>& _extensions) const;
 	};

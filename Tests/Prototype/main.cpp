@@ -35,7 +35,7 @@ using namespace Sa;
 //#include <SA/Render/Base/Shader/Bindings/ShaderIBOBinding.hpp>
 
 GLFW::WindowSystem winSys;
-GLFW::Window win;
+AWindow* win = nullptr;
 
 GLFW::InputSystem inputSys;
 
@@ -93,10 +93,10 @@ int main()
 		{
 			winSys.Create();
 
-			GLFW::Window::CreateInfos infos;
+			WindowCreateInfos infos;
 			infos.dimension = winDim;
 
-			win.Create(infos);
+			win = winSys.CreateWindow(infos);
 		}
 
 
@@ -104,10 +104,10 @@ int main()
 		{
 			inputSys.Create();
 
-			AInputWindowContext* const inWinContext = inputSys.Register(&win);
+			AInputWindowContext* const inWinContext = inputSys.Register(win);
 			InputContext* const inputContext = inWinContext->CreateContext();
 
-			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::Esc, KeyState::Pressed }, &win, &GLFW::Window::Close);
+			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::Esc, KeyState::Pressed }, win, &AWindow::Close);
 
 			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::D, KeyState::Pressed }, []() { rightSign = 1; });
 			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::D, KeyState::Released }, [](){ if(rightSign == 1) rightSign = 0; });
@@ -126,11 +126,11 @@ int main()
 
 			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::MouseRight, KeyState::Pressed }, []() {
 				bCamEnabled = true;
-				win.SetCursorMode(CursorMode::Capture | CursorMode::Hidden);
+				win->SetCursorMode(CursorMode::Capture | CursorMode::Hidden);
 			});
 			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::MouseRight, KeyState::Released }, []() {
 				bCamEnabled = false;
-				win.SetCursorMode(CursorMode::None);
+				win->SetCursorMode(CursorMode::None);
 			});
 
 			inputContext->axis.Bind<InputAxisRange>(Axis::MouseX, [](float _inX) {
@@ -306,7 +306,7 @@ int main()
 
 	#if !SA_CI
 
-		while (!win.ShouldClose())
+		while (!win->ShouldClose())
 
 	#endif
 		{
@@ -405,7 +405,7 @@ int main()
 
 		// Window
 		{
-			win.Destroy();
+			winSys.DestroyWindow(win);
 			winSys.Destroy();
 		}
 	}

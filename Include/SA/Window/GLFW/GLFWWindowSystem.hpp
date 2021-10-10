@@ -9,6 +9,8 @@
 
 #include <SA/Window/Base/AWindowSystem.hpp>
 
+#include <SA/Window/GLFW/GLFWWindow.hpp>
+
 #if SA_GLFW
 
 namespace Sa::GLFW
@@ -18,6 +20,9 @@ namespace Sa::GLFW
 	public:
 		void Create() override final;
 		void Destroy() override final;
+
+		AWindow* CreateWindow(const WindowCreateInfos& _infos) override final;
+		void DestroyWindow(AWindow* _window) override final;
 
 		bool QueryRequiredExtensions(std::vector<const char*>& _extensions) const override final;
 	};

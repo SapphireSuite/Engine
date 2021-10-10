@@ -54,7 +54,7 @@ namespace Sa
 	}
 
 
-	void AWindow::Create(const CreateInfos& _infos)
+	void AWindow::Create(const WindowCreateInfos& _infos)
 	{
 		mSize = _infos.dimension;
 

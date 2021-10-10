@@ -85,7 +85,7 @@ namespace Sa::GLFW
 			glfwSetInputMode(mHandle, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 	}
 
-	void Window::Create(const CreateInfos& _infos)
+	void Window::Create(const WindowCreateInfos& _infos)
 	{
 		AWindow::Create(_infos);
 

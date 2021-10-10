@@ -10,10 +10,7 @@
 
 #include <SA/Core/Support/API/Vulkan.hpp>
 
-#include <SA/Maths/Space/Vector2.hpp>
-
-#include <SA/Window/Base/WindowMode.hpp>
-#include <SA/Window/Base/CursorMode.hpp>
+#include <SA/Window/Base/WindowCreateInfos.hpp>
 
 /**
 *	\file AWindow.hpp
@@ -50,7 +47,6 @@ namespace Sa
 		WindowMode mMode = WindowMode::Windowed;
 
 	protected:
-
 		/**
 		*	\brief Set Minimized state.
 		*	Call onMinimized event.
@@ -77,24 +73,6 @@ namespace Sa
 		void SetSize(const Vec2ui& _size);
 
 	public:
-		/// Create infos struct
-		struct CreateInfos
-		{
-			/// Window size.
-			Vec2ui dimension = Vec2ui{ 1200u, 800u };
-
-			/// Window position on screen.
-			Vec2ui position;
-
-			/// Window mode.
-			WindowMode mode = WindowMode::Windowed;
-
-			Flags<CursorMode> cursorFlags;
-
-			/// Window name.
-			std::string name = "Main Window";
-		};
-
 		/// Minimized callback event.
 		Event<void(bool)> onMinimized;
 
@@ -157,7 +135,7 @@ namespace Sa
 		* 
 		*	\param[in] _infos	Creation arguments.
 		*/
-		virtual void Create(const CreateInfos& _infos);
+		virtual void Create(const WindowCreateInfos& _infos);
 
 		/**
 		*	\brief Destroy this window.

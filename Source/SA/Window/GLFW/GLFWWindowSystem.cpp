@@ -30,6 +30,23 @@ namespace Sa::GLFW
 	}
 
 
+	AWindow* WindowSystem::CreateWindow(const WindowCreateInfos& _infos)
+	{
+		Window* window = new Window();
+
+		window->Create(_infos);
+
+		return window;
+	}
+
+	void WindowSystem::DestroyWindow(AWindow* _window)
+	{
+		_window->Destroy();
+
+		delete _window;
+	}
+
+
 	bool WindowSystem::QueryRequiredExtensions(std::vector<const char*>& _extensions) const
 	{
 		// Query extensions.
