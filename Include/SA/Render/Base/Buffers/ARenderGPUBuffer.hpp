@@ -16,12 +16,13 @@ namespace Sa
 	class ARenderGPUBuffer : public ARenderBufferBase
 	{
 	public:
-		virtual void Create(ARenderResourceInitializer& _init,
+		virtual void Create(const ARenderDevice* _device,
+			ARenderResourceInitializer& _init,
 			RenderBufferType _type,
 			uint64 _size,
 			const void* _data) = 0;
 
-		virtual void UpdateData(ARenderResourceInitializer& _init, const void* _data, uint64 _size, uint64 _offset = 0) = 0;
+		virtual void UpdateData(const ARenderDevice* _device, ARenderResourceInitializer& _init, const void* _data, uint64 _size, uint64 _offset = 0) = 0;
 	};
 }
 

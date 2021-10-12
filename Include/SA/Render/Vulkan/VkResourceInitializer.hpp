@@ -22,15 +22,13 @@ namespace Sa::Vk
 		CommandPool mCmdPool;
 
 	public:
-		const Device* device = nullptr;
-
 		CommandBuffer cmd;
 		ResourceHolder resHolder;
 
-		void Create(const ARenderDevice* _device) override final;
-		void Destroy() override final;
+		void Create(const Device& _device);
+		void Destroy(const Device& _device);
 
-		void Submit() override final;
+		void Submit(const Device& _device);
 	};
 }
 

@@ -8,23 +8,20 @@
 
 namespace Sa::Vk
 {
-	void ResourceInitializer::Create(const ARenderDevice* _device)
+	void ResourceInitializer::Create(const Device& _device)
 	{
-		device = _device->AsPtr<Device>();
-
 		// TODO: Clean queue.
-		mCmdPool.Create(*device, device->queueMgr.transfer.GetQueue(0).GetFamilyIndex());
+		mCmdPool.Create(_device, _device.queueMgr.transfer.GetQueue(0).GetFamilyIndex());
 
-		cmd = mCmdPool.Allocate(*device);
+		cmd = mCmdPool.Allocate(_device);
 		cmd.Begin();
 		
 		SA_LOG(L"Render Resource Initializer created.", Infos, SA/Render/Vulkan);
 	}
 
-	void ResourceInitializer::Destroy()
+	void ResourceInitializer::Destroy(const Device& _device)
 	{
-		mCmdPool.Destroy(*device);
-		device = nullptr;
+		mCmdPool.Destroy(_device);
 
 		resHolder.FreeAll();
 		
@@ -32,7 +29,7 @@ namespace Sa::Vk
 	}
 
 
-	void ResourceInitializer::Submit()
+	void ResourceInitializer::Submit(const Device& _device)
 	{
 		cmd.End();
 
@@ -51,8 +48,8 @@ namespace Sa::Vk
 		submitInfo.pSignalSemaphores = nullptr;
 
 		// TODO: Clean queue.
-		vkQueueSubmit(device->queueMgr.transfer.GetQueue(0), 1, &submitInfo, VK_NULL_HANDLE);
-		vkQueueWaitIdle(device->queueMgr.transfer.GetQueue(0));
+		vkQueueSubmit(_device.queueMgr.transfer.GetQueue(0), 1, &submitInfo, VK_NULL_HANDLE);
+		vkQueueWaitIdle(_device.queueMgr.transfer.GetQueue(0));
 
 		resHolder.FreeAll();
 

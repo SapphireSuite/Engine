@@ -23,63 +23,50 @@ namespace Sa::Vk
 		return mSwapChain.GetFormat();
 	}
 
-	void Surface::Create(const ARenderDevice* _device)
+	void Surface::Create(const Device& _device)
 	{
-		const Device& vkDevice = _device->As<Device>();
-
 		SA_ASSERT(Nullptr, SA/Render/Vulkan, mHandle,
 			L"Handle is nullptr. VkSurfaceKHR must be created first: use window.CreateVkSurface()");
 
-		mSwapChain.Create(vkDevice, *this);
+		mSwapChain.Create(_device, *this);
 
 		SA_LOG(L"Render Surface created.", Infos, SA/Render/Vulkan);
 	}
 	
-	void Surface::Destroy(const ARenderDevice* _device)
+	void Surface::Destroy(const Device& _device)
 	{
-		const Device& vkDevice = _device->As<Device>();
-
 		SA_ASSERT(Nullptr, SA/Render/Vulkan, mHandle,
 			L"Handle is nullptr. VkSurfaceKHR must be created first: use window.CreateVkSurface()");
 
-		mSwapChain.Destroy(vkDevice);
+		mSwapChain.Destroy(_device);
 		
 		SA_LOG(L"Render Surface destroyed.", Infos, SA/Render/Vulkan);
 	}
 
 
-	void Surface::CreateFrameBuffers(const ARenderDevice* _device, const ARenderPass* _renderPass, const RenderPassDescriptor& _renderPassDesc)
+	void Surface::CreateFrameBuffers(const Device& _device, const RenderPass& _renderPass, const RenderPassDescriptor& _renderPassDesc)
 	{
-		const Device& vkDevice = _device->As<Device>();
-		const RenderPass& vkRenderPass = _renderPass->As<RenderPass>();
-
-		mSwapChain.CreateFrameBuffers(vkDevice, vkRenderPass, _renderPassDesc);
+		mSwapChain.CreateFrameBuffers(_device, _renderPass, _renderPassDesc);
 
 		SA_LOG(L"Render Surface FrameBuffers created.", Infos, SA/Render/Vulkan);
 	}
 
-	void Surface::DestroyFrameBuffers(const ARenderDevice* _device)
+	void Surface::DestroyFrameBuffers(const Device& _device)
 	{
-		const Device& vkDevice = _device->As<Device>();
-
-		mSwapChain.DestroyFrameBuffers(vkDevice);
+		mSwapChain.DestroyFrameBuffers(_device);
 
 		SA_LOG(L"Render Surface FrameBuffers destroyed.", Infos, SA/Render/Vulkan);
 	}
 
 
-	FrameBuffer& Surface::Begin(const ARenderDevice& _device)
+	FrameBuffer& Surface::Begin(const Device& _device)
 	{
-		const Device& vkDevice = _device.As<Device>();
-
-		return mSwapChain.Begin(vkDevice);
+		return mSwapChain.Begin(_device);
 	}
 
-	void Surface::End(const ARenderDevice& _device, const std::vector<CommandBuffer>& _cmdBuffers)
+	void Surface::End(const Device& _device, const std::vector<CommandBuffer>& _cmdBuffers)
 	{
-		const Device& vkDevice = _device.As<Device>();
-
-		mSwapChain.End(vkDevice, _cmdBuffers);
+		mSwapChain.End(_device, _cmdBuffers);
 	}
 
 

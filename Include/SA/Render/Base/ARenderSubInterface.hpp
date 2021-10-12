@@ -40,6 +40,7 @@ namespace Sa
 
 		virtual ARenderResourceInitializer* CreateResourceInitializer() = 0;
 		virtual void DestroyResourceInitializer(ARenderResourceInitializer* _init) = 0;
+		virtual void SubmitResourceInitializer(ARenderResourceInitializer* _init) = 0;
 
 		virtual AShader* CreateShader(ARenderResourceInitializer* _init, const RawShader& _raw) = 0;
 		virtual void DestroyShader(AShader* _shader) = 0;

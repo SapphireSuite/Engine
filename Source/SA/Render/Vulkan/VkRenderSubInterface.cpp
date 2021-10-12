@@ -2,6 +2,7 @@
 
 #include <Render/Vulkan/VkRenderSubInterface.hpp>
 
+#include <SA/Render/Vulkan/Surface/VkSurface.hpp>
 #include <SA/Render/Vulkan/Pass/VkRenderPass.hpp>
 #include <SA/Render/Vulkan/Pipeline/VkPipeline.hpp>
 #include <SA/Render/Vulkan/VkResourceInitializer.hpp>
@@ -31,12 +32,12 @@ namespace Sa::Vk
 	
 	void RenderSubInterface::CreateSurface(ARenderSurface* _surface)
 	{
-		_surface->Create(&mDevice);
+		_surface->As<Surface>().Create(mDevice);
 	}
 
 	void RenderSubInterface::DestroySurface(ARenderSurface* _surface)
 	{
-		_surface->Destroy(&mDevice);
+		_surface->As<Surface>().Destroy(mDevice);
 	}
 
 
@@ -44,16 +45,18 @@ namespace Sa::Vk
 	{
 		RenderPass* const pass = new RenderPass();
 
-		pass->Create(&mDevice, _descriptor);
+		pass->Create(mDevice, _descriptor);
 
 		return pass;
 	}
 	
 	void RenderSubInterface::DestroyRenderPass(ARenderPass* _pass)
 	{
-		_pass->Destroy(&mDevice);
+		RenderPass* const vkPass = _pass->AsPtr<RenderPass>();
 
-		delete _pass;
+		vkPass->Destroy(mDevice);
+
+		delete vkPass;
 	}
 
 
@@ -61,18 +64,18 @@ namespace Sa::Vk
 	{
 		Pipeline* const pipeline = new Pipeline();
 
-		pipeline->Create(&mDevice, _desc);
+		pipeline->Create(mDevice, _desc);
 
 		return pipeline;
 	}
 
 	void RenderSubInterface::DestroyPipeline(ARenderPipeline* _pipeline)
 	{
-		SA_ASSERT(Nullptr, SA/Render/Vulkan, _pipeline);
+		Pipeline* const vkPipeline = _pipeline->AsPtr<Pipeline>();
 
-		_pipeline->Destroy(&mDevice);
+		vkPipeline->Destroy(mDevice);
 
-		delete _pipeline;
+		delete vkPipeline;
 	}
 
 
@@ -82,17 +85,25 @@ namespace Sa::Vk
 	{
 		ResourceInitializer* const init = new ResourceInitializer();
 
-		init->Create(&mDevice);
+		init->Create(mDevice);
 
 		return init;
 	}
 
 	void RenderSubInterface::DestroyResourceInitializer(ARenderResourceInitializer* _init)
 	{
+		ResourceInitializer* const vkInit = _init->AsPtr<ResourceInitializer>();
+
+		vkInit->Destroy(mDevice);
+
+		delete vkInit;
+	}
+
+	void RenderSubInterface::SubmitResourceInitializer(ARenderResourceInitializer* _init)
+	{
 		SA_ASSERT(Nullptr, SA/Render/Vulkan, _init);
 
-		_init->Destroy();
-		delete _init;
+		_init->As<ResourceInitializer>().Submit(mDevice);
 	}
 
 
@@ -100,18 +111,18 @@ namespace Sa::Vk
 	{
 		Shader* const shader = new Shader();
 
-		shader->Create(_init, _raw);
+		shader->Create(mDevice, _init->As<ResourceInitializer>(), _raw);
 
 		return shader;
 	}
 
 	void RenderSubInterface::DestroyShader(AShader* _shader)
 	{
-		SA_ASSERT(Nullptr, SA/Render/Vulkan, _shader);
+		Shader* const vkShader = _shader->AsPtr<Shader>();
 
-		_shader->Destroy(&mDevice);
+		vkShader->Destroy(mDevice);
 
-		delete _shader;
+		delete vkShader;
 	}
 
 	
@@ -119,18 +130,18 @@ namespace Sa::Vk
 	{
 		StaticMesh* const mesh = new StaticMesh();
 
-		mesh->Create(_init, _raw);
+		mesh->Create(mDevice, _init->As<ResourceInitializer>(), _raw);
 
 		return mesh;
 	}
 	
 	void RenderSubInterface::DestroyStaticMesh(AStaticMesh* _mesh)
 	{
-		SA_ASSERT(Nullptr, SA/Render/Vulkan, _mesh);
+		StaticMesh* const vkMesh = _mesh->AsPtr<StaticMesh>();
 
-		_mesh->Destroy(&mDevice);
+		vkMesh->Destroy(mDevice);
 
-		delete _mesh;
+		delete vkMesh;
 	}
 
 	
@@ -138,18 +149,18 @@ namespace Sa::Vk
 	{
 		Texture* const texture = new Texture();
 
-		texture->Create(_init, _raw);
+		texture->Create(mDevice, _init->As<ResourceInitializer>(), _raw);
 
 		return texture;
 	}
 	
 	void RenderSubInterface::DestroyTexture(ATexture* _texture)
 	{
-		SA_ASSERT(Nullptr, SA/Render/Vulkan, _texture);
+		Texture* const vkTexture = _texture->AsPtr<Texture>();
 
-		_texture->Destroy(&mDevice);
+		vkTexture->Destroy(mDevice);
 
-		delete _texture;
+		delete vkTexture;
 	}
 
 	
@@ -157,38 +168,37 @@ namespace Sa::Vk
 	{
 		Cubemap* const cubemap = new Cubemap();
 
-		cubemap->Create(_init, _raw);
+		cubemap->Create(mDevice, _init->As<ResourceInitializer>(), _raw);
 
 		return cubemap;
 	}
 	
 	void RenderSubInterface::DestroyCubemap(ACubemap* _cubemap)
 	{
-		SA_ASSERT(Nullptr, SA/Render/Vulkan, _cubemap);
+		Cubemap* const vkCubemap = _cubemap->AsPtr<Cubemap>();
 
-		_cubemap->Destroy(&mDevice);
+		vkCubemap->Destroy(mDevice);
 
-		delete _cubemap;
+		delete vkCubemap;
 	}
-
 
 	
 	ARenderMaterial* RenderSubInterface::CreateMaterial(const RenderMaterialCreateInfos& _infos)
 	{
 		Material* const mat = new Material();
 
-		mat->Create(&mDevice, _infos);
+		mat->Create(mDevice, _infos);
 
 		return mat;
 	}
 	
 	void RenderSubInterface::DestroyMaterial(ARenderMaterial* _material)
 	{
-		SA_ASSERT(Nullptr, SA/Render/Vulkan, _material);
+		Material* const vkMat = _material->AsPtr<Material>();
 
-		_material->Destroy(&mDevice);
+		vkMat->Destroy(mDevice);
 
-		delete _material;
+		delete vkMat;
 	}
 
 	
@@ -196,18 +206,18 @@ namespace Sa::Vk
 	{
 		Camera* const camera = new Camera();
 
-		camera->Create(&mDevice);
+		camera->Create(mDevice);
 
 		return camera;
 	}
 	
 	void RenderSubInterface::DestroyCamera(ACamera* _camera)
 	{
-		SA_ASSERT(Nullptr, SA/Render/Vulkan, _camera);
+		Camera* const vkCamera = _camera->AsPtr<Camera>();
 
-		_camera->Destroy(&mDevice);
+		vkCamera->Destroy(mDevice);
 
-		delete _camera;
+		delete vkCamera;
 	}
 
 //}

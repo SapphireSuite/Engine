@@ -33,6 +33,7 @@ namespace Sa::Vk
 	
 		ARenderResourceInitializer* CreateResourceInitializer() override final;
 		void DestroyResourceInitializer(ARenderResourceInitializer* _init) override final;
+		void SubmitResourceInitializer(ARenderResourceInitializer* _init) override final;
 
 		AShader* CreateShader(ARenderResourceInitializer* _init, const RawShader& _raw) override final;
 		void DestroyShader(AShader* _shader) override final;

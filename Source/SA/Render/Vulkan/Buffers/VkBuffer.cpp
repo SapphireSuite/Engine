@@ -59,11 +59,11 @@ namespace Sa::Vk
 	}
 
 
-	Buffer& Buffer::CreateStaging(ResourceInitializer& _init, const void* _data, uint64 _size)
+	Buffer& Buffer::CreateStaging(const Device* _device, ResourceInitializer& _init, const void* _data, uint64 _size)
 	{
-		Buffer& stagingBuffer = _init.resHolder.Make<Buffer>(Buffer::Deleter(_init.device));
+		Buffer& stagingBuffer = _init.resHolder.Make<Buffer>(Buffer::Deleter(_device));
 
-		stagingBuffer.Create(_init.device,
+		stagingBuffer.Create(_device,
 			RenderBufferType::TransferSRC,
 			_size,
 			_data

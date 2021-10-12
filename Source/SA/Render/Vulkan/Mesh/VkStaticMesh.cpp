@@ -12,14 +12,13 @@
 
 namespace Sa::Vk
 {
-	void StaticMesh::Create(ARenderResourceInitializer* _init, const RawMesh& _raw)
+	void StaticMesh::Create(const Device& _device, ResourceInitializer& _init, const RawMesh& _raw)
 	{
-		AStaticMesh::Create(_init, _raw);
-
-		ResourceInitializer& vkInit = _init->As<ResourceInitializer>();
+		mLayout = _raw.GetLayout();
 
 		// Create Vertex buffer.
-		mVertexBuffer.Create(vkInit,
+		mVertexBuffer.Create(_device,
+			_init,
 			RenderBufferType::Vertex,
 			SizeOf(_raw.vertices),
 			_raw.vertices.data());
@@ -27,7 +26,8 @@ namespace Sa::Vk
 
 		// Create Index buffer.
 		mIndicesSize = SizeOf<uint32>(_raw.indices);
-		mIndexBuffer.Create(vkInit,
+		mIndexBuffer.Create(_device,
+			_init,
 			RenderBufferType::Index,
 			sizeof(uint32) * mIndicesSize,
 			_raw.indices.data());
@@ -35,7 +35,7 @@ namespace Sa::Vk
 		SA_LOG(L"Mesh created.", Infos, SA/Render/Vulkan);
 	}
 	
-	void StaticMesh::Destroy(const ARenderDevice* _device)
+	void StaticMesh::Destroy(const Device& _device)
 	{
 		mVertexBuffer.Destroy(_device);
 		mIndexBuffer.Destroy(_device);

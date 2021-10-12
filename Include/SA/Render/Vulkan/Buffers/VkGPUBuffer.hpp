@@ -25,7 +25,8 @@ namespace Sa::Vk
 			RenderBufferType _type,
 			uint64 _size) override final;
 
-		void Create(ARenderResourceInitializer& _init,
+		void Create(const ARenderDevice* _device,
+			ARenderResourceInitializer& _init,
 			RenderBufferType _type,
 			uint64 _size,
 			const void* _data) override final;
@@ -33,7 +34,7 @@ namespace Sa::Vk
 		void Destroy(const ARenderDevice* _device) override final;
 
 
-		void UpdateData(ARenderResourceInitializer& _init, const void* _data, uint64 _size, uint64 _offset = 0) override final;
+		void UpdateData(const ARenderDevice* _device, ARenderResourceInitializer& _init, const void* _data, uint64 _size, uint64 _offset = 0) override final;
 
 
 		VkDescriptorBufferInfo CreateDescriptorBufferInfo() const noexcept override final;

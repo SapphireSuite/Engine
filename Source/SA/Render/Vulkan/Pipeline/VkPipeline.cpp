@@ -36,26 +36,22 @@ namespace Sa::Vk
 	}
 
 
-	void Pipeline::Create(const ARenderDevice* _device, const RenderPipelineDescriptor& _desc)
+	void Pipeline::Create(const Device& _device, const RenderPipelineDescriptor& _desc)
 	{
-		const Device& vkDevice = _device->As<Device>();
+		CreateDescriptorSetLayouts(_device, _desc);
 
-		CreateDescriptorSetLayouts(vkDevice, _desc);
-
-		CreatePipelineLayout(vkDevice);
-		CreatePipelineHandle(vkDevice, _desc);
+		CreatePipelineLayout(_device);
+		CreatePipelineHandle(_device, _desc);
 
 		SA_LOG(L"Render Pipeline created.", Infos, SA/Render/Vulkan);
 	}
 
-	void Pipeline::Destroy(const ARenderDevice* _device)
+	void Pipeline::Destroy(const Device& _device)
 	{
-		const Device& vkDevice = _device->As<Device>();
+		DestroyPipelineHandle(_device);
+		DestroyPipelineLayout(_device);
 
-		DestroyPipelineHandle(vkDevice);
-		DestroyPipelineLayout(vkDevice);
-
-		DestroyDescriptorSetLayouts(vkDevice);
+		DestroyDescriptorSetLayouts(_device);
 
 		SA_LOG(L"Render Pipeline destroyed.", Infos, SA/Render/Vulkan);
 	}

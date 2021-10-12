@@ -11,14 +11,8 @@
 
 namespace Sa
 {
-	class ARenderDevice;
-	class ARenderResourceInitializer;
-
 	class AShader : public ARenderResource
 	{
-	public:
-		virtual void Create(ARenderResourceInitializer* _init, const RawShader& _raw) = 0;
-		virtual void Destroy(const ARenderDevice* _device) = 0;
 	};
 }
 

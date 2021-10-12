@@ -13,15 +13,17 @@
 
 namespace Sa::Vk
 {
+	class Device;
+
 	class Material : public ARenderMaterial
 	{
 		DescriptorSet mDescSet;
 
 	public:
-		void Create(const ARenderDevice* _device, const RenderMaterialCreateInfos& _infos) override final;
-		void Destroy(const ARenderDevice* _device) override final;
+		void Create(const Device& _device, const RenderMaterialCreateInfos& _infos);
+		void Destroy(const Device& _device);
 
-		void UpdateBinding(const ARenderDevice* _device, const ARenderMaterialBinding* _bind) override final;
+		void UpdateBinding(const Device& _device, const ARenderMaterialBinding* _bind);
 	};
 }
 

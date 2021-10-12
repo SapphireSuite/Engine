@@ -8,34 +8,28 @@
 
 namespace Sa::Vk
 {
-	void Camera::Create(const ARenderDevice* _device)
+	void Camera::Create(const Device& _device)
 	{
-		//const Device& vkDevice = _device->As<Device>();
-
 		mCameraUBO.Create(_device, RenderBufferType::Uniform, sizeof(CameraUBO), &mUBOData);
 		
 		SA_LOG(L"Camera created.", Infos, SA/Render/Vulkan);
 	}
 
-	void Camera::Destroy(const ARenderDevice* _device)
+	void Camera::Destroy(const Device& _device)
 	{
-		//const Device& vkDevice = _device->As<Device>();
-
 		mCameraUBO.Destroy(_device);
 		
 		SA_LOG(L"Camera destroyed.", Infos, SA/Render/Vulkan);
 	}
 
 
-	void Camera::Update(const ARenderDevice* _device)
+	void Camera::Update(const Device& _device)
 	{
-		//const Device& vkDevice = _device->As<Device>();
-
 		UpdateUBO(_device);
 	}
 
 
-	void Camera::UpdateUBO(const ARenderDevice* _device)
+	void Camera::UpdateUBO(const Device& _device)
 	{
 		if (bProjDirty)
 		{

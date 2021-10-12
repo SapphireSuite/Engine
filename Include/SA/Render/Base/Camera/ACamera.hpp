@@ -12,8 +12,6 @@
 
 namespace Sa
 {
-	class ARenderDevice;
-
 	class ACamera : public Abstract
 	{
 	protected:
@@ -23,12 +21,6 @@ namespace Sa
 		bool bTransformDirty = false;
 
 	public:
-		virtual void Create(const ARenderDevice* _device) = 0;
-		virtual void Destroy(const ARenderDevice* _device) = 0;
-
-		virtual void Update(const ARenderDevice* _device) = 0;
-
-
 		const CMat4f& GetProjection() const noexcept;
 		void SetProjection(const CMat4f& _proj) noexcept;
 

@@ -89,10 +89,8 @@ namespace Sa::Vk
 	}
 
 
-	void RenderPass::Create(const ARenderDevice* _device, const RenderPassDescriptor& _descriptor)
+	void RenderPass::Create(const Device& _device, const RenderPassDescriptor& _descriptor)
 	{
-		const Device& vkDevice = _device->As<Device>();
-
 		// === Subpasses ===
 		uint32 subpassNum = SizeOf<uint32>(_descriptor.subPassDescs);
 
@@ -209,18 +207,16 @@ namespace Sa::Vk
 		renderPassCreateInfo.dependencyCount = SizeOf<uint32>(subpassDependencies);
 		renderPassCreateInfo.pDependencies = subpassDependencies.data();
 
-		SA_VK_ASSERT(vkCreateRenderPass(vkDevice, &renderPassCreateInfo, nullptr, &mHandle), L"Failed to create render pass!");
+		SA_VK_ASSERT(vkCreateRenderPass(_device, &renderPassCreateInfo, nullptr, &mHandle), L"Failed to create render pass!");
 		
 		SA_LOG(L"RenderPass created.", Infos, SA/Render/Vulkan);
 	}
 	
-	void RenderPass::Destroy(const ARenderDevice* _device)
+	void RenderPass::Destroy(const Device& _device)
 	{
 		SA_ASSERT(Default, SA/Render/Vulkan, mHandle != VK_NULL_HANDLE, L"Try to destroyed a null RenderPass!");
 
-		const Device& vkDevice = _device->As<Device>();
-
-		vkDestroyRenderPass(vkDevice, mHandle, nullptr);
+		vkDestroyRenderPass(_device, mHandle, nullptr);
 		
 		SA_LOG(L"RenderPass destroyed.", Infos, SA/Render/Vulkan);
 	}

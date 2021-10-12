@@ -11,15 +11,11 @@
 
 namespace Sa
 {
-	class ARenderDevice;
 	class ARenderFrame;
 
 	class ARenderPipeline : public ARenderResource
 	{
 	public:
-		virtual void Create(const ARenderDevice* _device, const RenderPipelineDescriptor& _desc) = 0;
-		virtual void Destroy(const ARenderDevice* _device) = 0;
-
 		virtual void Bind(const ARenderFrame& _frame) const = 0;
 	};
 }

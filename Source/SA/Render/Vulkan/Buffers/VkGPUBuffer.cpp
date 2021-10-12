@@ -27,14 +27,15 @@ namespace Sa::Vk
 		);
 	}
 
-	void GPUBuffer::Create(ARenderResourceInitializer& _init,
+	void GPUBuffer::Create(const ARenderDevice* _device,
+		ARenderResourceInitializer& _init,
 		RenderBufferType _type,
 		uint64 _size,
 		const void* _data)
 	{
-		Create(_init.As<ResourceInitializer>().device, _type, _size);
+		Create(_device, _type, _size);
 
-		UpdateData(_init, _data, _size);
+		UpdateData(_device, _init, _data, _size);
 	}
 
 	void GPUBuffer::Destroy(const ARenderDevice* _device)
@@ -43,12 +44,12 @@ namespace Sa::Vk
 	}
 
 
-	void GPUBuffer::UpdateData(ARenderResourceInitializer& _init, const void* _data, uint64 _size, uint64 _offset)
+	void GPUBuffer::UpdateData(const ARenderDevice* _device, ARenderResourceInitializer& _init, const void* _data, uint64 _size, uint64 _offset)
 	{
 		ResourceInitializer& vkInit = _init.As<ResourceInitializer>();
 
 		// Create temp staging buffer. Hold buffer until command is submitted and executed.
-		Buffer& stagingBuffer = Buffer::CreateStaging(vkInit, _data, _size);
+		Buffer& stagingBuffer = Buffer::CreateStaging(_device->AsPtr<Device>(), vkInit, _data, _size);
 
 
 		// Add copy command.

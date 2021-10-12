@@ -11,14 +11,9 @@
 
 namespace Sa
 {
-	class ARenderDevice;
-	class ARenderResourceInitializer;
-
 	class ACubemap : public ARenderResource
 	{
 	public:
-		virtual void Create(ARenderResourceInitializer* _init, const RawCubemap& _raw) = 0;
-		virtual void Destroy(const ARenderDevice* _device) = 0;
 	};
 }
 

@@ -12,11 +12,9 @@
 
 namespace Sa::Vk
 {
-	void Texture::Create(ARenderResourceInitializer* _init, const RawTexture& _raw)
+	void Texture::Create(const Device& _device, ResourceInitializer& _init, const RawTexture& _raw)
 	{
-		ResourceInitializer& vkInit = _init->As<ResourceInitializer>();
-
-		Buffer& stagingBuffer = Buffer::CreateStaging(vkInit, _raw.data.data(), _raw.GetTotalSize());
+		Buffer& stagingBuffer = Buffer::CreateStaging(_device, _init, _raw.data.data(), _raw.GetTotalSize());
 
 		ImageBufferCreateInfos imageBufferCreateInfos;
 
@@ -33,7 +31,7 @@ namespace Sa::Vk
 			imageBufferCreateInfos.usage |= VK_IMAGE_USAGE_TRANSFER_SRC_BIT;
 
 
-		mBuffer.Create(*vkInit.device, imageBufferCreateInfos);
+		mBuffer.Create(_device, imageBufferCreateInfos);
 
 
 		// Undef to Dst Transition
@@ -44,7 +42,7 @@ namespace Sa::Vk
 			infos.mipLevels = _raw.mipLevels;
 			infos.imageType = ImageType::Image2D;
 
-			mBuffer.TransitionImageLayout(vkInit, infos);
+			mBuffer.TransitionImageLayout(_init, infos);
 
 		}
 
@@ -58,7 +56,7 @@ namespace Sa::Vk
 			copyInfos.mipLevels = _raw.mipLevels;
 			copyInfos.imageType = ImageType::Image2D;
 
-			mBuffer.CopyBufferToImage(vkInit, copyInfos);
+			mBuffer.CopyBufferToImage(_init, copyInfos);
 		}
 
 		// Destroy will be called by ResourceHolder.
@@ -73,22 +71,20 @@ namespace Sa::Vk
 			infos.mipLevels = _raw.mipLevels;
 			infos.imageType = ImageType::Image2D;
 
-			mBuffer.TransitionImageLayout(vkInit, infos);
+			mBuffer.TransitionImageLayout(_init, infos);
 		}
 
 
-		mSampler.Create(*vkInit.device, _raw.mipLevels);
+		mSampler.Create(_device, _raw.mipLevels);
 		
 		SA_LOG(L"Texture created.", Infos, SA/Render/Vulkan);
 	}
 
-	void Texture::Destroy(const ARenderDevice* _device)
+	void Texture::Destroy(const Device& _device)
 	{
-		const Device& vkDevice = _device->As<Device>();
+		mSampler.Destroy(_device);
 
-		mSampler.Destroy(vkDevice);
-
-		mBuffer.Destroy(vkDevice);
+		mBuffer.Destroy(_device);
 		
 		SA_LOG(L"Texture destroyed.", Infos, SA/Render/Vulkan);
 	}

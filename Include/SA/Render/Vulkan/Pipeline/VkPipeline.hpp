@@ -53,8 +53,8 @@ namespace Sa::Vk
 		VkPipelineLayout GetLayout() const noexcept;
 		const std::vector<VkDescriptorSetLayout>& GetDescriptorSetLayouts() const noexcept;
 
-		void Create(const ARenderDevice* _device, const RenderPipelineDescriptor& _desc) override final;
-		void Destroy(const ARenderDevice* _device) override final;
+		void Create(const Device& _device, const RenderPipelineDescriptor& _desc);
+		void Destroy(const Device& _device);
 
 		void Bind(const ARenderFrame& _frame) const override final;
 	};

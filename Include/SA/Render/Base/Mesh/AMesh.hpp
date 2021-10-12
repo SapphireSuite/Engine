@@ -13,8 +13,6 @@
 namespace Sa
 {
 	class ARenderFrame;
-	class ARenderDevice;
-	class ARenderResourceInitializer;
 
 	class AMesh : public ARenderResource
 	{
@@ -23,9 +21,6 @@ namespace Sa
 
 	public:
 		std::shared_ptr<VertexLayout> GetLayout() const noexcept;
-
-		virtual void Create(ARenderResourceInitializer* _init, const RawMesh& _raw);
-		virtual void Destroy(const ARenderDevice* _device) = 0;
 
 		virtual void Draw(const ARenderFrame& _frame, const MeshDrawInfos& _infos = MeshDrawInfos()) const = 0;
 	};

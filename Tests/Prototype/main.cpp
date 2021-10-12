@@ -275,8 +275,7 @@ int main()
 			}
 
 
-			resInit->Submit();
-
+			renderSubIntf->SubmitResourceInitializer(resInit);
 			renderSubIntf->DestroyResourceInitializer(resInit);
 
 

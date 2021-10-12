@@ -19,13 +19,13 @@ namespace Sa::Vk
 	{
 		Buffer mCameraUBO;
 
-		void UpdateUBO(const ARenderDevice* _device);
+		void UpdateUBO(const Device& _device);
 
 	public:
-		void Create(const ARenderDevice* _device) override final;
-		void Destroy(const ARenderDevice* _device) override final;
+		void Create(const Device& _device);
+		void Destroy(const Device& _device);
 
-		void Update(const ARenderDevice* _device) override final;
+		void Update(const Device& _device);
 	};
 }
 

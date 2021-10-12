@@ -23,8 +23,8 @@ namespace Sa::Vk
 		TextureSampler mSampler;
 
 	public:
-		void Create(ARenderResourceInitializer* _init, const RawCubemap& _raw) override final;
-		void Destroy(const ARenderDevice* _device) override final;
+		void Create(const Device& _device, ResourceInitializer& _init, const RawCubemap& _raw);
+		void Destroy(const Device& _device);
 
 		VkDescriptorImageInfo CreateDescriptorImageInfo() const noexcept;
 		VkDescriptorImageInfo CreateIrradianceDescriptorImageInfo() const noexcept;

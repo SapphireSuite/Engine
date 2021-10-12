@@ -9,15 +9,8 @@
 
 namespace Sa
 {
-	class ARenderDevice;
-
 	class ARenderResourceInitializer : public Abstract
 	{
-	public:
-		virtual void Create(const ARenderDevice* _device) = 0;
-		virtual void Destroy() = 0;
-
-		virtual void Submit() = 0;
 	};
 }
 

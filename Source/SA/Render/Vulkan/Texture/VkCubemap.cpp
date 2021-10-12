@@ -10,12 +10,9 @@
 
 namespace Sa::Vk
 {
-	void Cubemap::Create(ARenderResourceInitializer* _init, const RawCubemap& _raw)
+	void Cubemap::Create(const Device& _device, ResourceInitializer& _init, const RawCubemap& _raw)
 	{
-		ResourceInitializer& vkInit = _init->As<ResourceInitializer>();
-
-
-		Buffer& stagingBuffer = Buffer::CreateStaging(vkInit, _raw.data.data(), _raw.GetTotalMapSize());
+		Buffer& stagingBuffer = Buffer::CreateStaging(_device, _init, _raw.data.data(), _raw.GetTotalMapSize());
 
 
 		ImageBufferCreateInfos imageBufferCreateInfos;
@@ -33,7 +30,7 @@ namespace Sa::Vk
 
 		
 		// === Create buffer ===
-		mBuffer.Create(*vkInit.device, imageBufferCreateInfos);
+		mBuffer.Create(_device, imageBufferCreateInfos);
 
 		// Copy image to shader.
 		ImageBuffer::TransitionInfos undefToDstTransitionInfos{};
@@ -42,7 +39,7 @@ namespace Sa::Vk
 		undefToDstTransitionInfos.mipLevels = _raw.mipLevels;
 		undefToDstTransitionInfos.imageType = ImageType::Cube;
 
-		mBuffer.TransitionImageLayout(vkInit, undefToDstTransitionInfos);
+		mBuffer.TransitionImageLayout(_init, undefToDstTransitionInfos);
 
 
 		ImageBuffer::CopyBufferImageInfos copyInfos{};
@@ -52,7 +49,7 @@ namespace Sa::Vk
 		copyInfos.mipLevels = _raw.mipLevels;
 		copyInfos.imageType = ImageType::Cube;
 
-		mBuffer.CopyBufferToImage(vkInit, copyInfos);
+		mBuffer.CopyBufferToImage(_init, copyInfos);
 
 
 		ImageBuffer::TransitionInfos dstToReadTransitionInfos{};
@@ -61,7 +58,7 @@ namespace Sa::Vk
 		dstToReadTransitionInfos.mipLevels = _raw.mipLevels;
 		dstToReadTransitionInfos.imageType = ImageType::Cube;
 
-		mBuffer.TransitionImageLayout(vkInit, dstToReadTransitionInfos);
+		mBuffer.TransitionImageLayout(_init, dstToReadTransitionInfos);
 
 
 		// Destroy will be called by ResourceHolder.
@@ -69,7 +66,7 @@ namespace Sa::Vk
 
 
 		// === Create irradiance buffer ===
-		Buffer& irrStagingBuffer = Buffer::CreateStaging(vkInit, _raw.data.data(), _raw.GetMapSize());
+		Buffer& irrStagingBuffer = Buffer::CreateStaging(_device, _init, _raw.data.data(), _raw.GetMapSize());
 
 		imageBufferCreateInfos.mipLevels = 1u;
 		imageBufferCreateInfos.usage = VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
@@ -80,32 +77,30 @@ namespace Sa::Vk
 		dstToReadTransitionInfos.mipLevels = 1u;
 
 
-		mIrradianceBuffer.Create(*vkInit.device, imageBufferCreateInfos);
+		mIrradianceBuffer.Create(_device, imageBufferCreateInfos);
 
-		mIrradianceBuffer.TransitionImageLayout(vkInit, undefToDstTransitionInfos);
+		mIrradianceBuffer.TransitionImageLayout(_init, undefToDstTransitionInfos);
 
-		mIrradianceBuffer.CopyBufferToImage(vkInit, copyInfos);
+		mIrradianceBuffer.CopyBufferToImage(_init, copyInfos);
 
-		mIrradianceBuffer.TransitionImageLayout(vkInit, dstToReadTransitionInfos);
+		mIrradianceBuffer.TransitionImageLayout(_init, dstToReadTransitionInfos);
 
 
 		// Destroy will be called by ResourceHolder.
 		//irrStagingBuffer.Destroy(device);
 
 
-		mSampler.Create(*vkInit.device, _raw.mipLevels);
+		mSampler.Create(_device, _raw.mipLevels);
 		
 		SA_LOG(L"Cubemap created.", Infos, SA/Render/Vulkan);
 	}
 
-	void Cubemap::Destroy(const ARenderDevice* _device)
+	void Cubemap::Destroy(const Device& _device)
 	{
-		const Device& vkDevice = _device->As<Device>();
+		mSampler.Destroy(_device);
 
-		mSampler.Destroy(vkDevice);
-
-		mBuffer.Destroy(vkDevice);
-		mIrradianceBuffer.Destroy(vkDevice);
+		mBuffer.Destroy(_device);
+		mIrradianceBuffer.Destroy(_device);
 		
 		SA_LOG(L"Cubemap destroyed.", Infos, SA/Render/Vulkan);
 	}

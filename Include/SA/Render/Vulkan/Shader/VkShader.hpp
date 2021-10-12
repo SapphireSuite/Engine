@@ -13,13 +13,16 @@
 
 namespace Sa::Vk
 {
+	class Device;
+	class ResourceInitializer;
+
 	class Shader : public AShader
 	{
 		VkShaderModule mHandle = VK_NULL_HANDLE;
 
 	public:
-		void Create(ARenderResourceInitializer* _init, const RawShader& _raw) override final;
-		void Destroy(const ARenderDevice* _device) override final;
+		void Create(const Device& _device, ResourceInitializer& _init, const RawShader& _raw);
+		void Destroy(const Device& _device);
 
 		operator VkShaderModule() const;
 	};

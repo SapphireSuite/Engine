@@ -37,7 +37,7 @@ namespace Sa::Vk
 		VkDescriptorBufferInfo CreateDescriptorBufferInfo() const noexcept override final;
 
 
-		static Buffer& CreateStaging(ResourceInitializer& _init, const void* _data, uint64 _size);
+		static Buffer& CreateStaging(const Device* _device, ResourceInitializer& _init, const void* _data, uint64 _size);
 
 
 		operator VkBuffer() const noexcept;
