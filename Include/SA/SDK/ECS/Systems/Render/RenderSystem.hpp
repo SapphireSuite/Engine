@@ -26,6 +26,8 @@
 
 //}
 
+#include <SA/SDK/ECS/Systems/Render/RenderSubSystem.hpp>
+
 #include <SA/SDK/ECS/Systems/WindowSystem.hpp>
 
 namespace Sa
@@ -39,13 +41,18 @@ namespace Sa
 	public:
 		ARenderInterface* GetInterface() const noexcept;
 
+
 		template <typename IntfT>
 		void Create(const WindowSystem& _winSys);
 
 		void Destroy();
+
+
+		RenderSubSystem* CreateSubSystem(const AGraphicDeviceInfos& _infos);
+		void DestroySubSystem(RenderSubSystem* _subSys);
 	};
 }
 
-#include <SA/SDK/ECS/Systems/RenderSystem.inl>
+#include <SA/SDK/ECS/Systems/Render/RenderSystem.inl>
 
 #endif // GUARD

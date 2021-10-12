@@ -22,7 +22,8 @@ using namespace Sa;
 
 #include <SA/SDK/ECS/Systems/WindowSystem.hpp>
 #include <SA/SDK/ECS/Systems/InputSystem.hpp>
-#include <SA/SDK/ECS/Systems/RenderSystem.hpp>
+#include <SA/SDK/ECS/Systems/Render/RenderSystem.hpp>
+#include <SA/SDK/ECS/Systems/Render/RenderSubSystem.hpp>
 
 #include <SA/SDK/Assets/Render/Shader/ShaderAsset.hpp>
 #include <SA/SDK/Assets/Render/TextureAsset.hpp>
@@ -45,6 +46,8 @@ InputSystem inputSys;
 
 RenderSystem renderSys;
 Vk::RenderInterface* renderIntf = nullptr;
+
+RenderSubSystem* renderSubSys;
 ARenderSubInterface* renderSubIntf = nullptr;
 
 
@@ -158,11 +161,11 @@ int main()
 		{
 			renderSys.Create<Vk::RenderInterface>(winSys);
 			renderIntf = renderSys.GetInterface()->AsPtr<Vk::RenderInterface>();
-			//renderSubIntf = renderSys.GetInterface()->AsPtr<Vk::RenderInterface>();
 			surface = renderIntf->MakeWindowSurface(win);
 			
 			const std::vector<Vk::GraphicDeviceInfos> deviceInfos = Vk::Device::QuerySuitableDevices(*renderIntf, surface->AsPtr<Vk::Surface>());
-			renderSubIntf = renderIntf->CreateSubInterface(deviceInfos[0]);
+			renderSubSys = renderSys.CreateSubSystem(deviceInfos[0]);
+			renderSubIntf = renderSubSys->GetInterface();
 
 			renderSubIntf->CreateSurface(surface);
 
@@ -401,8 +404,7 @@ int main()
 			renderSubIntf->DestroySurface(surface);
 			renderIntf->DestroyWindowSurface(win, surface);
 
-			renderIntf->DestroySubInterface(renderSubIntf);
-
+			renderSys.DestroySubSystem(renderSubSys);
 			renderSys.Destroy();
 		}
 
