@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_RENDER_ARENDER_MATERIAL_GUARD
 #define SAPPHIRE_RENDER_ARENDER_MATERIAL_GUARD
 
-#include <SA/Core/Types/Abstract.hpp>
+#include <SA/Render/Base/ARenderResource.hpp>
 
 #include <SA/Render/Base/Material/RenderMaterialCreateInfos.hpp>
 
@@ -13,7 +13,7 @@ namespace Sa
 {
 	class ARenderDevice;
 
-	class ARenderMaterial : public Abstract
+	class ARenderMaterial : public ARenderResource
 	{
 	public:
 		virtual void Create(const ARenderDevice* _device, const RenderMaterialCreateInfos& _infos) = 0;

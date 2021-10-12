@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <SDK/Assets/ModelAsset.hpp>
+#include <SDK/Assets/Render/ModelAsset.hpp>
 
 #include <vector>
 

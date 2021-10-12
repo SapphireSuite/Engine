@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <SDK/Assets/TextureAsset.hpp>
+#include <SDK/Assets/Render/TextureAsset.hpp>
 
 #include <Core/Algorithms/SizeOf.hpp>
 #include <Core/Serialize/Serializer.hpp>

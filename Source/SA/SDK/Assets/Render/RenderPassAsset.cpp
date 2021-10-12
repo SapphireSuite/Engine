@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <SDK/Assets/RenderPassAsset.hpp>
+#include <SDK/Assets/Render/RenderPassAsset.hpp>
 
 #include <Core/Serialize/Serializer.hpp>
 

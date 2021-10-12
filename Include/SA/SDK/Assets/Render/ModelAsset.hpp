@@ -2,24 +2,31 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_SDK_TEXTURE_ASSET_GUARD
-#define SAPPHIRE_SDK_TEXTURE_ASSET_GUARD
+#ifndef SAPPHIRE_SDK_MODEL_ASSET_GUARD
+#define SAPPHIRE_SDK_MODEL_ASSET_GUARD
 
-#include <SA/SDK/Assets/AAsset.hpp>
+#include <SA/SDK/Assets/Render/ARenderAsset.hpp>
 
-#include <SA/Render/Base/Texture/RawTexture.hpp>
+#include <SA/SDK/Assets/Render/MeshAsset.hpp>
+
+// Assimp node.
+struct aiScene;
+struct aiNode;
 
 namespace Sa
 {
-	class TextureAsset : public AAsset
+	class ModelAsset : public ARenderAsset
 	{
+		bool ParseScene(const aiScene* _scene);
+		bool ParseNode(const aiScene* _scene, const aiNode* _node);
+
 	protected:
 		bool Load_Internal(std::string&& _bin) override final;
 		bool Save_Internal(std::fstream& _fStream) const override final;
 		bool Import_Internal(const std::string& _path) override final;
 
 	public:
-		RawTexture raw;
+		std::vector<MeshAsset> meshes;
 
 
 		bool IsValid() const override final;

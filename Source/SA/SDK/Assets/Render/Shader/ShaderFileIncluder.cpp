@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <SDK/Assets/Shader/ShaderFileIncluder.hpp>
+#include <SDK/Assets/Render/Shader/ShaderFileIncluder.hpp>
 
 #include <libshaderc_util/io_shaderc.h>
 

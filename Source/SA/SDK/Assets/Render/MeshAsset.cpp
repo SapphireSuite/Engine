@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <SDK/Assets/MeshAsset.hpp>
+#include <SDK/Assets/Render/MeshAsset.hpp>
 
 #include <fstream>
 

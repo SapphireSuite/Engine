@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <SDK/Assets/Shader/ShaderCompiler.hpp>
+#include <SDK/Assets/Render/Shader/ShaderCompiler.hpp>
 
 #include <sstream>
 #include <fstream>
@@ -10,7 +10,7 @@
 #include <Render/Base/Shader/RawShader.hpp>
 
 #include <SDK/EnvironmentVariable.hpp>
-#include <SDK/Assets/Shader/ShaderFileIncluder.hpp>
+#include <SDK/Assets/Render/Shader/ShaderFileIncluder.hpp>
 
 namespace Sa
 {

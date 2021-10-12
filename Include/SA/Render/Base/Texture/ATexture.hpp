@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_RENDER_ATEXTURE_GUARD
 #define SAPPHIRE_RENDER_ATEXTURE_GUARD
 
-#include <SA/Core/Types/Abstract.hpp>
+#include <SA/Render/Base/ARenderResource.hpp>
 
 #include <SA/Render/Base/Texture/RawTexture.hpp>
 
@@ -14,7 +14,7 @@ namespace Sa
 	class ARenderDevice;
 	class ARenderResourceInitializer;
 
-	class ATexture : public Abstract
+	class ATexture : public ARenderResource
 	{
 	public:
 		virtual void Create(ARenderResourceInitializer* _init, const RawTexture& _raw) = 0;

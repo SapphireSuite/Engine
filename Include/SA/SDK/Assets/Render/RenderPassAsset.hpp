@@ -5,13 +5,13 @@
 #ifndef SAPPHIRE_SDK_RENDER_PASS_ASSET_GUARD
 #define SAPPHIRE_SDK_RENDER_PASS_ASSET_GUARD
 
-#include <SA/SDK/Assets/AAsset.hpp>
+#include <SA/SDK/Assets/Render/ARenderAsset.hpp>
 
 #include <SA/Render/Base/Pass/RenderPassDescriptor.hpp>
 
 namespace Sa
 {
-	class RenderPassAsset : public AAsset
+	class RenderPassAsset : public ARenderAsset
 	{
 		bool Load_Internal(std::string&& _bin) override final;
 		bool Save_Internal(std::fstream& _fStream) const override final;

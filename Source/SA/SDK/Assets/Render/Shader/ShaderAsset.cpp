@@ -1,14 +1,14 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <SDK/Assets/Shader/ShaderAsset.hpp>
+#include <SDK/Assets/Render/Shader/ShaderAsset.hpp>
 
 #include <fstream>
 
 #include <Core/Algorithms/SizeOf.hpp>
 #include <Core/Serialize/Serializer.hpp>
 
-#include <SDK/Assets/Shader/ShaderCompiler.hpp>
-#include <SDK/Assets/Shader/ShaderReflector.hpp>
+#include <SDK/Assets/Render/Shader/ShaderCompiler.hpp>
+#include <SDK/Assets/Render/Shader/ShaderReflector.hpp>
 
 
 namespace Sa

@@ -21,9 +21,9 @@ using namespace Sa;
 #include <SA/SDK/ECS/Systems/InputSystem.hpp>
 #include <SA/SDK/ECS/Systems/RenderSystem.hpp>
 
-#include <SA/SDK/Assets/Shader/ShaderAsset.hpp>
-#include <SA/SDK/Assets/TextureAsset.hpp>
-#include <SA/SDK/Assets/ModelAsset.hpp>
+#include <SA/SDK/Assets/Render/Shader/ShaderAsset.hpp>
+#include <SA/SDK/Assets/Render/TextureAsset.hpp>
+#include <SA/SDK/Assets/Render/ModelAsset.hpp>
 
 //#include <SA/Render/Vulkan/Device/VkCommandPool.hpp>
 //#include <SA/Render/Vulkan/Buffers/VkFrameBuffer.hpp>
