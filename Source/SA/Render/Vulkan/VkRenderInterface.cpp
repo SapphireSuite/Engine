@@ -10,8 +10,9 @@
 
 namespace Sa::Vk
 {
-	void RenderInterface::Create(const AWindowInterface& _winIntf)
+	void RenderInterface::Create(const AWindowInterface* _winIntf)
 	{
+		SA_ASSERT(Nullptr, SA/Render/Vulkan, _winIntf, L"Create Render interface with nullptr Window interface!")
 		SA_ASSERT(Default, SA/Render/Vulkan, ValidationLayers::CheckValidationSupport(), L"Validation Layers not supported!");
 
 		SA_LOG(L"Render Interface created.", Infos, SA/Render/Vulkan);

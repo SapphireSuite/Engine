@@ -10,12 +10,12 @@
 
 namespace Sa::Vk
 {
-	std::vector<const char*> GetRequiredExtensions(const AWindowInterface& _winIntf) noexcept
+	std::vector<const char*> GetRequiredExtensions(const AWindowInterface* _winIntf) noexcept
 	{
 		std::vector<const char*> extensions;
 
 		// Query window API required extensions.
-		_winIntf.QueryRequiredExtensions(extensions);
+		_winIntf->QueryRequiredExtensions(extensions);
 
 #if SA_VK_VALIDATION_LAYERS
 
@@ -26,7 +26,7 @@ namespace Sa::Vk
 	}
 
 
-	void Instance::Create(const AWindowInterface& _winIntf)
+	void Instance::Create(const AWindowInterface* _winIntf)
 	{
 		VkApplicationInfo appInfos{};
 

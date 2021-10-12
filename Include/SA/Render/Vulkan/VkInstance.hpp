@@ -27,7 +27,7 @@ namespace Sa::Vk
 #endif
 
 	public:
-		void Create(const AWindowInterface& _winIntf);
+		void Create(const AWindowInterface* _winIntf);
 		void Destroy();
 
 		operator VkInstance() const noexcept;

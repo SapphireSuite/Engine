@@ -46,7 +46,7 @@ namespace Sa
 	class ARenderInterface : public Abstract
 	{
 	public:
-		virtual void Create(const AWindowInterface& _winIntf) = 0;
+		virtual void Create(const AWindowInterface* _winIntf) = 0;
 		virtual void Destroy() = 0;
 
 		virtual ARenderDevice* CreateDevice(const AGraphicDeviceInfos& _infos) = 0;
@@ -63,8 +63,8 @@ namespace Sa
 
 //{ Resources
 
-		virtual ARenderResourceInitializer* CreateResourceInitializer(const ARenderDevice* _device);
-		virtual void DestroyResourceInitializer(ARenderResourceInitializer* _init);
+		virtual ARenderResourceInitializer* CreateResourceInitializer(const ARenderDevice* _device) = 0;
+		virtual void DestroyResourceInitializer(ARenderResourceInitializer* _init) = 0;
 
 		virtual AShader* CreateShader(ARenderResourceInitializer* _init, const RawShader& _raw) = 0;
 		virtual void DestroyShader(const ARenderDevice* _device, AShader* _shader) = 0;

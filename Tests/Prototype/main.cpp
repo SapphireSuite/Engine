@@ -9,9 +9,6 @@ using namespace Sa;
 
 #include <SA/Maths/Transform/Transform.hpp>
 
-#include <SA/Window/GLFW/GLFWWindow.hpp>
-#include <SA/Window/GLFW/GLFWWindowInterface.hpp>
-
 #include <SA/Input/GLFW/GLFWInputInterface.hpp>
 #include <SA/Input/Base/Key/Bindings/InputKeyAction.hpp>
 #include <SA/Input/Base/Key/Bindings/InputKeyRange.hpp>
@@ -19,6 +16,10 @@ using namespace Sa;
 #include <SA/Input/Base/Axis/Bindings/InputAxisRange.hpp>
 
 #include <SA/Render/Vulkan/VkRenderInterface.hpp>
+
+#include <SA/SDK/ECS/Systems/WindowSystem.hpp>
+#include <SA/SDK/ECS/Systems/InputSystem.hpp>
+#include <SA/SDK/ECS/Systems/RenderSystem.hpp>
 
 #include <SA/SDK/Assets/Shader/ShaderAsset.hpp>
 #include <SA/SDK/Assets/TextureAsset.hpp>
@@ -34,12 +35,16 @@ using namespace Sa;
 //#include <SA/Render/Base/Shader/Bindings/ShaderUBOBinding.hpp>
 //#include <SA/Render/Base/Shader/Bindings/ShaderIBOBinding.hpp>
 
-GLFW::WindowInterface winIntf;
+WindowSystem winSys;
 AWindow* win = nullptr;
 
-GLFW::InputInterface inputIntf;
+InputSystem inputSys;
 
-Vk::RenderInterface renderIntf;
+RenderSystem renderSys;
+Vk::RenderInterface* renderIntf = nullptr;
+
+
+
 ARenderDevice* device = nullptr;
 ARenderSurface* surface = nullptr;
 RenderPassDescriptor renderPassDesc;
@@ -91,20 +96,20 @@ int main()
 
 		// Window.
 		{
-			winIntf.Create();
+			winSys.Create<GLFW::WindowInterface>();
 
 			WindowCreateInfos infos;
 			infos.dimension = winDim;
 
-			win = winIntf.CreateWindow(infos);
+			win = winSys.GetInterface()->CreateWindow(infos);
 		}
 
 
 		// Input.
 		{
-			inputIntf.Create();
+			inputSys.Create<GLFW::InputInterface>();
 
-			AInputWindowContext* const inWinContext = inputIntf.Register(win);
+			AInputWindowContext* const inWinContext = inputSys.GetInterface()->Register(win);
 			InputContext* const inputContext = inWinContext->CreateContext();
 
 			inputContext->key.Bind<InputKeyAction>(InputKeyBind{ Key::Esc, KeyState::Pressed }, win, &AWindow::Close);
@@ -148,16 +153,17 @@ int main()
 
 		// Render
 		{
-			renderIntf.Create(winIntf);
-			surface = renderIntf.MakeWindowSurface(win);
+			renderSys.Create<Vk::RenderInterface>(winSys);
+			renderIntf = renderSys.GetInterface()->AsPtr<Vk::RenderInterface>();
+			surface = renderIntf->MakeWindowSurface(win);
 			
-			const std::vector<Vk::GraphicDeviceInfos> deviceInfos = Vk::Device::QuerySuitableDevices(renderIntf, surface->AsPtr<Vk::Surface>());
-			device = renderIntf.CreateDevice(deviceInfos[0]);
+			const std::vector<Vk::GraphicDeviceInfos> deviceInfos = Vk::Device::QuerySuitableDevices(*renderIntf, surface->AsPtr<Vk::Surface>());
+			device = renderIntf->CreateDevice(deviceInfos[0]);
 
 			surface->Create(device);
 
 			renderPassDesc = RenderPassDescriptor::DefaultSingle(surface);
-			renderPass = renderIntf.CreateRenderPass(device, renderPassDesc);
+			renderPass = renderIntf->CreateRenderPass(device, renderPassDesc);
 
 			surface->CreateFrameBuffers(device, renderPass, renderPassDesc);
 
@@ -181,7 +187,7 @@ int main()
 
 		// Assets
 		{
-			ARenderResourceInitializer* const resInit = renderIntf.CreateResourceInitializer(device);
+			ARenderResourceInitializer* const resInit = renderIntf->CreateResourceInitializer(device);
 
 
 			// Shaders
@@ -201,7 +207,7 @@ int main()
 						}
 					}
 
-					unlitvert = renderIntf.CreateShader(resInit, asset.raw);
+					unlitvert = renderIntf->CreateShader(resInit, asset.raw);
 					unlitPipelineDesc.AddShader(unlitvert, asset.raw.descriptor);
 				}
 
@@ -220,7 +226,7 @@ int main()
 						}
 					}
 
-					unlitfrag = renderIntf.CreateShader(resInit, asset.raw);
+					unlitfrag = renderIntf->CreateShader(resInit, asset.raw);
 					unlitPipelineDesc.AddShader(unlitfrag, asset.raw.descriptor);
 				}
 			}
@@ -241,7 +247,7 @@ int main()
 					}
 				}
 
-				missText = renderIntf.CreateTexture(resInit, asset.raw);
+				missText = renderIntf->CreateTexture(resInit, asset.raw);
 			}
 
 
@@ -261,13 +267,13 @@ int main()
 					}
 				}
 
-				cubeMesh = renderIntf.CreateStaticMesh(resInit, meshAsset.raw);
+				cubeMesh = renderIntf->CreateStaticMesh(resInit, meshAsset.raw);
 			}
 
 
 			resInit->Submit();
 
-			renderIntf.DestroyResourceInitializer(resInit);
+			renderIntf->DestroyResourceInitializer(resInit);
 
 
 			// Pipeline
@@ -275,7 +281,7 @@ int main()
 				unlitPipelineDesc.SetRenderPass(renderPass, renderPassDesc, 0u);
 				unlitPipelineDesc.shaderInfos.vertexBindingLayout.meshLayout = cubeMesh->GetLayout();
 
-				unlitPipeline = renderIntf.CreatePipeline(device, unlitPipelineDesc);
+				unlitPipeline = renderIntf->CreatePipeline(device, unlitPipelineDesc);
 			}
 
 
@@ -283,13 +289,13 @@ int main()
 			{
 				RenderMaterialCreateInfos infos{ unlitPipeline, &unlitPipelineDesc };
 				infos.AddBinding<IBOBinding>(0u, missText);
-				cubeMat = renderIntf.CreateMaterial(device, infos);
+				cubeMat = renderIntf->CreateMaterial(device, infos);
 			}
 
 
 			// Camera
 			{
-				camera = renderIntf.CreateCamera(device);
+				camera = renderIntf->CreateCamera(device);
 				
 				camera->SetProjection(Mat4f::MakePerspective(90.0f, 1200.0f / 800.0f));
 				
@@ -313,7 +319,7 @@ int main()
 			deltaTime = chrono.Restart() * 0.000005f;
 
 
-			inputIntf.Update();
+			inputSys.Update();
 
 			// Update Camera
 			if(bCamEnabled)
@@ -372,41 +378,41 @@ int main()
 			cubeDescSet.Destroy(device);
 			*/
 
-			renderIntf.DestroyCamera(device, camera);
+			renderIntf->DestroyCamera(device, camera);
 
-			renderIntf.DestroyMaterial(device, cubeMat);
+			renderIntf->DestroyMaterial(device, cubeMat);
 
-			renderIntf.DestroyPipeline(device, unlitPipeline);
+			renderIntf->DestroyPipeline(device, unlitPipeline);
 
-			renderIntf.DestroyStaticMesh(device, cubeMesh);
+			renderIntf->DestroyStaticMesh(device, cubeMesh);
 
-			renderIntf.DestroyTexture(device, missText);
+			renderIntf->DestroyTexture(device, missText);
 
-			renderIntf.DestroyShader(device, unlitvert);
-			renderIntf.DestroyShader(device, unlitfrag);
+			renderIntf->DestroyShader(device, unlitvert);
+			renderIntf->DestroyShader(device, unlitfrag);
 
 			surface->DestroyFrameBuffers(device);
 
-			renderIntf.DestroyRenderPass(device, renderPass);
+			renderIntf->DestroyRenderPass(device, renderPass);
 
-			renderIntf.DestroyWindowSurface(win, device, surface);
+			renderIntf->DestroyWindowSurface(win, device, surface);
 
-			renderIntf.DestroyDevice(device);
+			renderIntf->DestroyDevice(device);
 
-			renderIntf.Destroy();
+			renderIntf->Destroy();
 		}
 
 
 		// Input.
 		{
-			inputIntf.Destroy();
+			inputSys.Destroy();
 		}
 
 
 		// Window
 		{
-			winIntf.DestroyWindow(win);
-			winIntf.Destroy();
+			winSys.GetInterface()->DestroyWindow(win);
+			winSys.Destroy();
 		}
 	}
 

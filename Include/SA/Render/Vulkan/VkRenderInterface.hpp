@@ -29,7 +29,7 @@ namespace Sa::Vk
 		Instance mInstance;
 
 	public:
-		void Create(const AWindowInterface& _winIntf) override final;
+		void Create(const AWindowInterface* _winIntf) override final;
 		void Destroy() override final;
 
 		ARenderDevice* CreateDevice(const AGraphicDeviceInfos& _infos) override final;
