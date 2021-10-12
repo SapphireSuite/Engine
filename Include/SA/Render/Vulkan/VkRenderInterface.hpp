@@ -2,10 +2,10 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_VK_RENDER_SYSTEM_GUARD
-#define SAPPHIRE_VK_RENDER_SYSTEM_GUARD
+#ifndef SAPPHIRE_VK_RENDER_INTERFACE_GUARD
+#define SAPPHIRE_VK_RENDER_INTERFACE_GUARD
 
-#include <SA/Render/Base/ARenderSystem.hpp>
+#include <SA/Render/Base/ARenderInterface.hpp>
 
 #include <SA/Render/Vulkan/VkInstance.hpp>
 #include <SA/Render/Vulkan/Device/VkDevice.hpp>
@@ -24,12 +24,12 @@
 
 namespace Sa::Vk
 {
-	class RenderSystem : public ARenderSystem
+	class RenderInterface : public ARenderInterface
 	{
 		Instance mInstance;
 
 	public:
-		void Create(const AWindowSystem& _winSys) override final;
+		void Create(const AWindowInterface& _winIntf) override final;
 		void Destroy() override final;
 
 		ARenderDevice* CreateDevice(const AGraphicDeviceInfos& _infos) override final;

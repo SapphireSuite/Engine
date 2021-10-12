@@ -11,7 +11,7 @@
 
 namespace Sa
 {
-	class AWindowSystem;
+	class AWindowInterface;
 }
 
 namespace Sa::Vk
@@ -27,7 +27,7 @@ namespace Sa::Vk
 #endif
 
 	public:
-		void Create(const AWindowSystem& _winSys);
+		void Create(const AWindowInterface& _winIntf);
 		void Destroy();
 
 		operator VkInstance() const noexcept;

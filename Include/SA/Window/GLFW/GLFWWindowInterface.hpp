@@ -2,12 +2,12 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_GLFW_WINDOW_SYSTEM_GUARD
-#define SAPPHIRE_GLFW_WINDOW_SYSTEM_GUARD
+#ifndef SAPPHIRE_GLFW_WINDOW_INTERFACE_GUARD
+#define SAPPHIRE_GLFW_WINDOW_INTERFACE_GUARD
 
 #include <SA/Core/Support/API/GLFW.hpp>
 
-#include <SA/Window/Base/AWindowSystem.hpp>
+#include <SA/Window/Base/AWindowInterface.hpp>
 
 #include <SA/Window/GLFW/GLFWWindow.hpp>
 
@@ -15,7 +15,7 @@
 
 namespace Sa::GLFW
 {
-	class WindowSystem : public AWindowSystem
+	class WindowInterface : public AWindowInterface
 	{
 	public:
 		void Create() override final;

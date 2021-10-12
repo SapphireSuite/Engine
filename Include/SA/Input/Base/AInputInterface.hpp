@@ -2,8 +2,8 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_INPUT_AINPUT_SYSTEM_GUARD
-#define SAPPHIRE_INPUT_AINPUT_SYSTEM_GUARD
+#ifndef SAPPHIRE_INPUT_AINPUT_INTERFACE_GUARD
+#define SAPPHIRE_INPUT_AINPUT_INTERFACE_GUARD
 
 #include <vector>
 
@@ -15,7 +15,7 @@ namespace Sa
 {
 	class AWindow;
 
-	class AInputSystem : public Abstract
+	class AInputInterface : public Abstract
 	{
 		std::unordered_map<const AWindow*, AInputWindowContext*> mWindowContextMap;
 
@@ -24,7 +24,7 @@ namespace Sa
 		virtual void DeleteWindowContext(AInputWindowContext* _winContext) = 0;
 
 	public:
-		virtual ~AInputSystem();
+		virtual ~AInputInterface();
 
 		AInputWindowContext* Register(AWindow* _win);
 		bool UnRegister(const AWindow* _win);

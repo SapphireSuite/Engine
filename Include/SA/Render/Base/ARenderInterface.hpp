@@ -2,14 +2,14 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_RENDER_ARENDER_SYSTEM_GUARD
-#define SAPPHIRE_RENDER_ARENDER_SYSTEM_GUARD
+#ifndef SAPPHIRE_RENDER_ARENDER_INTERFACE_GUARD
+#define SAPPHIRE_RENDER_ARENDER_INTERFACE_GUARD
 
 #include <SA/Core/Types/Abstract.hpp>
 
 namespace Sa
 {
-	class AWindowSystem;
+	class AWindowInterface;
 	class AWindow;
 
 	class ARenderDevice;
@@ -43,10 +43,10 @@ namespace Sa
 	class ACamera;
 
 
-	class ARenderSystem : public Abstract
+	class ARenderInterface : public Abstract
 	{
 	public:
-		virtual void Create(const AWindowSystem& _winSys) = 0;
+		virtual void Create(const AWindowInterface& _winIntf) = 0;
 		virtual void Destroy() = 0;
 
 		virtual ARenderDevice* CreateDevice(const AGraphicDeviceInfos& _infos) = 0;
@@ -82,8 +82,8 @@ namespace Sa
 		virtual ARenderMaterial* CreateMaterial(const ARenderDevice* _device, const RenderMaterialCreateInfos& _infos) = 0;
 		virtual void DestroyMaterial(const ARenderDevice* _device, ARenderMaterial* _material) = 0;
 
-		virtual ACamera* CreateCamera(const ARenderDevice* _device);
-		virtual void DestroyCamera(const ARenderDevice* _device, ACamera* _camera);
+		virtual ACamera* CreateCamera(const ARenderDevice* _device) = 0;
+		virtual void DestroyCamera(const ARenderDevice* _device, ACamera* _camera) = 0;
 
 //}
 	};

@@ -1,18 +1,18 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Input/Base/AInputSystem.hpp>
+#include <Input/Base/AInputInterface.hpp>
 
 #include <Core/Debug.hpp>
 
 namespace Sa
 {
-	AInputSystem::~AInputSystem()
+	AInputInterface::~AInputInterface()
 	{
 		Clear();
 	}
 
 
-	AInputWindowContext* AInputSystem::Register(AWindow* _win)
+	AInputWindowContext* AInputInterface::Register(AWindow* _win)
 	{
 		SA_ASSERT(Nullptr, SA/Input, _win, L"Register null window!");
 
@@ -32,7 +32,7 @@ namespace Sa
 		return winContext;
 	}
 
-	bool AInputSystem::UnRegister(const AWindow* _win)
+	bool AInputInterface::UnRegister(const AWindow* _win)
 	{
 		SA_ASSERT(Nullptr, SA/Input, _win, L"UnRegister null window!");
 
@@ -53,7 +53,7 @@ namespace Sa
 	}
 
 
-	void AInputSystem::Clear()
+	void AInputInterface::Clear()
 	{
 		for (auto it = mWindowContextMap.begin(); it != mWindowContextMap.end(); ++it)
 		{
@@ -65,7 +65,7 @@ namespace Sa
 	}
 
 
-	void AInputSystem::Destroy()
+	void AInputInterface::Destroy()
 	{
 		Clear();
 	}

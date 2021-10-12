@@ -2,18 +2,18 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_INPUT_GLFW_INPUT_SYSTEM_GUARD
-#define SAPPHIRE_INPUT_GLFW_INPUT_SYSTEM_GUARD
+#ifndef SAPPHIRE_INPUT_GLFW_INPUT_INTERFACE_GUARD
+#define SAPPHIRE_INPUT_GLFW_INPUT_INTERFACE_GUARD
 
 #include <SA/Core/Support/API/GLFW.hpp>
 
-#include <SA/Input/Base/AInputSystem.hpp>
+#include <SA/Input/Base/AInputInterface.hpp>
 
 #if SA_GLFW
 
 namespace Sa::GLFW
 {
-	class InputSystem : public AInputSystem
+	class InputInterface : public AInputInterface
 	{
 	protected:
 		AInputWindowContext* InstantiateWindowContext() override final;

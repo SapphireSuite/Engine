@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Window/GLFW/GLFWWindowSystem.hpp>
+#include <Window/GLFW/GLFWWindowInterface.hpp>
 
 #include <Core/Debug.hpp>
 
@@ -13,24 +13,24 @@ namespace Sa::GLFW
 		SA_LOG(L"GLFW Error [" << error << L"]:" << description, Error, SA/Window/GLFW);
 	}
 
-	void WindowSystem::Create()
+	void WindowInterface::Create()
 	{
 		glfwSetErrorCallback(ErrorCallback);
 
 		SA_ASSERT_EXEC(Default, SA/Window/GLFW, glfwInit(), L"GLFW init failed!");
 
-		SA_LOG(L"Window System created.", Infos, SA/Window/GLFW);
+		SA_LOG(L"Window Interface created.", Infos, SA/Window/GLFW);
 	}
 
-	void WindowSystem::Destroy()
+	void WindowInterface::Destroy()
 	{
 		glfwTerminate();
 
-		SA_LOG(L"Window System destroyed.", Infos, SA/Window/GLFW);
+		SA_LOG(L"Window Interface destroyed.", Infos, SA/Window/GLFW);
 	}
 
 
-	AWindow* WindowSystem::CreateWindow(const WindowCreateInfos& _infos)
+	AWindow* WindowInterface::CreateWindow(const WindowCreateInfos& _infos)
 	{
 		Window* window = new Window();
 
@@ -41,7 +41,7 @@ namespace Sa::GLFW
 		return window;
 	}
 
-	void WindowSystem::DestroyWindow(AWindow* _window)
+	void WindowInterface::DestroyWindow(AWindow* _window)
 	{
 		_window->Destroy();
 
@@ -51,7 +51,7 @@ namespace Sa::GLFW
 	}
 
 
-	bool WindowSystem::QueryRequiredExtensions(std::vector<const char*>& _extensions) const
+	bool WindowInterface::QueryRequiredExtensions(std::vector<const char*>& _extensions) const
 	{
 		// Query extensions.
 		uint32_t glfwExtensionCount = 0;

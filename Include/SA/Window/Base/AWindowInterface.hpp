@@ -2,8 +2,8 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_WINDOW_AWINDOW_SYSTEM_GUARD
-#define SAPPHIRE_WINDOW_AWINDOW_SYSTEM_GUARD
+#ifndef SAPPHIRE_WINDOW_AWINDOW_INTERFACE_GUARD
+#define SAPPHIRE_WINDOW_AWINDOW_INTERFACE_GUARD
 
 #include <SA/Core/Types/Abstract.hpp>
 
@@ -12,7 +12,7 @@ namespace Sa
 	class AWindow;
 	struct WindowCreateInfos;
 
-	class AWindowSystem : public Abstract
+	class AWindowInterface : public Abstract
 	{
 	public:
 		virtual void Create() = 0;
