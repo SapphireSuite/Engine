@@ -6,7 +6,7 @@
 
 #include <Render/Vulkan/Debug/Debug.hpp>
 #include <Render/Vulkan/VkInstance.hpp>
-#include <Render/Vulkan/Surface/VkSurface.hpp>
+#include <Render/Vulkan/Surface/VkWindowSurface.hpp>
 
 #if SA_GLFW
 
@@ -199,7 +199,7 @@ namespace Sa::GLFW
 
 #if SA_VULKAN
 
-	Vk::Surface Window::CreateVkRenderSurface(const Vk::Instance& _instance) const
+	Vk::WindowSurface Window::CreateVkWindowSurface(const Vk::Instance& _instance) const
 	{
 		VkSurfaceKHR vkSurface;
 
@@ -207,10 +207,10 @@ namespace Sa::GLFW
 
 		SA_LOG(L"Window Surface created.", Infos, SA/Render/Vulkan);
 
-		return Vk::Surface{ vkSurface };
+		return Vk::WindowSurface{ vkSurface };
 	}
 
-	void Window::DestroyVkRenderSurface(const Vk::Instance& _instance, Vk::Surface& _surface) const
+	void Window::DestroyVkWindowSurface(const Vk::Instance& _instance, Vk::WindowSurface& _surface) const
 	{
 		vkDestroySurfaceKHR(_instance, _surface, nullptr);
 

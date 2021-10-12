@@ -18,6 +18,7 @@ using namespace Sa;
 // TODO: Remove later.
 #include <SA/Render/Vulkan/VkRenderInterface.hpp>
 #include <SA/Render/Vulkan/Device/VkDevice.hpp>
+#include <SA/Render/Vulkan/Surface/VkWindowSurface.hpp>
 #include <SA/Render/Vulkan/Surface/VkSurface.hpp>
 
 #include <SA/SDK/ECS/Systems/WindowSystem.hpp>
@@ -39,20 +40,25 @@ using namespace Sa;
 //#include <SA/Render/Base/Shader/Bindings/ShaderUBOBinding.hpp>
 //#include <SA/Render/Base/Shader/Bindings/ShaderIBOBinding.hpp>
 
+
 WindowSystem winSys;
 AWindow* win = nullptr;
 
+
 InputSystem inputSys;
 
-RenderSystem renderSys;
-Vk::RenderInterface* renderIntf = nullptr;
 
+RenderSystem renderSys;
 RenderSubSystem* renderSubSys;
+
+Vk::RenderInterface* renderIntf = nullptr;
 ARenderSubInterface* renderSubIntf = nullptr;
 
 
-
+AWindowSurface* winSurface = nullptr;
 ARenderSurface* surface = nullptr;
+
+
 RenderPassDescriptor renderPassDesc;
 ARenderPass* renderPass = nullptr;
 RenderPipelineDescriptor unlitPipelineDesc;
@@ -161,13 +167,13 @@ int main()
 		{
 			renderSys.Create<Vk::RenderInterface>(winSys);
 			renderIntf = renderSys.GetInterface()->AsPtr<Vk::RenderInterface>();
-			surface = renderIntf->MakeWindowSurface(win);
-			
-			const std::vector<Vk::GraphicDeviceInfos> deviceInfos = Vk::Device::QuerySuitableDevices(*renderIntf, surface->AsPtr<Vk::Surface>());
+			winSurface = renderIntf->CreateWindowSurface(win);
+
+			const std::vector<Vk::GraphicDeviceInfos> deviceInfos = Vk::Device::QuerySuitableDevices(*renderIntf, winSurface->AsPtr<Vk::WindowSurface>());
 			renderSubSys = renderSys.CreateSubSystem(deviceInfos[0]);
 			renderSubIntf = renderSubSys->GetInterface();
 
-			renderSubIntf->CreateSurface(surface);
+			surface = renderSubIntf->CreateSurface(winSurface);
 
 			renderPassDesc = RenderPassDescriptor::DefaultSingle(surface);
 			renderPass = renderSubIntf->CreateRenderPass(renderPassDesc);
@@ -402,7 +408,7 @@ int main()
 			renderSubIntf->DestroyRenderPass(renderPass);
 
 			renderSubIntf->DestroySurface(surface);
-			renderIntf->DestroyWindowSurface(win, surface);
+			renderIntf->DestroyWindowSurface(win, winSurface);
 
 			renderSys.DestroySubSystem(renderSubSys);
 			renderSys.Destroy();

@@ -19,7 +19,7 @@ namespace Sa::Vk
 		void Create(const AGraphicDeviceInfos& _infos) override final;
 		void Destroy() override final;
 
-		void CreateSurface(ARenderSurface* _surface) override final;
+		ARenderSurface* CreateSurface(AWindowSurface* _winSurface) override final;
 		void DestroySurface(ARenderSurface* _surface) override final;
 
 		ARenderPass* CreateRenderPass(const RenderPassDescriptor& _descriptor) override final;

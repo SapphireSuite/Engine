@@ -21,10 +21,13 @@ namespace Sa::Vk
 		void Create(const AWindowInterface* _winIntf) override final;
 		void Destroy() override final;
 
-		ARenderSubInterface* CreateSubInterface(const AGraphicDeviceInfos& _infos) override final;
 
-		ARenderSurface* MakeWindowSurface(AWindow* _win) override final;
-		void DestroyWindowSurface(AWindow* _win, ARenderSurface* _surface) override final;
+		ARenderSubInterface* CreateSubInterface(const AGraphicDeviceInfos& _infos) override final;
+		
+
+		AWindowSurface* CreateWindowSurface(AWindow* _win) override final;
+		void DestroyWindowSurface(AWindow* _win, AWindowSurface* _winSurface) override final;
+
 
 		operator const Instance&() const;
 	};

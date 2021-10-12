@@ -65,14 +65,14 @@ namespace Sa::Vk
 		return true;
 	}
 
-	bool IsPhysicalDeviceSuitable(GraphicDeviceInfos& _infos, const Surface* _surface)
+	bool IsPhysicalDeviceSuitable(GraphicDeviceInfos& _infos, const WindowSurface* _winSurface)
 	{
 		// Check requiered extensions.
 		if (!CheckExtensionSupport(_infos.device, _infos.reqs.familyFlags))
 			return false;
 
 		// Check queue family suitability.
-		_infos.QueryQueueFamilies(_surface);
+		_infos.QueryQueueFamilies(_winSurface);
 
 		if (!_infos.QueueFamiliesCompleted())
 			return false;
@@ -175,9 +175,9 @@ namespace Sa::Vk
 		return Device::QuerySuitableDevices(_inst, nullptr, _queueReq);
 	}
 
-	std::vector<GraphicDeviceInfos> Device::QuerySuitableDevices(const Instance& _inst, const Surface* _surface, const QueueRequirements& _queueReq)
+	std::vector<GraphicDeviceInfos> Device::QuerySuitableDevices(const Instance& _inst, const WindowSurface* _winSurface, const QueueRequirements& _queueReq)
 	{
-		SA_ASSERT(Default, SA/Render/Vulkan, !((bool)(_queueReq.familyFlags & QueueFamily::Present) ^ (_surface != nullptr)),
+		SA_ASSERT(Default, SA/Render/Vulkan, !((bool)(_queueReq.familyFlags & QueueFamily::Present) ^ (_winSurface != nullptr)),
 			L"QueueType::Present requiere a valid RenderSurface as parameter!");
 
 		// Query Physical devices.
@@ -197,7 +197,7 @@ namespace Sa::Vk
 		{
 			GraphicDeviceInfos infos{ *it, _queueReq };
 
-			if (IsPhysicalDeviceSuitable(infos, _surface))
+			if (IsPhysicalDeviceSuitable(infos, _winSurface))
 				ghDeviceInfos.emplace_back(infos);
 		}
 

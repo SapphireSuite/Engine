@@ -5,6 +5,7 @@
 #include <Render/Vulkan/VkInstance.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
 #include <Render/Vulkan/Pass/VkRenderPass.hpp>
+#include <Render/Vulkan/Surface/VkWindowSurface.hpp>
 
 #include <Render/Debug.hpp>
 
@@ -12,21 +13,14 @@
 
 namespace Sa::Vk
 {
-	Surface::Surface(VkSurfaceKHR _handle) noexcept :
-		mHandle{ _handle }
-	{
-	}
-
-
 	Format Surface::GetFormat() const
 	{
 		return mSwapChain.GetFormat();
 	}
 
-	void Surface::Create(const Device& _device)
+	void Surface::Create(const Device& _device, const WindowSurface& _winSurface)
 	{
-		SA_ASSERT(Nullptr, SA/Render/Vulkan, mHandle,
-			L"Handle is nullptr. VkSurfaceKHR must be created first: use window.CreateVkSurface()");
+		mHandle = _winSurface;
 
 		mSwapChain.Create(_device, *this);
 
@@ -39,6 +33,7 @@ namespace Sa::Vk
 			L"Handle is nullptr. VkSurfaceKHR must be created first: use window.CreateVkSurface()");
 
 		mSwapChain.Destroy(_device);
+		mHandle = VK_NULL_HANDLE;
 		
 		SA_LOG(L"Render Surface destroyed.", Infos, SA/Render/Vulkan);
 	}

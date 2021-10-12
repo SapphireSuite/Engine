@@ -28,7 +28,7 @@ namespace Sa
 	namespace Vk
 	{
 		class Instance;
-		class Surface;
+		class WindowSurface;
 	}
 
 
@@ -165,8 +165,8 @@ namespace Sa
 
 #if SA_VULKAN
 
-		virtual Vk::Surface CreateVkRenderSurface(const Vk::Instance& _instance) const = 0;
-		virtual void DestroyVkRenderSurface(const Vk::Instance& _instance, Vk::Surface& _surface) const = 0;
+		virtual Vk::WindowSurface CreateVkWindowSurface(const Vk::Instance& _instance) const = 0;
+		virtual void DestroyVkWindowSurface(const Vk::Instance& _instance, Vk::WindowSurface& _surface) const = 0;
 
 #endif
 	};

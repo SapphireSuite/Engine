@@ -2,6 +2,7 @@
 
 #include <Render/Vulkan/VkRenderSubInterface.hpp>
 
+#include <SA/Render/Vulkan/Surface/VkWindowSurface.hpp>
 #include <SA/Render/Vulkan/Surface/VkSurface.hpp>
 #include <SA/Render/Vulkan/Pass/VkRenderPass.hpp>
 #include <SA/Render/Vulkan/Pipeline/VkPipeline.hpp>
@@ -30,14 +31,22 @@ namespace Sa::Vk
 	}
 
 	
-	void RenderSubInterface::CreateSurface(ARenderSurface* _surface)
+	ARenderSurface* RenderSubInterface::CreateSurface(AWindowSurface* _winSurface)
 	{
-		_surface->As<Surface>().Create(mDevice);
+		Surface* const surface = new Surface();
+
+		surface->Create(mDevice, _winSurface->As<WindowSurface>());
+
+		return surface;
 	}
 
 	void RenderSubInterface::DestroySurface(ARenderSurface* _surface)
 	{
-		_surface->As<Surface>().Destroy(mDevice);
+		Surface* const vkSurface = _surface->AsPtr<Surface>();
+
+		vkSurface->Destroy(mDevice);
+
+		delete vkSurface;
 	}
 
 

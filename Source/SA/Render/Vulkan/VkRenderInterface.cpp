@@ -4,7 +4,7 @@
 
 #include <Render/Vulkan/VkRenderSubInterface.hpp>
 #include <Render/Vulkan/Debug/VkValidationLayers.hpp>
-#include <Render/Vulkan/Surface/VkSurface.hpp>
+#include <Render/Vulkan/Surface/VkWindowSurface.hpp>
 
 #include <Window/Base/AWindow.hpp>
 
@@ -41,22 +41,25 @@ namespace Sa::Vk
 	}
 
 
-	ARenderSurface* RenderInterface::MakeWindowSurface(AWindow* _win)
+	AWindowSurface* RenderInterface::CreateWindowSurface(AWindow* _win)
 	{
 		SA_ASSERT(Nullptr, SA/Render/Vulkan, _win);
 
-		Surface* const vkSurface = new Surface(_win->CreateVkRenderSurface(mInstance));
+		WindowSurface* const winSurface = new WindowSurface(_win->CreateVkWindowSurface(mInstance));
 
-		return vkSurface;
+		return winSurface;
 	}
 
-	void RenderInterface::DestroyWindowSurface(AWindow* _win, ARenderSurface* _surface)
+	void RenderInterface::DestroyWindowSurface(AWindow* _win, AWindowSurface* _winSurface)
 	{
 		SA_ASSERT(Nullptr, SA/Render/Vulkan, _win);
-		SA_ASSERT(Nullptr, SA/Render/Vulkan, _surface);
+		SA_ASSERT(Nullptr, SA/Render/Vulkan, _winSurface);
 
-		_win->DestroyVkRenderSurface(mInstance, _surface->As<Surface>());
-		delete _surface;
+		WindowSurface* const vkWinSurface = _winSurface->AsPtr<WindowSurface>();
+
+		_win->DestroyVkWindowSurface(mInstance, *vkWinSurface);
+
+		delete vkWinSurface;
 	}
 
 

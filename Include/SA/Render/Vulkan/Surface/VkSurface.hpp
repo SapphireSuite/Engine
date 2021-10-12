@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_RENDER_VK_SURFACE_GUARD
 #define SAPPHIRE_RENDER_VK_SURFACE_GUARD
 
-#include <SA/Render/Base/ARenderSurface.hpp>
+#include <SA/Render/Base/Surface/ARenderSurface.hpp>
 
 #include <SA/Render/Vulkan/Surface/VkSwapChain.hpp>
 #include <SA/Render/Vulkan/Surface/VkSurfaceSupportDetails.hpp>
@@ -19,6 +19,7 @@ namespace Sa
 
 namespace Sa::Vk
 {
+	class WindowSurface;
 	class RenderPass;
 
 	class Surface : public ARenderSurface
@@ -28,13 +29,10 @@ namespace Sa::Vk
 		SwapChain mSwapChain;
 
 	public:
-		Surface() = default;
-		Surface(VkSurfaceKHR _handle) noexcept;
-
 		Format GetFormat() const override final;
 
 
-		void Create(const Device& _device);
+		void Create(const Device& _device, const WindowSurface& _winSurface);
 		void Destroy(const Device& _device);
 
 		void CreateFrameBuffers(const Device& _device, const RenderPass& _renderPass, const RenderPassDescriptor& _renderPassDesc);
