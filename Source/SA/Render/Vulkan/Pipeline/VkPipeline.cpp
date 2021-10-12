@@ -44,6 +44,8 @@ namespace Sa::Vk
 
 		CreatePipelineLayout(vkDevice);
 		CreatePipelineHandle(vkDevice, _desc);
+
+		SA_LOG(L"Render Pipeline created.", Infos, SA/Render/Vulkan);
 	}
 
 	void Pipeline::Destroy(const ARenderDevice* _device)
@@ -54,6 +56,8 @@ namespace Sa::Vk
 		DestroyPipelineLayout(vkDevice);
 
 		DestroyDescriptorSetLayouts(vkDevice);
+
+		SA_LOG(L"Render Pipeline destroyed.", Infos, SA/Render/Vulkan);
 	}
 
 	void Pipeline::Bind(const ARenderFrame& _frame) const

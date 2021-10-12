@@ -78,6 +78,8 @@ namespace Sa::Vk
 
 
 		mSampler.Create(*vkInit.device, _raw.mipLevels);
+		
+		SA_LOG(L"Texture created.", Infos, SA/Render/Vulkan);
 	}
 
 	void Texture::Destroy(const ARenderDevice* _device)
@@ -87,6 +89,8 @@ namespace Sa::Vk
 		mSampler.Destroy(vkDevice);
 
 		mBuffer.Destroy(vkDevice);
+		
+		SA_LOG(L"Texture destroyed.", Infos, SA/Render/Vulkan);
 	}
 
 	VkDescriptorImageInfo Texture::CreateDescriptorImageInfo() const noexcept

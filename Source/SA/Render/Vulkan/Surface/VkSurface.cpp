@@ -43,6 +43,8 @@ namespace Sa::Vk
 			L"Handle is nullptr. VkSurfaceKHR must be created first: use window.CreateVkSurface()");
 
 		mSwapChain.Destroy(vkDevice);
+		
+		SA_LOG(L"Render Surface destroyed.", Infos, SA/Render/Vulkan);
 	}
 
 

@@ -25,6 +25,8 @@ namespace Sa::Vk
 		shaderModuleCreateInfo.pCode = _raw.data.data();
 
 		SA_VK_ASSERT(vkCreateShaderModule(vkDevice, &shaderModuleCreateInfo, nullptr, &mHandle), L"Failed to create shader module!");
+		
+		SA_LOG(L"Shader created.", Infos, SA/Render/Vulkan);
 	}
 
 	void Shader::Destroy(const ARenderDevice* _device)
@@ -36,6 +38,8 @@ namespace Sa::Vk
 		vkDestroyShaderModule(vkDevice, mHandle, nullptr);
 
 		mHandle = VK_NULL_HANDLE;
+		
+		SA_LOG(L"Shader destroyed.", Infos, SA/Render/Vulkan);
 	}
 
 

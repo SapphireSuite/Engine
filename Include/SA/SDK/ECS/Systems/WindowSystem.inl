@@ -7,5 +7,7 @@ namespace Sa
 	{
 		mInterface = new IntfT();
 		mInterface->Create();
+
+		SA_LOG(L"Window System created.", Infos, SA/SDK/ECS);
 	}
 }

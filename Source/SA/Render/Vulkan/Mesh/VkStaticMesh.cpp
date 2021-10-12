@@ -31,6 +31,8 @@ namespace Sa::Vk
 			RenderBufferType::Index,
 			sizeof(uint32) * mIndicesSize,
 			_raw.indices.data());
+		
+		SA_LOG(L"Mesh created.", Infos, SA/Render/Vulkan);
 	}
 	
 	void StaticMesh::Destroy(const ARenderDevice* _device)
@@ -39,6 +41,8 @@ namespace Sa::Vk
 		mIndexBuffer.Destroy(_device);
 
 		mIndicesSize = ~uint32();
+		
+		SA_LOG(L"Mesh destroyed.", Infos, SA/Render/Vulkan);
 	}
 
 

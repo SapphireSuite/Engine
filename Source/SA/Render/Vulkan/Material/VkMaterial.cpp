@@ -21,6 +21,8 @@ namespace Sa::Vk
 
 		if(!_infos.bindings.empty())
 			mDescSet.Update(vkDevice, _infos.bindings);
+		
+		SA_LOG(L"Render Material created.", Infos, SA/Render/Vulkan);
 	}
 
 	void Material::Destroy(const ARenderDevice* _device)
@@ -28,6 +30,8 @@ namespace Sa::Vk
 		const Device& vkDevice = _device->As<Device>();
 
 		mDescSet.Destroy(vkDevice);
+		
+		SA_LOG(L"Render Material destroyed.", Infos, SA/Render/Vulkan);
 	}
 
 

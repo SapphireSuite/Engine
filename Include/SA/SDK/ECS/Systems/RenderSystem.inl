@@ -7,5 +7,7 @@ namespace Sa
 	{
 		mInterface = new IntfT();
 		mInterface->Create(_winSys.GetInterface());
+		
+		SA_LOG(L"Render System created.", Infos, SA/SDK/ECS);
 	}
 }

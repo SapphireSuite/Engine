@@ -101,6 +101,8 @@ namespace Sa::GLFW
 
 		SetCursorMode(_infos.cursorFlags);
 		SetWindowMode(_infos.mode);
+		
+		SA_LOG(L"Window created.", Infos, SA/Window/GLFW);
 	}
 	
 	void Window::Destroy()
@@ -109,6 +111,8 @@ namespace Sa::GLFW
 
 		glfwDestroyWindow(mHandle);
 		mHandle = nullptr;
+		
+		SA_LOG(L"Window destroyed.", Infos, SA/Window/GLFW);
 	}
 
 	AInputWindowContext* Window::GetInputWindowContext() const
@@ -201,12 +205,16 @@ namespace Sa::GLFW
 
 		SA_VK_ASSERT(glfwCreateWindowSurface(_instance, mHandle, nullptr, &vkSurface), L"Failed to create VkRenderSurface from GLFW window!");
 
+		SA_LOG(L"Window Surface created.", Infos, SA/Render/Vulkan);
+
 		return Vk::Surface{ vkSurface };
 	}
 
 	void Window::DestroyVkRenderSurface(const Vk::Instance& _instance, Vk::Surface& _surface) const
 	{
 		vkDestroySurfaceKHR(_instance, _surface, nullptr);
+
+		SA_LOG(L"Window Surface destroyed.", Infos, SA/Render/Vulkan);
 	}
 
 #endif

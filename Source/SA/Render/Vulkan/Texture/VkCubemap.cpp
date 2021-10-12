@@ -94,6 +94,8 @@ namespace Sa::Vk
 
 
 		mSampler.Create(*vkInit.device, _raw.mipLevels);
+		
+		SA_LOG(L"Cubemap created.", Infos, SA/Render/Vulkan);
 	}
 
 	void Cubemap::Destroy(const ARenderDevice* _device)
@@ -104,6 +106,8 @@ namespace Sa::Vk
 
 		mBuffer.Destroy(vkDevice);
 		mIrradianceBuffer.Destroy(vkDevice);
+		
+		SA_LOG(L"Cubemap destroyed.", Infos, SA/Render/Vulkan);
 	}
 
 

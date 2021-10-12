@@ -7,5 +7,7 @@ namespace Sa
 	{
 		mInterface = new IntfT();
 		mInterface->Create();
+		
+		SA_LOG(L"Input System created.", Infos, SA/SDK/ECS);
 	}
 }
