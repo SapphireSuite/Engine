@@ -34,6 +34,9 @@ namespace Sa
 		virtual ARenderPass* CreateRenderPass(const RenderPassDescriptor& _descriptor) = 0;
 		virtual void DestroyRenderPass(ARenderPass* _pass) = 0;
 
+		virtual void CreateFrameBuffers(ARenderSurface* _surface, ARenderPass* _pass, const RenderPassDescriptor& _descriptor) = 0;
+		virtual void DestroyFrameBuffers(ARenderSurface* _surface) = 0;
+
 		virtual ARenderPipeline* CreatePipeline(const RenderPipelineDescriptor& _desc) = 0;
 		virtual void DestroyPipeline(ARenderPipeline* _pipeline) = 0;
 

@@ -69,6 +69,17 @@ namespace Sa::Vk
 	}
 
 
+	void RenderSubInterface::CreateFrameBuffers(ARenderSurface* _surface, ARenderPass* _pass, const RenderPassDescriptor& _descriptor)
+	{
+		_surface->As<Surface>().CreateFrameBuffers(mDevice, _pass->As<RenderPass>(), _descriptor);
+	}
+
+	void RenderSubInterface::DestroyFrameBuffers(ARenderSurface* _surface)
+	{
+		_surface->As<Surface>().DestroyFrameBuffers(mDevice);
+	}
+
+
 	ARenderPipeline* RenderSubInterface::CreatePipeline(const RenderPipelineDescriptor& _desc)
 	{
 		Pipeline* const pipeline = new Pipeline();

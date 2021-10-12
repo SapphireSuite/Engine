@@ -178,7 +178,7 @@ int main()
 			renderPassDesc = RenderPassDescriptor::DefaultSingle(surface);
 			renderPass = renderSubIntf->CreateRenderPass(renderPassDesc);
 
-			//surface->CreateFrameBuffers(device, renderPass, renderPassDesc);
+			renderSubIntf->CreateFrameBuffers(surface, renderPass, renderPassDesc);
 
 			//cmdPool.Create(device, device.queueMgr.graphics.GetQueue(0).GetFamilyIndex());
 
@@ -403,7 +403,7 @@ int main()
 			renderSubIntf->DestroyShader(unlitvert);
 			renderSubIntf->DestroyShader(unlitfrag);
 
-			//surface->DestroyFrameBuffers(device);
+			renderSubIntf->DestroyFrameBuffers(surface);
 
 			renderSubIntf->DestroyRenderPass(renderPass);
 
