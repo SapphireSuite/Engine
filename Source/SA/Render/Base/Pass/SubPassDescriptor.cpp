@@ -4,8 +4,26 @@
 
 #include <Collections/Debug>
 
+#include <Core/Serialize/Serializer.hpp>
+
 namespace Sa
 {
+	namespace Serialize
+	{
+		void ToBinary(const SubPassDescriptor& _obj, std::string& _str)
+		{
+			ToBinary(_obj.sampling, _str);
+			ToBinary(_obj.attachmentDescs, _str);
+		}
+
+		void FromBinary(SubPassDescriptor& _obj, Reader& _read)
+		{
+			FromBinary(_obj.sampling, _read);
+			FromBinary(_obj.attachmentDescs, _read);
+		}
+	}
+
+
 #if SA_VULKAN
 
 	namespace Vk

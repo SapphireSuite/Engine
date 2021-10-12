@@ -5,6 +5,7 @@
 #ifndef SAPPHIRE_RENDER_SUBPASS_DESCRIPTOR_GUARD
 #define SAPPHIRE_RENDER_SUBPASS_DESCRIPTOR_GUARD
 
+#include <string>
 #include <vector>
 
 #include <SA/Render/Misc/Format.hpp>
@@ -41,6 +42,14 @@ namespace Sa
 
 		std::vector<SubPassAttachmentDescriptor> attachmentDescs;
 	};
+
+
+	namespace Serialize
+	{
+		void ToBinary(const SubPassDescriptor& _obj, std::string& _str);
+		void FromBinary(SubPassDescriptor& _obj, class Reader& _read);
+	}
+
 
 #if SA_VULKAN
 

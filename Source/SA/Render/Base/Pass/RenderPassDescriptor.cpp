@@ -4,6 +4,8 @@
 
 #include <Render/Base/ARenderSurface.hpp>
 
+#include <Core/Serialize/Serializer.hpp>
+
 namespace Sa
 {
 	RenderPassDescriptor RenderPassDescriptor::DefaultSingle(const ARenderSurface* _surface)
@@ -80,5 +82,19 @@ namespace Sa
 
 
 		return result;
+	}
+
+
+	namespace Serialize
+	{
+		void ToBinary(const RenderPassDescriptor& _obj, std::string& _str)
+		{
+			ToBinary(_obj.subPassDescs, _str);
+		}
+
+		void FromBinary(RenderPassDescriptor& _obj, Reader& _read)
+		{
+			FromBinary(_obj.subPassDescs, _read);
+		}
 	}
 }

@@ -25,6 +25,13 @@ namespace Sa
 		*/
 		static RenderPassDescriptor DefaultPBR(const ARenderSurface* _surface = nullptr);
 	};
+
+
+	namespace Serialize
+	{
+		void ToBinary(const RenderPassDescriptor& _obj, std::string& _str);
+		void FromBinary(RenderPassDescriptor& _obj, class Reader& _read);
+	}
 }
 
 #endif // GUARD
