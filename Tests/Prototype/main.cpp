@@ -15,7 +15,10 @@ using namespace Sa;
 #include <SA/Input/Base/Axis/Bindings/InputAxisAction.hpp>
 #include <SA/Input/Base/Axis/Bindings/InputAxisRange.hpp>
 
+// TODO: Remove later.
 #include <SA/Render/Vulkan/VkRenderInterface.hpp>
+#include <SA/Render/Vulkan/Device/VkDevice.hpp>
+#include <SA/Render/Vulkan/Surface/VkSurface.hpp>
 
 #include <SA/SDK/ECS/Systems/WindowSystem.hpp>
 #include <SA/SDK/ECS/Systems/InputSystem.hpp>
@@ -42,10 +45,10 @@ InputSystem inputSys;
 
 RenderSystem renderSys;
 Vk::RenderInterface* renderIntf = nullptr;
+ARenderSubInterface* renderSubIntf = nullptr;
 
 
 
-ARenderDevice* device = nullptr;
 ARenderSurface* surface = nullptr;
 RenderPassDescriptor renderPassDesc;
 ARenderPass* renderPass = nullptr;
@@ -155,17 +158,18 @@ int main()
 		{
 			renderSys.Create<Vk::RenderInterface>(winSys);
 			renderIntf = renderSys.GetInterface()->AsPtr<Vk::RenderInterface>();
+			//renderSubIntf = renderSys.GetInterface()->AsPtr<Vk::RenderInterface>();
 			surface = renderIntf->MakeWindowSurface(win);
 			
 			const std::vector<Vk::GraphicDeviceInfos> deviceInfos = Vk::Device::QuerySuitableDevices(*renderIntf, surface->AsPtr<Vk::Surface>());
-			device = renderIntf->CreateDevice(deviceInfos[0]);
+			renderSubIntf = renderIntf->CreateSubInterface(deviceInfos[0]);
 
-			surface->Create(device);
+			renderSubIntf->CreateSurface(surface);
 
 			renderPassDesc = RenderPassDescriptor::DefaultSingle(surface);
-			renderPass = renderIntf->CreateRenderPass(device, renderPassDesc);
+			renderPass = renderSubIntf->CreateRenderPass(renderPassDesc);
 
-			surface->CreateFrameBuffers(device, renderPass, renderPassDesc);
+			//surface->CreateFrameBuffers(device, renderPass, renderPassDesc);
 
 			//cmdPool.Create(device, device.queueMgr.graphics.GetQueue(0).GetFamilyIndex());
 
@@ -187,7 +191,7 @@ int main()
 
 		// Assets
 		{
-			ARenderResourceInitializer* const resInit = renderIntf->CreateResourceInitializer(device);
+			ARenderResourceInitializer* const resInit = renderSubIntf->CreateResourceInitializer();
 
 
 			// Shaders
@@ -207,7 +211,7 @@ int main()
 						}
 					}
 
-					unlitvert = renderIntf->CreateShader(resInit, asset.raw);
+					unlitvert = renderSubIntf->CreateShader(resInit, asset.raw);
 					unlitPipelineDesc.AddShader(unlitvert, asset.raw.descriptor);
 				}
 
@@ -226,7 +230,7 @@ int main()
 						}
 					}
 
-					unlitfrag = renderIntf->CreateShader(resInit, asset.raw);
+					unlitfrag = renderSubIntf->CreateShader(resInit, asset.raw);
 					unlitPipelineDesc.AddShader(unlitfrag, asset.raw.descriptor);
 				}
 			}
@@ -247,7 +251,7 @@ int main()
 					}
 				}
 
-				missText = renderIntf->CreateTexture(resInit, asset.raw);
+				missText = renderSubIntf->CreateTexture(resInit, asset.raw);
 			}
 
 
@@ -267,13 +271,13 @@ int main()
 					}
 				}
 
-				cubeMesh = renderIntf->CreateStaticMesh(resInit, meshAsset.raw);
+				cubeMesh = renderSubIntf->CreateStaticMesh(resInit, meshAsset.raw);
 			}
 
 
 			resInit->Submit();
 
-			renderIntf->DestroyResourceInitializer(resInit);
+			renderSubIntf->DestroyResourceInitializer(resInit);
 
 
 			// Pipeline
@@ -281,7 +285,7 @@ int main()
 				unlitPipelineDesc.SetRenderPass(renderPass, renderPassDesc, 0u);
 				unlitPipelineDesc.shaderInfos.vertexBindingLayout.meshLayout = cubeMesh->GetLayout();
 
-				unlitPipeline = renderIntf->CreatePipeline(device, unlitPipelineDesc);
+				unlitPipeline = renderSubIntf->CreatePipeline(unlitPipelineDesc);
 			}
 
 
@@ -289,13 +293,13 @@ int main()
 			{
 				RenderMaterialCreateInfos infos{ unlitPipeline, &unlitPipelineDesc };
 				infos.AddBinding<IBOBinding>(0u, missText);
-				cubeMat = renderIntf->CreateMaterial(device, infos);
+				cubeMat = renderSubIntf->CreateMaterial(infos);
 			}
 
 
 			// Camera
 			{
-				camera = renderIntf->CreateCamera(device);
+				camera = renderSubIntf->CreateCamera();
 				
 				camera->SetProjection(Mat4f::MakePerspective(90.0f, 1200.0f / 800.0f));
 				
@@ -334,7 +338,7 @@ int main()
 				camTr.rotation = Quatf(cos(dx), 0, sin(dx), 0) * Quatf(cos(dy), sin(dy), 0, 0);
 
 				camera->SetTransform(camTr);
-				camera->Update(device);
+				//camera->Update(device);
 			}
 
 
@@ -369,7 +373,7 @@ int main()
 	{
 		// Render
 		{
-			device->WaitIdle();
+			//device->WaitIdle();
 
 			/*
 			camUBO.Destroy(device);
@@ -378,28 +382,29 @@ int main()
 			cubeDescSet.Destroy(device);
 			*/
 
-			renderIntf->DestroyCamera(device, camera);
+			renderSubIntf->DestroyCamera(camera);
 
-			renderIntf->DestroyMaterial(device, cubeMat);
+			renderSubIntf->DestroyMaterial(cubeMat);
 
-			renderIntf->DestroyPipeline(device, unlitPipeline);
+			renderSubIntf->DestroyPipeline(unlitPipeline);
 
-			renderIntf->DestroyStaticMesh(device, cubeMesh);
+			renderSubIntf->DestroyStaticMesh(cubeMesh);
 
-			renderIntf->DestroyTexture(device, missText);
+			renderSubIntf->DestroyTexture(missText);
 
-			renderIntf->DestroyShader(device, unlitvert);
-			renderIntf->DestroyShader(device, unlitfrag);
+			renderSubIntf->DestroyShader(unlitvert);
+			renderSubIntf->DestroyShader(unlitfrag);
 
-			surface->DestroyFrameBuffers(device);
+			//surface->DestroyFrameBuffers(device);
 
-			renderIntf->DestroyRenderPass(device, renderPass);
+			renderSubIntf->DestroyRenderPass(renderPass);
 
-			renderIntf->DestroyWindowSurface(win, device, surface);
+			renderSubIntf->DestroySurface(surface);
+			renderIntf->DestroyWindowSurface(win, surface);
 
-			renderIntf->DestroyDevice(device);
+			renderIntf->DestroySubInterface(renderSubIntf);
 
-			renderIntf->Destroy();
+			renderSys.Destroy();
 		}
 
 

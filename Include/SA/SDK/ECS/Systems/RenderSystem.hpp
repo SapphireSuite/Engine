@@ -5,6 +5,8 @@
 #ifndef SAPPHIRE_SDK_RENDER_SYSTEM_GUARD
 #define SAPPHIRE_SDK_RENDER_SYSTEM_GUARD
 
+//{ Interface Includes
+
 #include <SA/Core/Support/API/Vulkan.hpp>
 
 #if SA_VULKAN
@@ -22,9 +24,9 @@
 
 #endif
 
+//}
 
 #include <SA/SDK/ECS/Systems/WindowSystem.hpp>
-
 
 namespace Sa
 {
