@@ -10,46 +10,33 @@
 
 namespace Sa::Vk
 {
-	bool GPUBuffer::IsValid() const noexcept
-	{
-		return mHandle.IsValid();
-	}
-
-
-	void GPUBuffer::Create(const ARenderDevice* _device,
-		RenderBufferType _type,
+	void GPUBuffer::Create(const Device& _device,
+		VkBufferUsageFlags _usage,
 		uint64 _size)
 	{
-		mHandle.Create(_device->As<Device>(),
+		Create_Internal(_device,
 			_size,
-			VK_BUFFER_USAGE_TRANSFER_DST_BIT | API_GetBufferUsage(_type),
+			VK_BUFFER_USAGE_TRANSFER_DST_BIT | _usage,
 			VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT
 		);
 	}
 
-	void GPUBuffer::Create(const ARenderDevice* _device,
-		ARenderResourceInitializer& _init,
-		RenderBufferType _type,
+	void GPUBuffer::Create(const Device& _device,
+		ResourceInitializer& _init,
+		VkBufferUsageFlags _usage,
 		uint64 _size,
 		const void* _data)
 	{
-		Create(_device, _type, _size);
+		Create(_device, _usage, _size);
 
 		UpdateData(_device, _init, _data, _size);
 	}
 
-	void GPUBuffer::Destroy(const ARenderDevice* _device)
+
+	void GPUBuffer::UpdateData(const Device& _device, ResourceInitializer& _init, const void* _data, uint64 _size, uint64 _offset)
 	{
-		mHandle.Destroy(_device->As<Device>());
-	}
-
-
-	void GPUBuffer::UpdateData(const ARenderDevice* _device, ARenderResourceInitializer& _init, const void* _data, uint64 _size, uint64 _offset)
-	{
-		ResourceInitializer& vkInit = _init.As<ResourceInitializer>();
-
 		// Create temp staging buffer. Hold buffer until command is submitted and executed.
-		Buffer& stagingBuffer = Buffer::CreateStaging(_device->AsPtr<Device>(), vkInit, _data, _size);
+		Buffer& stagingBuffer = Buffer::CreateStaging(_device, _init, _data, _size);
 
 
 		// Add copy command.
@@ -58,23 +45,11 @@ namespace Sa::Vk
 		copyRegion.dstOffset = _offset;
 		copyRegion.size = _size;
 
-		vkCmdCopyBuffer(vkInit.cmd, stagingBuffer, mHandle, 1, &copyRegion);
+		vkCmdCopyBuffer(_init.cmd, stagingBuffer, mHandle, 1, &copyRegion);
 
 
 		// Destroy will be called by ResourceHolder.
 		//stagingBuffer.Destroy(_device);
-	}
-
-
-	VkDescriptorBufferInfo GPUBuffer::CreateDescriptorBufferInfo() const noexcept
-	{
-		return mHandle.CreateDescriptorBufferInfo();
-	}
-
-
-	GPUBuffer::operator VkBuffer() const noexcept
-	{
-		return mHandle;
 	}
 }
 

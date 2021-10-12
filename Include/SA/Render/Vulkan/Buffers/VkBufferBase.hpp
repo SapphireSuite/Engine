@@ -9,12 +9,15 @@
 
 #include <SA/Core/Support/API/Vulkan.hpp>
 
+#include <SA/Render/Base/Buffers/IRenderBuffer.hpp>
+
 namespace Sa::Vk
 {
 	class Device;
 
-	class BufferBase
+	class BufferBase : public IRenderBuffer
 	{
+	protected:
 		VkBuffer mHandle = VK_NULL_HANDLE;
 		VkDeviceMemory mDeviceMemory = VK_NULL_HANDLE;
 

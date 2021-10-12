@@ -4,18 +4,17 @@
 
 #include <Core/Algorithms/SizeOf.hpp>
 
-#include <Render/Base/Buffers/ARenderBufferBase.hpp>
-#include <Render/Vulkan/Buffers/IVkBufferBinding.hpp>
+#include <Render/Vulkan/Buffers/VkBufferBase.hpp>
 
 namespace Sa
 {
-	UBOBinding::UBOBinding(uint32 _binding, const ARenderBufferBase* _UBO) noexcept :
+	UBOBinding::UBOBinding(uint32 _binding, const IRenderBuffer* _UBO) noexcept :
 		ARenderMaterialBinding(_binding),
 		UBOs{ _UBO }
 	{
 	}
 	
-	UBOBinding::UBOBinding(uint32 _binding, std::vector<const ARenderBufferBase*> _UBOs) noexcept :
+	UBOBinding::UBOBinding(uint32 _binding, std::vector<const IRenderBuffer*> _UBOs) noexcept :
 		ARenderMaterialBinding(_binding),
 		UBOs{ std::move(_UBOs) }
 	{
@@ -38,7 +37,7 @@ namespace Sa
 		std::vector<VkDescriptorBufferInfo>& descs = _bufferDescs.emplace_back();
 
 		for (auto it = UBOs.begin(); it != UBOs.end(); ++it)
-			descs.push_back((*it)->As<Vk::IBufferBinding>().CreateDescriptorBufferInfo());
+			descs.push_back((*it)->As<Vk::BufferBase>().CreateDescriptorBufferInfo());
 
 
 		VkWriteDescriptorSet descWrite{};

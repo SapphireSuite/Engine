@@ -1,21 +1,18 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Render/Vulkan/Buffers/VkBufferHandle.hpp>
+#include <Render/Vulkan/Buffers/VkBufferBase.hpp>
 
 #include <Render/Vulkan/Debug/Debug.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
-	bool BufferHandle::IsValid() const noexcept
+	bool BufferBase::IsValid() const noexcept
 	{
 		return mHandle != VK_NULL_HANDLE && mDeviceMemory != VK_NULL_HANDLE;
 	}
 
-
-	void BufferHandle::Create(const Device& _device,
+	void BufferBase::Create_Internal(const Device& _device,
 		uint64 _size, VkBufferUsageFlags _usage,
 		VkMemoryPropertyFlags _properties)
 	{
@@ -51,7 +48,7 @@ namespace Sa::Vk
 		vkBindBufferMemory(_device, mHandle, mDeviceMemory, 0);
 	}
 
-	void BufferHandle::Destroy(const Device& _device)
+	void BufferBase::Destroy(const Device& _device)
 	{
 		SA_ASSERT(Default, SA / Render / Vulkan, IsValid(), L"Destroy a null Buffer!");
 
@@ -64,7 +61,7 @@ namespace Sa::Vk
 	}
 
 
-	VkDescriptorBufferInfo BufferHandle::CreateDescriptorBufferInfo() const noexcept
+	VkDescriptorBufferInfo BufferBase::CreateDescriptorBufferInfo() const noexcept
 	{
 		VkDescriptorBufferInfo descInfos{};
 		descInfos.buffer = mHandle;
@@ -74,8 +71,7 @@ namespace Sa::Vk
 		return descInfos;
 	}
 
-
-	uint32 BufferHandle::FindMemoryType(const Device& _device, uint32 _typeFilter, VkMemoryPropertyFlags _properties)
+	uint32 BufferBase::FindMemoryType(const Device& _device, uint32 _typeFilter, VkMemoryPropertyFlags _properties)
 	{
 		const VkPhysicalDeviceMemoryProperties& memProperties = _device.GetMemoryProperties();
 
@@ -91,15 +87,13 @@ namespace Sa::Vk
 	}
 
 
-	BufferHandle::operator VkBuffer() const noexcept
+	BufferBase::operator VkBuffer() const noexcept
 	{
 		return mHandle;
 	}
 
-	BufferHandle::operator VkDeviceMemory() const noexcept
+	BufferBase::operator VkDeviceMemory() const noexcept
 	{
 		return mDeviceMemory;
 	}
 }
-
-#endif

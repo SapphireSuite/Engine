@@ -5,42 +5,28 @@
 #ifndef SAPPHIRE_RENDER_VK_GPU_BUFFER_GUARD
 #define SAPPHIRE_RENDER_VK_GPU_BUFFER_GUARD
 
-#include <SA/Render/Base/Buffers/ARenderGPUBuffer.hpp>
-#include <SA/Render/Vulkan/Buffers/VkBufferHandle.hpp>
-#include <SA/Render/Vulkan/Buffers/IVkBufferBinding.hpp>
+#include <SA/Render/Vulkan/Buffers/VkBufferBase.hpp>
 
 #if SA_VULKAN
 
 namespace Sa::Vk
 {
-	class GPUBuffer : public ARenderGPUBuffer, public IBufferBinding
+	class ResourceInitializer;
+
+	class GPUBuffer : public BufferBase
 	{
-		BufferHandle mHandle;
-
 	public:
-		bool IsValid() const noexcept override final;
+		void Create(const Device& _device,
+			VkBufferUsageFlags _usage,
+			uint64 _size);
 
-
-		void Create(const ARenderDevice* _device,
-			RenderBufferType _type,
-			uint64 _size) override final;
-
-		void Create(const ARenderDevice* _device,
-			ARenderResourceInitializer& _init,
-			RenderBufferType _type,
+		void Create(const Device& _device,
+			ResourceInitializer& _init,
+			VkBufferUsageFlags _usage,
 			uint64 _size,
-			const void* _data) override final;
+			const void* _data);
 
-		void Destroy(const ARenderDevice* _device) override final;
-
-
-		void UpdateData(const ARenderDevice* _device, ARenderResourceInitializer& _init, const void* _data, uint64 _size, uint64 _offset = 0) override final;
-
-
-		VkDescriptorBufferInfo CreateDescriptorBufferInfo() const noexcept override final;
-
-
-		operator VkBuffer() const noexcept;
+		void UpdateData(const Device& _device, ResourceInitializer& _init, const void* _data, uint64 _size, uint64 _offset = 0);
 	};
 }
 

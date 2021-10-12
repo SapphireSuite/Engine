@@ -19,7 +19,7 @@ namespace Sa::Vk
 		// Create Vertex buffer.
 		mVertexBuffer.Create(_device,
 			_init,
-			RenderBufferType::Vertex,
+			VK_BUFFER_USAGE_VERTEX_BUFFER_BIT,
 			SizeOf(_raw.vertices),
 			_raw.vertices.data());
 
@@ -28,7 +28,7 @@ namespace Sa::Vk
 		mIndicesSize = SizeOf<uint32>(_raw.indices);
 		mIndexBuffer.Create(_device,
 			_init,
-			RenderBufferType::Index,
+			VK_BUFFER_USAGE_INDEX_BUFFER_BIT,
 			sizeof(uint32) * mIndicesSize,
 			_raw.indices.data());
 		

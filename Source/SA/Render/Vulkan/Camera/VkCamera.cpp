@@ -10,7 +10,7 @@ namespace Sa::Vk
 {
 	void Camera::Create(const Device& _device)
 	{
-		mCameraUBO.Create(_device, RenderBufferType::Uniform, sizeof(CameraUBO), &mUBOData);
+		mCameraUBO.Create(_device, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, sizeof(CameraUBO), &mUBOData);
 		
 		SA_LOG(L"Camera created.", Infos, SA/Render/Vulkan);
 	}

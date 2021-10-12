@@ -9,15 +9,15 @@
 
 namespace Sa
 {
-	class ARenderBufferBase;
+	class IRenderBuffer;
 
 	class UBOBinding : public ARenderMaterialBinding
 	{
 	public:
-		std::vector<const ARenderBufferBase*> UBOs;
+		std::vector<const IRenderBuffer*> UBOs;
 
-		UBOBinding(uint32 _binding, const ARenderBufferBase* _UBO) noexcept;
-		UBOBinding(uint32 _binding, std::vector<const ARenderBufferBase*> _UBOs) noexcept;
+		UBOBinding(uint32 _binding, const IRenderBuffer* _UBO) noexcept;
+		UBOBinding(uint32 _binding, std::vector<const IRenderBuffer*> _UBOs) noexcept;
 
 
 #if SA_VULKAN
