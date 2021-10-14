@@ -14,6 +14,15 @@ namespace Sa::Vk
 	class RenderSubInterface : public ARenderSubInterface
 	{
 		Device mDevice;
+		
+		VkDescriptorSetLayout mCameraDescSetLayout;
+		VkDescriptorSetLayout mModelDescSetLayout;
+
+		void CreateCameraDescriptorSetLayout();
+		void DestroyCameraDescriptorSetLayout();
+
+		void CreateModelDescriptorSetLayout();
+		void DestroyModelDescriptorSetLayout();
 
 	public:
 		void Create(const AGraphicDeviceInfos& _infos) override final;

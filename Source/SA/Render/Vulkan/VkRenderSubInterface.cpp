@@ -2,17 +2,19 @@
 
 #include <Render/Vulkan/VkRenderSubInterface.hpp>
 
-#include <SA/Render/Vulkan/Surface/VkWindowSurface.hpp>
-#include <SA/Render/Vulkan/Surface/VkSurface.hpp>
-#include <SA/Render/Vulkan/Pass/VkRenderPass.hpp>
-#include <SA/Render/Vulkan/Pipeline/VkPipeline.hpp>
-#include <SA/Render/Vulkan/VkResourceInitializer.hpp>
-#include <SA/Render/Vulkan/Shader/VkShader.hpp>
-#include <SA/Render/Vulkan/Mesh/VkStaticMesh.hpp>
-#include <SA/Render/Vulkan/Texture/VkTexture.hpp>
-#include <SA/Render/Vulkan/Texture/VkCubemap.hpp>
-#include <SA/Render/Vulkan/Material/VkMaterial.hpp>
-#include <SA/Render/Vulkan/Camera/VkCamera.hpp>
+#include <Render/Vulkan/Debug/Debug.hpp>
+
+#include <Render/Vulkan/Surface/VkWindowSurface.hpp>
+#include <Render/Vulkan/Surface/VkSurface.hpp>
+#include <Render/Vulkan/Pass/VkRenderPass.hpp>
+#include <Render/Vulkan/Pipeline/VkPipeline.hpp>
+#include <Render/Vulkan/VkResourceInitializer.hpp>
+#include <Render/Vulkan/Shader/VkShader.hpp>
+#include <Render/Vulkan/Mesh/VkStaticMesh.hpp>
+#include <Render/Vulkan/Texture/VkTexture.hpp>
+#include <Render/Vulkan/Texture/VkCubemap.hpp>
+#include <Render/Vulkan/Material/VkMaterial.hpp>
+#include <Render/Vulkan/Camera/VkCamera.hpp>
 
 namespace Sa::Vk
 {
@@ -20,14 +22,84 @@ namespace Sa::Vk
 	{
 		mDevice.Create(_infos);
 
+		CreateCameraDescriptorSetLayout();
+		CreateModelDescriptorSetLayout();
+
 		SA_LOG(L"Render Sub-Interface created.", Infos, SA/Render/Vulkan);
 	}
 
 	void RenderSubInterface::Destroy()
 	{
+		DestroyModelDescriptorSetLayout();
+		DestroyCameraDescriptorSetLayout();
+
 		mDevice.Destroy();
 
 		SA_LOG(L"Render Sub-Interface destroyed.", Infos, SA/Render/Vulkan);
+	}
+
+
+	void RenderSubInterface::CreateCameraDescriptorSetLayout()
+	{
+		constexpr uint32 size = 1u;
+		VkDescriptorSetLayoutBinding descSetLayout[size]{};
+
+
+		// Camera UBO
+		descSetLayout[0].binding = 0;
+		descSetLayout[0].descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+		descSetLayout[0].descriptorCount = 1;
+		descSetLayout[0].stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
+		descSetLayout[0].pImmutableSamplers = nullptr;
+
+
+
+		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutInfo{};
+		descriptorSetLayoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
+		descriptorSetLayoutInfo.pNext = nullptr;
+		descriptorSetLayoutInfo.flags = 0u;
+		descriptorSetLayoutInfo.bindingCount = size;
+		descriptorSetLayoutInfo.pBindings = descSetLayout;
+
+		SA_VK_ASSERT(vkCreateDescriptorSetLayout(mDevice, &descriptorSetLayoutInfo, nullptr, &mCameraDescSetLayout),
+			L"Failed to create camera descriptor set layout!");
+	}
+
+	void RenderSubInterface::DestroyCameraDescriptorSetLayout()
+	{
+		vkDestroyDescriptorSetLayout(mDevice, mCameraDescSetLayout, nullptr);
+	}
+
+
+	void RenderSubInterface::CreateModelDescriptorSetLayout()
+	{
+		constexpr uint32 size = 1u;
+		VkDescriptorSetLayoutBinding descSetLayout[size]{};
+
+
+		// Model UBO
+		descSetLayout[0].binding = 0;
+		descSetLayout[0].descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+		descSetLayout[0].descriptorCount = 1;
+		descSetLayout[0].stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
+		descSetLayout[0].pImmutableSamplers = nullptr;
+
+
+
+		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutInfo{};
+		descriptorSetLayoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
+		descriptorSetLayoutInfo.pNext = nullptr;
+		descriptorSetLayoutInfo.flags = 0u;
+		descriptorSetLayoutInfo.bindingCount = size;
+		descriptorSetLayoutInfo.pBindings = descSetLayout;
+
+		SA_VK_ASSERT(vkCreateDescriptorSetLayout(mDevice, &descriptorSetLayoutInfo, nullptr, &mModelDescSetLayout),
+			L"Failed to create model descriptor set layout!");
+	}
+
+	void RenderSubInterface::DestroyModelDescriptorSetLayout()
+	{
+		vkDestroyDescriptorSetLayout(mDevice, mModelDescSetLayout, nullptr);
 	}
 
 	
