@@ -15,5 +15,7 @@ namespace Sa
 
 		mInterface->Destroy();
 		delete mInterface;
+
+		SA_LOG(L"Window System destroyed.", Infos, SA/SDK/ECS);
 	}
 }

@@ -3,11 +3,15 @@
 namespace Sa
 {
 	template <typename IntfT>
-	void WindowSystem::Create()
+	IntfT* WindowSystem::Create()
 	{
-		mInterface = new IntfT();
+		IntfT* interfaceT = new IntfT();
+
+		mInterface = interfaceT;
 		mInterface->Create();
 
 		SA_LOG(L"Window System created.", Infos, SA/SDK/ECS);
+
+		return interfaceT;
 	}
 }

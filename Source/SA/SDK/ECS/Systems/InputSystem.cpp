@@ -15,6 +15,8 @@ namespace Sa
 
 		mInterface->Destroy();
 		delete mInterface;
+
+		SA_LOG(L"Input System destroyed.", Infos, SA/SDK/ECS);
 	}
 
 

@@ -43,7 +43,7 @@ namespace Sa
 
 
 		template <typename IntfT>
-		void Create(const WindowSystem& _winSys);
+		IntfT* Create(const WindowSystem& _winSys);
 
 		void Destroy();
 

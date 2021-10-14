@@ -165,8 +165,7 @@ int main()
 
 		// Render
 		{
-			renderSys.Create<Vk::RenderInterface>(winSys);
-			renderIntf = renderSys.GetInterface()->AsPtr<Vk::RenderInterface>();
+			renderIntf = renderSys.Create<Vk::RenderInterface>(winSys);
 			winSurface = renderIntf->CreateWindowSurface(win);
 
 			const std::vector<Vk::GraphicDeviceInfos> deviceInfos = Vk::Device::QuerySuitableDevices(*renderIntf, winSurface->AsPtr<Vk::WindowSurface>());

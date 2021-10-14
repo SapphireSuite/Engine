@@ -23,7 +23,7 @@ namespace Sa
 		AInputInterface* GetInterface() const noexcept;
 
 		template <typename IntfT>
-		void Create();
+		IntfT* Create();
 
 		void Destroy();
 

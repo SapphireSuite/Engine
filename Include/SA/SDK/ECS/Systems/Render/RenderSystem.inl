@@ -3,11 +3,15 @@
 namespace Sa
 {
 	template <typename IntfT>
-	void RenderSystem::Create(const WindowSystem& _winSys)
+	IntfT* RenderSystem::Create(const WindowSystem& _winSys)
 	{
-		mInterface = new IntfT();
+		IntfT* interfaceT = new IntfT();
+
+		mInterface = interfaceT;
 		mInterface->Create(_winSys.GetInterface());
 		
 		SA_LOG(L"Render System created.", Infos, SA/SDK/ECS);
+
+		return interfaceT;
 	}
 }

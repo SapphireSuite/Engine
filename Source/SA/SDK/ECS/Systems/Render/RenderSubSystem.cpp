@@ -17,6 +17,8 @@ namespace Sa
 		SA_ASSERT(Nullptr, SA/SDK/ECS, _mainIntf, L"Create Render SubInterface from nullptr Render Interface!");
 
 		mInterface = _mainIntf->CreateSubInterface(_infos);
+
+		SA_LOG(L"Render Sub-System created.", Infos, SA/SDK/ECS);
 	}
 	
 	void RenderSubSystem::Destroy(ARenderInterface* _mainIntf)
@@ -26,5 +28,7 @@ namespace Sa
 		_mainIntf->DestroySubInterface(mInterface);
 
 		mInterface = nullptr;
+
+		SA_LOG(L"Render Sub-System destroyed.", Infos, SA/SDK/ECS);
 	}
 }
