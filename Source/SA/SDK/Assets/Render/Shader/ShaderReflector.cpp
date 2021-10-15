@@ -17,7 +17,17 @@ namespace Sa
 		{
 			const uint32 set = _comp.get_decoration(res.id, spv::DecorationDescriptorSet);
 
-			ShaderBindingDescriptor& desc = _raw.descriptor.EmplaceBinding(set);
+
+			// Engine set.
+			if (set != 0)
+			{
+				_raw.descriptor.engineBindingSets.insert(set);
+				continue;
+			}
+
+
+			// User set.
+			ShaderBindingDescriptor& desc = _raw.descriptor.userBindingSet.bindings.emplace_back();
 			
 			desc.name = res.name;
 			desc.type = _type;

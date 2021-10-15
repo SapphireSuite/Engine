@@ -22,84 +22,18 @@ namespace Sa::Vk
 	{
 		mDevice.Create(_infos);
 
-		CreateCameraDescriptorSetLayout();
-		CreateModelDescriptorSetLayout();
+		enDescSetLayouts.Create(mDevice);
 
 		SA_LOG(L"Render Sub-Interface created.", Infos, SA/Render/Vulkan);
 	}
 
 	void RenderSubInterface::Destroy()
 	{
-		DestroyModelDescriptorSetLayout();
-		DestroyCameraDescriptorSetLayout();
+		enDescSetLayouts.Destroy(mDevice);
 
 		mDevice.Destroy();
 
 		SA_LOG(L"Render Sub-Interface destroyed.", Infos, SA/Render/Vulkan);
-	}
-
-
-	void RenderSubInterface::CreateCameraDescriptorSetLayout()
-	{
-		constexpr uint32 size = 1u;
-		VkDescriptorSetLayoutBinding descSetLayout[size]{};
-
-
-		// Camera UBO
-		descSetLayout[0].binding = 0;
-		descSetLayout[0].descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-		descSetLayout[0].descriptorCount = 1;
-		descSetLayout[0].stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
-		descSetLayout[0].pImmutableSamplers = nullptr;
-
-
-
-		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutInfo{};
-		descriptorSetLayoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-		descriptorSetLayoutInfo.pNext = nullptr;
-		descriptorSetLayoutInfo.flags = 0u;
-		descriptorSetLayoutInfo.bindingCount = size;
-		descriptorSetLayoutInfo.pBindings = descSetLayout;
-
-		SA_VK_ASSERT(vkCreateDescriptorSetLayout(mDevice, &descriptorSetLayoutInfo, nullptr, &mCameraDescSetLayout),
-			L"Failed to create camera descriptor set layout!");
-	}
-
-	void RenderSubInterface::DestroyCameraDescriptorSetLayout()
-	{
-		vkDestroyDescriptorSetLayout(mDevice, mCameraDescSetLayout, nullptr);
-	}
-
-
-	void RenderSubInterface::CreateModelDescriptorSetLayout()
-	{
-		constexpr uint32 size = 1u;
-		VkDescriptorSetLayoutBinding descSetLayout[size]{};
-
-
-		// Model UBO
-		descSetLayout[0].binding = 0;
-		descSetLayout[0].descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-		descSetLayout[0].descriptorCount = 1;
-		descSetLayout[0].stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
-		descSetLayout[0].pImmutableSamplers = nullptr;
-
-
-
-		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutInfo{};
-		descriptorSetLayoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-		descriptorSetLayoutInfo.pNext = nullptr;
-		descriptorSetLayoutInfo.flags = 0u;
-		descriptorSetLayoutInfo.bindingCount = size;
-		descriptorSetLayoutInfo.pBindings = descSetLayout;
-
-		SA_VK_ASSERT(vkCreateDescriptorSetLayout(mDevice, &descriptorSetLayoutInfo, nullptr, &mModelDescSetLayout),
-			L"Failed to create model descriptor set layout!");
-	}
-
-	void RenderSubInterface::DestroyModelDescriptorSetLayout()
-	{
-		vkDestroyDescriptorSetLayout(mDevice, mModelDescSetLayout, nullptr);
 	}
 
 	
@@ -156,7 +90,7 @@ namespace Sa::Vk
 	{
 		Pipeline* const pipeline = new Pipeline();
 
-		pipeline->Create(mDevice, _desc);
+		pipeline->Create(mDevice, _desc, enDescSetLayouts);
 
 		return pipeline;
 	}

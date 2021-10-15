@@ -10,6 +10,7 @@
 #include <Render/Vulkan/Pass/VkRenderPass.hpp>
 #include <Render/Vulkan/VkFrame.hpp>
 #include <Render/Vulkan/Pipeline/VkSpecConstantData.hpp>
+#include <Render/Vulkan/Pipeline/VkEngineDescriptorSetLayouts.hpp>
 
 #if SA_VULKAN
 
@@ -30,17 +31,17 @@ namespace Sa::Vk
 		return mPipelineLayout;
 	}
 
-	const std::vector<VkDescriptorSetLayout>& Pipeline::GetDescriptorSetLayouts() const noexcept
+	VkDescriptorSetLayout Pipeline::GetMainDescriptorSetLayout() const noexcept
 	{
-		return mDescriptorSetLayouts;
+		return mMainDescriptorSetLayout;
 	}
 
 
-	void Pipeline::Create(const Device& _device, const RenderPipelineDescriptor& _desc)
+	void Pipeline::Create(const Device& _device, const RenderPipelineDescriptor& _desc, const EngineDescriptorSetLayouts& _enDescSetLayouts)
 	{
-		CreateDescriptorSetLayouts(_device, _desc);
+		CreateMainDescriptorSetLayout(_device, _desc);
 
-		CreatePipelineLayout(_device);
+		CreatePipelineLayout(_device, _desc, _enDescSetLayouts);
 		CreatePipelineHandle(_device, _desc);
 
 		SA_LOG(L"Render Pipeline created.", Infos, SA/Render/Vulkan);
@@ -51,7 +52,7 @@ namespace Sa::Vk
 		DestroyPipelineHandle(_device);
 		DestroyPipelineLayout(_device);
 
-		DestroyDescriptorSetLayouts(_device);
+		DestroyMainDescriptorSetLayout(_device);
 
 		SA_LOG(L"Render Pipeline destroyed.", Infos, SA/Render/Vulkan);
 	}
@@ -64,63 +65,50 @@ namespace Sa::Vk
 	}
 
 
-	void Pipeline::CreateDescriptorSetLayouts(const Device& _device, const RenderPipelineDescriptor& _desc)
+	void Pipeline::CreateMainDescriptorSetLayout(const Device& _device, const RenderPipelineDescriptor& _desc)
 	{
-		std::vector<std::vector<VkDescriptorSetLayoutBinding>> descSetLayouts;
-		descSetLayouts.reserve(5); // Default is 3.
+		std::vector<VkDescriptorSetLayoutBinding> descSetLayout;
 
-		for(uint32 i = 0; i < _desc.shaderInfos.bindingSets.size(); ++i)
+		for (auto& bind : _desc.shaderInfos.userBindingSet.bindings)
 		{
-			auto& setDesc = _desc.shaderInfos.bindingSets[i];
-			std::vector<VkDescriptorSetLayoutBinding>& descSetLayout = descSetLayouts.size() > i ? descSetLayouts[i] : descSetLayouts.emplace_back();
+			VkDescriptorSetLayoutBinding& descBinding = descSetLayout.emplace_back();
 
-			for (auto& bind : setDesc.bindings)
-			{
-				VkDescriptorSetLayoutBinding& descBinding = descSetLayout.emplace_back();
-
-				descBinding.binding = bind.binding;
-				descBinding.descriptorType = API_GetDescriptorType(bind.type);
-				descBinding.descriptorCount = bind.num;
-				descBinding.stageFlags = API_GetShaderStageFlags(bind.stageFlags);
-				descBinding.pImmutableSamplers = nullptr;
-			}
+			descBinding.binding = bind.binding;
+			descBinding.descriptorType = API_GetDescriptorType(bind.type);
+			descBinding.descriptorCount = bind.num;
+			descBinding.stageFlags = API_GetShaderStageFlags(bind.stageFlags);
+			descBinding.pImmutableSamplers = nullptr;
 		}
-
-		// Create descriptor set layouts.
-		mDescriptorSetLayouts.resize(descSetLayouts.size());
 
 		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutInfo{};
 		descriptorSetLayoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
 		descriptorSetLayoutInfo.pNext = nullptr;
 		descriptorSetLayoutInfo.flags = 0u;
+		descriptorSetLayoutInfo.bindingCount = 1u;
+		descriptorSetLayoutInfo.pBindings = descSetLayout.data();
 
-		for (uint32 i = 0; i < descSetLayouts.size(); ++i)
-		{
-			descriptorSetLayoutInfo.bindingCount = SizeOf<uint32>(descSetLayouts[i]);
-			descriptorSetLayoutInfo.pBindings = descSetLayouts[i].data();
-
-			SA_VK_ASSERT(vkCreateDescriptorSetLayout(_device, &descriptorSetLayoutInfo, nullptr, &mDescriptorSetLayouts[i]),
-				L"Failed to create descriptor set layout!");
-		}
+		SA_VK_ASSERT(vkCreateDescriptorSetLayout(_device, &descriptorSetLayoutInfo, nullptr, &mMainDescriptorSetLayout),
+			L"Failed to create descriptor set layout!");
 	}
 
-	void Pipeline::DestroyDescriptorSetLayouts(const Device& _device)
+	void Pipeline::DestroyMainDescriptorSetLayout(const Device& _device)
 	{
-		for(auto it = mDescriptorSetLayouts.begin(); it != mDescriptorSetLayouts.end(); ++it)
-			vkDestroyDescriptorSetLayout(_device, *it, nullptr);
-
-		mDescriptorSetLayouts.clear();
+		vkDestroyDescriptorSetLayout(_device, mMainDescriptorSetLayout, nullptr);
+		mMainDescriptorSetLayout = VK_NULL_HANDLE;
 	}
 
 
-	void Pipeline::CreatePipelineLayout(const Device& _device)
+	void Pipeline::CreatePipelineLayout(const Device& _device, const RenderPipelineDescriptor& _desc, const EngineDescriptorSetLayouts& _enDescSetLayouts)
 	{
+		std::vector<VkDescriptorSetLayout> descSetLayouts = _enDescSetLayouts.QuerySets(_desc.shaderInfos.engineBindingSets);
+		descSetLayouts[0] = mMainDescriptorSetLayout;
+
 		VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo{};
 		pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
 		pipelineLayoutCreateInfo.pNext = nullptr;
 		pipelineLayoutCreateInfo.flags = 0u;
-		pipelineLayoutCreateInfo.setLayoutCount = SizeOf<uint32>(mDescriptorSetLayouts);
-		pipelineLayoutCreateInfo.pSetLayouts = mDescriptorSetLayouts.data();
+		pipelineLayoutCreateInfo.setLayoutCount = SizeOf<uint32>(descSetLayouts);
+		pipelineLayoutCreateInfo.pSetLayouts = descSetLayouts.data();
 		pipelineLayoutCreateInfo.pushConstantRangeCount = 0u;
 		pipelineLayoutCreateInfo.pPushConstantRanges = nullptr;
 

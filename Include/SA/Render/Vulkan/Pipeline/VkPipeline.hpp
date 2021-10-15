@@ -15,18 +15,19 @@ namespace Sa::Vk
 {
 	class Device;
 	class SpecConstantData;
+	class EngineDescriptorSetLayouts;
 
 	class Pipeline : public ARenderPipeline
 	{
 		VkPipeline mHandle = VK_NULL_HANDLE;
 		VkPipelineLayout mPipelineLayout = VK_NULL_HANDLE;
 
-		std::vector<VkDescriptorSetLayout> mDescriptorSetLayouts;
+		VkDescriptorSetLayout mMainDescriptorSetLayout = VK_NULL_HANDLE;
 
-		void CreateDescriptorSetLayouts(const Device& _device, const RenderPipelineDescriptor& _desc);
-		void DestroyDescriptorSetLayouts(const Device& _device);
+		void CreateMainDescriptorSetLayout(const Device& _device, const RenderPipelineDescriptor& _desc);
+		void DestroyMainDescriptorSetLayout(const Device& _device);
 
-		void CreatePipelineLayout(const Device& _device);
+		void CreatePipelineLayout(const Device& _device, const RenderPipelineDescriptor& _desc, const EngineDescriptorSetLayouts& _enDescSetLayouts);
 		void DestroyPipelineLayout(const Device& _device);
 
 		void CreatePipelineHandle(const Device& _device, const RenderPipelineDescriptor& _desc);
@@ -51,9 +52,9 @@ namespace Sa::Vk
 
 	public:
 		VkPipelineLayout GetLayout() const noexcept;
-		const std::vector<VkDescriptorSetLayout>& GetDescriptorSetLayouts() const noexcept;
+		VkDescriptorSetLayout GetMainDescriptorSetLayout() const noexcept;
 
-		void Create(const Device& _device, const RenderPipelineDescriptor& _desc);
+		void Create(const Device& _device, const RenderPipelineDescriptor& _desc, const EngineDescriptorSetLayouts& _enDescSetLayouts);
 		void Destroy(const Device& _device);
 
 		void Bind(const ARenderFrame& _frame) const override final;

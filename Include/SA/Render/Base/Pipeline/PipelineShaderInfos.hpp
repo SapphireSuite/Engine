@@ -46,7 +46,8 @@ namespace Sa
 
 		std::vector<PipelineShaderStage> stages;
 
-		std::vector<PipelineBindingSetDescriptor> bindingSets;
+		PipelineBindingSetDescriptor userBindingSet;
+		std::set<uint32> engineBindingSets;
 
 		std::set<PipelineSpecConstant> userSpecConstants;
 		std::set<SpecConstantDescriptor> engineSpecConstants; // Values set in engine.

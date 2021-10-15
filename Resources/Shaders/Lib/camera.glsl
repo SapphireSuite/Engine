@@ -3,7 +3,7 @@
 //{ camera glsl
 
 /**
-*   set 1 is engine pre-defined for environment bindings.
+*   set 1 is engine pre-defined for camera bindings.
 */
 
 layout(set = 1, binding = 0) uniform Camera

@@ -8,6 +8,7 @@
 #include <SA/Render/Base/ARenderSubInterface.hpp>
 
 #include <SA/Render/Vulkan/Device/VkDevice.hpp>
+#include <SA/Render/Vulkan/Pipeline/VkEngineDescriptorSetLayouts.hpp>
 
 namespace Sa::Vk
 {
@@ -15,14 +16,7 @@ namespace Sa::Vk
 	{
 		Device mDevice;
 		
-		VkDescriptorSetLayout mCameraDescSetLayout;
-		VkDescriptorSetLayout mModelDescSetLayout;
-
-		void CreateCameraDescriptorSetLayout();
-		void DestroyCameraDescriptorSetLayout();
-
-		void CreateModelDescriptorSetLayout();
-		void DestroyModelDescriptorSetLayout();
+		EngineDescriptorSetLayouts enDescSetLayouts;
 
 	public:
 		void Create(const AGraphicDeviceInfos& _infos) override final;

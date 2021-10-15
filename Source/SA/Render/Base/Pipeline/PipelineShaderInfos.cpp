@@ -4,6 +4,23 @@
 
 namespace Sa
 {
+	void EmplaceBinding(PipelineBindingSetDescriptor& _bindSet, const ShaderBindingDescriptor& _binding, ShaderStage _stage)
+	{
+		PipelineBindingDescriptor* pipBindDesc = nullptr;
+
+		// Search existing binding.
+		for (auto& itpipBind : _bindSet.bindings)
+		{
+			if (itpipBind.binding == _binding.binding)
+				pipBindDesc = &itpipBind;
+		}
+
+		if (!pipBindDesc)
+			pipBindDesc = &_bindSet.bindings.emplace_back(_binding);
+
+		pipBindDesc->stageFlags |= _stage;
+	}
+
 	void PipelineShaderInfos::AddShader(const AShader* _shader, const ShaderDescriptor& _descriptor)
 	{
 		if (_descriptor.stage == ShaderStage::Vertex)
@@ -12,38 +29,14 @@ namespace Sa
 		PipelineShaderStage& stage = stages.emplace_back();
 		stage.shader = _shader;
 		stage.stage = _descriptor.stage;
-		//stage.userSpecConstants = _descriptor.userSpecConstants;
-		//stage.engineSpecConstants = _descriptor.engineSpecConstants;
 
 
 		// Bindings
 		{
-			for(uint32 i = 0; i < _descriptor.bindingSets.size(); ++i)
-			{
-				auto& setDesc = i < bindingSets.size() ? bindingSets[i] : bindingSets.emplace_back();
+			for (auto& bindSet : _descriptor.userBindingSet.bindings)
+				EmplaceBinding(userBindingSet, bindSet, _descriptor.stage);
 
-				for (auto& shBind : _descriptor.bindingSets[i].bindings)
-				{
-					bool bFound = false;
-
-					// Search existing binding.
-					for (auto& pipBind : setDesc.bindings)
-					{
-						if (shBind.binding == pipBind.binding)
-						{
-							pipBind.stageFlags |= _descriptor.stage;
-							bFound = true;
-							break;
-						}
-					}
-
-					if (!bFound)
-					{
-						auto& pipBind = setDesc.bindings.emplace_back(shBind);
-						pipBind.stageFlags = _descriptor.stage;
-					}
-				}
-			}
+			engineBindingSets.insert(_descriptor.engineBindingSets.begin(), _descriptor.engineBindingSets.end());
 		}
 
 

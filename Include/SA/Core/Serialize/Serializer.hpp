@@ -82,6 +82,7 @@ namespace Sa::Serialize
 
 #include <SA/Core/Serialize/StringSerializer.inl>
 #include <SA/Core/Serialize/VectorSerializer.inl>
+#include <SA/Core/Serialize/SetSerializer.inl>
 #include <SA/Core/Serialize/MapSerializer.inl>
 #include <SA/Core/Serialize/Serializer.inl>
 

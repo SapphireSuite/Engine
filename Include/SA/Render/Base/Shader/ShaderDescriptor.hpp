@@ -5,6 +5,7 @@
 #ifndef SAPPHIRE_RENDER_SHADER_DESCRIPTOR_GUARD
 #define SAPPHIRE_RENDER_SHADER_DESCRIPTOR_GUARD
 
+#include <set>
 #include <vector>
 
 #include <SA/Render/Base/Shader/ShaderStage.hpp>
@@ -22,16 +23,16 @@ namespace Sa
 		/// Vertex layout (valid only if stage == Vertex).
 		Flags<VertexComp> vertexLayout;
 
-		std::vector<ShaderBindingSetDescriptor> bindingSets;
+		ShaderBindingSetDescriptor userBindingSet;
+		std::set<uint32> engineBindingSets;
 
 		std::vector<SpecConstantDescriptor> userSpecConstants;
 		std::vector<SpecConstantDescriptor> engineSpecConstants;
 
 
-		ShaderBindingDescriptor& EmplaceBinding(uint32 _set);
 		SpecConstantDescriptor& EmplaceSpecConstants(uint32 _id);
 
-		void Reset();
+		void Clear();
 	};
 
 

@@ -14,9 +14,8 @@ namespace Sa::Vk
 		const Pipeline& vkPipeline = _infos.pipeline->As<Pipeline>();
 
 		SA_ASSERT(Nullptr, SA/Render/Vulkan, _infos.desc, L"Create render material witn nullptr pipeline descriptor.");
-		SA_ASSERT(OutOfRange, SA/Render/Vulkan, _infos.setIndex, 0u, (uint32)_infos.desc->shaderInfos.bindingSets.size(), L"Set index is out of pipeline range!");
 
-		mDescSet.Create(_device, _infos.desc->shaderInfos.bindingSets[_infos.setIndex], vkPipeline.GetDescriptorSetLayouts()[_infos.setIndex]);
+		mDescSet.Create(_device, _infos.desc->shaderInfos.userBindingSet, vkPipeline.GetMainDescriptorSetLayout());
 
 		if(!_infos.bindings.empty())
 			mDescSet.Update(_device, _infos.bindings);

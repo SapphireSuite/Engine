@@ -10,7 +10,7 @@ namespace Sa
 	{
 		data.clear();
 
-		descriptor.Reset();
+		descriptor.Clear();
 	}
 
 
