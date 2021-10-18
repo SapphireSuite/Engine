@@ -10,6 +10,7 @@
 namespace Sa
 {
 	bool ReadFile(const std::string& _path, std::string& _out);
+	bool ReadBinaryFile(const std::string& _path, std::string& _out);
 }
 
 #endif // GUARD

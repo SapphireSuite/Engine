@@ -54,7 +54,7 @@ namespace Sa
 
 		std::string bin;
 
-		if (!ReadFile(fullPath, bin))
+		if (!ReadBinaryFile(fullPath, bin))
 			return false;
 
 		return Load_Internal(std::move(bin), fullPath);
