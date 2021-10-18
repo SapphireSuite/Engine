@@ -2,8 +2,6 @@
 
 #include <SDK/Assets/Render/MeshAsset.hpp>
 
-#include <fstream>
-
 #include <Core/Algorithms/SizeOf.hpp>
 
 namespace Sa

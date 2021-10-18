@@ -4,7 +4,7 @@
 
 namespace Sa::GLSL
 {
-	bool ShaderBuilder::Build(const std::string& _path, RawShader& _raw, ShaderDescriptor& _desc)
+	bool ShaderBuilder::Build(const std::string& _path, RawShader& _raw, ShaderDescriptor& _desc) const
 	{
 		if (!mCompiler.Compile(_path, _raw, _desc))
 			return false;

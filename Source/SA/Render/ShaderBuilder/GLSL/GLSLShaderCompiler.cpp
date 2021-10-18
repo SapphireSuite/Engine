@@ -58,7 +58,7 @@ namespace Sa::GLSL
 	}
 
 
-	std::string ShaderCompiler::AssembleShader(const std::string& _path)
+	std::string ShaderCompiler::AssembleShader(const std::string& _path) const
 	{
 		std::string code;
 
@@ -96,7 +96,7 @@ namespace Sa::GLSL
 		return code;
 	}
 
-	bool ShaderCompiler::Compile(const std::string& _path, RawShader& _raw, ShaderDescriptor& _desc)
+	bool ShaderCompiler::Compile(const std::string& _path, RawShader& _raw, ShaderDescriptor& _desc) const
 	{
 		SA_LOG(L"Compiling shader {" << _path << L"}", Infos, SA/SDK/Asset);
 

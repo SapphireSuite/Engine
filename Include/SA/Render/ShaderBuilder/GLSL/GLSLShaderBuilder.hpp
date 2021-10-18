@@ -18,7 +18,7 @@ namespace Sa::GLSL
 		ShaderReflector mReflector;
 
 	public:
-		bool Build(const std::string& _path, RawShader& _raw, ShaderDescriptor& _desc) override final;
+		bool Build(const std::string& _path, RawShader& _raw, ShaderDescriptor& _desc) const override final;
 	};
 }
 

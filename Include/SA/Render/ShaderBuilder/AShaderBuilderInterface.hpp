@@ -24,7 +24,7 @@ namespace Sa
 		* 
 		*	\returns true on build success.
 		*/
-		virtual bool Build(const std::string& _path, RawShader& _raw, ShaderDescriptor& _desc) = 0;
+		virtual bool Build(const std::string& _path, RawShader& _raw, ShaderDescriptor& _desc) const = 0;
 	};
 }
 

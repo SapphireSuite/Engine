@@ -2,20 +2,13 @@
 
 #include <SDK/Assets/Render/ShaderAsset.hpp>
 
-#include <fstream>
-
 #include <Core/Algorithms/SizeOf.hpp>
 
 namespace Sa
 {
-	bool ShaderAsset::ShouldCompileShader(const std::string& _resourcePath, const std::string& _assetPath) noexcept
+	ShaderAsset::ShaderAsset(const AShaderBuilderInterface* _shaderBuilder) noexcept :
+		mShaderBuilder{ _shaderBuilder }
 	{
-		struct stat assetStat;
-		struct stat resourceStat;
-
-		return stat(_assetPath.c_str(), &assetStat) != 0 ||
-			stat(_resourcePath.c_str(), &resourceStat) != 0 ||
-			assetStat.st_mtime < resourceStat.st_mtime;
 	}
 
 
@@ -71,14 +64,21 @@ namespace Sa
 	{
 		mResourcePath = _path;
 
-		// TODO: Use Shader interface.
+		SA_ASSERT(Nullptr, SA/SDK, mShaderBuilder, L"Try import shader with nullptr shader builder interface!");
 
-		//if (!compiler.Compile(_path, raw))
-		//	return false;
-
-		//if (!reflector.Reflect(raw))
-		//	return false;
+		return mShaderBuilder->Build(_path, raw, descriptor);
 
 		return true;
+	}
+
+
+	bool ShaderAsset::ShouldCompileShader(const std::string& _resourcePath, const std::string& _assetPath) noexcept
+	{
+		struct stat assetStat;
+		struct stat resourceStat;
+
+		return stat(_assetPath.c_str(), &assetStat) != 0 ||
+			stat(_resourcePath.c_str(), &resourceStat) != 0 ||
+			assetStat.st_mtime < resourceStat.st_mtime;
 	}
 }

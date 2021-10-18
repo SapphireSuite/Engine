@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_RENDER_RAW_SHADER_GUARD
 #define SAPPHIRE_RENDER_RAW_SHADER_GUARD
 
-#include <SA/Render/Base/Shader/ShaderDescriptor.hpp>
+#include <vector>
 
 namespace Sa
 {

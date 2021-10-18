@@ -18,10 +18,10 @@ namespace Sa
 		{
 			shaderc::Compiler mHandle;
 
-			std::string AssembleShader(const std::string& _path);
+			std::string AssembleShader(const std::string& _path) const;
 
 		public:
-			bool Compile(const std::string& _path, RawShader& _raw, ShaderDescriptor& _desc);
+			bool Compile(const std::string& _path, RawShader& _raw, ShaderDescriptor& _desc) const;
 		};
 	}
 }

@@ -7,6 +7,8 @@
 
 #include <SA/SDK/Assets/Render/ARenderAsset.hpp>
 
+#include <SA/Render/ShaderBuilder/AShaderBuilderInterface.hpp>
+
 #include <SA/Render/Base/Shader/RawShader.hpp>
 #include <SA/Render/Base/Shader/ShaderDescriptor.hpp>
 
@@ -15,6 +17,7 @@ namespace Sa
 	class ShaderAsset : public ARenderAsset
 	{
 		std::string mResourcePath;
+		const AShaderBuilderInterface* mShaderBuilder = nullptr;
 
 		static bool ShouldCompileShader(const std::string& _resourcePath, const std::string& _assetPath) noexcept;
 
@@ -26,6 +29,9 @@ namespace Sa
 	public:
 		RawShader raw;
 		ShaderDescriptor descriptor;
+
+
+		ShaderAsset(const AShaderBuilderInterface* _shaderBuilder) noexcept;
 
 
 		bool IsValid() const override final;

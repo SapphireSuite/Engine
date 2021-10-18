@@ -7,6 +7,7 @@
 #include <Collections/Debug>
 
 #include <Render/Base/Shader/RawShader.hpp>
+#include <Render/Base/Shader/ShaderDescriptor.hpp>
 
 namespace Sa::GLSL
 {
@@ -67,7 +68,7 @@ namespace Sa::GLSL
 	}
 
 
-	bool ShaderReflector::Reflect(RawShader& _raw, ShaderDescriptor& _desc)
+	bool ShaderReflector::Reflect(RawShader& _raw, ShaderDescriptor& _desc) const
 	{
 		if (_raw.data.empty())
 		{

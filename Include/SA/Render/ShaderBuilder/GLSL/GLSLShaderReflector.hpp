@@ -15,7 +15,7 @@ namespace Sa
 		class ShaderReflector
 		{
 		public:
-			bool Reflect(RawShader& _raw, ShaderDescriptor& _desc);
+			bool Reflect(RawShader& _raw, ShaderDescriptor& _desc) const;
 		};
 	}
 }

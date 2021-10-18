@@ -20,6 +20,7 @@ using namespace Sa;
 #include <SA/Render/Vulkan/Device/VkDevice.hpp>
 #include <SA/Render/Vulkan/Surface/VkWindowSurface.hpp>
 #include <SA/Render/Vulkan/Surface/VkSurface.hpp>
+#include <SA/Render/ShaderBuilder/GLSL/GLSLShaderBuilder.hpp>
 
 #include <SA/SDK/ECS/Systems/WindowSystem.hpp>
 #include <SA/SDK/ECS/Systems/InputSystem.hpp>
@@ -72,6 +73,8 @@ ARenderMaterial* cubeMat = nullptr;
 
 TransffPR camTr;
 ACamera* camera = nullptr;
+
+GLSL::ShaderBuilder shaderBuilder;
 
 //Vk::CommandPool cmdPool;
 //std::vector<Vk::CommandBuffer> cmdBuffers;
@@ -209,7 +212,7 @@ int main()
 					const std::string assetName = "Assets/Shaders/unlit_vert.spha";
 					const std::string resName = "/Engine/Resources/Shaders/Forward/unlit.vert";
 
-					ShaderAsset asset;
+					ShaderAsset asset(&shaderBuilder);
 
 					if (!asset.Load(assetName))
 					{
@@ -219,7 +222,7 @@ int main()
 						}
 					}
 
-					//unlitvert = renderSubIntf->CreateShader(resInit, asset.raw);
+					unlitvert = renderSubIntf->CreateShader(resInit, asset.raw);
 					//unlitPipelineDesc.AddShader(unlitvert, asset.descriptor);
 				}
 
@@ -228,7 +231,7 @@ int main()
 					const std::string assetName = "Assets/Shaders/unlit_frag.spha";
 					const std::string resName = "/Engine/Resources/Shaders/Forward/unlit.frag";
 
-					ShaderAsset asset;
+					ShaderAsset asset(&shaderBuilder);
 
 					if (!asset.Load(assetName))
 					{
@@ -238,7 +241,7 @@ int main()
 						}
 					}
 
-					//unlitfrag = renderSubIntf->CreateShader(resInit, asset.raw);
+					unlitfrag = renderSubIntf->CreateShader(resInit, asset.raw);
 					//unlitPipelineDesc.AddShader(unlitfrag, asset.descriptor);
 				}
 			}
@@ -399,8 +402,8 @@ int main()
 
 			renderSubIntf->DestroyTexture(missText);
 
-			//renderSubIntf->DestroyShader(unlitvert);
-			//renderSubIntf->DestroyShader(unlitfrag);
+			renderSubIntf->DestroyShader(unlitvert);
+			renderSubIntf->DestroyShader(unlitfrag);
 
 			renderSubIntf->DestroyFrameBuffers(surface);
 
