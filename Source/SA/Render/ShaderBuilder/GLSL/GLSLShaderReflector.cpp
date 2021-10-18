@@ -1,14 +1,16 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <SDK/Assets/Render/Shader/ShaderReflector.hpp>
+#include <Render/ShaderBuilder/GLSL/GLSLShaderReflector.hpp>
 
 #include <spirv_cross/spirv_glsl.hpp>
 
 #include <Collections/Debug>
 
-namespace Sa
+#include <Render/Base/Shader/RawShader.hpp>
+
+namespace Sa::GLSL
 {
-	void ParseResources(RawShader& _raw,
+	void ParseResources(ShaderDescriptor& _desc,
 		const spirv_cross::Compiler& _comp,
 		const spirv_cross::SmallVector<spirv_cross::Resource>& _resources,
 		ShaderBindingType _type)
@@ -17,17 +19,7 @@ namespace Sa
 		{
 			const uint32 set = _comp.get_decoration(res.id, spv::DecorationDescriptorSet);
 
-
-			// Engine set.
-			if (set != 0)
-			{
-				_raw.descriptor.engineBindingSets.insert(set);
-				continue;
-			}
-
-
-			// User set.
-			ShaderBindingDescriptor& desc = _raw.descriptor.userBindingSet.bindings.emplace_back();
+			ShaderBindingDescriptor& desc = _desc.EmplaceBinding(set);
 			
 			desc.name = res.name;
 			desc.type = _type;
@@ -40,7 +32,7 @@ namespace Sa
 		}
 	}
 
-	void ParseVertexLayout(RawShader& _raw,
+	void ParseVertexLayout(ShaderDescriptor& _desc,
 		const spirv_cross::Compiler& _comp,
 		const spirv_cross::SmallVector<spirv_cross::Resource>& _resources)
 	{
@@ -49,30 +41,33 @@ namespace Sa
 			const uint32 location = _comp.get_decoration(res.id, spv::DecorationLocation);
 
 			if (location == 0u)
-				_raw.descriptor.vertexLayout |= VertexComp::Position;
+				_desc.vertexLayout |= VertexComp::Position;
 			else if (location == 1u)
-				_raw.descriptor.vertexLayout |= VertexComp::Normal;
+				_desc.vertexLayout |= VertexComp::Normal;
 			else if (location == 2u)
-				_raw.descriptor.vertexLayout |= VertexComp::Tangent;
+				_desc.vertexLayout |= VertexComp::Tangent;
 			else if (location == 3u)
-				_raw.descriptor.vertexLayout |= VertexComp::Texture;
+				_desc.vertexLayout |= VertexComp::Texture;
 		}
 	}
 
-	void ParseSpecConstants(RawShader& _raw, const spirv_cross::Compiler& _comp)
+	void ParseSpecConstants(ShaderDescriptor& _desc, const spirv_cross::Compiler& _comp)
 	{
 		for (auto& spec : _comp.get_specialization_constants())
 		{
-			SpecConstantDescriptor& specConst = _raw.descriptor.EmplaceSpecConstants(spec.constant_id);
+			SpecConstantDescriptor& specConst = _desc.specConstants.emplace_back();
 
+			specConst.id = spec.constant_id;
 			specConst.name = _comp.get_name(spec.id);
 			
 			//const spirv_cross::SPIRConstant& value = _comp.get_constant(spec.id);
 		}
+
+		std::sort(_desc.specConstants.begin(), _desc.specConstants.end());
 	}
 
 
-	bool ShaderReflector::Reflect(RawShader& _raw)
+	bool ShaderReflector::Reflect(RawShader& _raw, ShaderDescriptor& _desc)
 	{
 		if (_raw.data.empty())
 		{
@@ -85,17 +80,17 @@ namespace Sa
 		const spirv_cross::ShaderResources resources = glsl.get_shader_resources();
 
 
-		ParseResources(_raw, glsl, resources.uniform_buffers, ShaderBindingType::UniformBuffer);
-		ParseResources(_raw, glsl, resources.storage_buffers, ShaderBindingType::StorageBuffer);
-		ParseResources(_raw, glsl, resources.subpass_inputs, ShaderBindingType::InputAttachment);
-		ParseResources(_raw, glsl, resources.sampled_images, ShaderBindingType::ImageSampler2D);
+		ParseResources(_desc, glsl, resources.uniform_buffers, ShaderBindingType::UniformBuffer);
+		ParseResources(_desc, glsl, resources.storage_buffers, ShaderBindingType::StorageBuffer);
+		ParseResources(_desc, glsl, resources.subpass_inputs, ShaderBindingType::InputAttachment);
+		ParseResources(_desc, glsl, resources.sampled_images, ShaderBindingType::ImageSampler2D);
 
 
 		// Vertex binding layout.
-		if (_raw.descriptor.stage == ShaderStage::Vertex)
-			ParseVertexLayout(_raw, glsl, resources.stage_inputs);
+		if (_desc.stage == ShaderStage::Vertex)
+			ParseVertexLayout(_desc, glsl, resources.stage_inputs);
 
-		ParseSpecConstants(_raw, glsl);
+		ParseSpecConstants(_desc, glsl);
 
 		return true;
 	}

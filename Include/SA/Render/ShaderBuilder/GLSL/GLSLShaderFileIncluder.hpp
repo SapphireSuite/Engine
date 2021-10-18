@@ -2,12 +2,12 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_SDK_SHADER_FILE_INCLUDER_GUARD
-#define SAPPHIRE_SDK_SHADER_FILE_INCLUDER_GUARD
+#ifndef SAPPHIRE_RENDER_GLSL_SHADER_FILE_INCLUDER_GUARD
+#define SAPPHIRE_RENDER_GLSL_SHADER_FILE_INCLUDER_GUARD
 
 #include <shaderc/shaderc.hpp>
 
-namespace Sa
+namespace Sa::GLSL
 {
 	class ShaderFileIncluder : public shaderc::CompileOptions::IncluderInterface
 	{

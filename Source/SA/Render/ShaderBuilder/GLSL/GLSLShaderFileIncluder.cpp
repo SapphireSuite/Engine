@@ -1,14 +1,14 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <SDK/Assets/Render/Shader/ShaderFileIncluder.hpp>
+#include <Render/ShaderBuilder/GLSL/GLSLShaderFileIncluder.hpp>
 
 #include <libshaderc_util/io_shaderc.h>
 
 #include <Collections/Debug>
 
-#include <SDK/EnvironmentVariable.hpp>
+#include <Core/Support/EnvironmentVariable.hpp>
 
-namespace Sa
+namespace Sa::GLSL
 {
 	shaderc_include_result* MakeError(const std::string& message)
 	{

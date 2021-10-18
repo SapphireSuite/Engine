@@ -1,18 +1,18 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <SDK/Assets/Render/Shader/ShaderCompiler.hpp>
-
-#include <sstream>
-#include <fstream>
+#include <Render/ShaderBuilder/GLSL/GLSLShaderCompiler.hpp>
 
 #include <Collections/Debug>
 
+#include <Core/Algorithms/ReadFile.hpp>
+#include <Core/Support/EnvironmentVariable.hpp>
+
 #include <Render/Base/Shader/RawShader.hpp>
+#include <Render/Base/Shader/ShaderDescriptor.hpp>
 
-#include <SDK/EnvironmentVariable.hpp>
-#include <SDK/Assets/Render/Shader/ShaderFileIncluder.hpp>
+#include <Render/ShaderBuilder/GLSL/GLSLShaderFileIncluder.hpp>
 
-namespace Sa
+namespace Sa::GLSL
 {
 	shaderc_shader_kind GetShaderKind(ShaderStage _stage)
 	{
@@ -62,23 +62,8 @@ namespace Sa
 	{
 		std::string code;
 
-
-		// Read File.
-		{
-			std::fstream fStream(_path, std::ios_base::in);
-
-			if (!fStream.is_open())
-			{
-				SA_LOG(L"Failed to open file {" << _path << L"}!", Error, SA/SDK/Asset);
-				return "";
-			}
-
-
-			std::stringstream scode;
-			scode << fStream.rdbuf();
-
-			code = scode.str();
-		}
+		if (!ReadFile(_path, code))
+			return "";
 
 
 		// Rename use main() by main_user()
@@ -99,33 +84,28 @@ namespace Sa
 		{
 			static std::string mainEnginePath = EnvVar::path + "\\Resources\\Shaders\\Lib\\main_engine.glsl";
 
-			std::fstream fStream(mainEnginePath, std::ios_base::in);
-
-			if (!fStream.is_open())
-			{
-				SA_LOG(L"Failed to open file main engine!", Error, SA/SDK/Asset);
+			std::string mainCode;
+			
+			if (!ReadFile(mainEnginePath, mainCode))
 				return "";
-			}
 
-
-			std::stringstream scode;
-			scode << fStream.rdbuf();
-
-			code += scode.str();
+			code += mainCode;
 		}
 
 
 		return code;
 	}
 
-	bool ShaderCompiler::Compile(const std::string& _path, RawShader& _raw)
+	bool ShaderCompiler::Compile(const std::string& _path, RawShader& _raw, ShaderDescriptor& _desc)
 	{
 		SA_LOG(L"Compiling shader {" << _path << L"}", Infos, SA/SDK/Asset);
 
 		const std::string code = AssembleShader(_path);
 
+		_desc.stage = ShaderStageFromFile(_path);
+
 		shaderc::CompileOptions options;
-		SetStageOptions(options, _raw.descriptor.stage);
+		SetStageOptions(options, _desc.stage);
 		options.SetIncluder(std::make_unique<ShaderFileIncluder>());
 
 #if !SA_DEBUG
@@ -134,7 +114,7 @@ namespace Sa
 
 
 		shaderc::SpvCompilationResult module =
-			mHandle.CompileGlslToSpv(code.data(), code.size(), GetShaderKind(_raw.descriptor.stage), _path.c_str(), options);
+			mHandle.CompileGlslToSpv(code.data(), code.size(), GetShaderKind(_desc.stage), _path.c_str(), options);
 
 		if (module.GetCompilationStatus() != shaderc_compilation_status_success)
 		{

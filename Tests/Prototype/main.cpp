@@ -219,8 +219,8 @@ int main()
 						}
 					}
 
-					unlitvert = renderSubIntf->CreateShader(resInit, asset.raw);
-					unlitPipelineDesc.AddShader(unlitvert, asset.raw.descriptor);
+					//unlitvert = renderSubIntf->CreateShader(resInit, asset.raw);
+					//unlitPipelineDesc.AddShader(unlitvert, asset.descriptor);
 				}
 
 				// Unlit frag
@@ -238,8 +238,8 @@ int main()
 						}
 					}
 
-					unlitfrag = renderSubIntf->CreateShader(resInit, asset.raw);
-					unlitPipelineDesc.AddShader(unlitfrag, asset.raw.descriptor);
+					//unlitfrag = renderSubIntf->CreateShader(resInit, asset.raw);
+					//unlitPipelineDesc.AddShader(unlitfrag, asset.descriptor);
 				}
 			}
 
@@ -289,18 +289,18 @@ int main()
 
 			// Pipeline
 			{
-				unlitPipelineDesc.SetRenderPass(renderPass, renderPassDesc, 0u);
-				unlitPipelineDesc.shaderInfos.vertexBindingLayout.meshLayout = cubeMesh->GetLayout();
+				//unlitPipelineDesc.SetRenderPass(renderPass, renderPassDesc, 0u);
+				//unlitPipelineDesc.shaderInfos.vertexBindingLayout.meshLayout = cubeMesh->GetLayout();
 
-				unlitPipeline = renderSubIntf->CreatePipeline(unlitPipelineDesc);
+				//unlitPipeline = renderSubIntf->CreatePipeline(unlitPipelineDesc);
 			}
 
 
 			// Material.
 			{
-				RenderMaterialCreateInfos infos{ unlitPipeline, &unlitPipelineDesc };
-				infos.AddBinding<IBOBinding>(0u, missText);
-				cubeMat = renderSubIntf->CreateMaterial(infos);
+				//RenderMaterialCreateInfos infos{ unlitPipeline, &unlitPipelineDesc };
+				//infos.AddBinding<IBOBinding>(0u, missText);
+				//cubeMat = renderSubIntf->CreateMaterial(infos);
 			}
 
 
@@ -391,16 +391,16 @@ int main()
 
 			renderSubIntf->DestroyCamera(camera);
 
-			renderSubIntf->DestroyMaterial(cubeMat);
+			//renderSubIntf->DestroyMaterial(cubeMat);
 
-			renderSubIntf->DestroyPipeline(unlitPipeline);
+			//renderSubIntf->DestroyPipeline(unlitPipeline);
 
 			renderSubIntf->DestroyStaticMesh(cubeMesh);
 
 			renderSubIntf->DestroyTexture(missText);
 
-			renderSubIntf->DestroyShader(unlitvert);
-			renderSubIntf->DestroyShader(unlitfrag);
+			//renderSubIntf->DestroyShader(unlitvert);
+			//renderSubIntf->DestroyShader(unlitfrag);
 
 			renderSubIntf->DestroyFrameBuffers(surface);
 
