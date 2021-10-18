@@ -3,6 +3,7 @@
 #include <SDK/Assets/Render/ShaderAsset.hpp>
 
 #include <Core/Algorithms/SizeOf.hpp>
+#include <Core/Serialize/Serializer.hpp>
 
 namespace Sa
 {
@@ -67,8 +68,6 @@ namespace Sa
 		SA_ASSERT(Nullptr, SA/SDK, mShaderBuilder, L"Try import shader with nullptr shader builder interface!");
 
 		return mShaderBuilder->Build(_path, raw, descriptor);
-
-		return true;
 	}
 
 

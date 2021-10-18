@@ -2,6 +2,8 @@
 
 #include <SDK/Assets/Render/RenderPassAsset.hpp>
 
+#include <Core/Serialize/Serializer.hpp>
+
 namespace Sa
 {
 	bool RenderPassAsset::IsValid() const
@@ -34,6 +36,8 @@ namespace Sa
 	
 	bool RenderPassAsset::Import_Internal(const std::string& _path)
 	{
+		(void)_path;
+
 		return false;
 	}
 }

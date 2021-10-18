@@ -8,10 +8,14 @@
 #include <fstream>
 
 #include <SA/Core/Types/Abstract.hpp>
-#include <SA/Core/Serialize/Serializer.hpp>
 
 namespace Sa
 {
+	namespace Serialize
+	{
+		class Reader;
+	}
+
 	class AAsset : public Abstract
 	{
 		std::string GetFullPath(const std::string& _path) const;

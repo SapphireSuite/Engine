@@ -3,6 +3,7 @@
 #include <SDK/Assets/Render/TextureAsset.hpp>
 
 #include <Core/Algorithms/SizeOf.hpp>
+#include <Core/Serialize/Serializer.hpp>
 
 #include <SDK/Wrappers/StbImage.hpp>
 

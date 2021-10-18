@@ -6,6 +6,9 @@
 #define SAPPHIRE_RENDER_RAW_SHADER_GUARD
 
 #include <vector>
+#include <string>
+
+#include <SA/Core/Types/Int.hpp>
 
 namespace Sa
 {
@@ -20,7 +23,7 @@ namespace Sa
 	namespace Serialize
 	{
 		void ToBinary(const RawShader& _obj, std::string& _str);
-		void FromBinary(RawShader& _obj, Reader& _read);
+		void FromBinary(RawShader& _obj, class Reader& _read);
 	}
 }
 

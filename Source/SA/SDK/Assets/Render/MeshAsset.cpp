@@ -3,6 +3,7 @@
 #include <SDK/Assets/Render/MeshAsset.hpp>
 
 #include <Core/Algorithms/SizeOf.hpp>
+#include <Core/Serialize/Serializer.hpp>
 
 namespace Sa
 {

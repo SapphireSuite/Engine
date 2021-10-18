@@ -5,6 +5,7 @@
 #include <filesystem>
 
 #include <Core/Algorithms/ReadFile.hpp>
+#include <Core/Serialize/Serializer.hpp>
 #include <Core/Support/EnvironmentVariable.hpp>
 
 namespace Sa
