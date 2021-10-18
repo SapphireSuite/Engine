@@ -8,6 +8,7 @@
 #include <fstream>
 
 #include <SA/Core/Types/Abstract.hpp>
+#include <SA/Core/Serialize/Serializer.hpp>
 
 namespace Sa
 {
@@ -17,7 +18,7 @@ namespace Sa
 		void CreateDirectory(const std::string& _path) const;
 
 	protected:
-		virtual bool Load_Internal(std::string&& _bin) = 0;
+		virtual bool Load_Internal(Serialize::Reader&& _read, const std::string& _path) = 0;
 		virtual bool Save_Internal(std::fstream& _fStream) const = 0;
 		virtual bool Import_Internal(const std::string& _path) = 0;
 

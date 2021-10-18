@@ -5,7 +5,6 @@
 #include <fstream>
 
 #include <Core/Algorithms/SizeOf.hpp>
-#include <Core/Serialize/Serializer.hpp>
 
 namespace Sa
 {
@@ -14,11 +13,11 @@ namespace Sa
 		return !raw.vertices.empty() && !raw.indices.empty();
 	}
 
-	bool MeshAsset::Load_Internal(std::string&& _bin)
+	bool MeshAsset::Load_Internal(Serialize::Reader&& _read, const std::string& _path)
 	{
-		Serialize::Reader read = std::move(_bin);
+		(void)_path;
 
-		Serialize::FromBinary(raw, read);
+		Serialize::FromBinary(raw, _read);
 		
 		return true;
 	}

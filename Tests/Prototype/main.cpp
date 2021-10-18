@@ -26,7 +26,7 @@ using namespace Sa;
 #include <SA/SDK/ECS/Systems/Render/RenderSystem.hpp>
 #include <SA/SDK/ECS/Systems/Render/RenderSubSystem.hpp>
 
-#include <SA/SDK/Assets/Render/Shader/ShaderAsset.hpp>
+#include <SA/SDK/Assets/Render/ShaderAsset.hpp>
 #include <SA/SDK/Assets/Render/TextureAsset.hpp>
 #include <SA/SDK/Assets/Render/ModelAsset.hpp>
 

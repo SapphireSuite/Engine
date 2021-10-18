@@ -19,7 +19,7 @@ namespace Sa
 		static bool ShouldCompileShader(const std::string& _resourcePath, const std::string& _assetPath) noexcept;
 
 	protected:
-		bool Load_Internal(std::string&& _bin) override final;
+		bool Load_Internal(Serialize::Reader&& _read, const std::string& _path) override final;
 		bool Save_Internal(std::fstream& _fStream) const override final;
 		bool Import_Internal(const std::string& _path) override final;
 

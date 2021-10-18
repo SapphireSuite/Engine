@@ -3,7 +3,6 @@
 #include <SDK/Assets/Render/TextureAsset.hpp>
 
 #include <Core/Algorithms/SizeOf.hpp>
-#include <Core/Serialize/Serializer.hpp>
 
 #include <SDK/Wrappers/StbImage.hpp>
 
@@ -15,11 +14,11 @@ namespace Sa
 	}
 
 	
-	bool TextureAsset::Load_Internal(std::string&& _bin)
+	bool TextureAsset::Load_Internal(Serialize::Reader&& _read, const std::string& _path)
 	{
-		Serialize::Reader read = std::move(_bin);
+		(void)_path;
 
-		Serialize::FromBinary(raw, read);
+		Serialize::FromBinary(raw, _read);
 
 		return true;
 	}

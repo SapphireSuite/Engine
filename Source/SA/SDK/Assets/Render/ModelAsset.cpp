@@ -18,10 +18,11 @@ namespace Sa
 		return !meshes.empty();
 	}
 
-	bool ModelAsset::Load_Internal(std::string&& _bin)
+	bool ModelAsset::Load_Internal(Serialize::Reader&& _read, const std::string& _path)
 	{
 		// TODO: implement.
-		(void)_bin;
+		(void)_read;
+		(void)_path;
 		SA_LOG(L"IMPLEMENT", Error, SA/SDK/Asset);
 		return false;
 	}

@@ -14,7 +14,7 @@ namespace Sa
 	class TextureAsset : public ARenderAsset
 	{
 	protected:
-		bool Load_Internal(std::string&& _bin) override final;
+		bool Load_Internal(Serialize::Reader&& _read, const std::string& _path) override final;
 		bool Save_Internal(std::fstream& _fStream) const override final;
 		bool Import_Internal(const std::string& _path) override final;
 

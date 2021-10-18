@@ -1,11 +1,10 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <SDK/Assets/Render/Shader/ShaderAsset.hpp>
+#include <SDK/Assets/Render/ShaderAsset.hpp>
 
 #include <fstream>
 
 #include <Core/Algorithms/SizeOf.hpp>
-#include <Core/Serialize/Serializer.hpp>
 
 namespace Sa
 {
@@ -26,15 +25,25 @@ namespace Sa
 	}
 
 	
-	bool ShaderAsset::Load_Internal(std::string&& _bin)
+	bool ShaderAsset::Load_Internal(Serialize::Reader&& _read, const std::string& _path)
 	{
-		// TODO: Use ShouldCompileShader.
+		Serialize::FromBinary(mResourcePath, _read);
 
-		Serialize::Reader read = std::move(_bin);
+		if (ShouldCompileShader(mResourcePath, _path))
+		{
+			// Re-import shader for compilation.
 
-		Serialize::FromBinary(mResourcePath, read);
-		Serialize::FromBinary(raw, read);
-		Serialize::FromBinary(descriptor, read);
+			if (!Import(mResourcePath))
+			{
+				SA_LOG("Shader {" << _path << L"} Re-import compilation failed!", Error, SA/SDK/Asset);
+				return false;
+			}
+		}
+		else
+		{
+			Serialize::FromBinary(raw, _read);
+			Serialize::FromBinary(descriptor, _read);
+		}
 
 		return true;
 	}

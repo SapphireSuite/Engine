@@ -2,8 +2,6 @@
 
 #include <SDK/Assets/Render/RenderPassAsset.hpp>
 
-#include <Core/Serialize/Serializer.hpp>
-
 namespace Sa
 {
 	bool RenderPassAsset::IsValid() const
@@ -12,11 +10,11 @@ namespace Sa
 	}
 
 
-	bool RenderPassAsset::Load_Internal(std::string&& _bin)
+	bool RenderPassAsset::Load_Internal(Serialize::Reader&& _read, const std::string& _path)
 	{
-		Serialize::Reader read = std::move(_bin);
+		(void)_path;
 
-		Serialize::FromBinary(raw, read);
+		Serialize::FromBinary(raw, _read);
 
 		return true;
 	}

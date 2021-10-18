@@ -59,7 +59,7 @@ namespace Sa
 		if (!ReadFile(fullPath, bin))
 			return false;
 
-		return Load_Internal(std::move(bin));
+		return Load_Internal(std::move(bin), fullPath);
 	}
 
 	bool AAsset::Save(const std::string& _path) const
