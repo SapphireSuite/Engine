@@ -6,11 +6,9 @@
 
 namespace Sa
 {
-	void RawShader::Reset()
+	void RawShader::Clear()
 	{
 		data.clear();
-
-		descriptor.Clear();
 	}
 
 
@@ -19,13 +17,11 @@ namespace Sa
 		void ToBinary(const RawShader& _obj, std::string& _str)
 		{
 			ToBinary(_obj.data, _str);
-			ToBinary(_obj.descriptor, _str);
 		}
 
 		void FromBinary(RawShader& _obj, Reader& _read)
 		{
 			FromBinary(_obj.data, _read);
-			FromBinary(_obj.descriptor, _read);
 		}
 	}
 }

@@ -23,14 +23,11 @@ namespace Sa
 		/// Vertex layout (valid only if stage == Vertex).
 		Flags<VertexComp> vertexLayout;
 
-		ShaderBindingSetDescriptor userBindingSet;
-		std::set<uint32> engineBindingSets;
-
-		std::vector<SpecConstantDescriptor> userSpecConstants;
-		std::vector<SpecConstantDescriptor> engineSpecConstants;
+		std::vector<ShaderBindingSetDescriptor> bindingSet;
+		std::vector<SpecConstantDescriptor> specConstants;
 
 
-		SpecConstantDescriptor& EmplaceSpecConstants(uint32 _id);
+		ShaderBindingDescriptor& EmplaceBinding(uint32 _set);
 
 		void Clear();
 	};

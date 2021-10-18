@@ -8,18 +8,13 @@
 
 namespace Sa
 {
-	SpecConstantDescriptor& ShaderDescriptor::EmplaceSpecConstants(uint32 _id)
+	ShaderBindingDescriptor& ShaderDescriptor::EmplaceBinding(uint32 _set)
 	{
-		SpecConstantDescriptor& specDesc =
-			_id >= SpecConstantID::Min ?
-			engineSpecConstants.emplace_back() :
-			userSpecConstants.emplace_back();
+		while (_set >= bindingSet.size())
+			bindingSet.emplace_back();
 
-		specDesc.id = _id;
-
-		return specDesc;
+		return bindingSet[_set].bindings.emplace_back();
 	}
-
 
 	void ShaderDescriptor::Clear()
 	{
@@ -27,11 +22,8 @@ namespace Sa
 
 		vertexLayout = 0u;
 
-		userBindingSet.bindings.clear();
-		engineBindingSets.clear();
-
-		userSpecConstants.clear();
-		engineSpecConstants.clear();
+		bindingSet.clear();
+		specConstants.clear();
 	}
 
 
@@ -44,11 +36,8 @@ namespace Sa
 			if (_obj.stage == ShaderStage::Vertex)
 				ToBinary(_obj.vertexLayout, _str);
 
-			ToBinary(_obj.userBindingSet, _str);
-			ToBinary(_obj.engineBindingSets, _str);
-
-			ToBinary(_obj.userSpecConstants, _str);
-			ToBinary(_obj.engineSpecConstants, _str);
+			ToBinary(_obj.bindingSet, _str);
+			ToBinary(_obj.specConstants, _str);
 		}
 
 		void FromBinary(ShaderDescriptor& _obj, Reader& _read)
@@ -58,11 +47,8 @@ namespace Sa
 			if (_obj.stage == ShaderStage::Vertex)
 				FromBinary(_obj.vertexLayout, _read);
 
-			FromBinary(_obj.userBindingSet, _read);
-			FromBinary(_obj.engineBindingSets, _read);
-
-			FromBinary(_obj.userSpecConstants, _read);
-			FromBinary(_obj.engineSpecConstants, _read);
+			FromBinary(_obj.bindingSet, _read);
+			FromBinary(_obj.specConstants, _read);
 		}
 	}
 }

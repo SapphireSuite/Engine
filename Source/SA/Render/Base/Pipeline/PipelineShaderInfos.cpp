@@ -31,23 +31,23 @@ namespace Sa
 		stage.stage = _descriptor.stage;
 
 
-		// Bindings
-		{
-			for (auto& bindSet : _descriptor.userBindingSet.bindings)
-				EmplaceBinding(userBindingSet, bindSet, _descriptor.stage);
+		//// Bindings
+		//{
+		//	for (auto& bindSet : _descriptor.userBindingSet.bindings)
+		//		EmplaceBinding(userBindingSet, bindSet, _descriptor.stage);
 
-			engineBindingSets.insert(_descriptor.engineBindingSets.begin(), _descriptor.engineBindingSets.end());
-		}
+		//	engineBindingSets.insert(_descriptor.engineBindingSets.begin(), _descriptor.engineBindingSets.end());
+		//}
 
 
-		// Spec constants.
-		{
-			// User
-			for (auto& specCst : _descriptor.userSpecConstants)
-				userSpecConstants.emplace(specCst);
+		//// Spec constants.
+		//{
+		//	// User
+		//	for (auto& specCst : _descriptor.userSpecConstants)
+		//		userSpecConstants.emplace(specCst);
 
-			for (auto& specCst : _descriptor.engineSpecConstants)
-				engineSpecConstants.emplace(specCst);
-		}
+		//	for (auto& specCst : _descriptor.engineSpecConstants)
+		//		engineSpecConstants.emplace(specCst);
+		//}
 	}
 }

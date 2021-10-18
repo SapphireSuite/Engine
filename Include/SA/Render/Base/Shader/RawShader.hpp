@@ -12,9 +12,8 @@ namespace Sa
 	struct RawShader
 	{
 		std::vector<uint32> data;
-		ShaderDescriptor descriptor;
 
-		void Reset();
+		void Clear();
 	};
 
 
