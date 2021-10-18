@@ -5,7 +5,9 @@
 #include <sstream>
 #include <filesystem>
 
-#include <SDK/EnvironmentVariable.hpp>
+#include <Core/Algorithms/ReadFile.hpp>
+
+#include <Core/Support/EnvironmentVariable.hpp>
 
 namespace Sa
 {
@@ -27,27 +29,6 @@ namespace Sa
 				std::filesystem::create_directories(dirPath);
 		}
 	}
-
-	bool AAsset::ReadFile(const std::string& _path, std::string& _out) const
-	{
-		const std::string fullpath = GetFullPath(_path);
-
-		std::fstream fStream(fullpath, std::ios::binary | std::ios_base::in);
-
-		if (!fStream.is_open())
-		{
-			SA_LOG("Failed to open file {" << fullpath << L"}!", Error, SA/SDK/Asset);
-			return false;
-		}
-
-		std::stringstream sstream;
-		sstream << fStream.rdbuf();
-
-		_out = sstream.str();
-
-		return true;
-	}
-
 
 	bool AAsset::Open(const std::string& _path)
 	{
@@ -101,6 +82,7 @@ namespace Sa
 			SA_LOG(L"Failed to open file {" << fullPath << L"}!", Error, SA/SDK/Asset);
 			return false;
 		}
+
 
 		return Save_Internal(fStream);
 	}

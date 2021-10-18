@@ -7,16 +7,8 @@
 #include <Core/Algorithms/SizeOf.hpp>
 #include <Core/Serialize/Serializer.hpp>
 
-#include <SDK/Assets/Render/Shader/ShaderCompiler.hpp>
-#include <SDK/Assets/Render/Shader/ShaderReflector.hpp>
-
-
 namespace Sa
 {
-	ShaderCompiler compiler;
-	ShaderReflector reflector;
-
-
 	bool ShaderAsset::ShouldCompileShader(const std::string& _resourcePath, const std::string& _assetPath) noexcept
 	{
 		struct stat assetStat;
@@ -36,10 +28,13 @@ namespace Sa
 	
 	bool ShaderAsset::Load_Internal(std::string&& _bin)
 	{
+		// TODO: Use ShouldCompileShader.
+
 		Serialize::Reader read = std::move(_bin);
 
 		Serialize::FromBinary(mResourcePath, read);
 		Serialize::FromBinary(raw, read);
+		Serialize::FromBinary(descriptor, read);
 
 		return true;
 	}
@@ -47,7 +42,9 @@ namespace Sa
 	void ShaderAsset::UnLoad()
 	{
 		mResourcePath.clear();
-		raw.Reset();
+
+		raw.Clear();
+		descriptor.Clear();
 	}
 
 	
@@ -55,6 +52,7 @@ namespace Sa
 	{
 		_fStream << Serialize::ToBinary(mResourcePath);
 		_fStream << Serialize::ToBinary(raw);
+		_fStream << Serialize::ToBinary(descriptor);
 
 		return true;
 	}
@@ -63,13 +61,14 @@ namespace Sa
 	bool ShaderAsset::Import_Internal(const std::string& _path)
 	{
 		mResourcePath = _path;
-		raw.descriptor.stage = ShaderStageFromFile(_path);
 
-		if (!compiler.Compile(_path, raw))
-			return false;
+		// TODO: Use Shader interface.
 
-		if (!reflector.Reflect(raw))
-			return false;
+		//if (!compiler.Compile(_path, raw))
+		//	return false;
+
+		//if (!reflector.Reflect(raw))
+		//	return false;
 
 		return true;
 	}

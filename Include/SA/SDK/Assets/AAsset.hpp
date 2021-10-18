@@ -16,8 +16,6 @@ namespace Sa
 		std::string GetFullPath(const std::string& _path) const;
 		void CreateDirectory(const std::string& _path) const;
 
-		bool ReadFile(const std::string& _path, std::string& _out) const;
-
 	protected:
 		virtual bool Load_Internal(std::string&& _bin) = 0;
 		virtual bool Save_Internal(std::fstream& _fStream) const = 0;

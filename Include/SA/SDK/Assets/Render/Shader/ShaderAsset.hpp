@@ -8,6 +8,7 @@
 #include <SA/SDK/Assets/Render/ARenderAsset.hpp>
 
 #include <SA/Render/Base/Shader/RawShader.hpp>
+#include <SA/Render/Base/Shader/ShaderDescriptor.hpp>
 
 namespace Sa
 {
@@ -24,6 +25,7 @@ namespace Sa
 
 	public:
 		RawShader raw;
+		ShaderDescriptor descriptor;
 
 
 		bool IsValid() const override final;
