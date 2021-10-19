@@ -11,8 +11,6 @@
 
 #include <SA/Window/GLFW/GLFWWindow.hpp>
 
-#if SA_GLFW
-
 namespace Sa::GLFW
 {
 	class WindowInterface : public AWindowInterface
@@ -27,7 +25,5 @@ namespace Sa::GLFW
 		bool QueryRequiredExtensions(std::vector<const char*>& _extensions) const override final;
 	};
 }
-
-#endif
 
 #endif // GUARD

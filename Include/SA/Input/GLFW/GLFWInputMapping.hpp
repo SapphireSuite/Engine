@@ -9,8 +9,6 @@
 
 #include <SA/Core/Debug.hpp>
 
-#if SA_GLFW
-
 namespace Sa::GLFW
 {
 	std::unordered_map<int, Key> gGlfwToEngineInputMap
@@ -151,7 +149,5 @@ namespace Sa::GLFW
 		}
 	}
 }
-
-#endif
 
 #endif // GUARD

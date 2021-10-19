@@ -4,11 +4,13 @@
 
 #include <Input/GLFW/GLFWInputWindowContext.hpp>
 
-#include <Render/Vulkan/Debug/Debug.hpp>
-#include <Render/Vulkan/VkInstance.hpp>
-#include <Render/Vulkan/Surface/VkWindowSurface.hpp>
+#if SA_VULKAN
 
-#if SA_GLFW
+	#include <Render/Vulkan/Debug/Debug.hpp>
+	#include <Render/Vulkan/VkInstance.hpp>
+	#include <Render/Vulkan/Surface/VkWindowSurface.hpp>
+
+#endif
 
 namespace Sa::GLFW
 {
@@ -225,5 +227,3 @@ namespace Sa::GLFW
 		return mHandle;
 	}
 }
-
-#endif

@@ -6,8 +6,6 @@
 
 #include <Window/GLFW/GLFWWindow.hpp>
 
-#if SA_GLFW
-
 namespace Sa::GLFW
 {
 	AInputWindowContext* InputInterface::InstantiateWindowContext()
@@ -41,5 +39,3 @@ namespace Sa::GLFW
 		glfwPollEvents();
 	}
 }
-
-#endif

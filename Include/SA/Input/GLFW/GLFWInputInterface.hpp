@@ -5,11 +5,7 @@
 #ifndef SAPPHIRE_INPUT_GLFW_INPUT_INTERFACE_GUARD
 #define SAPPHIRE_INPUT_GLFW_INPUT_INTERFACE_GUARD
 
-#include <SA/Core/Support/API/GLFW.hpp>
-
 #include <SA/Input/Base/AInputInterface.hpp>
-
-#if SA_GLFW
 
 namespace Sa::GLFW
 {
@@ -26,7 +22,5 @@ namespace Sa::GLFW
 		void Update() override final;
 	};
 }
-
-#endif
 
 #endif // GUARD

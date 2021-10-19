@@ -4,8 +4,6 @@
 
 #include <Core/Debug.hpp>
 
-#if SA_GLFW
-
 namespace Sa::GLFW
 {
 	void ErrorCallback(int32 error, const char* description)
@@ -61,5 +59,3 @@ namespace Sa::GLFW
 		return true;
 	}
 }
-
-#endif

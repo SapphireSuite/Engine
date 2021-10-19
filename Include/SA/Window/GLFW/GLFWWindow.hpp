@@ -9,8 +9,6 @@
 
 #include <SA/Core/Support/API/GLFW.hpp>
 
-#if SA_GLFW
-
 /**
 *	\file GLFWWindow.hpp
 * 
@@ -105,7 +103,5 @@ namespace Sa::GLFW
 
 
 /** \} */
-
-#endif
 
 #endif // GUARD

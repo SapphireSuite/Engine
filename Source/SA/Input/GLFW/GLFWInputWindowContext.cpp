@@ -7,8 +7,6 @@
 
 #include <Core/Algorithms/Equals.hpp>
 
-#if SA_GLFW
-
 namespace Sa::GLFW
 {
 	void WindowKeyCallback(GLFWwindow* _handle, int _key, int _scancode, int _action, int _mods)
@@ -107,5 +105,3 @@ namespace Sa::GLFW
 		mSavedMousePos = _mousePos;
 	}
 }
-
-#endif
