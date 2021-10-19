@@ -4,8 +4,6 @@
 
 #include <Render/Vulkan/Device/VkDevice.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	void Camera::Create(const Device& _device)
@@ -51,5 +49,3 @@ namespace Sa::Vk
 		}
 	}
 }
-
-#endif

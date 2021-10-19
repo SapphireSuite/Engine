@@ -10,8 +10,6 @@
 #include <Render/Vulkan/Device/VkDevice.hpp>
 #include <Render/Vulkan/Pipeline/VkPipeline.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	void DescriptorSet::Create(const Device& _device, const PipelineBindingSetDescriptor& _infos, VkDescriptorSetLayout _descSetLayout)
@@ -104,5 +102,3 @@ namespace Sa::Vk
 		//vkFreeDescriptorSets(_device, mDescriptorPool, 1u, mDescriptorSets);
 	}
 }
-
-#endif

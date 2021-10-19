@@ -7,8 +7,6 @@
 
 #include <SA/Render/Vulkan/Debug/Debug.hpp>
 
-#if SA_VULKAN
-
 namespace Sa
 {
 	class AWindowInterface;
@@ -33,7 +31,5 @@ namespace Sa::Vk
 		operator VkInstance() const noexcept;
 	};
 }
-
-#endif
 
 #endif // GUARD

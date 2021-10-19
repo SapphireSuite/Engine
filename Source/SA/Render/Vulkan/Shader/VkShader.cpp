@@ -9,8 +9,6 @@
 #include <Render/Vulkan/VkResourceInitializer.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	void Shader::Create(const Device& _device, ResourceInitializer& _init, const RawShader& _raw)
@@ -46,5 +44,3 @@ namespace Sa::Vk
 		return mHandle;
 	}
 }
-
-#endif

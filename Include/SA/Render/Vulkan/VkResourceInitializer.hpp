@@ -11,8 +11,6 @@
 
 #include <SA/Render/Vulkan/Device/VkCommandPool.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	class Device;
@@ -31,7 +29,5 @@ namespace Sa::Vk
 		void Submit(const Device& _device);
 	};
 }
-
-#endif
 
 #endif // GUARD

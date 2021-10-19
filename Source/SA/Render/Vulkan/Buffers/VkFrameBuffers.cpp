@@ -8,8 +8,6 @@
 #include <Render/Vulkan/Device/VkDevice.hpp>
 #include <Render/Vulkan/Pass/VkRenderPass.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	void FrameBuffer::AddClearColor(Format _format, const Color& _clearColor)
@@ -136,5 +134,3 @@ namespace Sa::Vk
 		return mHandle;
 	}
 }
-
-#endif

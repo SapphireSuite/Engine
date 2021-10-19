@@ -11,8 +11,6 @@
 
 #include <SA/Render/Vulkan/Buffers/VkCommandBuffer.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	class Device;
@@ -36,7 +34,5 @@ namespace Sa::Vk
 		operator VkCommandPool() const;
 	};
 }
-
-#endif
 
 #endif // GUARD

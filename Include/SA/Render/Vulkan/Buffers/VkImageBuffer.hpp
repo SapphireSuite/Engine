@@ -10,8 +10,6 @@
 #include <SA/Render/Vulkan/VkResourceInitializer.hpp>
 #include <SA/Render/Vulkan/Buffers/VkImageBufferCreateInfos.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	class Device;
@@ -64,7 +62,5 @@ namespace Sa::Vk
 		operator VkDeviceMemory() const noexcept;
 	};
 }
-
-#endif
 
 #endif // GUARD

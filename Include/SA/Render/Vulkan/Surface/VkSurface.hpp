@@ -10,8 +10,6 @@
 #include <SA/Render/Vulkan/Surface/VkSwapChain.hpp>
 #include <SA/Render/Vulkan/Surface/VkSurfaceSupportDetails.hpp>
 
-#if SA_VULKAN
-
 namespace Sa
 {
 	struct RenderPassDescriptor;
@@ -49,7 +47,5 @@ namespace Sa::Vk
 		operator VkSurfaceKHR() const noexcept;
 	};
 }
-
-#endif
 
 #endif // GUARD

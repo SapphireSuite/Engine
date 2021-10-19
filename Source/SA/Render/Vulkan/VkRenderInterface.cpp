@@ -6,17 +6,18 @@
 #include <Render/Vulkan/Debug/VkValidationLayers.hpp>
 #include <Render/Vulkan/Surface/VkWindowSurface.hpp>
 
-#include <Window/Base/AWindow.hpp>
+#if SA_WINDOW
 
-#if SA_VULKAN
+	#include <Window/Base/AWindow.hpp>
+
+#endif
 
 namespace Sa::Vk
 {
 	void RenderInterface::Create(const AWindowInterface* _winIntf)
 	{
-		SA_ASSERT(Nullptr, SA/Render/Vulkan, _winIntf, L"Create Render interface with nullptr Window interface!")
+		// _winIntf can be nullptr for offscreen rendering.
 		SA_ASSERT(Default, SA/Render/Vulkan, ValidationLayers::CheckValidationSupport(), L"Validation Layers not supported!");
-
 
 		mInstance.Create(_winIntf);
 
@@ -41,6 +42,8 @@ namespace Sa::Vk
 	}
 
 
+#if SA_WINDOW
+
 	AWindowSurface* RenderInterface::CreateWindowSurface(AWindow* _win)
 	{
 		SA_ASSERT(Nullptr, SA/Render/Vulkan, _win);
@@ -62,11 +65,11 @@ namespace Sa::Vk
 		delete vkWinSurface;
 	}
 
+#endif
+
 
 	RenderInterface::operator const Instance&() const
 	{
 		return mInstance;
 	}
 }
-
-#endif

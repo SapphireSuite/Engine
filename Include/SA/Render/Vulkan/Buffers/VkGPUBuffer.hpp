@@ -7,8 +7,6 @@
 
 #include <SA/Render/Vulkan/Buffers/VkBufferBase.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	class ResourceInitializer;
@@ -29,7 +27,5 @@ namespace Sa::Vk
 		void UpdateData(const Device& _device, ResourceInitializer& _init, const void* _data, uint64 _size, uint64 _offset = 0);
 	};
 }
-
-#endif
 
 #endif // GUARD

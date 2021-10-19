@@ -9,8 +9,6 @@
 
 #include <SA/Core/Support/API/Vulkan.hpp>
 
-#if SA_VULKAN
-
 namespace Sa
 {
 	struct PipelineBindingSetDescriptor;
@@ -42,7 +40,5 @@ namespace Sa::Vk
 		void Update(const Device& _device, const std::vector<const ARenderMaterialBinding*>& _bindings);
 	};
 }
-
-#endif
 
 #endif // GUARD

@@ -11,8 +11,6 @@
 
 #include <SA/Core/Support/API/Vulkan.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	struct SurfaceSupportDetails
@@ -26,7 +24,5 @@ namespace Sa::Vk
 		Vec2ui ChooseSwapExtent() const;
 	};
 }
-
-#endif
 
 #endif // GUARD

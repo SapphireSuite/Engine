@@ -4,8 +4,6 @@
 
 #include <Render/Vulkan/Device/VkDevice.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	bool Queue::IsValid() const noexcept
@@ -45,5 +43,3 @@ namespace Sa::Vk
 		return mHandle;
 	}
 }
-
-#endif

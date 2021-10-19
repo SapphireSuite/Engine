@@ -9,8 +9,6 @@
 
 #include <SA/Core/Types/Int.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	class Device;
@@ -31,7 +29,5 @@ namespace Sa::Vk
 		operator VkQueue() const;
 	};
 }
-
-#endif
 
 #endif // GUARD

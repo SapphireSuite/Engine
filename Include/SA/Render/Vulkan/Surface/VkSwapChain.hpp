@@ -13,8 +13,6 @@
 
 #include <SA/Render/Vulkan/Buffers/VkFrameBuffer.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	class Device;
@@ -60,7 +58,5 @@ namespace Sa::Vk
 		void End(const Device& _device, const std::vector<CommandBuffer>& _cmdBuffers);
 	};
 }
-
-#endif
 
 #endif // GUARD

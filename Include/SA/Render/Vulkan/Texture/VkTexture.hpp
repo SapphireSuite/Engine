@@ -5,14 +5,10 @@
 #ifndef SAPPHIRE_RENDER_VK_TEXTURE_GUARD
 #define SAPPHIRE_RENDER_VK_TEXTURE_GUARD
 
-#include <SA/Core/Support/API/Vulkan.hpp>
-
 #include <SA/Render/Base/Texture/ATexture.hpp>
 
 #include <SA/Render/Vulkan/Buffers/VkImageBuffer.hpp>
 #include <SA/Render/Vulkan/Texture/VkTextureSampler.hpp>
-
-#if SA_VULKAN
 
 namespace Sa::Vk
 {
@@ -30,7 +26,5 @@ namespace Sa::Vk
 		VkDescriptorImageInfo CreateDescriptorImageInfo() const noexcept;
 	};
 }
-
-#endif
 
 #endif // GUARD

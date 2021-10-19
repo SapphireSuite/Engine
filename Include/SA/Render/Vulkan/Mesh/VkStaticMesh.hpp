@@ -9,8 +9,6 @@
 
 #include <SA/Render/Vulkan/Buffers/VkGPUBuffer.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	class Device;
@@ -30,7 +28,5 @@ namespace Sa::Vk
 		void Draw(const ARenderFrame& _frame, const MeshDrawInfos& _infos = MeshDrawInfos()) const override final;
 	};
 }
-
-#endif
 
 #endif // GUARD

@@ -9,8 +9,6 @@
 
 #include <Render/Debug.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	Format Surface::GetFormat() const
@@ -103,5 +101,3 @@ namespace Sa::Vk
 		return mHandle;
 	}
 }
-
-#endif

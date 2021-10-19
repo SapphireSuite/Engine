@@ -9,8 +9,6 @@
 #include <Render/Vulkan/Buffers/VkCommandBuffer.hpp>
 #include <Render/Vulkan/Buffers/VkFrameBuffer.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	VkSubpassDescription CreateSubpassDesc()
@@ -255,5 +253,3 @@ namespace Sa::Vk
 		return mHandle;
 	}
 }
-
-#endif

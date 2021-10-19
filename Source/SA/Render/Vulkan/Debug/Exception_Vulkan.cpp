@@ -2,8 +2,6 @@
 
 #include <Render/Vulkan/Debug/Exception_Vulkan.hpp>
 
-#if SA_VULKAN
-
 namespace Sa
 {
 	Exception_Vulkan::Exception_Vulkan(
@@ -20,5 +18,3 @@ namespace Sa
 	{
 	}
 }
-
-#endif

@@ -8,8 +8,6 @@
 #include <SA/Render/Base/Shader/SpecConstants/DefaultSpecConstant.hpp>
 #include <SA/Render/Base/Pipeline/PipelineShaderInfos.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	class SpecConstantData
@@ -32,7 +30,5 @@ namespace Sa::Vk
 		}
 	};
 }
-
-#endif
 
 #endif // GUARD

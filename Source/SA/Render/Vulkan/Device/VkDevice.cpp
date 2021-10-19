@@ -9,8 +9,6 @@
 #include <Render/Vulkan/VkInstance.hpp>
 #include <Render/Vulkan/Device/VkGraphicDeviceInfos.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	std::vector<const char*> GetRequiredExtensions(QueueFamily _reqFamilies)
@@ -220,5 +218,3 @@ namespace Sa::Vk
 		return mPhysicalDevice;
 	}
 }
-
-#endif

@@ -7,9 +7,6 @@
 
 #include <SA/Render/Vulkan/Buffers/VkImageBuffer.hpp>
 
-
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	class Device;
@@ -39,7 +36,5 @@ namespace Sa::Vk
 		operator VkFramebuffer() const;
 	};
 }
-
-#endif
 
 #endif // GUARD

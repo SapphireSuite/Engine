@@ -5,8 +5,6 @@
 #include <Render/Vulkan/Debug/Debug.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	void TextureSampler::Create(const Device& _device, uint32 _mipLevels)
@@ -46,5 +44,3 @@ namespace Sa::Vk
 		return mHandle;
 	}
 }
-
-#endif

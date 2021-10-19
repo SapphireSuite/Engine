@@ -9,8 +9,6 @@
 
 #include <SA/Render/Vulkan/Buffers/VkBuffer.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	class Device;
@@ -28,7 +26,5 @@ namespace Sa::Vk
 		void Update(const Device& _device);
 	};
 }
-
-#endif
 
 #endif // GUARD

@@ -4,8 +4,6 @@
 
 #include <Core/Debug.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	Queue& QueueFamilyMgr::GetQueue(uint32 _index)
@@ -45,5 +43,3 @@ namespace Sa::Vk
 		SA_LOG(L"Queue Family Manager destroyed", Infos, SA/Render/Vulkan);
 	}
 }
-
-#endif

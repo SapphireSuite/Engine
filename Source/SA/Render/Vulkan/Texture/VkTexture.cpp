@@ -8,8 +8,6 @@
 #include <Render/Vulkan/Device/VkDevice.hpp>
 #include <Render/Vulkan/Buffers/VkBuffer.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	void Texture::Create(const Device& _device, ResourceInitializer& _init, const RawTexture& _raw)
@@ -99,5 +97,3 @@ namespace Sa::Vk
 		return descImage;
 	}
 }
-
-#endif

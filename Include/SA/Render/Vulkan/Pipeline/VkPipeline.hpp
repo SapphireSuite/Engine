@@ -9,8 +9,6 @@
 
 #include <SA/Core/Support/API/Vulkan.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	class Device;
@@ -60,7 +58,5 @@ namespace Sa::Vk
 		void Bind(const ARenderFrame& _frame) const override final;
 	};
 }
-
-#endif
 
 #endif // GUARD

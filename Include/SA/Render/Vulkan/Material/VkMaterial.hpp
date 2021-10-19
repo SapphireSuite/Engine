@@ -9,8 +9,6 @@
 
 #include <SA/Render/Vulkan/Pipeline/VkDescriptorSet.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	class Device;
@@ -26,7 +24,5 @@ namespace Sa::Vk
 		void UpdateBinding(const Device& _device, const ARenderMaterialBinding* _bind);
 	};
 }
-
-#endif
 
 #endif // GUARD

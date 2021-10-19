@@ -9,8 +9,6 @@
 
 #include <SA/Render/Vulkan/VkInstance.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	class RenderInterface : public ARenderInterface
@@ -25,14 +23,15 @@ namespace Sa::Vk
 		ARenderSubInterface* CreateSubInterface(const AGraphicDeviceInfos& _infos) override final;
 		
 
+#if SA_WINDOW
+
 		AWindowSurface* CreateWindowSurface(AWindow* _win) override final;
 		void DestroyWindowSurface(AWindow* _win, AWindowSurface* _winSurface) override final;
 
+#endif
 
 		operator const Instance&() const;
 	};
 }
-
-#endif
 
 #endif // GUARD

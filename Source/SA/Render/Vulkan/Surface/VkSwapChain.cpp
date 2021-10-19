@@ -10,9 +10,6 @@
 #include <Render/Vulkan/Surface/VkSurface.hpp>
 #include <Render/Vulkan/Buffers/VkCommandBuffer.hpp>
 
-
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	Format SwapChain::GetFormat() const
@@ -237,5 +234,3 @@ namespace Sa::Vk
 		mFrameIndex = (mFrameIndex + 1) % mImageNum;
 	}
 }
-
-#endif

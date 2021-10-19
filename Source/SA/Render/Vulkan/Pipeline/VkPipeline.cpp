@@ -12,8 +12,6 @@
 #include <Render/Vulkan/Pipeline/VkSpecConstantData.hpp>
 #include <Render/Vulkan/Pipeline/VkEngineDescriptorSetLayouts.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	struct RenderPassAttachmentInfos
@@ -366,5 +364,3 @@ namespace Sa::Vk
 		_renderPassAttInfos.colorBlendingInfo.blendConstants[3] = 0.0f;
 	}
 }
-
-#endif

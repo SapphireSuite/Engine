@@ -2,8 +2,6 @@
 
 #include <Render/Vulkan/Buffers/VkImageBufferCreateInfos.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	VkImageCreateInfo ImageBufferCreateInfos::VkImageInfos() const noexcept
@@ -76,5 +74,3 @@ namespace Sa::Vk
 		return vkInfos;
 	}
 }
-
-#endif

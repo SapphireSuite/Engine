@@ -7,15 +7,11 @@
 
 #include <SA/Render/Base/ARenderInterface.hpp>
 
-#if SA_OPEN_GL
-
 namespace Sa::GL
 {
 	class RenderInterface : public ARenderInterface
 	{
 	};
 }
-
-#endif
 
 #endif // GUARD

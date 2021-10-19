@@ -10,8 +10,6 @@
 #include <SA/Render/Vulkan/Buffers/VkImageBuffer.hpp>
 #include <SA/Render/Vulkan/Texture/VkTextureSampler.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	class Cubemap : public ACubemap
@@ -31,7 +29,5 @@ namespace Sa::Vk
 		static VkWriteDescriptorSet CreateWriteDescriptorSet(VkDescriptorSet _descriptorSet, uint32 _binding, uint32 _arrayElem = 0u) noexcept;
 	};
 }
-
-#endif
 
 #endif // GUARD

@@ -7,8 +7,6 @@
 
 #include <SA/Render/Vulkan/Buffers/VkBufferBase.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	class ResourceInitializer;
@@ -38,7 +36,5 @@ namespace Sa::Vk
 		static Buffer& CreateStaging(const Device& _device, ResourceInitializer& _init, const void* _data, uint64 _size);
 	};
 }
-
-#endif
 
 #endif // GUARD

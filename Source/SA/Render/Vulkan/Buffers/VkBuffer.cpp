@@ -6,8 +6,6 @@
 #include <Render/Vulkan/Device/VkDevice.hpp>
 #include <Render/Vulkan/VkResourceInitializer.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	Buffer::Deleter::Deleter(const Device& _device) noexcept : mDevice{ _device }
@@ -62,5 +60,3 @@ namespace Sa::Vk
 		return stagingBuffer;
 	}
 }
-
-#endif

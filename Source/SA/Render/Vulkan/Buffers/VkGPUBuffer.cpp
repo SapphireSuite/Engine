@@ -6,8 +6,6 @@
 #include <Render/Vulkan/VkResourceInitializer.hpp>
 #include <Render/Vulkan/Buffers/VkBuffer.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	void GPUBuffer::Create(const Device& _device,
@@ -52,5 +50,3 @@ namespace Sa::Vk
 		//stagingBuffer.Destroy(_device);
 	}
 }
-
-#endif

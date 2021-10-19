@@ -9,8 +9,6 @@
 
 #include <SA/Render/Base/Shader/AShader.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	class Device;
@@ -27,7 +25,5 @@ namespace Sa::Vk
 		operator VkShaderModule() const;
 	};
 }
-
-#endif
 
 #endif // GUARD

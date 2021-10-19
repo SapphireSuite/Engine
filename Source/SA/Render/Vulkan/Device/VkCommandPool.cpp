@@ -8,8 +8,6 @@
 
 #include <Render/Vulkan/Device/VkDevice.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	void CommandPool::Create(const Device& _device, uint32 _queueFamilyIndex)
@@ -116,5 +114,3 @@ namespace Sa::Vk
 		return mHandle;
 	}
 }
-
-#endif

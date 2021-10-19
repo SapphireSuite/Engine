@@ -8,8 +8,6 @@
 #include <Render/Vulkan/VkResourceInitializer.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	void StaticMesh::Create(const Device& _device, ResourceInitializer& _init, const RawMesh& _raw)
@@ -60,5 +58,3 @@ namespace Sa::Vk
 		vkCmdDrawIndexed(vkFrame.cmd, mIndicesSize, _infos.instanceNum, 0, 0, 0);
 	}
 }
-
-#endif

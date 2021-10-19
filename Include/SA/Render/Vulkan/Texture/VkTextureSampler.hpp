@@ -9,8 +9,6 @@
 
 #include <SA/Core/Support/API/Vulkan.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	class Device;
@@ -26,7 +24,5 @@ namespace Sa::Vk
 		operator VkSampler() const;
 	};
 }
-
-#endif
 
 #endif // GUARD

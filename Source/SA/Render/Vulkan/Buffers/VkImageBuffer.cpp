@@ -11,8 +11,6 @@
 #include <Render/Vulkan/Buffers/VkBuffer.hpp>
 #include <Render/Vulkan/Buffers/VkCommandBuffer.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	void ImageBuffer::CreateImage(const Device& _device, const VkImageCreateInfo& _vkInfos)
@@ -187,5 +185,3 @@ namespace Sa::Vk
 		return mImageMemory;
 	}
 }
-
-#endif

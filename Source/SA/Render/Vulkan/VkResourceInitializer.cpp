@@ -4,8 +4,6 @@
 
 #include <Render/Vulkan/Device/VkDevice.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	void ResourceInitializer::Create(const Device& _device)
@@ -58,5 +56,3 @@ namespace Sa::Vk
 		cmd.Begin();
 	}
 }
-
-#endif

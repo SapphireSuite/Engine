@@ -9,8 +9,6 @@
 
 #include <SA/Render/Vulkan/Buffers/VkCommandBuffer.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	class Frame : public ARenderFrame
@@ -21,7 +19,5 @@ namespace Sa::Vk
 		Frame(CommandBuffer& _cmd) noexcept;
 	};
 }
-
-#endif
 
 #endif // GUARD

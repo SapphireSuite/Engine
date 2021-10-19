@@ -7,10 +7,6 @@
 
 #include <SA/Core/Types/Variadics/Flags.hpp>
 
-#include <SA/Core/Support/API/Vulkan.hpp>
-
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	enum class QueueFamily : uint8
@@ -30,7 +26,5 @@ namespace Sa::Vk
 
 	SA_DEFINE_ENUM_FLAGS(QueueFamily)
 }
-
-#endif
 
 #endif // GUARD

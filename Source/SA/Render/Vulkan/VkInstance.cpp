@@ -6,8 +6,6 @@
 
 #include <Window/Base/AWindowInterface.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	std::vector<const char*> GetRequiredExtensions(const AWindowInterface* _winIntf) noexcept
@@ -15,7 +13,8 @@ namespace Sa::Vk
 		std::vector<const char*> extensions;
 
 		// Query window API required extensions.
-		_winIntf->QueryRequiredExtensions(extensions);
+		if(_winIntf)
+			_winIntf->QueryRequiredExtensions(extensions);
 
 #if SA_VK_VALIDATION_LAYERS
 
@@ -103,5 +102,3 @@ namespace Sa::Vk
 		return mHandle;
 	}
 }
-
-#endif

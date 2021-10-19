@@ -23,8 +23,12 @@ namespace Sa
 		virtual ARenderSubInterface* CreateSubInterface(const AGraphicDeviceInfos& _infos) = 0;
 		virtual void DestroySubInterface(ARenderSubInterface* _intf);
 
+#if SA_WINDOW
+
 		virtual AWindowSurface* CreateWindowSurface(AWindow* _win) = 0;
 		virtual void DestroyWindowSurface(AWindow* _win, AWindowSurface* _winSurface) = 0;
+
+#endif
 	};
 }
 

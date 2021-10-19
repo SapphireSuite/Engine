@@ -4,8 +4,6 @@
 
 #include <Render/Vulkan/Debug/Debug.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	void CommandBuffer::Begin()
@@ -34,5 +32,3 @@ namespace Sa::Vk
 		return mHandle;
 	}
 }
-
-#endif

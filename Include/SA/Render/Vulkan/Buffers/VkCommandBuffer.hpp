@@ -7,8 +7,6 @@
 
 #include <SA/Core/Support/API/Vulkan.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	class CommandBuffer
@@ -24,7 +22,5 @@ namespace Sa::Vk
 		operator VkCommandBuffer() const;
 	};
 }
-
-#endif
 
 #endif // GUARD

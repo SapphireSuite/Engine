@@ -11,8 +11,6 @@
 #include <SA/Render/Base/Misc/ImageType.hpp>
 #include <SA/Render/Base/Pass/SampleBits.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	struct ImageBufferCreateInfos
@@ -36,7 +34,5 @@ namespace Sa::Vk
 		VkImageViewCreateInfo VkImageViewInfos(VkImage _image) const noexcept;
 	};
 }
-
-#endif
 
 #endif // GUARD

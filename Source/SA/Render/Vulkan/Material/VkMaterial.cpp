@@ -5,8 +5,6 @@
 #include <Render/Vulkan/Device/VkDevice.hpp>
 #include <Render/Vulkan/Pipeline/VkPipeline.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	void Material::Create(const Device& _device, const RenderMaterialCreateInfos& _infos)
@@ -36,5 +34,3 @@ namespace Sa::Vk
 		mDescSet.Update(_device, { _bind });
 	}
 }
-
-#endif

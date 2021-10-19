@@ -7,9 +7,9 @@
 
 #include <SA/Render/Base/Device/AGraphicDeviceInfos.hpp>
 
-#include <SA/Render/Vulkan/Device/VkQueueRequirements.hpp>
+#include <SA/Core/Support/API/Vulkan.hpp>
 
-#if SA_VULKAN
+#include <SA/Render/Vulkan/Device/VkQueueRequirements.hpp>
 
 namespace Sa::Vk
 {
@@ -58,7 +58,5 @@ namespace Sa::Vk
 		std::vector<VkDeviceQueueCreateInfo> GetDeviceCreateInfos() const noexcept;
 	};
 }
-
-#endif
 
 #endif // GUARD

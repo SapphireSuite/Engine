@@ -7,8 +7,6 @@
 
 #include <SA/Render/Base/Pass/ARenderPass.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	class Device;
@@ -30,7 +28,5 @@ namespace Sa::Vk
 		operator VkRenderPass() const noexcept;
 	};
 }
-
-#endif
 
 #endif // GUARD

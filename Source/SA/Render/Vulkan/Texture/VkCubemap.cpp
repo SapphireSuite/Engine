@@ -6,8 +6,6 @@
 #include <Render/Vulkan/Device/VkDevice.hpp>
 #include <Render/Vulkan/Buffers/VkBuffer.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	void Cubemap::Create(const Device& _device, ResourceInitializer& _init, const RawCubemap& _raw)
@@ -143,5 +141,3 @@ namespace Sa::Vk
 		return writeDesc;
 	}
 }
-
-#endif

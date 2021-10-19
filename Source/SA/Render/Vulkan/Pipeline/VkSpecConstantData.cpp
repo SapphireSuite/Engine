@@ -6,8 +6,6 @@
 
 #include <Core/Algorithms/SizeOf.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	void SpecConstantData::Add(const PipelineSpecConstant& _specCst)
@@ -49,5 +47,3 @@ namespace Sa::Vk
 		specInfo.pData = data.data();
 	}
 }
-
-#endif

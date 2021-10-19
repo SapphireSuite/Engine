@@ -5,11 +5,9 @@
 #ifndef SAPPHIRE_RENDER_EXCEPTION_VULKAN_GUARD
 #define SAPPHIRE_RENDER_EXCEPTION_VULKAN_GUARD
 
-#include <SA/Core/Support/API/Vulkan.hpp>
-
 #include <SA/Core/Debug/Exceptions/Exception.hpp>
 
-#if SA_VULKAN
+#include <SA/Core/Support/API/Vulkan.hpp>
 
 namespace Sa
 {
@@ -33,7 +31,5 @@ namespace Sa
 		##__VA_ARGS__\
 	)
 }
-
-#endif
 
 #endif // GUARD

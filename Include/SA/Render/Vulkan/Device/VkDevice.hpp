@@ -10,8 +10,6 @@
 #include <SA/Render/Base/Device/ARenderDevice.hpp>
 #include <SA/Render/Vulkan/Device/VkQueueMgr.hpp>
 
-#if SA_VULKAN
-
 namespace Sa::Vk
 {
 	class Instance;
@@ -47,7 +45,5 @@ namespace Sa::Vk
 		operator VkPhysicalDevice() const noexcept;
 	};
 }
-
-#endif
 
 #endif // GUARD
