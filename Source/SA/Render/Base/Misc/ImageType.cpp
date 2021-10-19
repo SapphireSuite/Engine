@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Render/Misc/ImageType.hpp>
+#include <Render/Base/Misc/ImageType.hpp>
 
 #include <Collections/Debug>
 

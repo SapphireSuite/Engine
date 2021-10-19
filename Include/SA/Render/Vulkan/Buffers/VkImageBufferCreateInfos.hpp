@@ -7,8 +7,8 @@
 
 #include <SA/Maths/Space/Vector2.hpp>
 
-#include <SA/Render/Misc/Format.hpp>
-#include <SA/Render/Misc/ImageType.hpp>
+#include <SA/Render/Base/Misc/Format.hpp>
+#include <SA/Render/Base/Misc/ImageType.hpp>
 #include <SA/Render/Base/Pass/SampleBits.hpp>
 
 #if SA_VULKAN

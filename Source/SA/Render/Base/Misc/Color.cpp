@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <SA/Render/Misc/Color.hpp>
+#include <SA/Render/Base/Misc/Color.hpp>
 
 namespace Sa
 {

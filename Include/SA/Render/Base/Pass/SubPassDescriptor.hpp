@@ -8,8 +8,8 @@
 #include <string>
 #include <vector>
 
-#include <SA/Render/Misc/Format.hpp>
-#include <SA/Render/Misc/Color.hpp>
+#include <SA/Render/Base/Misc/Format.hpp>
+#include <SA/Render/Base/Misc/Color.hpp>
 
 #include <SA/Render/Base/Pass/SampleBits.hpp>
 

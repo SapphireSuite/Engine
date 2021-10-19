@@ -5,8 +5,6 @@
 #ifndef SAPPHIRE_RENDER_COLOR_GUARD
 #define SAPPHIRE_RENDER_COLOR_GUARD
 
-#include <SA/Config.hpp>
-
 #include <SA/Core/Support/API/Vulkan.hpp>
 
 namespace Sa

@@ -7,7 +7,7 @@
 
 #include <SA/Maths/Space/Vector2.hpp>
 
-#include <SA/Render/Misc/Format.hpp>
+#include <SA/Render/Base/Misc/Format.hpp>
 
 namespace Sa
 {

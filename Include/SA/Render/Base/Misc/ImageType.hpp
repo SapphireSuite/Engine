@@ -16,6 +16,7 @@ namespace Sa
 		/// Default 2D image.
 		Image2D,
 
+		/// Default 3D image.
 		Image3D,
 
 		/// Cubemap.
