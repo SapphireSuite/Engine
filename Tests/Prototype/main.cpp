@@ -20,7 +20,7 @@ using namespace Sa;
 #include <SA/Render/Vulkan/Device/VkDevice.hpp>
 #include <SA/Render/Vulkan/Surface/VkWindowSurface.hpp>
 #include <SA/Render/Vulkan/Surface/VkSurface.hpp>
-#include <SA/Render/ShaderBuilder/GLSL/GLSLShaderBuilder.hpp>
+#include <SA/SDK/ShaderBuilder/GLSL/GLSLShaderBuilder.hpp>
 
 #include <SA/SDK/ECS/Systems/WindowSystem.hpp>
 #include <SA/SDK/ECS/Systems/InputSystem.hpp>

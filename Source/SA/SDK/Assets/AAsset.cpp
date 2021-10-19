@@ -6,7 +6,8 @@
 
 #include <Core/Algorithms/ReadFile.hpp>
 #include <Core/Serialize/Serializer.hpp>
-#include <Core/Support/EnvironmentVariable.hpp>
+
+#include <SDK/EnvironmentVariable.hpp>
 
 namespace Sa
 {

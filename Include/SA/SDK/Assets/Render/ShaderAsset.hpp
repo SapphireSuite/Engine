@@ -7,10 +7,10 @@
 
 #include <SA/SDK/Assets/Render/ARenderAsset.hpp>
 
-#include <SA/Render/ShaderBuilder/AShaderBuilderInterface.hpp>
-
 #include <SA/Render/Base/Shader/RawShader.hpp>
 #include <SA/Render/Base/Shader/ShaderDescriptor.hpp>
+
+#include <SA/SDK/ShaderBuilder/AShaderBuilderInterface.hpp>
 
 namespace Sa
 {

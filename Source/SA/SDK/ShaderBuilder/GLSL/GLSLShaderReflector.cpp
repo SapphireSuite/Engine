@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Render/ShaderBuilder/GLSL/GLSLShaderReflector.hpp>
+#include <SDK/ShaderBuilder/GLSL/GLSLShaderReflector.hpp>
 
 #include <spirv_cross/spirv_glsl.hpp>
 

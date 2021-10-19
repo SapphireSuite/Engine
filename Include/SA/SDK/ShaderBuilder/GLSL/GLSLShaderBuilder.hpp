@@ -5,10 +5,10 @@
 #ifndef SAPPHIRE_RENDER_GLSL_SHADER_BUILDER_GUARD
 #define SAPPHIRE_RENDER_GLSL_SHADER_BUILDER_GUARD
 
-#include <SA/Render/ShaderBuilder/AShaderBuilderInterface.hpp>
+#include <SA/SDK/ShaderBuilder/AShaderBuilderInterface.hpp>
 
-#include <SA/Render/ShaderBuilder/GLSL/GLSLShaderCompiler.hpp>
-#include <SA/Render/ShaderBuilder/GLSL/GLSLShaderReflector.hpp>
+#include <SA/SDK/ShaderBuilder/GLSL/GLSLShaderCompiler.hpp>
+#include <SA/SDK/ShaderBuilder/GLSL/GLSLShaderReflector.hpp>
 
 namespace Sa::GLSL
 {

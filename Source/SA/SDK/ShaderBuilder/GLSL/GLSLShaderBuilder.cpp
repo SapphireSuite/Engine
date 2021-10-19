@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Render/ShaderBuilder/GLSL/GLSLShaderBuilder.hpp>
+#include <SDK/ShaderBuilder/GLSL/GLSLShaderBuilder.hpp>
 
 namespace Sa::GLSL
 {

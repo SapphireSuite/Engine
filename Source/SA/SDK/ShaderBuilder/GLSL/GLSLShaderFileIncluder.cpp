@@ -1,12 +1,12 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Render/ShaderBuilder/GLSL/GLSLShaderFileIncluder.hpp>
+#include <SDK/ShaderBuilder/GLSL/GLSLShaderFileIncluder.hpp>
 
 #include <libshaderc_util/io_shaderc.h>
 
 #include <Collections/Debug>
 
-#include <Core/Support/EnvironmentVariable.hpp>
+#include <SDK/EnvironmentVariable.hpp>
 
 namespace Sa::GLSL
 {
