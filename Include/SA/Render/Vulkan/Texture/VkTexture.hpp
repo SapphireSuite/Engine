@@ -14,6 +14,7 @@ namespace Sa::Vk
 {
 	class Texture : public ATexture
 	{
+	protected:
 		ImageBuffer mBuffer;
 
 		// TODO: Sampler is not link to 1 image: Use 1 for multiple image!
@@ -21,7 +22,7 @@ namespace Sa::Vk
 
 	public:
 		void Create(const Device& _device, ResourceInitializer& _init, const RawTexture& _raw);
-		void Destroy(const Device& _device);
+		virtual void Destroy(const Device& _device);
 
 		VkDescriptorImageInfo CreateDescriptorImageInfo() const noexcept;
 	};

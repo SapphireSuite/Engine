@@ -14,22 +14,26 @@ namespace Sa::Vk
 	{
 		Buffer& stagingBuffer = Buffer::CreateStaging(_device, _init, _raw.data.data(), _raw.GetTotalSize());
 
-		ImageBufferCreateInfos imageBufferCreateInfos;
 
-		imageBufferCreateInfos.imageFlags = 0u;
-		imageBufferCreateInfos.imageType = ImageType::Image2D;
+		// Create Device Image buffer
+		{
+			ImageBufferCreateInfos imageBufferCreateInfos;
 
-		imageBufferCreateInfos.format = _raw.format;
-		imageBufferCreateInfos.extent = _raw.extent;
+			imageBufferCreateInfos.imageFlags = 0u;
+			imageBufferCreateInfos.imageType = ImageType::Image2D;
 
-		imageBufferCreateInfos.usage = VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
-		imageBufferCreateInfos.mipLevels = _raw.mipLevels;
+			imageBufferCreateInfos.format = _raw.format;
+			imageBufferCreateInfos.extent = _raw.extent;
 
-		if (_raw.mipLevels > 1)
-			imageBufferCreateInfos.usage |= VK_IMAGE_USAGE_TRANSFER_SRC_BIT;
+			imageBufferCreateInfos.usage = VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
+			imageBufferCreateInfos.mipLevels = _raw.mipLevels;
+
+			if (_raw.mipLevels > 1)
+				imageBufferCreateInfos.usage |= VK_IMAGE_USAGE_TRANSFER_SRC_BIT;
 
 
-		mBuffer.Create(_device, imageBufferCreateInfos);
+			mBuffer.Create(_device, imageBufferCreateInfos);
+		}
 
 
 		// Undef to Dst Transition
@@ -57,9 +61,6 @@ namespace Sa::Vk
 			mBuffer.CopyBufferToImage(_init, copyInfos);
 		}
 
-		// Destroy will be called by ResourceHolder.
-		//stagingBuffer.Destroy(device);
-
 
 		// Dst to Read Transition
 		{
@@ -72,6 +73,9 @@ namespace Sa::Vk
 			mBuffer.TransitionImageLayout(_init, infos);
 		}
 
+
+		// Destroy will be called by ResourceHolder.
+		//stagingBuffer.Destroy(device);
 
 		mSampler.Create(_device, _raw.mipLevels);
 		
