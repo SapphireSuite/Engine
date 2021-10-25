@@ -354,23 +354,29 @@ namespace Sa
 		mFreeIndices.push_back(_index);
 	}
 
+	template <typename T>
+	void SparseVector<T>::RemoveHandle(uint64 _index)
+	{
+		RemoveHandle(static_cast<uint32>(_index));
+	}
+
 //}
 
 
 //{ Operators
 		
 	template <typename T>
-	T& SparseVector<T>::operator[](uint32 _index)
+	T& SparseVector<T>::operator[](uint64 _index)
 	{
-		SA_ASSERT(OutOfRange, SA/Core/Containers, _index, 0u, mSize);
+		SA_ASSERT(OutOfRange, SA/Core/Containers, (uint32)_index, 0u, mSize);
 
 		return mData[_index];
 	}
 
 	template <typename T>
-	const T& SparseVector<T>::operator[](uint32 _index) const
+	const T& SparseVector<T>::operator[](uint64 _index) const
 	{
-		SA_ASSERT(OutOfRange, SA/Core/Containers, _index, 0u, mSize);
+		SA_ASSERT(OutOfRange, SA/Core/Containers, (uint32)_index, 0u, mSize);
 
 		return mData[_index];
 	}
