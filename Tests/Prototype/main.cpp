@@ -58,15 +58,13 @@ ARenderInterface* renderIntf = nullptr;
 ARenderGraphicInterface* renderGraph = nullptr;
 ARenderContextInterface* renderContext = nullptr;
 
+WindowSurfaceHandle winSurface;
+//ARenderSurface* surface = nullptr;
 
 //RenderSubSystem* renderSubSys;
 //
 //Vk::RenderInterface* renderIntf = nullptr;
 //ARenderSubInterface* renderSubIntf = nullptr;
-//
-//
-//AWindowSurface* winSurface = nullptr;
-//ARenderSurface* surface = nullptr;
 //
 //
 //RenderPassDescriptor renderPassDesc;
@@ -178,7 +176,7 @@ int main()
 		// Render
 		{
 			renderIntf = renderSys.Create<Vk::RenderInterface>(winSys);
-			//winSurface = renderIntf->CreateWindowSurface(win);
+			winSurface = renderIntf->CreateWindowSurface(win);
 
 			//const std::vector<Vk::GraphicDeviceInfos> deviceInfos = Vk::Device::QuerySuitableDevices(*renderIntf, winSurface->AsPtr<Vk::WindowSurface>());
 			//renderSubSys = renderSys.CreateSubSystem(deviceInfos[0]);
@@ -419,7 +417,7 @@ int main()
 			//renderSubIntf->DestroyRenderPass(renderPass);
 
 			//renderSubIntf->DestroySurface(surface);
-			//renderIntf->DestroyWindowSurface(win, winSurface);
+			renderIntf->DestroyWindowSurface(win, winSurface);
 
 			//renderSys.DestroySubSystem(renderSubSys);
 			renderSys.Destroy();

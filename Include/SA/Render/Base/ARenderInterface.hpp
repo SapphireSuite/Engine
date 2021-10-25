@@ -7,6 +7,8 @@
 
 #include <SA/Render/Base/ARenderGraphicInterface.hpp>
 
+#include <SA/Render/Base/Surface/WindowSurfaceHandle.hpp>
+
 namespace Sa
 {
 	class AWindowInterface;
@@ -25,8 +27,8 @@ namespace Sa
 
 #if SA_WINDOW
 
-		//virtual AWindowSurface* CreateWindowSurface(AWindow* _win) = 0;
-		//virtual void DestroyWindowSurface(AWindow* _win, AWindowSurface* _winSurface) = 0;
+		virtual WindowSurfaceHandle CreateWindowSurface(AWindow* _win) = 0;
+		virtual void DestroyWindowSurface(AWindow* _win, WindowSurfaceHandle _handle) = 0;
 
 #endif
 	};

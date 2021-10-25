@@ -7,11 +7,9 @@
 
 #include <SA/Core/Support/API/Vulkan.hpp>
 
-#include <SA/Render/Base/Surface/AWindowSurface.hpp>
-
 namespace Sa::Vk
 {
-	class WindowSurface : public AWindowSurface
+	class WindowSurface
 	{
 		VkSurfaceKHR mHandle = VK_NULL_HANDLE;
 

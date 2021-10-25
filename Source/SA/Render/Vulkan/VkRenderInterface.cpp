@@ -44,26 +44,23 @@ namespace Sa::Vk
 
 #if SA_WINDOW
 
-	//AWindowSurface* RenderInterface::CreateWindowSurface(AWindow* _win)
-	//{
-	//	SA_ASSERT(Nullptr, SA/Render/Vulkan, _win);
+	WindowSurfaceHandle RenderInterface::CreateWindowSurface(AWindow* _win)
+	{
+		SA_ASSERT(Nullptr, SA/Render/Vulkan, _win);
 
-	//	WindowSurface* const winSurface = new WindowSurface(_win->CreateVkWindowSurface(mInstance));
+		const WindowSurfaceHandle handle = reinterpret_cast<uint64>(_win->CreateVkWindowSurface(mInstance));
 
-	//	return winSurface;
-	//}
+		return handle;
+	}
 
-	//void RenderInterface::DestroyWindowSurface(AWindow* _win, AWindowSurface* _winSurface)
-	//{
-	//	SA_ASSERT(Nullptr, SA/Render/Vulkan, _win);
-	//	SA_ASSERT(Nullptr, SA/Render/Vulkan, _winSurface);
+	void RenderInterface::DestroyWindowSurface(AWindow* _win, WindowSurfaceHandle _handle)
+	{
+		SA_ASSERT(Nullptr, SA/Render/Vulkan, _win);
 
-	//	WindowSurface* const vkWinSurface = _winSurface->AsPtr<WindowSurface>();
+		const VkSurfaceKHR vkSurface = reinterpret_cast<VkSurfaceKHR>(_handle.ID);
 
-	//	_win->DestroyVkWindowSurface(mInstance, *vkWinSurface);
-
-	//	delete vkWinSurface;
-	//}
+		_win->DestroyVkWindowSurface(mInstance, vkSurface);
+	}
 
 #endif
 

@@ -5,20 +5,20 @@
 #ifndef SAPPHIRE_RENDER_ARENDER_CONTEXT_INTERFACE_GUARD
 #define SAPPHIRE_RENDER_ARENDER_CONTEXT_INTERFACE_GUARD
 
-#include <SA/Render/Base/Device/ARenderDevice.hpp>
-#include <SA/Render/Base/Surface/AWindowSurface.hpp>
-#include <SA/Render/Base/Surface/ARenderSurface.hpp>
-#include <SA/Render/Base/Pass/ARenderPass.hpp>
-#include <SA/Render/Base/Pipeline/ARenderPipeline.hpp>
-#include <SA/Render/Base/ARenderResourceInitializer.hpp>
-#include <SA/Render/Base/Mesh/AStaticMesh.hpp>
-#include <SA/Render/Base/Texture/ATexture.hpp>
-#include <SA/Render/Base/Texture/ACubemap.hpp>
-#include <SA/Render/Base/Material/ARenderMaterial.hpp>
-#include <SA/Render/Base/Camera/ACamera.hpp>
-
-#include <SA/Render/Base/Shader/ShaderHandle.hpp>
-#include <SA/Render/Base/Shader/RawShader.hpp>
+//#include <SA/Render/Base/Device/ARenderDevice.hpp>
+//#include <SA/Render/Base/Surface/AWindowSurface.hpp>
+//#include <SA/Render/Base/Surface/ARenderSurface.hpp>
+//#include <SA/Render/Base/Pass/ARenderPass.hpp>
+//#include <SA/Render/Base/Pipeline/ARenderPipeline.hpp>
+//#include <SA/Render/Base/ARenderResourceInitializer.hpp>
+//#include <SA/Render/Base/Mesh/AStaticMesh.hpp>
+//#include <SA/Render/Base/Texture/ATexture.hpp>
+//#include <SA/Render/Base/Texture/ACubemap.hpp>
+//#include <SA/Render/Base/Material/ARenderMaterial.hpp>
+//#include <SA/Render/Base/Camera/ACamera.hpp>
+//
+//#include <SA/Render/Base/Shader/ShaderHandle.hpp>
+//#include <SA/Render/Base/Shader/RawShader.hpp>
 
 namespace Sa
 {

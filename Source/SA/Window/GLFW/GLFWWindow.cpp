@@ -201,7 +201,7 @@ namespace Sa::GLFW
 
 #if SA_VULKAN
 
-	Vk::WindowSurface Window::CreateVkWindowSurface(const Vk::Instance& _instance) const
+	VkSurfaceKHR Window::CreateVkWindowSurface(const Vk::Instance& _instance) const
 	{
 		VkSurfaceKHR vkSurface;
 
@@ -209,10 +209,10 @@ namespace Sa::GLFW
 
 		SA_LOG(L"Window Surface created.", Infos, SA/Render/Vulkan);
 
-		return Vk::WindowSurface{ vkSurface };
+		return vkSurface;
 	}
 
-	void Window::DestroyVkWindowSurface(const Vk::Instance& _instance, Vk::WindowSurface& _surface) const
+	void Window::DestroyVkWindowSurface(const Vk::Instance& _instance, VkSurfaceKHR _surface) const
 	{
 		vkDestroySurfaceKHR(_instance, _surface, nullptr);
 
