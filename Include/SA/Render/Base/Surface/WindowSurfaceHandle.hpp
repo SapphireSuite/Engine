@@ -7,11 +7,21 @@
 
 #include <SA/Core/Types/Handle.hpp>
 
+#include <SA/Core/Support/API/Vulkan.hpp>
+
 namespace Sa
 {
 	struct WindowSurfaceHandle : public Handle
 	{
 		using Handle::Handle;
+
+#if SA_VULKAN
+
+		WindowSurfaceHandle(VkSurfaceKHR _vkHandle) noexcept;
+
+		operator VkSurfaceKHR() const;
+
+#endif
 	};
 }
 

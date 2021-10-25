@@ -4,7 +4,6 @@
 
 #include <Render/Vulkan/VkRenderGraphicInterface.hpp>
 #include <Render/Vulkan/Debug/VkValidationLayers.hpp>
-#include <Render/Vulkan/Surface/VkWindowSurface.hpp>
 
 #if SA_WINDOW
 
@@ -48,18 +47,14 @@ namespace Sa::Vk
 	{
 		SA_ASSERT(Nullptr, SA/Render/Vulkan, _win);
 
-		const WindowSurfaceHandle handle = reinterpret_cast<uint64>(_win->CreateVkWindowSurface(mInstance));
-
-		return handle;
+		return _win->CreateVkWindowSurface(mInstance);
 	}
 
-	void RenderInterface::DestroyWindowSurface(AWindow* _win, WindowSurfaceHandle _handle)
+	void RenderInterface::DestroyWindowSurface(AWindow* _win, WindowSurfaceHandle& _handle)
 	{
 		SA_ASSERT(Nullptr, SA/Render/Vulkan, _win);
 
-		const VkSurfaceKHR vkSurface = reinterpret_cast<VkSurfaceKHR>(_handle.ID);
-
-		_win->DestroyVkWindowSurface(mInstance, vkSurface);
+		_win->DestroyVkWindowSurface(mInstance, _handle);
 	}
 
 #endif

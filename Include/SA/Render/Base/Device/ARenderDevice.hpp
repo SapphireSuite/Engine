@@ -9,7 +9,7 @@
 
 namespace Sa
 {
-	class ARenderDevice : public Abstract
+	class ARenderDevice
 	{
 	public:
 		virtual void Create(const AGraphicDeviceInfos& _infos) = 0;

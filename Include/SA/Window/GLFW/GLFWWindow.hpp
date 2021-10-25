@@ -87,8 +87,8 @@ namespace Sa::GLFW
 
 #if SA_VULKAN
 
-		VkSurfaceKHR CreateVkWindowSurface(const Vk::Instance& _instance) const override final;
-		void DestroyVkWindowSurface(const Vk::Instance& _instance, VkSurfaceKHR _surface) const override final;
+		WindowSurfaceHandle CreateVkWindowSurface(const Vk::Instance& _instance) const override final;
+		void DestroyVkWindowSurface(const Vk::Instance& _instance, WindowSurfaceHandle& _winSurface) const override final;
 
 #endif
 

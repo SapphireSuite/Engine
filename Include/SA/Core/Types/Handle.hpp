@@ -16,6 +16,8 @@ namespace Sa
 		Handle() = default;
 		Handle(uint64 _ID) noexcept;
 
+		void Reset() noexcept;
+
 		operator uint64() const noexcept;
 	};
 }

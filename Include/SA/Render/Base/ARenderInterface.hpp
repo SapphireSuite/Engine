@@ -28,7 +28,7 @@ namespace Sa
 #if SA_WINDOW
 
 		virtual WindowSurfaceHandle CreateWindowSurface(AWindow* _win) = 0;
-		virtual void DestroyWindowSurface(AWindow* _win, WindowSurfaceHandle _handle) = 0;
+		virtual void DestroyWindowSurface(AWindow* _win, WindowSurfaceHandle& _handle) = 0;
 
 #endif
 	};

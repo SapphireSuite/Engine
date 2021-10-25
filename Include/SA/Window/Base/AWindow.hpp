@@ -10,6 +10,8 @@
 
 #include <SA/Core/Support/API/Vulkan.hpp>
 
+#include <SA/Render/Base/Surface/WindowSurfaceHandle.hpp>
+
 #include <SA/Window/Base/WindowCreateInfos.hpp>
 
 /**
@@ -164,8 +166,8 @@ namespace Sa
 
 #if SA_VULKAN
 
-		virtual VkSurfaceKHR CreateVkWindowSurface(const Vk::Instance& _instance) const = 0;
-		virtual void DestroyVkWindowSurface(const Vk::Instance& _instance, VkSurfaceKHR _surface) const = 0;
+		virtual WindowSurfaceHandle CreateVkWindowSurface(const Vk::Instance& _instance) const = 0;
+		virtual void DestroyVkWindowSurface(const Vk::Instance& _instance, WindowSurfaceHandle& _winSurface) const = 0;
 
 #endif
 	};

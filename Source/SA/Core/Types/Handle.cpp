@@ -9,6 +9,13 @@ namespace Sa
 	{
 	}
 
+
+	void Handle::Reset() noexcept
+	{
+		ID = uint64(-1);
+	}
+
+
 	Handle::operator uint64() const noexcept
 	{
 		return ID;

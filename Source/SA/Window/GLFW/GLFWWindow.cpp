@@ -8,7 +8,6 @@
 
 	#include <Render/Vulkan/Debug/Debug.hpp>
 	#include <Render/Vulkan/VkInstance.hpp>
-	#include <Render/Vulkan/Surface/VkWindowSurface.hpp>
 
 #endif
 
@@ -201,7 +200,7 @@ namespace Sa::GLFW
 
 #if SA_VULKAN
 
-	VkSurfaceKHR Window::CreateVkWindowSurface(const Vk::Instance& _instance) const
+	WindowSurfaceHandle Window::CreateVkWindowSurface(const Vk::Instance& _instance) const
 	{
 		VkSurfaceKHR vkSurface;
 
@@ -212,9 +211,10 @@ namespace Sa::GLFW
 		return vkSurface;
 	}
 
-	void Window::DestroyVkWindowSurface(const Vk::Instance& _instance, VkSurfaceKHR _surface) const
+	void Window::DestroyVkWindowSurface(const Vk::Instance& _instance, WindowSurfaceHandle& _winSurface) const
 	{
-		vkDestroySurfaceKHR(_instance, _surface, nullptr);
+		vkDestroySurfaceKHR(_instance, _winSurface, nullptr);
+		_winSurface.Reset();
 
 		SA_LOG(L"Window Surface destroyed.", Infos, SA/Render/Vulkan);
 	}
