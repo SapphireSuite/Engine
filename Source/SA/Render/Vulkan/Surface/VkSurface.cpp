@@ -2,21 +2,21 @@
 
 #include <Render/Vulkan/Surface/VkSurface.hpp>
 
-#include <Render/Vulkan/VkInstance.hpp>
+#include <Render/Base/Surface/WindowSurfaceHandle.hpp>
+
 #include <Render/Vulkan/Device/VkDevice.hpp>
 #include <Render/Vulkan/Pass/VkRenderPass.hpp>
-#include <Render/Vulkan/Surface/VkWindowSurface.hpp>
 
 #include <Render/Debug.hpp>
 
 namespace Sa::Vk
 {
-	Format Surface::GetFormat() const
-	{
-		return mSwapChain.GetFormat();
-	}
+	//Format Surface::GetFormat() const
+	//{
+	//	return mSwapChain.GetFormat();
+	//}
 
-	void Surface::Create(const Device& _device, const WindowSurface& _winSurface)
+	void Surface::Create(const Device& _device, WindowSurfaceHandle _winSurface)
 	{
 		mHandle = _winSurface;
 
@@ -37,30 +37,30 @@ namespace Sa::Vk
 	}
 
 
-	void Surface::CreateFrameBuffers(const Device& _device, const RenderPass& _renderPass, const RenderPassDescriptor& _renderPassDesc)
-	{
-		mSwapChain.CreateFrameBuffers(_device, _renderPass, _renderPassDesc);
+	//void Surface::CreateFrameBuffers(const Device& _device, const RenderPass& _renderPass, const RenderPassDescriptor& _renderPassDesc)
+	//{
+	//	mSwapChain.CreateFrameBuffers(_device, _renderPass, _renderPassDesc);
 
-		SA_LOG(L"Render Surface FrameBuffers created.", Infos, SA/Render/Vulkan);
-	}
+	//	SA_LOG(L"Render Surface FrameBuffers created.", Infos, SA/Render/Vulkan);
+	//}
 
-	void Surface::DestroyFrameBuffers(const Device& _device)
-	{
-		mSwapChain.DestroyFrameBuffers(_device);
+	//void Surface::DestroyFrameBuffers(const Device& _device)
+	//{
+	//	mSwapChain.DestroyFrameBuffers(_device);
 
-		SA_LOG(L"Render Surface FrameBuffers destroyed.", Infos, SA/Render/Vulkan);
-	}
+	//	SA_LOG(L"Render Surface FrameBuffers destroyed.", Infos, SA/Render/Vulkan);
+	//}
 
 
-	FrameBuffer& Surface::Begin(const Device& _device)
-	{
-		return mSwapChain.Begin(_device);
-	}
+	//FrameBuffer& Surface::Begin(const Device& _device)
+	//{
+	//	return mSwapChain.Begin(_device);
+	//}
 
-	void Surface::End(const Device& _device, const std::vector<CommandBuffer>& _cmdBuffers)
-	{
-		mSwapChain.End(_device, _cmdBuffers);
-	}
+	//void Surface::End(const Device& _device, const std::vector<CommandBuffer>& _cmdBuffers)
+	//{
+	//	mSwapChain.End(_device, _cmdBuffers);
+	//}
 
 
 	SurfaceSupportDetails Surface::QuerySupportDetails(VkPhysicalDevice _device) const

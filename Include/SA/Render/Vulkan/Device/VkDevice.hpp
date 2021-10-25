@@ -10,10 +10,14 @@
 #include <SA/Render/Base/Device/ARenderDevice.hpp>
 #include <SA/Render/Vulkan/Device/VkQueueMgr.hpp>
 
+namespace Sa
+{
+	struct WindowSurfaceHandle;
+}
+
 namespace Sa::Vk
 {
 	class Instance;
-	class WindowSurface;
 
 	class Device : public ARenderDevice
 	{
@@ -38,7 +42,8 @@ namespace Sa::Vk
 			const QueueRequirements& _queueReq = QueueRequirements{ QueueFamily::OffScreen });
 
 		static std::vector<GraphicDeviceInfos> QuerySuitableDevices(const Instance& _inst,
-			const WindowSurface* _winSurface, const QueueRequirements& _queueReq = QueueRequirements{ QueueFamily::Max });
+			WindowSurfaceHandle _winSurface,
+			const QueueRequirements& _queueReq = QueueRequirements{ QueueFamily::Max });
 
 
 		operator VkDevice() const noexcept;

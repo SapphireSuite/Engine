@@ -11,10 +11,13 @@
 
 #include <SA/Render/Vulkan/Device/VkQueueRequirements.hpp>
 
+namespace Sa
+{
+	struct WindowSurfaceHandle;
+}
+
 namespace Sa::Vk
 {
-	class WindowSurface;
-
 	struct GraphicDeviceInfos : public AGraphicDeviceInfos
 	{
 		struct FamilyInfos
@@ -50,8 +53,8 @@ namespace Sa::Vk
 
 		GraphicDeviceInfos(VkPhysicalDevice _device, const QueueRequirements& _reqs) noexcept;
 
-		void QueryQueueFamilies(const WindowSurface* _surface) noexcept;
-		void AddFamily(const WindowSurface* _surface, const VkQueueFamilyProperties& _family, uint32 _famIndex) noexcept;
+		void QueryQueueFamilies(WindowSurfaceHandle _winSurface) noexcept;
+		void AddFamily(WindowSurfaceHandle _winSurface, const VkQueueFamilyProperties& _family, uint32 _famIndex) noexcept;
 
 		bool QueueFamiliesCompleted() const noexcept;
 

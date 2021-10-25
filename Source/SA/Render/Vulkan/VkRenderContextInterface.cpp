@@ -4,17 +4,17 @@
 
 #include <Render/Vulkan/Debug/Debug.hpp>
 
-#include <Render/Vulkan/Surface/VkWindowSurface.hpp>
-#include <Render/Vulkan/Surface/VkSurface.hpp>
-#include <Render/Vulkan/Pass/VkRenderPass.hpp>
-#include <Render/Vulkan/Pipeline/VkPipeline.hpp>
-#include <Render/Vulkan/VkResourceInitializer.hpp>
-#include <Render/Vulkan/Shader/VkShader.hpp>
-#include <Render/Vulkan/Mesh/VkStaticMesh.hpp>
-#include <Render/Vulkan/Texture/VkTexture.hpp>
-#include <Render/Vulkan/Texture/VkCubemap.hpp>
-#include <Render/Vulkan/Material/VkMaterial.hpp>
-#include <Render/Vulkan/Camera/VkCamera.hpp>
+//#include <Render/Vulkan/Surface/VkWindowSurface.hpp>
+//#include <Render/Vulkan/Surface/VkSurface.hpp>
+//#include <Render/Vulkan/Pass/VkRenderPass.hpp>
+//#include <Render/Vulkan/Pipeline/VkPipeline.hpp>
+//#include <Render/Vulkan/VkResourceInitializer.hpp>
+//#include <Render/Vulkan/Shader/VkShader.hpp>
+//#include <Render/Vulkan/Mesh/VkStaticMesh.hpp>
+//#include <Render/Vulkan/Texture/VkTexture.hpp>
+//#include <Render/Vulkan/Texture/VkCubemap.hpp>
+//#include <Render/Vulkan/Material/VkMaterial.hpp>
+//#include <Render/Vulkan/Camera/VkCamera.hpp>
 
 namespace Sa::Vk
 {
@@ -29,23 +29,21 @@ namespace Sa::Vk
 	}
 
 	
-	//ARenderSurface* RenderContextInterface::CreateSurface(AWindowSurface* _winSurface)
-	//{
-	//	Surface* const surface = new Surface();
+	RenderSurfaceHandle RenderContextInterface::CreateSurface(WindowSurfaceHandle _winHandle)
+	{
+		const RenderSurfaceHandle handle = mSurfaces.EmplaceHandle();
 
-	//	surface->Create(mDevice, _winSurface->As<WindowSurface>());
+		//mSurfaces[handle].Create(mDevice, _winHandle);
 
-	//	return surface;
-	//}
+		return handle;
+	}
 
-	//void RenderContextInterface::DestroySurface(ARenderSurface* _surface)
-	//{
-	//	Surface* const vkSurface = _surface->AsPtr<Surface>();
+	void RenderContextInterface::DestroySurface(RenderSurfaceHandle _handle)
+	{
+		//mSurfaces[_handle].Destroy(mDevice);
 
-	//	vkSurface->Destroy(mDevice);
-
-	//	delete vkSurface;
-	//}
+		mSurfaces.RemoveHandle(_handle);
+	}
 
 
 	//ARenderPass* RenderContextInterface::CreateRenderPass(const RenderPassDescriptor& _descriptor)

@@ -8,6 +8,7 @@
 
 #include <Render/Vulkan/VkInstance.hpp>
 #include <Render/Vulkan/Device/VkGraphicDeviceInfos.hpp>
+#include <Render/Base/Surface/WindowSurfaceHandle.hpp>
 
 namespace Sa::Vk
 {
@@ -63,7 +64,7 @@ namespace Sa::Vk
 		return true;
 	}
 
-	bool IsPhysicalDeviceSuitable(GraphicDeviceInfos& _infos, const WindowSurface* _winSurface)
+	bool IsPhysicalDeviceSuitable(GraphicDeviceInfos& _infos, WindowSurfaceHandle _winSurface)
 	{
 		// Check requiered extensions.
 		if (!CheckExtensionSupport(_infos.device, _infos.reqs.familyFlags))
@@ -173,7 +174,7 @@ namespace Sa::Vk
 		return Device::QuerySuitableDevices(_inst, nullptr, _queueReq);
 	}
 
-	std::vector<GraphicDeviceInfos> Device::QuerySuitableDevices(const Instance& _inst, const WindowSurface* _winSurface, const QueueRequirements& _queueReq)
+	std::vector<GraphicDeviceInfos> Device::QuerySuitableDevices(const Instance& _inst, WindowSurfaceHandle _winSurface, const QueueRequirements& _queueReq)
 	{
 		SA_ASSERT(Default, SA/Render/Vulkan, !((bool)(_queueReq.familyFlags & QueueFamily::Present) ^ (_winSurface != nullptr)),
 			L"QueueType::Present requiere a valid RenderSurface as parameter!");

@@ -2,13 +2,11 @@
 
 #include <Render/Base/Pass/RenderPassDescriptor.hpp>
 
-#include <Render/Base/Surface/ARenderSurface.hpp>
-
 #include <Core/Serialize/Serializer.hpp>
 
 namespace Sa
 {
-	RenderPassDescriptor RenderPassDescriptor::DefaultSingle(const ARenderSurface* _surface)
+	RenderPassDescriptor RenderPassDescriptor::DefaultSingle()
 	{
 		RenderPassDescriptor result{};
 
@@ -24,7 +22,8 @@ namespace Sa
 
 			// Color and present attachment.
 			SubPassAttachmentDescriptor& colorAttachDesc = mainSubpassDesc.attachmentDescs.emplace_back();
-			colorAttachDesc.format = _surface ? _surface->GetFormat() : Format::sRGBA_32;
+			// TODO: use surface.
+			//colorAttachDesc.format = _surface ? _surface->GetFormat() : Format::sRGBA_32;
 
 
 			// Depth attachment.
@@ -35,7 +34,7 @@ namespace Sa
 		return result;
 	}
 
-	RenderPassDescriptor RenderPassDescriptor::DefaultPBR(const ARenderSurface* _surface)
+	RenderPassDescriptor RenderPassDescriptor::DefaultPBR()
 	{
 		RenderPassDescriptor result{};
 
@@ -77,7 +76,8 @@ namespace Sa
 			presentSubpassDesc.sampling = SampleBits::Sample8Bits;
 
 			SubPassAttachmentDescriptor& presentAttachDesc = presentSubpassDesc.attachmentDescs.emplace_back();
-			presentAttachDesc.format = _surface ? _surface->GetFormat() : Format::sRGBA_32;
+			// TODO: use surface.
+			//presentAttachDesc.format = _surface ? _surface->GetFormat() : Format::sRGBA_32;
 		}
 
 

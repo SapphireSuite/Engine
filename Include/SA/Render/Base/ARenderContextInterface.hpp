@@ -5,9 +5,10 @@
 #ifndef SAPPHIRE_RENDER_ARENDER_CONTEXT_INTERFACE_GUARD
 #define SAPPHIRE_RENDER_ARENDER_CONTEXT_INTERFACE_GUARD
 
-//#include <SA/Render/Base/Device/ARenderDevice.hpp>
+#include <SA/Render/Base/Surface/WindowSurfaceHandle.hpp>
+#include <SA/Render/Base/Surface/RenderSurfaceHandle.hpp>
+
 //#include <SA/Render/Base/Surface/AWindowSurface.hpp>
-//#include <SA/Render/Base/Surface/ARenderSurface.hpp>
 //#include <SA/Render/Base/Pass/ARenderPass.hpp>
 //#include <SA/Render/Base/Pipeline/ARenderPipeline.hpp>
 //#include <SA/Render/Base/ARenderResourceInitializer.hpp>
@@ -30,8 +31,8 @@ namespace Sa
 		virtual void Create() = 0;
 		virtual void Destroy() = 0;
 
-		//virtual ARenderSurface* CreateSurface(AWindowSurface* _winSurface) = 0;
-		//virtual void DestroySurface(ARenderSurface* _surface) = 0;
+		virtual RenderSurfaceHandle CreateSurface(WindowSurfaceHandle _winHandle) = 0;
+		virtual void DestroySurface(RenderSurfaceHandle _handle) = 0;
 
 		//virtual ARenderPass* CreateRenderPass(const RenderPassDescriptor& _descriptor) = 0;
 		//virtual void DestroyRenderPass(ARenderPass* _pass) = 0;

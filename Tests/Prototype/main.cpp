@@ -23,8 +23,11 @@ using namespace Sa;
 #include <SA/Render/Vulkan/VkRenderInterface.hpp>
 #include <SA/Render/Vulkan/VkRenderGraphicInterface.hpp>
 #include <SA/Render/Vulkan/VkRenderContextInterface.hpp>
+
+#include <SA/Render/Vulkan/Device/VkDevice.hpp>
+//
+
 //#include <SA/Render/Vulkan/VkRenderInterface.hpp>
-//#include <SA/Render/Vulkan/Device/VkDevice.hpp>
 //#include <SA/Render/Vulkan/Surface/VkWindowSurface.hpp>
 //#include <SA/Render/Vulkan/Surface/VkSurface.hpp>
 //#include <SA/SDK/ShaderBuilder/GLSL/GLSLShaderBuilder.hpp>
@@ -54,12 +57,12 @@ InputSystem inputSys;
 RenderSystem renderSys;
 
 // TODO: Remove later.
-ARenderInterface* renderIntf = nullptr;
+Vk::RenderInterface* renderIntf = nullptr;
 ARenderGraphicInterface* renderGraph = nullptr;
 ARenderContextInterface* renderContext = nullptr;
 
 WindowSurfaceHandle winSurface;
-//ARenderSurface* surface = nullptr;
+RenderSurfaceHandle surface;
 
 //RenderSubSystem* renderSubSys;
 //
@@ -178,11 +181,11 @@ int main()
 			renderIntf = renderSys.Create<Vk::RenderInterface>(winSys);
 			winSurface = renderIntf->CreateWindowSurface(win);
 
-			//const std::vector<Vk::GraphicDeviceInfos> deviceInfos = Vk::Device::QuerySuitableDevices(*renderIntf, winSurface->AsPtr<Vk::WindowSurface>());
-			//renderSubSys = renderSys.CreateSubSystem(deviceInfos[0]);
-			//renderSubIntf = renderSubSys->GetInterface();
+			const std::vector<Vk::GraphicDeviceInfos> deviceInfos = Vk::Device::QuerySuitableDevices(*renderIntf, winSurface);
+			renderGraph = renderIntf->CreateGraphicInterface(deviceInfos[0]);
+			renderContext = renderGraph->CreateContextInterface();
 
-			//surface = renderSubIntf->CreateSurface(winSurface);
+			surface = renderContext->CreateSurface(winSurface);
 
 			//renderPassDesc = RenderPassDescriptor::DefaultSingle(surface);
 			//renderPass = renderSubIntf->CreateRenderPass(renderPassDesc);
@@ -416,10 +419,13 @@ int main()
 
 			//renderSubIntf->DestroyRenderPass(renderPass);
 
-			//renderSubIntf->DestroySurface(surface);
+			renderContext->DestroySurface(surface);
+
+			renderGraph->DestroyContextInterface(renderContext);
+			renderIntf->DestroyGraphicInterface(renderGraph);
+
 			renderIntf->DestroyWindowSurface(win, winSurface);
 
-			//renderSys.DestroySubSystem(renderSubSys);
 			renderSys.Destroy();
 		}
 

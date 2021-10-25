@@ -7,16 +7,22 @@
 
 #include <SA/Render/Base/ARenderContextInterface.hpp>
 
+#include <SA/Core/Types/Variadics/SparseVector.hpp>
+
+#include <SA/Render/Vulkan/Surface/VkSurface.hpp>
+
 namespace Sa::Vk
 {
 	class RenderContextInterface : public ARenderContextInterface
 	{
+		SparseVector<Surface> mSurfaces;
+
 	public:
 		void Create() override final;
 		void Destroy() override final;
 
-		//ARenderSurface* CreateSurface(AWindowSurface* _winSurface) override final;
-		//void DestroySurface(ARenderSurface* _surface) override final;
+		RenderSurfaceHandle CreateSurface(WindowSurfaceHandle _winHandle) override final;
+		void DestroySurface(RenderSurfaceHandle _handle) override final;
 
 		//ARenderPass* CreateRenderPass(const RenderPassDescriptor& _descriptor) override final;
 		//void DestroyRenderPass(ARenderPass* _pass) override final;

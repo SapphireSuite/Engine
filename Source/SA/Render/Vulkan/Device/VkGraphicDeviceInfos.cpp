@@ -2,8 +2,9 @@
 
 #include <Render/Vulkan/Device/VkGraphicDeviceInfos.hpp>
 
+#include <Render/Base/Surface/WindowSurfaceHandle.hpp>
+
 #include <Render/Vulkan/Debug/Debug.hpp>
-#include <Render/Vulkan/Surface/VkWindowSurface.hpp>
 
 namespace Sa::Vk
 {
@@ -22,7 +23,7 @@ namespace Sa::Vk
 		(void)properties.limits.maxSamplerAnisotropy;
 	}
 
-	void GraphicDeviceInfos::QueryQueueFamilies(const WindowSurface* _winSurface) noexcept
+	void GraphicDeviceInfos::QueryQueueFamilies(WindowSurfaceHandle _winSurface) noexcept
 	{
 		SA_ASSERT(Default, SA/Render/Vulkan, device != VK_NULL_HANDLE, L"Query queue families of a null physical device!");
 
@@ -36,7 +37,7 @@ namespace Sa::Vk
 			AddFamily(_winSurface, queueFamilies[i], i);
 	}
 
-	void GraphicDeviceInfos::AddFamily(const WindowSurface* _winSurface, const VkQueueFamilyProperties& _family, uint32 _famIndex) noexcept
+	void GraphicDeviceInfos::AddFamily(WindowSurfaceHandle _winSurface, const VkQueueFamilyProperties& _family, uint32 _famIndex) noexcept
 	{
 		// TODO: Allow queue with same index but lower device score.
 
@@ -70,7 +71,7 @@ namespace Sa::Vk
 		if (reqs.familyFlags & QueueFamily::Present && reqs.presentNum > 0)
 		{
 			VkBool32 presentSupport = false;
-			SA_VK_ASSERT(vkGetPhysicalDeviceSurfaceSupportKHR(device, _famIndex, *_winSurface, &presentSupport));
+			SA_VK_ASSERT(vkGetPhysicalDeviceSurfaceSupportKHR(device, _famIndex, _winSurface, &presentSupport));
 
 			if (presentSupport)
 			{
