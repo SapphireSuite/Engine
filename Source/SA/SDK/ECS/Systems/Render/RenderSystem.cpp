@@ -18,23 +18,4 @@ namespace Sa
 
 		SA_LOG(L"Render System destroyed.", Infos, SA/SDK/ECS);
 	}
-
-
-	RenderSubSystem* RenderSystem::CreateSubSystem(const AGraphicDeviceInfos& _infos)
-	{
-		RenderSubSystem* const subSys = new RenderSubSystem();
-
-		subSys->Create(mInterface, _infos);
-
-		return subSys;
-	}
-
-	void RenderSystem::DestroySubSystem(RenderSubSystem* _subSys)
-	{
-		SA_ASSERT(Nullptr, SA/SDK/ECS, _subSys);
-
-		_subSys->Destroy(mInterface);
-
-		delete _subSys;
-	}
 }

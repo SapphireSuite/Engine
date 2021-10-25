@@ -26,8 +26,6 @@
 
 //}
 
-#include <SA/SDK/ECS/Systems/Render/RenderSubSystem.hpp>
-
 #include <SA/SDK/ECS/Systems/WindowSystem.hpp>
 
 namespace Sa
@@ -46,10 +44,6 @@ namespace Sa
 		IntfT* Create(const WindowSystem& _winSys);
 
 		void Destroy();
-
-
-		RenderSubSystem* CreateSubSystem(const AGraphicDeviceInfos& _infos);
-		void DestroySubSystem(RenderSubSystem* _subSys);
 	};
 }
 

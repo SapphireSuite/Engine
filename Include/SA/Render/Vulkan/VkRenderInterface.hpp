@@ -20,13 +20,13 @@ namespace Sa::Vk
 		void Destroy() override final;
 
 
-		ARenderSubInterface* CreateSubInterface(const AGraphicDeviceInfos& _infos) override final;
+		ARenderGraphicInterface* CreateGraphicInterface(const AGraphicDeviceInfos& _infos) override final;
 		
 
 #if SA_WINDOW
 
-		AWindowSurface* CreateWindowSurface(AWindow* _win) override final;
-		void DestroyWindowSurface(AWindow* _win, AWindowSurface* _winSurface) override final;
+		//AWindowSurface* CreateWindowSurface(AWindow* _win) override final;
+		//void DestroyWindowSurface(AWindow* _win, AWindowSurface* _winSurface) override final;
 
 #endif
 

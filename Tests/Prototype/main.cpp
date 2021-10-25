@@ -15,21 +15,23 @@ using namespace Sa;
 #include <SA/Input/Base/Axis/Bindings/InputAxisAction.hpp>
 #include <SA/Input/Base/Axis/Bindings/InputAxisRange.hpp>
 
-// TODO: Remove later.
-#include <SA/Render/Vulkan/VkRenderInterface.hpp>
-#include <SA/Render/Vulkan/Device/VkDevice.hpp>
-#include <SA/Render/Vulkan/Surface/VkWindowSurface.hpp>
-#include <SA/Render/Vulkan/Surface/VkSurface.hpp>
-#include <SA/SDK/ShaderBuilder/GLSL/GLSLShaderBuilder.hpp>
-
 #include <SA/SDK/ECS/Systems/WindowSystem.hpp>
 #include <SA/SDK/ECS/Systems/InputSystem.hpp>
 #include <SA/SDK/ECS/Systems/Render/RenderSystem.hpp>
-#include <SA/SDK/ECS/Systems/Render/RenderSubSystem.hpp>
 
-#include <SA/SDK/Assets/Render/ShaderAsset.hpp>
-#include <SA/SDK/Assets/Render/TextureAsset.hpp>
-#include <SA/SDK/Assets/Render/ModelAsset.hpp>
+// TODO: Remove later.
+#include <SA/Render/Vulkan/VkRenderInterface.hpp>
+#include <SA/Render/Vulkan/VkRenderGraphicInterface.hpp>
+#include <SA/Render/Vulkan/VkRenderContextInterface.hpp>
+//#include <SA/Render/Vulkan/VkRenderInterface.hpp>
+//#include <SA/Render/Vulkan/Device/VkDevice.hpp>
+//#include <SA/Render/Vulkan/Surface/VkWindowSurface.hpp>
+//#include <SA/Render/Vulkan/Surface/VkSurface.hpp>
+//#include <SA/SDK/ShaderBuilder/GLSL/GLSLShaderBuilder.hpp>
+
+//#include <SA/SDK/Assets/Render/ShaderAsset.hpp>
+//#include <SA/SDK/Assets/Render/TextureAsset.hpp>
+//#include <SA/SDK/Assets/Render/ModelAsset.hpp>
 
 //#include <SA/Render/Vulkan/Device/VkCommandPool.hpp>
 //#include <SA/Render/Vulkan/Buffers/VkFrameBuffer.hpp>
@@ -50,31 +52,38 @@ InputSystem inputSys;
 
 
 RenderSystem renderSys;
-RenderSubSystem* renderSubSys;
 
-Vk::RenderInterface* renderIntf = nullptr;
-ARenderSubInterface* renderSubIntf = nullptr;
-
-
-AWindowSurface* winSurface = nullptr;
-ARenderSurface* surface = nullptr;
+// TODO: Remove later.
+ARenderInterface* renderIntf = nullptr;
+ARenderGraphicInterface* renderGraph = nullptr;
+ARenderContextInterface* renderContext = nullptr;
 
 
-RenderPassDescriptor renderPassDesc;
-ARenderPass* renderPass = nullptr;
-RenderPipelineDescriptor unlitPipelineDesc;
-ARenderPipeline* unlitPipeline = nullptr;
+//RenderSubSystem* renderSubSys;
+//
+//Vk::RenderInterface* renderIntf = nullptr;
+//ARenderSubInterface* renderSubIntf = nullptr;
+//
+//
+//AWindowSurface* winSurface = nullptr;
+//ARenderSurface* surface = nullptr;
+//
+//
+//RenderPassDescriptor renderPassDesc;
+//ARenderPass* renderPass = nullptr;
+//RenderPipelineDescriptor unlitPipelineDesc;
+//ARenderPipeline* unlitPipeline = nullptr;
+//
+//AShader* unlitvert = nullptr;
+//AShader* unlitfrag = nullptr;
+//ATexture* missText = nullptr;
+//AStaticMesh* cubeMesh = nullptr;
+//ARenderMaterial* cubeMat = nullptr;
+//
+//TransffPR camTr;
+//ACamera* camera = nullptr;
 
-AShader* unlitvert = nullptr;
-AShader* unlitfrag = nullptr;
-ATexture* missText = nullptr;
-AStaticMesh* cubeMesh = nullptr;
-ARenderMaterial* cubeMat = nullptr;
-
-TransffPR camTr;
-ACamera* camera = nullptr;
-
-GLSL::ShaderBuilder shaderBuilder;
+//GLSL::ShaderBuilder shaderBuilder;
 
 //Vk::CommandPool cmdPool;
 //std::vector<Vk::CommandBuffer> cmdBuffers;
@@ -169,18 +178,18 @@ int main()
 		// Render
 		{
 			renderIntf = renderSys.Create<Vk::RenderInterface>(winSys);
-			winSurface = renderIntf->CreateWindowSurface(win);
+			//winSurface = renderIntf->CreateWindowSurface(win);
 
-			const std::vector<Vk::GraphicDeviceInfos> deviceInfos = Vk::Device::QuerySuitableDevices(*renderIntf, winSurface->AsPtr<Vk::WindowSurface>());
-			renderSubSys = renderSys.CreateSubSystem(deviceInfos[0]);
-			renderSubIntf = renderSubSys->GetInterface();
+			//const std::vector<Vk::GraphicDeviceInfos> deviceInfos = Vk::Device::QuerySuitableDevices(*renderIntf, winSurface->AsPtr<Vk::WindowSurface>());
+			//renderSubSys = renderSys.CreateSubSystem(deviceInfos[0]);
+			//renderSubIntf = renderSubSys->GetInterface();
 
-			surface = renderSubIntf->CreateSurface(winSurface);
+			//surface = renderSubIntf->CreateSurface(winSurface);
 
-			renderPassDesc = RenderPassDescriptor::DefaultSingle(surface);
-			renderPass = renderSubIntf->CreateRenderPass(renderPassDesc);
+			//renderPassDesc = RenderPassDescriptor::DefaultSingle(surface);
+			//renderPass = renderSubIntf->CreateRenderPass(renderPassDesc);
 
-			renderSubIntf->CreateFrameBuffers(surface, renderPass, renderPassDesc);
+			//renderSubIntf->CreateFrameBuffers(surface, renderPass, renderPassDesc);
 
 			//cmdPool.Create(device, device.queueMgr.graphics.GetQueue(0).GetFamilyIndex());
 
@@ -202,92 +211,92 @@ int main()
 
 		// Assets
 		{
-			ARenderResourceInitializer* const resInit = renderSubIntf->CreateResourceInitializer();
+			//ARenderResourceInitializer* const resInit = renderSubIntf->CreateResourceInitializer();
 
 
 			// Shaders
 			{
 				// Unlit vert
 				{
-					const std::string assetName = "Assets/Shaders/unlit_vert.spha";
-					const std::string resName = "/Engine/Resources/Shaders/Forward/unlit.vert";
+					//const std::string assetName = "Assets/Shaders/unlit_vert.spha";
+					//const std::string resName = "/Engine/Resources/Shaders/Forward/unlit.vert";
 
-					ShaderAsset asset(&shaderBuilder);
+					//ShaderAsset asset(&shaderBuilder);
 
-					if (!asset.Load(assetName))
-					{
-						if (asset.Import(resName))
-						{
-							asset.Save(assetName);
-						}
-					}
+					//if (!asset.Load(assetName))
+					//{
+					//	if (asset.Import(resName))
+					//	{
+					//		asset.Save(assetName);
+					//	}
+					//}
 
-					unlitvert = renderSubIntf->CreateShader(resInit, asset.raw);
-					//unlitPipelineDesc.AddShader(unlitvert, asset.descriptor);
+					//unlitvert = renderSubIntf->CreateShader(resInit, asset.raw);
+					////unlitPipelineDesc.AddShader(unlitvert, asset.descriptor);
 				}
 
 				// Unlit frag
 				{
-					const std::string assetName = "Assets/Shaders/unlit_frag.spha";
-					const std::string resName = "/Engine/Resources/Shaders/Forward/unlit.frag";
+					//const std::string assetName = "Assets/Shaders/unlit_frag.spha";
+					//const std::string resName = "/Engine/Resources/Shaders/Forward/unlit.frag";
 
-					ShaderAsset asset(&shaderBuilder);
+					//ShaderAsset asset(&shaderBuilder);
 
-					if (!asset.Load(assetName))
-					{
-						if (asset.Import(resName))
-						{
-							asset.Save(assetName);
-						}
-					}
+					//if (!asset.Load(assetName))
+					//{
+					//	if (asset.Import(resName))
+					//	{
+					//		asset.Save(assetName);
+					//	}
+					//}
 
-					unlitfrag = renderSubIntf->CreateShader(resInit, asset.raw);
-					//unlitPipelineDesc.AddShader(unlitfrag, asset.descriptor);
+					//unlitfrag = renderSubIntf->CreateShader(resInit, asset.raw);
+					////unlitPipelineDesc.AddShader(unlitfrag, asset.descriptor);
 				}
 			}
 
 
 			// Texture
 			{
-				const std::string assetName = "Assets/Textures/missing.spha";
-				const std::string resName = "/Engine/Resources/Textures/missing_texture.png";
+				//const std::string assetName = "Assets/Textures/missing.spha";
+				//const std::string resName = "/Engine/Resources/Textures/missing_texture.png";
 
-				TextureAsset asset;
+				//TextureAsset asset;
 
-				if (!asset.Load(assetName))
-				{
-					if (asset.Import(resName))
-					{
-						asset.Save(assetName);
-					}
-				}
+				//if (!asset.Load(assetName))
+				//{
+				//	if (asset.Import(resName))
+				//	{
+				//		asset.Save(assetName);
+				//	}
+				//}
 
-				missText = renderSubIntf->CreateTexture(resInit, asset.raw);
+				//missText = renderSubIntf->CreateTexture(resInit, asset.raw);
 			}
 
 
 			// CUBE.
 			{
-				const std::string assetName = "Assets/Meshes/cube.spha";
-				const std::string resName = "/Engine/Resources/Meshes/cube.obj";
+				//const std::string assetName = "Assets/Meshes/cube.spha";
+				//const std::string resName = "/Engine/Resources/Meshes/cube.obj";
 
-				MeshAsset meshAsset;
-				if (!meshAsset.Load(assetName))
-				{
-					ModelAsset modelAsset;
-					if (modelAsset.Import(resName))
-					{
-						modelAsset.meshes[0].Save(assetName);
-						meshAsset = std::move(modelAsset.meshes[0]);
-					}
-				}
+				//MeshAsset meshAsset;
+				//if (!meshAsset.Load(assetName))
+				//{
+				//	ModelAsset modelAsset;
+				//	if (modelAsset.Import(resName))
+				//	{
+				//		modelAsset.meshes[0].Save(assetName);
+				//		meshAsset = std::move(modelAsset.meshes[0]);
+				//	}
+				//}
 
-				cubeMesh = renderSubIntf->CreateStaticMesh(resInit, meshAsset.raw);
+				//cubeMesh = renderSubIntf->CreateStaticMesh(resInit, meshAsset.raw);
 			}
 
 
-			renderSubIntf->SubmitResourceInitializer(resInit);
-			renderSubIntf->DestroyResourceInitializer(resInit);
+			//renderSubIntf->SubmitResourceInitializer(resInit);
+			//renderSubIntf->DestroyResourceInitializer(resInit);
 
 
 			// Pipeline
@@ -309,12 +318,12 @@ int main()
 
 			// Camera
 			{
-				camera = renderSubIntf->CreateCamera();
-				
-				camera->SetProjection(Mat4f::MakePerspective(90.0f, 1200.0f / 800.0f));
-				
-				camTr.position = Vec3f(0.0f, 0.0f, 5.0f);
-				camera->SetTransform(camTr);
+				//camera = renderSubIntf->CreateCamera();
+				//
+				//camera->SetProjection(Mat4f::MakePerspective(90.0f, 1200.0f / 800.0f));
+				//
+				//camTr.position = Vec3f(0.0f, 0.0f, 5.0f);
+				//camera->SetTransform(camTr);
 			}
 		}
 	}
@@ -335,21 +344,21 @@ int main()
 
 			inputSys.Update();
 
-			// Update Camera
-			if(bCamEnabled)
-			{
-				if (rightSign)
-					camTr.position += rightSign * deltaTime * camTr.Right();
-				if (upSign)
-					camTr.position += upSign * deltaTime * camTr.Up();
-				if (forwardSign)
-					camTr.position += -1 * forwardSign * deltaTime * camTr.Forward();
+			//// Update Camera
+			//if(bCamEnabled)
+			//{
+			//	if (rightSign)
+			//		camTr.position += rightSign * deltaTime * camTr.Right();
+			//	if (upSign)
+			//		camTr.position += upSign * deltaTime * camTr.Up();
+			//	if (forwardSign)
+			//		camTr.position += -1 * forwardSign * deltaTime * camTr.Forward();
 
-				camTr.rotation = Quatf(cos(dx), 0, sin(dx), 0) * Quatf(cos(dy), sin(dy), 0, 0);
+			//	camTr.rotation = Quatf(cos(dx), 0, sin(dx), 0) * Quatf(cos(dy), sin(dy), 0, 0);
 
-				camera->SetTransform(camTr);
-				//camera->Update(device);
-			}
+			//	camera->SetTransform(camTr);
+			//	//camera->Update(device);
+			//}
 
 
 			/*
@@ -392,27 +401,27 @@ int main()
 			cubeDescSet.Destroy(device);
 			*/
 
-			renderSubIntf->DestroyCamera(camera);
+			//renderSubIntf->DestroyCamera(camera);
 
-			//renderSubIntf->DestroyMaterial(cubeMat);
+			////renderSubIntf->DestroyMaterial(cubeMat);
 
-			//renderSubIntf->DestroyPipeline(unlitPipeline);
+			////renderSubIntf->DestroyPipeline(unlitPipeline);
 
-			renderSubIntf->DestroyStaticMesh(cubeMesh);
+			//renderSubIntf->DestroyStaticMesh(cubeMesh);
 
-			renderSubIntf->DestroyTexture(missText);
+			//renderSubIntf->DestroyTexture(missText);
 
-			renderSubIntf->DestroyShader(unlitvert);
-			renderSubIntf->DestroyShader(unlitfrag);
+			//renderSubIntf->DestroyShader(unlitvert);
+			//renderSubIntf->DestroyShader(unlitfrag);
 
-			renderSubIntf->DestroyFrameBuffers(surface);
+			//renderSubIntf->DestroyFrameBuffers(surface);
 
-			renderSubIntf->DestroyRenderPass(renderPass);
+			//renderSubIntf->DestroyRenderPass(renderPass);
 
-			renderSubIntf->DestroySurface(surface);
-			renderIntf->DestroyWindowSurface(win, winSurface);
+			//renderSubIntf->DestroySurface(surface);
+			//renderIntf->DestroyWindowSurface(win, winSurface);
 
-			renderSys.DestroySubSystem(renderSubSys);
+			//renderSys.DestroySubSystem(renderSubSys);
 			renderSys.Destroy();
 		}
 

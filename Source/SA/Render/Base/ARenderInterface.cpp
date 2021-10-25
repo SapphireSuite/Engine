@@ -2,16 +2,14 @@
 
 #include <Render/Base/ARenderInterface.hpp>
 
-#include <Render/Base/ARenderSubInterface.hpp>
-
 namespace Sa
 {
-	void ARenderInterface::DestroySubInterface(ARenderSubInterface* _intf)
+	void ARenderInterface::DestroyGraphicInterface(ARenderGraphicInterface* _graphics)
 	{
-		SA_ASSERT(Nullptr, SA/Render/Vulkan, _intf);
+		SA_ASSERT(Nullptr, SA/Render/Vulkan, _graphics);
 
-		_intf->Destroy();
+		_graphics->Destroy();
 
-		delete _intf;
+		delete _graphics;
 	}
 }
