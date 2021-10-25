@@ -355,4 +355,25 @@ namespace Sa
 	}
 
 //}
+
+
+//{ Operators
+		
+	template <typename T>
+	T& SparseVector<T>::operator[](uint32 _index)
+	{
+		SA_ASSERT(OutOfRange, SA/Core/Containers, _index, 0u, mSize);
+
+		return mData[_index];
+	}
+
+	template <typename T>
+	const T& SparseVector<T>::operator[](uint32 _index) const
+	{
+		SA_ASSERT(OutOfRange, SA/Core/Containers, _index, 0u, mSize);
+
+		return mData[_index];
+	}
+
+//}
 }

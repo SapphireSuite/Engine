@@ -134,6 +134,14 @@ namespace Sa
 		void RemoveHandle(uint32 _index);
 
 //}
+
+
+//{ Operators
+		
+		T& operator[](uint32 _index);
+		const T& operator[](uint32 _index) const;
+
+//}
 	};
 }
 
