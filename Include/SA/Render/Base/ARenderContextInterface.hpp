@@ -28,7 +28,7 @@ namespace Sa
 	public:
 		virtual ~ARenderContextInterface() = default;
 
-		virtual void Create() = 0;
+		//virtual void Create() = 0;
 		virtual void Destroy() = 0;
 
 		virtual RenderSurfaceHandle CreateSurface(WindowSurfaceHandle _winHandle) = 0;

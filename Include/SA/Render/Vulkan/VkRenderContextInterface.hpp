@@ -13,12 +13,18 @@
 
 namespace Sa::Vk
 {
+	class RenderGraphicInterface;
+
 	class RenderContextInterface : public ARenderContextInterface
 	{
+		const RenderGraphicInterface* mGraphics = nullptr;
+
 		SparseVector<Surface> mSurfaces;
 
+		const Device& GetDevice() const;
+
 	public:
-		void Create() override final;
+		void Create(const RenderGraphicInterface* _graphics);
 		void Destroy() override final;
 
 		RenderSurfaceHandle CreateSurface(WindowSurfaceHandle _winHandle) override final;

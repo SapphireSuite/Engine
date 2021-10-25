@@ -6,22 +6,22 @@
 
 namespace Sa::Vk
 {
-	const ARenderDevice* RenderGraphicInterface::GetDevice() const
+	ARenderDevice* RenderGraphicInterface::GetDevice()
 	{
-		return &mDevice;
+		return &device;
 	}
 
 
 	void RenderGraphicInterface::Create(const AGraphicDeviceInfos& _infos)
 	{
-		mDevice.Create(_infos);
+		device.Create(_infos);
 
 		SA_LOG(L"Render Graphic Interface created.", Infos, SA/Render/Vulkan);
 	}
 
 	void RenderGraphicInterface::Destroy()
 	{
-		mDevice.Destroy();
+		device.Destroy();
 
 		SA_LOG(L"Render Graphic Interface destroyed.", Infos, SA/Render/Vulkan);
 	}
@@ -31,7 +31,7 @@ namespace Sa::Vk
 	{
 		RenderContextInterface* const context = new RenderContextInterface();
 		
-		context->Create();
+		context->Create(this);
 
 		return context;
 	}

@@ -2,6 +2,8 @@
 
 #include <Render/Vulkan/VkRenderContextInterface.hpp>
 
+#include <Render/Vulkan/VkRenderGraphicInterface.hpp>
+
 #include <Render/Vulkan/Debug/Debug.hpp>
 
 //#include <Render/Vulkan/Surface/VkWindowSurface.hpp>
@@ -18,29 +20,46 @@
 
 namespace Sa::Vk
 {
-	void RenderContextInterface::Create()
+	void RenderContextInterface::Create(const RenderGraphicInterface* _graphics)
 	{
+		SA_ASSERT(Nullptr, SA/Render/Vulkan, _graphics);
+
+		mGraphics = _graphics;
+
 		SA_LOG(L"Render Context Interface created.", Infos, SA/Render/Vulkan);
 	}
 
 	void RenderContextInterface::Destroy()
 	{
+		for (auto& surface : mSurfaces)
+			surface.Destroy(GetDevice());
+
+		mGraphics = nullptr;
+
 		SA_LOG(L"Render Context  Interface destroyed.", Infos, SA/Render/Vulkan);
 	}
 
 	
+	const Device& RenderContextInterface::GetDevice() const
+	{
+		SA_ASSERT(Nullptr, SA/Render/Vulkan, mGraphics);
+
+		return mGraphics->device;
+	}
+
+
 	RenderSurfaceHandle RenderContextInterface::CreateSurface(WindowSurfaceHandle _winHandle)
 	{
 		const RenderSurfaceHandle handle = mSurfaces.EmplaceHandle();
 
-		//mSurfaces[handle].Create(mDevice, _winHandle);
+		mSurfaces[handle].Create(GetDevice(), _winHandle);
 
 		return handle;
 	}
 
 	void RenderContextInterface::DestroySurface(RenderSurfaceHandle _handle)
 	{
-		//mSurfaces[_handle].Destroy(mDevice);
+		mSurfaces[_handle].Destroy(GetDevice());
 
 		mSurfaces.RemoveHandle(_handle);
 	}

@@ -13,10 +13,10 @@ namespace Sa::Vk
 {
 	class RenderGraphicInterface : public ARenderGraphicInterface
 	{
-		Device mDevice;
-
 	public:
-		const ARenderDevice* GetDevice() const override final;
+		Device device;
+
+		ARenderDevice* GetDevice() override final;
 
 		void Create(const AGraphicDeviceInfos& _infos) override final;
 		void Destroy() override final;

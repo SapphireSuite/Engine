@@ -15,7 +15,7 @@ namespace Sa
 	public:
 		virtual ~ARenderGraphicInterface() = default;
 
-		virtual const ARenderDevice* GetDevice() const = 0;
+		virtual ARenderDevice* GetDevice() = 0;
 
 		virtual void Create(const AGraphicDeviceInfos& _infos) = 0;
 		virtual void Destroy() = 0;

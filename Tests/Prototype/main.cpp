@@ -393,7 +393,7 @@ int main()
 	{
 		// Render
 		{
-			//device->WaitIdle();
+			renderGraph->GetDevice()->WaitIdle();
 
 			/*
 			camUBO.Destroy(device);
