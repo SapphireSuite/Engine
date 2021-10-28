@@ -200,6 +200,53 @@ namespace Sa::Vk
 	//	delete vkMesh;
 	//}
 
+
+	TextureHandle RenderContextInterface::CreateTexture(const RenderResourceInitializerHandle& _init, const RawTexture& _raw)
+	{
+		const TextureHandle handle = mTextures.EmplaceHandle();
+
+		Texture& texture = mTextures[handle];
+		ResourceInitializer& resInit = mResInits[_init];
+
+		texture.Create(GetDevice(), resInit, _raw);
+
+		return handle;
+	}
+
+	void RenderContextInterface::DestroyTexture(TextureHandle& _texture)
+	{
+		Texture& texture = mTextures[_texture];
+
+		texture.Destroy(GetDevice());
+
+		mTextures.RemoveHandle(_texture);
+		_texture.Reset();
+	}
+
+
+	CubemapHandle RenderContextInterface::CreateCubemap(const RenderResourceInitializerHandle& _init, const RawCubemap& _raw)
+	{
+		const CubemapHandle handle = mCubemaps.EmplaceHandle();
+
+		Cubemap& cubemap = mCubemaps[handle];
+		ResourceInitializer& resInit = mResInits[_init];
+
+		cubemap.Create(GetDevice(), resInit, _raw);
+
+		return handle;
+	}
+
+	void RenderContextInterface::DestroyCubemap(CubemapHandle& _cubemap)
+	{
+		Cubemap& cubemap = mCubemaps[_cubemap];
+
+		cubemap.Destroy(GetDevice());
+
+		mCubemaps.RemoveHandle(_cubemap);
+		_cubemap.Reset();
+	}
+
+
 	//
 	//ATexture* RenderContextInterface::CreateTexture(ARenderResourceInitializer* _init, const RawTexture& _raw)
 	//{

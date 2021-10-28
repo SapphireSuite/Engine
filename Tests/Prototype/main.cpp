@@ -33,7 +33,7 @@ using namespace Sa;
 
 #include <SA/SDK/Assets/Render/ShaderAsset.hpp>
 #include <SA/SDK/ShaderBuilder/GLSL/GLSLShaderBuilder.hpp>
-//#include <SA/SDK/Assets/Render/TextureAsset.hpp>
+#include <SA/SDK/Assets/Render/TextureAsset.hpp>
 //#include <SA/SDK/Assets/Render/ModelAsset.hpp>
 
 //#include <SA/Render/Vulkan/Device/VkCommandPool.hpp>
@@ -69,6 +69,7 @@ RenderPassDescriptor renderPassDesc;
 
 ShaderHandle unlitvert;
 ShaderHandle unlitfrag;
+TextureHandle missText;
 
 //RenderSubSystem* renderSubSys;
 //
@@ -79,9 +80,6 @@ ShaderHandle unlitfrag;
 //RenderPipelineDescriptor unlitPipelineDesc;
 //ARenderPipeline* unlitPipeline = nullptr;
 //
-//AShader* unlitvert = nullptr;
-//AShader* unlitfrag = nullptr;
-//ATexture* missText = nullptr;
 //AStaticMesh* cubeMesh = nullptr;
 //ARenderMaterial* cubeMat = nullptr;
 //
@@ -263,20 +261,20 @@ int main()
 
 			// Texture
 			{
-				//const std::string assetName = "Assets/Textures/missing.spha";
-				//const std::string resName = "/Engine/Resources/Textures/missing_texture.png";
+				const std::string assetName = "Assets/Textures/missing.spha";
+				const std::string resName = "/Engine/Resources/Textures/missing_texture.png";
 
-				//TextureAsset asset;
+				TextureAsset asset;
 
-				//if (!asset.Load(assetName))
-				//{
-				//	if (asset.Import(resName))
-				//	{
-				//		asset.Save(assetName);
-				//	}
-				//}
+				if (!asset.Load(assetName))
+				{
+					if (asset.Import(resName))
+					{
+						asset.Save(assetName);
+					}
+				}
 
-				//missText = renderSubIntf->CreateTexture(resInit, asset.raw);
+				missText = renderContext->CreateTexture(resInit, asset.raw);
 			}
 
 
@@ -414,7 +412,7 @@ int main()
 
 			//renderSubIntf->DestroyStaticMesh(cubeMesh);
 
-			//renderSubIntf->DestroyTexture(missText);
+			renderContext->DestroyTexture(missText);
 
 			renderContext->DestroyShader(unlitvert);
 			renderContext->DestroyShader(unlitfrag);

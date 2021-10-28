@@ -2,6 +2,7 @@
 
 #include <Render/Vulkan/Texture/VkTexture.hpp>
 
+#include <Render/Base/Texture/RawTexture.hpp>
 #include <Render/Base/Texture/Mipmap.hpp>
 
 #include <Render/Vulkan/VkResourceInitializer.hpp>
@@ -87,7 +88,7 @@ namespace Sa::Vk
 		mSampler.Destroy(_device);
 
 		mBuffer.Destroy(_device);
-		
+
 		SA_LOG(L"Texture destroyed.", Infos, SA/Render/Vulkan);
 	}
 

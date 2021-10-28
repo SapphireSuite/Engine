@@ -36,8 +36,8 @@ namespace Sa
 
 		std::vector<VkDescriptorImageInfo>& descs = _imageDescs.emplace_back();
 
-		for (auto it = IBOs.begin(); it != IBOs.end(); ++it)
-			descs.push_back((*it)->As<Vk::Texture>().CreateDescriptorImageInfo());
+		//for (auto it = IBOs.begin(); it != IBOs.end(); ++it)
+		//	descs.push_back((*it)->As<Vk::Texture>().CreateDescriptorImageInfo());
 
 
 		VkWriteDescriptorSet descWrite{};

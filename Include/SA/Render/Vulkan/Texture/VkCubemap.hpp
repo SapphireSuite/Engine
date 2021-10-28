@@ -5,12 +5,16 @@
 #ifndef SAPPHIRE_RENDER_VK_CUBEMAP_GUARD
 #define SAPPHIRE_RENDER_VK_CUBEMAP_GUARD
 
-#include <SA/Render/Base/Texture/ACubemap.hpp>
 #include <SA/Render/Vulkan/Texture/VkTexture.hpp>
+
+namespace Sa
+{
+	struct RawCubemap;
+}
 
 namespace Sa::Vk
 {
-	class Cubemap : public Texture, public ACubemap
+	class Cubemap : public Texture
 	{
 		ImageBuffer mIrradianceBuffer;
 

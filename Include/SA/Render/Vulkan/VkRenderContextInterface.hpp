@@ -13,6 +13,8 @@
 #include <SA/Render/Vulkan/Pass/VkRenderPass.hpp>
 #include <SA/Render/Vulkan/VkResourceInitializer.hpp>
 #include <SA/Render/Vulkan/Shader/VkShader.hpp>
+#include <SA/Render/Vulkan/Texture/VkTexture.hpp>
+#include <SA/Render/Vulkan/Texture/VkCubemap.hpp>
 
 namespace Sa::Vk
 {
@@ -26,6 +28,8 @@ namespace Sa::Vk
 		SparseVector<RenderPass> mRenderPasses;
 		SparseVector<ResourceInitializer> mResInits;
 		SparseVector<Shader> mShaders;
+		SparseVector<Texture> mTextures;
+		SparseVector<Cubemap> mCubemaps;
 
 		const Device& GetDevice() const;
 
@@ -60,11 +64,11 @@ namespace Sa::Vk
 		//AStaticMesh* CreateStaticMesh(ARenderResourceInitializer* _init, const RawMesh& _raw) override final;
 		//void DestroyStaticMesh(AStaticMesh* _mesh) override final;
 
-		//ATexture* CreateTexture(ARenderResourceInitializer* _init, const RawTexture& _raw) override final;
-		//void DestroyTexture(ATexture* _texture) override final;
+		TextureHandle CreateTexture(const RenderResourceInitializerHandle& _init, const RawTexture& _raw) override final;
+		void DestroyTexture(TextureHandle& _texture) override final;
 
-		//ACubemap* CreateCubemap(ARenderResourceInitializer* _init, const RawCubemap& _raw) override final;
-		//void DestroyCubemap(ACubemap* _cubemap) override final;
+		CubemapHandle CreateCubemap(const RenderResourceInitializerHandle& _init, const RawCubemap& _raw) override final;
+		void DestroyCubemap(CubemapHandle& _cubemap) override final;
 
 
 		//ARenderMaterial* CreateMaterial(const RenderMaterialCreateInfos& _infos) override final;

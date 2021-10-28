@@ -12,6 +12,10 @@
 #include <SA/Render/Base/RenderResourceInitializerHandle.hpp>
 #include <SA/Render/Base/Shader/ShaderHandle.hpp>
 #include <SA/Render/Base/Shader/RawShader.hpp>
+#include <SA/Render/Base/Texture/TextureHandle.hpp>
+#include <SA/Render/Base/Texture/RawTexture.hpp>
+#include <SA/Render/Base/Texture/CubemapHandle.hpp>
+#include <SA/Render/Base/Texture/RawCubemap.hpp>
 
 //#include <SA/Render/Base/Pipeline/ARenderPipeline.hpp>
 //#include <SA/Render/Base/Mesh/AStaticMesh.hpp>
@@ -53,17 +57,18 @@ namespace Sa
 		virtual void DestroyResourceInitializer(RenderResourceInitializerHandle& _init) = 0;
 		virtual void SubmitResourceInitializer(const RenderResourceInitializerHandle& _init) = 0;
 
-		virtual ShaderHandle CreateShader(const RenderResourceInitializerHandle& _init, const RawShader& _raw) = 0;
+		virtual ShaderHandle CreateShader(const RenderResourceInitializerHandle& _init,
+			const RawShader& _raw) = 0;
 		virtual void DestroyShader(ShaderHandle& _shader) = 0;
 
 		//virtual AStaticMesh* CreateStaticMesh(ARenderResourceInitializer* _init, const RawMesh& _raw) = 0;
 		//virtual void DestroyStaticMesh(AStaticMesh* _mesh) = 0;
 
-		//virtual ATexture* CreateTexture(ARenderResourceInitializer* _init, const RawTexture& _raw) = 0;
-		//virtual void DestroyTexture(ATexture* _texture) = 0;
+		virtual TextureHandle CreateTexture(const RenderResourceInitializerHandle& _init, const RawTexture& _raw) = 0;
+		virtual void DestroyTexture(TextureHandle& _texture) = 0;
 
-		//virtual ACubemap* CreateCubemap(ARenderResourceInitializer* _init, const RawCubemap& _raw) = 0;
-		//virtual void DestroyCubemap(ACubemap* _cubemap) = 0;
+		virtual CubemapHandle CreateCubemap(const RenderResourceInitializerHandle& _init, const RawCubemap& _raw) = 0;
+		virtual void DestroyCubemap(CubemapHandle& _cubemap) = 0;
 
 
 		//virtual ARenderMaterial* CreateMaterial(const RenderMaterialCreateInfos& _infos) = 0;

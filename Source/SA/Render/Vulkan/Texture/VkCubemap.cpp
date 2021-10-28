@@ -2,6 +2,8 @@
 
 #include <Render/Vulkan/Texture/VkCubemap.hpp>
 
+#include <Render/Base/Texture/RawCubemap.hpp>
+
 #include <Render/Vulkan/VkResourceInitializer.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
 #include <Render/Vulkan/Buffers/VkBuffer.hpp>
