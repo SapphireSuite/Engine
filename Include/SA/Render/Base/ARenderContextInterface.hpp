@@ -9,11 +9,9 @@
 #include <SA/Render/Base/Surface/RenderSurfaceHandle.hpp>
 #include <SA/Render/Base/Pass/RenderPassHandle.hpp>
 #include <SA/Render/Base/Pass/RenderPassDescriptor.hpp>
+#include <SA/Render/Base/RenderResourceInitializerHandle.hpp>
 
-//#include <SA/Render/Base/Surface/AWindowSurface.hpp>
-//#include <SA/Render/Base/Pass/ARenderPass.hpp>
 //#include <SA/Render/Base/Pipeline/ARenderPipeline.hpp>
-//#include <SA/Render/Base/ARenderResourceInitializer.hpp>
 //#include <SA/Render/Base/Mesh/AStaticMesh.hpp>
 //#include <SA/Render/Base/Texture/ATexture.hpp>
 //#include <SA/Render/Base/Texture/ACubemap.hpp>
@@ -49,9 +47,9 @@ namespace Sa
 
 //{ Resources
 
-		//virtual ARenderResourceInitializer* CreateResourceInitializer() = 0;
-		//virtual void DestroyResourceInitializer(ARenderResourceInitializer* _init) = 0;
-		//virtual void SubmitResourceInitializer(ARenderResourceInitializer* _init) = 0;
+		virtual RenderResourceInitializerHandle CreateResourceInitializer() = 0;
+		virtual void DestroyResourceInitializer(RenderResourceInitializerHandle& _init) = 0;
+		virtual void SubmitResourceInitializer(const RenderResourceInitializerHandle& _init) = 0;
 
 		//virtual ShaderHandle CreateShader(ARenderResourceInitializer* _init, const RawShader& _raw) = 0;
 		//virtual void DestroyShader(ShaderHandle _shader) = 0;

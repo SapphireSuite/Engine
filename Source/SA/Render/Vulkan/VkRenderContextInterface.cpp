@@ -130,30 +130,33 @@ namespace Sa::Vk
 
 //{ Resources
 
-	//ARenderResourceInitializer* RenderContextInterface::CreateResourceInitializer()
-	//{
-	//	ResourceInitializer* const init = new ResourceInitializer();
+	RenderResourceInitializerHandle RenderContextInterface::CreateResourceInitializer()
+	{
+		const RenderResourceInitializerHandle handle = mResInits.EmplaceHandle();
 
-	//	init->Create(mDevice);
+		ResourceInitializer& resInit = mResInits[handle];
 
-	//	return init;
-	//}
+		resInit.Create(GetDevice());
 
-	//void RenderContextInterface::DestroyResourceInitializer(ARenderResourceInitializer* _init)
-	//{
-	//	ResourceInitializer* const vkInit = _init->AsPtr<ResourceInitializer>();
+		return handle;
+	}
 
-	//	vkInit->Destroy(mDevice);
+	void RenderContextInterface::DestroyResourceInitializer(RenderResourceInitializerHandle& _init)
+	{
+		ResourceInitializer& resInit = mResInits[_init];
 
-	//	delete vkInit;
-	//}
+		resInit.Destroy(GetDevice());
 
-	//void RenderContextInterface::SubmitResourceInitializer(ARenderResourceInitializer* _init)
-	//{
-	//	SA_ASSERT(Nullptr, SA/Render/Vulkan, _init);
+		mResInits.RemoveHandle(_init);
+		_init.Reset();
+	}
 
-	//	_init->As<ResourceInitializer>().Submit(mDevice);
-	//}
+	void RenderContextInterface::SubmitResourceInitializer(const RenderResourceInitializerHandle& _init)
+	{
+		ResourceInitializer& resInit = mResInits[_init];
+
+		resInit.Submit(GetDevice());
+	}
 
 
 	//AShader* RenderContextInterface::CreateShader(ARenderResourceInitializer* _init, const RawShader& _raw)

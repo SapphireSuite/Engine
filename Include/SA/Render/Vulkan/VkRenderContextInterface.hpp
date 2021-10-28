@@ -11,6 +11,7 @@
 
 #include <SA/Render/Vulkan/Surface/VkSurface.hpp>
 #include <SA/Render/Vulkan/Pass/VkRenderPass.hpp>
+#include <SA/Render/Vulkan/VkResourceInitializer.hpp>
 
 namespace Sa::Vk
 {
@@ -22,6 +23,7 @@ namespace Sa::Vk
 
 		SparseVector<Surface> mSurfaces;
 		SparseVector<RenderPass> mRenderPasses;
+		SparseVector<ResourceInitializer> mResInits;
 
 		const Device& GetDevice() const;
 
@@ -46,9 +48,9 @@ namespace Sa::Vk
 
 //{ Resources
 	
-		//ARenderResourceInitializer* CreateResourceInitializer() override final;
-		//void DestroyResourceInitializer(ARenderResourceInitializer* _init) override final;
-		//void SubmitResourceInitializer(ARenderResourceInitializer* _init) override final;
+		RenderResourceInitializerHandle CreateResourceInitializer() override final;
+		void DestroyResourceInitializer(RenderResourceInitializerHandle& _init) override final;
+		void SubmitResourceInitializer(const RenderResourceInitializerHandle& _init) override final;
 
 		//AShader* CreateShader(ARenderResourceInitializer* _init, const RawShader& _raw) override final;
 		//void DestroyShader(AShader* _shader) override final;
