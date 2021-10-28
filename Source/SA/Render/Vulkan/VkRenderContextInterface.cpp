@@ -6,9 +6,6 @@
 
 #include <Render/Vulkan/Debug/Debug.hpp>
 
-//#include <Render/Vulkan/Surface/VkWindowSurface.hpp>
-//#include <Render/Vulkan/Surface/VkSurface.hpp>
-//#include <Render/Vulkan/Pass/VkRenderPass.hpp>
 //#include <Render/Vulkan/Pipeline/VkPipeline.hpp>
 //#include <Render/Vulkan/VkResourceInitializer.hpp>
 //#include <Render/Vulkan/Shader/VkShader.hpp>
@@ -50,20 +47,48 @@ namespace Sa::Vk
 
 	RenderSurfaceHandle RenderContextInterface::CreateSurface(WindowSurfaceHandle _winHandle)
 	{
-		const RenderSurfaceHandle handle = mSurfaces.EmplaceHandle();
+		RenderSurfaceHandle handle = mSurfaces.EmplaceHandle();
 
-		mSurfaces[handle].Create(GetDevice(), _winHandle);
+		Surface& surface = mSurfaces[handle];
+
+		surface.Create(GetDevice(), _winHandle);
+
+		handle.format = surface.GetFormat();
 
 		return handle;
 	}
 
-	void RenderContextInterface::DestroySurface(RenderSurfaceHandle _handle)
+	void RenderContextInterface::DestroySurface(RenderSurfaceHandle& _handle)
 	{
-		mSurfaces[_handle].Destroy(GetDevice());
+		Surface& surface = mSurfaces[_handle];
+
+		surface.Destroy(GetDevice());
 
 		mSurfaces.RemoveHandle(_handle);
+		_handle.Reset();
 	}
 
+
+	RenderPassHandle RenderContextInterface::CreateRenderPass(const RenderPassDescriptor& _descriptor)
+	{
+		const RenderPassHandle handle = mRenderPasses.EmplaceHandle();
+
+		RenderPass& renderPass = mRenderPasses[handle];
+
+		renderPass.Create(GetDevice(), _descriptor);
+
+		return handle;
+	}
+
+	void RenderContextInterface::DestroyRenderPass(RenderPassHandle& _handle)
+	{
+		RenderPass& renderPass = mRenderPasses[_handle];
+
+		renderPass.Destroy(GetDevice());
+
+		mRenderPasses.RemoveHandle(_handle);
+		_handle.Reset();
+	}
 
 	//ARenderPass* RenderContextInterface::CreateRenderPass(const RenderPassDescriptor& _descriptor)
 	//{

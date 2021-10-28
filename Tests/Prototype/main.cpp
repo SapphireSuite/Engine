@@ -64,14 +64,15 @@ ARenderContextInterface* renderContext = nullptr;
 WindowSurfaceHandle winSurface;
 RenderSurfaceHandle surface;
 
+RenderPassHandle renderPass;
+RenderPassDescriptor renderPassDesc;
+
 //RenderSubSystem* renderSubSys;
 //
 //Vk::RenderInterface* renderIntf = nullptr;
 //ARenderSubInterface* renderSubIntf = nullptr;
 //
 //
-//RenderPassDescriptor renderPassDesc;
-//ARenderPass* renderPass = nullptr;
 //RenderPipelineDescriptor unlitPipelineDesc;
 //ARenderPipeline* unlitPipeline = nullptr;
 //
@@ -187,8 +188,8 @@ int main()
 
 			surface = renderContext->CreateSurface(winSurface);
 
-			//renderPassDesc = RenderPassDescriptor::DefaultSingle(surface);
-			//renderPass = renderSubIntf->CreateRenderPass(renderPassDesc);
+			renderPassDesc = RenderPassDescriptor::DefaultSingle(surface);
+			renderPass = renderContext->CreateRenderPass(renderPassDesc);
 
 			//renderSubIntf->CreateFrameBuffers(surface, renderPass, renderPassDesc);
 
@@ -417,7 +418,7 @@ int main()
 
 			//renderSubIntf->DestroyFrameBuffers(surface);
 
-			//renderSubIntf->DestroyRenderPass(renderPass);
+			renderContext->DestroyRenderPass(renderPass);
 
 			renderContext->DestroySurface(surface);
 

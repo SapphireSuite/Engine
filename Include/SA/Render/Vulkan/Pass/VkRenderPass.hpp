@@ -5,15 +5,17 @@
 #ifndef SAPPHIRE_RENDER_VK_RENDER_PASS_GUARD
 #define SAPPHIRE_RENDER_VK_RENDER_PASS_GUARD
 
-#include <SA/Render/Base/Pass/ARenderPass.hpp>
+#include <SA/Core/Support/API/Vulkan.hpp>
+
+#include <SA/Render/Base/Pass/RenderPassDescriptor.hpp>
 
 namespace Sa::Vk
 {
 	class Device;
-	class CommandBuffer;
-	class FrameBuffer;
+	//class CommandBuffer;
+	//class FrameBuffer;
 
-	class RenderPass : public ARenderPass
+	class RenderPass
 	{
 		VkRenderPass mHandle = VK_NULL_HANDLE;
 
@@ -21,9 +23,9 @@ namespace Sa::Vk
 		void Create(const Device& _device, const RenderPassDescriptor& _descriptor);
 		void Destroy(const Device& _device);
 
-		void Begin(CommandBuffer& _cmdBuff, const FrameBuffer& _frameBuff);
-		void NextSubpass(CommandBuffer& _cmdBuff);
-		void End(CommandBuffer& _cmdBuff);
+		//void Begin(CommandBuffer& _cmdBuff, const FrameBuffer& _frameBuff);
+		//void NextSubpass(CommandBuffer& _cmdBuff);
+		//void End(CommandBuffer& _cmdBuff);
 
 		operator VkRenderPass() const noexcept;
 	};

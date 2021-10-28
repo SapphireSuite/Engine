@@ -7,11 +7,15 @@
 
 #include <SA/Core/Types/Handle.hpp>
 
+#include <SA/Render/Base/Misc/Format.hpp>
+
 namespace Sa
 {
 	struct RenderSurfaceHandle : public Handle
 	{
 		using Handle::Handle;
+
+		Format format;
 	};
 }
 

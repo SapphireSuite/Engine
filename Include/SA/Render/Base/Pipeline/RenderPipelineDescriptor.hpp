@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_RENDER_RENDER_PIPELINE_DESCRIPTOR_GUARD
 #define SAPPHIRE_RENDER_RENDER_PIPELINE_DESCRIPTOR_GUARD
 
-#include <SA/Render/Base/Pass/ARenderPass.hpp>
+//#include <SA/Render/Base/Pass/ARenderPass.hpp>
 
 #include <SA/Render/Base/Pipeline/PipelineRenderModes.hpp>
 #include <SA/Render/Base/Pipeline/PipelineShaderInfos.hpp>
@@ -16,11 +16,11 @@ namespace Sa
 	{
 //{ RenderPass
 
-		/// Associated renderpass.
-		const ARenderPass* renderPass = nullptr;
+		///// Associated renderpass.
+		//const ARenderPass* renderPass = nullptr;
 
-		/// Descriptor of the bound subpass of the renderpass.
-		SubPassDescriptor subPassDesc;
+		///// Descriptor of the bound subpass of the renderpass.
+		//SubPassDescriptor subPassDesc;
 
 		/// Index of the associated subpass.
 		uint32 subPassIndex = 0u;
@@ -36,9 +36,9 @@ namespace Sa
 
 
 		RenderPipelineDescriptor() = default;
-		RenderPipelineDescriptor(const ARenderPass* _renderPass, const RenderPassDescriptor& _renderPassDesc, uint32 _subPassIndex = 0u);
+		//RenderPipelineDescriptor(const ARenderPass* _renderPass, const RenderPassDescriptor& _renderPassDesc, uint32 _subPassIndex = 0u);
 
-		void SetRenderPass(const ARenderPass* _renderPass, const RenderPassDescriptor& _renderPassDesc, uint32 _subPassIndex = 0u);
+		//void SetRenderPass(const ARenderPass* _renderPass, const RenderPassDescriptor& _renderPassDesc, uint32 _subPassIndex = 0u);
 
 		void AddShader(const AShader* _shader, const ShaderDescriptor& _descriptor);
 	};

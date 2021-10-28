@@ -10,6 +10,7 @@
 #include <SA/Core/Types/Variadics/SparseVector.hpp>
 
 #include <SA/Render/Vulkan/Surface/VkSurface.hpp>
+#include <SA/Render/Vulkan/Pass/VkRenderPass.hpp>
 
 namespace Sa::Vk
 {
@@ -20,6 +21,7 @@ namespace Sa::Vk
 		const RenderGraphicInterface* mGraphics = nullptr;
 
 		SparseVector<Surface> mSurfaces;
+		SparseVector<RenderPass> mRenderPasses;
 
 		const Device& GetDevice() const;
 
@@ -28,10 +30,10 @@ namespace Sa::Vk
 		void Destroy() override final;
 
 		RenderSurfaceHandle CreateSurface(WindowSurfaceHandle _winHandle) override final;
-		void DestroySurface(RenderSurfaceHandle _handle) override final;
+		void DestroySurface(RenderSurfaceHandle& _handle) override final;
 
-		//ARenderPass* CreateRenderPass(const RenderPassDescriptor& _descriptor) override final;
-		//void DestroyRenderPass(ARenderPass* _pass) override final;
+		RenderPassHandle CreateRenderPass(const RenderPassDescriptor& _descriptor) override final;
+		void DestroyRenderPass(RenderPassHandle& _handle) override final;
 
 		//void CreateFrameBuffers(ARenderSurface* _surface, ARenderPass* _pass, const RenderPassDescriptor& _descriptor) override final;
 		//void DestroyFrameBuffers(ARenderSurface* _surface) override final;

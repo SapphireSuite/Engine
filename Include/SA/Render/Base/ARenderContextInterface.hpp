@@ -7,6 +7,8 @@
 
 #include <SA/Render/Base/Surface/WindowSurfaceHandle.hpp>
 #include <SA/Render/Base/Surface/RenderSurfaceHandle.hpp>
+#include <SA/Render/Base/Pass/RenderPassHandle.hpp>
+#include <SA/Render/Base/Pass/RenderPassDescriptor.hpp>
 
 //#include <SA/Render/Base/Surface/AWindowSurface.hpp>
 //#include <SA/Render/Base/Pass/ARenderPass.hpp>
@@ -32,10 +34,10 @@ namespace Sa
 		virtual void Destroy() = 0;
 
 		virtual RenderSurfaceHandle CreateSurface(WindowSurfaceHandle _winHandle) = 0;
-		virtual void DestroySurface(RenderSurfaceHandle _handle) = 0;
+		virtual void DestroySurface(RenderSurfaceHandle& _handle) = 0;
 
-		//virtual ARenderPass* CreateRenderPass(const RenderPassDescriptor& _descriptor) = 0;
-		//virtual void DestroyRenderPass(ARenderPass* _pass) = 0;
+		virtual RenderPassHandle CreateRenderPass(const RenderPassDescriptor& _descriptor) = 0;
+		virtual void DestroyRenderPass(RenderPassHandle& _handle) = 0;
 
 		//virtual void CreateFrameBuffers(ARenderSurface* _surface, ARenderPass* _pass, const RenderPassDescriptor& _descriptor) = 0;
 		//virtual void DestroyFrameBuffers(ARenderSurface* _surface) = 0;

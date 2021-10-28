@@ -206,7 +206,7 @@ namespace Sa::Vk
 		pipelineCreateInfo.pColorBlendState = &renderPassAttInfos.colorBlendingInfo;
 		pipelineCreateInfo.pDynamicState = nullptr;
 		pipelineCreateInfo.layout = mPipelineLayout;
-		pipelineCreateInfo.renderPass = _desc.renderPass->As<RenderPass>();
+		//pipelineCreateInfo.renderPass = _desc.renderPass->As<RenderPass>();
 		pipelineCreateInfo.subpass = _desc.subPassIndex;
 		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 		pipelineCreateInfo.basePipelineIndex = -1;
@@ -299,14 +299,14 @@ namespace Sa::Vk
 
 	void Pipeline::FillRenderPassAttachments(struct RenderPassAttachmentInfos& _renderPassAttInfos, const RenderPipelineDescriptor& _desc) noexcept
 	{
-		const VkSampleCountFlagBits sampleCount = API_GetSampleCount(_desc.subPassDesc.sampling);
+		//const VkSampleCountFlagBits sampleCount = API_GetSampleCount(_desc.subPassDesc.sampling);
 
 		// MultiSampling.
 		_renderPassAttInfos.multisamplingInfos.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
 		_renderPassAttInfos.multisamplingInfos.pNext = nullptr;
 		_renderPassAttInfos.multisamplingInfos.flags = 0u;
-		_renderPassAttInfos.multisamplingInfos.rasterizationSamples = sampleCount;
-		_renderPassAttInfos.multisamplingInfos.sampleShadingEnable = sampleCount != VK_SAMPLE_COUNT_1_BIT;
+		//_renderPassAttInfos.multisamplingInfos.rasterizationSamples = sampleCount;
+		//_renderPassAttInfos.multisamplingInfos.sampleShadingEnable = sampleCount != VK_SAMPLE_COUNT_1_BIT;
 		_renderPassAttInfos.multisamplingInfos.minSampleShading = 0.2f;
 		_renderPassAttInfos.multisamplingInfos.pSampleMask = nullptr;
 		_renderPassAttInfos.multisamplingInfos.alphaToCoverageEnable = VK_FALSE;
@@ -341,11 +341,11 @@ namespace Sa::Vk
 		// Query color attachments only.
 		uint32 colorAttachmentNum = 0u;
 
-		for (auto it = _desc.subPassDesc.attachmentDescs.begin(); it != _desc.subPassDesc.attachmentDescs.end(); ++it)
-		{
-			if (!IsDepthFormat(it->format))
-				++colorAttachmentNum;
-		}
+		//for (auto it = _desc.subPassDesc.attachmentDescs.begin(); it != _desc.subPassDesc.attachmentDescs.end(); ++it)
+		//{
+		//	if (!IsDepthFormat(it->format))
+		//		++colorAttachmentNum;
+		//}
 
 		_renderPassAttInfos.colorBlendAttachments.resize(colorAttachmentNum, colorBlendAttachment);
 

@@ -10,6 +10,12 @@ namespace Sa
 	}
 
 
+	bool Handle::IsValid() const noexcept
+	{
+		return ID != uint64(-1);
+	}
+
+
 	void Handle::Reset() noexcept
 	{
 		ID = uint64(-1);

@@ -11,10 +11,10 @@
 
 namespace Sa::Vk
 {
-	//Format Surface::GetFormat() const
-	//{
-	//	return mSwapChain.GetFormat();
-	//}
+	Format Surface::GetFormat() const
+	{
+		return mSwapChain.GetFormat();
+	}
 
 	void Surface::Create(const Device& _device, WindowSurfaceHandle _winSurface)
 	{

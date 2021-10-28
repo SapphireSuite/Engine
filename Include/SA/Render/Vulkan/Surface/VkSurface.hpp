@@ -25,7 +25,7 @@ namespace Sa::Vk
 		SwapChain mSwapChain;
 
 	public:
-		//Format GetFormat() const;
+		Format GetFormat() const;
 
 
 		void Create(const Device& _device, WindowSurfaceHandle _winSurface);
