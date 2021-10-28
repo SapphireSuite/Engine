@@ -31,8 +31,8 @@ namespace Sa::Vk
 		void Create(const Device& _device, WindowSurfaceHandle _winSurface);
 		void Destroy(const Device& _device);
 
-		//void CreateFrameBuffers(const Device& _device, const RenderPass& _renderPass, const RenderPassDescriptor& _renderPassDesc);
-		//void DestroyFrameBuffers(const Device& _device);
+		void CreateFrameBuffers(const Device& _device, const RenderPass& _renderPass, const RenderPassDescriptor& _renderPassDesc);
+		void DestroyFrameBuffers(const Device& _device);
 
 
 		//FrameBuffer& Begin(const Device& _device);

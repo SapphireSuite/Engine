@@ -35,8 +35,10 @@ namespace Sa::Vk
 		RenderPassHandle CreateRenderPass(const RenderPassDescriptor& _descriptor) override final;
 		void DestroyRenderPass(RenderPassHandle& _handle) override final;
 
-		//void CreateFrameBuffers(ARenderSurface* _surface, ARenderPass* _pass, const RenderPassDescriptor& _descriptor) override final;
-		//void DestroyFrameBuffers(ARenderSurface* _surface) override final;
+		void CreateFrameBuffers(const RenderSurfaceHandle& _surface,
+			const RenderPassHandle& _pass,
+			const RenderPassDescriptor& _descriptor) override final;
+		void DestroyFrameBuffers(const RenderSurfaceHandle& _surface) override final;
 
 		//ARenderPipeline* CreatePipeline(const RenderPipelineDescriptor& _desc) override final;
 		//void DestroyPipeline(ARenderPipeline* _pipeline) override final;

@@ -90,34 +90,23 @@ namespace Sa::Vk
 		_handle.Reset();
 	}
 
-	//ARenderPass* RenderContextInterface::CreateRenderPass(const RenderPassDescriptor& _descriptor)
-	//{
-	//	RenderPass* const pass = new RenderPass();
 
-	//	pass->Create(mDevice, _descriptor);
+	void RenderContextInterface::CreateFrameBuffers(const RenderSurfaceHandle& _surface,
+		const RenderPassHandle& _pass,
+		const RenderPassDescriptor& _descriptor)
+	{
+		Surface& surface = mSurfaces[_surface];
+		RenderPass& renderPass = mRenderPasses[_pass];
 
-	//	return pass;
-	//}
-	//
-	//void RenderContextInterface::DestroyRenderPass(ARenderPass* _pass)
-	//{
-	//	RenderPass* const vkPass = _pass->AsPtr<RenderPass>();
+		surface.CreateFrameBuffers(GetDevice(), renderPass, _descriptor);
+	}
 
-	//	vkPass->Destroy(mDevice);
+	void RenderContextInterface::DestroyFrameBuffers(const RenderSurfaceHandle& _surface)
+	{
+		Surface& surface = mSurfaces[_surface];
 
-	//	delete vkPass;
-	//}
-
-
-	//void RenderContextInterface::CreateFrameBuffers(ARenderSurface* _surface, ARenderPass* _pass, const RenderPassDescriptor& _descriptor)
-	//{
-	//	_surface->As<Surface>().CreateFrameBuffers(mDevice, _pass->As<RenderPass>(), _descriptor);
-	//}
-
-	//void RenderContextInterface::DestroyFrameBuffers(ARenderSurface* _surface)
-	//{
-	//	_surface->As<Surface>().DestroyFrameBuffers(mDevice);
-	//}
+		surface.DestroyFrameBuffers(GetDevice());
+	}
 
 
 	//ARenderPipeline* RenderContextInterface::CreatePipeline(const RenderPipelineDescriptor& _desc)

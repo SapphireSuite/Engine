@@ -37,19 +37,19 @@ namespace Sa::Vk
 	}
 
 
-	//void Surface::CreateFrameBuffers(const Device& _device, const RenderPass& _renderPass, const RenderPassDescriptor& _renderPassDesc)
-	//{
-	//	mSwapChain.CreateFrameBuffers(_device, _renderPass, _renderPassDesc);
+	void Surface::CreateFrameBuffers(const Device& _device, const RenderPass& _renderPass, const RenderPassDescriptor& _renderPassDesc)
+	{
+		mSwapChain.CreateFrameBuffers(_device, _renderPass, _renderPassDesc);
 
-	//	SA_LOG(L"Render Surface FrameBuffers created.", Infos, SA/Render/Vulkan);
-	//}
+		SA_LOG(L"Render Surface FrameBuffers created.", Infos, SA/Render/Vulkan);
+	}
 
-	//void Surface::DestroyFrameBuffers(const Device& _device)
-	//{
-	//	mSwapChain.DestroyFrameBuffers(_device);
+	void Surface::DestroyFrameBuffers(const Device& _device)
+	{
+		mSwapChain.DestroyFrameBuffers(_device);
 
-	//	SA_LOG(L"Render Surface FrameBuffers destroyed.", Infos, SA/Render/Vulkan);
-	//}
+		SA_LOG(L"Render Surface FrameBuffers destroyed.", Infos, SA/Render/Vulkan);
+	}
 
 
 	//FrameBuffer& Surface::Begin(const Device& _device)
