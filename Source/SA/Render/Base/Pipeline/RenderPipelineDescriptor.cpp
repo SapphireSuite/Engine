@@ -20,8 +20,8 @@ namespace Sa
 	//	subPassDesc = _renderPassDesc.subPassDescs[_subPassIndex];
 	//}
 
-	void RenderPipelineDescriptor::AddShader(const AShader* _shader, const ShaderDescriptor& _descriptor)
-	{
-		shaderInfos.AddShader(_shader, _descriptor);
-	}
+	//void RenderPipelineDescriptor::AddShader(const AShader* _shader, const ShaderDescriptor& _descriptor)
+	//{
+	//	shaderInfos.AddShader(_shader, _descriptor);
+	//}
 }

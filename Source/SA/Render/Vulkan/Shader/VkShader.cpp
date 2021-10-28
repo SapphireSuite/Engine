@@ -4,6 +4,8 @@
 
 #include <Core/Algorithms/SizeOf.hpp>
 
+#include <Render/Base/Shader/RawShader.hpp>
+
 #include <Render/Vulkan/Debug/Debug.hpp>
 
 #include <Render/Vulkan/VkResourceInitializer.hpp>

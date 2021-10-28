@@ -21,33 +21,33 @@ namespace Sa
 		pipBindDesc->stageFlags |= _stage;
 	}
 
-	void PipelineShaderInfos::AddShader(const AShader* _shader, const ShaderDescriptor& _descriptor)
-	{
-		if (_descriptor.stage == ShaderStage::Vertex)
-			vertexBindingLayout.desiredLayout = VertexLayout::Make(static_cast<VertexComp>((uint8)_descriptor.vertexLayout)); // TODO: Clean.
+	//void PipelineShaderInfos::AddShader(const AShader* _shader, const ShaderDescriptor& _descriptor)
+	//{
+	//	if (_descriptor.stage == ShaderStage::Vertex)
+	//		vertexBindingLayout.desiredLayout = VertexLayout::Make(static_cast<VertexComp>((uint8)_descriptor.vertexLayout)); // TODO: Clean.
 
-		PipelineShaderStage& stage = stages.emplace_back();
-		stage.shader = _shader;
-		stage.stage = _descriptor.stage;
-
-
-		//// Bindings
-		//{
-		//	for (auto& bindSet : _descriptor.userBindingSet.bindings)
-		//		EmplaceBinding(userBindingSet, bindSet, _descriptor.stage);
-
-		//	engineBindingSets.insert(_descriptor.engineBindingSets.begin(), _descriptor.engineBindingSets.end());
-		//}
+	//	PipelineShaderStage& stage = stages.emplace_back();
+	//	stage.shader = _shader;
+	//	stage.stage = _descriptor.stage;
 
 
-		//// Spec constants.
-		//{
-		//	// User
-		//	for (auto& specCst : _descriptor.userSpecConstants)
-		//		userSpecConstants.emplace(specCst);
+	//	//// Bindings
+	//	//{
+	//	//	for (auto& bindSet : _descriptor.userBindingSet.bindings)
+	//	//		EmplaceBinding(userBindingSet, bindSet, _descriptor.stage);
 
-		//	for (auto& specCst : _descriptor.engineSpecConstants)
-		//		engineSpecConstants.emplace(specCst);
-		//}
-	}
+	//	//	engineBindingSets.insert(_descriptor.engineBindingSets.begin(), _descriptor.engineBindingSets.end());
+	//	//}
+
+
+	//	//// Spec constants.
+	//	//{
+	//	//	// User
+	//	//	for (auto& specCst : _descriptor.userSpecConstants)
+	//	//		userSpecConstants.emplace(specCst);
+
+	//	//	for (auto& specCst : _descriptor.engineSpecConstants)
+	//	//		engineSpecConstants.emplace(specCst);
+	//	//}
+	//}
 }

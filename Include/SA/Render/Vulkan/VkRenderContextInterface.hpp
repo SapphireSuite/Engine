@@ -12,6 +12,7 @@
 #include <SA/Render/Vulkan/Surface/VkSurface.hpp>
 #include <SA/Render/Vulkan/Pass/VkRenderPass.hpp>
 #include <SA/Render/Vulkan/VkResourceInitializer.hpp>
+#include <SA/Render/Vulkan/Shader/VkShader.hpp>
 
 namespace Sa::Vk
 {
@@ -24,6 +25,7 @@ namespace Sa::Vk
 		SparseVector<Surface> mSurfaces;
 		SparseVector<RenderPass> mRenderPasses;
 		SparseVector<ResourceInitializer> mResInits;
+		SparseVector<Shader> mShaders;
 
 		const Device& GetDevice() const;
 
@@ -52,8 +54,8 @@ namespace Sa::Vk
 		void DestroyResourceInitializer(RenderResourceInitializerHandle& _init) override final;
 		void SubmitResourceInitializer(const RenderResourceInitializerHandle& _init) override final;
 
-		//AShader* CreateShader(ARenderResourceInitializer* _init, const RawShader& _raw) override final;
-		//void DestroyShader(AShader* _shader) override final;
+		ShaderHandle CreateShader(const RenderResourceInitializerHandle& _init, const RawShader& _raw) override final;
+		void DestroyShader(ShaderHandle& _shader) override final;
 
 		//AStaticMesh* CreateStaticMesh(ARenderResourceInitializer* _init, const RawMesh& _raw) override final;
 		//void DestroyStaticMesh(AStaticMesh* _mesh) override final;

@@ -7,7 +7,10 @@
 
 #include <SA/Core/Support/API/Vulkan.hpp>
 
-#include <SA/Render/Base/Pass/RenderPassDescriptor.hpp>
+namespace Sa
+{
+	struct RenderPassDescriptor;
+};
 
 namespace Sa::Vk
 {

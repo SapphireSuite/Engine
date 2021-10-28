@@ -40,7 +40,7 @@ namespace Sa
 
 		//void SetRenderPass(const ARenderPass* _renderPass, const RenderPassDescriptor& _renderPassDesc, uint32 _subPassIndex = 0u);
 
-		void AddShader(const AShader* _shader, const ShaderDescriptor& _descriptor);
+		//void AddShader(const AShader* _shader, const ShaderDescriptor& _descriptor);
 	};
 }
 

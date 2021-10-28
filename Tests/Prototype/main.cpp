@@ -30,9 +30,9 @@ using namespace Sa;
 //#include <SA/Render/Vulkan/VkRenderInterface.hpp>
 //#include <SA/Render/Vulkan/Surface/VkWindowSurface.hpp>
 //#include <SA/Render/Vulkan/Surface/VkSurface.hpp>
-//#include <SA/SDK/ShaderBuilder/GLSL/GLSLShaderBuilder.hpp>
 
-//#include <SA/SDK/Assets/Render/ShaderAsset.hpp>
+#include <SA/SDK/Assets/Render/ShaderAsset.hpp>
+#include <SA/SDK/ShaderBuilder/GLSL/GLSLShaderBuilder.hpp>
 //#include <SA/SDK/Assets/Render/TextureAsset.hpp>
 //#include <SA/SDK/Assets/Render/ModelAsset.hpp>
 
@@ -67,6 +67,9 @@ RenderSurfaceHandle surface;
 RenderPassHandle renderPass;
 RenderPassDescriptor renderPassDesc;
 
+ShaderHandle unlitvert;
+ShaderHandle unlitfrag;
+
 //RenderSubSystem* renderSubSys;
 //
 //Vk::RenderInterface* renderIntf = nullptr;
@@ -85,7 +88,7 @@ RenderPassDescriptor renderPassDesc;
 //TransffPR camTr;
 //ACamera* camera = nullptr;
 
-//GLSL::ShaderBuilder shaderBuilder;
+GLSL::ShaderBuilder shaderBuilder;
 
 //Vk::CommandPool cmdPool;
 //std::vector<Vk::CommandBuffer> cmdBuffers;
@@ -220,39 +223,39 @@ int main()
 			{
 				// Unlit vert
 				{
-					//const std::string assetName = "Assets/Shaders/unlit_vert.spha";
-					//const std::string resName = "/Engine/Resources/Shaders/Forward/unlit.vert";
+					const std::string assetName = "Assets/Shaders/unlit_vert.spha";
+					const std::string resName = "/Engine/Resources/Shaders/Forward/unlit.vert";
 
-					//ShaderAsset asset(&shaderBuilder);
+					ShaderAsset asset(&shaderBuilder);
 
-					//if (!asset.Load(assetName))
-					//{
-					//	if (asset.Import(resName))
-					//	{
-					//		asset.Save(assetName);
-					//	}
-					//}
+					if (!asset.Load(assetName))
+					{
+						if (asset.Import(resName))
+						{
+							asset.Save(assetName);
+						}
+					}
 
-					//unlitvert = renderSubIntf->CreateShader(resInit, asset.raw);
+					unlitvert = renderContext->CreateShader(resInit, asset.raw);
 					////unlitPipelineDesc.AddShader(unlitvert, asset.descriptor);
 				}
 
 				// Unlit frag
 				{
-					//const std::string assetName = "Assets/Shaders/unlit_frag.spha";
-					//const std::string resName = "/Engine/Resources/Shaders/Forward/unlit.frag";
+					const std::string assetName = "Assets/Shaders/unlit_frag.spha";
+					const std::string resName = "/Engine/Resources/Shaders/Forward/unlit.frag";
 
-					//ShaderAsset asset(&shaderBuilder);
+					ShaderAsset asset(&shaderBuilder);
 
-					//if (!asset.Load(assetName))
-					//{
-					//	if (asset.Import(resName))
-					//	{
-					//		asset.Save(assetName);
-					//	}
-					//}
+					if (!asset.Load(assetName))
+					{
+						if (asset.Import(resName))
+						{
+							asset.Save(assetName);
+						}
+					}
 
-					//unlitfrag = renderSubIntf->CreateShader(resInit, asset.raw);
+					unlitfrag = renderContext->CreateShader(resInit, asset.raw);
 					////unlitPipelineDesc.AddShader(unlitfrag, asset.descriptor);
 				}
 			}
@@ -413,8 +416,8 @@ int main()
 
 			//renderSubIntf->DestroyTexture(missText);
 
-			//renderSubIntf->DestroyShader(unlitvert);
-			//renderSubIntf->DestroyShader(unlitfrag);
+			renderContext->DestroyShader(unlitvert);
+			renderContext->DestroyShader(unlitfrag);
 
 			renderContext->DestroyFrameBuffers(surface);
 

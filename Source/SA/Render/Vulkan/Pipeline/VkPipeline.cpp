@@ -257,7 +257,7 @@ namespace Sa::Vk
 			vkStage.pNext = nullptr;
 			vkStage.flags = 0u;
 			vkStage.stage = API_GetShaderStage(stage.stage);
-			vkStage.module = stage.shader->As<Shader>();
+			//vkStage.module = stage.shader->As<Shader>();
 			vkStage.pName = "main";
 			vkStage.pSpecializationInfo = &_specConstData.specInfo;
 		}

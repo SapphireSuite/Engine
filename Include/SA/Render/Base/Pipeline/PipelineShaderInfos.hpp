@@ -7,7 +7,7 @@
 
 #include <set>
 
-#include <SA/Render/Base/Shader/AShader.hpp>
+//#include <SA/Render/Base/Shader/AShader.hpp>
 #include <SA/Render/Base/Shader/ShaderDescriptor.hpp>
 #include <SA/Render/Base/Shader/SpecConstants/SpecConstant.hpp>
 
@@ -17,7 +17,7 @@ namespace Sa
 {
 	struct PipelineShaderStage
 	{
-		const AShader* shader = nullptr;
+		//const AShader* shader = nullptr;
 
 		ShaderStage stage = ShaderStage::Unknown;
 	};
@@ -52,7 +52,7 @@ namespace Sa
 		std::set<PipelineSpecConstant> userSpecConstants;
 		std::set<SpecConstantDescriptor> engineSpecConstants; // Values set in engine.
 
-		void AddShader(const AShader* _shader, const ShaderDescriptor& _descriptor);
+		//void AddShader(const AShader* _shader, const ShaderDescriptor& _descriptor);
 
 
 		template <typename T>

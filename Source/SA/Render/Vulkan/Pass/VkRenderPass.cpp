@@ -4,6 +4,8 @@
 
 #include <Core/Algorithms/SizeOf.hpp>
 
+#include <Render/Base/Pass/RenderPassDescriptor.hpp>
+
 #include <Render/Vulkan/Debug/Debug.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
 

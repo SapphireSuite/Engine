@@ -10,6 +10,8 @@
 #include <SA/Render/Base/Pass/RenderPassHandle.hpp>
 #include <SA/Render/Base/Pass/RenderPassDescriptor.hpp>
 #include <SA/Render/Base/RenderResourceInitializerHandle.hpp>
+#include <SA/Render/Base/Shader/ShaderHandle.hpp>
+#include <SA/Render/Base/Shader/RawShader.hpp>
 
 //#include <SA/Render/Base/Pipeline/ARenderPipeline.hpp>
 //#include <SA/Render/Base/Mesh/AStaticMesh.hpp>
@@ -51,8 +53,8 @@ namespace Sa
 		virtual void DestroyResourceInitializer(RenderResourceInitializerHandle& _init) = 0;
 		virtual void SubmitResourceInitializer(const RenderResourceInitializerHandle& _init) = 0;
 
-		//virtual ShaderHandle CreateShader(ARenderResourceInitializer* _init, const RawShader& _raw) = 0;
-		//virtual void DestroyShader(ShaderHandle _shader) = 0;
+		virtual ShaderHandle CreateShader(const RenderResourceInitializerHandle& _init, const RawShader& _raw) = 0;
+		virtual void DestroyShader(ShaderHandle& _shader) = 0;
 
 		//virtual AStaticMesh* CreateStaticMesh(ARenderResourceInitializer* _init, const RawMesh& _raw) = 0;
 		//virtual void DestroyStaticMesh(AStaticMesh* _mesh) = 0;
