@@ -60,6 +60,9 @@ namespace Sa::Vk
 	{
 		Surface& surface = mSurfaces[_handle];
 
+		if (surface.FrameBuffersValid())
+			DestroyFrameBuffers(_handle);
+
 		surface.Destroy(GetDevice());
 
 		mSurfaces.EraseHandle(_handle);

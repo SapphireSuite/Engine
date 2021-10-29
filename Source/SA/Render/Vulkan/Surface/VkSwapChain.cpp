@@ -12,10 +12,16 @@
 
 namespace Sa::Vk
 {
-	Format SwapChain::GetFormat() const
+	Format SwapChain::GetFormat() const noexcept
 	{
 		return mFormat;
 	}
+
+	bool SwapChain::FrameBuffersValid() const noexcept
+	{
+		return !mFrameBuffers.empty();
+	}
+
 
 	void SwapChain::CreateSwapChainKHR(const Device& _device, const Surface& _surface)
 	{

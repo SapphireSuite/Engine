@@ -11,10 +11,16 @@
 
 namespace Sa::Vk
 {
-	Format Surface::GetFormat() const
+	Format Surface::GetFormat() const noexcept
 	{
 		return mSwapChain.GetFormat();
 	}
+
+	bool Surface::FrameBuffersValid() const noexcept
+	{
+		return mSwapChain.FrameBuffersValid();
+	}
+
 
 	void Surface::Create(const Device& _device, WindowSurfaceHandle _winSurface)
 	{

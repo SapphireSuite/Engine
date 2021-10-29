@@ -46,7 +46,8 @@ namespace Sa::Vk
 		void DestroySynchronisation(const Device& _device);
 
 	public:
-		Format GetFormat() const;
+		Format GetFormat() const noexcept;
+		bool FrameBuffersValid() const noexcept;
 
 		void Create(const Device& _device, const Surface& _surface);
 		void Destroy(const Device& _device);
