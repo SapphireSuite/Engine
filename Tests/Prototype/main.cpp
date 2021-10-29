@@ -219,43 +219,43 @@ int main()
 
 			// Shaders
 			{
-				//// Unlit vert
-				//{
-				//	const std::string assetName = "Assets/Shaders/unlit_vert.spha";
-				//	const std::string resName = "/Engine/Resources/Shaders/Forward/unlit.vert";
+				// Unlit vert
+				{
+					const std::string assetName = "Assets/Shaders/unlit_vert.spha";
+					const std::string resName = "/Engine/Resources/Shaders/Forward/unlit.vert";
 
-				//	ShaderAsset asset(&shaderBuilder);
+					ShaderAsset asset(&shaderBuilder);
 
-				//	if (!asset.Load(assetName))
-				//	{
-				//		if (asset.Import(resName))
-				//		{
-				//			asset.Save(assetName);
-				//		}
-				//	}
+					if (!asset.Load(assetName))
+					{
+						if (asset.Import(resName))
+						{
+							asset.Save(assetName);
+						}
+					}
 
-				//	unlitvert = renderContext->CreateShader(resInit, asset.raw);
-				//	////unlitPipelineDesc.AddShader(unlitvert, asset.descriptor);
-				//}
+					unlitvert = renderContext->CreateShader(resInit, asset.raw);
+					////unlitPipelineDesc.AddShader(unlitvert, asset.descriptor);
+				}
 
-				//// Unlit frag
-				//{
-				//	const std::string assetName = "Assets/Shaders/unlit_frag.spha";
-				//	const std::string resName = "/Engine/Resources/Shaders/Forward/unlit.frag";
+				// Unlit frag
+				{
+					const std::string assetName = "Assets/Shaders/unlit_frag.spha";
+					const std::string resName = "/Engine/Resources/Shaders/Forward/unlit.frag";
 
-				//	ShaderAsset asset(&shaderBuilder);
+					ShaderAsset asset(&shaderBuilder);
 
-				//	if (!asset.Load(assetName))
-				//	{
-				//		if (asset.Import(resName))
-				//		{
-				//			asset.Save(assetName);
-				//		}
-				//	}
+					if (!asset.Load(assetName))
+					{
+						if (asset.Import(resName))
+						{
+							asset.Save(assetName);
+						}
+					}
 
-				//	unlitfrag = renderContext->CreateShader(resInit, asset.raw);
-				//	////unlitPipelineDesc.AddShader(unlitfrag, asset.descriptor);
-				//}
+					unlitfrag = renderContext->CreateShader(resInit, asset.raw);
+					////unlitPipelineDesc.AddShader(unlitfrag, asset.descriptor);
+				}
 			}
 
 
@@ -414,8 +414,8 @@ int main()
 
 			//renderContext->DestroyTexture(missText);
 
-			//renderContext->DestroyShader(unlitvert);
-			//renderContext->DestroyShader(unlitfrag);
+			renderContext->DestroyShader(unlitvert);
+			renderContext->DestroyShader(unlitfrag);
 
 			renderContext->DestroyFrameBuffers(surface);
 

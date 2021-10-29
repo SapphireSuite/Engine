@@ -160,27 +160,27 @@ namespace Sa::Vk
 	}
 
 
-	//ShaderHandle RenderContextInterface::CreateShader(const RenderResourceInitializerHandle& _init, const RawShader& _raw)
-	//{
-	//	const ShaderHandle handle = mShaders.EmplaceHandle();
+	ShaderHandle RenderContextInterface::CreateShader(const RenderResourceInitializerHandle& _init, const RawShader& _raw)
+	{
+		const ShaderHandle handle = mShaders.EmplaceHandle();
 
-	//	Shader& shader = mShaders[handle];
-	//	ResourceInitializer& resInit = mResInits[_init];
+		Shader& shader = mShaders[handle];
+		ResourceInitializer& resInit = mResInits[_init];
 
-	//	shader.Create(GetDevice(), resInit, _raw);
+		shader.Create(GetDevice(), resInit, _raw);
 
-	//	return handle;
-	//}
+		return handle;
+	}
 
-	//void RenderContextInterface::DestroyShader(ShaderHandle& _shader)
-	//{
-	//	Shader& shader = mShaders[_shader];
+	void RenderContextInterface::DestroyShader(ShaderHandle& _shader)
+	{
+		Shader& shader = mShaders[_shader];
 
-	//	shader.Destroy(GetDevice());
+		shader.Destroy(GetDevice());
 
-	//	mShaders.RemoveHandle(_shader);
-	//	_shader.Reset();
-	//}
+		mShaders.EraseHandle(_shader);
+		_shader.Reset();
+	}
 
 	//
 	//AStaticMesh* RenderContextInterface::CreateStaticMesh(ARenderResourceInitializer* _init, const RawMesh& _raw)

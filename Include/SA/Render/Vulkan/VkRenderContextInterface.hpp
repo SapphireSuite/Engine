@@ -27,7 +27,7 @@ namespace Sa::Vk
 		SparseVector<Surface, ARenderSurface> mSurfaces;
 		SparseVector<RenderPass, ARenderPass> mRenderPasses;
 		SparseVector<ResourceInitializer, ARenderResourceInitializer> mResInits;
-		//SparseVector<Shader> mShaders;
+		SparseVector<Shader, AShader> mShaders;
 		//SparseVector<Texture> mTextures;
 		//SparseVector<Cubemap> mCubemaps;
 
@@ -58,8 +58,8 @@ namespace Sa::Vk
 		void DestroyResourceInitializer(RenderResourceInitializerHandle& _init) override final;
 		void SubmitResourceInitializer(const RenderResourceInitializerHandle& _init) override final;
 
-		//ShaderHandle CreateShader(const RenderResourceInitializerHandle& _init, const RawShader& _raw) override final;
-		//void DestroyShader(ShaderHandle& _shader) override final;
+		ShaderHandle CreateShader(const RenderResourceInitializerHandle& _init, const RawShader& _raw) override final;
+		void DestroyShader(ShaderHandle& _shader) override final;
 
 		//AStaticMesh* CreateStaticMesh(ARenderResourceInitializer* _init, const RawMesh& _raw) override final;
 		//void DestroyStaticMesh(AStaticMesh* _mesh) override final;

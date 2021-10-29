@@ -7,17 +7,14 @@
 
 #include <SA/Core/Support/API/Vulkan.hpp>
 
-namespace Sa
-{
-	struct RawShader;
-}
+#include <SA/Render/Base/Shader/AShader.hpp>
 
 namespace Sa::Vk
 {
 	class Device;
 	class ResourceInitializer;
 
-	class Shader
+	class Shader : public AShader
 	{
 		VkShaderModule mHandle = VK_NULL_HANDLE;
 
