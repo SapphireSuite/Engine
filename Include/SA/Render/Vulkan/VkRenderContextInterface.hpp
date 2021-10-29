@@ -24,12 +24,12 @@ namespace Sa::Vk
 	{
 		const RenderGraphicInterface* mGraphics = nullptr;
 
-		SparseVector<Surface> mSurfaces;
-		SparseVector<RenderPass> mRenderPasses;
-		SparseVector<ResourceInitializer> mResInits;
-		SparseVector<Shader> mShaders;
-		SparseVector<Texture> mTextures;
-		SparseVector<Cubemap> mCubemaps;
+		SparseVector<Surface, ARenderSurface> mSurfaces;
+		//SparseVector<RenderPass> mRenderPasses;
+		//SparseVector<ResourceInitializer> mResInits;
+		//SparseVector<Shader> mShaders;
+		//SparseVector<Texture> mTextures;
+		//SparseVector<Cubemap> mCubemaps;
 
 		const Device& GetDevice() const;
 
@@ -40,13 +40,13 @@ namespace Sa::Vk
 		RenderSurfaceHandle CreateSurface(WindowSurfaceHandle _winHandle) override final;
 		void DestroySurface(RenderSurfaceHandle& _handle) override final;
 
-		RenderPassHandle CreateRenderPass(const RenderPassDescriptor& _descriptor) override final;
-		void DestroyRenderPass(RenderPassHandle& _handle) override final;
+		//RenderPassHandle CreateRenderPass(const RenderPassDescriptor& _descriptor) override final;
+		//void DestroyRenderPass(RenderPassHandle& _handle) override final;
 
-		void CreateFrameBuffers(const RenderSurfaceHandle& _surface,
-			const RenderPassHandle& _pass,
-			const RenderPassDescriptor& _descriptor) override final;
-		void DestroyFrameBuffers(const RenderSurfaceHandle& _surface) override final;
+		//void CreateFrameBuffers(const RenderSurfaceHandle& _surface,
+		//	const RenderPassHandle& _pass,
+		//	const RenderPassDescriptor& _descriptor) override final;
+		//void DestroyFrameBuffers(const RenderSurfaceHandle& _surface) override final;
 
 		//ARenderPipeline* CreatePipeline(const RenderPipelineDescriptor& _desc) override final;
 		//void DestroyPipeline(ARenderPipeline* _pipeline) override final;
@@ -54,21 +54,21 @@ namespace Sa::Vk
 
 //{ Resources
 	
-		RenderResourceInitializerHandle CreateResourceInitializer() override final;
-		void DestroyResourceInitializer(RenderResourceInitializerHandle& _init) override final;
-		void SubmitResourceInitializer(const RenderResourceInitializerHandle& _init) override final;
+		//RenderResourceInitializerHandle CreateResourceInitializer() override final;
+		//void DestroyResourceInitializer(RenderResourceInitializerHandle& _init) override final;
+		//void SubmitResourceInitializer(const RenderResourceInitializerHandle& _init) override final;
 
-		ShaderHandle CreateShader(const RenderResourceInitializerHandle& _init, const RawShader& _raw) override final;
-		void DestroyShader(ShaderHandle& _shader) override final;
+		//ShaderHandle CreateShader(const RenderResourceInitializerHandle& _init, const RawShader& _raw) override final;
+		//void DestroyShader(ShaderHandle& _shader) override final;
 
 		//AStaticMesh* CreateStaticMesh(ARenderResourceInitializer* _init, const RawMesh& _raw) override final;
 		//void DestroyStaticMesh(AStaticMesh* _mesh) override final;
 
-		TextureHandle CreateTexture(const RenderResourceInitializerHandle& _init, const RawTexture& _raw) override final;
-		void DestroyTexture(TextureHandle& _texture) override final;
+		//TextureHandle CreateTexture(const RenderResourceInitializerHandle& _init, const RawTexture& _raw) override final;
+		//void DestroyTexture(TextureHandle& _texture) override final;
 
-		CubemapHandle CreateCubemap(const RenderResourceInitializerHandle& _init, const RawCubemap& _raw) override final;
-		void DestroyCubemap(CubemapHandle& _cubemap) override final;
+		//CubemapHandle CreateCubemap(const RenderResourceInitializerHandle& _init, const RawCubemap& _raw) override final;
+		//void DestroyCubemap(CubemapHandle& _cubemap) override final;
 
 
 		//ARenderMaterial* CreateMaterial(const RenderMaterialCreateInfos& _infos) override final;

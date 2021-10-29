@@ -5,12 +5,12 @@
 #ifndef SAPPHIRE_RENDER_RENDERPASS_DESCRIPTOR_GUARD
 #define SAPPHIRE_RENDER_RENDERPASS_DESCRIPTOR_GUARD
 
-#include <SA/Render/Base/Surface/RenderSurfaceHandle.hpp>
-
 #include <SA/Render/Base/Pass/SubPassDescriptor.hpp>
 
 namespace Sa
 {
+	class ARenderSurface;
+
 	struct RenderPassDescriptor
 	{
 		std::vector<SubPassDescriptor> subPassDescs;
@@ -18,12 +18,12 @@ namespace Sa
 		/**
 		*	\brief Create a default single-pass forward rendering renderpass descriptor.
 		*/
-		static RenderPassDescriptor DefaultSingle(const RenderSurfaceHandle& _surface = RenderSurfaceHandle());
+		static RenderPassDescriptor DefaultSingle(const ARenderSurface* _surface = nullptr);
 
 		/**
 		*	\brief Create a default multi-pass PBR deferred rendering renderpass descriptor.
 		*/
-		static RenderPassDescriptor DefaultPBR(const RenderSurfaceHandle& _surface = RenderSurfaceHandle());
+		static RenderPassDescriptor DefaultPBR(const ARenderSurface* _surface = nullptr);
 	};
 
 

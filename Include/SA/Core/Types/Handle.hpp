@@ -17,9 +17,9 @@ namespace Sa
 		Handle(uint64 _ID) noexcept;
 
 
-		bool IsValid() const noexcept;
+		virtual bool IsValid() const noexcept;
 
-		void Reset() noexcept;
+		virtual void Reset() noexcept;
 
 
 		operator uint64() const noexcept;

@@ -5,6 +5,8 @@
 #ifndef SAPPHIRE_RENDER_VK_SURFACE_GUARD
 #define SAPPHIRE_RENDER_VK_SURFACE_GUARD
 
+#include <SA/Render/Base/Surface/ARenderSurface.hpp>
+
 #include <SA/Render/Vulkan/Surface/VkSwapChain.hpp>
 #include <SA/Render/Vulkan/Surface/VkSurfaceSupportDetails.hpp>
 
@@ -18,7 +20,7 @@ namespace Sa::Vk
 {
 	class RenderPass;
 
-	class Surface
+	class Surface : public ARenderSurface
 	{
 		VkSurfaceKHR mHandle = VK_NULL_HANDLE;
 

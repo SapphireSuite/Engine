@@ -4,8 +4,8 @@ namespace Sa
 {
 //{ Iterators
 
-	template <typename T>
-	SparseVector<T>::Iterator::Iterator(T* _data, const std::list<uint32>& _freeIndices) noexcept :
+	template <typename T, typename HandleT>
+	SparseVector<T, HandleT>::Iterator::Iterator(T* _data, const std::list<uint32>& _freeIndices) noexcept :
 		mData{ _data },
 		mFreeIndices{ _freeIndices }
 	{
@@ -16,8 +16,8 @@ namespace Sa
 		IncrementInternal();
 	}
 
-	template <typename T>
-	void SparseVector<T>::Iterator::IncrementInternal()
+	template <typename T, typename HandleT>
+	void SparseVector<T, HandleT>::Iterator::IncrementInternal()
 	{
 		++mCurrIndex;
 
@@ -29,8 +29,8 @@ namespace Sa
 		}
 	}
 
-	template <typename T>
-	void SparseVector<T>::Iterator::DecrementInternal()
+	template <typename T, typename HandleT>
+	void SparseVector<T, HandleT>::Iterator::DecrementInternal()
 	{
 		--mCurrIndex;
 
@@ -43,8 +43,8 @@ namespace Sa
 	}
 
 
-	template <typename T>
-	SparseVector<T>::Iterator SparseVector<T>::Iterator::MakeEnd(T* _data, uint32 _size, const std::list<uint32>& _freeIndices)
+	template <typename T, typename HandleT>
+	SparseVector<T, HandleT>::Iterator SparseVector<T, HandleT>::Iterator::MakeEnd(T* _data, uint32 _size, const std::list<uint32>& _freeIndices)
 	{
 		Iterator res(_data, _freeIndices);
 
@@ -57,8 +57,8 @@ namespace Sa
 	}
 
 
-	template <typename T>
-	SparseVector<T>::Iterator SparseVector<T>::Iterator::operator++(int32 _offset)
+	template <typename T, typename HandleT>
+	SparseVector<T, HandleT>::Iterator SparseVector<T, HandleT>::Iterator::operator++(int32 _offset)
 	{
 		Iterator copy = *this;
 
@@ -68,8 +68,8 @@ namespace Sa
 		return copy;
 	}
 
-	template <typename T>
-	SparseVector<T>::Iterator& SparseVector<T>::Iterator::operator++()
+	template <typename T, typename HandleT>
+	SparseVector<T, HandleT>::Iterator& SparseVector<T, HandleT>::Iterator::operator++()
 	{
 		IncrementInternal();
 
@@ -77,8 +77,8 @@ namespace Sa
 	}
 
 
-	template <typename T>
-	SparseVector<T>::Iterator SparseVector<T>::Iterator::operator--(int32 _offset)
+	template <typename T, typename HandleT>
+	SparseVector<T, HandleT>::Iterator SparseVector<T, HandleT>::Iterator::operator--(int32 _offset)
 	{
 		Iterator copy = *this;
 
@@ -88,8 +88,8 @@ namespace Sa
 		return copy;
 	}
 
-	template <typename T>
-	SparseVector<T>::Iterator& SparseVector<T>::Iterator::operator--()
+	template <typename T, typename HandleT>
+	SparseVector<T, HandleT>::Iterator& SparseVector<T, HandleT>::Iterator::operator--()
 	{
 		DecrementInternal();
 
@@ -97,54 +97,54 @@ namespace Sa
 	}
 
 
-	template <typename T>
-	T& SparseVector<T>::Iterator::operator*() const
+	template <typename T, typename HandleT>
+	T& SparseVector<T, HandleT>::Iterator::operator*() const
 	{
 		return mData[mCurrIndex];
 	}
 
-	template <typename T>
-	T* SparseVector<T>::Iterator::operator->() const
+	template <typename T, typename HandleT>
+	T* SparseVector<T, HandleT>::Iterator::operator->() const
 	{
 		return &mData[mCurrIndex];
 	}
 
 
-	template <typename T>
-	bool SparseVector<T>::Iterator::operator==(const Iterator& _rhs) const
+	template <typename T, typename HandleT>
+	bool SparseVector<T, HandleT>::Iterator::operator==(const Iterator& _rhs) const
 	{
 		return mData == _rhs.mData && mCurrIndex == _rhs.mCurrIndex;
 	}
 
-	template <typename T>
-	bool SparseVector<T>::Iterator::operator!=(const Iterator& _rhs) const
+	template <typename T, typename HandleT>
+	bool SparseVector<T, HandleT>::Iterator::operator!=(const Iterator& _rhs) const
 	{
 		return !(*this == _rhs);
 	}
 
 
 
-	template <typename T>
-	SparseVector<T>::iterator SparseVector<T>::begin()
+	template <typename T, typename HandleT>
+	SparseVector<T, HandleT>::iterator SparseVector<T, HandleT>::begin()
 	{
 		return iterator(mData, mFreeIndices);
 	}
 
-	template <typename T>
-	SparseVector<T>::const_iterator SparseVector<T>::begin() const
+	template <typename T, typename HandleT>
+	SparseVector<T, HandleT>::const_iterator SparseVector<T, HandleT>::begin() const
 	{
 		return const_iterator(mData, mFreeIndices);
 	}
 
 
-	template <typename T>
-	SparseVector<T>::iterator SparseVector<T>::end()
+	template <typename T, typename HandleT>
+	SparseVector<T, HandleT>::iterator SparseVector<T, HandleT>::end()
 	{
 		return iterator::MakeEnd(mData, mSize, mFreeIndices);
 	}
 
-	template <typename T>
-	SparseVector<T>::const_iterator SparseVector<T>::end() const
+	template <typename T, typename HandleT>
+	SparseVector<T, HandleT>::const_iterator SparseVector<T, HandleT>::end() const
 	{
 		return const_iterator::MakeEnd(mData, mSize, mFreeIndices);
 	}
@@ -154,14 +154,14 @@ namespace Sa
 
 //{ Constructors
 
-	template <typename T>
-	SparseVector<T>::SparseVector(uint32 _capacity)
+	template <typename T, typename HandleT>
+	SparseVector<T, HandleT>::SparseVector(uint32 _capacity)
 	{
 		Reserve(_capacity);
 	}
 
-	template <typename T>
-	SparseVector<T>::SparseVector(SparseVector&& _other) noexcept :
+	template <typename T, typename HandleT>
+	SparseVector<T, HandleT>::SparseVector(SparseVector&& _other) noexcept :
 		mData{ _other.mData },
 		mSize{ _other.mSize},
 		mCapacity{ _other.mCapacity },
@@ -172,13 +172,13 @@ namespace Sa
 		_other.mCapacity = 0u;
 	}
 
-	template <typename T>
-	SparseVector<T>::SparseVector(const SparseVector& _other)
+	template <typename T, typename HandleT>
+	SparseVector<T, HandleT>::SparseVector(const SparseVector& _other)
 	{
 	}
 
-	template <typename T>
-	SparseVector<T>::~SparseVector()
+	template <typename T, typename HandleT>
+	SparseVector<T, HandleT>::~SparseVector()
 	{
 		Clear();
 		::operator delete(mData);
@@ -189,27 +189,27 @@ namespace Sa
 
 //{ Size/Capacity
 
-	template <typename T>
-	bool SparseVector<T>::Empty() const
+	template <typename T, typename HandleT>
+	bool SparseVector<T, HandleT>::Empty() const
 	{
 		return mSize;
 	}
 
-	template <typename T>
-	uint32 SparseVector<T>::Size() const
+	template <typename T, typename HandleT>
+	uint32 SparseVector<T, HandleT>::Size() const
 	{
 		return mSize;
 	}
 
-	template <typename T>
-	uint32 SparseVector<T>::Capacity() const
+	template <typename T, typename HandleT>
+	uint32 SparseVector<T, HandleT>::Capacity() const
 	{
 		return mCapacity;
 	}
 
 
-	template <typename T>
-	void SparseVector<T>::Reserve(uint32 _capacity)
+	template <typename T, typename HandleT>
+	void SparseVector<T, HandleT>::Reserve(uint32 _capacity)
 	{
 		if (mCapacity > _capacity)
 			return;
@@ -228,14 +228,14 @@ namespace Sa
 		mCapacity = _capacity;
 	}
 
-	//template <typename T>
-	//void SparseVector<T>::Resize(uint32 _size)
+	//template <typename T, typename HandleT>
+	//void SparseVector<T, HandleT>::Resize(uint32 _size)
 	//{
 	//}
 
 
-	template <typename T>
-	void SparseVector<T>::Clear()
+	template <typename T, typename HandleT>
+	void SparseVector<T, HandleT>::Clear()
 	{
 		uint32 index = uint32(-1);
 		uint32 currFreeIndex = uint32(-1);
@@ -266,8 +266,8 @@ namespace Sa
 
 //{ Add/Remove
 
-	template <typename T>
-	uint32 SparseVector<T>::InsertSpace()
+	template <typename T, typename HandleT>
+	uint32 SparseVector<T, HandleT>::InsertSpace()
 	{
 		uint32 index = uint32(-1);
 
@@ -291,54 +291,16 @@ namespace Sa
 		return index;
 	}
 
-	template <typename T>
-	template <typename... Args>
-	T& SparseVector<T>::ConstructInternal(uint32 _index, Args&&... _args)
+	template <typename T, typename HandleT>
+	void SparseVector<T, HandleT>::EraseAtIndex(uint32 _index)
 	{
-		SA_ASSERT(OutOfRange, SA / Core / Containers, _index, 0u, mCapacity);
+		SA_ASSERT(OutOfRange, SA/Core/Containers, _index, 0u, mSize, L"Erase index is out of range!");
 
-		new (&mData[_index]) T{ std::forward<Args>(_args)... };
-
-		return mData[_index];
-	}
-
-
-	template <typename T>
-	template <typename... Args>
-	T& SparseVector<T>::Emplace(Args&&... _args)
-	{
-		return ConstructInternal(InsertSpace(), std::forward<Args>(_args)...);
-	}
-
-	template <typename T>
-	template <typename... Args>
-	uint32 SparseVector<T>::EmplaceHandle(Args&&... _args)
-	{
-		const uint32 index = InsertSpace();
-
-		ConstructInternal(index, std::forward<Args>(_args)...);
-
-		return index;
-	}
-
-
-	template <typename T>
-	void SparseVector<T>::Remove(T& _object)
-	{
-		const uint32 index = &_object - mData;
-
-		Remove(index);
-	}
-
-
-	template <typename T>
-	void SparseVector<T>::RemoveHandle(uint32 _index)
-	{
 #if SA_DEBUG
 
-		for (auto index : mFreeIndices)
+		for (auto freeIndex : mFreeIndices)
 		{
-			if (index == _index)
+			if (freeIndex == _index)
 			{
 				SA_LOG(L"Index [" << _index << L"] already freed!", Error, SA/Core/Containers);
 				return;
@@ -354,31 +316,134 @@ namespace Sa
 		mFreeIndices.push_back(_index);
 	}
 
-	template <typename T>
-	void SparseVector<T>::RemoveHandle(uint64 _index)
+	template <typename T, typename HandleT>
+	template <typename... Args>
+	T& SparseVector<T, HandleT>::ConstructInternal(uint32 _index, Args&&... _args)
 	{
-		RemoveHandle(static_cast<uint32>(_index));
+		SA_ASSERT(OutOfRange, SA / Core / Containers, _index, 0u, mCapacity);
+
+		new (&mData[_index]) T{ std::forward<Args>(_args)... };
+
+		return mData[_index];
+	}
+
+
+	template <typename T, typename HandleT>
+	template <typename... Args>
+	T& SparseVector<T, HandleT>::Emplace(Args&&... _args)
+	{
+		return ConstructInternal(InsertSpace(), std::forward<Args>(_args)...);
+	}
+
+	template <typename T, typename HandleT>
+	template <typename... Args>
+	SparseVector<T, HandleT>::SparseHandleT SparseVector<T, HandleT>::EmplaceHandle(Args&&... _args)
+	{
+		const uint32 index = InsertSpace();
+
+		ConstructInternal(index, std::forward<Args>(_args)...);
+
+		return SparseHandleT(index, *this);
+	}
+
+
+	template <typename T, typename HandleT>
+	void SparseVector<T, HandleT>::Erase(T& _object)
+	{
+		const uint32 index = &_object - mData;
+
+		EraseAtIndex(index);
+	}
+
+	template <typename T, typename HandleT>
+	void SparseVector<T, HandleT>::EraseHandle(const SparseHandleT& _handle)
+	{
+		const uint32 index = static_cast<uint32>(_handle.ID);
+		
+		EraseAtIndex(index);
 	}
 
 //}
 
 
-//{ Operators
+//{ Accessors
 		
-	template <typename T>
-	T& SparseVector<T>::operator[](uint64 _index)
+	template <typename T, typename HandleT>
+	HandleT* SparseVector<T, HandleT>::At(uint32 _index)
+	{
+		SA_ASSERT(OutOfRange, SA/Core/Containers, _index, 0u, mSize);
+
+		return &mData[_index];
+	}
+
+	template <typename T, typename HandleT>
+	const HandleT* SparseVector<T, HandleT>::At(uint32 _index) const
+	{
+		SA_ASSERT(OutOfRange, SA/Core/Containers, _index, 0u, mSize);
+
+		return &mData[_index];
+	}
+
+
+	template <typename T, typename HandleT>
+	T& SparseVector<T, HandleT>::operator[](uint64 _index)
 	{
 		SA_ASSERT(OutOfRange, SA/Core/Containers, (uint32)_index, 0u, mSize);
 
 		return mData[_index];
 	}
 
-	template <typename T>
-	const T& SparseVector<T>::operator[](uint64 _index) const
+	template <typename T, typename HandleT>
+	const T& SparseVector<T, HandleT>::operator[](uint64 _index) const
 	{
 		SA_ASSERT(OutOfRange, SA/Core/Containers, (uint32)_index, 0u, mSize);
 
 		return mData[_index];
+	}
+
+//}
+
+
+//{ Handle
+
+	template <typename HandleT>
+	SparseVectorHandle<HandleT>::SparseVectorHandle(uint64 _id, Intl::SparseVectorBase<HandleT>& _vec) :
+		Handle(_id),
+		mVector{ &_vec }
+	{
+	}
+
+
+	template <typename HandleT>
+	HandleT* SparseVectorHandle<HandleT>::Get()
+	{
+		if (!IsValid())
+			return nullptr;
+
+		return mVector->At(static_cast<uint32>(ID));
+	}
+
+	template <typename HandleT>
+	const HandleT* SparseVectorHandle<HandleT>::Get() const
+	{
+		if (!IsValid())
+			return nullptr;
+
+		return mVector->At(static_cast<uint32>(ID));
+	}
+
+
+	template <typename HandleT>
+	bool SparseVectorHandle<HandleT>::IsValid() const noexcept
+	{
+		return Handle::IsValid() && mVector;
+	}
+
+	template <typename HandleT>
+	void SparseVectorHandle<HandleT>::Reset() noexcept
+	{
+		Handle::Reset();
+		mVector = nullptr;
 	}
 
 //}

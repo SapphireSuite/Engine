@@ -53,8 +53,6 @@ namespace Sa::Vk
 
 		surface.Create(GetDevice(), _winHandle);
 
-		handle.format = surface.GetFormat();
-
 		return handle;
 	}
 
@@ -64,49 +62,49 @@ namespace Sa::Vk
 
 		surface.Destroy(GetDevice());
 
-		mSurfaces.RemoveHandle(_handle);
+		mSurfaces.EraseHandle(_handle);
 		_handle.Reset();
 	}
 
 
-	RenderPassHandle RenderContextInterface::CreateRenderPass(const RenderPassDescriptor& _descriptor)
-	{
-		const RenderPassHandle handle = mRenderPasses.EmplaceHandle();
+	//RenderPassHandle RenderContextInterface::CreateRenderPass(const RenderPassDescriptor& _descriptor)
+	//{
+	//	const RenderPassHandle handle = mRenderPasses.EmplaceHandle();
 
-		RenderPass& renderPass = mRenderPasses[handle];
+	//	RenderPass& renderPass = mRenderPasses[handle];
 
-		renderPass.Create(GetDevice(), _descriptor);
+	//	renderPass.Create(GetDevice(), _descriptor);
 
-		return handle;
-	}
+	//	return handle;
+	//}
 
-	void RenderContextInterface::DestroyRenderPass(RenderPassHandle& _handle)
-	{
-		RenderPass& renderPass = mRenderPasses[_handle];
+	//void RenderContextInterface::DestroyRenderPass(RenderPassHandle& _handle)
+	//{
+	//	RenderPass& renderPass = mRenderPasses[_handle];
 
-		renderPass.Destroy(GetDevice());
+	//	renderPass.Destroy(GetDevice());
 
-		mRenderPasses.RemoveHandle(_handle);
-		_handle.Reset();
-	}
+	//	mRenderPasses.RemoveHandle(_handle);
+	//	_handle.Reset();
+	//}
 
 
-	void RenderContextInterface::CreateFrameBuffers(const RenderSurfaceHandle& _surface,
-		const RenderPassHandle& _pass,
-		const RenderPassDescriptor& _descriptor)
-	{
-		Surface& surface = mSurfaces[_surface];
-		RenderPass& renderPass = mRenderPasses[_pass];
+	//void RenderContextInterface::CreateFrameBuffers(const RenderSurfaceHandle& _surface,
+	//	const RenderPassHandle& _pass,
+	//	const RenderPassDescriptor& _descriptor)
+	//{
+	//	Surface& surface = mSurfaces[_surface];
+	//	RenderPass& renderPass = mRenderPasses[_pass];
 
-		surface.CreateFrameBuffers(GetDevice(), renderPass, _descriptor);
-	}
+	//	surface.CreateFrameBuffers(GetDevice(), renderPass, _descriptor);
+	//}
 
-	void RenderContextInterface::DestroyFrameBuffers(const RenderSurfaceHandle& _surface)
-	{
-		Surface& surface = mSurfaces[_surface];
+	//void RenderContextInterface::DestroyFrameBuffers(const RenderSurfaceHandle& _surface)
+	//{
+	//	Surface& surface = mSurfaces[_surface];
 
-		surface.DestroyFrameBuffers(GetDevice());
-	}
+	//	surface.DestroyFrameBuffers(GetDevice());
+	//}
 
 
 	//ARenderPipeline* RenderContextInterface::CreatePipeline(const RenderPipelineDescriptor& _desc)
@@ -130,56 +128,56 @@ namespace Sa::Vk
 
 //{ Resources
 
-	RenderResourceInitializerHandle RenderContextInterface::CreateResourceInitializer()
-	{
-		const RenderResourceInitializerHandle handle = mResInits.EmplaceHandle();
+	//RenderResourceInitializerHandle RenderContextInterface::CreateResourceInitializer()
+	//{
+	//	const RenderResourceInitializerHandle handle = mResInits.EmplaceHandle();
 
-		ResourceInitializer& resInit = mResInits[handle];
+	//	ResourceInitializer& resInit = mResInits[handle];
 
-		resInit.Create(GetDevice());
+	//	resInit.Create(GetDevice());
 
-		return handle;
-	}
+	//	return handle;
+	//}
 
-	void RenderContextInterface::DestroyResourceInitializer(RenderResourceInitializerHandle& _init)
-	{
-		ResourceInitializer& resInit = mResInits[_init];
+	//void RenderContextInterface::DestroyResourceInitializer(RenderResourceInitializerHandle& _init)
+	//{
+	//	ResourceInitializer& resInit = mResInits[_init];
 
-		resInit.Destroy(GetDevice());
+	//	resInit.Destroy(GetDevice());
 
-		mResInits.RemoveHandle(_init);
-		_init.Reset();
-	}
+	//	mResInits.RemoveHandle(_init);
+	//	_init.Reset();
+	//}
 
-	void RenderContextInterface::SubmitResourceInitializer(const RenderResourceInitializerHandle& _init)
-	{
-		ResourceInitializer& resInit = mResInits[_init];
+	//void RenderContextInterface::SubmitResourceInitializer(const RenderResourceInitializerHandle& _init)
+	//{
+	//	ResourceInitializer& resInit = mResInits[_init];
 
-		resInit.Submit(GetDevice());
-	}
+	//	resInit.Submit(GetDevice());
+	//}
 
 
-	ShaderHandle RenderContextInterface::CreateShader(const RenderResourceInitializerHandle& _init, const RawShader& _raw)
-	{
-		const ShaderHandle handle = mShaders.EmplaceHandle();
+	//ShaderHandle RenderContextInterface::CreateShader(const RenderResourceInitializerHandle& _init, const RawShader& _raw)
+	//{
+	//	const ShaderHandle handle = mShaders.EmplaceHandle();
 
-		Shader& shader = mShaders[handle];
-		ResourceInitializer& resInit = mResInits[_init];
+	//	Shader& shader = mShaders[handle];
+	//	ResourceInitializer& resInit = mResInits[_init];
 
-		shader.Create(GetDevice(), resInit, _raw);
+	//	shader.Create(GetDevice(), resInit, _raw);
 
-		return handle;
-	}
+	//	return handle;
+	//}
 
-	void RenderContextInterface::DestroyShader(ShaderHandle& _shader)
-	{
-		Shader& shader = mShaders[_shader];
+	//void RenderContextInterface::DestroyShader(ShaderHandle& _shader)
+	//{
+	//	Shader& shader = mShaders[_shader];
 
-		shader.Destroy(GetDevice());
+	//	shader.Destroy(GetDevice());
 
-		mShaders.RemoveHandle(_shader);
-		_shader.Reset();
-	}
+	//	mShaders.RemoveHandle(_shader);
+	//	_shader.Reset();
+	//}
 
 	//
 	//AStaticMesh* RenderContextInterface::CreateStaticMesh(ARenderResourceInitializer* _init, const RawMesh& _raw)
@@ -201,50 +199,50 @@ namespace Sa::Vk
 	//}
 
 
-	TextureHandle RenderContextInterface::CreateTexture(const RenderResourceInitializerHandle& _init, const RawTexture& _raw)
-	{
-		const TextureHandle handle = mTextures.EmplaceHandle();
+	//TextureHandle RenderContextInterface::CreateTexture(const RenderResourceInitializerHandle& _init, const RawTexture& _raw)
+	//{
+	//	const TextureHandle handle = mTextures.EmplaceHandle();
 
-		Texture& texture = mTextures[handle];
-		ResourceInitializer& resInit = mResInits[_init];
+	//	Texture& texture = mTextures[handle];
+	//	ResourceInitializer& resInit = mResInits[_init];
 
-		texture.Create(GetDevice(), resInit, _raw);
+	//	texture.Create(GetDevice(), resInit, _raw);
 
-		return handle;
-	}
+	//	return handle;
+	//}
 
-	void RenderContextInterface::DestroyTexture(TextureHandle& _texture)
-	{
-		Texture& texture = mTextures[_texture];
+	//void RenderContextInterface::DestroyTexture(TextureHandle& _texture)
+	//{
+	//	Texture& texture = mTextures[_texture];
 
-		texture.Destroy(GetDevice());
+	//	texture.Destroy(GetDevice());
 
-		mTextures.RemoveHandle(_texture);
-		_texture.Reset();
-	}
+	//	mTextures.RemoveHandle(_texture);
+	//	_texture.Reset();
+	//}
 
 
-	CubemapHandle RenderContextInterface::CreateCubemap(const RenderResourceInitializerHandle& _init, const RawCubemap& _raw)
-	{
-		const CubemapHandle handle = mCubemaps.EmplaceHandle();
+	//CubemapHandle RenderContextInterface::CreateCubemap(const RenderResourceInitializerHandle& _init, const RawCubemap& _raw)
+	//{
+	//	const CubemapHandle handle = mCubemaps.EmplaceHandle();
 
-		Cubemap& cubemap = mCubemaps[handle];
-		ResourceInitializer& resInit = mResInits[_init];
+	//	Cubemap& cubemap = mCubemaps[handle];
+	//	ResourceInitializer& resInit = mResInits[_init];
 
-		cubemap.Create(GetDevice(), resInit, _raw);
+	//	cubemap.Create(GetDevice(), resInit, _raw);
 
-		return handle;
-	}
+	//	return handle;
+	//}
 
-	void RenderContextInterface::DestroyCubemap(CubemapHandle& _cubemap)
-	{
-		Cubemap& cubemap = mCubemaps[_cubemap];
+	//void RenderContextInterface::DestroyCubemap(CubemapHandle& _cubemap)
+	//{
+	//	Cubemap& cubemap = mCubemaps[_cubemap];
 
-		cubemap.Destroy(GetDevice());
+	//	cubemap.Destroy(GetDevice());
 
-		mCubemaps.RemoveHandle(_cubemap);
-		_cubemap.Reset();
-	}
+	//	mCubemaps.RemoveHandle(_cubemap);
+	//	_cubemap.Reset();
+	//}
 
 
 	//

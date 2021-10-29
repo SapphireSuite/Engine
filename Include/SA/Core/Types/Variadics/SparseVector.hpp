@@ -7,6 +7,7 @@
 
 #include <list>
 
+#include <SA/Core/Types/Handle.hpp>
 #include <SA/Core/Algorithms/MemMove.hpp>
 
 #include <SA/Collections/Debug>
@@ -14,7 +15,24 @@
 namespace Sa
 {
 	template <typename T>
-	class SparseVector
+	class SparseVectorHandle;
+
+
+//{ Vector
+
+	namespace Intl
+	{
+		template <typename HandleT>
+		class SparseVectorBase
+		{
+		public:
+			virtual HandleT* At(uint32 _index) = 0;
+			virtual const HandleT* At(uint32 _index) const = 0;
+		};
+	}
+
+	template <typename T, typename HandleT = T>
+	class SparseVector : public Intl::SparseVectorBase<HandleT>
 	{
 		T* mData = nullptr;
 
@@ -32,6 +50,13 @@ namespace Sa
 		uint32 InsertSpace();
 
 		/**
+		*	Erase object at index.
+		* 
+		*	\param[in] _index	index to erase at.
+		*/
+		void EraseAtIndex(uint32 _index);
+
+		/**
 		*	Construct new object in-place at index with args.
 		* 
 		*	\param[in] _index	index to construct at.
@@ -41,6 +66,8 @@ namespace Sa
 		T& ConstructInternal(uint32 _index, Args&&... _args);
 
 	public:
+		using SparseHandleT = typename SparseVectorHandle<HandleT>;
+
 //{ Iterators
 
 		class Iterator
@@ -128,22 +155,62 @@ namespace Sa
 		*	\return index of emplaced object.
 		*/
 		template <typename... Args>
-		uint32 EmplaceHandle(Args&&... _args);
+		SparseHandleT EmplaceHandle(Args&&... _args);
 
-		void Remove(T& _object);
-		void RemoveHandle(uint32 _index);
-		void RemoveHandle(uint64 _index);
+		void Erase(T& _object);
+		void EraseHandle(const SparseHandleT& _handle);
 
 //}
 
 
-//{ Operators
+//{ Accessors
 		
+		HandleT* At(uint32 _index) override final;
+		const HandleT* At(uint32 _index) const override final;
+
 		T& operator[](uint64 _index);
 		const T& operator[](uint64 _index) const;
 
 //}
 	};
+
+//}
+
+
+//{ Handle
+
+	template <typename HandleT>
+	class SparseVectorHandle : public Handle
+	{
+		Intl::SparseVectorBase<HandleT>* mVector = nullptr;
+
+		using Handle::Handle;
+
+	public:
+		SparseVectorHandle() = default;
+		SparseVectorHandle(uint64 _id, Intl::SparseVectorBase<HandleT>& _vec);
+
+		/**
+		*	\brief Get Handled object.
+		* 
+		*	\return Handled object if valid, otherwise nullptr.
+		*/
+		HandleT* Get();
+
+		/**
+		*	\brief Get \b const Handled object.
+		* 
+		*	\return \b const Handled object if valid, otherwise nullptr.
+		*/
+		const HandleT* Get() const;
+
+
+		bool IsValid() const noexcept override;
+
+		void Reset() noexcept override;
+	};
+
+//}
 }
 
 #include <SA/Core/Types/Variadics/SparseVector.inl>

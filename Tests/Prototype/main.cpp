@@ -189,10 +189,10 @@ int main()
 
 			surface = renderContext->CreateSurface(winSurface);
 
-			renderPassDesc = RenderPassDescriptor::DefaultSingle(surface);
-			renderPass = renderContext->CreateRenderPass(renderPassDesc);
+			//renderPassDesc = RenderPassDescriptor::DefaultSingle(surface);
+			//renderPass = renderContext->CreateRenderPass(renderPassDesc);
 
-			renderContext->CreateFrameBuffers(surface, renderPass, renderPassDesc);
+			//renderContext->CreateFrameBuffers(surface, renderPass, renderPassDesc);
 
 			//cmdPool.Create(device, device.queueMgr.graphics.GetQueue(0).GetFamilyIndex());
 
@@ -214,67 +214,67 @@ int main()
 
 		// Assets
 		{
-			RenderResourceInitializerHandle resInit = renderContext->CreateResourceInitializer();
+			//RenderResourceInitializerHandle resInit = renderContext->CreateResourceInitializer();
 
 
 			// Shaders
 			{
-				// Unlit vert
-				{
-					const std::string assetName = "Assets/Shaders/unlit_vert.spha";
-					const std::string resName = "/Engine/Resources/Shaders/Forward/unlit.vert";
+				//// Unlit vert
+				//{
+				//	const std::string assetName = "Assets/Shaders/unlit_vert.spha";
+				//	const std::string resName = "/Engine/Resources/Shaders/Forward/unlit.vert";
 
-					ShaderAsset asset(&shaderBuilder);
+				//	ShaderAsset asset(&shaderBuilder);
 
-					if (!asset.Load(assetName))
-					{
-						if (asset.Import(resName))
-						{
-							asset.Save(assetName);
-						}
-					}
+				//	if (!asset.Load(assetName))
+				//	{
+				//		if (asset.Import(resName))
+				//		{
+				//			asset.Save(assetName);
+				//		}
+				//	}
 
-					unlitvert = renderContext->CreateShader(resInit, asset.raw);
-					////unlitPipelineDesc.AddShader(unlitvert, asset.descriptor);
-				}
+				//	unlitvert = renderContext->CreateShader(resInit, asset.raw);
+				//	////unlitPipelineDesc.AddShader(unlitvert, asset.descriptor);
+				//}
 
-				// Unlit frag
-				{
-					const std::string assetName = "Assets/Shaders/unlit_frag.spha";
-					const std::string resName = "/Engine/Resources/Shaders/Forward/unlit.frag";
+				//// Unlit frag
+				//{
+				//	const std::string assetName = "Assets/Shaders/unlit_frag.spha";
+				//	const std::string resName = "/Engine/Resources/Shaders/Forward/unlit.frag";
 
-					ShaderAsset asset(&shaderBuilder);
+				//	ShaderAsset asset(&shaderBuilder);
 
-					if (!asset.Load(assetName))
-					{
-						if (asset.Import(resName))
-						{
-							asset.Save(assetName);
-						}
-					}
+				//	if (!asset.Load(assetName))
+				//	{
+				//		if (asset.Import(resName))
+				//		{
+				//			asset.Save(assetName);
+				//		}
+				//	}
 
-					unlitfrag = renderContext->CreateShader(resInit, asset.raw);
-					////unlitPipelineDesc.AddShader(unlitfrag, asset.descriptor);
-				}
+				//	unlitfrag = renderContext->CreateShader(resInit, asset.raw);
+				//	////unlitPipelineDesc.AddShader(unlitfrag, asset.descriptor);
+				//}
 			}
 
 
 			// Texture
 			{
-				const std::string assetName = "Assets/Textures/missing.spha";
-				const std::string resName = "/Engine/Resources/Textures/missing_texture.png";
+				//const std::string assetName = "Assets/Textures/missing.spha";
+				//const std::string resName = "/Engine/Resources/Textures/missing_texture.png";
 
-				TextureAsset asset;
+				//TextureAsset asset;
 
-				if (!asset.Load(assetName))
-				{
-					if (asset.Import(resName))
-					{
-						asset.Save(assetName);
-					}
-				}
+				//if (!asset.Load(assetName))
+				//{
+				//	if (asset.Import(resName))
+				//	{
+				//		asset.Save(assetName);
+				//	}
+				//}
 
-				missText = renderContext->CreateTexture(resInit, asset.raw);
+				//missText = renderContext->CreateTexture(resInit, asset.raw);
 			}
 
 
@@ -298,8 +298,8 @@ int main()
 			}
 
 
-			renderContext->SubmitResourceInitializer(resInit);
-			renderContext->DestroyResourceInitializer(resInit);
+			//renderContext->SubmitResourceInitializer(resInit);
+			//renderContext->DestroyResourceInitializer(resInit);
 
 
 			// Pipeline
@@ -412,14 +412,14 @@ int main()
 
 			//renderSubIntf->DestroyStaticMesh(cubeMesh);
 
-			renderContext->DestroyTexture(missText);
+			//renderContext->DestroyTexture(missText);
 
-			renderContext->DestroyShader(unlitvert);
-			renderContext->DestroyShader(unlitfrag);
+			//renderContext->DestroyShader(unlitvert);
+			//renderContext->DestroyShader(unlitfrag);
 
-			renderContext->DestroyFrameBuffers(surface);
+			//renderContext->DestroyFrameBuffers(surface);
 
-			renderContext->DestroyRenderPass(renderPass);
+			//renderContext->DestroyRenderPass(renderPass);
 
 			renderContext->DestroySurface(surface);
 
