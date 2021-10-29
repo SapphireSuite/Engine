@@ -5,6 +5,8 @@
 #ifndef SAPPHIRE_RENDER_VK_RESOURCE_INITIALIZER_GUARD
 #define SAPPHIRE_RENDER_VK_RESOURCE_INITIALIZER_GUARD
 
+#include <SA/Render/Base/ARenderResourceInitializer.hpp>
+
 #include <SA/Core/Types/Variadics/ResourceHolder.hpp>
 
 #include <SA/Render/Vulkan/Device/VkCommandPool.hpp>
@@ -13,7 +15,7 @@ namespace Sa::Vk
 {
 	class Device;
 
-	class ResourceInitializer
+	class ResourceInitializer : public ARenderResourceInitializer
 	{
 		CommandPool mCmdPool;
 

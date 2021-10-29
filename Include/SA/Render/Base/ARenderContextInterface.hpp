@@ -54,9 +54,9 @@ namespace Sa
 
 //{ Resources
 
-		//virtual RenderResourceInitializerHandle CreateResourceInitializer() = 0;
-		//virtual void DestroyResourceInitializer(RenderResourceInitializerHandle& _init) = 0;
-		//virtual void SubmitResourceInitializer(const RenderResourceInitializerHandle& _init) = 0;
+		virtual RenderResourceInitializerHandle CreateResourceInitializer() = 0;
+		virtual void DestroyResourceInitializer(RenderResourceInitializerHandle& _init) = 0;
+		virtual void SubmitResourceInitializer(const RenderResourceInitializerHandle& _init) = 0;
 
 		//virtual ShaderHandle CreateShader(const RenderResourceInitializerHandle& _init,
 		//	const RawShader& _raw) = 0;

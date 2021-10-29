@@ -25,8 +25,8 @@ namespace Sa::Vk
 		const RenderGraphicInterface* mGraphics = nullptr;
 
 		SparseVector<Surface, ARenderSurface> mSurfaces;
-		//SparseVector<ResourceInitializer> mResInits;
 		SparseVector<RenderPass, ARenderPass> mRenderPasses;
+		SparseVector<ResourceInitializer, ARenderResourceInitializer> mResInits;
 		//SparseVector<Shader> mShaders;
 		//SparseVector<Texture> mTextures;
 		//SparseVector<Cubemap> mCubemaps;
@@ -54,9 +54,9 @@ namespace Sa::Vk
 
 //{ Resources
 	
-		//RenderResourceInitializerHandle CreateResourceInitializer() override final;
-		//void DestroyResourceInitializer(RenderResourceInitializerHandle& _init) override final;
-		//void SubmitResourceInitializer(const RenderResourceInitializerHandle& _init) override final;
+		RenderResourceInitializerHandle CreateResourceInitializer() override final;
+		void DestroyResourceInitializer(RenderResourceInitializerHandle& _init) override final;
+		void SubmitResourceInitializer(const RenderResourceInitializerHandle& _init) override final;
 
 		//ShaderHandle CreateShader(const RenderResourceInitializerHandle& _init, const RawShader& _raw) override final;
 		//void DestroyShader(ShaderHandle& _shader) override final;

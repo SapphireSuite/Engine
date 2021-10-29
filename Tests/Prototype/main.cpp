@@ -214,7 +214,7 @@ int main()
 
 		// Assets
 		{
-			//RenderResourceInitializerHandle resInit = renderContext->CreateResourceInitializer();
+			RenderResourceInitializerHandle resInit = renderContext->CreateResourceInitializer();
 
 
 			// Shaders
@@ -298,8 +298,8 @@ int main()
 			}
 
 
-			//renderContext->SubmitResourceInitializer(resInit);
-			//renderContext->DestroyResourceInitializer(resInit);
+			renderContext->SubmitResourceInitializer(resInit);
+			renderContext->DestroyResourceInitializer(resInit);
 
 
 			// Pipeline
