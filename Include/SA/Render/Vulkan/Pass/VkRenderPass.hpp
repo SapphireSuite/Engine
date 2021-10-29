@@ -7,10 +7,7 @@
 
 #include <SA/Core/Support/API/Vulkan.hpp>
 
-namespace Sa
-{
-	struct RenderPassDescriptor;
-};
+#include <SA/Render/Base/Pass/ARenderPass.hpp>
 
 namespace Sa::Vk
 {
@@ -18,7 +15,7 @@ namespace Sa::Vk
 	//class CommandBuffer;
 	//class FrameBuffer;
 
-	class RenderPass
+	class RenderPass : public ARenderPass
 	{
 		VkRenderPass mHandle = VK_NULL_HANDLE;
 

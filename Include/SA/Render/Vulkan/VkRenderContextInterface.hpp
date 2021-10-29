@@ -25,8 +25,8 @@ namespace Sa::Vk
 		const RenderGraphicInterface* mGraphics = nullptr;
 
 		SparseVector<Surface, ARenderSurface> mSurfaces;
-		//SparseVector<RenderPass> mRenderPasses;
 		//SparseVector<ResourceInitializer> mResInits;
+		SparseVector<RenderPass, ARenderPass> mRenderPasses;
 		//SparseVector<Shader> mShaders;
 		//SparseVector<Texture> mTextures;
 		//SparseVector<Cubemap> mCubemaps;
@@ -40,13 +40,13 @@ namespace Sa::Vk
 		RenderSurfaceHandle CreateSurface(WindowSurfaceHandle _winHandle) override final;
 		void DestroySurface(RenderSurfaceHandle& _handle) override final;
 
-		//RenderPassHandle CreateRenderPass(const RenderPassDescriptor& _descriptor) override final;
-		//void DestroyRenderPass(RenderPassHandle& _handle) override final;
+		RenderPassHandle CreateRenderPass(const RenderPassDescriptor& _descriptor) override final;
+		void DestroyRenderPass(RenderPassHandle& _handle) override final;
 
-		//void CreateFrameBuffers(const RenderSurfaceHandle& _surface,
-		//	const RenderPassHandle& _pass,
-		//	const RenderPassDescriptor& _descriptor) override final;
-		//void DestroyFrameBuffers(const RenderSurfaceHandle& _surface) override final;
+		void CreateFrameBuffers(const RenderSurfaceHandle& _surface,
+			const RenderPassHandle& _pass,
+			const RenderPassDescriptor& _descriptor) override final;
+		void DestroyFrameBuffers(const RenderSurfaceHandle& _surface) override final;
 
 		//ARenderPipeline* CreatePipeline(const RenderPipelineDescriptor& _desc) override final;
 		//void DestroyPipeline(ARenderPipeline* _pipeline) override final;

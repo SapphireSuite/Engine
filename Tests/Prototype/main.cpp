@@ -189,10 +189,10 @@ int main()
 
 			surface = renderContext->CreateSurface(winSurface);
 
-			//renderPassDesc = RenderPassDescriptor::DefaultSingle(surface);
-			//renderPass = renderContext->CreateRenderPass(renderPassDesc);
+			renderPassDesc = RenderPassDescriptor::DefaultSingle(surface.Get());
+			renderPass = renderContext->CreateRenderPass(renderPassDesc);
 
-			//renderContext->CreateFrameBuffers(surface, renderPass, renderPassDesc);
+			renderContext->CreateFrameBuffers(surface, renderPass, renderPassDesc);
 
 			//cmdPool.Create(device, device.queueMgr.graphics.GetQueue(0).GetFamilyIndex());
 
@@ -417,9 +417,9 @@ int main()
 			//renderContext->DestroyShader(unlitvert);
 			//renderContext->DestroyShader(unlitfrag);
 
-			//renderContext->DestroyFrameBuffers(surface);
+			renderContext->DestroyFrameBuffers(surface);
 
-			//renderContext->DestroyRenderPass(renderPass);
+			renderContext->DestroyRenderPass(renderPass);
 
 			renderContext->DestroySurface(surface);
 

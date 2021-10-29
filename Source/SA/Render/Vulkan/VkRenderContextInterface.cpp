@@ -70,44 +70,44 @@ namespace Sa::Vk
 	}
 
 
-	//RenderPassHandle RenderContextInterface::CreateRenderPass(const RenderPassDescriptor& _descriptor)
-	//{
-	//	const RenderPassHandle handle = mRenderPasses.EmplaceHandle();
+	RenderPassHandle RenderContextInterface::CreateRenderPass(const RenderPassDescriptor& _descriptor)
+	{
+		const RenderPassHandle handle = mRenderPasses.EmplaceHandle();
 
-	//	RenderPass& renderPass = mRenderPasses[handle];
+		RenderPass& renderPass = mRenderPasses[handle];
 
-	//	renderPass.Create(GetDevice(), _descriptor);
+		renderPass.Create(GetDevice(), _descriptor);
 
-	//	return handle;
-	//}
+		return handle;
+	}
 
-	//void RenderContextInterface::DestroyRenderPass(RenderPassHandle& _handle)
-	//{
-	//	RenderPass& renderPass = mRenderPasses[_handle];
+	void RenderContextInterface::DestroyRenderPass(RenderPassHandle& _handle)
+	{
+		RenderPass& renderPass = mRenderPasses[_handle];
 
-	//	renderPass.Destroy(GetDevice());
+		renderPass.Destroy(GetDevice());
 
-	//	mRenderPasses.RemoveHandle(_handle);
-	//	_handle.Reset();
-	//}
+		mRenderPasses.EraseHandle(_handle);
+		_handle.Reset();
+	}
 
 
-	//void RenderContextInterface::CreateFrameBuffers(const RenderSurfaceHandle& _surface,
-	//	const RenderPassHandle& _pass,
-	//	const RenderPassDescriptor& _descriptor)
-	//{
-	//	Surface& surface = mSurfaces[_surface];
-	//	RenderPass& renderPass = mRenderPasses[_pass];
+	void RenderContextInterface::CreateFrameBuffers(const RenderSurfaceHandle& _surface,
+		const RenderPassHandle& _pass,
+		const RenderPassDescriptor& _descriptor)
+	{
+		Surface& surface = mSurfaces[_surface];
+		RenderPass& renderPass = mRenderPasses[_pass];
 
-	//	surface.CreateFrameBuffers(GetDevice(), renderPass, _descriptor);
-	//}
+		surface.CreateFrameBuffers(GetDevice(), renderPass, _descriptor);
+	}
 
-	//void RenderContextInterface::DestroyFrameBuffers(const RenderSurfaceHandle& _surface)
-	//{
-	//	Surface& surface = mSurfaces[_surface];
+	void RenderContextInterface::DestroyFrameBuffers(const RenderSurfaceHandle& _surface)
+	{
+		Surface& surface = mSurfaces[_surface];
 
-	//	surface.DestroyFrameBuffers(GetDevice());
-	//}
+		surface.DestroyFrameBuffers(GetDevice());
+	}
 
 
 	//ARenderPipeline* RenderContextInterface::CreatePipeline(const RenderPipelineDescriptor& _desc)
