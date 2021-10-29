@@ -261,20 +261,20 @@ int main()
 
 			// Texture
 			{
-				//const std::string assetName = "Assets/Textures/missing.spha";
-				//const std::string resName = "/Engine/Resources/Textures/missing_texture.png";
+				const std::string assetName = "Assets/Textures/missing.spha";
+				const std::string resName = "/Engine/Resources/Textures/missing_texture.png";
 
-				//TextureAsset asset;
+				TextureAsset asset;
 
-				//if (!asset.Load(assetName))
-				//{
-				//	if (asset.Import(resName))
-				//	{
-				//		asset.Save(assetName);
-				//	}
-				//}
+				if (!asset.Load(assetName))
+				{
+					if (asset.Import(resName))
+					{
+						asset.Save(assetName);
+					}
+				}
 
-				//missText = renderContext->CreateTexture(resInit, asset.raw);
+				missText = renderContext->CreateTexture(resInit, asset.raw);
 			}
 
 
@@ -412,7 +412,7 @@ int main()
 
 			//renderSubIntf->DestroyStaticMesh(cubeMesh);
 
-			//renderContext->DestroyTexture(missText);
+			renderContext->DestroyTexture(missText);
 
 			renderContext->DestroyShader(unlitvert);
 			renderContext->DestroyShader(unlitfrag);

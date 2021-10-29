@@ -28,8 +28,7 @@ namespace Sa::Vk
 
 	void RenderContextInterface::Destroy()
 	{
-		for (auto& surface : mSurfaces)
-			surface.Destroy(GetDevice());
+		// TODO: Call SparseVectors' destroy.
 
 		mGraphics = nullptr;
 
@@ -202,50 +201,50 @@ namespace Sa::Vk
 	//}
 
 
-	//TextureHandle RenderContextInterface::CreateTexture(const RenderResourceInitializerHandle& _init, const RawTexture& _raw)
-	//{
-	//	const TextureHandle handle = mTextures.EmplaceHandle();
+	TextureHandle RenderContextInterface::CreateTexture(const RenderResourceInitializerHandle& _init, const RawTexture& _raw)
+	{
+		const TextureHandle handle = mTextures.EmplaceHandle();
 
-	//	Texture& texture = mTextures[handle];
-	//	ResourceInitializer& resInit = mResInits[_init];
+		Texture& texture = mTextures[handle];
+		ResourceInitializer& resInit = mResInits[_init];
 
-	//	texture.Create(GetDevice(), resInit, _raw);
+		texture.Create(GetDevice(), resInit, _raw);
 
-	//	return handle;
-	//}
+		return handle;
+	}
 
-	//void RenderContextInterface::DestroyTexture(TextureHandle& _texture)
-	//{
-	//	Texture& texture = mTextures[_texture];
+	void RenderContextInterface::DestroyTexture(TextureHandle& _texture)
+	{
+		Texture& texture = mTextures[_texture];
 
-	//	texture.Destroy(GetDevice());
+		texture.Destroy(GetDevice());
 
-	//	mTextures.RemoveHandle(_texture);
-	//	_texture.Reset();
-	//}
+		mTextures.EraseHandle(_texture);
+		_texture.Reset();
+	}
 
 
-	//CubemapHandle RenderContextInterface::CreateCubemap(const RenderResourceInitializerHandle& _init, const RawCubemap& _raw)
-	//{
-	//	const CubemapHandle handle = mCubemaps.EmplaceHandle();
+	CubemapHandle RenderContextInterface::CreateCubemap(const RenderResourceInitializerHandle& _init, const RawCubemap& _raw)
+	{
+		const CubemapHandle handle = mCubemaps.EmplaceHandle();
 
-	//	Cubemap& cubemap = mCubemaps[handle];
-	//	ResourceInitializer& resInit = mResInits[_init];
+		Cubemap& cubemap = mCubemaps[handle];
+		ResourceInitializer& resInit = mResInits[_init];
 
-	//	cubemap.Create(GetDevice(), resInit, _raw);
+		cubemap.Create(GetDevice(), resInit, _raw);
 
-	//	return handle;
-	//}
+		return handle;
+	}
 
-	//void RenderContextInterface::DestroyCubemap(CubemapHandle& _cubemap)
-	//{
-	//	Cubemap& cubemap = mCubemaps[_cubemap];
+	void RenderContextInterface::DestroyCubemap(CubemapHandle& _cubemap)
+	{
+		Cubemap& cubemap = mCubemaps[_cubemap];
 
-	//	cubemap.Destroy(GetDevice());
+		cubemap.Destroy(GetDevice());
 
-	//	mCubemaps.RemoveHandle(_cubemap);
-	//	_cubemap.Reset();
-	//}
+		mCubemaps.EraseHandle(_cubemap);
+		_cubemap.Reset();
+	}
 
 
 	//

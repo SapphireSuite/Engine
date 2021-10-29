@@ -28,8 +28,8 @@ namespace Sa::Vk
 		SparseVector<RenderPass, ARenderPass> mRenderPasses;
 		SparseVector<ResourceInitializer, ARenderResourceInitializer> mResInits;
 		SparseVector<Shader, AShader> mShaders;
-		//SparseVector<Texture> mTextures;
-		//SparseVector<Cubemap> mCubemaps;
+		SparseVector<Texture, ATexture> mTextures;
+		SparseVector<Cubemap, ACubemap> mCubemaps;
 
 		const Device& GetDevice() const;
 
@@ -64,11 +64,11 @@ namespace Sa::Vk
 		//AStaticMesh* CreateStaticMesh(ARenderResourceInitializer* _init, const RawMesh& _raw) override final;
 		//void DestroyStaticMesh(AStaticMesh* _mesh) override final;
 
-		//TextureHandle CreateTexture(const RenderResourceInitializerHandle& _init, const RawTexture& _raw) override final;
-		//void DestroyTexture(TextureHandle& _texture) override final;
+		TextureHandle CreateTexture(const RenderResourceInitializerHandle& _init, const RawTexture& _raw) override final;
+		void DestroyTexture(TextureHandle& _texture) override final;
 
-		//CubemapHandle CreateCubemap(const RenderResourceInitializerHandle& _init, const RawCubemap& _raw) override final;
-		//void DestroyCubemap(CubemapHandle& _cubemap) override final;
+		CubemapHandle CreateCubemap(const RenderResourceInitializerHandle& _init, const RawCubemap& _raw) override final;
+		void DestroyCubemap(CubemapHandle& _cubemap) override final;
 
 
 		//ARenderMaterial* CreateMaterial(const RenderMaterialCreateInfos& _infos) override final;
