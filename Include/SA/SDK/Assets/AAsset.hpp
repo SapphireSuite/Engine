@@ -7,8 +7,6 @@
 
 #include <fstream>
 
-#include <SA/Core/Types/Abstract.hpp>
-
 namespace Sa
 {
 	namespace Serialize
@@ -16,7 +14,7 @@ namespace Sa
 		class Reader;
 	}
 
-	class AAsset : public Abstract
+	class AAsset
 	{
 		std::string GetFullPath(const std::string& _path) const;
 		void CreateDirectory(const std::string& _path) const;

@@ -16,6 +16,11 @@ namespace Sa::Vk
 	{
 		return mFormat;
 	}
+	bool SwapChain::FrameBuffersValid() const noexcept
+	{
+		return !mFrameBuffers.empty();
+	}
+
 
 	void SwapChain::CreateSwapChainKHR(const Device& _device, const Surface& _surface)
 	{

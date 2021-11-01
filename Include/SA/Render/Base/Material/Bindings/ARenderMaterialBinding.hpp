@@ -5,13 +5,16 @@
 #ifndef SAPPHIRE_RENDER_ARENDER_MATERIAL_BINDING_GUARD
 #define SAPPHIRE_RENDER_ARENDER_MATERIAL_BINDING_GUARD
 
-#include <SA/Core/Types/Abstract.hpp>
+#include <list>
+#include <vector>
+
+#include <SA/Core/Types/Int.hpp>
 
 #include <SA/Core/Support/API/Vulkan.hpp>
 
 namespace Sa
 {
-	class ARenderMaterialBinding : public Abstract
+	class ARenderMaterialBinding
 	{
 	public:
 		/// Binding index in shader.

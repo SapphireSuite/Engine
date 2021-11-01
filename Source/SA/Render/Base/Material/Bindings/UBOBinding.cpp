@@ -2,6 +2,7 @@
 
 #include <Render/Base/Material/Bindings/UBOBinding.hpp>
 
+#include <Core/Algorithms/Cast.hpp>
 #include <Core/Algorithms/SizeOf.hpp>
 
 #include <Render/Vulkan/Buffers/VkBufferBase.hpp>
@@ -37,7 +38,7 @@ namespace Sa
 		std::vector<VkDescriptorBufferInfo>& descs = _bufferDescs.emplace_back();
 
 		for (auto it = UBOs.begin(); it != UBOs.end(); ++it)
-			descs.push_back((*it)->As<Vk::BufferBase>().CreateDescriptorBufferInfo());
+			descs.push_back(CastRef<Vk::BufferBase>(*it).CreateDescriptorBufferInfo());
 
 
 		VkWriteDescriptorSet descWrite{};

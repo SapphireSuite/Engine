@@ -5,14 +5,12 @@
 #ifndef SAPPHIRE_RENDER_ACAMERA_GUARD
 #define SAPPHIRE_RENDER_ACAMERA_GUARD
 
-#include <SA/Core/Types/Abstract.hpp>
-
 #include <SA/Maths/Transform/Transform.hpp>
 #include <SA/Render/Base/Camera/CameraUBO.hpp>
 
 namespace Sa
 {
-	class ACamera : public Abstract
+	class ACamera
 	{
 	protected:
 		CameraUBO mUBOData;

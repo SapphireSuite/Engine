@@ -5,7 +5,6 @@
 #ifndef SAPPHIRE_WINDOW_AWINDOW_GUARD
 #define SAPPHIRE_WINDOW_AWINDOW_GUARD
 
-#include <SA/Core/Types/Abstract.hpp>
 #include <SA/Core/Types/Variadics/Event.hpp>
 
 #include <SA/Core/Support/API/Vulkan.hpp>
@@ -35,7 +34,7 @@ namespace Sa
 	/**
 	*	\brief Window \e Abstract class
 	*/
-	class AWindow : public Abstract
+	class AWindow
 	{
 		bool bMinimized = false;
 		bool bMaximized = false;

@@ -28,6 +28,7 @@ namespace Sa::Vk
 
 	public:
 		Format GetFormat() const override final;
+		bool FrameBuffersValid() const noexcept;
 
 
 		void Create(const Device& _device, const WindowSurface& _winSurface);

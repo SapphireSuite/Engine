@@ -16,6 +16,12 @@ namespace Sa::Vk
 		return mSwapChain.GetFormat();
 	}
 
+	bool Surface::FrameBuffersValid() const noexcept
+	{
+		return mSwapChain.FrameBuffersValid();
+	}
+
+
 	void Surface::Create(const Device& _device, const WindowSurface& _winSurface)
 	{
 		mHandle = _winSurface;

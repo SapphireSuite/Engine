@@ -5,14 +5,14 @@
 #ifndef SAPPHIRE_RENDER_ASHADER_BUILDER_INTERFACE_GUARD
 #define SAPPHIRE_RENDER_ASHADER_BUILDER_INTERFACE_GUARD
 
-#include <SA/Core/Types/Abstract.hpp>
+#include <string>
 
 namespace Sa
 {
 	struct RawShader;
 	struct ShaderDescriptor;
 
-	class AShaderBuilderInterface : public Abstract
+	class AShaderBuilderInterface
 	{
 	public:
 		/**

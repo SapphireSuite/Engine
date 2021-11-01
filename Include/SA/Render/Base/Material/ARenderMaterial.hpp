@@ -5,15 +5,12 @@
 #ifndef SAPPHIRE_RENDER_ARENDER_MATERIAL_GUARD
 #define SAPPHIRE_RENDER_ARENDER_MATERIAL_GUARD
 
-#include <SA/Render/Base/ARenderResource.hpp>
-
 #include <SA/Render/Base/Material/RenderMaterialCreateInfos.hpp>
 
 namespace Sa
 {
-	class ARenderMaterial : public ARenderResource
+	class ARenderMaterial
 	{
-	public:
 	};
 }
 

@@ -7,12 +7,12 @@
 
 #include <SA/Config.hpp>
 
-#include <SA/Input/Base/InputBase.hpp>
+#include <SA/Input/Base/AInputBase.hpp>
 #include <SA/Input/Base/Axis/Axis.hpp>
 
 namespace Sa
 {
-	class InputAxis : public InputBase
+	class InputAxis : public AInputBase
 	{
 	public:
 		Axis axis = Axis::None;

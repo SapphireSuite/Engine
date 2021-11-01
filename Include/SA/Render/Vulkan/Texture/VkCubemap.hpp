@@ -22,6 +22,8 @@ namespace Sa::Vk
 
 		VkDescriptorImageInfo CreateIrradianceDescriptorImageInfo() const noexcept;
 		static VkWriteDescriptorSet CreateWriteDescriptorSet(VkDescriptorSet _descriptorSet, uint32 _binding, uint32 _arrayElem = 0u) noexcept;
+
+		bool operator==(const Cubemap& _rhs) const noexcept;
 	};
 }
 

@@ -7,14 +7,10 @@
 
 #include <SA/SDK/Assets/AAsset.hpp>
 
-#include <SA/Render/Base/ARenderResource.hpp>
-
 namespace Sa
 {
 	class ARenderAsset : public AAsset
 	{
-	public:
-		using ResT = ARenderResource;
 	};
 }
 

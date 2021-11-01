@@ -2,6 +2,7 @@
 
 #include <Render/Vulkan/Pipeline/VkPipeline.hpp>
 
+#include <Core/Algorithms/Cast.hpp>
 #include <Core/Algorithms/SizeOf.hpp>
 
 #include <Render/Vulkan/Debug/Debug.hpp>
@@ -57,7 +58,7 @@ namespace Sa::Vk
 
 	void Pipeline::Bind(const ARenderFrame& _frame) const
 	{
-		const Frame& vkFrame = _frame.As<Frame>();
+		const Frame& vkFrame = Cast<Frame>(_frame);
 
 		vkCmdBindPipeline(vkFrame.cmd, VK_PIPELINE_BIND_POINT_GRAPHICS, mHandle);
 	}
@@ -206,7 +207,7 @@ namespace Sa::Vk
 		pipelineCreateInfo.pColorBlendState = &renderPassAttInfos.colorBlendingInfo;
 		pipelineCreateInfo.pDynamicState = nullptr;
 		pipelineCreateInfo.layout = mPipelineLayout;
-		pipelineCreateInfo.renderPass = _desc.renderPass->As<RenderPass>();
+		pipelineCreateInfo.renderPass = CastRef<RenderPass>(_desc.renderPass);
 		pipelineCreateInfo.subpass = _desc.subPassIndex;
 		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 		pipelineCreateInfo.basePipelineIndex = -1;
@@ -257,7 +258,7 @@ namespace Sa::Vk
 			vkStage.pNext = nullptr;
 			vkStage.flags = 0u;
 			vkStage.stage = API_GetShaderStage(stage.stage);
-			vkStage.module = stage.shader->As<Shader>();
+			vkStage.module = CastRef<Shader>(stage.shader);
 			vkStage.pName = "main";
 			vkStage.pSpecializationInfo = &_specConstData.specInfo;
 		}

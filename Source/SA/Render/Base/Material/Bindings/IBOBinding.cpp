@@ -2,6 +2,7 @@
 
 #include <Render/Base/Material/Bindings/IBOBinding.hpp>
 
+#include <Core/Algorithms/Cast.hpp>
 #include <Core/Algorithms/SizeOf.hpp>
 
 #include <Render/Vulkan/Texture/VkTexture.hpp>
@@ -37,7 +38,7 @@ namespace Sa
 		std::vector<VkDescriptorImageInfo>& descs = _imageDescs.emplace_back();
 
 		for (auto it = IBOs.begin(); it != IBOs.end(); ++it)
-			descs.push_back((*it)->As<Vk::Texture>().CreateDescriptorImageInfo());
+			descs.push_back(CastRef<Vk::Texture>(*it).CreateDescriptorImageInfo());
 
 
 		VkWriteDescriptorSet descWrite{};

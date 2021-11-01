@@ -96,4 +96,10 @@ namespace Sa::Vk
 	{
 		return mDeviceMemory;
 	}
+
+
+	bool BufferBase::operator==(const BufferBase& _rhs) const noexcept
+	{
+		return mHandle == _rhs.mHandle;
+	}
 }

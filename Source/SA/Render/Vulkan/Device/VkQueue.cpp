@@ -2,6 +2,8 @@
 
 #include <Render/Vulkan/Device/VkQueue.hpp>
 
+#include <SA/Collections/Debug>
+
 #include <Render/Vulkan/Device/VkDevice.hpp>
 
 namespace Sa::Vk

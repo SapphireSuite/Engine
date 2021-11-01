@@ -5,6 +5,7 @@
 
 #include <Window/GLFW/GLFWWindow.hpp>
 
+#include <Core/Algorithms/Cast.hpp>
 #include <Core/Algorithms/Equals.hpp>
 
 namespace Sa::GLFW
@@ -58,7 +59,7 @@ namespace Sa::GLFW
 	void InputWindowContext::Create(AWindow* _win)
 	{
 		SA_ASSERT(Nullptr, SA/Input/GLFW, _win);
-		GLFW::Window& glfwWin = _win->As<Window>();
+		GLFW::Window& glfwWin = CastRef<Window>(_win);
 
 		GLFWwindow* const winHandle = glfwWin.GetHandle();
 		SA_ASSERT(Nullptr, SA/Input/GLFW, winHandle);

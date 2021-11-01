@@ -26,6 +26,8 @@ namespace Sa::Vk
 		void Destroy(const Device& _device);
 
 		void Draw(const ARenderFrame& _frame, const MeshDrawInfos& _infos = MeshDrawInfos()) const override final;
+
+		bool operator==(const StaticMesh& _rhs) const noexcept;
 	};
 }
 

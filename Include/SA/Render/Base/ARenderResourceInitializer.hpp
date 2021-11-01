@@ -5,12 +5,14 @@
 #ifndef SAPPHIRE_RENDER_ARENDER_RESOURCE_INITIALIZER_GUARD
 #define SAPPHIRE_RENDER_ARENDER_RESOURCE_INITIALIZER_GUARD
 
-#include <SA/Core/Types/Abstract.hpp>
-
 namespace Sa
 {
-	class ARenderResourceInitializer : public Abstract
+	class ARenderResourceInitializer
 	{
+	protected:
+		~ARenderResourceInitializer() = default;
+
+	public:
 	};
 }
 

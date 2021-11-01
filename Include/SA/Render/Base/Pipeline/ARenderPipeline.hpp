@@ -5,15 +5,13 @@
 #ifndef SAPPHIRE_RENDER_ARENDER_PIPELINE_GUARD
 #define SAPPHIRE_RENDER_ARENDER_PIPELINE_GUARD
 
-#include <SA/Render/Base/ARenderResource.hpp>
-
 #include <SA/Render/Base/Pipeline/RenderPipelineDescriptor.hpp>
 
 namespace Sa
 {
 	class ARenderFrame;
 
-	class ARenderPipeline : public ARenderResource
+	class ARenderPipeline
 	{
 	public:
 		virtual void Bind(const ARenderFrame& _frame) const = 0;

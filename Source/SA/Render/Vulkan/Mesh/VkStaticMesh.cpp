@@ -2,6 +2,7 @@
 
 #include <Render/Vulkan/Mesh/VkStaticMesh.hpp>
 
+#include <Core/Algorithms/Cast.hpp>
 #include <Core/Algorithms/SizeOf.hpp>
 
 #include <Render/Vulkan/VkFrame.hpp>
@@ -46,7 +47,7 @@ namespace Sa::Vk
 
 	void StaticMesh::Draw(const ARenderFrame& _frame, const MeshDrawInfos& _infos) const
 	{
-		const Frame& vkFrame = _frame.As<Frame>();
+		const Frame& vkFrame = Cast<Frame>(_frame);
 
 		VkDeviceSize offsets[] = { 0 };
 		VkBuffer vkVertBuff = mVertexBuffer;
@@ -56,5 +57,11 @@ namespace Sa::Vk
 		vkCmdBindIndexBuffer(vkFrame.cmd, mIndexBuffer, 0, VK_INDEX_TYPE_UINT32);
 
 		vkCmdDrawIndexed(vkFrame.cmd, mIndicesSize, _infos.instanceNum, 0, 0, 0);
+	}
+
+
+	bool StaticMesh::operator==(const StaticMesh& _rhs) const noexcept
+	{
+		return mVertexBuffer == _rhs.mVertexBuffer && mIndexBuffer == _rhs.mIndexBuffer;
 	}
 }

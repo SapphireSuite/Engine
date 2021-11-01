@@ -25,6 +25,8 @@ namespace Sa::Vk
 		virtual void Destroy(const Device& _device);
 
 		VkDescriptorImageInfo CreateDescriptorImageInfo() const noexcept;
+
+		bool operator==(const Texture& _rhs) const noexcept;
 	};
 }
 

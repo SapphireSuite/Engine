@@ -5,6 +5,8 @@
 #ifndef SAPPHIRE_RENDER_UBO_BINDING_GUARD
 #define SAPPHIRE_RENDER_UBO_BINDING_GUARD
 
+#include <vector>
+
 #include <SA/Render/Base/Material/Bindings/ARenderMaterialBinding.hpp>
 
 namespace Sa

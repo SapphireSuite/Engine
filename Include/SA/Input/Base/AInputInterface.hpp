@@ -7,15 +7,13 @@
 
 #include <vector>
 
-#include <SA/Core/Types/Abstract.hpp>
-
 #include <SA/Input/Base/AInputWindowContext.hpp>
 
 namespace Sa
 {
 	class AWindow;
 
-	class AInputInterface : public Abstract
+	class AInputInterface
 	{
 		std::unordered_map<const AWindow*, AInputWindowContext*> mWindowContextMap;
 

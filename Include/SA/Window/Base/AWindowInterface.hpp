@@ -5,14 +5,14 @@
 #ifndef SAPPHIRE_WINDOW_AWINDOW_INTERFACE_GUARD
 #define SAPPHIRE_WINDOW_AWINDOW_INTERFACE_GUARD
 
-#include <SA/Core/Types/Abstract.hpp>
+#include <vector>
 
 namespace Sa
 {
 	class AWindow;
 	struct WindowCreateInfos;
 
-	class AWindowInterface : public Abstract
+	class AWindowInterface
 	{
 	public:
 		virtual void Create() = 0;

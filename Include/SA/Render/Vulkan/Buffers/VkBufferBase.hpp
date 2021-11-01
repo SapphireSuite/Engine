@@ -40,6 +40,8 @@ namespace Sa::Vk
 
 		operator VkBuffer() const noexcept;
 		operator VkDeviceMemory() const noexcept;
+
+		bool operator==(const BufferBase& _rhs) const noexcept;
 	};
 }
 

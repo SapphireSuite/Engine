@@ -5,14 +5,15 @@
 #ifndef SAPPHIRE_RENDER_ARENDER_SURFACE_GUARD
 #define SAPPHIRE_RENDER_ARENDER_SURFACE_GUARD
 
-#include <SA/Core/Types/Abstract.hpp>
-
 #include <SA/Render/Base/Misc/Format.hpp>
 
 namespace Sa
 {
-	class ARenderSurface : public Abstract
+	class ARenderSurface
 	{
+	protected:
+		~ARenderSurface() = default;
+
 	public:
 		virtual Format GetFormat() const = 0;
 	};

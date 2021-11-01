@@ -2,6 +2,8 @@
 
 #include <Render/Vulkan/Device/VkQueueMgr.hpp>
 
+#include <Collections/Debug>
+
 namespace Sa::Vk
 {
 	const QueueFamilyMgr& QueueMgr::GetQueueFamilyMgrFromType(QueueFamily _family) const

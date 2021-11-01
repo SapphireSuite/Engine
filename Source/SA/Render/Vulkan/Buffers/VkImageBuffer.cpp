@@ -184,4 +184,12 @@ namespace Sa::Vk
 	{
 		return mImageMemory;
 	}
+
+
+	bool ImageBuffer::operator==(const ImageBuffer& _rhs) const noexcept
+	{
+		return mImage == _rhs.mImage &&
+			mImageView == _rhs.mImageView &&
+			mImageMemory == _rhs.mImageMemory;
+	}
 }

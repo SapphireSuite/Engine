@@ -2,6 +2,7 @@
 
 #include <Render/Vulkan/Device/VkDevice.hpp>
 
+#include <Core/Algorithms/Cast.hpp>
 #include <Core/Algorithms/SizeOf.hpp>
 
 #include <Render/Vulkan/Debug/VkValidationLayers.hpp>
@@ -103,7 +104,7 @@ namespace Sa::Vk
 
 	void Device::Create(const AGraphicDeviceInfos& _infos)
 	{
-		const GraphicDeviceInfos& vkInfos = _infos.As<GraphicDeviceInfos>();
+		const GraphicDeviceInfos& vkInfos = Cast<GraphicDeviceInfos>(_infos);
 
 		VkPhysicalDeviceFeatures physicalDeviceFeatures{}; // Need braces to ensure C-struct correct initialization.
 		//physicalDeviceFeatures.logicOp = VK_TRUE;

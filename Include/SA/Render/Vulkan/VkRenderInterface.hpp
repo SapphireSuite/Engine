@@ -25,8 +25,8 @@ namespace Sa::Vk
 
 #if SA_WINDOW
 
-		//AWindowSurface* CreateWindowSurface(AWindow* _win) override final;
-		//void DestroyWindowSurface(AWindow* _win, AWindowSurface* _winSurface) override final;
+		AWindowSurface* CreateWindowSurface(AWindow* _win) override final;
+		void DestroyWindowSurface(AWindow* _win, AWindowSurface* _winSurface) override final;
 
 #endif
 

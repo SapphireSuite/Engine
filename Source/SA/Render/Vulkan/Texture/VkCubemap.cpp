@@ -111,4 +111,10 @@ namespace Sa::Vk
 
 		return writeDesc;
 	}
+
+
+	bool Cubemap::operator==(const Cubemap& _rhs) const noexcept
+	{
+		return Texture::operator==(_rhs) && mIrradianceBuffer == _rhs.mIrradianceBuffer;
+	}
 }

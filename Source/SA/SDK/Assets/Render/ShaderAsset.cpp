@@ -2,6 +2,8 @@
 
 #include <SDK/Assets/Render/ShaderAsset.hpp>
 
+#include <Collections/Debug>
+
 #include <Core/Algorithms/SizeOf.hpp>
 #include <Core/Serialize/Serializer.hpp>
 

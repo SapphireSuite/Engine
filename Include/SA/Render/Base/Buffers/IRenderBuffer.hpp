@@ -5,11 +5,9 @@
 #ifndef SAPPHIRE_RENDER_IRENDER_BUFFER_GUARD
 #define SAPPHIRE_RENDER_IRENDER_BUFFER_GUARD
 
-#include <SA/Core/Types/Abstract.hpp>
-
 namespace Sa
 {
-	class IRenderBuffer : public Abstract
+	class IRenderBuffer
 	{
 	};
 }

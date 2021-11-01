@@ -4,6 +4,8 @@
 
 #include <filesystem>
 
+#include <Collections/Debug>
+
 #include <Core/Algorithms/ReadFile.hpp>
 #include <Core/Serialize/Serializer.hpp>
 

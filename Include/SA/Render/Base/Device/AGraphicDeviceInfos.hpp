@@ -7,11 +7,11 @@
 
 #include <string>
 
-#include <SA/Core/Types/Abstract.hpp>
+#include <SA/Core/Types/Int.hpp>
 
 namespace Sa
 {
-	struct AGraphicDeviceInfos : public Abstract
+	struct AGraphicDeviceInfos
 	{
 		uint32 ID = uint32(-1);
 		

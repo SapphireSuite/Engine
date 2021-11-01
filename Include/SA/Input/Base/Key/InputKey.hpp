@@ -9,14 +9,14 @@
 
 #include <SA/Config.hpp>
 
-#include <SA/Input/Base/InputBase.hpp>
+#include <SA/Input/Base/AInputBase.hpp>
 
 #include <SA/Input/Base/Key/Key.hpp>
 #include <SA/Input/Base/Key/KeyState.hpp>
 
 namespace Sa
 {
-	struct InputKey : public InputBase
+	struct InputKey : public AInputBase
 	{
 		Key key = Key::Esc;
 		KeyState state = KeyState::Pressed;

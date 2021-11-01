@@ -5,14 +5,14 @@
 #ifndef SAPPHIRE_RENDER_ASHADER_GUARD
 #define SAPPHIRE_RENDER_ASHADER_GUARD
 
-#include <SA/Render/Base/ARenderResource.hpp>
-
 #include <SA/Render/Base/Shader/RawShader.hpp>
 
 namespace Sa
 {
-	class AShader : public ARenderResource
+	class AShader
 	{
+	protected:
+		~AShader() = default;
 	};
 }
 

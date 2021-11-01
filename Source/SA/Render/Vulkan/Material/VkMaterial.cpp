@@ -9,14 +9,14 @@ namespace Sa::Vk
 {
 	void Material::Create(const Device& _device, const RenderMaterialCreateInfos& _infos)
 	{
-		const Pipeline& vkPipeline = _infos.pipeline->As<Pipeline>();
+		//const Pipeline& vkPipeline = _infos.pipeline->As<Pipeline>();
 
-		SA_ASSERT(Nullptr, SA/Render/Vulkan, _infos.desc, L"Create render material witn nullptr pipeline descriptor.");
+		//SA_ASSERT(Nullptr, SA/Render/Vulkan, _infos.desc, L"Create render material witn nullptr pipeline descriptor.");
 
-		mDescSet.Create(_device, _infos.desc->shaderInfos.userBindingSet, vkPipeline.GetMainDescriptorSetLayout());
+		//mDescSet.Create(_device, _infos.desc->shaderInfos.userBindingSet, vkPipeline.GetMainDescriptorSetLayout());
 
-		if(!_infos.bindings.empty())
-			mDescSet.Update(_device, _infos.bindings);
+		//if(!_infos.bindings.empty())
+		//	mDescSet.Update(_device, _infos.bindings);
 		
 		SA_LOG(L"Render Material created.", Infos, SA/Render/Vulkan);
 	}

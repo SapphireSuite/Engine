@@ -2,6 +2,8 @@
 
 #include <Render/Vulkan/VkResourceInitializer.hpp>
 
+#include <Collections/Debug>
+
 #include <Render/Vulkan/Device/VkDevice.hpp>
 
 namespace Sa::Vk
@@ -54,5 +56,11 @@ namespace Sa::Vk
 
 		// Ready for new submit.
 		cmd.Begin();
+	}
+
+
+	bool ResourceInitializer::operator==(const ResourceInitializer& _rhs) const noexcept
+	{
+		return mCmdPool == _rhs.mCmdPool && cmd == _rhs.cmd;
 	}
 }

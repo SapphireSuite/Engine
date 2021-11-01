@@ -27,6 +27,8 @@ namespace Sa::Vk
 		void Destroy(const Device& _device);
 
 		void Submit(const Device& _device);
+
+		bool operator==(const ResourceInitializer& _rhs) const noexcept;
 	};
 }
 

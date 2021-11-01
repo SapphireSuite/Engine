@@ -5,11 +5,9 @@
 #ifndef SAPPHIRE_RENDER_ARENDER_FRAME_GUARD
 #define SAPPHIRE_RENDER_ARENDER_FRAME_GUARD
 
-#include <SA/Core/Types/Abstract.hpp>
-
 namespace Sa
 {
-	class ARenderFrame : public Abstract
+	class ARenderFrame
 	{
 	};
 }

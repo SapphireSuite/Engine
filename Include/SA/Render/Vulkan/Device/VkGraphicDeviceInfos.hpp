@@ -5,6 +5,8 @@
 #ifndef SAPPHIRE_RENDER_VK_GRAPHIC_DEVICE_INFOS_GUARD
 #define SAPPHIRE_RENDER_VK_GRAPHIC_DEVICE_INFOS_GUARD
 
+#include <vector>
+
 #include <SA/Render/Base/Device/AGraphicDeviceInfos.hpp>
 
 #include <SA/Core/Support/API/Vulkan.hpp>

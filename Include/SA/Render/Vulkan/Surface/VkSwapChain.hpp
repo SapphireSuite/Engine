@@ -47,6 +47,8 @@ namespace Sa::Vk
 
 	public:
 		Format GetFormat() const;
+		bool FrameBuffersValid() const noexcept;
+
 
 		void Create(const Device& _device, const Surface& _surface);
 		void Destroy(const Device& _device);

@@ -60,6 +60,8 @@ namespace Sa::Vk
 		operator VkImage() const noexcept;
 		operator VkImageView() const noexcept;
 		operator VkDeviceMemory() const noexcept;
+
+		bool operator==(const ImageBuffer& _rhs) const noexcept;
 	};
 }
 

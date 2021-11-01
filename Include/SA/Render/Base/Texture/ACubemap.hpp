@@ -5,15 +5,14 @@
 #ifndef SAPPHIRE_RENDER_ACUBEMAP_GUARD
 #define SAPPHIRE_RENDER_ACUBEMAP_GUARD
 
-#include <SA/Render/Base/ARenderResource.hpp>
-
 #include <SA/Render/Base/Texture/RawCubemap.hpp>
 
 namespace Sa
 {
-	class ACubemap : public ARenderResource
+	class ACubemap
 	{
-	public:
+	protected:
+		~ACubemap() = default;
 	};
 }
 

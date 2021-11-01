@@ -100,4 +100,9 @@ namespace Sa::Vk
 
 		return descImage;
 	}
+
+	bool Texture::operator==(const Texture& _rhs) const noexcept
+	{
+		return mBuffer == _rhs.mBuffer && mSampler == _rhs.mSampler;
+	}
 }

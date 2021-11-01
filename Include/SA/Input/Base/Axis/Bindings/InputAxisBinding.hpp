@@ -5,11 +5,11 @@
 #ifndef SAPPHIRE_INPUT_INPUT_AXIS_BINDING_GUARD
 #define SAPPHIRE_INPUT_INPUT_AXIS_BINDING_GUARD
 
-#include <SA/Input/Base/Bindings/InputBindingBase.hpp>
+#include <SA/Input/Base/Bindings/AInputBindingBase.hpp>
 
 namespace Sa
 {
-	class InputAxisBinding : public InputBindingBase
+	class InputAxisBinding : public AInputBindingBase
 	{
 	public:
 		virtual bool Execute(float _value) = 0;

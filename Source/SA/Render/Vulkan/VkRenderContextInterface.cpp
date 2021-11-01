@@ -1,81 +1,122 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
 #include <Render/Vulkan/VkRenderContextInterface.hpp>
+#include <Render/Vulkan/VkRenderGraphicInterface.hpp>
+
+#include <Core/Algorithms/Cast.hpp>
 
 #include <Render/Vulkan/Debug/Debug.hpp>
 
 #include <Render/Vulkan/Surface/VkWindowSurface.hpp>
-#include <Render/Vulkan/Surface/VkSurface.hpp>
-#include <Render/Vulkan/Pass/VkRenderPass.hpp>
-#include <Render/Vulkan/Pipeline/VkPipeline.hpp>
-#include <Render/Vulkan/VkResourceInitializer.hpp>
-#include <Render/Vulkan/Shader/VkShader.hpp>
-#include <Render/Vulkan/Mesh/VkStaticMesh.hpp>
-#include <Render/Vulkan/Texture/VkTexture.hpp>
-#include <Render/Vulkan/Texture/VkCubemap.hpp>
-#include <Render/Vulkan/Material/VkMaterial.hpp>
-#include <Render/Vulkan/Camera/VkCamera.hpp>
+//#include <Render/Vulkan/Pipeline/VkPipeline.hpp>
+
+//#include <Render/Vulkan/Mesh/VkStaticMesh.hpp>
+//#include <Render/Vulkan/Texture/VkTexture.hpp>
+//#include <Render/Vulkan/Texture/VkCubemap.hpp>
+//#include <Render/Vulkan/Material/VkMaterial.hpp>
+//#include <Render/Vulkan/Camera/VkCamera.hpp>
 
 namespace Sa::Vk
 {
-	void RenderContextInterface::Create()
+	void RenderContextInterface::Create(const RenderGraphicInterface* _graphics)
 	{
+		SA_ASSERT(Nullptr, SA/Render/Vulkan, _graphics);
+
+		mGraphics = _graphics;
+
 		SA_LOG(L"Render Context Interface created.", Infos, SA/Render/Vulkan);
 	}
 
 	void RenderContextInterface::Destroy()
 	{
+		// Destroy in reversed order.
+		{
+			while (!mCubemaps.empty())
+				DestroyCubemap(&mCubemaps.front());
+
+			while (!mTextures.empty())
+				DestroyTexture(&mTextures.front());
+
+			while (!mStaticMeshes.empty())
+				DestroyStaticMesh(&mStaticMeshes.front());
+
+			while (!mShaders.empty())
+				DestroyShader(&mShaders.front());
+
+			while (!mResInits.empty())
+				DestroyResourceInitializer(&mResInits.front());
+
+			while (!mRenderPasses.empty())
+				DestroyRenderPass(&mRenderPasses.front());
+
+			while (!mSurfaces.empty())
+				DestroySurface(&mSurfaces.front());
+		}
+
+		mGraphics = nullptr;
+
 		SA_LOG(L"Render Context  Interface destroyed.", Infos, SA/Render/Vulkan);
 	}
 
+
+	const Device& RenderContextInterface::GetDevice() const
+	{
+		SA_ASSERT(Nullptr, SA/Render/Vulkan, mGraphics);
+
+		return mGraphics->device;
+	}
+
 	
-	//ARenderSurface* RenderContextInterface::CreateSurface(AWindowSurface* _winSurface)
-	//{
-	//	Surface* const surface = new Surface();
+	ARenderSurface* RenderContextInterface::CreateSurface(AWindowSurface* _winSurface)
+	{
+		Surface& surface = mSurfaces.emplace_front();
 
-	//	surface->Create(mDevice, _winSurface->As<WindowSurface>());
+		surface.Create(GetDevice(), CastRef<WindowSurface>(_winSurface));
 
-	//	return surface;
-	//}
+		return &surface;
+	}
 
-	//void RenderContextInterface::DestroySurface(ARenderSurface* _surface)
-	//{
-	//	Surface* const vkSurface = _surface->AsPtr<Surface>();
+	void RenderContextInterface::DestroySurface(ARenderSurface* _surface)
+	{
+		Surface& vkSurface = CastRef<Surface>(_surface);
 
-	//	vkSurface->Destroy(mDevice);
+		if (vkSurface.FrameBuffersValid())
+			DestroyFrameBuffers(_surface);
 
-	//	delete vkSurface;
-	//}
+		vkSurface.Destroy(GetDevice());
 
-
-	//ARenderPass* RenderContextInterface::CreateRenderPass(const RenderPassDescriptor& _descriptor)
-	//{
-	//	RenderPass* const pass = new RenderPass();
-
-	//	pass->Create(mDevice, _descriptor);
-
-	//	return pass;
-	//}
-	//
-	//void RenderContextInterface::DestroyRenderPass(ARenderPass* _pass)
-	//{
-	//	RenderPass* const vkPass = _pass->AsPtr<RenderPass>();
-
-	//	vkPass->Destroy(mDevice);
-
-	//	delete vkPass;
-	//}
+		mSurfaces.remove(vkSurface);
+	}
 
 
-	//void RenderContextInterface::CreateFrameBuffers(ARenderSurface* _surface, ARenderPass* _pass, const RenderPassDescriptor& _descriptor)
-	//{
-	//	_surface->As<Surface>().CreateFrameBuffers(mDevice, _pass->As<RenderPass>(), _descriptor);
-	//}
+	ARenderPass* RenderContextInterface::CreateRenderPass(const RenderPassDescriptor& _descriptor)
+	{
+		RenderPass& pass = mRenderPasses.emplace_front();
 
-	//void RenderContextInterface::DestroyFrameBuffers(ARenderSurface* _surface)
-	//{
-	//	_surface->As<Surface>().DestroyFrameBuffers(mDevice);
-	//}
+		pass.Create(GetDevice(), _descriptor);
+
+		return &pass;
+	}
+	
+	void RenderContextInterface::DestroyRenderPass(ARenderPass* _pass)
+	{
+		RenderPass& vkPass = CastRef<RenderPass>(_pass);
+
+		vkPass.Destroy(GetDevice());
+
+		mRenderPasses.remove(vkPass);
+	}
+
+
+	void RenderContextInterface::CreateFrameBuffers(ARenderSurface* _surface, ARenderPass* _pass, const RenderPassDescriptor& _descriptor)
+	{
+		CastRef<Surface>(_surface).CreateFrameBuffers(GetDevice(), CastRef<RenderPass>(_pass), _descriptor);
+	}
+
+	void RenderContextInterface::DestroyFrameBuffers(ARenderSurface* _surface)
+	{
+		CastRef<Surface>(_surface).DestroyFrameBuffers(GetDevice());
+	}
 
 
 	//ARenderPipeline* RenderContextInterface::CreatePipeline(const RenderPipelineDescriptor& _desc)
@@ -99,106 +140,114 @@ namespace Sa::Vk
 
 //{ Resources
 
-	//ARenderResourceInitializer* RenderContextInterface::CreateResourceInitializer()
-	//{
-	//	ResourceInitializer* const init = new ResourceInitializer();
+	ARenderResourceInitializer* RenderContextInterface::CreateResourceInitializer()
+	{
+		ResourceInitializer& init = mResInits.emplace_front();
 
-	//	init->Create(mDevice);
+		init.Create(GetDevice());
 
-	//	return init;
-	//}
+		return &init;
+	}
 
-	//void RenderContextInterface::DestroyResourceInitializer(ARenderResourceInitializer* _init)
-	//{
-	//	ResourceInitializer* const vkInit = _init->AsPtr<ResourceInitializer>();
+	void RenderContextInterface::DestroyResourceInitializer(ARenderResourceInitializer* _init)
+	{
+		ResourceInitializer& vkInit = CastRef<ResourceInitializer>(_init);
 
-	//	vkInit->Destroy(mDevice);
+		vkInit.Destroy(GetDevice());
 
-	//	delete vkInit;
-	//}
+		mResInits.remove(vkInit);
+	}
 
-	//void RenderContextInterface::SubmitResourceInitializer(ARenderResourceInitializer* _init)
-	//{
-	//	SA_ASSERT(Nullptr, SA/Render/Vulkan, _init);
+	void RenderContextInterface::SubmitResourceInitializer(ARenderResourceInitializer* _init)
+	{
+		ResourceInitializer& vkInit = CastRef<ResourceInitializer>(_init);
 
-	//	_init->As<ResourceInitializer>().Submit(mDevice);
-	//}
+		vkInit.Submit(GetDevice());
+	}
 
 
-	//AShader* RenderContextInterface::CreateShader(ARenderResourceInitializer* _init, const RawShader& _raw)
-	//{
-	//	Shader* const shader = new Shader();
+	AShader* RenderContextInterface::CreateShader(ARenderResourceInitializer* _init, const RawShader& _raw)
+	{
+		Shader& shader = mShaders.emplace_front();
 
-	//	shader->Create(mDevice, _init->As<ResourceInitializer>(), _raw);
+		ResourceInitializer& vkInit = CastRef<ResourceInitializer>(_init);
 
-	//	return shader;
-	//}
+		shader.Create(GetDevice(), vkInit, _raw);
 
-	//void RenderContextInterface::DestroyShader(AShader* _shader)
-	//{
-	//	Shader* const vkShader = _shader->AsPtr<Shader>();
+		return &shader;
+	}
 
-	//	vkShader->Destroy(mDevice);
+	void RenderContextInterface::DestroyShader(AShader* _shader)
+	{
+		Shader& vkShader = CastRef<Shader>(_shader);
 
-	//	delete vkShader;
-	//}
+		vkShader.Destroy(GetDevice());
 
-	//
-	//AStaticMesh* RenderContextInterface::CreateStaticMesh(ARenderResourceInitializer* _init, const RawMesh& _raw)
-	//{
-	//	StaticMesh* const mesh = new StaticMesh();
+		mShaders.remove(vkShader);
+	}
 
-	//	mesh->Create(mDevice, _init->As<ResourceInitializer>(), _raw);
 
-	//	return mesh;
-	//}
-	//
-	//void RenderContextInterface::DestroyStaticMesh(AStaticMesh* _mesh)
-	//{
-	//	StaticMesh* const vkMesh = _mesh->AsPtr<StaticMesh>();
+	AStaticMesh* RenderContextInterface::CreateStaticMesh(ARenderResourceInitializer* _init, const RawMesh& _raw)
+	{
+		StaticMesh& mesh = mStaticMeshes.emplace_front();
 
-	//	vkMesh->Destroy(mDevice);
+		ResourceInitializer& vkInit = CastRef<ResourceInitializer>(_init);
 
-	//	delete vkMesh;
-	//}
+		mesh.Create(GetDevice(), vkInit, _raw);
 
-	//
-	//ATexture* RenderContextInterface::CreateTexture(ARenderResourceInitializer* _init, const RawTexture& _raw)
-	//{
-	//	Texture* const texture = new Texture();
+		return &mesh;
+	}
+	
+	void RenderContextInterface::DestroyStaticMesh(AStaticMesh* _mesh)
+	{
+		StaticMesh& vkMesh = CastRef<StaticMesh>(_mesh);
 
-	//	texture->Create(mDevice, _init->As<ResourceInitializer>(), _raw);
+		vkMesh.Destroy(GetDevice());
 
-	//	return texture;
-	//}
-	//
-	//void RenderContextInterface::DestroyTexture(ATexture* _texture)
-	//{
-	//	Texture* const vkTexture = _texture->AsPtr<Texture>();
+		mStaticMeshes.remove(vkMesh);
+	}
 
-	//	vkTexture->Destroy(mDevice);
 
-	//	delete vkTexture;
-	//}
+	ATexture* RenderContextInterface::CreateTexture(ARenderResourceInitializer* _init, const RawTexture& _raw)
+	{
+		Texture& texture = mTextures.emplace_front();
 
-	//
-	//ACubemap* RenderContextInterface::CreateCubemap(ARenderResourceInitializer* _init, const RawCubemap& _raw)
-	//{
-	//	Cubemap* const cubemap = new Cubemap();
+		ResourceInitializer& vkInit = CastRef<ResourceInitializer>(_init);
 
-	//	cubemap->Create(mDevice, _init->As<ResourceInitializer>(), _raw);
+		texture.Create(GetDevice(), vkInit, _raw);
 
-	//	return cubemap;
-	//}
-	//
-	//void RenderContextInterface::DestroyCubemap(ACubemap* _cubemap)
-	//{
-	//	Cubemap* const vkCubemap = _cubemap->AsPtr<Cubemap>();
+		return &texture;
+	}
+	
+	void RenderContextInterface::DestroyTexture(ATexture* _texture)
+	{
+		Texture& vkTexture = CastRef<Texture>(_texture);
 
-	//	vkCubemap->Destroy(mDevice);
+		vkTexture.Destroy(GetDevice());
 
-	//	delete vkCubemap;
-	//}
+		mTextures.remove(vkTexture);
+	}
+
+	
+	ACubemap* RenderContextInterface::CreateCubemap(ARenderResourceInitializer* _init, const RawCubemap& _raw)
+	{
+		Cubemap& cubemap = mCubemaps.emplace_front();
+		
+		ResourceInitializer& vkInit = CastRef<ResourceInitializer>(_init);
+
+		cubemap.Create(GetDevice(), vkInit, _raw);
+
+		return &cubemap;
+	}
+	
+	void RenderContextInterface::DestroyCubemap(ACubemap* _cubemap)
+	{
+		Cubemap& vkCubemap = CastRef<Cubemap>(_cubemap);
+
+		vkCubemap.Destroy(GetDevice());
+
+		mCubemaps.remove(vkCubemap);
+	}
 
 	//
 	//ARenderMaterial* RenderContextInterface::CreateMaterial(const RenderMaterialCreateInfos& _infos)

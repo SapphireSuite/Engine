@@ -5,15 +5,13 @@
 #ifndef SAPPHIRE_INPUT_IINPUT_WINDOW_CONTEXT_GUARD
 #define SAPPHIRE_INPUT_IINPUT_WINDOW_CONTEXT_GUARD
 
-#include <SA/Core/Types/Abstract.hpp>
-
 #include <SA/Input/Base/InputContext.hpp>
 
 namespace Sa
 {
 	class AWindow;
 
-	class AInputWindowContext : public Abstract
+	class AInputWindowContext
 	{
 		std::vector<InputContext*> mContexts;
 
