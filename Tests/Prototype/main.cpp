@@ -381,8 +381,6 @@ int main()
 	{
 		// Render
 		{
-			//device->WaitIdle();
-
 			/*
 			camUBO.Destroy(device);
 			modelUBO.Destroy(device);

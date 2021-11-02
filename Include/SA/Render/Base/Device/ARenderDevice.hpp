@@ -15,7 +15,7 @@ namespace Sa
 		virtual void Create(const AGraphicDeviceInfos& _infos) = 0;
 		virtual void Destroy() = 0;
 
-		virtual void WaitIdle() = 0;
+		virtual void WaitIdle() const = 0;
 	};
 }
 

@@ -163,7 +163,7 @@ namespace Sa::Vk
 		SA_LOG(L"Render Device destroyed.", Infos, SA/Render/Vulkan);
 	}
 
-	void Device::WaitIdle()
+	void Device::WaitIdle() const
 	{
 		vkDeviceWaitIdle(mLogicalDevice);
 	}

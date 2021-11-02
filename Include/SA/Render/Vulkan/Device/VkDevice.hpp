@@ -31,7 +31,7 @@ namespace Sa::Vk
 		void Create(const AGraphicDeviceInfos& _infos) override final;
 		void Destroy() override final;
 
-		void WaitIdle() override final;
+		void WaitIdle() const override final;
 
 
 		static std::vector<GraphicDeviceInfos> QuerySuitableDevices(const Instance& _inst,
