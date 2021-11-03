@@ -35,7 +35,7 @@ namespace Sa::Vk
 
 //{ Allocs
 
-	void BufferHeap::Free(const Device& _device, uint64 _ID)
+	void BufferHeap::Free(uint64 _ID)
 	{
 		MetaData* meta = reinterpret_cast<MetaData*>(_ID);
 
@@ -52,7 +52,7 @@ namespace Sa::Vk
 
 	BufferHeap::MetaData* BufferHeap::Realloc(const Device& _device, uint64 _newCapacity)
 	{
-		const uint32 prevSize = mDeviceSize;
+		const uint64 prevSize = mDeviceSize;
 
 		ReallocBuffer(_device, _newCapacity);
 		
@@ -117,7 +117,7 @@ namespace Sa::Vk
 
 		// Split block.
 		{
-			const uint32 splitSize = meta->size - _size;
+			const uint64 splitSize = meta->size - _size;
 
 			if (splitSize > SA_VK_DEVICE_HEAP_MIN_BLOCK_SIZE)
 			{

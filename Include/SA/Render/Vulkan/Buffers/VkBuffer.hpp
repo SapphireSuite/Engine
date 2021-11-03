@@ -22,6 +22,17 @@ namespace Sa::Vk
 		uint64 mDeviceSize = 0u;
 
 	public:
+		class Deleter
+		{
+			const Device& mDevice;
+
+		public:
+			Deleter(const Device& _device) noexcept;
+
+			void operator()(Buffer& _buffer) const;
+		};
+
+
 		bool IsValid() const noexcept;
 
 		virtual void Create(const Device& _device,
@@ -31,6 +42,7 @@ namespace Sa::Vk
 
 
 		VkDescriptorBufferInfo CreateDescriptorBufferInfo() const noexcept;
+
 
 		static uint32 FindMemoryType(const Device& _device, uint32 _typeFilter, VkMemoryPropertyFlags _properties);
 

@@ -9,6 +9,8 @@
 
 namespace Sa::Vk
 {
+	class ResourceInitializer;
+
 	class CGPUBuffer : public Buffer
 	{
 		using Buffer::Create;
@@ -20,6 +22,8 @@ namespace Sa::Vk
 			const void* _data = nullptr);
 
 		void UpdateData(const Device& _device, const void* _data, uint64 _size, uint64 _offset = 0u);
+
+		static CGPUBuffer& CreateStaging(const Device& _device, ResourceInitializer& _init, const void* _data, uint64 _size);
 	};
 }
 

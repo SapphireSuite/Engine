@@ -2,7 +2,7 @@
 
 #include <Render/Vulkan/Buffers/GPU/VkGPUBuffer.hpp>
 
-#include <Render/Vulkan/VkResourceInitializer.hpp>
+#include <Render/Vulkan/Buffers/GPU/VkGPUBufferLibrary.hpp>
 
 namespace Sa::Vk
 {
@@ -27,22 +27,6 @@ namespace Sa::Vk
 
 	void GPUBuffer::UpdateData(const Device& _device, ResourceInitializer& _init, const void* _data, uint64 _size, uint64 _offset)
 	{
-		// TODO: implement
-
-		//// Create temp staging buffer. Hold buffer until command is submitted and executed.
-		//Buffer& stagingBuffer = Buffer::CreateStaging(_device, _init, _data, _size);
-
-
-		//// Add copy command.
-		//VkBufferCopy copyRegion{};
-		//copyRegion.srcOffset = 0u;
-		//copyRegion.dstOffset = _offset;
-		//copyRegion.size = _size;
-
-		//vkCmdCopyBuffer(_init.cmd, stagingBuffer, mHandle, 1, &copyRegion);
-
-
-		// Destroy will be called by ResourceHolder.
-		//stagingBuffer.Destroy(_device);
+		GPUBufferLibrary::CopyData(_device, *this, _init, _data, _size, _offset);
 	}
 }

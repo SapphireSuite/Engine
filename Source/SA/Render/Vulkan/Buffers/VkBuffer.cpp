@@ -7,6 +7,19 @@
 
 namespace Sa::Vk
 {
+//{ Deleter
+
+	Buffer::Deleter::Deleter(const Device& _device) noexcept : mDevice{ _device }
+	{
+	}
+
+	void Buffer::Deleter::operator()(Buffer& _buffer) const
+	{
+		_buffer.Destroy(mDevice);
+	}
+
+//}
+
 	bool Buffer::IsValid() const noexcept
 	{
 		return mHandle != VK_NULL_HANDLE && mDeviceMemory != VK_NULL_HANDLE;

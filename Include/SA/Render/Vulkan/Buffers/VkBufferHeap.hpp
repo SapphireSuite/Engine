@@ -74,7 +74,7 @@ namespace Sa::Vk
 		void Destroy(const Device& _device) override;
 
 		//uint64 Allocate(const Device& _device, void* _data, uint64 _size);
-		void Free(const Device& _device, uint64 _ID);
+		void Free(uint64 _ID);
 	};
 }
 
