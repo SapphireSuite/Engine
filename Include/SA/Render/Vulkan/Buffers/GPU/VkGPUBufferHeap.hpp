@@ -20,7 +20,7 @@ namespace Sa::Vk
 			VkBufferUsageFlags _usage,
 			uint64 _size);
 
-		uint64 Allocate(const Device& _device, ResourceInitializer& _init, void* _data, uint64 _size);
+		const MetaData* Allocate(const Device& _device, ResourceInitializer& _init, const void* _data, uint64 _size);
 	};
 }
 

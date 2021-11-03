@@ -17,13 +17,13 @@ namespace Sa::Vk
 	}
 
 
-	uint64 GPUBufferHeap::Allocate(const Device& _device, ResourceInitializer& _init, void* _data, uint64 _size)
+	const GPUBufferHeap::MetaData* GPUBufferHeap::Allocate(const Device& _device, ResourceInitializer& _init, const void* _data, uint64 _size)
 	{
 		MetaData* const meta = AllocateMeta(_device, _size, &_init);
 
 		GPUBufferLibrary::CopyData(_device, _init , _data, *this, _size, meta->offset);
 
-		return reinterpret_cast<uint64>(meta);
+		return meta;
 	}
 
 	void GPUBufferHeap::ReallocBuffer(const Device& _device, uint64 _newCapacity, ResourceInitializer* _init)

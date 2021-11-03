@@ -17,13 +17,13 @@ namespace Sa::Vk
 	}
 
 
-	uint64 CGPUBufferHeap::Allocate(const Device& _device, void* _data, uint64 _size)
+	const BufferHeap::MetaData* CGPUBufferHeap::Allocate(const Device& _device, const void* _data, uint64 _size)
 	{
 		MetaData* const meta = AllocateMeta(_device, _size);
 
 		CGPUBufferLibrary::CopyData(_device, *this, _data, _size, meta->offset);
 
-		return reinterpret_cast<uint64>(meta);
+		return meta;
 	}
 
 	void CGPUBufferHeap::ReallocBuffer(const Device& _device, uint64 _newCapacity, ResourceInitializer* _init)

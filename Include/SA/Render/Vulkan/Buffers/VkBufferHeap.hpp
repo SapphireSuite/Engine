@@ -16,11 +16,11 @@ namespace Sa::Vk
 	class BufferHeap : public Buffer
 	{
 	protected:
-
 		VkBufferUsageFlags mUsage = 0;
 
 //{ Meta
 
+	public:
 		struct MetaData
 		{
 			uint64 size = uint64(-1);
@@ -34,6 +34,7 @@ namespace Sa::Vk
 			bool operator<(const MetaData& _rhs) const;
 		};
 
+	protected:
 		MetaData* mTail = nullptr;
 		std::list<MetaData*> mBlocks;
 
@@ -74,8 +75,7 @@ namespace Sa::Vk
 			VkMemoryPropertyFlags _properties) override;
 		void Destroy(const Device& _device) override;
 
-		//uint64 Allocate(const Device& _device, void* _data, uint64 _size);
-		void Free(uint64 _ID);
+		void Free(const MetaData* _meta);
 	};
 }
 

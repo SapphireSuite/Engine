@@ -36,16 +36,18 @@ namespace Sa::Vk
 
 //{ Allocs
 
-	void BufferHeap::Free(uint64 _ID)
+	void BufferHeap::Free(const MetaData* _meta)
 	{
-		MetaData* meta = reinterpret_cast<MetaData*>(_ID);
+		MetaData* meta = const_cast<MetaData*>(_meta);
 
 		meta->bFreeBlock = true;
 
 		bool bFusion = false;
 
 		bFusion |= FusionBlock(meta->prev, meta);
-		bFusion |= FusionBlock(meta, meta->next);
+
+		if(meta->next)
+			bFusion |= FusionBlock(meta, meta->next);
 
 		if (bFusion)
 			mBlocks.sort();

@@ -12,6 +12,7 @@
 namespace Sa::Vk
 {
 	class Device;
+	class CommandBuffer;
 
 	class Buffer
 	{
@@ -44,6 +45,8 @@ namespace Sa::Vk
 
 		VkDescriptorBufferInfo CreateDescriptorBufferInfo() const noexcept;
 
+		void BindAsVertexBuffer(CommandBuffer& _cmd) const;
+		void BindAsIndexBuffer(CommandBuffer& _cmd) const;
 
 		static uint32 FindMemoryType(const Device& _device, uint32 _typeFilter, VkMemoryPropertyFlags _properties);
 
@@ -52,6 +55,8 @@ namespace Sa::Vk
 
 		operator VkBuffer() const noexcept;
 		operator VkDeviceMemory() const noexcept;
+
+		bool operator==(const Buffer& _rhs) const noexcept;
 	};
 }
 

@@ -4,6 +4,7 @@
 
 #include <Render/Vulkan/Debug/Debug.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
+#include <Render/Vulkan/Buffers/VkCommandBuffer.hpp>
 
 namespace Sa::Vk
 {
@@ -91,6 +92,19 @@ namespace Sa::Vk
 	}
 
 
+	void Buffer::BindAsVertexBuffer(CommandBuffer& _cmd) const
+	{
+		VkDeviceSize offsets[] = { 0 };
+
+		vkCmdBindVertexBuffers(_cmd, 0, 1, &mHandle, offsets);
+	}
+
+	void Buffer::BindAsIndexBuffer(CommandBuffer& _cmd) const
+	{
+		vkCmdBindIndexBuffer(_cmd, mHandle, 0, VK_INDEX_TYPE_UINT32);
+	}
+
+
 	uint32 Buffer::FindMemoryType(const Device& _device, uint32 _typeFilter, VkMemoryPropertyFlags _properties)
 	{
 		const VkPhysicalDeviceMemoryProperties& memProperties = _device.GetMemoryProperties();
@@ -131,5 +145,11 @@ namespace Sa::Vk
 	Buffer::operator VkDeviceMemory() const noexcept
 	{
 		return mDeviceMemory;
+	}
+
+
+	bool Buffer::operator==(const Buffer& _rhs) const noexcept
+	{
+		return mHandle == _rhs.mHandle;
 	}
 }
