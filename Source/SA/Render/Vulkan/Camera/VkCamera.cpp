@@ -8,14 +8,14 @@ namespace Sa::Vk
 {
 	void Camera::Create(const Device& _device)
 	{
-		mCameraUBO.Create(_device, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, sizeof(CameraUBO), &mUBOData);
+		//mCameraUBO.Create(_device, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, sizeof(CameraUBO), &mUBOData);
 		
 		SA_LOG(L"Camera created.", Infos, SA/Render/Vulkan);
 	}
 
 	void Camera::Destroy(const Device& _device)
 	{
-		mCameraUBO.Destroy(_device);
+		//mCameraUBO.Destroy(_device);
 		
 		SA_LOG(L"Camera destroyed.", Infos, SA/Render/Vulkan);
 	}
@@ -29,23 +29,23 @@ namespace Sa::Vk
 
 	void Camera::UpdateUBO(const Device& _device)
 	{
-		if (bProjDirty)
-		{
-			if (bTransformDirty)
-			{
-				// Update whole buffer.
-				mCameraUBO.UpdateData(_device, &mUBOData, sizeof(CameraUBO));
-			}
-			else
-			{
-				// Update proj only.
-				mCameraUBO.UpdateData(_device, &mUBOData.proj, sizeof(CMat4f));
-			}
-		}
-		else if (bTransformDirty)
-		{
-			// Update transform only.
-			mCameraUBO.UpdateData(_device, &mUBOData.viewInv, sizeof(CMat4f) + sizeof(Vec3f), sizeof(CMat4f));
-		}
+		//if (bProjDirty)
+		//{
+		//	if (bTransformDirty)
+		//	{
+		//		// Update whole buffer.
+		//		mCameraUBO.UpdateData(_device, &mUBOData, sizeof(CameraUBO));
+		//	}
+		//	else
+		//	{
+		//		// Update proj only.
+		//		mCameraUBO.UpdateData(_device, &mUBOData.proj, sizeof(CMat4f));
+		//	}
+		//}
+		//else if (bTransformDirty)
+		//{
+		//	// Update transform only.
+		//	mCameraUBO.UpdateData(_device, &mUBOData.viewInv, sizeof(CMat4f) + sizeof(Vec3f), sizeof(CMat4f));
+		//}
 	}
 }
