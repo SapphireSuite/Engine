@@ -5,7 +5,6 @@
 #include <Render/Vulkan/Debug/Debug.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
 
-#include <Render/Vulkan/Buffers/CGPU/VkCGPUBuffer.hpp>
 #include <Render/Vulkan/Buffers/CGPU/VkCGPUBufferLibrary.hpp>
 
 namespace Sa::Vk
@@ -14,7 +13,7 @@ namespace Sa::Vk
 		VkBufferUsageFlags _usage,
 		uint64 _size)
 	{
-		BufferHeap::Create(_device, _size, _usage, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+		BufferHeap::Create(_device, _size, _usage, CGPUBufferLibrary::defaultProperties);
 	}
 
 
@@ -27,10 +26,12 @@ namespace Sa::Vk
 		return reinterpret_cast<uint64>(meta);
 	}
 
-	void CGPUBufferHeap::ReallocBuffer(const Device& _device, uint64 _newCapacity)
+	void CGPUBufferHeap::ReallocBuffer(const Device& _device, uint64 _newCapacity, ResourceInitializer* _init)
 	{
-		CGPUBuffer newBuffer;
-		newBuffer.Create(_device, mUsage, _newCapacity);
+		(void)_init;
+
+		Buffer newBuffer;
+		newBuffer.Create(_device, _newCapacity, mUsage, CGPUBufferLibrary::defaultProperties);
 
 
 		void* bufferData = nullptr;

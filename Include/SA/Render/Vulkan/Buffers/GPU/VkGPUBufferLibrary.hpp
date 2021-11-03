@@ -7,6 +7,8 @@
 
 #include <SA/Core/Types/Int.hpp>
 
+#include <SA/Core/Support/API/Vulkan.hpp>
+
 namespace Sa::Vk
 {
 	class Device;
@@ -18,7 +20,15 @@ namespace Sa::Vk
 	public:
 		~GPUBufferLibrary() = delete;
 
-		static void CopyData(const Device& _device, Buffer& _buffer, ResourceInitializer& _init, const void* _src, uint64 _size, uint64 _offset = 0u);
+		static constexpr VkMemoryPropertyFlags defaultProperties = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+
+		static void CopyData(ResourceInitializer& _init, const Buffer& _src, Buffer& _dst);
+		static void CopyData(const Device& _device,
+			ResourceInitializer& _init,
+			const void* _src,
+			Buffer& _dst,
+			uint64 _size,
+			uint64 _dstOffset = 0u);
 	};
 }
 

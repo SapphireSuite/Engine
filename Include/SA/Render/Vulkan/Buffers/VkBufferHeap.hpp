@@ -11,12 +11,13 @@
 
 namespace Sa::Vk
 {
+	class ResourceInitializer;
+
 	class BufferHeap : public Buffer
 	{
 	protected:
 
 		VkBufferUsageFlags mUsage = 0;
-		VkMemoryPropertyFlags mProperties = 0;
 
 //{ Meta
 
@@ -37,7 +38,7 @@ namespace Sa::Vk
 		std::list<MetaData*> mBlocks;
 
 		
-		MetaData* AllocateMeta(const Device& _device, uint64 _size);
+		MetaData* AllocateMeta(const Device& _device, uint64 _size, ResourceInitializer* _init = nullptr);
 
 
 		/**
@@ -63,9 +64,9 @@ namespace Sa::Vk
 
 //}
 
-		MetaData* Realloc(const Device& _device, uint64 _newCapacity);
+		MetaData* Realloc(const Device& _device, uint64 _newCapacity, ResourceInitializer* _init);
 
-		virtual void ReallocBuffer(const Device& _device, uint64 _newCapacity) = 0;
+		virtual void ReallocBuffer(const Device& _device, uint64 _newCapacity, ResourceInitializer* _init) = 0;
 
 	public:
 		void Create(const Device& _device,

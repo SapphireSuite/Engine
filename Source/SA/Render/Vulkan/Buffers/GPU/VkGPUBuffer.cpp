@@ -10,7 +10,7 @@ namespace Sa::Vk
 		VkBufferUsageFlags _usage,
 		uint64 _size)
 	{
-		Buffer::Create(_device, _size, VK_BUFFER_USAGE_TRANSFER_DST_BIT | _usage, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+		Buffer::Create(_device, _size, VK_BUFFER_USAGE_TRANSFER_DST_BIT | _usage, GPUBufferLibrary::defaultProperties);
 	}
 
 	void GPUBuffer::Create(const Device& _device,
@@ -27,6 +27,6 @@ namespace Sa::Vk
 
 	void GPUBuffer::UpdateData(const Device& _device, ResourceInitializer& _init, const void* _data, uint64 _size, uint64 _offset)
 	{
-		GPUBufferLibrary::CopyData(_device, *this, _init, _data, _size, _offset);
+		GPUBufferLibrary::CopyData(_device, _init , _data , *this, _size, _offset);
 	}
 }

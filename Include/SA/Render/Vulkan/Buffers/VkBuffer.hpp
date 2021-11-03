@@ -34,6 +34,7 @@ namespace Sa::Vk
 
 
 		bool IsValid() const noexcept;
+		uint64 GetCapacity() const noexcept;
 
 		virtual void Create(const Device& _device,
 			uint64 _size, VkBufferUsageFlags _usage,

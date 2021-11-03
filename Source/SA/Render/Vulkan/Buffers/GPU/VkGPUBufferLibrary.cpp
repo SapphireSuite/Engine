@@ -7,7 +7,23 @@
 
 namespace Sa::Vk
 {
-	void GPUBufferLibrary::CopyData(const Device& _device, Buffer& _buffer, ResourceInitializer& _init, const void* _src, uint64 _size, uint64 _offset)
+	void GPUBufferLibrary::CopyData(ResourceInitializer& _init, const Buffer& _src, Buffer& _dst)
+	{
+		// Add copy command.
+		VkBufferCopy copyRegion{};
+		copyRegion.srcOffset = 0u;
+		copyRegion.dstOffset = 0u;
+		copyRegion.size = _src.GetCapacity();
+
+		vkCmdCopyBuffer(_init.cmd, _src, _dst, 1, &copyRegion);
+	}
+
+	void GPUBufferLibrary::CopyData(const Device& _device,
+		ResourceInitializer& _init,
+		const void* _src,
+		Buffer& _dst,
+		uint64 _size,
+		uint64 _dstOffset)
 	{
 		// Create temp staging buffer. Hold buffer until command is submitted and executed.
 		CGPUBuffer& stagingBuffer = CGPUBuffer::CreateStaging(_device, _init, _src, _size);
@@ -16,10 +32,10 @@ namespace Sa::Vk
 		// Add copy command.
 		VkBufferCopy copyRegion{};
 		copyRegion.srcOffset = 0u;
-		copyRegion.dstOffset = _offset;
+		copyRegion.dstOffset = _dstOffset;
 		copyRegion.size = _size;
 
-		vkCmdCopyBuffer(_init.cmd, stagingBuffer, _buffer, 1, &copyRegion);
+		vkCmdCopyBuffer(_init.cmd, stagingBuffer, _dst, 1, &copyRegion);
 
 
 		// Destroy will be called by ResourceHolder.

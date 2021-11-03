@@ -13,10 +13,12 @@ namespace Sa::Vk
 		uint64 _size, VkBufferUsageFlags _usage,
 		VkMemoryPropertyFlags _properties)
 	{
-		mUsage = _usage;
-		mProperties = _properties;
+		// Required flag for Realloc.
+		_usage |= VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
 
-		Buffer::Create(_device, _size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT | _usage, _properties);
+		mUsage = _usage;
+
+		Buffer::Create(_device, _size, _usage, _properties);
 
 		mTail = new MetaData{ _size };
 		mBlocks.push_back(mTail);
@@ -25,7 +27,6 @@ namespace Sa::Vk
 	void BufferHeap::Destroy(const Device& _device)
 	{
 		mUsage = 0;
-		mProperties = 0;
 
 		ClearMeta();
 
@@ -50,11 +51,11 @@ namespace Sa::Vk
 			mBlocks.sort();
 	}
 
-	BufferHeap::MetaData* BufferHeap::Realloc(const Device& _device, uint64 _newCapacity)
+	BufferHeap::MetaData* BufferHeap::Realloc(const Device& _device, uint64 _newCapacity, ResourceInitializer* _init)
 	{
 		const uint64 prevSize = mDeviceSize;
 
-		ReallocBuffer(_device, _newCapacity);
+		ReallocBuffer(_device, _newCapacity, _init);
 		
 		if (mTail->bFreeBlock)
 			mTail->size += _newCapacity - prevSize; // Add size to tail.
@@ -85,7 +86,7 @@ namespace Sa::Vk
 	}
 
 
-	BufferHeap::MetaData* BufferHeap::AllocateMeta(const Device& _device, uint64 _size)
+	BufferHeap::MetaData* BufferHeap::AllocateMeta(const Device& _device, uint64 _size, ResourceInitializer* _init)
 	{
 		bool bShouldSort = false;
 		MetaData* meta = nullptr;
@@ -109,7 +110,7 @@ namespace Sa::Vk
 			if (mTail->bFreeBlock)
 				newCapacity -= mTail->size; //Embed free tail size.
 
-			meta = Realloc(_device, newCapacity);
+			meta = Realloc(_device, newCapacity, _init);
 
 			bShouldSort = true;
 		}

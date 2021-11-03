@@ -14,8 +14,7 @@ namespace Sa::Vk
 		uint64 _size,
 		const void* _data)
 	{
-		Buffer::Create(_device, _size, _usage,
-			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+		Buffer::Create(_device, _size, _usage, CGPUBufferLibrary::defaultProperties);
 
 		UpdateData(_device, _data, _size);
 	}

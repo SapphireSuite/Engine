@@ -2,14 +2,14 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_RENDER_VK_CGPU_BUFFER_HEAP_GUARD
-#define SAPPHIRE_RENDER_VK_CGPU_BUFFER_HEAP_GUARD
+#ifndef SAPPHIRE_RENDER_VK_GPU_BUFFER_HEAP_GUARD
+#define SAPPHIRE_RENDER_VK_GPU_BUFFER_HEAP_GUARD
 
 #include <SA/Render/Vulkan/Buffers/VkBufferHeap.hpp>
 
 namespace Sa::Vk
 {
-	class CGPUBufferHeap : public BufferHeap
+	class GPUBufferHeap : public BufferHeap
 	{
 		using BufferHeap::Create;
 
@@ -20,7 +20,7 @@ namespace Sa::Vk
 			VkBufferUsageFlags _usage,
 			uint64 _size);
 
-		uint64 Allocate(const Device& _device, void* _data, uint64 _size);
+		uint64 Allocate(const Device& _device, ResourceInitializer& _init, void* _data, uint64 _size);
 	};
 }
 

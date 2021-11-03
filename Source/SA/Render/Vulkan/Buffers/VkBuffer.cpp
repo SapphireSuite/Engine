@@ -25,6 +25,11 @@ namespace Sa::Vk
 		return mHandle != VK_NULL_HANDLE && mDeviceMemory != VK_NULL_HANDLE;
 	}
 
+	uint64 Buffer::GetCapacity() const noexcept
+	{
+		return mDeviceSize;
+	}
+
 
 	void Buffer::Create(const Device& _device,
 		uint64 _size, VkBufferUsageFlags _usage,
