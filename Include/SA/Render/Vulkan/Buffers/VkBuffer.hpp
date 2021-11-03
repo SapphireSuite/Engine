@@ -5,14 +5,23 @@
 #ifndef SAPPHIRE_RENDER_VK_BUFFER_GUARD
 #define SAPPHIRE_RENDER_VK_BUFFER_GUARD
 
-#include <SA/Render/Vulkan/Buffers/VkBufferBase.hpp>
+#include <SA/Core/Types/Int.hpp>
+
+#include <SA/Core/Support/API/Vulkan.hpp>
 
 namespace Sa::Vk
 {
-	class ResourceInitializer;
-	
-	class Buffer : public BufferBase
+	class Device;
+	class CommandBuffer;
+
+	class Buffer
 	{
+	protected:
+		VkBuffer mHandle = VK_NULL_HANDLE;
+		VkDeviceMemory mDeviceMemory = VK_NULL_HANDLE;
+
+		uint64 mDeviceSize = 0u;
+
 	public:
 		class Deleter
 		{
@@ -21,19 +30,33 @@ namespace Sa::Vk
 		public:
 			Deleter(const Device& _device) noexcept;
 
-			void operator()(Buffer& _buffer);
+			void operator()(Buffer& _buffer) const;
 		};
 
 
-		void Create(const Device& _device,
-			VkBufferUsageFlags _usage,
-			uint64 _size,
-			const void* _data);
+		bool IsValid() const noexcept;
+		uint64 GetCapacity() const noexcept;
 
-		void UpdateData(const Device& _device, const void* _data, uint64 _size, uint64 _offset = 0u);
+		virtual void Create(const Device& _device,
+			uint64 _size, VkBufferUsageFlags _usage,
+			VkMemoryPropertyFlags _properties);
+		virtual void Destroy(const Device& _device);
 
 
-		static Buffer& CreateStaging(const Device& _device, ResourceInitializer& _init, const void* _data, uint64 _size);
+		VkDescriptorBufferInfo CreateDescriptorBufferInfo() const noexcept;
+
+		void BindAsVertexBuffer(CommandBuffer& _cmd) const;
+		void BindAsIndexBuffer(CommandBuffer& _cmd) const;
+
+		static uint32 FindMemoryType(const Device& _device, uint32 _typeFilter, VkMemoryPropertyFlags _properties);
+
+
+		Buffer& operator=(Buffer&& _rhs);
+
+		operator VkBuffer() const noexcept;
+		operator VkDeviceMemory() const noexcept;
+
+		bool operator==(const Buffer& _rhs) const noexcept;
 	};
 }
 

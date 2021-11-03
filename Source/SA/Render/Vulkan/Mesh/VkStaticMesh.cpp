@@ -31,7 +31,7 @@ namespace Sa::Vk
 			sizeof(uint32) * mIndicesSize,
 			_raw.indices.data());
 		
-		SA_LOG(L"Mesh created.", Infos, SA/Render/Vulkan);
+		SA_LOG(L"Static Mesh created.", Infos, SA/Render/Vulkan);
 	}
 	
 	void StaticMesh::Destroy(const Device& _device)
@@ -41,7 +41,7 @@ namespace Sa::Vk
 
 		mIndicesSize = ~uint32();
 		
-		SA_LOG(L"Mesh destroyed.", Infos, SA/Render/Vulkan);
+		SA_LOG(L"Static Mesh destroyed.", Infos, SA/Render/Vulkan);
 	}
 
 
@@ -49,12 +49,8 @@ namespace Sa::Vk
 	{
 		const Frame& vkFrame = Cast<Frame>(_frame);
 
-		VkDeviceSize offsets[] = { 0 };
-		VkBuffer vkVertBuff = mVertexBuffer;
-
-		vkCmdBindVertexBuffers(vkFrame.cmd, 0, 1, &vkVertBuff, offsets);
-
-		vkCmdBindIndexBuffer(vkFrame.cmd, mIndexBuffer, 0, VK_INDEX_TYPE_UINT32);
+		mVertexBuffer.BindAsVertexBuffer(vkFrame.cmd);
+		mIndexBuffer.BindAsIndexBuffer(vkFrame.cmd);
 
 		vkCmdDrawIndexed(vkFrame.cmd, mIndicesSize, _infos.instanceNum, 0, 0, 0);
 	}

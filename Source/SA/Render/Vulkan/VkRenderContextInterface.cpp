@@ -10,9 +10,6 @@
 #include <Render/Vulkan/Surface/VkWindowSurface.hpp>
 //#include <Render/Vulkan/Pipeline/VkPipeline.hpp>
 
-//#include <Render/Vulkan/Mesh/VkStaticMesh.hpp>
-//#include <Render/Vulkan/Texture/VkTexture.hpp>
-//#include <Render/Vulkan/Texture/VkCubemap.hpp>
 //#include <Render/Vulkan/Material/VkMaterial.hpp>
 //#include <Render/Vulkan/Camera/VkCamera.hpp>
 
@@ -23,6 +20,9 @@ namespace Sa::Vk
 		SA_ASSERT(Nullptr, SA/Render/Vulkan, _graphics);
 
 		mGraphics = _graphics;
+
+		mMeshVertexHeap.Create(GetDevice(), VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, 1024);
+		mMeshIndicesHeap.Create(GetDevice(), VK_BUFFER_USAGE_INDEX_BUFFER_BIT, 1024);
 
 		SA_LOG(L"Render Context Interface created.", Infos, SA/Render/Vulkan);
 	}
@@ -52,6 +52,9 @@ namespace Sa::Vk
 			while (!mSurfaces.empty())
 				DestroySurface(&mSurfaces.front());
 		}
+
+		mMeshVertexHeap.Destroy(GetDevice());
+		mMeshIndicesHeap.Destroy(GetDevice());
 
 		mGraphics = nullptr;
 
@@ -189,20 +192,20 @@ namespace Sa::Vk
 
 	AStaticMesh* RenderContextInterface::CreateStaticMesh(ARenderResourceInitializer* _init, const RawMesh& _raw)
 	{
-		StaticMesh& mesh = mStaticMeshes.emplace_front();
+		BLStaticMesh& mesh = mStaticMeshes.emplace_front();
 
 		ResourceInitializer& vkInit = CastRef<ResourceInitializer>(_init);
 
-		mesh.Create(GetDevice(), vkInit, _raw);
-
+		mesh.Create(GetDevice(), vkInit, mMeshVertexHeap, mMeshIndicesHeap, _raw);
+		
 		return &mesh;
 	}
 	
 	void RenderContextInterface::DestroyStaticMesh(AStaticMesh* _mesh)
 	{
-		StaticMesh& vkMesh = CastRef<StaticMesh>(_mesh);
+		BLStaticMesh& vkMesh = CastRef<BLStaticMesh>(_mesh);
 
-		vkMesh.Destroy(GetDevice());
+		vkMesh.Destroy(GetDevice(), mMeshVertexHeap, mMeshIndicesHeap);
 
 		mStaticMeshes.remove(vkMesh);
 	}

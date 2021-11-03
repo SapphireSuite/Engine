@@ -5,14 +5,16 @@
 #ifndef SAPPHIRE_RENDER_VK_GPU_BUFFER_GUARD
 #define SAPPHIRE_RENDER_VK_GPU_BUFFER_GUARD
 
-#include <SA/Render/Vulkan/Buffers/VkBufferBase.hpp>
+#include <SA/Render/Vulkan/Buffers/VkBuffer.hpp>
 
 namespace Sa::Vk
 {
 	class ResourceInitializer;
 
-	class GPUBuffer : public BufferBase
+	class GPUBuffer : public Buffer
 	{
+		using Buffer::Create;
+
 	public:
 		void Create(const Device& _device,
 			VkBufferUsageFlags _usage,

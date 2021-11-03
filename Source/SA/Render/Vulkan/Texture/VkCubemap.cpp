@@ -4,7 +4,7 @@
 
 #include <Render/Vulkan/VkResourceInitializer.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
-#include <Render/Vulkan/Buffers/VkBuffer.hpp>
+#include <Render/Vulkan/Buffers/CGPU/VkCGPUBuffer.hpp>
 
 namespace Sa::Vk
 {
@@ -13,7 +13,7 @@ namespace Sa::Vk
 		Texture::Create(_device, _init, _raw);
 
 
-		Buffer& irrStagingBuffer = Buffer::CreateStaging(_device, _init, _raw.irradiancemapData.data(), _raw.GetMapSize());
+		Buffer& irrStagingBuffer = CGPUBuffer::CreateStaging(_device, _init, _raw.irradiancemapData.data(), _raw.GetMapSize());
 
 
 		// Create Device Image buffer

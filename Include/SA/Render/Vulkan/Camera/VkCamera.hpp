@@ -15,7 +15,7 @@ namespace Sa::Vk
 
 	class Camera : public ACamera
 	{
-		Buffer mCameraUBO;
+		//Buffer mCameraUBO;
 
 		void UpdateUBO(const Device& _device);
 

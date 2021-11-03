@@ -6,13 +6,13 @@
 
 #include <Render/Vulkan/VkResourceInitializer.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
-#include <Render/Vulkan/Buffers/VkBuffer.hpp>
+#include <Render/Vulkan/Buffers/CGPU/VkCGPUBuffer.hpp>
 
 namespace Sa::Vk
 {
 	void Texture::Create(const Device& _device, ResourceInitializer& _init, const RawTexture& _raw)
 	{
-		Buffer& stagingBuffer = Buffer::CreateStaging(_device, _init, _raw.data.data(), _raw.GetTotalSize());
+		Buffer& stagingBuffer = CGPUBuffer::CreateStaging(_device, _init, _raw.data.data(), _raw.GetTotalSize());
 
 
 		// Create Device Image buffer

@@ -7,7 +7,7 @@
 
 #include <SA/Render/Base/Mesh/AStaticMesh.hpp>
 
-#include <SA/Render/Vulkan/Buffers/VkGPUBuffer.hpp>
+#include <SA/Render/Vulkan/Buffers/GPU/VkGPUBuffer.hpp>
 
 namespace Sa::Vk
 {

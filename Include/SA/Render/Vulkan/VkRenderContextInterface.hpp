@@ -13,9 +13,11 @@
 #include <SA/Render/Vulkan/Pass/VkRenderPass.hpp>
 #include <SA/Render/Vulkan/VkResourceInitializer.hpp>
 #include <SA/Render/Vulkan/Shader/VkShader.hpp>
-#include <SA/Render/Vulkan/Mesh/VkStaticMesh.hpp>
+#include <SA/Render/Vulkan/Mesh/VkBLStaticMesh.hpp>
 #include <SA/Render/Vulkan/Texture/VkTexture.hpp>
 #include <SA/Render/Vulkan/Texture/VkCubemap.hpp>
+
+#include <SA/Render/Vulkan/Buffers/GPU/VkGPUBufferHeap.hpp>
 
 namespace Sa::Vk
 {
@@ -29,9 +31,13 @@ namespace Sa::Vk
 		std::forward_list<RenderPass> mRenderPasses;
 		std::forward_list<ResourceInitializer> mResInits;
 		std::forward_list<Shader> mShaders;
-		std::forward_list<StaticMesh> mStaticMeshes;
+		std::forward_list<BLStaticMesh> mStaticMeshes;
 		std::forward_list<Texture> mTextures;
 		std::forward_list<Cubemap> mCubemaps;
+
+		GPUBufferHeap mMeshVertexHeap;
+		GPUBufferHeap mMeshIndicesHeap;
+
 
 		const Device& GetDevice() const;
 
