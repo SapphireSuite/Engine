@@ -22,8 +22,8 @@ layout(location = 0) out DataBlock
 void main()
 {
     // Position.
-    vec4 modelPosition = ComputeModelPosition(inPosition);
-    gl_Position = ComputeViewPosition(modelPosition);
+    vec4 modelPosition = Model_ComputePosition(inPosition);
+    gl_Position = Camera_ComputeViewPosition(modelPosition);
 
 
     // Texture

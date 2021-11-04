@@ -2,11 +2,16 @@
 
 //{ camera glsl
 
+#include <push_constant.glsl>
+
+
+//{ Bindings
+
 /**
 *   set 1 is engine pre-defined for camera bindings.
 */
 
-layout(set = 1, binding = 0) uniform Camera
+struct Camera
 {
 	// Camera projection matrix.
     mat4 proj;
@@ -14,15 +19,40 @@ layout(set = 1, binding = 0) uniform Camera
 	// Camera inverse transformation matrix.
     mat4 viewInv;
 
-    // Camera position.
-    vec3 viewPosition;
+    // Camera raw position.
+    vec3 position;
+};
 
-} cameraUBO;
-
-
-vec4 ComputeViewPosition(vec4 _modelPosition)
+layout(set = 1, binding = 0) buffer Camera_StorageBuffer
 {
-    return cameraUBO.proj * cameraUBO.viewInv * _modelPosition;
+    Camera cameras[];
+} Camera_UBO;
+
+//}
+
+
+//{ Getters
+
+// Get Current camera.
+Camera Camera_Get()
+{
+    return Camera_UBO.cameras[pConst.cameraIndex];
+}
+
+// Get Current camera raw position.
+vec3 Camera_GetRawPosition()
+{
+    return Camera_Get().position;
+}
+
+//}
+
+
+vec4 Camera_ComputeViewPosition(vec4 _modelPosition)
+{
+    Camera cam  = Camera_Get();
+
+    return cam.proj * cam.viewInv * _modelPosition;
 }
 
 //}
