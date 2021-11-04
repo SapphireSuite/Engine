@@ -31,17 +31,17 @@ layout(set = 2, binding = 1) buffer Model_NormalStorageBuffer
 // Get Current Model transform.
 mat4 Model_GetTransformMat()
 {
-    return Model_TransformUBO.transforms[pConst.modelIndex + gl_InstanceIndex];
+    return Model_TransformUBO.transforms[PConst.modelIndex + gl_InstanceIndex];
 }
 
 // Get Current Model Normal Matrix.
 mat3 Model_GetNormalMat()
 {
 	// No normal index registered: scale is uniform. Use model transform.
-	if(pConst.modelNormalIndex == -1)
+	if(PConst.modelNormalIndex == -1)
 		return mat3(Model_GetTransformMat());
 	else
-		return Model_NormalUBO.normalMats[pConst.modelNormalIndex + gl_InstanceIndex];
+		return Model_NormalUBO.normalMats[PConst.modelNormalIndex + gl_InstanceIndex];
 }
 
 //}

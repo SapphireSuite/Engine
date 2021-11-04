@@ -36,7 +36,7 @@ layout(set = 1, binding = 0) buffer Camera_StorageBuffer
 // Get Current camera.
 Camera Camera_Get()
 {
-    return Camera_UBO.cameras[pConst.cameraIndex];
+    return Camera_UBO.cameras[PConst.cameraIndex];
 }
 
 // Get Current camera raw position.

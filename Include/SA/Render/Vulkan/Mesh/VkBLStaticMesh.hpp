@@ -15,6 +15,10 @@ namespace Sa::Vk
 	class ResourceInitializer;
 	class GPUBufferHeap;
 
+	/**
+	*	Bindless implementation of Static Mesh.
+	*	Bindless required the use of BufferHeap instead of Buffer.
+	*/
 	class BLStaticMesh : public AStaticMesh
 	{
 		const BufferHeap::MetaData* mVertexMeta = nullptr;

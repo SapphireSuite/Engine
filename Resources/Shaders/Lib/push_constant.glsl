@@ -6,12 +6,12 @@
 *	Bindless push constants.
 *	Default value is -1.
 */
-layout(push_constant) uniform PushConstants
+layout(push_constant) uniform PConst_PushConstants
 {
 	int cameraIndex;
 
 	int modelIndex;
 	int modelNormalIndex;
-} pConst;
+} PConst;
 
 //}
