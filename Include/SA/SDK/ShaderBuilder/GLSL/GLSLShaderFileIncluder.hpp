@@ -5,6 +5,8 @@
 #ifndef SAPPHIRE_RENDER_GLSL_SHADER_FILE_INCLUDER_GUARD
 #define SAPPHIRE_RENDER_GLSL_SHADER_FILE_INCLUDER_GUARD
 
+#include <unordered_set>
+
 #include <shaderc/shaderc.hpp>
 
 namespace Sa::GLSL
@@ -24,6 +26,8 @@ namespace Sa::GLSL
 			shaderc_include_type _type,
 			const std::string& _requestingSrc,
 			size_t _includeDepth);
+
+		std::unordered_set<std::string> mRegisteredIncludes;
 
 	public:
 		shaderc_include_result* GetInclude(const char* _requestedSrc,

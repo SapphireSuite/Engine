@@ -22,7 +22,7 @@ namespace Sa::GLSL
 		{
 			case shaderc_include_type_relative:		// include "file.glsl"
 			{
-				const uint64 dirIndex = _requestingSrc.find_last_of("/\\");
+				const uint64 dirIndex = _requestingSrc.find_last_of("/");
 
 				if (dirIndex != std::string::npos)
 					return _requestingSrc.substr(0u, dirIndex + 1) + _requestedSrc;
@@ -31,9 +31,9 @@ namespace Sa::GLSL
 			}
 			case shaderc_include_type_standard:		// include <file.glsl>
 			{
-				static const std::string shaderLibPath = EnvVar::path + "\\Resources\\Shaders\\Lib";
+				static const std::string shaderLibPath = EnvVar::path + "/Resources/Shaders/Lib";
 
-				return shaderLibPath + "\\" + _requestedSrc;
+				return shaderLibPath + "/" + _requestedSrc;
 			}
 			default:
 			{
@@ -50,10 +50,24 @@ namespace Sa::GLSL
 	{
 		(void)_includeDepth;
 
-		std::string fullPath = GetFullPath(_requestedSrc, _requestingSrc, _type);
+		const std::string fullPath = GetFullPath(_requestedSrc, _requestingSrc, _type);
 
 		if (fullPath.empty())
 			return MakeError("Can't find included file {" << _requestedSrc << "} from {" << _requestingSrc << "}");
+
+
+		// File already included: don't add code.
+		if (mRegisteredIncludes.find(fullPath) != mRegisteredIncludes.end())
+		{
+			static const char* emptyInclude = " ";
+			static const char emptyIncludeName[] = "EmptyInclude";
+
+			return new shaderc_include_result{
+				emptyIncludeName, sizeof(emptyIncludeName),
+				emptyInclude, 1u,
+				nullptr
+			};
+		}
 
 
 		std::vector<char> content;
@@ -62,7 +76,9 @@ namespace Sa::GLSL
 			return MakeError("Can't read included file {" << _requestedSrc << "} from {" << _requestingSrc << "}");
 
 
-		FileInfos* fInfos = new FileInfos{ std::move(fullPath), std::move(content) };
+		mRegisteredIncludes.emplace(fullPath);
+
+		FileInfos* const fInfos = new FileInfos{ std::move(fullPath), std::move(content) };
 
 		return new shaderc_include_result{
 			fInfos->fullPath.c_str(), fInfos->fullPath.size(),
@@ -82,7 +98,8 @@ namespace Sa::GLSL
 
 	void ShaderFileIncluder::ReleaseInclude(shaderc_include_result* _data)
 	{
-		delete static_cast<FileInfos*>(_data->user_data);
+		if (_data->user_data)
+			delete static_cast<FileInfos*>(_data->user_data);
 
 		delete _data;
 	}
