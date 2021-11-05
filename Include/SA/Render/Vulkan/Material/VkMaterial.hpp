@@ -7,7 +7,7 @@
 
 #include <SA/Render/Base/Material/ARenderMaterial.hpp>
 
-#include <SA/Render/Vulkan/Pipeline/VkDescriptorSet.hpp>
+//#include <SA/Render/Vulkan/Pipeline/VkDescriptorSet.hpp>
 
 namespace Sa::Vk
 {
@@ -15,7 +15,7 @@ namespace Sa::Vk
 
 	class Material : public ARenderMaterial
 	{
-		DescriptorSet mDescSet;
+		//DescriptorSet mDescSet;
 
 	public:
 		void Create(const Device& _device, const RenderMaterialCreateInfos& _infos);

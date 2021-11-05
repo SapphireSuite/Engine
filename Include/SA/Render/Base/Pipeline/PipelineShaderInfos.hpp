@@ -8,10 +8,11 @@
 #include <set>
 
 #include <SA/Render/Base/Shader/AShader.hpp>
-#include <SA/Render/Base/Shader/ShaderDescriptor.hpp>
-#include <SA/Render/Base/Shader/SpecConstants/SpecConstant.hpp>
+#include <SA/Render/Base/Shader/Descriptors/ShaderDescriptor.hpp>
 
 #include <SA/Render/Base/Mesh/Vertex/VertexBindingLayout.hpp>
+
+#include <SA/Render/Base/Pipeline/SpecConstant.hpp>
 
 namespace Sa
 {
@@ -30,15 +31,22 @@ namespace Sa
 
 	struct PipelineBindingSetDescriptor
 	{
-		/// List of registered binding for set.
+		/// List of registered bindings for set.
 		std::vector<PipelineBindingDescriptor> bindings;
 	};
 
 
-	struct PipelineSpecConstant : public SpecConstantDescriptor
+	struct PipelinePushConstantDescriptor : public ShaderPushConstantDescriptor
+	{
+		Flags<ShaderStage> stageFlags;
+	};
+
+
+	struct PipelineSpecConstant : public ShaderSpecConstantDescriptor
 	{
 		std::unique_ptr<SpecConstantBase> value;
 	};
+
 
 	struct PipelineShaderInfos
 	{
@@ -46,13 +54,12 @@ namespace Sa
 
 		std::vector<PipelineShaderStage> stages;
 
-		PipelineBindingSetDescriptor userBindingSet;
-		std::set<uint32> engineBindingSets;
+		std::vector<PipelineBindingSetDescriptor> bindingSets;
 
-		std::set<PipelineSpecConstant> userSpecConstants;
-		std::set<SpecConstantDescriptor> engineSpecConstants; // Values set in engine.
+		std::vector<PipelinePushConstantDescriptor> pushConstants;
+		std::set<PipelineSpecConstant> specConstants;
 
-		void AddShader(const AShader* _shader, const ShaderDescriptor& _descriptor);
+		void AddShader(const AShader* _shader, const ShaderDescriptor& _desc);
 
 
 		template <typename T>

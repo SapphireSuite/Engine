@@ -11,7 +11,7 @@ namespace Sa
 		void ToBinary(const ShaderBindingDescriptor& _obj, std::string& _str)
 		{
 			ToBinary(_obj.name, _str);
-			ToBinary(_obj.typeName, _str);
+			ToBinary(_obj.datatTypeName, _str);
 
 			SA_SerializeEndBlock(ToBinary, _obj, type, _str);
 		}
@@ -19,7 +19,7 @@ namespace Sa
 		void FromBinary(ShaderBindingDescriptor& _obj, Reader& _read)
 		{
 			FromBinary(_obj.name, _read);
-			FromBinary(_obj.typeName, _read);
+			FromBinary(_obj.datatTypeName, _read);
 
 			SA_SerializeEndBlock(FromBinary, _obj, type, _read);
 		}

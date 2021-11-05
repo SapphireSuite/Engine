@@ -12,7 +12,7 @@ namespace Sa::Vk
 	{
 		if (_specCst.value == nullptr)
 		{
-			SA_LOG(L"Try add descriptor with null value!", Warning, SA/Render/Vulkan);
+			SA_LOG(L"Try add specialization constant with null value!", Warning, SA/Render/Vulkan);
 			return;
 		}
 

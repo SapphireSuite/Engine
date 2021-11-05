@@ -9,12 +9,10 @@
 
 namespace Sa
 {
-	class ARenderFrame;
-
 	class ARenderPipeline
 	{
-	public:
-		virtual void Bind(const ARenderFrame& _frame) const = 0;
+	protected:
+		~ARenderPipeline() = default;
 	};
 }
 

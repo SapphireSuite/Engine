@@ -23,7 +23,7 @@ namespace Sa::Vk
 
 	void Material::Destroy(const Device& _device)
 	{
-		mDescSet.Destroy(_device);
+		//mDescSet.Destroy(_device);
 		
 		SA_LOG(L"Render Material destroyed.", Infos, SA/Render/Vulkan);
 	}
@@ -31,6 +31,6 @@ namespace Sa::Vk
 
 	void Material::UpdateBinding(const Device& _device, const ARenderMaterialBinding* _bind)
 	{
-		mDescSet.Update(_device, { _bind });
+		//mDescSet.Update(_device, { _bind });
 	}
 }

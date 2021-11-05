@@ -31,6 +31,9 @@ namespace Sa::Vk
 	{
 		// Destroy in reversed order.
 		{
+			while (!mPipelines.empty())
+				DestroyPipeline(&mPipelines.front());
+
 			while (!mCubemaps.empty())
 				DestroyCubemap(&mCubemaps.front());
 
@@ -122,26 +125,26 @@ namespace Sa::Vk
 	}
 
 
-	//ARenderPipeline* RenderContextInterface::CreatePipeline(const RenderPipelineDescriptor& _desc)
-	//{
-	//	Pipeline* const pipeline = new Pipeline();
-
-	//	pipeline->Create(mDevice, _desc, enDescSetLayouts);
-
-	//	return pipeline;
-	//}
-
-	//void RenderContextInterface::DestroyPipeline(ARenderPipeline* _pipeline)
-	//{
-	//	Pipeline* const vkPipeline = _pipeline->AsPtr<Pipeline>();
-
-	//	vkPipeline->Destroy(mDevice);
-
-	//	delete vkPipeline;
-	//}
-
-
 //{ Resources
+
+	ARenderPipeline* RenderContextInterface::CreatePipeline(const RenderPipelineDescriptor& _desc)
+	{
+		Pipeline& pipline = mPipelines.emplace_front();
+
+		pipline.Create(GetDevice(), _desc);
+
+		return &pipline;
+	}
+
+	void RenderContextInterface::DestroyPipeline(ARenderPipeline* _pipeline)
+	{
+		Pipeline& vkPipline = CastRef<Pipeline>(_pipeline);
+
+		vkPipline.Destroy(GetDevice());
+
+		mPipelines.remove(vkPipline);
+	}
+
 
 	ARenderResourceInitializer* RenderContextInterface::CreateResourceInitializer()
 	{

@@ -11,6 +11,7 @@
 
 #include <SA/Render/Vulkan/Surface/VkSurface.hpp>
 #include <SA/Render/Vulkan/Pass/VkRenderPass.hpp>
+#include <SA/Render/Vulkan/Pipeline/VkPipeline.hpp>
 #include <SA/Render/Vulkan/VkResourceInitializer.hpp>
 #include <SA/Render/Vulkan/Shader/VkShader.hpp>
 #include <SA/Render/Vulkan/Mesh/VkBLStaticMesh.hpp>
@@ -29,6 +30,7 @@ namespace Sa::Vk
 
 		std::forward_list<Surface> mSurfaces;
 		std::forward_list<RenderPass> mRenderPasses;
+		std::forward_list<Pipeline> mPipelines;
 		std::forward_list<ResourceInitializer> mResInits;
 		std::forward_list<Shader> mShaders;
 		std::forward_list<BLStaticMesh> mStaticMeshes;
@@ -60,11 +62,11 @@ namespace Sa::Vk
 		void CreateFrameBuffers(ARenderSurface* _surface, ARenderPass* _pass, const RenderPassDescriptor& _descriptor) override final;
 		void DestroyFrameBuffers(ARenderSurface* _surface) override final;
 
-		//ARenderPipeline* CreatePipeline(const RenderPipelineDescriptor& _desc) override final;
-		//void DestroyPipeline(ARenderPipeline* _pipeline) override final;
-
 
 //{ Resources
+
+		ARenderPipeline* CreatePipeline(const RenderPipelineDescriptor& _desc) override final;
+		void DestroyPipeline(ARenderPipeline* _pipeline) override final;
 	
 		ARenderResourceInitializer* CreateResourceInitializer() override final;
 		void DestroyResourceInitializer(ARenderResourceInitializer* _init) override final;

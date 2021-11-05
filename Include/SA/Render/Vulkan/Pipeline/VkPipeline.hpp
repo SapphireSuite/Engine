@@ -20,12 +20,7 @@ namespace Sa::Vk
 		VkPipeline mHandle = VK_NULL_HANDLE;
 		VkPipelineLayout mPipelineLayout = VK_NULL_HANDLE;
 
-		VkDescriptorSetLayout mMainDescriptorSetLayout = VK_NULL_HANDLE;
-
-		void CreateMainDescriptorSetLayout(const Device& _device, const RenderPipelineDescriptor& _desc);
-		void DestroyMainDescriptorSetLayout(const Device& _device);
-
-		void CreatePipelineLayout(const Device& _device, const RenderPipelineDescriptor& _desc, const EngineDescriptorSetLayouts& _enDescSetLayouts);
+		void CreatePipelineLayout(const Device& _device, const RenderPipelineDescriptor& _desc);
 		void DestroyPipelineLayout(const Device& _device);
 
 		void CreatePipelineHandle(const Device& _device, const RenderPipelineDescriptor& _desc);
@@ -50,12 +45,14 @@ namespace Sa::Vk
 
 	public:
 		VkPipelineLayout GetLayout() const noexcept;
-		VkDescriptorSetLayout GetMainDescriptorSetLayout() const noexcept;
 
-		void Create(const Device& _device, const RenderPipelineDescriptor& _desc, const EngineDescriptorSetLayouts& _enDescSetLayouts);
+		void Create(const Device& _device, const RenderPipelineDescriptor& _desc);
 		void Destroy(const Device& _device);
 
-		void Bind(const ARenderFrame& _frame) const override final;
+		//void Bind(const ARenderFrame& _frame) const override final;
+
+
+		bool operator==(const Pipeline& _rhs) const noexcept;
 	};
 }
 

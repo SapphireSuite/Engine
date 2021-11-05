@@ -9,9 +9,8 @@
 #include <Render/Vulkan/Device/VkDevice.hpp>
 #include <Render/Vulkan/Shader/VkShader.hpp>
 #include <Render/Vulkan/Pass/VkRenderPass.hpp>
-#include <Render/Vulkan/VkFrame.hpp>
+//#include <Render/Vulkan/VkFrame.hpp>
 #include <Render/Vulkan/Pipeline/VkSpecConstantData.hpp>
-#include <Render/Vulkan/Pipeline/VkEngineDescriptorSetLayouts.hpp>
 
 namespace Sa::Vk
 {
@@ -30,17 +29,10 @@ namespace Sa::Vk
 		return mPipelineLayout;
 	}
 
-	VkDescriptorSetLayout Pipeline::GetMainDescriptorSetLayout() const noexcept
+
+	void Pipeline::Create(const Device& _device, const RenderPipelineDescriptor& _desc)
 	{
-		return mMainDescriptorSetLayout;
-	}
-
-
-	void Pipeline::Create(const Device& _device, const RenderPipelineDescriptor& _desc, const EngineDescriptorSetLayouts& _enDescSetLayouts)
-	{
-		CreateMainDescriptorSetLayout(_device, _desc);
-
-		CreatePipelineLayout(_device, _desc, _enDescSetLayouts);
+		CreatePipelineLayout(_device, _desc);
 		CreatePipelineHandle(_device, _desc);
 
 		SA_LOG(L"Render Pipeline created.", Infos, SA/Render/Vulkan);
@@ -51,72 +43,37 @@ namespace Sa::Vk
 		DestroyPipelineHandle(_device);
 		DestroyPipelineLayout(_device);
 
-		DestroyMainDescriptorSetLayout(_device);
-
 		SA_LOG(L"Render Pipeline destroyed.", Infos, SA/Render/Vulkan);
 	}
 
-	void Pipeline::Bind(const ARenderFrame& _frame) const
+	//void Pipeline::Bind(const ARenderFrame& _frame) const
+	//{
+	//	const Frame& vkFrame = Cast<Frame>(_frame);
+
+	//	vkCmdBindPipeline(vkFrame.cmd, VK_PIPELINE_BIND_POINT_GRAPHICS, mHandle);
+	//}
+
+
+	void Pipeline::CreatePipelineLayout(const Device& _device, const RenderPipelineDescriptor& _desc)
 	{
-		const Frame& vkFrame = Cast<Frame>(_frame);
+		//std::vector<VkDescriptorSetLayout> descSetLayouts = _enDescSetLayouts.QuerySets(_desc.shaderInfos.engineBindingSets);
+		//descSetLayouts[0] = mMainDescriptorSetLayout;
 
-		vkCmdBindPipeline(vkFrame.cmd, VK_PIPELINE_BIND_POINT_GRAPHICS, mHandle);
-	}
+		//VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo{};
+		//pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
+		//pipelineLayoutCreateInfo.pNext = nullptr;
+		//pipelineLayoutCreateInfo.flags = 0u;
+		//pipelineLayoutCreateInfo.setLayoutCount = SizeOf<uint32>(descSetLayouts);
+		//pipelineLayoutCreateInfo.pSetLayouts = descSetLayouts.data();
+		//pipelineLayoutCreateInfo.pushConstantRangeCount = 0u;
+		//pipelineLayoutCreateInfo.pPushConstantRanges = nullptr;
 
-
-	void Pipeline::CreateMainDescriptorSetLayout(const Device& _device, const RenderPipelineDescriptor& _desc)
-	{
-		std::vector<VkDescriptorSetLayoutBinding> descSetLayout;
-
-		for (auto& bind : _desc.shaderInfos.userBindingSet.bindings)
-		{
-			VkDescriptorSetLayoutBinding& descBinding = descSetLayout.emplace_back();
-
-			descBinding.binding = bind.binding;
-			descBinding.descriptorType = API_GetDescriptorType(bind.type);
-			descBinding.descriptorCount = bind.num;
-			descBinding.stageFlags = API_GetShaderStageFlags(bind.stageFlags);
-			descBinding.pImmutableSamplers = nullptr;
-		}
-
-		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutInfo{};
-		descriptorSetLayoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-		descriptorSetLayoutInfo.pNext = nullptr;
-		descriptorSetLayoutInfo.flags = 0u;
-		descriptorSetLayoutInfo.bindingCount = 1u;
-		descriptorSetLayoutInfo.pBindings = descSetLayout.data();
-
-		SA_VK_ASSERT(vkCreateDescriptorSetLayout(_device, &descriptorSetLayoutInfo, nullptr, &mMainDescriptorSetLayout),
-			L"Failed to create descriptor set layout!");
-	}
-
-	void Pipeline::DestroyMainDescriptorSetLayout(const Device& _device)
-	{
-		vkDestroyDescriptorSetLayout(_device, mMainDescriptorSetLayout, nullptr);
-		mMainDescriptorSetLayout = VK_NULL_HANDLE;
-	}
-
-
-	void Pipeline::CreatePipelineLayout(const Device& _device, const RenderPipelineDescriptor& _desc, const EngineDescriptorSetLayouts& _enDescSetLayouts)
-	{
-		std::vector<VkDescriptorSetLayout> descSetLayouts = _enDescSetLayouts.QuerySets(_desc.shaderInfos.engineBindingSets);
-		descSetLayouts[0] = mMainDescriptorSetLayout;
-
-		VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo{};
-		pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-		pipelineLayoutCreateInfo.pNext = nullptr;
-		pipelineLayoutCreateInfo.flags = 0u;
-		pipelineLayoutCreateInfo.setLayoutCount = SizeOf<uint32>(descSetLayouts);
-		pipelineLayoutCreateInfo.pSetLayouts = descSetLayouts.data();
-		pipelineLayoutCreateInfo.pushConstantRangeCount = 0u;
-		pipelineLayoutCreateInfo.pPushConstantRanges = nullptr;
-
-		SA_VK_ASSERT(vkCreatePipelineLayout(_device, &pipelineLayoutCreateInfo, nullptr, &mPipelineLayout), L"Failed to create pipeline layout!");
+		//SA_VK_ASSERT(vkCreatePipelineLayout(_device, &pipelineLayoutCreateInfo, nullptr, &mPipelineLayout), L"Failed to create pipeline layout!");
 	}
 
 	void Pipeline::DestroyPipelineLayout(const Device& _device)
 	{
-		SA_ASSERT(Nullptr, SA / Render / Vulkan, mPipelineLayout, L"Destroy pipeline with null Pipeline Layout!");
+		SA_ASSERT(Nullptr, SA/Render/Vulkan, mPipelineLayout, L"Destroy pipeline with null Pipeline Layout!");
 
 		vkDestroyPipelineLayout(_device, mPipelineLayout, nullptr);
 		mPipelineLayout = VK_NULL_HANDLE;
@@ -228,21 +185,21 @@ namespace Sa::Vk
 	void Pipeline::FillShaderSpecConstants(SpecConstantData& _specConstData,
 		const PipelineShaderInfos& _shaderInfos)
 	{
-		for (auto& specPair : _shaderInfos.userSpecConstants)
+		for (auto& specPair : _shaderInfos.specConstants)
 			_specConstData.Add(specPair);
 
-		for (auto& specPair : _shaderInfos.engineSpecConstants)
-		{
-			switch (specPair.id)
-			{
-				case SpecConstantID::RenderAPI:
-					_specConstData.Add(SpecConstantID::RenderAPI, SpecConstantValue::Vulkan);
-					break;
-				default:
-					SA_LOG(L"Shader Engine specialization constant [" << specPair.id << L"] not supported yet!", Warning, SA/Render/Vulkan);
-					break;
-			}
-		}
+		//for (auto& specPair : _shaderInfos.engineSpecConstants)
+		//{
+		//	switch (specPair.id)
+		//	{
+		//		case SpecConstantID::RenderAPI:
+		//			_specConstData.Add(SpecConstantID::RenderAPI, SpecConstantValue::Vulkan);
+		//			break;
+		//		default:
+		//			SA_LOG(L"Shader Engine specialization constant [" << specPair.id << L"] not supported yet!", Warning, SA/Render/Vulkan);
+		//			break;
+		//	}
+		//}
 	}
 
 	void Pipeline::FillShaderStages(std::vector<VkPipelineShaderStageCreateInfo>& _stages,
@@ -363,5 +320,11 @@ namespace Sa::Vk
 		_renderPassAttInfos.colorBlendingInfo.blendConstants[1] = 0.0f;
 		_renderPassAttInfos.colorBlendingInfo.blendConstants[2] = 0.0f;
 		_renderPassAttInfos.colorBlendingInfo.blendConstants[3] = 0.0f;
+	}
+
+
+	bool Pipeline::operator==(const Pipeline& _rhs) const noexcept
+	{
+		return mHandle == _rhs.mHandle && mPipelineLayout == _rhs.mPipelineLayout;
 	}
 }

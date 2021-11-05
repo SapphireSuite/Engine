@@ -9,7 +9,7 @@
 #include <SA/Render/Base/Surface/AWindowSurface.hpp>
 #include <SA/Render/Base/Surface/ARenderSurface.hpp>
 #include <SA/Render/Base/Pass/ARenderPass.hpp>
-//#include <SA/Render/Base/Pipeline/ARenderPipeline.hpp>
+#include <SA/Render/Base/Pipeline/ARenderPipeline.hpp>
 #include <SA/Render/Base/ARenderResourceInitializer.hpp>
 #include <SA/Render/Base/Shader/AShader.hpp>
 #include <SA/Render/Base/Mesh/AStaticMesh.hpp>
@@ -37,10 +37,10 @@ namespace Sa
 		virtual void CreateFrameBuffers(ARenderSurface* _surface, ARenderPass* _pass, const RenderPassDescriptor& _descriptor) = 0;
 		virtual void DestroyFrameBuffers(ARenderSurface* _surface) = 0;
 
-		//virtual ARenderPipeline* CreatePipeline(const RenderPipelineDescriptor& _desc) = 0;
-		//virtual void DestroyPipeline(ARenderPipeline* _pipeline) = 0;
-
 //{ Resources
+
+		virtual ARenderPipeline* CreatePipeline(const RenderPipelineDescriptor& _desc) = 0;
+		virtual void DestroyPipeline(ARenderPipeline* _pipeline) = 0;
 
 		virtual ARenderResourceInitializer* CreateResourceInitializer() = 0;
 		virtual void DestroyResourceInitializer(ARenderResourceInitializer* _init) = 0;

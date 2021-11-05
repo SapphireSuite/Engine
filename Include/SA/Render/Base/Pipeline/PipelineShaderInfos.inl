@@ -5,20 +5,28 @@ namespace Sa
 	template <typename T>
 	void PipelineShaderInfos::SetSpecConstant(uint32 _id, const T& _value)
 	{
-		for (auto& specCst : userSpecConstants)
+		PipelineSpecConstant* specCst = nullptr;
+
+		for (auto& specCstIt : specConstants)
 		{
-			if (specCst.id == _id)
+			if (specCstIt.id == _id)
 			{
-				specCst.value = std::make_unique<SpecConstant<T>>(_value);
-				return;
+				specCst = &specCstIt;
+				break;
 			}
 		}
+
+		// Not found: emplace unnamed spec constant.
+		if (!specCst)
+			specCst = &(*specConstants.emplace(ShaderSpecConstantDescriptor{ "", _id }).first);
+
+		specCst->value = std::make_unique<SpecConstant<T>>(_value);
 	}
 
 	template <typename T>
 	void PipelineShaderInfos::SetSpecConstant(const std::string& _name, const T& _value)
 	{
-		for (auto& specCst : userSpecConstants)
+		for (auto& specCst : specConstants)
 		{
 			if (specCst.name == _name)
 			{
@@ -26,5 +34,7 @@ namespace Sa
 				return;
 			}
 		}
+
+		// Can't emplace new spec constant: ID required.
 	}
 }

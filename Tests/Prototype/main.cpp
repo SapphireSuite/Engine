@@ -62,8 +62,8 @@ AShader* unlitfrag = nullptr;
 ATexture* missText = nullptr;
 AStaticMesh* cubeMesh = nullptr;
 
-//RenderPipelineDescriptor unlitPipelineDesc;
-//ARenderPipeline* unlitPipeline = nullptr;
+RenderPipelineDescriptor unlitPipelineDesc;
+ARenderPipeline* unlitPipeline = nullptr;
 
 
 //ARenderMaterial* cubeMat = nullptr;
@@ -221,7 +221,7 @@ int main()
 					}
 
 					unlitvert = renderContext->CreateShader(resInit, asset.raw);
-					//unlitPipelineDesc.AddShader(unlitvert, asset.descriptor);
+					unlitPipelineDesc.AddShader(unlitvert, asset.descriptor);
 				}
 
 				// Unlit frag
@@ -240,7 +240,7 @@ int main()
 					}
 
 					unlitfrag = renderContext->CreateShader(resInit, asset.raw);
-					//unlitPipelineDesc.AddShader(unlitfrag, asset.descriptor);
+					unlitPipelineDesc.AddShader(unlitfrag, asset.descriptor);
 				}
 			}
 
@@ -290,10 +290,10 @@ int main()
 
 			// Pipeline
 			{
-				//unlitPipelineDesc.SetRenderPass(renderPass, renderPassDesc, 0u);
-				//unlitPipelineDesc.shaderInfos.vertexBindingLayout.meshLayout = cubeMesh->GetLayout();
+				unlitPipelineDesc.SetRenderPass(renderPass, renderPassDesc, 0u);
+				unlitPipelineDesc.shaderInfos.vertexBindingLayout.meshLayout = cubeMesh->GetLayout();
 
-				//unlitPipeline = renderSubIntf->CreatePipeline(unlitPipelineDesc);
+				//unlitPipeline = renderContext->CreatePipeline(unlitPipelineDesc);
 			}
 
 
@@ -391,8 +391,6 @@ int main()
 			//renderSubIntf->DestroyCamera(camera);
 
 			////renderSubIntf->DestroyMaterial(cubeMat);
-
-			////renderSubIntf->DestroyPipeline(unlitPipeline);
 
 			renderGraph->DestroyContextInterface(renderContext);
 			renderIntf->DestroyGraphicInterface(renderGraph);

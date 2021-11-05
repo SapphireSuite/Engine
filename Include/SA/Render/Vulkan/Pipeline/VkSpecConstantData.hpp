@@ -5,7 +5,6 @@
 #ifndef SAPPHIRE_RENDER_VK_SPEC_CONSTANT_DATA_GUARD
 #define SAPPHIRE_RENDER_VK_SPEC_CONSTANT_DATA_GUARD
 
-#include <SA/Render/Base/Shader/SpecConstants/DefaultSpecConstant.hpp>
 #include <SA/Render/Base/Pipeline/PipelineShaderInfos.hpp>
 
 namespace Sa::Vk
