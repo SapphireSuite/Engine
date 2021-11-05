@@ -7,7 +7,7 @@
 
 #include <string>
 
-#include <SA/Render/Base/Shader/Bindings/ShaderBindingType.hpp>
+#include <SA/Render/Base/Shader/Descriptors/ShaderBindingType.hpp>
 
 namespace Sa
 {
@@ -15,6 +15,9 @@ namespace Sa
 	{
 		/// Binding name (as written in shader).
 		std::string name;
+
+		/// Binding <b>data type</b> (struct) name (as written in shader).
+		std::string datatTypeName;
 
 
 		// Block serialize

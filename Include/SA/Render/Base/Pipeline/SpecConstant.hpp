@@ -39,6 +39,6 @@ namespace Sa
 	};
 }
 
-#include <SA/Render/Base/Shader/SpecConstants/SpecConstant.inl>
+#include <SA/Render/Base/Pipeline/SpecConstant.inl>
 
 #endif // GUARD

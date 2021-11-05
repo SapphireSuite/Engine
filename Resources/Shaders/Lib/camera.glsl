@@ -28,6 +28,15 @@ layout(set = 1, binding = 0) buffer Camera_StorageBuffer
     Camera cameras[];
 } Camera_UBO;
 
+
+/*
+layout(push_constant) uniform Camera_PushConstants
+{
+    layout(offset = 0) int cameraIndex;
+} Camera_pConst;
+*/
+
+
 //}
 
 

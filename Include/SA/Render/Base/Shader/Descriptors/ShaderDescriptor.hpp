@@ -8,9 +8,10 @@
 #include <set>
 #include <vector>
 
-#include <SA/Render/Base/Shader/ShaderStage.hpp>
-#include <SA/Render/Base/Shader/Bindings/ShaderBindingSetDescriptor.hpp>
-#include <SA/Render/Base/Shader/SpecConstants/SpecConstantDescriptor.hpp>
+#include <SA/Render/Base/Shader/Descriptors/ShaderStage.hpp>
+#include <SA/Render/Base/Shader/Descriptors/ShaderBindingSetDescriptor.hpp>
+#include <SA/Render/Base/Shader/Descriptors/ShaderPushConstantDescriptor.hpp>
+#include <SA/Render/Base/Shader/Descriptors/ShaderSpecConstantDescriptor.hpp>
 
 #include <SA/Render/Base/Mesh/Vertex/VertexComp.hpp>
 
@@ -24,7 +25,8 @@ namespace Sa
 		Flags<VertexComp> vertexLayout;
 
 		std::vector<ShaderBindingSetDescriptor> bindingSet;
-		std::vector<SpecConstantDescriptor> specConstants;
+		std::vector<ShaderPushConstantDescriptor> pushConstants;
+		std::vector<ShaderSpecConstantDescriptor> specConstants;
 
 
 		ShaderBindingDescriptor& EmplaceBinding(uint32 _set);

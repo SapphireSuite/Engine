@@ -1,10 +1,8 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Render/Base/Shader/ShaderDescriptor.hpp>
+#include <Render/Base/Shader/Descriptors/ShaderDescriptor.hpp>
 
 #include <Core/Serialize/Serializer.hpp>
-
-#include <Render/Base/Shader/SpecConstants/DefaultSpecConstant.hpp>
 
 namespace Sa
 {
@@ -37,6 +35,7 @@ namespace Sa
 				ToBinary(_obj.vertexLayout, _str);
 
 			ToBinary(_obj.bindingSet, _str);
+			ToBinary(_obj.pushConstants, _str);
 			ToBinary(_obj.specConstants, _str);
 		}
 
@@ -48,6 +47,7 @@ namespace Sa
 				FromBinary(_obj.vertexLayout, _read);
 
 			FromBinary(_obj.bindingSet, _read);
+			FromBinary(_obj.pushConstants, _read);
 			FromBinary(_obj.specConstants, _read);
 		}
 	}

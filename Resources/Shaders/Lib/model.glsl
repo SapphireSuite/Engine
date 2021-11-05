@@ -23,6 +23,16 @@ layout(set = 2, binding = 1) buffer Model_NormalStorageBuffer
 	mat3 normalMats[];
 } Model_NormalUBO;
 
+
+/*
+layout(push_constant) uniform Model_PushConstants
+{
+	layout(offset = 4) int modelIndex;
+	layout(offset = 8) int modelNormalIndex;
+} Model_pConst;
+*/
+
+
 //}
 
 

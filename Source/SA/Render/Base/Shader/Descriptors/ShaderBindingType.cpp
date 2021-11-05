@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Render/Base/Shader/Bindings/ShaderBindingType.hpp>
+#include <Render/Base/Shader/Descriptors/ShaderBindingType.hpp>
 
 #include <Collections/Debug>
 

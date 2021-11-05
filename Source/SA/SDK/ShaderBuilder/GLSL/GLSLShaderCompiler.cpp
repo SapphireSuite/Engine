@@ -7,7 +7,7 @@
 #include <Core/Algorithms/ReadFile.hpp>
 
 #include <Render/Base/Shader/RawShader.hpp>
-#include <Render/Base/Shader/ShaderDescriptor.hpp>
+#include <Render/Base/Shader/Descriptors/ShaderDescriptor.hpp>
 
 #include <SDK/EnvironmentVariable.hpp>
 #include <SDK/ShaderBuilder/GLSL/GLSLShaderFileIncluder.hpp>

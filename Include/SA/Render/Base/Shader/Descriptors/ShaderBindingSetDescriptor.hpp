@@ -7,7 +7,7 @@
 
 #include <vector>
 
-#include <SA/Render/Base/Shader/Bindings/ShaderBindingDescriptor.hpp>
+#include <SA/Render/Base/Shader/Descriptors/ShaderBindingDescriptor.hpp>
 
 namespace Sa
 {
