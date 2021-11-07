@@ -1,8 +1,10 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <SA/Render/Base/Pipeline/PipelineShaderInfos.hpp>
+#include <Render/Base/Pipeline/Descriptors/PipelineShaderInfos.hpp>
 
 #include <Collections/Debug>
+
+#include <Render/Base/Shader/Descriptors/ShaderDescriptor.hpp>
 
 namespace Sa
 {

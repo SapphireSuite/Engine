@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Render/Base/Pipeline/CullingMode.hpp>
+#include <Render/Base/Pipeline/Modes/CullingMode.hpp>
 
 #include <Collections/Debug>
 

@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_RENDER_ARENDER_PIPELINE_GUARD
 #define SAPPHIRE_RENDER_ARENDER_PIPELINE_GUARD
 
-#include <SA/Render/Base/Pipeline/RenderPipelineDescriptor.hpp>
+#include <SA/Render/Base/Pipeline/Descriptors/RenderPipelineDescriptor.hpp>
 
 namespace Sa
 {

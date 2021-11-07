@@ -7,46 +7,16 @@
 
 #include <set>
 
-#include <SA/Render/Base/Shader/AShader.hpp>
-#include <SA/Render/Base/Shader/Descriptors/ShaderDescriptor.hpp>
-
 #include <SA/Render/Base/Mesh/Vertex/VertexBindingLayout.hpp>
 
-#include <SA/Render/Base/Pipeline/SpecConstant.hpp>
+#include <SA/Render/Base/Pipeline/Descriptors/PipelineShaderStage.hpp>
+#include <SA/Render/Base/Pipeline/Descriptors/PipelineBindingSetDescriptor.hpp>
+#include <SA/Render/Base/Pipeline/Descriptors/PipelinePushConstantDescriptor.hpp>
+#include <SA/Render/Base/Pipeline/SpecConstant/PipelineSpecConstant.hpp>
 
 namespace Sa
 {
-	struct PipelineShaderStage
-	{
-		const AShader* shader = nullptr;
-
-		ShaderStage stage = ShaderStage::Unknown;
-	};
-
-
-	struct PipelineBindingDescriptor : public ShaderBindingDescriptor
-	{
-		Flags<ShaderStage> stageFlags;
-	};
-
-	struct PipelineBindingSetDescriptor
-	{
-		/// List of registered bindings for set.
-		std::vector<PipelineBindingDescriptor> bindings;
-	};
-
-
-	struct PipelinePushConstantDescriptor : public ShaderPushConstantDescriptor
-	{
-		Flags<ShaderStage> stageFlags;
-	};
-
-
-	struct PipelineSpecConstant : public ShaderSpecConstantDescriptor
-	{
-		std::unique_ptr<SpecConstantBase> value;
-	};
-
+	struct ShaderDescriptor;
 
 	struct PipelineShaderInfos
 	{
@@ -70,6 +40,6 @@ namespace Sa
 	};
 }
 
-#include <SA/Render/Base/Pipeline/PipelineShaderInfos.inl>
+#include <SA/Render/Base/Pipeline/Descriptors/PipelineShaderInfos.inl>
 
 #endif // GUARD

@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Render/Base/Pipeline/FrontFaceMode.hpp>
+#include <Render/Base/Pipeline/Modes/FrontFaceMode.hpp>
 
 #include <Collections/Debug>
 

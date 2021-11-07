@@ -13,18 +13,11 @@ namespace Sa::Vk
 {
 	class Device;
 	class SpecConstantData;
-	class EngineDescriptorSetLayouts;
+	class PipelineLayout;
 
 	class Pipeline : public ARenderPipeline
 	{
 		VkPipeline mHandle = VK_NULL_HANDLE;
-		VkPipelineLayout mPipelineLayout = VK_NULL_HANDLE;
-
-		void CreatePipelineLayout(const Device& _device, const RenderPipelineDescriptor& _desc);
-		void DestroyPipelineLayout(const Device& _device);
-
-		void CreatePipelineHandle(const Device& _device, const RenderPipelineDescriptor& _desc);
-		void DestroyPipelineHandle(const Device& _device);
 
 
 		static void FillShaderSpecConstants(SpecConstantData& _specConstData,
@@ -41,12 +34,12 @@ namespace Sa::Vk
 
 		static void FillRasterization(VkPipelineRasterizationStateCreateInfo& _rasterizerInfo, const PipelineRenderModes& _modes) noexcept;
 
-		static void FillRenderPassAttachments(struct RenderPassAttachmentInfos& _renderPassAttInfos, const RenderPipelineDescriptor& _desc) noexcept;
+		static void FillRenderPassAttachments(struct RenderPassAttachmentInfos& _renderPassAttInfos, const PipelineRenderPassInfos& _passInfos) noexcept;
 
 	public:
 		VkPipelineLayout GetLayout() const noexcept;
 
-		void Create(const Device& _device, const RenderPipelineDescriptor& _desc);
+		void Create(const Device& _device, const RenderPipelineDescriptor& _desc, const PipelineLayout& _layout);
 		void Destroy(const Device& _device);
 
 		//void Bind(const ARenderFrame& _frame) const override final;

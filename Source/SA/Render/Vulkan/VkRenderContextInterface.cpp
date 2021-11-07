@@ -131,7 +131,8 @@ namespace Sa::Vk
 	{
 		Pipeline& pipline = mPipelines.emplace_front();
 
-		pipline.Create(GetDevice(), _desc);
+		// TODO.
+		//pipline.Create(GetDevice(), _desc);
 
 		return &pipline;
 	}
@@ -140,7 +141,8 @@ namespace Sa::Vk
 	{
 		Pipeline& vkPipline = CastRef<Pipeline>(_pipeline);
 
-		vkPipline.Destroy(GetDevice());
+		// TODO.
+		//vkPipline.Destroy(GetDevice());
 
 		mPipelines.remove(vkPipline);
 	}

@@ -5,9 +5,9 @@
 #ifndef SAPPHIRE_RENDER_PIPELINE_RENDER_MODES_GUARD
 #define SAPPHIRE_RENDER_PIPELINE_RENDER_MODES_GUARD
 
-#include <SA/Render/Base/Pipeline/CullingMode.hpp>
-#include <SA/Render/Base/Pipeline/FrontFaceMode.hpp>
-#include <SA/Render/Base/Pipeline/PolygonMode.hpp>
+#include <SA/Render/Base/Pipeline/Modes/CullingMode.hpp>
+#include <SA/Render/Base/Pipeline/Modes/FrontFaceMode.hpp>
+#include <SA/Render/Base/Pipeline/Modes/PolygonMode.hpp>
 
 namespace Sa
 {

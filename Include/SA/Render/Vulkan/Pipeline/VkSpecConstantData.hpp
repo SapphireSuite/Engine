@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_RENDER_VK_SPEC_CONSTANT_DATA_GUARD
 #define SAPPHIRE_RENDER_VK_SPEC_CONSTANT_DATA_GUARD
 
-#include <SA/Render/Base/Pipeline/PipelineShaderInfos.hpp>
+#include <SA/Render/Base/Pipeline/Descriptors/PipelineShaderInfos.hpp>
 
 namespace Sa::Vk
 {

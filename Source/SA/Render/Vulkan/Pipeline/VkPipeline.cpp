@@ -11,6 +11,7 @@
 #include <Render/Vulkan/Pass/VkRenderPass.hpp>
 //#include <Render/Vulkan/VkFrame.hpp>
 #include <Render/Vulkan/Pipeline/VkSpecConstantData.hpp>
+#include <Render/Vulkan/Pipeline/VkPipelineLayout.hpp>
 
 namespace Sa::Vk
 {
@@ -24,63 +25,7 @@ namespace Sa::Vk
 	};
 
 
-	VkPipelineLayout Pipeline::GetLayout() const noexcept
-	{
-		return mPipelineLayout;
-	}
-
-
-	void Pipeline::Create(const Device& _device, const RenderPipelineDescriptor& _desc)
-	{
-		CreatePipelineLayout(_device, _desc);
-		CreatePipelineHandle(_device, _desc);
-
-		SA_LOG(L"Render Pipeline created.", Infos, SA/Render/Vulkan);
-	}
-
-	void Pipeline::Destroy(const Device& _device)
-	{
-		DestroyPipelineHandle(_device);
-		DestroyPipelineLayout(_device);
-
-		SA_LOG(L"Render Pipeline destroyed.", Infos, SA/Render/Vulkan);
-	}
-
-	//void Pipeline::Bind(const ARenderFrame& _frame) const
-	//{
-	//	const Frame& vkFrame = Cast<Frame>(_frame);
-
-	//	vkCmdBindPipeline(vkFrame.cmd, VK_PIPELINE_BIND_POINT_GRAPHICS, mHandle);
-	//}
-
-
-	void Pipeline::CreatePipelineLayout(const Device& _device, const RenderPipelineDescriptor& _desc)
-	{
-		//std::vector<VkDescriptorSetLayout> descSetLayouts = _enDescSetLayouts.QuerySets(_desc.shaderInfos.engineBindingSets);
-		//descSetLayouts[0] = mMainDescriptorSetLayout;
-
-		//VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo{};
-		//pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-		//pipelineLayoutCreateInfo.pNext = nullptr;
-		//pipelineLayoutCreateInfo.flags = 0u;
-		//pipelineLayoutCreateInfo.setLayoutCount = SizeOf<uint32>(descSetLayouts);
-		//pipelineLayoutCreateInfo.pSetLayouts = descSetLayouts.data();
-		//pipelineLayoutCreateInfo.pushConstantRangeCount = 0u;
-		//pipelineLayoutCreateInfo.pPushConstantRanges = nullptr;
-
-		//SA_VK_ASSERT(vkCreatePipelineLayout(_device, &pipelineLayoutCreateInfo, nullptr, &mPipelineLayout), L"Failed to create pipeline layout!");
-	}
-
-	void Pipeline::DestroyPipelineLayout(const Device& _device)
-	{
-		SA_ASSERT(Nullptr, SA/Render/Vulkan, mPipelineLayout, L"Destroy pipeline with null Pipeline Layout!");
-
-		vkDestroyPipelineLayout(_device, mPipelineLayout, nullptr);
-		mPipelineLayout = VK_NULL_HANDLE;
-	}
-
-
-	void Pipeline::CreatePipelineHandle(const Device& _device, const RenderPipelineDescriptor& _desc)
+	void Pipeline::Create(const Device& _device, const RenderPipelineDescriptor& _desc, const PipelineLayout& _layout)
 	{
 		// Shaders
 		SpecConstantData specConstData;
@@ -144,7 +89,7 @@ namespace Sa::Vk
 
 		// Multisampling.
 		RenderPassAttachmentInfos renderPassAttInfos{};
-		FillRenderPassAttachments(renderPassAttInfos, _desc);
+		FillRenderPassAttachments(renderPassAttInfos, _desc.passInfos);
 
 
 		// Create handle.
@@ -163,23 +108,34 @@ namespace Sa::Vk
 		pipelineCreateInfo.pDepthStencilState = &renderPassAttInfos.depthStencilInfo;
 		pipelineCreateInfo.pColorBlendState = &renderPassAttInfos.colorBlendingInfo;
 		pipelineCreateInfo.pDynamicState = nullptr;
-		pipelineCreateInfo.layout = mPipelineLayout;
-		pipelineCreateInfo.renderPass = CastRef<RenderPass>(_desc.renderPass);
-		pipelineCreateInfo.subpass = _desc.subPassIndex;
+		pipelineCreateInfo.layout = _layout;
+		pipelineCreateInfo.renderPass = CastRef<RenderPass>(_desc.passInfos.renderPass);
+		pipelineCreateInfo.subpass = _desc.passInfos.subPassIndex;
 		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 		pipelineCreateInfo.basePipelineIndex = -1;
 
 		SA_VK_ASSERT(vkCreateGraphicsPipelines(_device, VK_NULL_HANDLE, 1, &pipelineCreateInfo, nullptr, &mHandle),
 			L"Failed to create graphics pipeline!");
+
+		SA_LOG(L"Render Pipeline created.", Infos, SA/Render/Vulkan);
 	}
 
-	void Pipeline::DestroyPipelineHandle(const Device& _device)
+	void Pipeline::Destroy(const Device& _device)
 	{
 		SA_ASSERT(Nullptr, SA/Render/Vulkan, mHandle, L"Destroy null Pipeline!");
 
 		vkDestroyPipeline(_device, mHandle, nullptr);
 		mHandle = VK_NULL_HANDLE;
+
+		SA_LOG(L"Render Pipeline destroyed.", Infos, SA/Render/Vulkan);
 	}
+
+	//void Pipeline::Bind(const ARenderFrame& _frame) const
+	//{
+	//	const Frame& vkFrame = Cast<Frame>(_frame);
+
+	//	vkCmdBindPipeline(vkFrame.cmd, VK_PIPELINE_BIND_POINT_GRAPHICS, mHandle);
+	//}
 
 
 	void Pipeline::FillShaderSpecConstants(SpecConstantData& _specConstData,
@@ -255,9 +211,9 @@ namespace Sa::Vk
 		_rasterizerInfo.lineWidth = 1.0f;
 	}
 
-	void Pipeline::FillRenderPassAttachments(struct RenderPassAttachmentInfos& _renderPassAttInfos, const RenderPipelineDescriptor& _desc) noexcept
+	void Pipeline::FillRenderPassAttachments(struct RenderPassAttachmentInfos& _renderPassAttInfos, const PipelineRenderPassInfos& _passInfos) noexcept
 	{
-		const VkSampleCountFlagBits sampleCount = API_GetSampleCount(_desc.subPassDesc.sampling);
+		const VkSampleCountFlagBits sampleCount = API_GetSampleCount(_passInfos.subPassDesc.sampling);
 
 		// MultiSampling.
 		_renderPassAttInfos.multisamplingInfos.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
@@ -299,7 +255,7 @@ namespace Sa::Vk
 		// Query color attachments only.
 		uint32 colorAttachmentNum = 0u;
 
-		for (auto it = _desc.subPassDesc.attachmentDescs.begin(); it != _desc.subPassDesc.attachmentDescs.end(); ++it)
+		for (auto it = _passInfos.subPassDesc.attachmentDescs.begin(); it != _passInfos.subPassDesc.attachmentDescs.end(); ++it)
 		{
 			if (!IsDepthFormat(it->format))
 				++colorAttachmentNum;
@@ -325,6 +281,6 @@ namespace Sa::Vk
 
 	bool Pipeline::operator==(const Pipeline& _rhs) const noexcept
 	{
-		return mHandle == _rhs.mHandle && mPipelineLayout == _rhs.mPipelineLayout;
+		return mHandle == _rhs.mHandle;
 	}
 }

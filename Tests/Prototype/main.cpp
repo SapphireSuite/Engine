@@ -221,7 +221,7 @@ int main()
 					}
 
 					unlitvert = renderContext->CreateShader(resInit, asset.raw);
-					unlitPipelineDesc.AddShader(unlitvert, asset.descriptor);
+					unlitPipelineDesc.shaderInfos.AddShader(unlitvert, asset.descriptor);
 				}
 
 				// Unlit frag
@@ -240,7 +240,7 @@ int main()
 					}
 
 					unlitfrag = renderContext->CreateShader(resInit, asset.raw);
-					unlitPipelineDesc.AddShader(unlitfrag, asset.descriptor);
+					unlitPipelineDesc.shaderInfos.AddShader(unlitfrag, asset.descriptor);
 				}
 			}
 
@@ -290,7 +290,7 @@ int main()
 
 			// Pipeline
 			{
-				unlitPipelineDesc.SetRenderPass(renderPass, renderPassDesc, 0u);
+				unlitPipelineDesc.passInfos.SetRenderPass(renderPass, renderPassDesc, 0u);
 				unlitPipelineDesc.shaderInfos.vertexBindingLayout.meshLayout = cubeMesh->GetLayout();
 
 				//unlitPipeline = renderContext->CreatePipeline(unlitPipelineDesc);

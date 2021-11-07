@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
-#include <Render/Base/Pipeline/PolygonMode.hpp>
+#include <Render/Base/Pipeline/Modes/PolygonMode.hpp>
 
 #include <Collections/Debug>
 
