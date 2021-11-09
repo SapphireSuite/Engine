@@ -4,15 +4,13 @@
 
 #include <Collections/Debug>
 
-#include <Maths/Matrix/Matrix3.hpp>
-#include <Maths/Matrix/Matrix4.hpp>
+#include <Core/Algorithms/SizeOf.hpp>
 
 namespace Sa::Vk
 {
 	constexpr uint64 gBufferHeapDefaultSize = 1024;
 	constexpr uint64 gFrameBufferDefaultElemNum = 10;
 	constexpr VkBufferUsageFlagBits gBufferUsage = VK_BUFFER_USAGE_STORAGE_BUFFER_BIT;
-	constexpr VkDescriptorType gBufferDescriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
 
 	void MeshMgr::Create(const Device& _device, uint32 _frameNum)
 	{
@@ -32,38 +30,20 @@ namespace Sa::Vk
 		}
 
 
-		// Descriptor Sets.
-		{
-			// TODO: Remove later.
-			PipelineBindingSetDescriptor modelBindSetDesc;
-			auto& trBind = modelBindSetDesc.bindings.emplace_back();
-			trBind.binding = 0u;
-			trBind.type = ShaderBindingType::StorageBuffer;
-			trBind.stageFlags = ShaderStage::Vertex;
+		// TODO: Remove later.
+		PipelineBindingSetDescriptor modelBindSetDesc;
+		auto& trBind = modelBindSetDesc.bindings.emplace_back();
+		trBind.binding = 0u;
+		trBind.type = ShaderBindingType::StorageBuffer;
+		trBind.stageFlags = ShaderStage::Vertex;
 
-			auto& normalBind = modelBindSetDesc.bindings.emplace_back();
-			normalBind.binding = 1u;
-			normalBind.type = ShaderBindingType::StorageBuffer;
-			normalBind.stageFlags = ShaderStage::Vertex;
-			//
+		auto& normalBind = modelBindSetDesc.bindings.emplace_back();
+		normalBind.binding = 1u;
+		normalBind.type = ShaderBindingType::StorageBuffer;
+		normalBind.stageFlags = ShaderStage::Vertex;
+		//
 
-			mDescriptorPool.Create(_device, modelBindSetDesc, _frameNum);
-			mDescriptorSetLayout.Create(_device, modelBindSetDesc);
-
-			mDescriptorSets = mDescriptorPool.Allocate(_device, std::vector<DescriptorSetLayout>(_frameNum, mDescriptorSetLayout));
-
-
-			// Bind buffer to descriptor.
-			for (uint32 i = 0; i < _frameNum; ++i)
-			{
-				DescriptorSet::Updater updater = mDescriptorSets[i].MakeUpdater();
-
-				updater.Add(modelBindSetDesc.bindings[0].binding, { &mFrames[i].transformBuffer }, gBufferDescriptorType);
-				updater.Add(modelBindSetDesc.bindings[1].binding, { &mFrames[i].normalBuffer }, gBufferDescriptorType);
-
-				updater.Submit(_device);
-			}
-		}
+		ResourceMgr::Create(_device, modelBindSetDesc, _frameNum);
 
 
 		SA_LOG(L"Mesh Manager created.", Infos, SA/Render/Vulkan);
@@ -71,16 +51,7 @@ namespace Sa::Vk
 
 	void MeshMgr::Destroy(const Device& _device)
 	{
-		// Descriptor Sets.
-		{
-			// Not needed: Auto free on destroy.
-			//mDescriptorPool.Free(_device, mDescriptorSets);
-
-			mDescriptorPool.Destroy(_device);
-			mDescriptorSetLayout.Destroy(_device);
-
-			mDescriptorSets.clear();
-		}
+		ResourceMgr::Destroy(_device);
 
 
 		// Buffers
@@ -100,6 +71,28 @@ namespace Sa::Vk
 
 
 		SA_LOG(L"Mesh Manager destroyed.", Infos, SA/Render/Vulkan);
+	}
+
+
+	void MeshMgr::FillDescriptorUpdater(DescriptorSet::Updater& _updater, uint32 _frame)
+	{
+		// TODO: Clean hard code.
+		_updater.Add(0u, { &mFrames[_frame].transformBuffer });
+		_updater.Add(1u, { &mFrames[_frame].normalBuffer });
+	}
+
+
+	void MeshMgr::Update(const Device& _device,
+		const std::vector<CMat4f>& _transforms,
+		const std::vector<CMat3f>& _normals,
+		uint32 _frame)
+	{
+		SA_ASSERT(OutOfRange, SA/Render/Vulkan, _frame, 0u, (uint32)mFrames.size());
+
+		Frame& frame = mFrames[_frame];
+
+		UpdateBuffer(_device, frame.transformBuffer, 0u, _transforms.data(), OctSizeOf<uint64>(_transforms), _frame);
+		UpdateBuffer(_device, frame.normalBuffer, 1u, _normals.data(), OctSizeOf<uint64>(_normals), _frame);
 	}
 
 

@@ -23,30 +23,14 @@ namespace Sa::Vk
 		}
 
 
-		// Descriptor Sets.
-		{
-			// TODO: Remove later.
-			PipelineBindingSetDescriptor cameraBindSetDesc;
-			auto& bind = cameraBindSetDesc.bindings.emplace_back();
-			bind.type = ShaderBindingType::StorageBuffer;
-			bind.stageFlags = ShaderStage::Vertex;
-			//
+		// TODO: Remove later.
+		PipelineBindingSetDescriptor cameraBindSetDesc;
+		auto& bind = cameraBindSetDesc.bindings.emplace_back();
+		bind.type = ShaderBindingType::StorageBuffer;
+		bind.stageFlags = ShaderStage::Vertex;
+		//
 
-			mDescriptorPool.Create(_device, cameraBindSetDesc, _frameNum);
-			mDescriptorSetLayout.Create(_device, cameraBindSetDesc);
-
-			mDescriptorSets = mDescriptorPool.Allocate(_device, std::vector<DescriptorSetLayout>(_frameNum, mDescriptorSetLayout));
-
-			// Bind buffer to descriptor.
-			for (uint32 i = 0; i < _frameNum; ++i)
-			{
-				DescriptorSet::Updater updater = mDescriptorSets[i].MakeUpdater();
-
-				updater.Add(bind.binding, { &mCameraBuffers[i] });
-
-				updater.Submit(_device);
-			}
-		}
+		ResourceMgr::Create(_device, cameraBindSetDesc, _frameNum);
 
 
 		SA_LOG(L"Camera Manager created.", Infos, SA/Render/Vulkan);
@@ -54,15 +38,7 @@ namespace Sa::Vk
 
 	void CameraMgr::Destroy(const Device& _device)
 	{
-		// Descriptor Sets.
-		{
-			// Not needed: Auto free on destroy.
-			//mDescriptorPool.Free(_device, mDescriptorSets);
-			mDescriptorPool.Destroy(_device);
-			mDescriptorSetLayout.Destroy(_device);
-
-			mDescriptorSets.clear();
-		}
+		ResourceMgr::Destroy(_device);
 
 		// Buffers.
 		{
@@ -76,22 +52,18 @@ namespace Sa::Vk
 	}
 
 
-	void CameraMgr::Update(const Device& _device, const std::vector<CameraUBO>& _cameras, uint32 _frameNum)
+	void CameraMgr::FillDescriptorUpdater(DescriptorSet::Updater& _updater, uint32 _frame)
 	{
-		SA_ASSERT(OutOfRange, SA/Render/Vulkan, _frameNum, 0u, (uint32)mCameraBuffers.size());
+		// TODO: Clean hard code.
+		_updater.Add(0u, { &mCameraBuffers[_frame] });
+	}
 
-		CGPUBuffer& buffer = mCameraBuffers[_frameNum];
+	void CameraMgr::Update(const Device& _device, const std::vector<CameraUBO>& _cameras, uint32 _frame)
+	{
+		SA_ASSERT(OutOfRange, SA/Render/Vulkan, _frame, 0u, (uint32)mCameraBuffers.size());
 
+		CGPUBuffer& buffer = mCameraBuffers[_frame];
 
-		const uint64 inOctSize = OctSizeOf<uint64>(_cameras);
-
-		if (buffer.GetCapacity() < inOctSize)
-		{
-			// Realloc.
-			buffer.Destroy(_device);
-			buffer.Create(_device, gBufferUsage, inOctSize, _cameras.data());
-		}
-		else
-			buffer.UpdateData(_device, _cameras.data(), inOctSize);
+		UpdateBuffer(_device, buffer, 0u, _cameras.data(), OctSizeOf<uint64>(_cameras), _frame);
 	}
 }

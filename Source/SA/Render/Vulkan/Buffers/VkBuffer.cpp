@@ -42,11 +42,33 @@ namespace Sa::Vk
 		return mDeviceSize;
 	}
 
+	VkBufferUsageFlags Buffer::GetUsage() const noexcept
+	{
+		return mUsage;
+	}
+
+	VkDescriptorType Buffer::GetDescriptorType() const noexcept
+	{
+		switch (mUsage)
+		{
+			case VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT:
+				return VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+			case VK_BUFFER_USAGE_STORAGE_BUFFER_BIT:
+				return VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
+			default:
+			{
+				SA_LOG(L"Usage [" << mUsage << L"] not supported yet!", Error, SA/Render/Vulkan);
+				return VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+			}
+		}
+	}
+
 
 	void Buffer::Create(const Device& _device,
 		uint64 _size, VkBufferUsageFlags _usage,
 		VkMemoryPropertyFlags _properties)
 	{
+		mUsage = _usage;
 		mDeviceSize = _size;
 
 		VkBufferCreateInfo bufferInfo{};
@@ -89,6 +111,7 @@ namespace Sa::Vk
 		mHandle = VK_NULL_HANDLE;
 		mDeviceMemory = VK_NULL_HANDLE;
 		mDeviceSize = 0u;
+		mUsage = 0u;
 	}
 
 

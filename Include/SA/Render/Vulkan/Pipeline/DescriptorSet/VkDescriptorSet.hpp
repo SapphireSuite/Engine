@@ -42,7 +42,7 @@ namespace Sa::Vk
 		public:
 			Updater(const DescriptorSet& _handle);
 
-			void Add(uint32 _binding, const std::vector<const Buffer*>& _buffers, VkDescriptorType _descType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER);
+			void Add(uint32 _binding, const std::vector<const Buffer*>& _buffers);
 			void Add(uint32 _binding, const std::vector<const Texture*>& _textures, VkDescriptorType _descType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER);
 
 			void Submit(const Device& _device) const;

@@ -57,7 +57,7 @@ namespace Sa::Vk
 
 		mGraphics = nullptr;
 
-		SA_LOG(L"Render Context  Interface destroyed.", Infos, SA/Render/Vulkan);
+		SA_LOG(L"Render Context Interface destroyed.", Infos, SA/Render/Vulkan);
 	}
 
 

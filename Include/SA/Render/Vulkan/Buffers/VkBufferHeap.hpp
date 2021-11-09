@@ -15,9 +15,6 @@ namespace Sa::Vk
 
 	class BufferHeap : public Buffer
 	{
-	protected:
-		VkBufferUsageFlags mUsage = 0;
-
 //{ Meta
 
 	public:

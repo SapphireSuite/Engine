@@ -31,7 +31,7 @@ namespace Sa::Vk
 	}
 
 
-	void DescriptorSet::Updater::Add(uint32 _binding, const std::vector<const Buffer*>& _buffers, VkDescriptorType _descType)
+	void DescriptorSet::Updater::Add(uint32 _binding, const std::vector<const Buffer*>& _buffers)
 	{
 		std::vector<VkDescriptorBufferInfo>& descs = mBufferDescs.emplace_front();
 		descs.reserve(_buffers.size());
@@ -41,7 +41,7 @@ namespace Sa::Vk
 
 		VkWriteDescriptorSet& descWrite = mDescWrites.emplace_back(MakeDefaultWriteDescriptors(_binding));
 		descWrite.descriptorCount = SizeOf<uint32>(descs);
-		descWrite.descriptorType = _descType;
+		descWrite.descriptorType = _buffers[0]->GetDescriptorType();
 		descWrite.pBufferInfo = descs.data();
 	}
 

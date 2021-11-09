@@ -16,8 +16,6 @@ namespace Sa::Vk
 		// Required flag for Realloc.
 		_usage |= VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
 
-		mUsage = _usage;
-
 		Buffer::Create(_device, _size, _usage, _properties);
 
 		mTail = new MetaData{ _size };
@@ -26,8 +24,6 @@ namespace Sa::Vk
 
 	void BufferHeap::Destroy(const Device& _device)
 	{
-		mUsage = 0;
-
 		ClearMeta();
 
 		Buffer::Destroy(_device);
