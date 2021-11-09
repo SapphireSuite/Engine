@@ -15,7 +15,6 @@
 #include <SA/Render/Base/Mesh/AStaticMesh.hpp>
 #include <SA/Render/Base/Texture/ATexture.hpp>
 #include <SA/Render/Base/Texture/ACubemap.hpp>
-//#include <SA/Render/Base/Material/ARenderMaterial.hpp>
 //#include <SA/Render/Base/Camera/ACamera.hpp>
 
 namespace Sa
@@ -58,9 +57,6 @@ namespace Sa
 		virtual ACubemap* CreateCubemap(ARenderResourceInitializer* _init, const RawCubemap& _raw) = 0;
 		virtual void DestroyCubemap(ACubemap* _cubemap) = 0;
 
-
-		//virtual ARenderMaterial* CreateMaterial(const RenderMaterialCreateInfos& _infos) = 0;
-		//virtual void DestroyMaterial(ARenderMaterial* _material) = 0;
 
 		//virtual ACamera* CreateCamera() = 0;
 		//virtual void DestroyCamera(ACamera* _camera) = 0;

@@ -10,7 +10,6 @@
 #include <Render/Vulkan/Surface/VkWindowSurface.hpp>
 //#include <Render/Vulkan/Pipeline/VkPipeline.hpp>
 
-//#include <Render/Vulkan/Material/VkMaterial.hpp>
 //#include <Render/Vulkan/Camera/VkCamera.hpp>
 
 namespace Sa::Vk
@@ -257,26 +256,7 @@ namespace Sa::Vk
 		mCubemaps.remove(vkCubemap);
 	}
 
-	//
-	//ARenderMaterial* RenderContextInterface::CreateMaterial(const RenderMaterialCreateInfos& _infos)
-	//{
-	//	Material* const mat = new Material();
 
-	//	mat->Create(mDevice, _infos);
-
-	//	return mat;
-	//}
-	//
-	//void RenderContextInterface::DestroyMaterial(ARenderMaterial* _material)
-	//{
-	//	Material* const vkMat = _material->AsPtr<Material>();
-
-	//	vkMat->Destroy(mDevice);
-
-	//	delete vkMat;
-	//}
-
-	//
 	//ACamera* RenderContextInterface::CreateCamera()
 	//{
 	//	Camera* const camera = new Camera();

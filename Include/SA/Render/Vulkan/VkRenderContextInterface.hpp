@@ -18,8 +18,6 @@
 #include <SA/Render/Vulkan/Texture/VkTexture.hpp>
 #include <SA/Render/Vulkan/Texture/VkCubemap.hpp>
 
-#include <SA/Render/Vulkan/Buffers/GPU/VkGPUBufferHeap.hpp>
-
 namespace Sa::Vk
 {
 	class RenderGraphicInterface;
@@ -84,9 +82,6 @@ namespace Sa::Vk
 		ACubemap* CreateCubemap(ARenderResourceInitializer* _init, const RawCubemap& _raw) override final;
 		void DestroyCubemap(ACubemap* _cubemap) override final;
 
-
-		//ARenderMaterial* CreateMaterial(const RenderMaterialCreateInfos& _infos) override final;
-		//void DestroyMaterial(ARenderMaterial* _material) override final;
 
 		//ACamera* CreateCamera() override final;
 		//void DestroyCamera(ACamera* _camera) override final;
