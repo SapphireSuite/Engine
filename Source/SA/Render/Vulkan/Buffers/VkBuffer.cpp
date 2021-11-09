@@ -21,6 +21,17 @@ namespace Sa::Vk
 
 //}
 
+	Buffer::Buffer(Buffer&& _other) noexcept :
+		mHandle{ _other.mHandle },
+		mDeviceMemory{ _other.mDeviceMemory },
+		mDeviceSize{ _other.mDeviceSize }
+	{
+		_other.mHandle = VK_NULL_HANDLE;
+		_other.mDeviceMemory = VK_NULL_HANDLE;
+		_other.mDeviceSize = 0u;
+	}
+
+
 	bool Buffer::IsValid() const noexcept
 	{
 		return mHandle != VK_NULL_HANDLE && mDeviceMemory != VK_NULL_HANDLE;

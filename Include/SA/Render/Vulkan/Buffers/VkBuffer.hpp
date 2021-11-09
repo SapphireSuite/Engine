@@ -34,6 +34,10 @@ namespace Sa::Vk
 		};
 
 
+		Buffer() = default;
+		Buffer(Buffer&& _other) noexcept;
+
+
 		bool IsValid() const noexcept;
 		uint64 GetCapacity() const noexcept;
 
