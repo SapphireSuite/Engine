@@ -20,16 +20,19 @@ namespace Sa::Vk
 
 		mGraphics = _graphics;
 
-		mMeshVertexHeap.Create(GetDevice(), VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, 1024);
-		mMeshIndicesHeap.Create(GetDevice(), VK_BUFFER_USAGE_INDEX_BUFFER_BIT, 1024);
+		mMeshMgr.Create(GetDevice());
 
 		SA_LOG(L"Render Context Interface created.", Infos, SA/Render/Vulkan);
 	}
 
 	void RenderContextInterface::Destroy()
 	{
+		GetDevice().WaitIdle();
+
 		// Destroy in reversed order.
 		{
+			mMeshMgr.Destroy(GetDevice());
+
 			while (!mPipelines.empty())
 				DestroyPipeline(&mPipelines.front());
 
@@ -38,9 +41,6 @@ namespace Sa::Vk
 
 			while (!mTextures.empty())
 				DestroyTexture(&mTextures.front());
-
-			while (!mStaticMeshes.empty())
-				DestroyStaticMesh(&mStaticMeshes.front());
 
 			while (!mShaders.empty())
 				DestroyShader(&mShaders.front());
@@ -54,9 +54,6 @@ namespace Sa::Vk
 			while (!mSurfaces.empty())
 				DestroySurface(&mSurfaces.front());
 		}
-
-		mMeshVertexHeap.Destroy(GetDevice());
-		mMeshIndicesHeap.Destroy(GetDevice());
 
 		mGraphics = nullptr;
 
@@ -196,22 +193,12 @@ namespace Sa::Vk
 
 	AStaticMesh* RenderContextInterface::CreateStaticMesh(ARenderResourceInitializer* _init, const RawMesh& _raw)
 	{
-		BLStaticMesh& mesh = mStaticMeshes.emplace_front();
-
-		ResourceInitializer& vkInit = CastRef<ResourceInitializer>(_init);
-
-		mesh.Create(GetDevice(), vkInit, mMeshVertexHeap, mMeshIndicesHeap, _raw);
-		
-		return &mesh;
+		return mMeshMgr.CreateStaticMesh(GetDevice(), CastRef<ResourceInitializer>(_init), _raw);
 	}
 	
 	void RenderContextInterface::DestroyStaticMesh(AStaticMesh* _mesh)
 	{
-		BLStaticMesh& vkMesh = CastRef<BLStaticMesh>(_mesh);
-
-		vkMesh.Destroy(GetDevice(), mMeshVertexHeap, mMeshIndicesHeap);
-
-		mStaticMeshes.remove(vkMesh);
+		mMeshMgr.DestroyStaticMesh(GetDevice(), Cast<BLStaticMesh>(_mesh));
 	}
 
 

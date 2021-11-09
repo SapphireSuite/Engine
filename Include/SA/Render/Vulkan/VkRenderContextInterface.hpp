@@ -15,6 +15,7 @@
 #include <SA/Render/Vulkan/VkResourceInitializer.hpp>
 #include <SA/Render/Vulkan/Shader/VkShader.hpp>
 #include <SA/Render/Vulkan/Mesh/VkBLStaticMesh.hpp>
+#include <SA/Render/Vulkan/Mesh/VkMeshMgr.hpp>
 #include <SA/Render/Vulkan/Texture/VkTexture.hpp>
 #include <SA/Render/Vulkan/Texture/VkCubemap.hpp>
 
@@ -31,12 +32,10 @@ namespace Sa::Vk
 		std::forward_list<Pipeline> mPipelines;
 		std::forward_list<ResourceInitializer> mResInits;
 		std::forward_list<Shader> mShaders;
-		std::forward_list<BLStaticMesh> mStaticMeshes;
 		std::forward_list<Texture> mTextures;
 		std::forward_list<Cubemap> mCubemaps;
 
-		GPUBufferHeap mMeshVertexHeap;
-		GPUBufferHeap mMeshIndicesHeap;
+		MeshMgr mMeshMgr;
 
 
 		const Device& GetDevice() const;

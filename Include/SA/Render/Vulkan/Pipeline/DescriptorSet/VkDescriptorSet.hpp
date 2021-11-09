@@ -5,8 +5,8 @@
 #ifndef SAPPHIRE_RENDER_VK_DESCRIPTOR_SET_GUARD
 #define SAPPHIRE_RENDER_VK_DESCRIPTOR_SET_GUARD
 
-#include <list>
 #include <vector>
+#include <forward_list>
 
 #include <SA/Core/Types/Int.hpp>
 
@@ -34,16 +34,16 @@ namespace Sa::Vk
 
 			std::vector<VkWriteDescriptorSet> mDescWrites;
 
-			std::list<std::vector<VkDescriptorBufferInfo>> mBufferDescs;
-			std::list<std::vector<VkDescriptorImageInfo>> mImageDescs;
+			std::forward_list<std::vector<VkDescriptorBufferInfo>> mBufferDescs;
+			std::forward_list<std::vector<VkDescriptorImageInfo>> mImageDescs;
 
 			VkWriteDescriptorSet MakeDefaultWriteDescriptors(uint32 _binding);
 
 		public:
 			Updater(const DescriptorSet& _handle);
 
-			void Add(uint32 _binding, const std::vector<const Buffer*>& _buffers);
-			void Add(uint32 _binding, const std::vector<const Texture*>& _textures);
+			void Add(uint32 _binding, const std::vector<const Buffer*>& _buffers, VkDescriptorType _descType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER);
+			void Add(uint32 _binding, const std::vector<const Texture*>& _textures, VkDescriptorType _descType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER);
 
 			void Submit(const Device& _device) const;
 		};

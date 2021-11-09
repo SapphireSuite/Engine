@@ -31,9 +31,9 @@ namespace Sa::Vk
 	}
 
 
-	void DescriptorSet::Updater::Add(uint32 _binding, const std::vector<const Buffer*>& _buffers)
+	void DescriptorSet::Updater::Add(uint32 _binding, const std::vector<const Buffer*>& _buffers, VkDescriptorType _descType)
 	{
-		std::vector<VkDescriptorBufferInfo>& descs = mBufferDescs.emplace_back();
+		std::vector<VkDescriptorBufferInfo>& descs = mBufferDescs.emplace_front();
 		descs.reserve(_buffers.size());
 
 		for (auto buffer : _buffers)
@@ -41,13 +41,13 @@ namespace Sa::Vk
 
 		VkWriteDescriptorSet& descWrite = mDescWrites.emplace_back(MakeDefaultWriteDescriptors(_binding));
 		descWrite.descriptorCount = SizeOf<uint32>(descs);
-		descWrite.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+		descWrite.descriptorType = _descType;
 		descWrite.pBufferInfo = descs.data();
 	}
 
-	void DescriptorSet::Updater::Add(uint32 _binding, const std::vector<const Texture*>& _textures)
+	void DescriptorSet::Updater::Add(uint32 _binding, const std::vector<const Texture*>& _textures, VkDescriptorType _descType)
 	{
-		std::vector<VkDescriptorImageInfo>& descs = mImageDescs.emplace_back();
+		std::vector<VkDescriptorImageInfo>& descs = mImageDescs.emplace_front();
 		descs.reserve(_textures.size());
 
 		for (auto texture : _textures)
@@ -55,7 +55,7 @@ namespace Sa::Vk
 
 		VkWriteDescriptorSet& descWrite = mDescWrites.emplace_back(MakeDefaultWriteDescriptors(_binding));
 		descWrite.descriptorCount = SizeOf<uint32>(descs);
-		descWrite.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+		descWrite.descriptorType = _descType;
 		descWrite.pImageInfo = descs.data();
 	}
 
