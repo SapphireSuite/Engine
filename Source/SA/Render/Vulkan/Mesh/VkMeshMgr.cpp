@@ -30,20 +30,7 @@ namespace Sa::Vk
 		}
 
 
-		// TODO: Remove later.
-		PipelineBindingSetDescriptor modelBindSetDesc;
-		auto& trBind = modelBindSetDesc.bindings.emplace_back();
-		trBind.binding = 0u;
-		trBind.type = ShaderBindingType::StorageBuffer;
-		trBind.stageFlags = ShaderStage::Vertex;
-
-		auto& normalBind = modelBindSetDesc.bindings.emplace_back();
-		normalBind.binding = 1u;
-		normalBind.type = ShaderBindingType::StorageBuffer;
-		normalBind.stageFlags = ShaderStage::Vertex;
-		//
-
-		ResourceMgr::Create(_device, modelBindSetDesc, _frameNum);
+		ResourceMgr::Create(_device, PipelineBindingSetDescriptor::modelBindSetDesc, _frameNum);
 
 
 		SA_LOG(L"Mesh Manager created.", Infos, SA/Render/Vulkan);

@@ -23,14 +23,7 @@ namespace Sa::Vk
 		}
 
 
-		// TODO: Remove later.
-		PipelineBindingSetDescriptor cameraBindSetDesc;
-		auto& bind = cameraBindSetDesc.bindings.emplace_back();
-		bind.type = ShaderBindingType::StorageBuffer;
-		bind.stageFlags = ShaderStage::Vertex;
-		//
-
-		ResourceMgr::Create(_device, cameraBindSetDesc, _frameNum);
+		ResourceMgr::Create(_device, PipelineBindingSetDescriptor::cameraBindSetDesc, _frameNum);
 
 
 		SA_LOG(L"Camera Manager created.", Infos, SA/Render/Vulkan);

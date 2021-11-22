@@ -21,6 +21,10 @@ namespace Sa
 	{
 		/// List of registered bindings for set.
 		std::vector<PipelineBindingDescriptor> bindings;
+
+
+		static PipelineBindingSetDescriptor modelBindSetDesc;
+		static PipelineBindingSetDescriptor cameraBindSetDesc;
 	};
 }
 
