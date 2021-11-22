@@ -63,7 +63,6 @@ namespace Sa::Vk
 
 	void MeshMgr::FillDescriptorUpdater(DescriptorSet::Updater& _updater, uint32 _frame)
 	{
-		// TODO: Clean hard code.
 		_updater.Add(0u, { &mFrames[_frame].transformBuffer });
 		_updater.Add(1u, { &mFrames[_frame].normalBuffer });
 	}

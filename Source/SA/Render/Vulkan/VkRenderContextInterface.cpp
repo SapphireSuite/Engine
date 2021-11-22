@@ -21,6 +21,7 @@ namespace Sa::Vk
 		mGraphics = _graphics;
 
 		mMeshMgr.Create(GetDevice());
+		mCameraMgr.Create(GetDevice());
 
 		SA_LOG(L"Render Context Interface created.", Infos, SA/Render/Vulkan);
 	}
@@ -31,6 +32,7 @@ namespace Sa::Vk
 
 		// Destroy in reversed order.
 		{
+			mCameraMgr.Destroy(GetDevice());
 			mMeshMgr.Destroy(GetDevice());
 
 			while (!mPipelines.empty())

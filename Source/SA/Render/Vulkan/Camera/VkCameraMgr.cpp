@@ -47,7 +47,6 @@ namespace Sa::Vk
 
 	void CameraMgr::FillDescriptorUpdater(DescriptorSet::Updater& _updater, uint32 _frame)
 	{
-		// TODO: Clean hard code.
 		_updater.Add(0u, { &mCameraBuffers[_frame] });
 	}
 

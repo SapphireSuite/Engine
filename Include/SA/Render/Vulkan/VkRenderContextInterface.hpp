@@ -14,10 +14,10 @@
 #include <SA/Render/Vulkan/Pipeline/VkPipeline.hpp>
 #include <SA/Render/Vulkan/VkResourceInitializer.hpp>
 #include <SA/Render/Vulkan/Shader/VkShader.hpp>
-#include <SA/Render/Vulkan/Mesh/VkBLStaticMesh.hpp>
 #include <SA/Render/Vulkan/Mesh/VkMeshMgr.hpp>
 #include <SA/Render/Vulkan/Texture/VkTexture.hpp>
 #include <SA/Render/Vulkan/Texture/VkCubemap.hpp>
+#include <SA/Render/Vulkan/Camera/VkCameraMgr.hpp>
 
 namespace Sa::Vk
 {
@@ -36,6 +36,7 @@ namespace Sa::Vk
 		std::forward_list<Cubemap> mCubemaps;
 
 		MeshMgr mMeshMgr;
+		CameraMgr mCameraMgr;
 
 
 		const Device& GetDevice() const;
