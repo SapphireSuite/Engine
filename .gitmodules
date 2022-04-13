@@ -1,0 +1,12 @@
+[submodule "ThirdParty/SA/Logger"]
+	path = ThirdParty/SA/Logger
+	url = https://github.com/SapphireSuite/Logger.git
+[submodule "ThirdParty/SA/Maths"]
+	path = ThirdParty/SA/Maths
+	url = https://github.com/SapphireSuite/Maths.git
+[submodule "ThirdParty/Window/glfw"]
+	path = ThirdParty/Window/glfw
+	url = https://github.com/glfw/glfw.git
+[submodule "ThirdParty/Render/UI/ImGui/imgui"]
+	path = ThirdParty/Render/UI/ImGui/imgui
+	url = https://github.com/ocornut/imgui.git
