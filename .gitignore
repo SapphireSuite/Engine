@@ -2,6 +2,9 @@
 
 # Visual Studio cache.
 .vs/
+.vscode/*
+!.vscode/launch.json
+!.vscode/settings.json
 
 
 # Vim cache.
@@ -14,7 +17,9 @@ CMakeFiles/
 CMake/
 CMakeCache.txt
 Makefile
-*.cmake
+
+# CMake cloned repo
+googletest/
 
 
 # Build and Temp files.
