@@ -8,3 +8,5 @@
 add_subdirectory(Logger)
 
 add_subdirectory(Maths)
+
+add_subdirectory(Event)

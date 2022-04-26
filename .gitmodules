@@ -10,3 +10,6 @@
 [submodule "ThirdParty/Render/UI/ImGui/imgui"]
 	path = ThirdParty/Render/UI/ImGui/imgui
 	url = https://github.com/ocornut/imgui.git
+[submodule "ThirdParty/SA/Event"]
+	path = ThirdParty/SA/Event
+	url = git@github.com:SapphireSuite/Event.git

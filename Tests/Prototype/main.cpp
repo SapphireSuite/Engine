@@ -20,6 +20,8 @@ int main()
 
 //}
 
+	SA_LOG("Hello, World!");
+
 
 	return 0;
 }

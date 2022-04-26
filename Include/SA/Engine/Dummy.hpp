@@ -7,7 +7,7 @@
 
 namespace Sa
 {
-	class __declspec(dllexport) Dummy
+	class Dummy
 	{
 	};
 }

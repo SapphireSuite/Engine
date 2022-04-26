@@ -28,7 +28,7 @@ file(GLOB SA_ENGINE_SOURCES "${SA_SOURCE_DIR}/*")
 
 ### Interface library for dependencies.
 add_library(SA_EngineDeps INTERFACE)
-target_link_libraries(SA_EngineDeps INTERFACE SA_Logger SA_Maths)
+target_link_libraries(SA_EngineDeps INTERFACE SA_Logger SA_Maths SA_Event)
 
 
 ## Render
@@ -65,19 +65,34 @@ option(SA_GLFW "Compile GLFW Window Manager" ON)
 
 if(SA_WINDOW)
 	file(GLOB_RECURSE SA_WINDOW_BASE_SOURCES "${SA_SOURCE_DIR}/Window/Base/*")
-	file(GLOB_RECURSE SA_INPUT_BASE_SOURCES "${SA_SOURCE_DIR}/Input/Base/*")
 
 	### GLFW
 	if(SA_GLFW)
 		file(GLOB_RECURSE SA_WINDOW_GLFW_SOURCES "${SA_SOURCE_DIR}/Window/GLFW/*")
-		file(GLOB_RECURSE SA_INPUT_GLFW_SOURCES "${SA_SOURCE_DIR}/Input/GLFW/*")
-		set(SA_SOURCES "${SA_SOURCES}")
 
 		target_link_libraries(SA_EngineDeps INTERFACE glfw)
 		target_compile_definitions(SA_EngineDeps INTERFACE SA_GLFW)
 	endif()
 
-	set(SA_ENGINE_SOURCES "${SA_ENGINE_SOURCES};${SA_WINDOW_BASE_SOURCES};${SA_INPUT_BASE_SOURCES};${SA_WINDOW_GLFW_SOURCES};${SA_INPUT_GLFW_SOURCES}")
+	set(SA_ENGINE_SOURCES "${SA_ENGINE_SOURCES};${SA_WINDOW_BASE_SOURCES};${SA_WINDOW_GLFW_SOURCES}")
+endif()
+
+
+## Input
+option(SA_INPUT "Compile Engine Input module" ON)
+
+if(SA_INPUT)
+	file(GLOB_RECURSE SA_INPUT_BASE_SOURCES "${SA_SOURCE_DIR}/Input/Base/*")
+
+	### GLFW
+	if(SA_GLFW)
+		file(GLOB_RECURSE SA_INPUT_GLFW_SOURCES "${SA_SOURCE_DIR}/Input/GLFW/*")
+
+		target_link_libraries(SA_EngineDeps INTERFACE glfw)
+		target_compile_definitions(SA_EngineDeps INTERFACE SA_GLFW)
+	endif()
+
+	set(SA_ENGINE_SOURCES "${SA_ENGINE_SOURCES};${SA_INPUT_BASE_SOURCES};${SA_INPUT_GLFW_SOURCES}")
 endif()
 
 
