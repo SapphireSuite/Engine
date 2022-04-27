@@ -6,9 +6,8 @@
 
 #if SA_VULKAN
 
-	// #include <Renderer/Vulkan/Debug/Debug.hpp>
-	// #include <Renderer/Vulkan/VkInstance.hpp>
-	// #include <Renderer/Vulkan/Surface/VkWindowSurface.hpp>
+	#include <Render/Vulkan/Debug/Debug.hpp>
+	#include <Render/Vulkan/VkInstance.hpp>
 
 #endif
 
@@ -315,23 +314,27 @@ namespace Sa::GLFW
 
 #if SA_VULKAN
 
-	// Vk::WindowSurface Window::CreateVkWindowSurface(const Vk::Instance& _instance) const
-	// {
-	// 	VkSurfaceKHR vkSurface;
+	Vk::WindowSurfaceHandle Window::CreateVkWindowSurfaceHandle(const Vk::Instance& _instance) const
+	{
+		CheckCreated();
 
-	// 	SA_VK_ASSERT(glfwCreateWindowSurface(_instance, mHandle, nullptr, &vkSurface), L"Failed to create VkRenderSurface from GLFW window!");
+		Vk::WindowSurfaceHandle vkSurface = VK_NULL_HANDLE;
 
-	// 	SA_LOG(L"Window Surface created.", Infos, SA/Engine/Window/GLFW);
+		SA_VK_ASSERT(glfwCreateWindowSurface(_instance, mHandle, nullptr, &vkSurface), L"Failed to create VkRenderSurface from GLFW window!");
 
-	// 	return Vk::WindowSurface{ vkSurface };
-	// }
+		SA_LOG(L"Window Surface Handle created.", Infos, SA/Engine/Window/GLFW);
 
-	// void Window::DestroyVkWindowSurface(const Vk::Instance& _instance, Vk::WindowSurface& _surface) const
-	// {
-	// 	vkDestroySurfaceKHR(_instance, _surface, nullptr);
+		return vkSurface;
+	}
 
-	// 	SA_LOG(L"Window Surface destroyed.", Infos, SA/Engine/Window/GLFW);
-	// }
+	void Window::DestroyVkWindowSurfaceHandle(const Vk::Instance& _instance, Vk::WindowSurfaceHandle _surfaceHandle) const
+	{
+		CheckCreated();
+
+		vkDestroySurfaceKHR(_instance, _surfaceHandle, nullptr);
+
+		SA_LOG(L"Window Surface Handle destroyed.", Infos, SA/Engine/Window/GLFW);
+	}
 
 #endif
 

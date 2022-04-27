@@ -7,7 +7,20 @@
 
 #include <SA/Event/Event.hpp>
 
+#include <SA/Engine/HI/HardwareInterface.hpp>
+
 #include <SA/Engine/Window/Base/WindowCreateInfos.hpp>
+
+#if SA_VULKAN
+
+	namespace Sa::Vk
+	{
+		class Instance;
+	}
+
+	#include <SA/Engine/Render/Vulkan/Surface/VkWindowSurfaceHandle.hpp>
+
+#endif
 
 /**
 *	\file AWindow.hpp
@@ -22,21 +35,14 @@ namespace Sa
 {
 	//class AInputWindowContext;
 
-#if SA_VULKAN
-
-	namespace Vk
-	{
-		class Instance;
-		class WindowSurface;
-	}
-
-#endif
-
 	/**
 	*	\brief Window \e Abstract class
 	*/
-	class AWindow
+	class AWindow : protected HardwareInterface
 	{
+		using HardwareInterface::Create;
+		using HardwareInterface::Clear; // Not used.
+
 	protected:
 
 		/// Current window mode.
@@ -144,12 +150,12 @@ namespace Sa
 		* 
 		*	\param[in] _infos	Creation arguments.
 		*/
-		virtual void Create(const WindowCreateInfos& _infos) = 0;
+		virtual void Create(const WindowCreateInfos& _infos);
 
 		/**
 		*	\brief Destroy this window.
 		*/
-		virtual void Destroy() = 0;
+		using HardwareInterface::Destroy;
 
 
 		///**
@@ -174,8 +180,8 @@ namespace Sa
 
 #if SA_VULKAN
 
-		// virtual Vk::WindowSurface CreateVkWindowSurface(const Vk::Instance& _instance) const = 0;
-		// virtual void DestroyVkWindowSurface(const Vk::Instance& _instance, Vk::WindowSurface& _surface) const = 0;
+		virtual Vk::WindowSurfaceHandle CreateVkWindowSurfaceHandle(const Vk::Instance& _instance) const = 0;
+		virtual void DestroyVkWindowSurfaceHandle(const Vk::Instance& _instance, Vk::WindowSurfaceHandle _surfaceHandle) const = 0;
 
 #endif
 	};

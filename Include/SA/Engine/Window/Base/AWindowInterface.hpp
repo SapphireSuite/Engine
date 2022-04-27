@@ -5,13 +5,13 @@
 #ifndef SAPPHIRE_ENGINE_AWINDOW_INTERFACE_GUARD
 #define SAPPHIRE_ENGINE_AWINDOW_INTERFACE_GUARD
 
-#include <SA/Engine/HI/HardwareInterfaceBase.hpp>
+#include <SA/Engine/HI/HardwareInterface.hpp>
 
 #include <SA/Engine/Window/Base/AWindow.hpp>
 
 namespace Sa
 {
-	class AWindowInterface : public HardwareInterfaceBase
+	class AWindowInterface : protected HardwareInterface
 	{
 	public:
 		/**
@@ -19,6 +19,11 @@ namespace Sa
 		*	Ensure correct polymorphism destruction.
 		*/
 		virtual ~AWindowInterface() = default;
+
+
+		using HardwareInterface::Create;
+		using HardwareInterface::Destroy;
+		using HardwareInterface::Clear;
 
 
 		/**

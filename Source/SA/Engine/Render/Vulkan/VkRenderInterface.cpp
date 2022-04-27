@@ -1,18 +1,15 @@
 // Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
 
 #include <Render/Vulkan/VkRenderInterface.hpp>
+// #include <Render/Vulkan/VkRenderGraphicInterface.hpp>
 
 #include <Render/Vulkan/Debug/VkValidationLayers.hpp>
 
-
-// #include <Core/Algorithms/Cast.hpp>
-
-// #include <Render/Vulkan/VkRenderGraphicInterface.hpp>
-// #include <Render/Vulkan/Surface/VkWindowSurface.hpp>
+#include <Render/Vulkan/Surface/VkWindowSurface.hpp>
 
 #if SA_WINDOW
 
-	// #include <Window/Base/AWindow.hpp>
+	#include <Window/Base/AWindow.hpp>
 
 #endif
 
@@ -39,6 +36,11 @@ namespace Sa::Vk
 		SA_LOG(L"Render Interface destroyed.", Infos, SA/Render/Vulkan);
 	}
 
+	void RenderInterface::Clear()
+	{
+		mWindowSurfaces.Clear(WindowSurfaceDestroyer{ mInstance });
+	}
+
 
 	// ARenderGraphicInterface* RenderInterface::CreateGraphicInterface(const AGraphicDeviceInfos& _infos)
 	// {
@@ -52,26 +54,28 @@ namespace Sa::Vk
 
 #if SA_WINDOW
 
-	// AWindowSurface* RenderInterface::CreateWindowSurface(AWindow* _win)
-	// {
-	// 	SA_ASSERT(Nullptr, SA/Render/Vulkan, _win);
+	AWindowSurface* RenderInterface::CreateWindowSurface(AWindow* _win)
+	{
+		CheckCreated();
+		SA_ASSERT(Nullptr, SA/Render/Vulkan, _win);
 
-	// 	WindowSurface* const winSurface = new WindowSurface(_win->CreateVkWindowSurface(mInstance));
+		WindowSurface* winSurface = mWindowSurfaces.Emplace();
 
-	// 	return winSurface;
-	// }
+		winSurface->Create(_win, mInstance);
 
-	// void RenderInterface::DestroyWindowSurface(AWindow* _win, AWindowSurface* _winSurface)
-	// {
-	// 	SA_ASSERT(Nullptr, SA/Render/Vulkan, _win);
-	// 	SA_ASSERT(Nullptr, SA/Render/Vulkan, _winSurface);
+		return winSurface;
+	}
 
-	// 	WindowSurface* const vkWinSurface = Cast<WindowSurface>(_winSurface);
+	void RenderInterface::DestroyWindowSurface(AWindowSurface* _winSurface)
+	{
+		CheckCreated();
+		SA_ASSERT(Nullptr, SA/Render/Vulkan, _winSurface);
 
-	// 	_win->DestroyVkWindowSurface(mInstance, *vkWinSurface);
+		bool bRemoved = mWindowSurfaces.Erase(_winSurface, WindowSurfaceDestroyer{ mInstance });
 
-	// 	delete vkWinSurface;
-	// }
+		if(!bRemoved)
+			SA_LOG(L"Window Surface [" << _winSurface << "] not created with this inferface.", Error, SA/Engine/Render/Vulkan);
+	}
 
 #endif
 }

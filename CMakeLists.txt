@@ -37,6 +37,7 @@ option(SA_VULKAN "Compile Vulkan Renderer" ON)
 option(SA_OPEN_GL "Compile OpenGL Renderer" OFF)
 
 if(SA_RENDER)
+	target_compile_definitions(SA_EngineDeps INTERFACE SA_RENDER)
 	file(GLOB_RECURSE SA_RENDER_BASE_SOURCES "${SA_SOURCE_DIR}/Render/Base/*")
 
 	### Vulkan
@@ -64,6 +65,7 @@ option(SA_WINDOW "Compile Engine Windowing module" ON)
 option(SA_GLFW "Compile GLFW Window Manager" ON)
 
 if(SA_WINDOW)
+	target_compile_definitions(SA_EngineDeps INTERFACE SA_WINDOW)
 	file(GLOB_RECURSE SA_WINDOW_BASE_SOURCES "${SA_SOURCE_DIR}/Window/Base/*")
 
 	### GLFW
@@ -82,6 +84,7 @@ endif()
 option(SA_INPUT "Compile Engine Input module" ON)
 
 if(SA_INPUT)
+	target_compile_definitions(SA_EngineDeps INTERFACE SA_INPUT)
 	file(GLOB_RECURSE SA_INPUT_BASE_SOURCES "${SA_SOURCE_DIR}/Input/Base/*")
 
 	### GLFW
@@ -100,6 +103,7 @@ endif()
 option(SA_SDK "Compile Engine SDK module" ON)
 
 if(SA_SDK)
+	target_compile_definitions(SA_EngineDeps INTERFACE SA_SDK)
 	file(GLOB_RECURSE SA_SDK_SOURCES "${SA_SOURCE_DIR}/SDK/*")
 
 	set(SA_ENGINE_SOURCES "${SA_ENGINE_SOURCES};${SA_SDK_SOURCES}")

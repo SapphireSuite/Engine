@@ -8,6 +8,9 @@
 #include <SA/Engine/Render/Base/ARenderInterface.hpp>
 
 #include <SA/Engine/Render/Vulkan/VkInstance.hpp>
+#include <SA/Engine/Render/Vulkan/Surface/VkWindowSurface.hpp>
+
+#include <SA/Engine/HI/InterfaceList.hpp>
 
 namespace Sa::Vk
 {
@@ -15,15 +18,18 @@ namespace Sa::Vk
     {
 		Instance mInstance;
 
+		InterfaceList<WindowSurface> mWindowSurfaces;
+
 	public:
 		void Create(const AWindowInterface* _winIntf = nullptr) override final;
 		void Destroy() override final;
 
+		void Clear() override final;
 
 #if SA_WINDOW
 
-		// AWindowSurface* CreateWindowSurface(AWindow* _win) override final;
-		// void DestroyWindowSurface(AWindow* _win, AWindowSurface* _winSurface) override final;
+		AWindowSurface* CreateWindowSurface(AWindow* _win) override final;
+		void DestroyWindowSurface(AWindowSurface* _winSurface) override final;
 
 #endif
     };

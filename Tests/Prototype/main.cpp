@@ -40,9 +40,10 @@ int main()
 
 
 	// Render
-	Vk::RenderInterface renderInrf;
-	renderInrf.Create(&winIntf);
+	Vk::RenderInterface renderIntf;
+	renderIntf.Create(&winIntf);
 
+	AWindowSurface* winSurface = renderIntf.CreateWindowSurface(win);
 //}
 
 
@@ -63,7 +64,7 @@ int main()
 //{ Uninit
 
 	// Render
-	renderInrf.Destroy();
+	renderIntf.Destroy();
 
 	// Input
 	inputIntf.Destroy();
