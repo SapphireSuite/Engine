@@ -15,7 +15,8 @@ namespace Sa
 	{
 	public:
 		/**
-		*	Virtual destructor. Ensure correct polymorphism destruction.
+		*	Virtual destructor.
+		*	Ensure correct polymorphism destruction.
 		*/
 		virtual ~AWindowInterface() = default;
 

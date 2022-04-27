@@ -5,12 +5,14 @@
 #include <SA/Collections/Debug>
 #include <SA/Collections/Window>
 #include <SA/Collections/Input>
+#include <SA/Collections/Render>
 using namespace Sa;
 
 int main()
 {
-//{ Init Logger
+//{ Init
 
+	// Logger
 	Logger logger;
 	Sa::Debug::logger = &logger;
 
@@ -20,13 +22,8 @@ int main()
 	FileLogStream fileStream;
 	logger.Register(fileStream);
 
-//}
-
-
-//{ Init
 
 	// Window
-
 	GLFW::WindowInterface winIntf;
 	winIntf.Create();
 
@@ -35,12 +32,16 @@ int main()
 
 
 	// Input
-
 	GLFW::InputInterface inputIntf;
 	inputIntf.Create();
 
 	AInputWindowContext* const inputWinContext = inputIntf.CreateInputWindowContext(win);
-	InputContext* const inputContext = inputWinContext->CreateContext();
+	// InputContext* const inputContext = inputWinContext->CreateContext();
+
+
+	// Render
+	Vk::RenderInterface renderInrf;
+	renderInrf.Create(&winIntf);
 
 //}
 
@@ -61,13 +62,14 @@ int main()
 
 //{ Uninit
 
-	// Input
+	// Render
+	renderInrf.Destroy();
 
+	// Input
 	inputIntf.Destroy();
 
 
 	// Window
-
 	winIntf.Destroy();
 
 //}

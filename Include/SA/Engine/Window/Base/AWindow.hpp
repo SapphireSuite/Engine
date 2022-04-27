@@ -43,6 +43,13 @@ namespace Sa
 		WindowMode mWindowMode = WindowMode::Windowed;
 
 	public:
+		/**
+		*	Virtual destructor.
+		*	Ensure correct polymorphism destruction.
+		*/
+		virtual ~AWindow() = default;
+		
+		
 		/// Resize window callback event.
 		Event<void(Vec2ui)> onResize;
 
