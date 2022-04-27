@@ -5,16 +5,16 @@
 #ifndef SAPPHIRE_ENGINE_GLFW_WINDOWING_INTERFACE_GUARD
 #define SAPPHIRE_ENGINE_GLFW_WINDOWING_INTERFACE_GUARD
 
-#include <list>
-
 #include <SA/Engine/Window/Base/AWindowInterface.hpp>
 #include <SA/Engine/Window/GLFW/GLFWWindow.hpp>
+
+#include <SA/Engine/HI/InterfaceList.hpp>
 
 namespace Sa::GLFW
 {
 	class WindowInterface : public AWindowInterface
 	{
-		std::list<Window> mWindows;
+		InterfaceList<Window> mWindows;
 
 	public:
 		void Create() override final;

@@ -5,16 +5,16 @@
 #ifndef SAPPHIRE_ENGINE_GLFW_INPUT_INTERFACE_GUARD
 #define SAPPHIRE_ENGINE_GLFW_INPUT_INTERFACE_GUARD
 
-#include <list>
-
 #include <SA/Engine/Input/Base/AInputInterface.hpp>
 #include <SA/Engine/Input/GLFW/GLFWInputWindowContext.hpp>
+
+#include <SA/Engine/HI/InterfaceList.hpp>
 
 namespace Sa::GLFW
 {
 	class InputInterface : public AInputInterface
 	{
-		std::list<InputWindowContext> mInputWinContexts;
+		InterfaceList<InputWindowContext> mInputWinContexts;
 
 	public:
 		void Create() override final;

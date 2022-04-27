@@ -25,10 +25,7 @@ namespace Sa::GLFW
 	{
 		AInputInterface::Clear();
 
-		for (auto it = mInputWinContexts.begin(); it != mInputWinContexts.end(); ++it)
-			it->Destroy();
-
-		mInputWinContexts.clear();
+		mInputWinContexts.Clear();
 	}
 
 
@@ -40,28 +37,20 @@ namespace Sa::GLFW
 
 	AInputWindowContext* InputInterface::CreateInputWindowContext(AWindow* _win)
 	{
-		InputWindowContext& inputWinContext = mInputWinContexts.emplace_back();
+		InputWindowContext* inputWinContext = mInputWinContexts.Emplace();
 
-		inputWinContext.Create(_win);
+		inputWinContext->Create(_win);
 
-		return &inputWinContext;
+		return inputWinContext;
 	}
 
 	void InputInterface::DestroyInputWindowContext(AInputWindowContext* _winContext)
 	{
 		SA_ASSERT(Nullptr, SA/Windowing/Input/GLFW, _winContext);
 
-		for (auto it = mInputWinContexts.begin(); it != mInputWinContexts.end(); ++it)
-		{
-			if (&*it == _winContext)
-			{
-				_winContext->Destroy();
-				mInputWinContexts.erase(it);
-				
-				return;
-			}
-		}
+		bool bRemoved = mInputWinContexts.Remove(_winContext);
 
-		SA_LOG(L"InputWindowContext [" << _winContext << "] not created with this inferface.", Warning, SA/Windowing/Input/GLFW);
+		if(!bRemoved)
+			SA_LOG(L"InputWindowContext [" << _winContext << "] not created with this inferface.", Warning, SA/Engine/Input/GLFW);
 	}
 }

@@ -1,4 +1,4 @@
-// Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
+// Copyright (c) 2022 Sapphire's Suite. All Rights Reserved.
 
 #include <SA/Collections/Debug>
 
@@ -38,38 +38,27 @@ namespace Sa::GLFW
 	{
 		AWindowInterface::Clear();
 
-		for (auto it = mWindows.begin(); it != mWindows.end(); ++it)
-			it->Destroy();
-
-		mWindows.clear();
+		mWindows.Clear();
 	}
 
 
 	AWindow* WindowInterface::CreateWindow(const WindowCreateInfos& _infos)
 	{
-		Window& window = mWindows.emplace_back();
+		Window* window = mWindows.Emplace();
 
-		window.Create(_infos);
+		window->Create(_infos);
 
-		return &window;
+		return window;
 	}
 
 	void WindowInterface::DestroyWindow(AWindow* _window)
 	{
 		SA_ASSERT(Nullptr, SA/Windowing/Window/GLFW, _window);
 
-		for (auto it = mWindows.begin(); it != mWindows.end(); ++it)
-		{
-			if (&*it == _window)
-			{
-				_window->Destroy();
-				mWindows.erase(it);
-				
-				return;
-			}
-		}
-
-		SA_LOG(L"Window [" << _window << "] not created with this inferface.", Warning, SA/Windowing/Window/GLFW);
+		bool bRemoved = mWindows.Remove(_window);
+		
+		if(!bRemoved)
+			SA_LOG(L"Window [" << _window << "] not created with this inferface.", Warning, SA/Windowing/Window/GLFW);
 	}
 
 
