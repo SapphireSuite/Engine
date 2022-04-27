@@ -25,7 +25,7 @@ namespace Sa::GLFW
 	{
 		AInputInterface::Clear();
 
-		mInputWinContexts.Clear();
+		mInputWinContexts.Clear(DestroyFunctor<InputWindowContext>());
 	}
 
 
@@ -48,7 +48,7 @@ namespace Sa::GLFW
 	{
 		SA_ASSERT(Nullptr, SA/Engine/Input/GLFW, _winContext);
 
-		bool bRemoved = mInputWinContexts.Remove(_winContext);
+		bool bRemoved = mInputWinContexts.Erase(_winContext, DestroyFunctor<InputWindowContext>());
 
 		if(!bRemoved)
 			SA_LOG(L"InputWindowContext [" << _winContext << "] not created with this inferface.", Warning, SA/Engine/Input/GLFW);

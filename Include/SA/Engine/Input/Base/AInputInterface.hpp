@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_ENGINE_AINPUT_INTERFACE_GUARD
 #define SAPPHIRE_ENGINE_AINPUT_INTERFACE_GUARD
 
-#include <SA/Engine/HI/HardwareInterfaceBase.hpp>
+#include <SA/Engine/HI/HardwareInterface.hpp>
 
 #include <SA/Engine/Input/Base/AInputWindowContext.hpp>
 
@@ -13,7 +13,7 @@ namespace Sa
 {
 	class AWindow;
 
-	class AInputInterface : public HardwareInterfaceBase
+	class AInputInterface : protected HardwareInterface
 	{
 	public:
 		/**
@@ -23,7 +23,12 @@ namespace Sa
 		virtual ~AInputInterface() = default;
 
 
+		using HardwareInterface::Create;
+		using HardwareInterface::Destroy;
+		using HardwareInterface::Clear;
+
 		virtual void Update() = 0;
+
 
 		virtual AInputWindowContext* CreateInputWindowContext(AWindow* _win) = 0;
 		virtual void DestroyInputWindowContext(AInputWindowContext* _winContext) = 0;

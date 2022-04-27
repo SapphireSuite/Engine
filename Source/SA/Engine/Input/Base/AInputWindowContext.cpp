@@ -8,14 +8,14 @@ namespace Sa
 {
 	void AInputWindowContext::Create(AWindow* _win)
 	{
-		HardwareInterfaceBase::Create();
+		HardwareInterface::Create();
 
 		SA_ASSERT(Nullptr, SA/Engine/Input, _win);
 	}
 
 	void AInputWindowContext::Clear()
 	{
-		HardwareInterfaceBase::Clear();
+		HardwareInterface::Clear();
 
 		mContexts.clear();
 	}
@@ -23,20 +23,28 @@ namespace Sa
 	
 	InputContext* AInputWindowContext::CreateContext()
 	{
+		CheckCreated();
+
 		return &mContexts.emplace_front();
 	}
 	
 	bool AInputWindowContext::DestroyContext(const InputContext* _context)
 	{
+		CheckCreated();
+		
 		SA_ASSERT(Nullptr, SA/Engine/Input, _context, L"Destroy null InputContext");
+
+		auto prevIt = mContexts.before_begin();
 
 		for (auto it = mContexts.begin(); it != mContexts.end(); ++it)
 		{
 			if (&*it == _context)
 			{
-				mContexts.erase(it);
+				mContexts.erase_after(prevIt);
 				return true;
 			}
+
+			prevIt = it;
 		}
 
 		return false;

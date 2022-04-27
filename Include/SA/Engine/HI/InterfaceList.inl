@@ -3,7 +3,10 @@
 namespace Sa
 {
     template <typename T>
-    const typename InterfaceList<T>::DestroyerT InterfaceList<T>::defaultDestroyer = [](T& _in){ _in.Destroy(); };
+    InterfaceList<T>::InterfaceList() noexcept
+    {
+        static_assert(std::is_base_of<HardwareInterface, T>::value, L"Handled interface type should inherit from HardwareInterface");
+    }
 
 
     template <typename T>
@@ -14,8 +17,8 @@ namespace Sa
     }
 
     template <typename T>
-    template <typename AT>
-    bool InterfaceList<T>::Remove(AT* _object, DestroyerT destroyer)
+    template <typename AT, typename DestroyFunctor>
+    bool InterfaceList<T>::Erase(AT* _object, DestroyFunctor _destroyer)
     {
         static_assert(std::is_base_of<AT, T>::value, "Object to remove must be a base class of T");
 
@@ -25,9 +28,7 @@ namespace Sa
 		{
 			if (&*it == _object)
 			{
-                if(destroyer)
-				    destroyer(*it);
-
+				_destroyer(*it);
 				mObjects.erase_after(prevIt);
 				
 				return true;
@@ -36,17 +37,19 @@ namespace Sa
             prevIt = it;
 		}
 
+        SA_LOG(L"Object [" << _object << L"] not found in list", Error, SA/Engine/HI);
+
         return false;
     }
 
+
+
     template <typename T>
-    void InterfaceList<T>::Clear(DestroyerT destroyer)
+    template <typename DestroyFunctor>
+    void InterfaceList<T>::Clear(DestroyFunctor _destroyer)
     {
-        if(destroyer)
-        {
-            for (auto it = mObjects.begin(); it != mObjects.end(); ++it)
-                destroyer(*it);
-        }
+        for (auto it = mObjects.begin(); it != mObjects.end(); ++it)
+            _destroyer(*it);
 
 		mObjects.clear();
     }

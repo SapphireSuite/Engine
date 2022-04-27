@@ -20,6 +20,8 @@ namespace Sa::Vk
 {
 	void RenderInterface::Create(const AWindowInterface* _winIntf)
 	{
+		HardwareInterface::Create();
+
 		// _winIntf can be nullptr for offscreen rendering.
 		SA_ASSERT(Default, SA/Render/Vulkan, ValidationLayers::CheckValidationSupport(), L"Validation Layers not supported!");
 
@@ -30,6 +32,8 @@ namespace Sa::Vk
 
 	void RenderInterface::Destroy()
 	{
+		HardwareInterface::Destroy();
+
 		mInstance.Destroy();
 
 		SA_LOG(L"Render Interface destroyed.", Infos, SA/Render/Vulkan);

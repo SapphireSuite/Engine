@@ -3,10 +3,10 @@
 #include <gtest/gtest.h>
 
 #include <SA/Collections/Debug>
-#include <SA/Engine/HI/HardwareInterfaceBase.hpp>
+#include <SA/Engine/HI/HardwareInterface.hpp>
 using namespace Sa;
 
-namespace Sa::UT::HardwareInterfaceBase
+namespace Sa::UT::HardwareInterface
 {
 #if SA_DEBUG
 	// Only throw on debug.
@@ -16,7 +16,7 @@ namespace Sa::UT::HardwareInterfaceBase
 	#define SA_INTERFACE_THROW_TEST(statement) EXPECT_NO_THROW(statement)
 #endif
 
-	class MyInterface : public Sa::HardwareInterfaceBase
+	class MyInterface : public Sa::HardwareInterface
 	{
 	public:
 		virtual ~MyInterface() = default;
@@ -30,12 +30,12 @@ namespace Sa::UT::HardwareInterfaceBase
 	};
 
 
-	TEST(HardwareInterfaceBase, NoCreateNoDestroy)
+	TEST(HardwareInterface, NoCreateNoDestroy)
 	{
 		MyInterface intf;
 	}
 
-	TEST(HardwareInterfaceBase, CreateNoDestroy)
+	TEST(HardwareInterface, CreateNoDestroy)
 	{
 		SA_INTERFACE_THROW_TEST([]()
 		{
@@ -48,7 +48,7 @@ namespace Sa::UT::HardwareInterfaceBase
 		}());
 	}
 
-	TEST(HardwareInterfaceBase, NoCreateDestroy)
+	TEST(HardwareInterface, NoCreateDestroy)
 	{
 		SA_INTERFACE_THROW_TEST([]()
 		{
@@ -59,7 +59,7 @@ namespace Sa::UT::HardwareInterfaceBase
 		}());
 	}
 
-	TEST(HardwareInterfaceBase, CreateDestroy)
+	TEST(HardwareInterface, CreateDestroy)
 	{
 		MyInterface intf;
 
@@ -67,7 +67,7 @@ namespace Sa::UT::HardwareInterfaceBase
 		intf.Destroy();
 	}
 
-	TEST(HardwareInterfaceBase, NoCreateCheck)
+	TEST(HardwareInterface, NoCreateCheck)
 	{
 		SA_INTERFACE_THROW_TEST([]()
 		{
@@ -78,7 +78,7 @@ namespace Sa::UT::HardwareInterfaceBase
 		}());
 	}
 
-	TEST(HardwareInterfaceBase, CreateCheck)
+	TEST(HardwareInterface, CreateCheck)
 	{
 		MyInterface intf;
 

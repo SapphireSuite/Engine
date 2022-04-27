@@ -2,14 +2,14 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_ENGINE_HARDWARE_INTERFACE_BASE_GUARD
-#define SAPPHIRE_ENGINE_HARDWARE_INTERFACE_BASE_GUARD
+#ifndef SAPPHIRE_ENGINE_HARDWARE_INTERFACE_GUARD
+#define SAPPHIRE_ENGINE_HARDWARE_INTERFACE_GUARD
 
 #include <SA/Support/Debug.hpp>
 
 namespace Sa
 {
-	class HardwareInterfaceBase
+	class HardwareInterface
 	{
 #if SA_DEBUG
 
@@ -32,7 +32,7 @@ namespace Sa
 		*	Ensure Destroy as been called previously.
 		*	Destrutor <b>non</b>-virtual. Inherit from this class to create a parent class.
 		*/
-		~HardwareInterfaceBase() noexcept(false);
+		~HardwareInterface() noexcept(false);
 
 
 		/**
@@ -51,6 +51,21 @@ namespace Sa
 		*/
 		virtual void Clear();
 	};
+
+
+// { Functor
+
+    template <typename T>
+    struct DestroyFunctor
+    {
+        void operator()(T& _in)
+		{
+			_in.Destroy();
+		}
+    };
+
+//}
+
 }
 
 #endif // GUARD

@@ -8,4 +8,12 @@ namespace Sa
 	{
 		return mWindowMode;
 	}
+
+
+	void AWindow::Create(const WindowCreateInfos& _infos)
+	{
+		(void)_infos;
+		
+		HardwareInterface::Create();
+	}
 }

@@ -6,7 +6,7 @@ namespace Sa
 {
     void ARenderInterface::Create(const AWindowInterface* _winIntf)
     {
-        HardwareInterfaceBase::Create();
+        HardwareInterface::Create();
         
         (void)_winIntf;
     }

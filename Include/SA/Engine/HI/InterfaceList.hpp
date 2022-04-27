@@ -9,16 +9,24 @@
 
 namespace Sa
 {
+// { Functor
+
+    template <typename T>
+    struct NoneFunctor
+    {
+        void operator()(T& _in) { (void)_in; };
+    };
+
+//}
+
+
     template <typename T>
     class InterfaceList
     {
         std::forward_list<T> mObjects;
 
     public:
-        using DestroyerT = void (*)(T&);
-
-        static const DestroyerT defaultDestroyer;
-
+        InterfaceList() noexcept;
 
         template <typename... Args>
         T* Emplace(Args&&... _args);
@@ -32,10 +40,17 @@ namespace Sa
          * @return true 
          * @return false 
          */
-        template <typename AT>
-        bool Remove(AT* _object, DestroyerT destroyer = defaultDestroyer);
+        template <typename AT, typename DestroyFunctor>
+        bool Erase(AT* _object, DestroyFunctor _destroyer);
 
-        void Clear(DestroyerT destroyer = defaultDestroyer);
+        template <typename AT>
+        bool Erase(AT* _object) { return Remove(_object, NoneFunctor<T>()); }
+
+
+        template <typename DestroyFunctor>
+        void Clear(DestroyFunctor _destroyer);
+
+        void Clear() { Clear(NoneFunctor<T>()); }
     };
 }
 

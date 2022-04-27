@@ -38,12 +38,14 @@ namespace Sa::GLFW
 	{
 		AWindowInterface::Clear();
 
-		mWindows.Clear();
+		mWindows.Clear(DestroyFunctor<Window>());
 	}
 
 
 	AWindow* WindowInterface::CreateWindow(const WindowCreateInfos& _infos)
 	{
+		CheckCreated();
+
 		Window* window = mWindows.Emplace();
 
 		window->Create(_infos);
@@ -53,9 +55,11 @@ namespace Sa::GLFW
 
 	void WindowInterface::DestroyWindow(AWindow* _window)
 	{
+		CheckCreated();
+
 		SA_ASSERT(Nullptr, SA/Engine/Window/GLFW, _window);
 
-		bool bRemoved = mWindows.Remove(_window);
+		bool bRemoved = mWindows.Erase(_window, DestroyFunctor<Window>());
 		
 		if(!bRemoved)
 			SA_LOG(L"Window [" << _window << "] not created with this inferface.", Warning, SA/Engine/Window/GLFW);
@@ -64,6 +68,8 @@ namespace Sa::GLFW
 
 	bool WindowInterface::QueryRequiredExtensions(std::vector<const char*>& _extensions) const
 	{
+		CheckCreated();
+
 		// Query extensions.
 		uint32_t glfwExtensionCount = 0;
 		const char** glfwExtensions = nullptr;

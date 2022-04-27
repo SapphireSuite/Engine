@@ -1,16 +1,16 @@
 // Copyright (c) 2022 Sapphire's Suite. All Rights Reserved.
 
-#include <SA/Engine/HI/HardwareInterfaceBase.hpp>
+#include <SA/Engine/HI/HardwareInterface.hpp>
 
 #include <SA/Collections/Debug>
 
 namespace Sa
 {
-	HardwareInterfaceBase::~HardwareInterfaceBase() noexcept(false)
+	HardwareInterface::~HardwareInterface() noexcept(false)
 	{
 #if SA_DEBUG
 
-		SA_ASSERT(Default, SA/HardwareInterface, !bCreated,
+		SA_ASSERT(Default, SA/HI, !bCreated,
 			L"Destructor called without previously calling Destroy().",
 			L"Call interface->Destroy() before object destruction.")
 
@@ -18,7 +18,7 @@ namespace Sa
 	}
 
 
-	void HardwareInterfaceBase::Create()
+	void HardwareInterface::Create()
 	{
 #if SA_DEBUG
 
@@ -27,10 +27,8 @@ namespace Sa
 #endif
 	}
 
-	void HardwareInterfaceBase::Destroy()
+	void HardwareInterface::Destroy()
 	{
-		CheckCreated();
-
 		Clear();
 
 #if SA_DEBUG
@@ -40,16 +38,17 @@ namespace Sa
 #endif
 	}
 
-	void HardwareInterfaceBase::Clear()
+	void HardwareInterface::Clear()
 	{
+		CheckCreated();
 	}
 
 
-	void HardwareInterfaceBase::CheckCreated() const
+	void HardwareInterface::CheckCreated() const
 	{
 #if SA_DEBUG
 
-		SA_ASSERT(Default, SA/HardwareInterface, bCreated,
+		SA_ASSERT(Default, SA/HI, bCreated,
 			L"Interface must be previously created.",
 			L"Call interface->Create().");
 

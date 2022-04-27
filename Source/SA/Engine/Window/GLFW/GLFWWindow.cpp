@@ -1,4 +1,4 @@
-// Copyright (c) 2021 Sapphire's Suite. All Rights Reserved.
+// Copyright (c) 2022 Sapphire's Suite. All Rights Reserved.
 
 #include <Window/GLFW/GLFWWindow.hpp>
 
@@ -25,6 +25,7 @@ namespace Sa::GLFW
 
 	void Window::SetSize(const Vec2ui& _size)
 	{
+		// TODO:
 		//mSavedSize = _size;
 
 		//SetWindowMode(GetWindowMode());
@@ -179,6 +180,8 @@ namespace Sa::GLFW
 
 	void Window::Create(const WindowCreateInfos& _infos)
 	{
+		AWindow::Create(_infos);
+
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 		mHandle = glfwCreateWindow(_infos.dimension.x, _infos.dimension.y, _infos.name.c_str(), nullptr, nullptr);
 
@@ -222,6 +225,8 @@ namespace Sa::GLFW
 		glfwDestroyWindow(mHandle);
 		mHandle = nullptr;
 		
+		
+		AWindow::Destroy();
 
 		SA_LOG(L"Window destroyed.", Infos, SA/Engine/Window/GLFW);
 	}

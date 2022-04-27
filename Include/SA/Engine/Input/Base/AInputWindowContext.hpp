@@ -5,20 +5,20 @@
 #ifndef SAPPHIRE_ENGINE_AINPUT_WINDOW_CONTEXT_GUARD
 #define SAPPHIRE_ENGINE_AINPUT_WINDOW_CONTEXT_GUARD
 
-#include <list>
+#include <forward_list>
 
-#include <SA/Engine/HI/HardwareInterfaceBase.hpp>
+#include <SA/Engine/HI/HardwareInterface.hpp>
 #include <SA/Engine/Input/Base/InputContext.hpp>
 
 namespace Sa
 {
 	class AWindow;
 
-	class AInputWindowContext : public HardwareInterfaceBase
+	class AInputWindowContext : protected HardwareInterface
 	{
-		std::list<InputContext> mContexts;
+		std::forward_list<InputContext> mContexts;
 
-		using HardwareInterfaceBase::Create;
+		using HardwareInterface::Create;
 
 	public:
 		/**
@@ -29,6 +29,7 @@ namespace Sa
 		
 
 		virtual void Create(AWindow* _win);
+		using HardwareInterface::Destroy;
 
 		void Clear() override;
 
