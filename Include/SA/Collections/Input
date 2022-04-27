@@ -1,0 +1,19 @@
+// Copyright (c) 2022 Sapphire development team. All Rights Reserved.
+
+#pragma once
+
+#ifndef SAPPHIRE_ENGINE_COLLECTIONS_INPUT_GUARD
+#define SAPPHIRE_ENGINE_COLLECTIONS_INPUT_GUARD
+
+    #include <SA/Engine/Input/Base/AInputInterface.hpp>
+    #include <SA/Engine/Input/Base/AInputWindowContext.hpp>
+    #include <SA/Engine/Input/Base/InputContext.hpp>
+
+#if SA_GLFW
+
+    #include <SA/Engine/Input/GLFW/GLFWInputInterface.hpp>
+    #include <SA/Engine/Input/GLFW/GLFWInputWindowContext.hpp>
+
+#endif
+
+#endif // GUARD

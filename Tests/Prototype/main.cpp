@@ -4,6 +4,7 @@
 
 #include <SA/Collections/Debug>
 #include <SA/Collections/Window>
+#include <SA/Collections/Input>
 using namespace Sa;
 
 int main()
@@ -35,11 +36,11 @@ int main()
 
 	// Input
 
-	// GLFW::InputInterface inputIntf;
-	// inputIntf.Create();
+	GLFW::InputInterface inputIntf;
+	inputIntf.Create();
 
-	// AInputWindowContext* const inputWinContext = inputIntf.CreateInputWindowContext(win);
-	// InputContext* const inputContext = inputWinContext->CreateContext();
+	AInputWindowContext* const inputWinContext = inputIntf.CreateInputWindowContext(win);
+	InputContext* const inputContext = inputWinContext->CreateContext();
 
 //}
 
@@ -52,7 +53,7 @@ int main()
 
 #endif
 	{
-		// inputIntf.Update();
+		inputIntf.Update();
 	}
 
 //}
@@ -62,7 +63,7 @@ int main()
 
 	// Input
 
-	// inputIntf.Destroy();
+	inputIntf.Destroy();
 
 
 	// Window
