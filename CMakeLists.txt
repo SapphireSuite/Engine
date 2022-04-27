@@ -24,7 +24,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)		# .dll / .so
 # Input.
 
 set(SA_SOURCE_DIR "Source/SA/Engine")
-file(GLOB SA_ENGINE_SOURCES "${SA_SOURCE_DIR}/*")
+file(GLOB SA_ENGINE_SOURCES "${SA_SOURCE_DIR}/*" "${SA_SOURCE_DIR}/HI/*")
 
 ### Interface library for dependencies.
 add_library(SA_EngineDeps INTERFACE)
