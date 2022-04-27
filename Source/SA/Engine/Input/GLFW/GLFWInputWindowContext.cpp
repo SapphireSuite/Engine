@@ -27,14 +27,14 @@ namespace Sa::GLFW
 		AInputWindowContext::Create(_win);
 
 		mWindow = Cast<Window>(_win);
-		SA_ASSERT(Nullptr, SA/Windowing/Input/GLFW, mWindow, L"Window must be of type GLFW::Window");
-		SA_ASSERT(Default, SA/Windowing/Input/GLFW, mWindow->inputWinContext == nullptr,
+		SA_ASSERT(Nullptr, SA/Engine/Input/GLFW, mWindow, L"Window must be of type GLFW::Window");
+		SA_ASSERT(Default, SA/Engine/Input/GLFW, mWindow->inputWinContext == nullptr,
 			L"Window already has an InputWindowContext bound!");
 
 		mWindow->inputWinContext = this;
 
 		GLFWwindow* const winHandle = mWindow->GetHandle();
-		SA_ASSERT(Nullptr, SA/Windowing/Input/GLFW, winHandle, L"Window must be created. Call window->Create().");
+		SA_ASSERT(Nullptr, SA/Engine/Input/GLFW, winHandle, L"Window must be created. Call window->Create().");
 
 
 		// Set Callbacks.
@@ -54,7 +54,7 @@ namespace Sa::GLFW
 		}
 
 
-		SA_LOG(L"Input Window Context created.", Infos, SA/Windowing/Input/GLFW);
+		SA_LOG(L"Input Window Context created.", Infos, SA/Engine/Input/GLFW);
 	}
 	
 	void InputWindowContext::Destroy()
@@ -64,7 +64,7 @@ namespace Sa::GLFW
 		if (mWindow->inputWinContext) // null if window already destroyed.
 		{
 			GLFWwindow* const winHandle = mWindow->GetHandle();
-			SA_ASSERT(Nullptr, SA/Windowing/Input/GLFW, winHandle,
+			SA_ASSERT(Nullptr, SA/Engine/Input/GLFW, winHandle,
 				L"Window must be created. Call window->Create().");
 
 
@@ -79,6 +79,6 @@ namespace Sa::GLFW
 		mWindow = nullptr;
 
 
-		SA_LOG(L"Input Window Context destroyed.", Infos, SA/Windowing/Input/GLFW);
+		SA_LOG(L"Input Window Context destroyed.", Infos, SA/Engine/Input/GLFW);
 	}
 }

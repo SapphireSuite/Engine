@@ -92,7 +92,7 @@ namespace Sa::GLFW
 				flags = CursorMode::None;
 				break;
 			default:
-				SA_LOG(L"InputMode [" << inputMode << "] not supported yet!", Warning, SA/Windowing/Window/GLFW);
+				SA_LOG(L"InputMode [" << inputMode << "] not supported yet!", Warning, SA/Engine/Window/GLFW);
 				break;
 		}
 
@@ -167,7 +167,7 @@ namespace Sa::GLFW
 			}
 			default:
 			{
-				SA_LOG(L"WindowMode [" << _mode << "] not supported yet!", Warning, SA/Windowing/Window/GLFW);
+				SA_LOG(L"WindowMode [" << _mode << "] not supported yet!", Warning, SA/Engine/Window/GLFW);
 				break;
 			}
 		}
@@ -182,7 +182,7 @@ namespace Sa::GLFW
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 		mHandle = glfwCreateWindow(_infos.dimension.x, _infos.dimension.y, _infos.name.c_str(), nullptr, nullptr);
 
-		SA_ASSERT(Default, SA/Windowing/Window/GLFW, mHandle, L"GLFW create window failed!");
+		SA_ASSERT(Default, SA/Engine/Window/GLFW, mHandle, L"GLFW create window failed!");
 
 		glfwSetWindowPos(mHandle, _infos.position.x, _infos.position.y);
 
@@ -202,17 +202,17 @@ namespace Sa::GLFW
 			Minimize(true);
 
 
-		SA_LOG(L"Window created.", Infos, SA/Windowing/Window/GLFW);
+		SA_LOG(L"Window created.", Infos, SA/Engine/Window/GLFW);
 	}
 
 	void Window::Destroy()
 	{
-		SA_ASSERT(Nullptr, SA/Windowing/Window/GLFW, mHandle, L"Try to destroy a non-created window, call Create() first.");
+		SA_ASSERT(Nullptr, SA/Engine/Window/GLFW, mHandle, L"Try to destroy a non-created window, call Create() first.");
 
 		if (inputWinContext)
 		{
 			SA_LOG(L"InputWindowContext should be destroyed before window.",
-				Warning, SA/Windowing/Window/GLFW,
+				Warning, SA/Engine/Window/GLFW,
 				L"Call InputInterface->DestroyInputWindowContext(inputWinContext)")
 
 			inputWinContext = nullptr; // Will be destroyed by input interface. Nullptr value is handled on destroy.
@@ -223,7 +223,7 @@ namespace Sa::GLFW
 		mHandle = nullptr;
 		
 
-		SA_LOG(L"Window destroyed.", Infos, SA/Windowing/Window/GLFW);
+		SA_LOG(L"Window destroyed.", Infos, SA/Engine/Window/GLFW);
 	}
 
 	//AInputWindowContext* Window::GetInputWindowContext() const
@@ -262,7 +262,7 @@ namespace Sa::GLFW
 	void Window::ResizeCallback(GLFWwindow* _handle, int32_t _width, int32_t _height)
 	{
 		GLFW::Window* const win = static_cast<GLFW::Window*>(glfwGetWindowUserPointer(_handle));
-		SA_ASSERT(Nullptr, SA/Windowing/Window/GLFW, win);
+		SA_ASSERT(Nullptr, SA/Engine/Window/GLFW, win);
 
 		Vec2ui newSize = Vec2i{ _width, _height };
 
@@ -316,7 +316,7 @@ namespace Sa::GLFW
 
 	// 	SA_VK_ASSERT(glfwCreateWindowSurface(_instance, mHandle, nullptr, &vkSurface), L"Failed to create VkRenderSurface from GLFW window!");
 
-	// 	SA_LOG(L"Window Surface created.", Infos, SA/Windowing/Window/GLFW);
+	// 	SA_LOG(L"Window Surface created.", Infos, SA/Engine/Window/GLFW);
 
 	// 	return Vk::WindowSurface{ vkSurface };
 	// }
@@ -325,7 +325,7 @@ namespace Sa::GLFW
 	// {
 	// 	vkDestroySurfaceKHR(_instance, _surface, nullptr);
 
-	// 	SA_LOG(L"Window Surface destroyed.", Infos, SA/Windowing/Window/GLFW);
+	// 	SA_LOG(L"Window Surface destroyed.", Infos, SA/Engine/Window/GLFW);
 	// }
 
 #endif

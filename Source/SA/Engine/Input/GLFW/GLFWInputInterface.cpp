@@ -11,14 +11,14 @@ namespace Sa::GLFW
 	{
 		AInputInterface::Create();
 
-		SA_LOG(L"Input Interface created.", Infos, SA/Windowing/Input/GLFW);
+		SA_LOG(L"Input Interface created.", Infos, SA/Engine/Input/GLFW);
 	}
 	
 	void InputInterface::Destroy()
 	{
 		AInputInterface::Destroy();
 
-		SA_LOG(L"Input Interface destroyed.", Infos, SA/Windowing/Input/GLFW);
+		SA_LOG(L"Input Interface destroyed.", Infos, SA/Engine/Input/GLFW);
 	}
 
 	void InputInterface::Clear()
@@ -46,7 +46,7 @@ namespace Sa::GLFW
 
 	void InputInterface::DestroyInputWindowContext(AInputWindowContext* _winContext)
 	{
-		SA_ASSERT(Nullptr, SA/Windowing/Input/GLFW, _winContext);
+		SA_ASSERT(Nullptr, SA/Engine/Input/GLFW, _winContext);
 
 		bool bRemoved = mInputWinContexts.Remove(_winContext);
 

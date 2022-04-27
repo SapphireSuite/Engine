@@ -10,7 +10,7 @@ namespace Sa
 	{
 		HardwareInterfaceBase::Create();
 
-		SA_ASSERT(Nullptr, SA/Windowing/Input, _win);
+		SA_ASSERT(Nullptr, SA/Engine/Input, _win);
 	}
 
 	void AInputWindowContext::Clear()
@@ -28,7 +28,7 @@ namespace Sa
 	
 	bool AInputWindowContext::DestroyContext(const InputContext* _context)
 	{
-		SA_ASSERT(Nullptr, SA/Windowing/Input, _context, L"Destroy null InputContext");
+		SA_ASSERT(Nullptr, SA/Engine/Input, _context, L"Destroy null InputContext");
 
 		for (auto it = mContexts.begin(); it != mContexts.end(); ++it)
 		{

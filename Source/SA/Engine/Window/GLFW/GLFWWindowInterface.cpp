@@ -11,7 +11,7 @@ namespace Sa::GLFW
 {
 	void ErrorCallback(int32_t error, const char* description)
 	{
-		SA_LOG(L"GLFW Error [" << error << L"]:" << description, Error, SA/Windowing/Window/GLFW);
+		SA_LOG(L"GLFW Error [" << error << L"]:" << description, Error, SA/Engine/Window/GLFW);
 	}
 
 	void WindowInterface::Create()
@@ -20,9 +20,9 @@ namespace Sa::GLFW
 
 		glfwSetErrorCallback(ErrorCallback);
 
-		SA_ASSERT_EXEC(Default, SA/Windowing/Window/GLFW, glfwInit(), L"GLFW init failed!");
+		SA_ASSERT_EXEC(Default, SA/Engine/Window/GLFW, glfwInit(), L"GLFW init failed!");
 
-		SA_LOG(L"Window Interface created.", Infos, SA/Windowing/Window/GLFW);
+		SA_LOG(L"Window Interface created.", Infos, SA/Engine/Window/GLFW);
 	}
 
 	void WindowInterface::Destroy()
@@ -31,7 +31,7 @@ namespace Sa::GLFW
 
 		glfwTerminate();
 
-		SA_LOG(L"Window Interface destroyed.", Infos, SA/Windowing/Window/GLFW);
+		SA_LOG(L"Window Interface destroyed.", Infos, SA/Engine/Window/GLFW);
 	}
 
 	void WindowInterface::Clear()
@@ -53,12 +53,12 @@ namespace Sa::GLFW
 
 	void WindowInterface::DestroyWindow(AWindow* _window)
 	{
-		SA_ASSERT(Nullptr, SA/Windowing/Window/GLFW, _window);
+		SA_ASSERT(Nullptr, SA/Engine/Window/GLFW, _window);
 
 		bool bRemoved = mWindows.Remove(_window);
 		
 		if(!bRemoved)
-			SA_LOG(L"Window [" << _window << "] not created with this inferface.", Warning, SA/Windowing/Window/GLFW);
+			SA_LOG(L"Window [" << _window << "] not created with this inferface.", Warning, SA/Engine/Window/GLFW);
 	}
 
 
