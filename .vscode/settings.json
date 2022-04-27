@@ -22,4 +22,7 @@
     },
     "peacock.color": "#0f3362",
     "editor.formatOnSave": true,
+    "files.associations": {
+        "debug": "cpp"
+    },
 }
