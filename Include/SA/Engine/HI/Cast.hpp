@@ -67,7 +67,7 @@ namespace Sa
 		T* const casted = Cast<T>(_in);
 
 		SA_ASSERT(Nullptr, SA/HardwareInterface, casted,
-			Sa::WStringStream() << L"Input type [" << typeid(TIn).name() << L"] does not inherit from cast type [" << typeid(T).name() << L"]");
+			L"Input type ["_L << typeid(TIn).name() << L"] does not inherit from cast type [" << typeid(T).name() << L"]");
 
 		return *casted;
 	}
@@ -78,7 +78,7 @@ namespace Sa
 		const T* const casted = Cast<T>(_in);
 
 		SA_ASSERT(Nullptr, SA/HardwareInterface, casted,
-			Sa::WStringStream() << L"Input type [" << typeid(TIn).name() << L"] does not inherit from cast type [" << typeid(T).name() << L"]");
+			L"Input type ["_L << typeid(TIn).name() << L"] does not inherit from cast type [" << typeid(T).name() << L"]");
 
 		return *casted;
 	}
