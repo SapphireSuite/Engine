@@ -15,13 +15,6 @@ namespace Sa
 	{
 	protected:
 		AWindow* mWindow = nullptr;
-
-	public:
-	    /**
-		*	@brief Virtual destructor.
-		*	Ensure correct polymorphism destruction.
-		*/
-		virtual ~AWindowSurface() = default;
 	};
 }
 

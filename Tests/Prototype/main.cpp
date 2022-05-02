@@ -44,6 +44,15 @@ int main()
 	renderIntf.Create(&winIntf);
 
 	AWindowSurface* const winSurface = renderIntf.CreateWindowSurface(win);
+	
+	const std::vector<ARenderDeviceInfos*> deviceInfos = renderIntf.QueryDevices(winSurface);
+
+	// ARenderDevice* const renderDevice = renderIntf.CreateDevice(deviceInfos[0]);
+
+	// ARenderContext* const renderContext = renderDevice->CreateRenderContext();
+
+	// ARenderSurface* const surface = renderContext->CreateSurface(winSurface);
+
 //}
 
 
@@ -64,6 +73,7 @@ int main()
 //{ Uninit
 
 	// Render
+	// device->WaitIdle();
 	renderIntf.Destroy();
 
 	// Input

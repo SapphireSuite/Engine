@@ -8,9 +8,8 @@
 #include <SA/Engine/Render/Base/ARenderInterface.hpp>
 
 #include <SA/Engine/Render/Vulkan/VkInstance.hpp>
+#include <SA/Engine/Render/Vulkan/Device/VkDevice.hpp>
 #include <SA/Engine/Render/Vulkan/Surface/VkWindowSurface.hpp>
-
-#include <SA/Engine/HI/InterfaceList.hpp>
 
 namespace Sa::Vk
 {
@@ -19,12 +18,16 @@ namespace Sa::Vk
 		Instance mInstance;
 
 		InterfaceList<WindowSurface> mWindowSurfaces;
+		InterfaceList<Device> mDevices;
 
 	public:
 		void Create(const AWindowInterface* _winIntf = nullptr) override final;
 		void Destroy() override final;
-
 		void Clear() override final;
+
+		std::vector<ARenderDeviceInfos*> QueryDevices(AWindowSurface* _winSurface = nullptr) override final;
+		ARenderDevice* CreateDevice(ARenderDeviceInfos* _infos) override final;
+		void DestroyDevice(ARenderDevice* _device) override final;
 
 #if SA_WINDOW
 

@@ -22,8 +22,8 @@ namespace Sa::Vk
 		using AWindowSurface::Destroy;
 
 	public:
-		void Create(AWindow* _win,  Instance& _inst);
-		void Destroy(Instance& _inst);
+		void Create(AWindow* _win,  const Instance& _inst);
+		void Destroy(const Instance& _inst);
 
 		operator VkSurfaceKHR() const;
 	};

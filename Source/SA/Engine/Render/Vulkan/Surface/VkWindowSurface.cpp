@@ -6,7 +6,7 @@
 
 namespace  Sa::Vk
 {
-    void WindowSurface::Create(AWindow* _win,  Instance& _inst)
+    void WindowSurface::Create(AWindow* _win,  const Instance& _inst)
     {
         AWindowSurface::Create();
 
@@ -16,7 +16,7 @@ namespace  Sa::Vk
 		SA_LOG(L"Window Surface created.", Infos, SA/Engine/Render/Vulkan);
     }
 
-    void WindowSurface::Destroy(Instance& _inst)
+    void WindowSurface::Destroy(const Instance& _inst)
     {
         AWindowSurface::Destroy();
         

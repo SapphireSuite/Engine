@@ -5,7 +5,10 @@
 #ifndef SAPPHIRE_ENGINE_ARENDER_INTERFACE_GUARD
 #define SAPPHIRE_ENGINE_ARENDER_INTERFACE_GUARD
 
-#include <SA/Engine/HI/HardwareInterface.hpp>
+#include <vector>
+
+#include <SA/Engine/Render/Base/Device/ARenderDevice.hpp>
+#include <SA/Engine/Render/Base/Device/ARenderDeviceInfos.hpp>
 
 #include <SA/Engine/Render/Base/Surface/AWindowSurface.hpp>
 
@@ -16,21 +19,22 @@ namespace Sa
 
 	class ARenderInterface : protected HardwareInterface
 	{	
-        using HardwareInterface::Create;
+        using HardwareInterface::Create; // overloaded.
 
 	public:
-    	/**
-		*	Virtual destructor.
-		*	Ensure correct polymorphism destruction.
-		*/
-		virtual ~ARenderInterface() = default;
-
 		virtual void Create(const AWindowInterface* _winIntf = nullptr);
         using HardwareInterface::Destroy;
         using HardwareInterface::Clear;
 
-		// virtual ARenderGraphicInterface* CreateGraphicInterface(const AGraphicDeviceInfos& _infos) = 0;
-		// virtual void DestroyGraphicInterface(ARenderGraphicInterface* _graphics);
+		/**
+		 * @brief Query supported devices for rendering.
+		 * 
+		 * @param _winSurface	Assossiated window surface requiered for window presenting. Null for offscreen rendering. 
+		 * @return std::vector<ARenderDeviceInfos*> supported render device infos.
+		 */
+		virtual std::vector<ARenderDeviceInfos*> QueryDevices(AWindowSurface* _winSurface = nullptr) = 0;
+		virtual ARenderDevice* CreateDevice(ARenderDeviceInfos* _infos) = 0;
+		virtual void DestroyDevice(ARenderDevice* _device) = 0;
 
 #if SA_WINDOW
 
