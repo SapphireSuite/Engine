@@ -43,7 +43,7 @@ int main()
 	Vk::RenderInterface renderIntf;
 	renderIntf.Create(&winIntf);
 
-	AWindowSurface* winSurface = renderIntf.CreateWindowSurface(win);
+	AWindowSurface* const winSurface = renderIntf.CreateWindowSurface(win);
 //}
 
 
