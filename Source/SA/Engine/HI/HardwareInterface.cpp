@@ -10,7 +10,7 @@ namespace Sa
 
 	HardwareInterface::~HardwareInterface() noexcept(false)
 	{
-		SA_ASSERT(Default, SA/HI, !bCreated,
+		SA_ASSERT(Default, SA/Engine/HI, !bCreated,
 			L"Destructor called without previously calling Destroy().",
 			L"Call interface->Destroy() before object destruction.")
 
@@ -56,7 +56,7 @@ namespace Sa
 	{
 #if SA_DEBUG
 
-		SA_ASSERT(Default, SA/HI, bCreated,
+		SA_ASSERT(Default, SA/Engine/HI, bCreated,
 			L"Interface must be previously created.",
 			L"Call interface->Create().");
 
