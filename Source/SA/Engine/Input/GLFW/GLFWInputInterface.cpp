@@ -26,6 +26,8 @@ namespace Sa::GLFW
 		AInputInterface::Clear();
 
 		mInputWinContexts.Clear(DestroyFunctor<InputWindowContext>());
+		
+		SA_LOG(L"Input Interface cleared.", Infos, SA/Engine/Input/GLFW);
 	}
 
 

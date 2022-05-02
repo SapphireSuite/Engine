@@ -16,13 +16,6 @@ namespace Sa
 	class AInputInterface : protected HardwareInterface
 	{
 	public:
-		/**
-		*	Virtual destructor.
-		*	Ensure correct polymorphism destruction.
-		*/
-		virtual ~AInputInterface() = default;
-
-
 		using HardwareInterface::Create;
 		using HardwareInterface::Destroy;
 		using HardwareInterface::Clear;

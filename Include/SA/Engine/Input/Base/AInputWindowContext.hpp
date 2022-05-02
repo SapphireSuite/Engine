@@ -18,16 +18,9 @@ namespace Sa
 	{
 		std::forward_list<InputContext> mContexts;
 
-		using HardwareInterface::Create;
+		using HardwareInterface::Create; // overloaded.
 
 	public:
-		/**
-		*	Virtual destructor.
-		*	Ensure correct polymorphism destruction.
-		*/
-		virtual ~AInputWindowContext() = default;
-		
-
 		virtual void Create(AWindow* _win);
 		using HardwareInterface::Destroy;
 

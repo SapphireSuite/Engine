@@ -39,6 +39,8 @@ namespace Sa::GLFW
 		AWindowInterface::Clear();
 
 		mWindows.Clear(DestroyFunctor<Window>());
+
+		SA_LOG(L"Window Interface cleared.", Infos, SA/Engine/Window/GLFW);
 	}
 
 

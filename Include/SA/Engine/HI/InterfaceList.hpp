@@ -7,6 +7,8 @@
 
 #include <forward_list>
 
+#include <SA/Collections/Debug>
+
 namespace Sa
 {
 // { Functor

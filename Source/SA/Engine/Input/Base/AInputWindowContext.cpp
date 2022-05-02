@@ -18,6 +18,8 @@ namespace Sa
 		HardwareInterface::Clear();
 
 		mContexts.clear();
+
+		SA_LOG(L"Input Window Context cleared.", Infos, SA/Engine/Input);
 	}
 
 	

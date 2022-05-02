@@ -40,7 +40,7 @@ namespace Sa
 	*/
 	class AWindow : protected HardwareInterface
 	{
-		using HardwareInterface::Create;
+		using HardwareInterface::Create; // overloaded.
 		using HardwareInterface::Clear; // Not used.
 
 	protected:
@@ -49,13 +49,6 @@ namespace Sa
 		WindowMode mWindowMode = WindowMode::Windowed;
 
 	public:
-		/**
-		*	Virtual destructor.
-		*	Ensure correct polymorphism destruction.
-		*/
-		virtual ~AWindow() = default;
-		
-		
 		/// Resize window callback event.
 		Event<void(Vec2ui)> onResize;
 

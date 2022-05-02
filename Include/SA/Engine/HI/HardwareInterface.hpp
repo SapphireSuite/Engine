@@ -27,13 +27,15 @@ namespace Sa
 		void CheckCreated() const;
 
 	public:
-		/**
-		*	\brief Interface Destructor.
-		*	Ensure Destroy as been called previously.
-		*	Destrutor <b>non</b>-virtual. Inherit from this class to create a parent class.
+    	/**
+		*	Virtual destructor.
+		*	Ensure correct polymorphism destruction.
 		*/
-		~HardwareInterface() noexcept(false);
-
+#if SA_DEBUG
+		virtual ~HardwareInterface() noexcept(false);
+#else
+		virtual ~HardwareInterface();
+#endif
 
 		/**
 		*	\brief Create and initialize this interface.

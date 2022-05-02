@@ -6,16 +6,24 @@
 
 namespace Sa
 {
-	HardwareInterface::~HardwareInterface() noexcept(false)
-	{
 #if SA_DEBUG
 
+	HardwareInterface::~HardwareInterface() noexcept(false)
+	{
 		SA_ASSERT(Default, SA/HI, !bCreated,
 			L"Destructor called without previously calling Destroy().",
 			L"Call interface->Destroy() before object destruction.")
 
-#endif
 	}
+
+#else
+
+	HardwareInterface::~HardwareInterface()
+	{
+		
+	}
+
+#endif
 
 
 	void HardwareInterface::Create()
