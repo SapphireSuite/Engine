@@ -10,7 +10,7 @@
 #include <SA/Engine/Render/Base/Device/ARenderDevice.hpp>
 
 #include <SA/Engine/Render/Vulkan/Device/VkContext.hpp>
-#include <SA/Engine/Render/Vulkan/Device/Queue/VkQueueRequirements.hpp>
+#include <SA/Engine/Render/Vulkan/Device/Queue/VkQueueMgr.hpp>
 
 namespace Sa::Vk
 {
@@ -31,6 +31,8 @@ namespace Sa::Vk
         using ARenderDevice::Create; // overloaded.
 
 	public:
+		QueueMgr queueMgr;
+
 		const VkPhysicalDeviceMemoryProperties& GetMemoryProperties() const noexcept;
 
 		void Create(const DeviceInfos& _infos);

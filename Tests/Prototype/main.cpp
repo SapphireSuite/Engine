@@ -51,7 +51,7 @@ int main()
 
 	ARenderContext* const renderContext = renderDevice->CreateRenderContext();
 
-	// ARenderSurface* const surface = renderContext->CreateSurface(winSurface);
+	ARenderSurface* const surface = renderContext->CreateSurface(winSurface);
 
 //}
 

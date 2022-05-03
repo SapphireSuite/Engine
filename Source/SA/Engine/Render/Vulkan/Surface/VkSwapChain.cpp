@@ -56,23 +56,23 @@ namespace Sa::Vk
 		swapChainCreateInfo.oldSwapchain = VK_NULL_HANDLE;
 
 
-		// // TODO: Multiple Queues?
-		// // Queue family setup.
-		// uint32_t familyIndices[]
-		// {
-		// 	_device.queueMgr.graphics.GetQueue(0).GetFamilyIndex(),
-		// 	_device.queueMgr.present.GetQueue(0).GetFamilyIndex(),
-		// };
+		// TODO: Multiple Queues?
+		// Queue family setup.
+		uint32_t familyIndices[]
+		{
+			_device.queueMgr.graphics[0].GetFamilyIndex(),
+			_device.queueMgr.present[0].GetFamilyIndex(),
+		};
 
-		// if (_device.queueMgr.present.GetQueue(0).IsValid() && familyIndices[0] != familyIndices[1]) // Graphic and present familiy are different.
-		// {
-		// 	swapChainCreateInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
-		// 	swapChainCreateInfo.queueFamilyIndexCount = SizeOf<uint32>(familyIndices);
-		// 	swapChainCreateInfo.pQueueFamilyIndices = familyIndices;
-		// }
+		if (_device.queueMgr.present[0].IsValid() && familyIndices[0] != familyIndices[1]) // Graphic and present familiy are different.
+		{
+			swapChainCreateInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
+			swapChainCreateInfo.queueFamilyIndexCount = sizeof(familyIndices) / sizeof(uint32_t);
+			swapChainCreateInfo.pQueueFamilyIndices = familyIndices;
+		}
 
 
-		// SA_VK_ASSERT(vkCreateSwapchainKHR(_device, &swapChainCreateInfo, nullptr, &mHandle), L"Failed to create swap chain!");
+		SA_VK_ASSERT(vkCreateSwapchainKHR(_device, &swapChainCreateInfo, nullptr, &mHandle), L"Failed to create swap chain!");
 
 		SA_LOG(L"Swap chain created.", Infos, SA/Engine/Render/Vulkan);
 	}

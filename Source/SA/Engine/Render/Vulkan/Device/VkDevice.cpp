@@ -57,6 +57,7 @@ namespace Sa::Vk
 		// Query properties.
 		vkGetPhysicalDeviceMemoryProperties(mPhysicalDevice, &mMemProperties);
 
+		queueMgr.Create(*this, _infos);
 
 		SA_LOG(L"Render Device [" << _infos.GetName() << ":\t" << _infos.GetID() << L"] created.", Infos, SA/Engine/Render/Vulkan);
 	}
@@ -66,6 +67,8 @@ namespace Sa::Vk
 		ARenderDevice::Destroy();
 
 		WaitIdle();
+
+		queueMgr.Destroy(*this);
 
 		vkDestroyDevice(mLogicalDevice, nullptr);
 
