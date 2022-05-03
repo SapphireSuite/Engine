@@ -14,14 +14,14 @@ namespace Sa::Vk
 
 		mDevice = &_device;
 
-		SA_LOG(L"Render Context created.", Infos, SA/Render/Vulkan);
+		SA_LOG(L"Render Context created.", Infos, SA/Engine/Render/Vulkan);
 	}
 
 	void Context::Destroy()
 	{
 		ARenderContext::Destroy();
 
-		SA_LOG(L"Render Context destroyed.", Infos, SA/Render/Vulkan);
+		SA_LOG(L"Render Context destroyed.", Infos, SA/Engine/Render/Vulkan);
 	}
 
 
@@ -29,7 +29,7 @@ namespace Sa::Vk
 	{
 		ARenderContext::Clear();
 
-		SA_LOG(L"Render Context cleared.", Infos, SA/Render/Vulkan);
+		SA_LOG(L"Render Context cleared.", Infos, SA/Engine/Render/Vulkan);
 	}
 
 

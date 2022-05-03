@@ -73,7 +73,6 @@ int main()
 //{ Uninit
 
 	// Render
-	renderDevice->WaitIdle();
 	renderIntf.Destroy();
 
 	// Input

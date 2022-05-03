@@ -121,22 +121,22 @@ namespace Sa::Vk
 			//	break;
 			case VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT:
 			{
-				SA_LOG(pCallbackData->pMessage, Infos, SA/Render/Vulkan/VLayers, L"Vulkan Validation Layers " << msgTypeStr);
+				SA_LOG(pCallbackData->pMessage, Infos, SA/Engine/Render/Vulkan/VLayers, L"Vulkan Validation Layers " << msgTypeStr);
 				break;
 			}
 			case VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT:
 			{
-				SA_LOG(pCallbackData->pMessage, Warning, SA/Render/Vulkan/VLayers, L"Vulkan Validation Layers " << msgTypeStr);
+				SA_LOG(pCallbackData->pMessage, Warning, SA/Engine/Render/Vulkan/VLayers, L"Vulkan Validation Layers " << msgTypeStr);
 				break;
 			}
 			case VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT:
 			{
-				SA_LOG(pCallbackData->pMessage, Error, SA/Render/Vulkan/VLayers, L"Vulkan Validation Layers " << msgTypeStr);
+				SA_LOG(pCallbackData->pMessage, Error, SA/Engine/Render/Vulkan/VLayers, L"Vulkan Validation Layers " << msgTypeStr);
 				break;
 			}
 			default:
 			{
-				SA_LOG(pCallbackData->pMessage, Normal, SA/Render/Vulkan/VLayers, L"Vulkan Validation Layers " << msgTypeStr);
+				SA_LOG(pCallbackData->pMessage, Normal, SA/Engine/Render/Vulkan/VLayers, L"Vulkan Validation Layers " << msgTypeStr);
 				break;
 			}
 		}

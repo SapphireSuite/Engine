@@ -71,13 +71,13 @@ namespace Sa::Vk
 #if SA_VK_VALIDATION_LAYERS
 
 		auto createDebugFunc = (PFN_vkCreateDebugUtilsMessengerEXT)vkGetInstanceProcAddr(mHandle, "vkCreateDebugUtilsMessengerEXT");
-		SA_ASSERT(Nullptr, SA/Render/Vulkan, createDebugFunc, L"Extension PFN_vkCreateDebugUtilsMessengerEXT missing!");
+		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, createDebugFunc, L"Extension PFN_vkCreateDebugUtilsMessengerEXT missing!");
 
 		SA_VK_ASSERT(createDebugFunc(mHandle, &debugUtilscreateInfo, nullptr, &mDebugMessenger), L"Failed to create vulkan debug messenger!");
 
 #endif
 
-		SA_LOG(L"Render Instance created.", Infos, SA/Render/Vulkan);
+		SA_LOG(L"Render Instance created.", Infos, SA/Engine/Render/Vulkan);
 	}
 
 	void Instance::Destroy()
@@ -85,7 +85,7 @@ namespace Sa::Vk
 #if SA_VK_VALIDATION_LAYERS
 
 		auto destroyDebugFunc = (PFN_vkDestroyDebugUtilsMessengerEXT)vkGetInstanceProcAddr(mHandle, "vkDestroyDebugUtilsMessengerEXT");
-		SA_ASSERT(Nullptr, SA/Render/Vulkan, destroyDebugFunc, L"Extension PFN_vkDestroyDebugUtilsMessengerEXT missing!");
+		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, destroyDebugFunc, L"Extension PFN_vkDestroyDebugUtilsMessengerEXT missing!");
 
 		destroyDebugFunc(mHandle, mDebugMessenger, nullptr);
 
@@ -93,7 +93,7 @@ namespace Sa::Vk
 
 		vkDestroyInstance(mHandle, nullptr);
 
-		SA_LOG(L"Render Instance destroyed.", Infos, SA/Render/Vulkan);
+		SA_LOG(L"Render Instance destroyed.", Infos, SA/Engine/Render/Vulkan);
 	}
 
 

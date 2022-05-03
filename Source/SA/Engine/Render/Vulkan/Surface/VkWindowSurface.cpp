@@ -20,7 +20,7 @@ namespace  Sa::Vk
     {
         AWindowSurface::Destroy();
         
-        SA_ASSERT(Nullptr, SA/Render/Vulkan, mWindow, L"Destroy null window surface.");
+        SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, mWindow, L"Destroy null window surface.");
 
         mWindow->DestroyVkWindowSurfaceHandle(_inst, mHandle);
         mWindow = nullptr;

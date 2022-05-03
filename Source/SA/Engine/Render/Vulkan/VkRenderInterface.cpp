@@ -21,11 +21,11 @@ namespace Sa::Vk
 		ARenderInterface::Create(_winIntf);
 
 		// _winIntf can be nullptr for offscreen rendering.
-		SA_ASSERT(Default, SA/Render/Vulkan, ValidationLayers::CheckValidationSupport(), L"Validation Layers not supported!");
+		SA_ASSERT(Default, SA/Engine/Render/Vulkan, ValidationLayers::CheckValidationSupport(), L"Validation Layers not supported!");
 
 		mInstance.Create(_winIntf);
 
-		SA_LOG(L"Render Interface created.", Infos, SA/Render/Vulkan);
+		SA_LOG(L"Render Interface created.", Infos, SA/Engine/Render/Vulkan);
 	}
 
 	void RenderInterface::Destroy()
@@ -34,18 +34,18 @@ namespace Sa::Vk
 
 		mInstance.Destroy();
 
-		SA_LOG(L"Render Interface destroyed.", Infos, SA/Render/Vulkan);
+		SA_LOG(L"Render Interface destroyed.", Infos, SA/Engine/Render/Vulkan);
 	}
 
 	void RenderInterface::Clear()
 	{
 		ARenderInterface::Clear();
 
-		mWindowSurfaces.Clear(WindowSurfaceDestroyer{ mInstance });
-		
 		mDevices.Clear(DestroyFunctor<Device>());
+		
+		mWindowSurfaces.Clear(WindowSurfaceDestroyer{ mInstance });
 
-		SA_LOG(L"Render Interface cleared.", Infos, SA/Render/Vulkan);
+		SA_LOG(L"Render Interface cleared.", Infos, SA/Engine/Render/Vulkan);
 	}
 
 
@@ -71,7 +71,7 @@ namespace Sa::Vk
 	ARenderDevice* RenderInterface::CreateDevice(const ARenderDeviceInfos* _infos)
 	{
 		CheckCreated();
-		SA_ASSERT(Nullptr, SA/Render/Vulkan, _infos);
+		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _infos);
 
 		Device* const device = mDevices.Emplace();
 
@@ -83,7 +83,7 @@ namespace Sa::Vk
 	void RenderInterface::DestroyDevice(ARenderDevice* _device)
 	{
 		CheckCreated();
-		SA_ASSERT(Nullptr, SA/Render/Vulkan, _device);
+		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _device);
 
 		mDevices.Erase(_device, DestroyFunctor<Device>());
 	}
@@ -94,7 +94,7 @@ namespace Sa::Vk
 	AWindowSurface* RenderInterface::CreateWindowSurface(AWindow* _win)
 	{
 		CheckCreated();
-		SA_ASSERT(Nullptr, SA/Render/Vulkan, _win);
+		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _win);
 
 		WindowSurface* winSurface = mWindowSurfaces.Emplace();
 
@@ -106,7 +106,7 @@ namespace Sa::Vk
 	void RenderInterface::DestroyWindowSurface(AWindowSurface* _winSurface)
 	{
 		CheckCreated();
-		SA_ASSERT(Nullptr, SA/Render/Vulkan, _winSurface);
+		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _winSurface);
 
 		bool bRemoved = mWindowSurfaces.Erase(_winSurface, WindowSurfaceDestroyer{ mInstance });
 
