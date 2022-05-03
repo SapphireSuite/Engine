@@ -43,20 +43,32 @@ namespace Sa::Vk
 
 		mWindowSurfaces.Clear(WindowSurfaceDestroyer{ mInstance });
 		
-		mDevices.Clear();
+		mDevices.Clear(DestroyFunctor<Device>());
 
 		SA_LOG(L"Render Interface cleared.", Infos, SA/Render/Vulkan);
 	}
 
 
-	std::vector<ARenderDeviceInfos*> RenderInterface::QueryDevices(AWindowSurface* _winSurface)
+	PolymorphicVector<ARenderDeviceInfos> RenderInterface::QueryDevices(AWindowSurface* _winSurface)
 	{
 		CheckCreated();
 	
-		return std::vector<ARenderDeviceInfos*>();
+		std::vector<DeviceInfos> deviceInfos;
+
+		if(_winSurface)
+		{
+			WindowSurface* const vkWinSurface = Cast<WindowSurface>(_winSurface);
+			SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, vkWinSurface, L"Window surface not of type Vk::WindowSurface.");
+
+			deviceInfos = Device::QuerySuitableDevices(mInstance, vkWinSurface);
+		}
+		else
+			deviceInfos = Device::QuerySuitableDevices(mInstance);
+
+		return deviceInfos;
 	}
 	
-	ARenderDevice* RenderInterface::CreateDevice(ARenderDeviceInfos* _infos)
+	ARenderDevice* RenderInterface::CreateDevice(const ARenderDeviceInfos* _infos)
 	{
 		CheckCreated();
 		SA_ASSERT(Nullptr, SA/Render/Vulkan, _infos);

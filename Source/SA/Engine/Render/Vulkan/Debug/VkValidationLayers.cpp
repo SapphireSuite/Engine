@@ -2,6 +2,8 @@
 
 #include <cstring> // std::strcmp
 
+#include <SA/Collections/Debug>
+
 #include <Render/Vulkan/Debug/VkValidationLayers.hpp>
 
 #if SA_VK_VALIDATION_LAYERS

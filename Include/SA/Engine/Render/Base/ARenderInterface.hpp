@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_ENGINE_ARENDER_INTERFACE_GUARD
 #define SAPPHIRE_ENGINE_ARENDER_INTERFACE_GUARD
 
-#include <vector>
+#include <SA/Engine/HI/PolymorphicVector.hpp>
 
 #include <SA/Engine/Render/Base/Device/ARenderDevice.hpp>
 #include <SA/Engine/Render/Base/Device/ARenderDeviceInfos.hpp>
@@ -30,10 +30,10 @@ namespace Sa
 		 * @brief Query supported devices for rendering.
 		 * 
 		 * @param _winSurface	Assossiated window surface requiered for window presenting. Null for offscreen rendering. 
-		 * @return std::vector<ARenderDeviceInfos*> supported render device infos.
+		 * @return std::vector<std::unique_ptr<ARenderDeviceInfos>> supported render device infos.
 		 */
-		virtual std::vector<ARenderDeviceInfos*> QueryDevices(AWindowSurface* _winSurface = nullptr) = 0;
-		virtual ARenderDevice* CreateDevice(ARenderDeviceInfos* _infos) = 0;
+		virtual PolymorphicVector<ARenderDeviceInfos> QueryDevices(AWindowSurface* _winSurface = nullptr) = 0;
+		virtual ARenderDevice* CreateDevice(const ARenderDeviceInfos* _infos) = 0;
 		virtual void DestroyDevice(ARenderDevice* _device) = 0;
 
 #if SA_WINDOW

@@ -2,7 +2,7 @@
 
 #include <Render/Vulkan/VkInstance.hpp>
 
-#include <Render/Vulkan/Debug/VkValidationLayers.hpp>
+#include <Render/Vulkan/Debug/Debug.hpp>
 
 #include <Window/Base/AWindowInterface.hpp>
 

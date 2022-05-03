@@ -12,7 +12,15 @@ namespace Sa
 {
 	class ARenderDeviceInfos
 	{
-		std::string name;
+	public:
+	    /**
+		*	Virtual destructor.
+		*	Ensure correct polymorphism destruction.
+		*/
+		virtual ~ARenderDeviceInfos() = default;
+
+		virtual uint32_t GetID() const noexcept = 0;
+		virtual std::string GetName() const noexcept = 0;
 
 		uint32_t score = 0;
 

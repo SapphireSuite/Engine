@@ -45,9 +45,9 @@ int main()
 
 	AWindowSurface* const winSurface = renderIntf.CreateWindowSurface(win);
 	
-	const std::vector<ARenderDeviceInfos*> deviceInfos = renderIntf.QueryDevices(winSurface);
+	const PolymorphicVector<ARenderDeviceInfos> deviceInfos = renderIntf.QueryDevices(winSurface);
 
-	// ARenderDevice* const renderDevice = renderIntf.CreateDevice(deviceInfos[0]);
+	ARenderDevice* const renderDevice = renderIntf.CreateDevice(deviceInfos[0]);
 
 	// ARenderContext* const renderContext = renderDevice->CreateRenderContext();
 
@@ -73,7 +73,7 @@ int main()
 //{ Uninit
 
 	// Render
-	// device->WaitIdle();
+	renderDevice->WaitIdle();
 	renderIntf.Destroy();
 
 	// Input

@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_ENGINE_RENDER_VK_INSTANCE_GUARD
 #define SAPPHIRE_ENGINE_RENDER_VK_INSTANCE_GUARD
 
-#include <SA/Engine/Render/Vulkan/Debug/Debug.hpp>
+#include <SA/Engine/Render/Vulkan/Debug/VkValidationLayers.hpp>
 
 namespace Sa
 {

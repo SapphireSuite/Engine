@@ -10,6 +10,7 @@
 #include <SA/Engine/Render/Base/Device/ARenderDevice.hpp>
 
 #include <SA/Engine/Render/Vulkan/Device/VkContext.hpp>
+#include <SA/Engine/Render/Vulkan/Device/Queue/VkQueueRequirements.hpp>
 
 namespace Sa::Vk
 {
@@ -29,6 +30,8 @@ namespace Sa::Vk
         using ARenderDevice::Create; // overloaded.
 
 	public:
+		const VkPhysicalDeviceMemoryProperties& GetMemoryProperties() const noexcept;
+
 		void Create(const DeviceInfos& _infos);
 		void Destroy() override final;
 		void Clear() override final;
@@ -37,6 +40,13 @@ namespace Sa::Vk
 
 		ARenderContext* CreateRenderContext() override final;
 		void DestroyRenderContext(ARenderContext* _context) override final;
+
+
+		static std::vector<DeviceInfos> QuerySuitableDevices(const Instance& _inst,
+			const QueueRequirements& _queueReq = QueueRequirements{ QueueFamily::OffScreen });
+
+		static std::vector<DeviceInfos> QuerySuitableDevices(const Instance& _inst,
+			const WindowSurface* _winSurface, const QueueRequirements& _queueReq = QueueRequirements{ QueueFamily::Max });
 	};
 }
 

@@ -8,9 +8,8 @@
 #include <SA/Collections/Debug>
 
 #include <SA/Engine/Render/Vulkan/Debug/Exception_Vulkan.hpp>
+#include <SA/Engine/Render/Vulkan/Debug/VkValidationLayers.hpp>
 
-#define SA_VK_VALIDATION_LAYERS SA_VULKAN && (SA_DEBUG || SA_LOG_RELEASE_OPT) && 1
-
-#define SA_VK_ASSERT(_pred, ...) SA_ASSERT_EXEC(Vulkan, SA/Render/Vulkan, (_pred), ##__VA_ARGS__)
+#define SA_VK_ASSERT(_pred, ...) SA_ASSERT_EXEC(Vulkan, SA/Engine/Render/Vulkan, (_pred), ##__VA_ARGS__)
 
 #endif // GUARD
