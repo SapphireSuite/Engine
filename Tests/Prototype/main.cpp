@@ -49,7 +49,7 @@ int main()
 
 	ARenderDevice* const renderDevice = renderIntf.CreateDevice(deviceInfos[0]);
 
-	// ARenderContext* const renderContext = renderDevice->CreateRenderContext();
+	ARenderContext* const renderContext = renderDevice->CreateRenderContext();
 
 	// ARenderSurface* const surface = renderContext->CreateSurface(winSurface);
 

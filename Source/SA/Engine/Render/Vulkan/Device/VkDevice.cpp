@@ -190,4 +190,15 @@ namespace Sa::Vk
 	}
 
 //}
+
+	
+	Device::operator VkDevice() const noexcept
+	{
+		return mLogicalDevice;
+	}
+	
+	Device::operator VkPhysicalDevice() const noexcept
+	{
+		return mPhysicalDevice;
+	}
 }

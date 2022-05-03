@@ -7,6 +7,8 @@
 
 #include <SA/Engine/HI/HardwareInterface.hpp>
 
+#include <SA/Engine/Render/Base/Misc/Format.hpp>
+
 namespace Sa
 {
 	class AWindowSurface;
@@ -14,6 +16,9 @@ namespace Sa
 	class ARenderSurface : protected HardwareInterface
 	{
 		using HardwareInterface::Clear; // not used.
+
+	public:
+		virtual Format GetFormat() const = 0;
 	};
 }
 

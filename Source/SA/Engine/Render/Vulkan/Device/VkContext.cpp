@@ -29,6 +29,8 @@ namespace Sa::Vk
 	{
 		ARenderContext::Clear();
 
+		mSurfaces.Clear(ContextObjDestroyer<Surface>{ *mDevice });
+
 		SA_LOG(L"Render Context cleared.", Infos, SA/Engine/Render/Vulkan);
 	}
 

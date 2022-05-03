@@ -14,6 +14,7 @@
 
 namespace Sa::Vk
 {
+	class Instance;
 	class DeviceInfos;
 
 	class Device : public ARenderDevice
@@ -47,6 +48,10 @@ namespace Sa::Vk
 
 		static std::vector<DeviceInfos> QuerySuitableDevices(const Instance& _inst,
 			const WindowSurface* _winSurface, const QueueRequirements& _queueReq = QueueRequirements{ QueueFamily::Max });
+
+
+		operator VkDevice() const noexcept;
+		operator VkPhysicalDevice() const noexcept;
 	};
 }
 
