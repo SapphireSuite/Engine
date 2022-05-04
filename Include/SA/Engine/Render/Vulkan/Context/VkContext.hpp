@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_ENGINE_VK_CONTEXT_GUARD
 #define SAPPHIRE_ENGINE_VK_CONTEXT_GUARD
 
-#include <SA/Engine/Render/Base/Device/ARenderContext.hpp>
+#include <SA/Engine/Render/Base/Context/ARenderContext.hpp>
 
 #include <SA/Engine/Render/Vulkan/Surface/VkSurface.hpp>
 #include <SA/Engine/Render/Vulkan/Pass/VkRenderPass.hpp>

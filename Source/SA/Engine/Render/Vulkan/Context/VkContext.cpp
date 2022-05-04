@@ -1,6 +1,6 @@
 // Copyright (c) 2022 Sapphire's Suite. All Rights Reserved.
 
-#include <Render/Vulkan/Device/VkContext.hpp>
+#include <Render/Vulkan/Context/VkContext.hpp>
 
 #include <HI/Cast.hpp>
 

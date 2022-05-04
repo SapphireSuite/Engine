@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_ENGINE_ARENDER_DEVICE_GUARD
 #define SAPPHIRE_ENGINE_ARENDER_DEVICE_GUARD
 
-#include <SA/Engine/Render/Base/Device/ARenderContext.hpp>
+#include <SA/Engine/Render/Base/Context/ARenderContext.hpp>
 
 namespace Sa
 {
