@@ -9,6 +9,7 @@
 
 #include <SA/Engine/Render/Vulkan/Surface/VkSurface.hpp>
 #include <SA/Engine/Render/Vulkan/Pass/VkRenderPass.hpp>
+#include <SA/Engine/Render/Vulkan/Context/VkResourceInitializer.hpp>
 
 #include <SA/Engine/HI/InterfaceList.hpp>
 
@@ -22,6 +23,7 @@ namespace Sa::Vk
 
 		InterfaceList<Surface> mSurfaces;
 		InterfaceList<RenderPass> mRenderPasses;
+		InterfaceList<ResourceInitializer> mResInits;
 
 		using HardwareInterface::Create; // overloaded.
 
@@ -36,6 +38,9 @@ namespace Sa::Vk
 
 		ARenderPass* CreateRenderPass(const RenderPassDescriptor& _desc) override final;
 		void DestroyRenderPass(ARenderPass* _pass) override final;
+
+		ARenderResourceInitializer* CreateResourceInitializer() override final;
+		void DestroyResourceInitializer(ARenderResourceInitializer* _resInit) override final;
 	};
 
 

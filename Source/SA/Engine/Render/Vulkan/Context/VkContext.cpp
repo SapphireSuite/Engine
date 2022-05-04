@@ -29,6 +29,7 @@ namespace Sa::Vk
 	{
 		ARenderContext::Clear();
 
+		mResInits.Clear(ContextObjDestroyer<ResourceInitializer>{ *mDevice });
 		mRenderPasses.Clear(ContextObjDestroyer<RenderPass>{ *mDevice });
 		mSurfaces.Clear(ContextObjDestroyer<Surface>{ *mDevice });
 
@@ -74,5 +75,25 @@ namespace Sa::Vk
 		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _pass);
 
 		mRenderPasses.Erase(_pass, ContextObjDestroyer<RenderPass>{ *mDevice });
+	}
+
+
+	ARenderResourceInitializer* Context::CreateResourceInitializer()
+	{
+		CheckCreated();
+
+		ResourceInitializer* const resInit = mResInits.Emplace();
+
+		resInit->Create(*mDevice);
+
+		return resInit;
+	}
+
+	void Context::DestroyResourceInitializer(ARenderResourceInitializer* _resInit)
+	{
+		CheckCreated();
+		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _resInit);
+
+		mResInits.Erase(_resInit, ContextObjDestroyer<ResourceInitializer>{ *mDevice });
 	}
 }

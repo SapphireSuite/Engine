@@ -10,8 +10,8 @@
 namespace Sa::Vk
 {
 	DeviceInfos::DeviceInfos(VkPhysicalDevice _device, const QueueRequirements& _reqs) :
-		device{ _device },
-		mReqs{_reqs}
+		mReqs{_reqs},
+		device{ _device }
 	{
 		vkGetPhysicalDeviceProperties(device, &properties);
 	}

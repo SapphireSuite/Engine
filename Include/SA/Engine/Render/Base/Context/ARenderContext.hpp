@@ -7,6 +7,7 @@
 
 #include <SA/Engine/Render/Base/Surface/ARenderSurface.hpp>
 #include <SA/Engine/Render/Base/Pass/ARenderPass.hpp>
+#include <SA/Engine/Render/Base/Context/ARenderResourceInitializer.hpp>
 
 namespace Sa
 {
@@ -20,6 +21,9 @@ namespace Sa
 
 		virtual ARenderPass* CreateRenderPass(const RenderPassDescriptor& _desc) = 0;
 		virtual void DestroyRenderPass(ARenderPass* _pass) = 0;
+
+		virtual ARenderResourceInitializer* CreateResourceInitializer() = 0;
+		virtual void DestroyResourceInitializer(ARenderResourceInitializer* _resInit) = 0;
 	};
 }
 
