@@ -22,6 +22,10 @@ namespace Sa
 		virtual ARenderPass* CreateRenderPass(const RenderPassDescriptor& _desc) = 0;
 		virtual void DestroyRenderPass(ARenderPass* _pass) = 0;
 
+		virtual void CreateFrameBuffers(ARenderSurface* _surface, ARenderPass* _pass, const RenderPassDescriptor& _desc) = 0;
+		virtual void DestroyFrameBuffers(ARenderSurface* _surface) = 0;
+
+
 		virtual ARenderResourceInitializer* CreateResourceInitializer() = 0;
 		virtual void DestroyResourceInitializer(ARenderResourceInitializer* _resInit) = 0;
 	};

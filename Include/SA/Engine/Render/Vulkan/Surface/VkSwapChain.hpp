@@ -7,9 +7,7 @@
 
 #include <vector>
 
-#include <SA/Maths/Space/Vector2.hpp>
-
-#include <SA/Engine/Render/Base/Misc/Format.hpp>
+#include <SA/Engine/Render/Vulkan/Buffers/VkFrameBuffer.hpp>
 
 namespace Sa::Vk
 {
@@ -51,11 +49,19 @@ namespace Sa::Vk
 		uint32_t mFrameIndex = 0u;
 		uint32_t mImageIndex = 0u;
 
+		std::vector<FrameBuffer> mFrameBuffers;
+
 	public:
 		Format GetFormat() const;
 
 		void Create(const Device& _device, const Surface& _surface);
 		void Destroy(const Device& _device);
+
+
+		void CreateFrameBuffers(const Device& _device,
+			const RenderPass& _renderPass,
+			const RenderPassDescriptor& _renderPassDesc);
+		void DestroyFrameBuffers(const Device& _device);
 	};
 }
 

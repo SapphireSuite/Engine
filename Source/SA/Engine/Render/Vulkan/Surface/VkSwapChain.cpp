@@ -136,7 +136,44 @@ namespace Sa::Vk
 
 	void SwapChain::Destroy(const Device& _device)
 	{
+		if(!mFrameBuffers.empty())
+		{
+			SA_LOG(L"Self destroy SwapChain's Frame Buffers on destroy.", Warning, SA/Engine/Render/Vulkan);
+
+			DestroyFrameBuffers(_device);
+		}
+
 		DestroySynchronisation(_device);
 		DestroySwapChainKHR(_device);
+	}
+
+
+	void SwapChain::CreateFrameBuffers(const Device& _device,
+		const RenderPass& _renderPass,
+		const RenderPassDescriptor& _renderPassDesc)
+	{
+		std::vector<VkImage> swapChainImages(mImageNum);
+		vkGetSwapchainImagesKHR(_device, mHandle, &mImageNum, swapChainImages.data());
+
+		mFrameBuffers.reserve(mImageNum);
+
+		for (uint32_t i = 0u; i < mImageNum; ++i)
+		{
+			FrameBuffer& frameBuffer = mFrameBuffers.emplace_back();
+			frameBuffer.Create(_device, _renderPass, _renderPassDesc, mExtent, swapChainImages[i]);
+		}
+
+
+		SA_LOG(L"SwapChain FrameBuffers created.", Infos, SA/Engine/Render/Vulkan);
+	}
+
+	void SwapChain::DestroyFrameBuffers(const Device& _device)
+	{
+		for (auto it = mFrameBuffers.begin(); it != mFrameBuffers.end(); ++it)
+			it->Destroy(_device);
+
+		mFrameBuffers.clear();
+
+		SA_LOG(L"SwapChain FrameBuffers destroyed.", Infos, SA/Engine/Render/Vulkan);
 	}
 }

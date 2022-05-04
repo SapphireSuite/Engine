@@ -78,6 +78,17 @@ namespace Sa::Vk
 	}
 
 
+	void Context::CreateFrameBuffers(ARenderSurface* _surface, ARenderPass* _pass, const RenderPassDescriptor& _desc)
+	{
+		CastRef<Surface>(_surface).CreateFrameBuffers(*mDevice, CastRef<RenderPass>(_pass), _desc);
+	}
+	
+	void Context::DestroyFrameBuffers(ARenderSurface* _surface)
+	{
+		CastRef<Surface>(_surface).DestroyFrameBuffers(*mDevice);
+	}
+
+
 	ARenderResourceInitializer* Context::CreateResourceInitializer()
 	{
 		CheckCreated();

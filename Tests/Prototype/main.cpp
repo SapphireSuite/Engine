@@ -54,6 +54,8 @@ int main()
 	const RenderPassDescriptor renderPassDesc = RenderPassDescriptor::DefaultSingle(surface);
 	ARenderPass* const renderPass = renderContext->CreateRenderPass(renderPassDesc);
 	
+	renderContext->CreateFrameBuffers(surface, renderPass, renderPassDesc);
+	
 //}
 
 

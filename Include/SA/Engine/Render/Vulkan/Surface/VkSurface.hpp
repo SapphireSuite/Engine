@@ -10,10 +10,16 @@
 #include <SA/Engine/Render/Vulkan/Surface/VkSwapChain.hpp>
 #include <SA/Engine/Render/Vulkan/Surface/VkSurfaceSupportDetails.hpp>
 
+namespace Sa
+{
+	struct RenderPassDescriptor;
+}
+
 namespace Sa::Vk
 {
 	class Device;
 	class WindowSurface;
+	class RenderPass;
 
 	class Surface : public ARenderSurface
 	{
@@ -29,6 +35,11 @@ namespace Sa::Vk
 
 		void Create(const Device& _device, const WindowSurface& _winSurface);
 		void Destroy(const Device& _device);
+
+		void CreateFrameBuffers(const Device& _device,
+		const RenderPass& _renderPass,
+		const RenderPassDescriptor& _renderPassDesc);
+		void DestroyFrameBuffers(const Device& _device);
 
 		SurfaceSupportDetails QuerySupportDetails(VkPhysicalDevice _device) const;
 
