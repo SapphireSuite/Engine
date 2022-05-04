@@ -46,13 +46,13 @@ int main()
 	AWindowSurface* const winSurface = renderIntf.CreateWindowSurface(win);
 	
 	const PolymorphicVector<ARenderDeviceInfos> deviceInfos = renderIntf.QueryDevices(winSurface);
-
 	ARenderDevice* const renderDevice = renderIntf.CreateDevice(deviceInfos[0]);
-
 	ARenderContext* const renderContext = renderDevice->CreateRenderContext();
 
 	ARenderSurface* const surface = renderContext->CreateSurface(winSurface);
 
+	const RenderPassDescriptor renderPassDesc = RenderPassDescriptor::DefaultSingle(surface);
+	ARenderPass* const renderPass = renderContext->CreateRenderPass(renderPassDesc);
 //}
 
 

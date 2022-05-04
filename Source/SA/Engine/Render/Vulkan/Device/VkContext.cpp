@@ -29,6 +29,7 @@ namespace Sa::Vk
 	{
 		ARenderContext::Clear();
 
+		mRenderPasses.Clear(ContextObjDestroyer<RenderPass>{ *mDevice });
 		mSurfaces.Clear(ContextObjDestroyer<Surface>{ *mDevice });
 
 		SA_LOG(L"Render Context cleared.", Infos, SA/Engine/Render/Vulkan);
@@ -53,5 +54,25 @@ namespace Sa::Vk
 		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _surface);
 	
 		mSurfaces.Erase(_surface, ContextObjDestroyer<Surface>{ *mDevice });
+	}
+
+
+	ARenderPass* Context::CreateRenderPass(const RenderPassDescriptor& _desc)
+	{
+		CheckCreated();
+
+		RenderPass* const pass = mRenderPasses.Emplace();
+
+		pass->Create(*mDevice, _desc);
+
+		return pass;
+	}
+	
+	void Context::DestroyRenderPass(ARenderPass* _pass)
+	{
+		CheckCreated();
+		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _pass);
+
+		mRenderPasses.Erase(_pass, ContextObjDestroyer<RenderPass>{ *mDevice });
 	}
 }

@@ -8,6 +8,7 @@
 #include <SA/Engine/Render/Base/Device/ARenderContext.hpp>
 
 #include <SA/Engine/Render/Vulkan/Surface/VkSurface.hpp>
+#include <SA/Engine/Render/Vulkan/Pass/VkRenderPass.hpp>
 
 #include <SA/Engine/HI/InterfaceList.hpp>
 
@@ -20,6 +21,7 @@ namespace Sa::Vk
 		Device* mDevice = nullptr;
 
 		InterfaceList<Surface> mSurfaces;
+		InterfaceList<RenderPass> mRenderPasses;
 
 		using HardwareInterface::Create; // overloaded.
 
@@ -31,6 +33,9 @@ namespace Sa::Vk
 
 		ARenderSurface* CreateSurface(AWindowSurface* _winSurface) override final;
 		void DestroySurface(ARenderSurface* _surface) override final;
+
+		ARenderPass* CreateRenderPass(const RenderPassDescriptor& _desc) override final;
+		void DestroyRenderPass(ARenderPass* _pass) override final;
 	};
 
 
