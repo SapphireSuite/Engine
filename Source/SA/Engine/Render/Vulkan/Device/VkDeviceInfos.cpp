@@ -11,7 +11,7 @@ namespace Sa::Vk
 {
 	DeviceInfos::DeviceInfos(VkPhysicalDevice _device, const QueueRequirements& _reqs) :
 		device{ _device },
-		reqs{_reqs}
+		mReqs{_reqs}
 	{
 		vkGetPhysicalDeviceProperties(device, &properties);
 	}
@@ -55,7 +55,7 @@ namespace Sa::Vk
 	void DeviceInfos::QueryQueueFamilies(const WindowSurface* _winSurface) noexcept
 	{
 		SA_ASSERT(Default, SA/Engine/Render/Vulkan, device != VK_NULL_HANDLE, L"Query queue families of a null physical device!");
-		SA_ASSERT(Default, SA/Engine/Render/Vulkan, !(reqs.familyFlags.IsSet(QueueFamily::Present) ^ (_winSurface != nullptr)),
+		SA_ASSERT(Default, SA/Engine/Render/Vulkan, !(mReqs.familyFlags.IsSet(QueueFamily::Present) ^ (_winSurface != nullptr)),
 			L"QueueType::Present requiere a valid RenderSurface as parameter!");
 
 		uint32_t queueFamilyCount = 0;
@@ -75,26 +75,26 @@ namespace Sa::Vk
 		IndexInfos infos{ _famIndex };
 
 		// Graphics family.
-		if (reqs.familyFlags & QueueFamily::Graphics && (_family.queueFlags & VK_QUEUE_GRAPHICS_BIT) && reqs.graphicNum > 0)
-			Intl::EmplaceFamily(_family, graphics, reqs.graphicNum, infos, _famIndex, 1.0f);
+		if (mReqs.familyFlags & QueueFamily::Graphics && (_family.queueFlags & VK_QUEUE_GRAPHICS_BIT) && mReqs.graphicNum > 0)
+			Intl::EmplaceFamily(_family, graphics, mReqs.graphicNum, infos, _famIndex, 1.0f);
 
 		// Compute family.
-		if (reqs.familyFlags & QueueFamily::Compute && (_family.queueFlags & VK_QUEUE_COMPUTE_BIT) && reqs.computeNum > 0)
-			Intl::EmplaceFamily(_family, compute, reqs.computeNum, infos, _famIndex, 1.0f);
+		if (mReqs.familyFlags & QueueFamily::Compute && (_family.queueFlags & VK_QUEUE_COMPUTE_BIT) && mReqs.computeNum > 0)
+			Intl::EmplaceFamily(_family, compute, mReqs.computeNum, infos, _famIndex, 1.0f);
 
 		// Present family.
-		if (reqs.familyFlags & QueueFamily::Present && reqs.presentNum > 0)
+		if (mReqs.familyFlags & QueueFamily::Present && mReqs.presentNum > 0)
 		{
 			VkBool32 presentSupport = false;
 			SA_VK_ASSERT(vkGetPhysicalDeviceSurfaceSupportKHR(device, _famIndex, *_winSurface, &presentSupport));
 
 			if (presentSupport)
-				Intl::EmplaceFamily(_family, present, reqs.presentNum, infos, _famIndex, 0.7f);
+				Intl::EmplaceFamily(_family, present, mReqs.presentNum, infos, _famIndex, 0.7f);
 		}
 
 		// Transfer family.
-		if (reqs.familyFlags & QueueFamily::Transfer && (_family.queueFlags & VK_QUEUE_TRANSFER_BIT) && reqs.transferNum > 0)
-				Intl::EmplaceFamily(_family, transfer, reqs.transferNum, infos, _famIndex, 0.5f);
+		if (mReqs.familyFlags & QueueFamily::Transfer && (_family.queueFlags & VK_QUEUE_TRANSFER_BIT) && mReqs.transferNum > 0)
+				Intl::EmplaceFamily(_family, transfer, mReqs.transferNum, infos, _famIndex, 0.5f);
 
 		if (infos.num != 0)
 			indexInfos.push_back(infos);
@@ -102,10 +102,10 @@ namespace Sa::Vk
 
 	bool DeviceInfos::QueueFamiliesCompleted() const noexcept
 	{
-		return reqs.graphicNum == 0 &&
-			reqs.computeNum == 0 &&
-			reqs.transferNum == 0 &&
-			reqs.presentNum == 0;
+		return mReqs.graphicNum == 0 &&
+			mReqs.computeNum == 0 &&
+			mReqs.transferNum == 0 &&
+			mReqs.presentNum == 0;
 	}
 
 //}
@@ -124,7 +124,7 @@ namespace Sa::Vk
 
 		std::vector<const char*> result;
 
-		if (reqs.familyFlags.IsSet(QueueFamily::Present))
+		if (mReqs.familyFlags.IsSet(QueueFamily::Present))
 			result.insert(result.end(), presentRequieredExtensions, presentRequieredExtensions + sizeof(presentRequieredExtensions)/8);
 
 		return result;

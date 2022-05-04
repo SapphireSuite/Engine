@@ -18,6 +18,8 @@ namespace Sa::Vk
 
 	class DeviceInfos : public ARenderDeviceInfos
 	{
+		QueueRequirements mReqs;
+
 	public:
 		VkPhysicalDevice device = VK_NULL_HANDLE;
 		VkPhysicalDeviceProperties properties;
@@ -57,8 +59,6 @@ namespace Sa::Vk
 		};
 
 		std::vector<IndexInfos> indexInfos;
-
-		QueueRequirements reqs;
 
 
 		void QueryQueueFamilies(const WindowSurface* _winSurface = nullptr) noexcept;

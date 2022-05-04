@@ -35,7 +35,7 @@ int main()
 	GLFW::InputInterface inputIntf;
 	inputIntf.Create();
 
-	AInputWindowContext* const inputWinContext = inputIntf.CreateInputWindowContext(win);
+	// AInputWindowContext* const inputWinContext = inputIntf.CreateInputWindowContext(win);
 	// InputContext* const inputContext = inputWinContext->CreateContext();
 
 
