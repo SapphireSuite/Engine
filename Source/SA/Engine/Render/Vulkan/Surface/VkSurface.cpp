@@ -22,7 +22,7 @@ namespace Sa::Vk
 
 		mSwapChain.Create(_device, *this);
 
-		SA_LOG(L"Render Surface created.", Infos, SA/Engine/Render/Vulkan);
+		SA_LOG(L"Render Surface [" << mHandle << L"] created.", Infos, SA/Engine/Render/Vulkan);
 	}
 
 	void Surface::Destroy(const Device& _device)
@@ -31,9 +31,9 @@ namespace Sa::Vk
 
 		mSwapChain.Destroy(_device);
 
-		mHandle = VK_NULL_HANDLE;
+		SA_LOG(L"Render Surface [" << mHandle << L"] destroyed.", Infos, SA/Engine/Render/Vulkan);
 
-		SA_LOG(L"Render Surface destroyed.", Infos, SA/Engine/Render/Vulkan);
+		mHandle = VK_NULL_HANDLE;
 	}
 
 

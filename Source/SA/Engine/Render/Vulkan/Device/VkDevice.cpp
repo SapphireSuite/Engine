@@ -59,7 +59,8 @@ namespace Sa::Vk
 
 		queueMgr.Create(*this, _infos);
 
-		SA_LOG(L"Render Device [" << _infos.GetName() << ":\t" << _infos.GetID() << L"] created.", Infos, SA/Engine/Render/Vulkan);
+		SA_LOG(L"Render Device [" << mLogicalDevice << L"] created.", Infos, SA/Engine/Render/Vulkan,
+			L"Name: " << _infos.GetName() << "\tID: " << _infos.GetID());
 	}
 
 	void Device::Destroy()
@@ -75,7 +76,7 @@ namespace Sa::Vk
 		mLogicalDevice = VK_NULL_HANDLE;
 		mPhysicalDevice = VK_NULL_HANDLE;
 
-		SA_LOG(L"Render Device destroyed.", Infos, SA/Engine/Render/Vulkan);
+		SA_LOG(L"Render Device [" << mLogicalDevice << L"] destroyed.", Infos, SA/Engine/Render/Vulkan);
 	}
 
 	void Device::Clear()

@@ -13,7 +13,7 @@ namespace  Sa::Vk
         mWindow = _win;
         mHandle = _win->CreateVkWindowSurfaceHandle(_inst);
 
-		SA_LOG(L"Window Surface created.", Infos, SA/Engine/Render/Vulkan);
+		SA_LOG(L"Window Surface [" << mHandle << L"] created.", Infos, SA/Engine/Render/Vulkan);
     }
 
     void WindowSurface::Destroy(const Instance& _inst)
@@ -25,7 +25,7 @@ namespace  Sa::Vk
         mWindow->DestroyVkWindowSurfaceHandle(_inst, mHandle);
         mWindow = nullptr;
 		
-        SA_LOG(L"Window Surface destroyed.", Infos, SA/Engine/Render/Vulkan);
+        SA_LOG(L"Window Surface [" << mHandle << L"] destroyed.", Infos, SA/Engine/Render/Vulkan);
     }
 
 

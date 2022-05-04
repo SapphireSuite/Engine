@@ -322,7 +322,7 @@ namespace Sa::GLFW
 
 		SA_VK_ASSERT(glfwCreateWindowSurface(_instance, mHandle, nullptr, &vkSurface), L"Failed to create VkRenderSurface from GLFW window!");
 
-		SA_LOG(L"Window Surface Handle created.", Infos, SA/Engine/Window/GLFW);
+		SA_LOG(L"Window Surface Handle [" << vkSurface << L"] created.", Infos, SA/Engine/Window/GLFW);
 
 		return vkSurface;
 	}
@@ -333,7 +333,7 @@ namespace Sa::GLFW
 
 		vkDestroySurfaceKHR(_instance, _surfaceHandle, nullptr);
 
-		SA_LOG(L"Window Surface Handle destroyed.", Infos, SA/Engine/Window/GLFW);
+		SA_LOG(L"Window Surface Handle [" << _surfaceHandle << L"] destroyed.", Infos, SA/Engine/Window/GLFW);
 	}
 
 #endif

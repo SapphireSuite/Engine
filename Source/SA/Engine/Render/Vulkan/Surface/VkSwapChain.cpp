@@ -74,7 +74,7 @@ namespace Sa::Vk
 
 		SA_VK_ASSERT(vkCreateSwapchainKHR(_device, &swapChainCreateInfo, nullptr, &mHandle), L"Failed to create swap chain!");
 
-		SA_LOG(L"Swap chain created.", Infos, SA/Engine/Render/Vulkan);
+		SA_LOG(L"Swap chain [" << mHandle << L"] created.", Infos, SA/Engine/Render/Vulkan);
 	}
 	
 	void SwapChain::DestroySwapChainKHR(const Device& _device)
@@ -82,9 +82,10 @@ namespace Sa::Vk
 		SA_ASSERT(Default, SA/Engine/Render/Vulkan, mHandle != VK_NULL_HANDLE, L"Destroy a null swapchain!");
 
 		vkDestroySwapchainKHR(_device, mHandle, nullptr);
-		mHandle = VK_NULL_HANDLE;
 
-		SA_LOG(L"Swap chain destroyed.", Infos, SA/Engine/Render/Vulkan);
+		SA_LOG(L"Swap chain [" << mHandle << L"] destroyed.", Infos, SA/Engine/Render/Vulkan);
+
+		mHandle = VK_NULL_HANDLE;
 	}
 
 	

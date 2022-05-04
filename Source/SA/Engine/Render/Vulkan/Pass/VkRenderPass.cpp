@@ -207,7 +207,7 @@ namespace Sa::Vk
 
 		SA_VK_ASSERT(vkCreateRenderPass(_device, &renderPassCreateInfo, nullptr, &mHandle), L"Failed to create render pass!");
 		
-		SA_LOG(L"RenderPass created.", Infos, SA/Engine/Render/Vulkan);
+		SA_LOG(L"RenderPass [" << mHandle << L"] created.", Infos, SA/Engine/Render/Vulkan);
 	}
 	
 	void RenderPass::Destroy(const Device& _device)
@@ -215,10 +215,10 @@ namespace Sa::Vk
 		ARenderPass::Destroy();
 
 		vkDestroyRenderPass(_device, mHandle, nullptr);
-		
-		mHandle = VK_NULL_HANDLE;
 
-		SA_LOG(L"RenderPass destroyed.", Infos, SA/Render/Vulkan);
+		SA_LOG(L"RenderPass [" << mHandle << L"] destroyed.", Infos, SA/Render/Vulkan);
+
+		mHandle = VK_NULL_HANDLE;
 	}
 
 	

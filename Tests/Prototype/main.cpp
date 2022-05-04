@@ -53,10 +53,14 @@ int main()
 
 	const RenderPassDescriptor renderPassDesc = RenderPassDescriptor::DefaultSingle(surface);
 	ARenderPass* const renderPass = renderContext->CreateRenderPass(renderPassDesc);
+	
 //}
 
 
 //{ Loop
+
+	SA_LOG("Start Game loop.");
+
 
 #if !SA_CI
 
@@ -66,6 +70,9 @@ int main()
 	{
 		inputIntf.Update();
 	}
+
+
+	SA_LOG("End Game loop.");
 
 //}
 
