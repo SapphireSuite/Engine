@@ -31,6 +31,7 @@ namespace Sa::Vk
 		using HardwareInterface::Destroy;// overloaded.
 
 	public:
+		Vec2ui GetExtent() const override final;
 		Format GetFormat() const override final;
 
 		void Create(const Device& _device, const WindowSurface& _winSurface);
@@ -40,6 +41,9 @@ namespace Sa::Vk
 		const RenderPass& _renderPass,
 		const RenderPassDescriptor& _renderPassDesc);
 		void DestroyFrameBuffers(const Device& _device);
+
+		Frame& Begin(const Device& _device);
+		void End(const Device& _device);
 
 		SurfaceSupportDetails QuerySupportDetails(VkPhysicalDevice _device) const;
 

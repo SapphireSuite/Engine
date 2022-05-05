@@ -8,6 +8,11 @@
 
 namespace Sa::Vk
 {
+	Vec2ui Surface::GetExtent() const
+	{
+		return mSwapChain.GetExtent();
+	}
+	
 	Format Surface::GetFormat() const
 	{
 		return mSwapChain.GetFormat();
@@ -55,6 +60,21 @@ namespace Sa::Vk
 		mSwapChain.DestroyFrameBuffers(_device);
 
 		SA_LOG(L"Render Surface FrameBuffers destroyed.", Infos, SA/Engine/Render/Vulkan);
+	}
+
+
+	Frame& Surface::Begin(const Device& _device)
+	{
+		CheckCreated();
+
+		return mSwapChain.Begin(_device);
+	}
+
+	void Surface::End(const Device& _device)
+	{
+		CheckCreated();
+
+		return mSwapChain.End(_device);
 	}
 
 

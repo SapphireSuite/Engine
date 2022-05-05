@@ -11,6 +11,11 @@
 
 namespace Sa::Vk
 {
+	Vec2ui SwapChain::GetExtent() const
+	{
+		return mExtent;
+	}
+	
 	Format SwapChain::GetFormat() const
 	{
 		return mFormat;
@@ -32,6 +37,8 @@ namespace Sa::Vk
 
 		if (details.capabilities.maxImageCount > 0 && mImageNum > details.capabilities.maxImageCount)
 			mImageNum = details.capabilities.maxImageCount;
+
+		mFrames.resize(mImageNum);
 
 
 		// Create Swapchain.
@@ -101,13 +108,11 @@ namespace Sa::Vk
 		fenceCreateInfo.pNext = nullptr;
 		fenceCreateInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
 
-		mFramesSynch.resize(mImageNum);
-
-		for (auto it = mFramesSynch.begin(); it != mFramesSynch.end(); ++it)
+		for (auto it = mFrames.begin(); it != mFrames.end(); ++it)
 		{
-			SA_VK_ASSERT(vkCreateSemaphore(_device, &semaphoreCreateInfo, nullptr, &it->acquireSemaphore), L"Failed to create acquire semaphore!");
-			SA_VK_ASSERT(vkCreateSemaphore(_device, &semaphoreCreateInfo, nullptr, &it->presentSemaphore), L"Failed to create present semaphore!");
-			SA_VK_ASSERT(vkCreateFence(_device, &fenceCreateInfo, nullptr, &it->fence), L"Failed to create fence!");
+			SA_VK_ASSERT(vkCreateSemaphore(_device, &semaphoreCreateInfo, nullptr, &it->sync.acquireSemaphore), L"Failed to create acquire semaphore!");
+			SA_VK_ASSERT(vkCreateSemaphore(_device, &semaphoreCreateInfo, nullptr, &it->sync.presentSemaphore), L"Failed to create present semaphore!");
+			SA_VK_ASSERT(vkCreateFence(_device, &fenceCreateInfo, nullptr, &it->sync.fence), L"Failed to create fence!");
 		}
 
 		SA_LOG(L"Swap chain synchronisation created.", Infos, SA/Engine/Render/Vulkan);
@@ -115,16 +120,33 @@ namespace Sa::Vk
 	
 	void SwapChain::DestroySynchronisation(const Device& _device)
 	{
-		for (auto it = mFramesSynch.begin(); it != mFramesSynch.end(); ++it)
+		for (auto it = mFrames.begin(); it != mFrames.end(); ++it)
 		{
-			vkDestroySemaphore(_device, it->acquireSemaphore, nullptr);
-			vkDestroySemaphore(_device, it->presentSemaphore, nullptr);
-			vkDestroyFence(_device, it->fence, nullptr);
+			vkDestroySemaphore(_device, it->sync.acquireSemaphore, nullptr);
+			vkDestroySemaphore(_device, it->sync.presentSemaphore, nullptr);
+			vkDestroyFence(_device, it->sync.fence, nullptr);
 		}
 
-		mFramesSynch.clear();
-
 		SA_LOG(L"Swap chain synchronisation destroyed.", Infos, SA/Engine/Render/Vulkan);
+	}
+
+
+	void SwapChain::CreateCommandBuffers(const Device& _device)
+	{
+		// TODO: Clean.
+		mCmdPool.Create(_device, _device.queueMgr.graphics.GetQueue(0).GetFamilyIndex());
+
+		for (auto it = mFrames.begin(); it != mFrames.end(); ++it)
+			it->cmd = mCmdPool.Allocate(_device);
+
+		SA_LOG(L"Swap chain cmd created.", Infos, SA/Engine/Render/Vulkan);
+	}
+	
+	void SwapChain::DestroyCommandBuffers(const Device& _device)
+	{
+		mCmdPool.Destroy(_device);
+		
+		SA_LOG(L"Swap chain cmd destroyed.", Infos, SA/Engine/Render/Vulkan);
 	}
 
 
@@ -132,11 +154,12 @@ namespace Sa::Vk
 	{
 		CreateSwapChainKHR(_device, _surface);
 		CreateSynchronisation(_device);
+		CreateCommandBuffers(_device);
 	}
 
 	void SwapChain::Destroy(const Device& _device)
 	{
-		if(!mFrameBuffers.empty())
+		if(!mFrames.empty() && mFrames[0].fBuff != VK_NULL_HANDLE)
 		{
 			SA_LOG(L"Self destroy SwapChain's Frame Buffers on destroy.", Warning, SA/Engine/Render/Vulkan);
 
@@ -145,6 +168,7 @@ namespace Sa::Vk
 
 		DestroySynchronisation(_device);
 		DestroySwapChainKHR(_device);
+		DestroyCommandBuffers(_device);
 	}
 
 
@@ -155,25 +179,83 @@ namespace Sa::Vk
 		std::vector<VkImage> swapChainImages(mImageNum);
 		vkGetSwapchainImagesKHR(_device, mHandle, &mImageNum, swapChainImages.data());
 
-		mFrameBuffers.reserve(mImageNum);
-
 		for (uint32_t i = 0u; i < mImageNum; ++i)
-		{
-			FrameBuffer& frameBuffer = mFrameBuffers.emplace_back();
-			frameBuffer.Create(_device, _renderPass, _renderPassDesc, mExtent, swapChainImages[i]);
-		}
-
+			mFrames[i].fBuff.Create(_device, _renderPass, _renderPassDesc, mExtent, swapChainImages[i]);
 
 		SA_LOG(L"SwapChain FrameBuffers created.", Infos, SA/Engine/Render/Vulkan);
 	}
 
 	void SwapChain::DestroyFrameBuffers(const Device& _device)
 	{
-		for (auto it = mFrameBuffers.begin(); it != mFrameBuffers.end(); ++it)
-			it->Destroy(_device);
-
-		mFrameBuffers.clear();
+		for (auto it = mFrames.begin(); it != mFrames.end(); ++it)
+			it->fBuff.Destroy(_device);
 
 		SA_LOG(L"SwapChain FrameBuffers destroyed.", Infos, SA/Engine/Render/Vulkan);
+	}
+
+
+	Frame& SwapChain::Begin(const Device& _device)
+	{
+		SwapFrame& frame = mFrames[mFrameIndex];
+
+
+		// Wait current Fence.
+		vkWaitForFences(_device, 1, &frame.sync.fence, true, UINT64_MAX);
+
+		// Reset current Fence.
+		vkResetFences(_device, 1, &frame.sync.fence);
+
+
+		SA_VK_ASSERT(vkAcquireNextImageKHR(_device, mHandle, UINT64_MAX, frame.sync.acquireSemaphore, VK_NULL_HANDLE, &mImageIndex),
+			L"Failed to aquire next image!");
+
+
+		frame.cmd.Begin();
+
+		return frame;
+	}
+	
+	void SwapChain::End(const Device& _device)
+	{
+		SwapFrame& frame = mFrames[mFrameIndex];
+
+		frame.cmd.End();
+
+
+		// Submit graphics.
+		const VkPipelineStageFlags waitStages = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+
+		VkSubmitInfo submitInfo{};
+		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+		submitInfo.pNext = nullptr;
+		submitInfo.waitSemaphoreCount = 1u;
+		submitInfo.pWaitSemaphores = &frame.sync.acquireSemaphore;
+		submitInfo.pWaitDstStageMask = &waitStages;
+		submitInfo.commandBufferCount = 1u;
+		submitInfo.pCommandBuffers = reinterpret_cast<const VkCommandBuffer*>(&frame.cmd); // Warning: Unsafe.
+		submitInfo.signalSemaphoreCount = 1u;
+		submitInfo.pSignalSemaphores = &frame.sync.presentSemaphore;
+
+		SA_VK_ASSERT(vkQueueSubmit(_device.queueMgr.graphics.GetQueue(0), 1, &submitInfo, frame.sync.fence),
+			L"Failed to submit graphics queue!");
+
+
+		// Submit present.
+		VkPresentInfoKHR presentInfo{};
+		presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+		presentInfo.pNext = nullptr;
+		presentInfo.waitSemaphoreCount = 1u;
+		presentInfo.pWaitSemaphores = &frame.sync.presentSemaphore;
+		presentInfo.swapchainCount = 1u;
+		presentInfo.pSwapchains = &mHandle;
+		presentInfo.pImageIndices = &mImageIndex;
+		presentInfo.pResults = nullptr;
+
+		SA_VK_ASSERT(vkQueuePresentKHR(_device.queueMgr.present.GetQueue(0), &presentInfo),
+			L"Failed to submit present queue!");
+
+
+		// Increment next frame.
+		mFrameIndex = (mFrameIndex + 1) % mImageNum;
 	}
 }

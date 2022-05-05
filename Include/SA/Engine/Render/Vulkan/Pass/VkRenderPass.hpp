@@ -24,6 +24,10 @@ namespace Sa::Vk
 		void Create(const Device& _device, const RenderPassDescriptor& _desc);
 		void Destroy(const Device& _device);
 
+		void Begin(ARenderFrame& _frame, const Rect2Dui& _rect) override final;
+		void NextSubpass(ARenderFrame& _frame) override final;
+		void End(ARenderFrame& _frame) override final;
+
 		operator VkRenderPass() const noexcept;
 	};
 }

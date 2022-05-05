@@ -33,14 +33,22 @@ namespace Sa::Vk
 		void Clear() override final;
 
 
+//{ Surface
+
 		ARenderSurface* CreateSurface(AWindowSurface* _winSurface) override final;
 		void DestroySurface(ARenderSurface* _surface) override final;
+
+		void CreateFrameBuffers(ARenderSurface* _surface, ARenderPass* _pass, const RenderPassDescriptor& _desc) override final;
+		void DestroyFrameBuffers(ARenderSurface* _surface) override final;
+
+		ARenderFrame& BeginSurface(ARenderSurface* _surface) override final;
+		void EndSurface(ARenderSurface* _surface) override final;
+
+//}
 
 		ARenderPass* CreateRenderPass(const RenderPassDescriptor& _desc) override final;
 		void DestroyRenderPass(ARenderPass* _pass) override final;
 
-		void CreateFrameBuffers(ARenderSurface* _surface, ARenderPass* _pass, const RenderPassDescriptor& _desc) override final;
-		void DestroyFrameBuffers(ARenderSurface* _surface) override final;
 
 		ARenderResourceInitializer* CreateResourceInitializer() override final;
 		void DestroyResourceInitializer(ARenderResourceInitializer* _resInit) override final;

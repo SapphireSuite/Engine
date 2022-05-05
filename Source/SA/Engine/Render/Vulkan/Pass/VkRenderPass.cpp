@@ -2,6 +2,9 @@
 
 #include <Render/Vulkan/Pass/VkRenderPass.hpp>
 
+#include <HI/Cast.hpp>
+
+#include <Render/Vulkan/VkFrame.hpp>
 #include <Render/Vulkan/Debug/Debug.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
 
@@ -222,6 +225,39 @@ namespace Sa::Vk
 	}
 
 	
+	void RenderPass::Begin(ARenderFrame& _frame, const Rect2Dui& _rect)
+	{
+		Frame& vkFrame = CastRef<Frame>(_frame);
+
+		const std::vector<VkClearValue>& clearValues = vkFrame.fBuff.GetClearValues();
+
+		VkRenderPassBeginInfo renderPassBeginInfo{};
+		renderPassBeginInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
+		renderPassBeginInfo.pNext = nullptr;
+		renderPassBeginInfo.renderPass = mHandle;
+		renderPassBeginInfo.framebuffer = vkFrame.fBuff;
+		renderPassBeginInfo.renderArea = reinterpret_cast<const VkRect2D&>(_rect);
+		renderPassBeginInfo.clearValueCount = (uint32_t)clearValues.size();
+		renderPassBeginInfo.pClearValues = clearValues.data();
+
+		vkCmdBeginRenderPass(vkFrame.cmd, &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
+	}
+	
+	void RenderPass::NextSubpass(ARenderFrame& _frame)
+	{
+		Frame& vkFrame = CastRef<Frame>(_frame);
+
+		vkCmdNextSubpass(vkFrame.cmd, VK_SUBPASS_CONTENTS_INLINE);
+	}
+	
+	void RenderPass::End(ARenderFrame& _frame)
+	{
+		Frame& vkFrame = CastRef<Frame>(_frame);
+
+		vkCmdEndRenderPass(vkFrame.cmd);
+	}
+	
+
 	RenderPass::operator VkRenderPass() const noexcept
 	{
 		return mHandle;

@@ -52,6 +52,8 @@ int main()
 	ARenderSurface* const surface = renderContext->CreateSurface(winSurface);
 
 	const RenderPassDescriptor renderPassDesc = RenderPassDescriptor::DefaultSingle(surface);
+
+	const Rect2Dui renderRect = { { 0, 0 }, surface->GetExtent() };
 	ARenderPass* const renderPass = renderContext->CreateRenderPass(renderPassDesc);
 	
 	renderContext->CreateFrameBuffers(surface, renderPass, renderPassDesc);
@@ -71,6 +73,14 @@ int main()
 #endif
 	{
 		inputIntf.Update();
+
+		ARenderFrame& frame = renderContext->BeginSurface(surface);
+
+		renderPass->Begin(frame, renderRect);
+
+		renderPass->End(frame);
+
+		renderContext->EndSurface(surface);
 	}
 
 

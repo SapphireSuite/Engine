@@ -7,6 +7,8 @@
 
 #include <SA/Engine/HI/HardwareInterface.hpp>
 
+#include <SA/Maths/Space/Vector2.hpp>
+
 #include <SA/Engine/Render/Base/Misc/Format.hpp>
 
 namespace Sa
@@ -18,6 +20,7 @@ namespace Sa
 		using HardwareInterface::Clear; // not used.
 
 	public:
+		virtual Vec2ui GetExtent() const = 0;
 		virtual Format GetFormat() const = 0;
 	};
 }

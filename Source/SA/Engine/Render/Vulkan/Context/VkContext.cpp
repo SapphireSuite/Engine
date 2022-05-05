@@ -37,6 +37,8 @@ namespace Sa::Vk
 	}
 
 
+//{ Surface
+
 	ARenderSurface* Context::CreateSurface(AWindowSurface* _winSurface)
 	{
 		CheckCreated();
@@ -58,6 +60,42 @@ namespace Sa::Vk
 	}
 
 
+	void Context::CreateFrameBuffers(ARenderSurface* _surface, ARenderPass* _pass, const RenderPassDescriptor& _desc)
+	{
+		CheckCreated();
+		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _surface);
+
+		CastRef<Surface>(_surface).CreateFrameBuffers(*mDevice, CastRef<RenderPass>(_pass), _desc);
+	}
+	
+	void Context::DestroyFrameBuffers(ARenderSurface* _surface)
+	{
+		CheckCreated();
+		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _surface);
+
+		CastRef<Surface>(_surface).DestroyFrameBuffers(*mDevice);
+	}
+
+
+	ARenderFrame& Context::BeginSurface(ARenderSurface* _surface)
+	{
+		CheckCreated();
+		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _surface);
+
+		return CastRef<Surface>(_surface).Begin(*mDevice);
+	}
+	
+	void Context::EndSurface(ARenderSurface* _surface)
+	{
+		CheckCreated();
+		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _surface);
+
+		CastRef<Surface>(_surface).End(*mDevice);
+	}
+
+//}
+
+
 	ARenderPass* Context::CreateRenderPass(const RenderPassDescriptor& _desc)
 	{
 		CheckCreated();
@@ -77,16 +115,6 @@ namespace Sa::Vk
 		mRenderPasses.Erase(_pass, ContextObjDestroyer<RenderPass>{ *mDevice });
 	}
 
-
-	void Context::CreateFrameBuffers(ARenderSurface* _surface, ARenderPass* _pass, const RenderPassDescriptor& _desc)
-	{
-		CastRef<Surface>(_surface).CreateFrameBuffers(*mDevice, CastRef<RenderPass>(_pass), _desc);
-	}
-	
-	void Context::DestroyFrameBuffers(ARenderSurface* _surface)
-	{
-		CastRef<Surface>(_surface).DestroyFrameBuffers(*mDevice);
-	}
 
 
 	ARenderResourceInitializer* Context::CreateResourceInitializer()
