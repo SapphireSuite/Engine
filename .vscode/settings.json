@@ -88,6 +88,10 @@
 		"typeinfo": "cpp",
 		"variant": "cpp",
 		"debug": "cpp",
-		"window": "cpp"
+		"window": "cpp",
+		"hash_map": "cpp",
+		"hash_set": "cpp",
+		"bitset": "cpp",
+		"regex": "cpp"
 	},
 }

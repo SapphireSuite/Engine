@@ -8,6 +8,9 @@
 #include <SA/Collections/Render>
 using namespace Sa;
 
+#include <SA/Engine/SDK/ShaderBuilder/GLSL/GLSLShaderBuilder.hpp>
+#include <SA/Engine/Render/Base/Shader/Descriptors/ShaderDescriptor.hpp>
+
 int main()
 {
 //{ Init
@@ -58,6 +61,13 @@ int main()
 	
 	renderContext->CreateFrameBuffers(surface, renderPass, renderPassDesc);
 	
+
+	GLSL::ShaderBuilder shBuilder;
+
+	RawShader rawSh;
+	ShaderDescriptor descSh;
+	shBuilder.Build("Resources/Shaders/Forward/unlit.vert", rawSh, descSh);
+
 //}
 
 
