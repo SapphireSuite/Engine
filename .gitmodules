@@ -1,12 +1,12 @@
 [submodule "ThirdParty/SA/Logger"]
 	path = ThirdParty/SA/Logger
-	url = git@github.com:SapphireSuite/Logger.git
+	url = https://github.com/SapphireSuite/Logger.git
 [submodule "ThirdParty/SA/Maths"]
 	path = ThirdParty/SA/Maths
-	url = git@github.com:SapphireSuite/Maths.git
+	url = https://github.com/SapphireSuite/Maths.git
 [submodule "ThirdParty/SA/Event"]
 	path = ThirdParty/SA/Event
-	url = git@github.com:SapphireSuite/Event.git
+	url = https://github.com/SapphireSuite/Event.git
 [submodule "ThirdParty/Window/glfw"]
 	path = ThirdParty/Window/glfw
 	url = https://github.com/glfw/glfw.git
