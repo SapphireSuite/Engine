@@ -9,3 +9,4 @@ add_subdirectory(SA)
 
 add_subdirectory(Window)
 add_subdirectory(Render)
+add_subdirectory(SDK)

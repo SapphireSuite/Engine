@@ -106,6 +106,16 @@ if(SA_SDK)
 	target_compile_definitions(SA_EngineDeps INTERFACE SA_SDK)
 	file(GLOB_RECURSE SA_SDK_SOURCES "${SA_SOURCE_DIR}/SDK/*")
 
+	target_link_libraries(SA_EngineDeps INTERFACE assimp)
+
+	if(SA_RENDER)
+		target_link_libraries(SA_EngineDeps INTERFACE SA_STB)
+
+		if(SA_VULKAN OR SA_OPEN_GL)
+			target_link_libraries(SA_EngineDeps INTERFACE SA_GLSL_ShaderBuilder)
+		endif()
+	endif()
+
 	set(SA_ENGINE_SOURCES "${SA_ENGINE_SOURCES};${SA_SDK_SOURCES}")
 endif()
 

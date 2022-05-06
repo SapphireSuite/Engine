@@ -1,3 +1,4 @@
+# Sapphire Suite's mudules
 [submodule "ThirdParty/SA/Logger"]
 	path = ThirdParty/SA/Logger
 	url = https://github.com/SapphireSuite/Logger.git
@@ -7,9 +8,49 @@
 [submodule "ThirdParty/SA/Event"]
 	path = ThirdParty/SA/Event
 	url = https://github.com/SapphireSuite/Event.git
-[submodule "ThirdParty/Window/glfw"]
-	path = ThirdParty/Window/glfw
-	url = https://github.com/glfw/glfw.git
+
+
+# Rendering modules
 [submodule "ThirdParty/Render/UI/ImGui/imgui"]
 	path = ThirdParty/Render/UI/ImGui/imgui
 	url = https://github.com/ocornut/imgui.git
+
+
+
+# Windowing modules
+[submodule "ThirdParty/Window/glfw"]
+	path = ThirdParty/Window/glfw
+	url = https://github.com/glfw/glfw.git
+
+
+
+# SDK Modules
+
+
+## ShaderBuilder
+
+### GLSL
+[submodule "ThirdParty/SDK/ShaderBuilder/GLSL/shaderc"]
+	path = ThirdParty/SDK/ShaderBuilder/GLSL/shaderc
+	url = https://github.com/google/shaderc.git
+[submodule "ThirdParty/SDK/ShaderBuilder/GLSL/glslang"]
+	path = ThirdParty/SDK/ShaderBuilder/GLSL/glslang
+	url = https://github.com/KhronosGroup/glslang.git
+[submodule "ThirdParty/SDK/ShaderBuilder/GLSL/SPIRV-Headers"]
+	path = ThirdParty/SDK/ShaderBuilder/GLSL/SPIRV-Headers
+	url = https://github.com/KhronosGroup/SPIRV-Headers.git
+[submodule "ThirdParty/SDK/ShaderBuilder/GLSL/SPIRV-Tools"]
+	path = ThirdParty/SDK/ShaderBuilder/GLSL/SPIRV-Tools
+	url = https://github.com/KhronosGroup/SPIRV-Tools.git
+[submodule "ThirdParty/SDK/ShaderBuilder/GLSL/SPIRV-Cross"]
+	path = ThirdParty/SDK/ShaderBuilder/GLSL/SPIRV-Cross
+	url = https://github.com/KhronosGroup/SPIRV-Cross.git
+
+
+## Assets
+[submodule "ThirdParty/SDK/assimp"]
+	path = ThirdParty/SDK/assimp
+	url = https://github.com/assimp/assimp.git
+[submodule "ThirdParty/SDK/STB/stb"]
+	path = ThirdParty/SDK/STB/stb
+	url = https://github.com/nothings/stb.git
