@@ -101,9 +101,9 @@ namespace Sa::Vk
 	{
 		CheckCreated();
 
-		Context* const context = mContexts.Emplace();
+		Context* const context = mContexts.Emplace(*this);
 
-		context->Create(*this);
+		context->Create();
 
 		return context;
 	}

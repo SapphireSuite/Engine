@@ -8,11 +8,14 @@
 
 namespace Sa::Vk
 {
-	void Context::Create(Device& _device)
+	Context::Context(Device& _device) noexcept : mDevice{ _device }
+	{
+	}
+
+
+	void Context::Create()
 	{
 		ARenderContext::Create();
-
-		mDevice = &_device;
 
 		SA_LOG(L"Render Context created.", Infos, SA/Engine/Render/Vulkan);
 	}
@@ -29,9 +32,9 @@ namespace Sa::Vk
 	{
 		ARenderContext::Clear();
 
-		mResInits.Clear(ContextObjDestroyer<ResourceInitializer>{ *mDevice });
-		mRenderPasses.Clear(ContextObjDestroyer<RenderPass>{ *mDevice });
-		mSurfaces.Clear(ContextObjDestroyer<Surface>{ *mDevice });
+		mResInits.Clear(ContextObjDestroyer<ResourceInitializer>{ mDevice });
+		mRenderPasses.Clear(ContextObjDestroyer<RenderPass>{ mDevice });
+		mSurfaces.Clear(ContextObjDestroyer<Surface>{ mDevice });
 
 		SA_LOG(L"Render Context cleared.", Infos, SA/Engine/Render/Vulkan);
 	}
@@ -46,7 +49,7 @@ namespace Sa::Vk
 
 		Surface* const surface = mSurfaces.Emplace();
 
-		surface->Create(*mDevice, CastRef<WindowSurface>(_winSurface));
+		surface->Create(mDevice, CastRef<WindowSurface>(_winSurface));
 
 		return surface;
 	}
@@ -56,7 +59,7 @@ namespace Sa::Vk
 		CheckCreated();
 		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _surface);
 	
-		mSurfaces.Erase(_surface, ContextObjDestroyer<Surface>{ *mDevice });
+		mSurfaces.Erase(_surface, ContextObjDestroyer<Surface>{ mDevice });
 	}
 
 
@@ -65,7 +68,7 @@ namespace Sa::Vk
 		CheckCreated();
 		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _surface);
 
-		CastRef<Surface>(_surface).CreateFrameBuffers(*mDevice, CastRef<RenderPass>(_pass), _desc);
+		CastRef<Surface>(_surface).CreateFrameBuffers(mDevice, CastRef<RenderPass>(_pass), _desc);
 	}
 	
 	void Context::DestroyFrameBuffers(ARenderSurface* _surface)
@@ -73,7 +76,7 @@ namespace Sa::Vk
 		CheckCreated();
 		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _surface);
 
-		CastRef<Surface>(_surface).DestroyFrameBuffers(*mDevice);
+		CastRef<Surface>(_surface).DestroyFrameBuffers(mDevice);
 	}
 
 
@@ -82,7 +85,7 @@ namespace Sa::Vk
 		CheckCreated();
 		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _surface);
 
-		return CastRef<Surface>(_surface).Begin(*mDevice);
+		return CastRef<Surface>(_surface).Begin(mDevice);
 	}
 	
 	void Context::EndSurface(ARenderSurface* _surface)
@@ -90,7 +93,7 @@ namespace Sa::Vk
 		CheckCreated();
 		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _surface);
 
-		CastRef<Surface>(_surface).End(*mDevice);
+		CastRef<Surface>(_surface).End(mDevice);
 	}
 
 //}
@@ -102,7 +105,7 @@ namespace Sa::Vk
 
 		RenderPass* const pass = mRenderPasses.Emplace();
 
-		pass->Create(*mDevice, _desc);
+		pass->Create(mDevice, _desc);
 
 		return pass;
 	}
@@ -112,7 +115,7 @@ namespace Sa::Vk
 		CheckCreated();
 		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _pass);
 
-		mRenderPasses.Erase(_pass, ContextObjDestroyer<RenderPass>{ *mDevice });
+		mRenderPasses.Erase(_pass, ContextObjDestroyer<RenderPass>{ mDevice });
 	}
 
 
@@ -123,16 +126,25 @@ namespace Sa::Vk
 
 		ResourceInitializer* const resInit = mResInits.Emplace();
 
-		resInit->Create(*mDevice);
+		resInit->Create(mDevice);
 
 		return resInit;
 	}
 
-	void Context::DestroyResourceInitializer(ARenderResourceInitializer* _resInit)
+	void Context::DestroyResourceInitializer(ARenderResourceInitializer* _init)
 	{
 		CheckCreated();
-		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _resInit);
+		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _init);
 
-		mResInits.Erase(_resInit, ContextObjDestroyer<ResourceInitializer>{ *mDevice });
+		mResInits.Erase(_init, ContextObjDestroyer<ResourceInitializer>{ mDevice });
+	}
+	
+	void Context::SubmitResourceInitializer(ARenderResourceInitializer* _init)
+	{
+		CheckCreated();
+
+		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _init);
+
+		CastRef<ResourceInitializer>(_init).Submit(mDevice);
 	}
 }

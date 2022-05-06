@@ -1,7 +1,5 @@
 {
 	"editor.formatOnSave": true,
-	"cmake.setBuildTypeOnMultiConfig": true,
-	"cmake.buildDirectory": "${workspaceFolder}/CMake/build",
 	"workbench.colorCustomizations": {
 		"activityBar.activeBackground": "#ffffff",
 		"activityBar.activeBorder": "#df9f9f",

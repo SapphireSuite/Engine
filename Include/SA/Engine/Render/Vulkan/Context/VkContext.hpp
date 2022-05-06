@@ -19,16 +19,16 @@ namespace Sa::Vk
 
 	class Context : public ARenderContext
 	{
-		Device* mDevice = nullptr;
+		Device& mDevice;
 
 		InterfaceList<Surface> mSurfaces;
 		InterfaceList<RenderPass> mRenderPasses;
 		InterfaceList<ResourceInitializer> mResInits;
 
-		using HardwareInterface::Create; // overloaded.
-
 	public:
-		void Create(Device& _device);
+		Context(Device& _device) noexcept;
+
+		void Create() override final;
 		void Destroy() override final;
 		void Clear() override final;
 
@@ -51,7 +51,8 @@ namespace Sa::Vk
 
 
 		ARenderResourceInitializer* CreateResourceInitializer() override final;
-		void DestroyResourceInitializer(ARenderResourceInitializer* _resInit) override final;
+		void DestroyResourceInitializer(ARenderResourceInitializer* _init) override final;
+		void SubmitResourceInitializer(ARenderResourceInitializer* _init) override final;
 	};
 
 

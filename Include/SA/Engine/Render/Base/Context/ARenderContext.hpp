@@ -38,6 +38,7 @@ namespace Sa
 
 		virtual ARenderResourceInitializer* CreateResourceInitializer() = 0;
 		virtual void DestroyResourceInitializer(ARenderResourceInitializer* _resInit) = 0;
+		virtual void SubmitResourceInitializer(ARenderResourceInitializer* _init) = 0;
 	};
 }
 
