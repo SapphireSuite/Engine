@@ -87,6 +87,7 @@
 		"cinttypes": "cpp",
 		"typeinfo": "cpp",
 		"variant": "cpp",
-		"debug": "cpp"
+		"debug": "cpp",
+		"window": "cpp"
 	},
 }
