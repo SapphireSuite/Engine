@@ -27,7 +27,6 @@ namespace Sa::Vk
 		SA_LOG(L"Render Context destroyed.", Infos, SA/Engine/Render/Vulkan);
 	}
 
-
 	void Context::Clear()
 	{
 		ARenderContext::Clear();
@@ -119,6 +118,7 @@ namespace Sa::Vk
 	}
 
 
+//{ Resources
 
 	ARenderResourceInitializer* Context::CreateResourceInitializer()
 	{
@@ -142,9 +142,30 @@ namespace Sa::Vk
 	void Context::SubmitResourceInitializer(ARenderResourceInitializer* _init)
 	{
 		CheckCreated();
-
 		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _init);
 
 		CastRef<ResourceInitializer>(_init).Submit(mDevice);
 	}
+
+
+	AShader* Context::CreateShader(ARenderResourceInitializer* _init, const RawShader& _raw)
+	{
+		CheckCreated();
+
+		Shader* const shader = mShaders.Emplace();
+
+		shader->Create(mDevice, CastRef<ResourceInitializer>(_init), _raw);
+
+		return shader;
+	}
+	
+	void Context::DestroyShader(AShader* _shader)
+	{
+		CheckCreated();
+		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _shader);
+
+		mShaders.Erase(_shader, ContextObjDestroyer<Shader>{ mDevice });
+	}
+
+//}
 }

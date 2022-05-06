@@ -9,6 +9,7 @@
 #include <SA/Engine/Render/Base/Surface/ARenderSurface.hpp>
 #include <SA/Engine/Render/Base/Pass/ARenderPass.hpp>
 #include <SA/Engine/Render/Base/Context/ARenderResourceInitializer.hpp>
+#include <SA/Engine/Render/Base/Shader/AShader.hpp>
 
 namespace Sa
 {
@@ -36,9 +37,15 @@ namespace Sa
 		virtual void DestroyRenderPass(ARenderPass* _pass) = 0;
 
 
+//{ Resources
+
 		virtual ARenderResourceInitializer* CreateResourceInitializer() = 0;
 		virtual void DestroyResourceInitializer(ARenderResourceInitializer* _resInit) = 0;
 		virtual void SubmitResourceInitializer(ARenderResourceInitializer* _init) = 0;
+
+		virtual AShader* CreateShader(ARenderResourceInitializer* _init, const RawShader& _raw) = 0;
+		virtual void DestroyShader(AShader* _shader) = 0;
+//}
 	};
 }
 

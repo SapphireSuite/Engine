@@ -10,6 +10,7 @@
 #include <SA/Engine/Render/Vulkan/Surface/VkSurface.hpp>
 #include <SA/Engine/Render/Vulkan/Pass/VkRenderPass.hpp>
 #include <SA/Engine/Render/Vulkan/Context/VkResourceInitializer.hpp>
+#include <SA/Engine/Render/Vulkan/Shader/VkShader.hpp>
 
 #include <SA/Engine/HI/InterfaceList.hpp>
 
@@ -24,6 +25,7 @@ namespace Sa::Vk
 		InterfaceList<Surface> mSurfaces;
 		InterfaceList<RenderPass> mRenderPasses;
 		InterfaceList<ResourceInitializer> mResInits;
+		InterfaceList<Shader> mShaders;
 
 	public:
 		Context(Device& _device) noexcept;
@@ -50,9 +52,15 @@ namespace Sa::Vk
 		void DestroyRenderPass(ARenderPass* _pass) override final;
 
 
+//{ Resoures
+
 		ARenderResourceInitializer* CreateResourceInitializer() override final;
 		void DestroyResourceInitializer(ARenderResourceInitializer* _init) override final;
 		void SubmitResourceInitializer(ARenderResourceInitializer* _init) override final;
+
+		AShader* CreateShader(ARenderResourceInitializer* _init, const RawShader& _raw) override final;
+		void DestroyShader(AShader* _shader) override final;
+//}
 	};
 
 
