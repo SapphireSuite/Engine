@@ -1,79 +1,377 @@
 {
-	"version": 2,
+	"version": 3,
 	"configurePresets": [
 		{
-			"name": "Clang Debug x64",
-			"displayName": "Clang Debug x64",
-			"description": "Using compilers: C = /usr/bin/clang, CXX = /usr/bin/clang++",
+			"name": "Base",
+			"hidden": true,
 			"binaryDir": "${sourceDir}/CMake/build/${presetName}",
+			"cacheVariables": {
+				"CMAKE_INSTALL_PREFIX": "${sourceDir}/CMake/install/${presetName}",
+				"SA_ENGINE_BUILD_TESTS_OPT": true
+			}
+		},
+		{
+			"name": "Debug",
+			"hidden": true,
+			"inherits": "Base",
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Debug"
+			}
+		},
+		{
+			"name": "Release",
+			"hidden": true,
+			"inherits": "Base",
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Release"
+			}
+		},
+		{
+			"name": "Clang",
+			"hidden": true,
 			"generator": "Ninja",
 			"cacheVariables": {
-				"CMAKE_BUILD_TYPE": "Debug",
-				"CMAKE_INSTALL_PREFIX": "${sourceDir}/CMake/install/${presetName}",
-				"CMAKE_C_COMPILER": "/usr/bin/clang",
-				"CMAKE_CXX_COMPILER": "/usr/bin/clang++",
-				"SA_SUPPORT_BUILD_TESTS_OPT": "True",
-				"SA_FLAGS_BUILD_TESTS_OPT": "True",
-				"SA_LOGGER_BUILD_TESTS_OPT": "True",
-				"SA_MATHS_BUILD_TESTS_OPT": "True",
-				"SA_EVENT_BUILD_TESTS_OPT": "True",
-				"SA_ENGINE_BUILD_TESTS_OPT": "True"
+				"CMAKE_C_COMPILER": "clang",
+				"CMAKE_CXX_COMPILER": "clang++"
 			}
 		},
 		{
-			"name": "Clang Release x64",
-			"displayName": "Clang Release x64",
-			"description": "Using compilers: C = /usr/bin/clang, CXX = /usr/bin/clang++",
-			"binaryDir": "${sourceDir}/CMake/build/${presetName}",
+			"name": "Clang Debug",
+			"inherits": [
+				"Clang",
+				"Debug"
+			],
+			"description": "Compilers: C=clang, CXX=clang++"
+		},
+		{
+			"name": "Clang Release",
+			"inherits": [
+				"Clang",
+				"Release"
+			],
+			"description": "Compilers: C=clang, CXX=clang++"
+		},
+		{
+			"name": "GCC",
+			"hidden": true,
 			"generator": "Ninja",
 			"cacheVariables": {
-				"CMAKE_BUILD_TYPE": "Release",
-				"CMAKE_INSTALL_PREFIX": "${sourceDir}/CMake/install/${presetName}",
-				"CMAKE_C_COMPILER": "/usr/bin/clang",
-				"CMAKE_CXX_COMPILER": "/usr/bin/clang++",
-				"SA_SUPPORT_BUILD_TESTS_OPT": "True",
-				"SA_FLAGS_BUILD_TESTS_OPT": "True",
-				"SA_LOGGER_BUILD_TESTS_OPT": "True",
-				"SA_MATHS_BUILD_TESTS_OPT": "True",
-				"SA_EVENT_BUILD_TESTS_OPT": "True",
-				"SA_ENGINE_BUILD_TESTS_OPT": "True"
+				"CMAKE_C_COMPILER": "gcc",
+				"CMAKE_CXX_COMPILER": "g++"
 			}
 		},
 		{
-			"name": "GCC Debug x64",
-			"displayName": "GCC Debug x64",
-			"description": "Using compilers: C = /usr/bin/gcc, CXX = /usr/bin/g++",
-			"binaryDir": "${sourceDir}/CMake/build/${presetName}",
-			"cacheVariables": {
-				"CMAKE_BUILD_TYPE": "Debug",
-				"CMAKE_INSTALL_PREFIX": "${sourceDir}/CMake/install/${presetName}",
-				"CMAKE_C_COMPILER": "/usr/bin/gcc",
-				"CMAKE_CXX_COMPILER": "/usr/bin/g++",
-				"SA_SUPPORT_BUILD_TESTS_OPT": "True",
-				"SA_FLAGS_BUILD_TESTS_OPT": "True",
-				"SA_LOGGER_BUILD_TESTS_OPT": "True",
-				"SA_MATHS_BUILD_TESTS_OPT": "True",
-				"SA_EVENT_BUILD_TESTS_OPT": "True",
-				"SA_ENGINE_BUILD_TESTS_OPT": "True"
+			"name": "GCC Debug",
+			"inherits": [
+				"GCC",
+				"Debug"
+			],
+			"description": "Compilers: C=gcc, CXX=g++"
+		},
+		{
+			"name": "GCC Release",
+			"inherits": [
+				"GCC",
+				"Release"
+			],
+			"description": "Compilers: C=gcc, CXX=g++"
+		},
+		{
+			"name": "Windows",
+			"hidden": true,
+			"condition": {
+				"type": "equals",
+				"lhs": "${hostSystemName}",
+				"rhs": "Windows"
 			}
 		},
 		{
-			"name": "GCC Release x64",
-			"displayName": "GCC Release x64",
-			"description": "Using compilers: C = /usr/bin/gcc, CXX = /usr/bin/g++",
-			"binaryDir": "${sourceDir}/CMake/build/${presetName}",
-			"cacheVariables": {
-				"CMAKE_BUILD_TYPE": "Release",
-				"CMAKE_INSTALL_PREFIX": "${sourceDir}/CMake/install/${presetName}",
-				"CMAKE_C_COMPILER": "/usr/bin/gcc",
-				"CMAKE_CXX_COMPILER": "/usr/bin/g++",
-				"SA_SUPPORT_BUILD_TESTS_OPT": "True",
-				"SA_FLAGS_BUILD_TESTS_OPT": "True",
-				"SA_LOGGER_BUILD_TESTS_OPT": "True",
-				"SA_MATHS_BUILD_TESTS_OPT": "True",
-				"SA_EVENT_BUILD_TESTS_OPT": "True",
-				"SA_ENGINE_BUILD_TESTS_OPT": "True"
+			"name": "VisualStudio",
+			"hidden": true,
+			"inherits": [
+				"Windows",
+				"Base"
+			],
+			"architecture": "x64"
+		},
+		{
+			"name": "VS_2017",
+			"inherits": "VisualStudio",
+			"displayName": "Visual Studio 2017",
+			"description": "MSVC Compiler",
+			"generator": "Visual Studio 15 2017"
+		},
+		{
+			"name": "VS_2019",
+			"inherits": "VisualStudio",
+			"displayName": "Visual Studio 2019",
+			"description": "MSVC Compiler",
+			"generator": "Visual Studio 16 2019"
+		},
+		{
+			"name": "VS_2022",
+			"inherits": "VisualStudio",
+			"displayName": "Visual Studio 2022",
+			"description": "MSVC Compiler",
+			"generator": "Visual Studio 17 2022"
+		},
+		{
+			"name": "VS_ClangCL",
+			"inherits": "VisualStudio",
+			"displayName": "ClangCL Visual Studio 2022",
+			"description": "Clang CL Compiler with Visual Studio",
+			"generator": "Visual Studio 17 2022",
+			"toolset": "ClangCL",
+			"vendor": {
+				"microsoft.com/VisualStudioSettings/CMake/1.0": {
+					"intelliSenseMode": "windows-clang-x64"
+				}
 			}
+		},
+		{
+			"name": "MacOS",
+			"hidden": true,
+			"condition": {
+				"type": "equals",
+				"lhs": "${hostSystemName}",
+				"rhs": "Darwin"
+			}
+		},
+		{
+			"name": "Xcode",
+			"inherits": [
+				"MacOS",
+				"Base"
+			],
+			"generator": "Xcode"
+		}
+	],
+	"buildPresets": [
+		{
+			"name": "Base",
+			"hidden": true,
+			"verbose": true
+		},
+		{
+			"name": "Debug",
+			"hidden": true,
+			"inherits": "Base",
+			"configuration": "Debug"
+		},
+		{
+			"name": "Release",
+			"hidden": true,
+			"inherits": "Base",
+			"configuration": "Release"
+		},
+		{
+			"name": "Clang Debug",
+			"inherits": "Debug",
+			"displayName": "Default",
+			"configurePreset": "Clang Debug"
+		},
+		{
+			"name": "Clang Release",
+			"inherits": "Release",
+			"displayName": "Default",
+			"configurePreset": "Clang Release"
+		},
+		{
+			"name": "GCC Debug",
+			"inherits": "Debug",
+			"displayName": "Default",
+			"configurePreset": "GCC Debug"
+		},
+		{
+			"name": "GCC Release",
+			"inherits": "Release",
+			"displayName": "Default",
+			"configurePreset": "GCC Release"
+		},
+		{
+			"name": "VS_2017 Debug",
+			"displayName": "Debug",
+			"inherits": "Debug",
+			"description": "Visual Studio multi-config Debug preset",
+			"configurePreset": "VS_2017"
+		},
+		{
+			"name": "VS_2017 Release",
+			"displayName": "Release",
+			"inherits": "Release",
+			"description": "Visual Studio multi-config Release preset",
+			"configurePreset": "VS_2017"
+		},
+		{
+			"name": "VS_2019 Debug",
+			"displayName": "Debug",
+			"inherits": "Debug",
+			"description": "Visual Studio multi-config Debug preset",
+			"configurePreset": "VS_2019"
+		},
+		{
+			"name": "VS_2019 Release",
+			"displayName": "Release",
+			"inherits": "Release",
+			"description": "Visual Studio multi-config Release preset",
+			"configurePreset": "VS_2019"
+		},
+		{
+			"name": "VS_2022 Debug",
+			"displayName": "Debug",
+			"inherits": "Debug",
+			"description": "Visual Studio multi-config Debug preset",
+			"configurePreset": "VS_2022"
+		},
+		{
+			"name": "VS_2022 Release",
+			"displayName": "Release",
+			"inherits": "Release",
+			"description": "Visual Studio multi-config Release preset",
+			"configurePreset": "VS_2022"
+		},
+		{
+			"name": "VS_ClangCL Debug",
+			"displayName": "Debug",
+			"inherits": "Debug",
+			"description": "Visual Studio multi-config Debug preset",
+			"configurePreset": "VS_ClangCL"
+		},
+		{
+			"name": "VS_ClangCL Release",
+			"displayName": "Release",
+			"inherits": "Release",
+			"description": "Visual Studio multi-config Release preset",
+			"configurePreset": "VS_ClangCL"
+		},
+		{
+			"name": "Xcode Debug",
+			"displayName": "Debug",
+			"inherits": "Debug",
+			"description": "Xcode multi-config Debug preset",
+			"configurePreset": "Xcode"
+		},
+		{
+			"name": "Xcode Release",
+			"displayName": "Release",
+			"inherits": "Release",
+			"description": "Xcode multi-config Release preset",
+			"configurePreset": "Xcode"
+		}
+	],
+	"testPresets": [
+		{
+			"name": "Base",
+			"hidden": true,
+			"output": {
+				"verbosity": "verbose"
+			}
+		},
+		{
+			"name": "Debug",
+			"hidden": true,
+			"inherits": "Base",
+			"configuration": "Debug"
+		},
+		{
+			"name": "Release",
+			"hidden": true,
+			"inherits": "Base",
+			"configuration": "Release"
+		},
+		{
+			"name": "Clang Debug",
+			"inherits": "Debug",
+			"displayName": "Default",
+			"configurePreset": "Clang Debug"
+		},
+		{
+			"name": "Clang Release",
+			"inherits": "Release",
+			"displayName": "Default",
+			"configurePreset": "Clang Release"
+		},
+		{
+			"name": "GCC Debug",
+			"inherits": "Debug",
+			"displayName": "Default",
+			"configurePreset": "GCC Debug"
+		},
+		{
+			"name": "GCC Release",
+			"inherits": "Release",
+			"displayName": "Default",
+			"configurePreset": "GCC Release"
+		},
+		{
+			"name": "VS_2017 Debug",
+			"displayName": "Debug",
+			"inherits": "Debug",
+			"description": "Visual Studio multi-config Debug preset",
+			"configurePreset": "VS_2017"
+		},
+		{
+			"name": "VS_2017 Release",
+			"displayName": "Release",
+			"inherits": "Release",
+			"description": "Visual Studio multi-config Release preset",
+			"configurePreset": "VS_2017"
+		},
+		{
+			"name": "VS_2019 Debug",
+			"displayName": "Debug",
+			"inherits": "Debug",
+			"description": "Visual Studio multi-config Debug preset",
+			"configurePreset": "VS_2019"
+		},
+		{
+			"name": "VS_2019 Release",
+			"displayName": "Release",
+			"inherits": "Release",
+			"description": "Visual Studio multi-config Release preset",
+			"configurePreset": "VS_2019"
+		},
+		{
+			"name": "VS_2022 Debug",
+			"displayName": "Debug",
+			"inherits": "Debug",
+			"description": "Visual Studio multi-config Debug preset",
+			"configurePreset": "VS_2022"
+		},
+		{
+			"name": "VS_2022 Release",
+			"displayName": "Release",
+			"inherits": "Release",
+			"description": "Visual Studio multi-config Release preset",
+			"configurePreset": "VS_2022"
+		},
+		{
+			"name": "VS_ClangCL Debug",
+			"displayName": "Debug",
+			"inherits": "Debug",
+			"description": "Visual Studio multi-config Debug preset",
+			"configurePreset": "VS_ClangCL"
+		},
+		{
+			"name": "VS_ClangCL Release",
+			"displayName": "Release",
+			"inherits": "Release",
+			"description": "Visual Studio multi-config Release preset",
+			"configurePreset": "VS_ClangCL"
+		},
+		{
+			"name": "Xcode Debug",
+			"displayName": "Debug",
+			"inherits": "Debug",
+			"description": "Xcode multi-config Debug preset",
+			"configurePreset": "Xcode"
+		},
+		{
+			"name": "Xcode Release",
+			"displayName": "Release",
+			"inherits": "Release",
+			"description": "Xcode multi-config Release preset",
+			"configurePreset": "Xcode"
 		}
 	]
 }

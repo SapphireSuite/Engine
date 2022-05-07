@@ -1,6 +1,7 @@
 # Copyright (c) 2022 Sapphire's Suite. All Rights Reserved.
 
-SA_SetMaxWarningLevel(TARGET SA_Engine)
+
+SA_SetupTargetForTesting(TARGET SA_Engine)
 
 
 
