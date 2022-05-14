@@ -8,16 +8,16 @@ int main(int argc, char** argv)
 {
 //{ Init static logger instance
 
-	Sa::Logger logger;
+	SA::Logger logger;
 
-	Sa::ConsoleLogStream cslStream;
+	SA::ConsoleLogStream cslStream;
 	logger.Register(cslStream);
 
-	Sa::FileLogStream fileStream;
+	SA::FileLogStream fileStream;
 	logger.Register(fileStream);
 
 	// Init instance.
-	Sa::Debug::logger = &logger;
+	SA::Debug::logger = &logger;
 
 //}
 

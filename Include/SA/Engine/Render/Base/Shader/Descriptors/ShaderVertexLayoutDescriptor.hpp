@@ -9,7 +9,7 @@
 
 #include <SA/Engine/Render/Base/Shader/Descriptors/ShaderVertexLocationDescriptor.hpp>
 
-namespace Sa
+namespace SA
 {
 	struct ShaderVertexLayoutDescriptor
 	{

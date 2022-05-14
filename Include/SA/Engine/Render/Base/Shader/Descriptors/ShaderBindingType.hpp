@@ -9,7 +9,7 @@
 
 #include <SA/Support/API/Vulkan.hpp>
 
-namespace Sa
+namespace SA
 {
 	enum class ShaderBindingType : uint8_t
 	{
@@ -26,7 +26,7 @@ namespace Sa
 
 #if SA_VULKAN
 
-	namespace Vk
+	namespace VK
 	{
 		VkDescriptorType API_GetDescriptorType(ShaderBindingType _type);
 	}

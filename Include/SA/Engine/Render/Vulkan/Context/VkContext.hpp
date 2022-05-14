@@ -14,7 +14,7 @@
 
 #include <SA/Engine/HI/InterfaceList.hpp>
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	class Device;
 

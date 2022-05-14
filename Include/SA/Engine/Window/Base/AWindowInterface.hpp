@@ -9,7 +9,7 @@
 
 #include <SA/Engine/Window/Base/AWindow.hpp>
 
-namespace Sa
+namespace SA
 {
 	class AWindowInterface : protected HardwareInterface
 	{

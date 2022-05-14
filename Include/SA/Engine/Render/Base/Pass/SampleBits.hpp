@@ -9,7 +9,7 @@
 
 #include <SA/Support/API/Vulkan.hpp>
 
-namespace Sa
+namespace SA
 {
 	enum class SampleBits : uint8_t
 	{
@@ -43,7 +43,7 @@ namespace Sa
 
 #if SA_VULKAN
 
-	namespace Vk
+	namespace VK
 	{
 		VkSampleCountFlagBits API_GetSampleCount(SampleBits _sampleBits);
 	}

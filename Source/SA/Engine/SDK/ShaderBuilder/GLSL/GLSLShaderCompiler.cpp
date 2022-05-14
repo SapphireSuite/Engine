@@ -11,19 +11,19 @@
 #include <SDK/Misc/ReadFile.hpp>
 #include <SDK/ShaderBuilder/GLSL/GLSLShaderFileIncluder.hpp>
 
-namespace Sa::GLSL
+namespace SA::GLSL
 {
 	shaderc_shader_kind GetShaderKind(ShaderStage _stage)
 	{
 		switch (_stage)
 		{
-			case Sa::ShaderStage::Vertex:
+			case ShaderStage::Vertex:
 				return shaderc_glsl_vertex_shader;
-			case Sa::ShaderStage::Fragment:
+			case ShaderStage::Fragment:
 				return shaderc_glsl_fragment_shader;
-			case Sa::ShaderStage::Geometry:
+			case ShaderStage::Geometry:
 				return shaderc_glsl_geometry_shader;
-			case Sa::ShaderStage::Compute:
+			case ShaderStage::Compute:
 				return shaderc_glsl_compute_shader;
 			default:
 			{
@@ -37,16 +37,16 @@ namespace Sa::GLSL
 	{
 		switch (_stage)
 		{
-			case Sa::ShaderStage::Vertex:
+			case ShaderStage::Vertex:
 				options.AddMacroDefinition("VERTEX");
 				break;
-			case Sa::ShaderStage::Fragment:
+			case ShaderStage::Fragment:
 				options.AddMacroDefinition("FRAGMENT");
 				break;
-			case Sa::ShaderStage::Geometry:
+			case ShaderStage::Geometry:
 				options.AddMacroDefinition("GEOMETRY");
 				break;
-			case Sa::ShaderStage::Compute:
+			case ShaderStage::Compute:
 				options.AddMacroDefinition("COMPUTE");
 				break;
 			default:

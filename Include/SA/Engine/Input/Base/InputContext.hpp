@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_ENGINE_INPUT_CONTEXT_GUARD
 #define SAPPHIRE_ENGINE_INPUT_CONTEXT_GUARD
 
-namespace Sa
+namespace SA
 {
 	class InputContext
 	{

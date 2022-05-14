@@ -9,7 +9,7 @@
 
 #include <SA/Engine/Render/Vulkan/Device/Command/VkCommandBuffer.hpp>
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	class Device;
 

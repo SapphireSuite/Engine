@@ -6,7 +6,7 @@
 
 #include <Window/Base/AWindowInterface.hpp>
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	std::vector<const char*> GetRequiredExtensions(const AWindowInterface* _winIntf) noexcept
 	{

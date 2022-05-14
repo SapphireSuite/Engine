@@ -6,7 +6,7 @@
 
 #include <Render/Vulkan/Surface/VkWindowSurface.hpp>
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	Vec2ui Surface::GetExtent() const
 	{

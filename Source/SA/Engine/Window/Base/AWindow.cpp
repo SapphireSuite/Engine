@@ -2,7 +2,7 @@
 
 #include <Window/Base/AWindow.hpp>
 
-namespace Sa
+namespace SA
 {
 	WindowMode AWindow::GetWindowMode() const
 	{

@@ -7,7 +7,7 @@
 
 #include <shaderc/shaderc.hpp>
 
-namespace Sa
+namespace SA
 {
 	struct RawShader;
 	struct ShaderDescriptor;

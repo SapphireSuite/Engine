@@ -4,7 +4,7 @@
 
 #include <SA/Collections/Debug>
 
-namespace Sa
+namespace SA
 {
 	ShaderStage ShaderStageFromFile(const std::string& _path)
 	{
@@ -36,21 +36,21 @@ namespace Sa
 
 #if SA_VULKAN
 
-	namespace Vk
+	namespace VK
 	{
 		VkShaderStageFlagBits API_GetShaderStage(ShaderStage _stage) noexcept
 		{
 			switch (_stage)
 			{
-				case Sa::ShaderStage::Vertex:
+				case ShaderStage::Vertex:
 					return VK_SHADER_STAGE_VERTEX_BIT;
-				case Sa::ShaderStage::Fragment:
+				case ShaderStage::Fragment:
 					return VK_SHADER_STAGE_FRAGMENT_BIT;
-				case Sa::ShaderStage::Geometry:
+				case ShaderStage::Geometry:
 					return VK_SHADER_STAGE_GEOMETRY_BIT;
-				case Sa::ShaderStage::Compute:
+				case ShaderStage::Compute:
 					return VK_SHADER_STAGE_COMPUTE_BIT;
-				case Sa::ShaderStage::Unknown:
+				case ShaderStage::Unknown:
 				default:
 					SA_LOG("Vulkan API GetShaderStage [" << _stage << L"] default or unknown used!", Error, SA/Engine/Render);
 					return VkShaderStageFlagBits(0);

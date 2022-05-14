@@ -10,12 +10,12 @@
 #include <SA/Engine/Render/Vulkan/Surface/VkSwapChain.hpp>
 #include <SA/Engine/Render/Vulkan/Surface/VkSurfaceSupportDetails.hpp>
 
-namespace Sa
+namespace SA
 {
 	struct RenderPassDescriptor;
 }
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	class Device;
 	class WindowSurface;

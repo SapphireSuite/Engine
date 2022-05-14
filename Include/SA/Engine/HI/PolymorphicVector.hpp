@@ -8,7 +8,7 @@
 #include <vector>
 #include <memory>
 
-namespace Sa
+namespace SA
 {
 	template <typename T>
 	class PolymorphicVector

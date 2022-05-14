@@ -10,7 +10,7 @@
 #include <SA/Engine/Window/Base/WindowMode.hpp>
 #include <SA/Engine/Window/Base/CursorMode.hpp>
 
-namespace Sa
+namespace SA
 {
 	struct WindowCreateInfos
 	{

@@ -11,7 +11,7 @@
 #include <SA/Engine/Render/Base/Context/ARenderResourceInitializer.hpp>
 #include <SA/Engine/Render/Base/Shader/AShader.hpp>
 
-namespace Sa
+namespace SA
 {
 	class AWindowSurface;
 

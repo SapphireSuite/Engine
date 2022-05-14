@@ -2,7 +2,7 @@
 
 #include <HI/ResourceHolder.hpp>
 
-namespace Sa
+namespace SA
 {
 	ResourceHolder::~ResourceHolder()
 	{

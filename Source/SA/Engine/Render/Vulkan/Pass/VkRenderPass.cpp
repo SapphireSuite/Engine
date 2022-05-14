@@ -8,7 +8,7 @@
 #include <Render/Vulkan/Debug/Debug.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	namespace Intl
 	{

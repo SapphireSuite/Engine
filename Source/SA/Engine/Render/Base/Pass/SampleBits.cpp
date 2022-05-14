@@ -2,11 +2,11 @@
 
 #include <SA/Engine/Render/Base/Pass/SampleBits.hpp>
 
-namespace Sa
+namespace SA
 {
 #if SA_VULKAN
 
-	namespace Vk
+	namespace VK
 	{
 		VkSampleCountFlagBits API_GetSampleCount(SampleBits _sampleBits)
 		{

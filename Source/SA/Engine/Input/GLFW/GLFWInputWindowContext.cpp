@@ -7,7 +7,7 @@
 #include <HI/Cast.hpp>
 #include <Window/GLFW/GLFWWindow.hpp>
 
-namespace Sa::GLFW
+namespace SA::GLFW
 {
 	void WindowKeyCallback(GLFWwindow* _handle, int _key, int _scancode, int _action, int _mods)
 	{

@@ -7,7 +7,7 @@
 
 #include <vector>
 
-namespace Sa
+namespace SA
 {
 	namespace Intl
 	{

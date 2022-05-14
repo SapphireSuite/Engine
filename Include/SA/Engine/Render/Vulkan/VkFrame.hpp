@@ -10,7 +10,7 @@
 #include <SA/Engine/Render/Vulkan/Device/Command/VkCommandBuffer.hpp>
 #include <SA/Engine/Render/Vulkan/Buffers/VkFrameBuffer.hpp>
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	struct Frame : public ARenderFrame
 	{

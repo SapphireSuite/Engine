@@ -7,7 +7,7 @@
 
 #include <SA/Engine/HI/HardwareInterface.hpp>
 
-namespace Sa
+namespace SA
 {
 	class AWindow;
 

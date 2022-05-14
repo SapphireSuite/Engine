@@ -9,7 +9,7 @@
 
 #include <SA/Engine/Render/Base/Shader/Descriptors/ShaderBindingType.hpp>
 
-namespace Sa
+namespace SA
 {
 	struct ShaderBindingDescriptor
 	{

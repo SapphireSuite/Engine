@@ -10,7 +10,7 @@
 #include <SA/Engine/Render/Base/Surface/AWindowSurface.hpp>
 #include <SA/Engine/Render/Vulkan/Surface/VkWindowSurfaceHandle.hpp>
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	class Instance;
 

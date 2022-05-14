@@ -11,7 +11,7 @@
 
 #include <SA/Support/API/Vulkan.hpp>
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	struct SurfaceSupportDetails
 	{

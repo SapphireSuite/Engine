@@ -9,13 +9,13 @@
 
 #include <SA/Engine/Render/Vulkan/Buffers/VkImageBuffer.hpp>
 
-namespace Sa
+namespace SA
 {
 	struct Color;
 	struct RenderPassDescriptor;
 }
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	class RenderPass;
 

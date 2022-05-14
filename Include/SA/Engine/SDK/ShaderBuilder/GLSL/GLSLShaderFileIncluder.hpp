@@ -9,7 +9,7 @@
 
 #include <shaderc/shaderc.hpp>
 
-namespace Sa::GLSL
+namespace SA::GLSL
 {
 	class ShaderFileIncluder : public shaderc::CompileOptions::IncluderInterface
 	{

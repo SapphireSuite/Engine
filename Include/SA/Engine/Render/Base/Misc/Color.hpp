@@ -7,7 +7,7 @@
 
 #include <SA/Support/API/Vulkan.hpp>
 
-namespace Sa
+namespace SA
 {
 	struct Color
 	{

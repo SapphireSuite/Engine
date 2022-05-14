@@ -4,7 +4,7 @@
 
 #include <SA/Collections/Debug>
 
-namespace Sa
+namespace SA
 {
 	bool IsColorFormat(Format _format) noexcept
 	{
@@ -57,7 +57,7 @@ namespace Sa
 
 #if SA_VULKAN
 
-	namespace Vk
+	namespace VK
 	{
 		VkFormat API_GetFormat(Format _format)
 		{

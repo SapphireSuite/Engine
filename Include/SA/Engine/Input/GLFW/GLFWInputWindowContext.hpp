@@ -7,7 +7,7 @@
 
 #include <SA/Engine/Input/Base/AInputWindowContext.hpp>
 
-namespace Sa::GLFW
+namespace SA::GLFW
 {
 	class Window;
 

@@ -7,7 +7,7 @@
 #include <Window/GLFW/GLFWWindowInterface.hpp>
 #include <Window/GLFW/GLFWWindow.hpp>
 
-namespace Sa::GLFW
+namespace SA::GLFW
 {
 	void ErrorCallback(int32_t error, const char* description)
 	{

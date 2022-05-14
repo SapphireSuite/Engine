@@ -13,7 +13,7 @@
 
 #if SA_VULKAN
 
-	namespace Sa::Vk
+	namespace SA::VK
 	{
 		class Instance;
 	}
@@ -31,7 +31,7 @@
 *	\{
 */
 
-namespace Sa
+namespace SA
 {
 	//class AInputWindowContext;
 
@@ -173,8 +173,8 @@ namespace Sa
 
 #if SA_VULKAN
 
-		virtual Vk::WindowSurfaceHandle CreateVkWindowSurfaceHandle(const Vk::Instance& _instance) const = 0;
-		virtual void DestroyVkWindowSurfaceHandle(const Vk::Instance& _instance, Vk::WindowSurfaceHandle _surfaceHandle) const = 0;
+		virtual VK::WindowSurfaceHandle CreateVkWindowSurfaceHandle(const VK::Instance& _instance) const = 0;
+		virtual void DestroyVkWindowSurfaceHandle(const VK::Instance& _instance, VK::WindowSurfaceHandle _surfaceHandle) const = 0;
 
 #endif
 	};

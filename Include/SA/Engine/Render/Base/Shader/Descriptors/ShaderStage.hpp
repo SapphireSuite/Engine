@@ -7,7 +7,7 @@
 
 #include <SA/Support/API/Vulkan.hpp>
 
-namespace Sa
+namespace SA
 {
 	enum class ShaderStage : uint8_t
 	{
@@ -27,7 +27,7 @@ namespace Sa
 
 #if SA_VULKAN
 
-	namespace Vk
+	namespace VK
 	{
 		VkShaderStageFlagBits API_GetShaderStage(ShaderStage _type) noexcept;
 

@@ -2,7 +2,7 @@
 
 #include <Render/Base/Shader/Descriptors/ShaderDescriptor.hpp>
 
-namespace Sa
+namespace SA
 {
 	ShaderBindingDescriptor& ShaderDescriptor::EmplaceBinding(uint32_t _set)
 	{

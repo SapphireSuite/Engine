@@ -6,7 +6,7 @@
 #include <SA/Collections/Window>
 #include <SA/Collections/Input>
 #include <SA/Collections/Render>
-using namespace Sa;
+using namespace SA;
 
 #include <SA/Engine/SDK/ShaderBuilder/GLSL/GLSLShaderBuilder.hpp>
 #include <SA/Engine/Render/Base/Shader/Descriptors/ShaderDescriptor.hpp>
@@ -17,7 +17,7 @@ int main()
 
 	// Logger
 	Logger logger;
-	Sa::Debug::logger = &logger;
+	SA::Debug::logger = &logger;
 
 	ConsoleLogStream cslStream;
 	logger.Register(cslStream);
@@ -43,7 +43,7 @@ int main()
 
 
 	// Render
-	Vk::RenderInterface renderIntf;
+	VK::RenderInterface renderIntf;
 	renderIntf.Create(&winIntf);
 
 	AWindowSurface* const winSurface = renderIntf.CreateWindowSurface(win);

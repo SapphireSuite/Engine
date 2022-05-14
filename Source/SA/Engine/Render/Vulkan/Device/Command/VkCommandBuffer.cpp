@@ -4,7 +4,7 @@
 
 #include <Render/Vulkan/Debug/Debug.hpp>
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	void CommandBuffer::Begin()
 	{

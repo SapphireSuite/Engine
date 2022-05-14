@@ -9,7 +9,7 @@
 
 #include <SA/Engine/Input/Base/AInputWindowContext.hpp>
 
-namespace Sa
+namespace SA
 {
 	class AWindow;
 

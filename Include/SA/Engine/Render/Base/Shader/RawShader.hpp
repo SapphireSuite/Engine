@@ -8,7 +8,7 @@
 #include <cstdint>
 #include <vector>
 
-namespace Sa
+namespace SA
 {
     struct RawShader
 	{

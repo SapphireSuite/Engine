@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_ENGINE_ARENDER_FRAME_GUARD
 #define SAPPHIRE_ENGINE_ARENDER_FRAME_GUARD
 
-namespace Sa
+namespace SA
 {
 	struct ARenderFrame
 	{

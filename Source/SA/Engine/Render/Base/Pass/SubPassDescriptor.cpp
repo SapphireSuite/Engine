@@ -4,11 +4,11 @@
 
 #include <SA/Collections/Debug>
 
-namespace Sa
+namespace SA
 {
 #if SA_VULKAN
 
-	namespace Vk
+	namespace VK
 	{
 		VkAttachmentLoadOp API_GetAttachmentLoadOp(const AttachmentLoadMode _mode) noexcept
 		{

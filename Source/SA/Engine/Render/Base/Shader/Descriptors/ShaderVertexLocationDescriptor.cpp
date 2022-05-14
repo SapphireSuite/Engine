@@ -2,7 +2,7 @@
 
 #include <Render/Base/Shader/Descriptors/ShaderVertexLocationDescriptor.hpp>
 
-namespace Sa
+namespace SA
 {
 	bool ShaderVertexLocationDescriptor::operator<(const ShaderVertexLocationDescriptor& _rhs) const noexcept
 	{

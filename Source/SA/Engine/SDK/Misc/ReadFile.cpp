@@ -7,7 +7,7 @@
 
 #include <SA/Collections/Debug>
 
-namespace Sa
+namespace SA
 {
 	namespace Intl
 	{

@@ -11,7 +11,7 @@
 
 #include <SA/Engine/Render/Vulkan/Device/Command/VkCommandPool.hpp>
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	class ResourceInitializer : public ARenderResourceInitializer
 	{

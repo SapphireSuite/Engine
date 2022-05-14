@@ -4,7 +4,7 @@
 
 #include <SA/Logger/Misc/ToString.hpp>
 
-namespace Sa
+namespace SA
 {
 	Exception_Vulkan::Exception_Vulkan(
 		BaseInfos&& _infos,

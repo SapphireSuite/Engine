@@ -9,7 +9,7 @@
 
 #include <SA/Logger/Exceptions/Exception.hpp>
 
-namespace Sa
+namespace SA
 {
 	class Exception_Vulkan : public Exception
 	{
@@ -23,7 +23,7 @@ namespace Sa
 	};
 
 
-	#define __SA_CREATE_EXCEPTION_Vulkan(_baseInfos, _vkRes, ...) Sa::Exception_Vulkan(\
+	#define __SA_CREATE_EXCEPTION_Vulkan(_baseInfos, _vkRes, ...) SA::Exception_Vulkan(\
 		_baseInfos,\
 		_vkRes,\
 		#_vkRes,\

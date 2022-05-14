@@ -12,7 +12,7 @@
 #include <SA/Engine/Render/Base/Device/ARenderDeviceInfos.hpp>
 #include <SA/Engine/Render/Vulkan/Device/Queue/VkQueueRequirements.hpp>
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	class WindowSurface;
 

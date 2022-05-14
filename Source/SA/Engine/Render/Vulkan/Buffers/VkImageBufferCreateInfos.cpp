@@ -2,7 +2,7 @@
 
 #include <Render/Vulkan/Buffers/VkImageBufferCreateInfos.hpp>
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	VkImageCreateInfo ImageBufferCreateInfos::VkImageInfos() const noexcept
 	{

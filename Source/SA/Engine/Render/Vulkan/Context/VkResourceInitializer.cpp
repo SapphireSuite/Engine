@@ -6,7 +6,7 @@
 
 #include <Render/Vulkan/Device/VkDevice.hpp>
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	void ResourceInitializer::Create(const Device& _device)
 	{

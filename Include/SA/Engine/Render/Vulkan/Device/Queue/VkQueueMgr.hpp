@@ -7,7 +7,7 @@
 
 #include <SA/Engine/Render/Vulkan/Device/Queue/VkQueueFamilyMgr.hpp>
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	class QueueMgr
 	{

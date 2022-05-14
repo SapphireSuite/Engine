@@ -10,7 +10,7 @@
 #include <SA/Engine/Render/Vulkan/Context/VkResourceInitializer.hpp>
 #include <SA/Engine/Render/Vulkan/Buffers/VkImageBufferCreateInfos.hpp>
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	class Device;
 	class CommandBuffer;

@@ -4,9 +4,9 @@
 
 #include <SA/Collections/Debug>
 #include <SA/Engine/HI/HardwareInterface.hpp>
-using namespace Sa;
+using namespace SA;
 
-namespace Sa::UT::HardwareInterface
+namespace SA::UT::HardwareInterface
 {
 #if SA_DEBUG
 	// Only throw on debug.
@@ -16,7 +16,7 @@ namespace Sa::UT::HardwareInterface
 	#define SA_INTERFACE_THROW_TEST(statement) EXPECT_NO_THROW(statement)
 #endif
 
-	class MyInterface : public Sa::HardwareInterface
+	class MyInterface : public SA::HardwareInterface
 	{
 	public:
 		virtual ~MyInterface() = default;

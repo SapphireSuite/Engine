@@ -8,7 +8,7 @@
 #include <Render/Vulkan/Device/VkDevice.hpp>
 #include <Render/Vulkan/Pass/VkRenderPass.hpp>
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	void FrameBuffer::AddClearColor(Format _format, const Color& _clearColor)
 	{

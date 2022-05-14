@@ -6,7 +6,7 @@
 
 #include <Render/Vulkan/Device/VkDevice.hpp>
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	uint32_t ABuffer::FindMemoryType(const Device& _device, uint32_t _typeFilter, VkMemoryPropertyFlags _properties)
 	{

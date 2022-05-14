@@ -7,7 +7,7 @@
 
 #include <string>
 
-namespace Sa
+namespace SA
 {
 	struct RawShader;
 	struct ShaderDescriptor;

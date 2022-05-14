@@ -11,7 +11,7 @@
 
 #endif
 
-namespace Sa::GLFW
+namespace SA::GLFW
 {
 	Vec2ui Window::GetSize() const
 	{
@@ -314,11 +314,11 @@ namespace Sa::GLFW
 
 #if SA_VULKAN
 
-	Vk::WindowSurfaceHandle Window::CreateVkWindowSurfaceHandle(const Vk::Instance& _instance) const
+	VK::WindowSurfaceHandle Window::CreateVkWindowSurfaceHandle(const VK::Instance& _instance) const
 	{
 		CheckCreated();
 
-		Vk::WindowSurfaceHandle vkSurface = VK_NULL_HANDLE;
+		VK::WindowSurfaceHandle vkSurface = VK_NULL_HANDLE;
 
 		SA_VK_ASSERT(glfwCreateWindowSurface(_instance, mHandle, nullptr, &vkSurface), L"Failed to create VkRenderSurface from GLFW window!");
 
@@ -327,7 +327,7 @@ namespace Sa::GLFW
 		return vkSurface;
 	}
 
-	void Window::DestroyVkWindowSurfaceHandle(const Vk::Instance& _instance, Vk::WindowSurfaceHandle _surfaceHandle) const
+	void Window::DestroyVkWindowSurfaceHandle(const VK::Instance& _instance, VK::WindowSurfaceHandle _surfaceHandle) const
 	{
 		CheckCreated();
 

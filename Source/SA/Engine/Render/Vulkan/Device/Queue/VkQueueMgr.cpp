@@ -4,7 +4,7 @@
 
 #include <SA/Collections/Debug>
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	const QueueFamilyMgr& QueueMgr::GetQueueFamilyMgrFromType(QueueFamily _family) const
 	{

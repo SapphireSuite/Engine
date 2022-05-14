@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_ENGINE_GLSL_SHADER_REFLECTOR_GUARD
 #define SAPPHIRE_ENGINE_GLSL_SHADER_REFLECTOR_GUARD
 
-namespace Sa
+namespace SA
 {
 	struct RawShader;
 	struct ShaderDescriptor;

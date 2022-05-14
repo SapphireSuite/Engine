@@ -11,7 +11,7 @@
 #include <SA/Engine/Render/Vulkan/Device/VkDevice.hpp>
 #include <SA/Engine/Render/Vulkan/Surface/VkWindowSurface.hpp>
 
-namespace Sa::Vk
+namespace SA::VK
 {
     class RenderInterface : public ARenderInterface
     {

@@ -7,7 +7,7 @@
 
 #include <SA/Flags/Flags.hpp>
 
-namespace Sa
+namespace SA
 {
 	enum class CursorMode : uint8_t
 	{

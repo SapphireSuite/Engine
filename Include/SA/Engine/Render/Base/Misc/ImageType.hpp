@@ -9,7 +9,7 @@
 
 #include <SA/Support/API/Vulkan.hpp>
 
-namespace Sa
+namespace SA
 {
 	enum class ImageType : uint8_t
 	{
@@ -25,7 +25,7 @@ namespace Sa
 
 #if SA_VULKAN
 
-	namespace Vk
+	namespace VK
 	{
 		VkImageType API_GetImageType(ImageType _type);
 

@@ -19,7 +19,7 @@
 */
 
 
-namespace Sa::GLFW
+namespace SA::GLFW
 {
 	class InputWindowContext;
 
@@ -104,8 +104,8 @@ namespace Sa::GLFW
 
 #if SA_VULKAN
 
-		Vk::WindowSurfaceHandle CreateVkWindowSurfaceHandle(const Vk::Instance& _instance) const override final;
-		void DestroyVkWindowSurfaceHandle(const Vk::Instance& _instance, Vk::WindowSurfaceHandle _surface) const override final;
+		VK::WindowSurfaceHandle CreateVkWindowSurfaceHandle(const VK::Instance& _instance) const override final;
+		void DestroyVkWindowSurfaceHandle(const VK::Instance& _instance, VK::WindowSurfaceHandle _surface) const override final;
 
 #endif
 

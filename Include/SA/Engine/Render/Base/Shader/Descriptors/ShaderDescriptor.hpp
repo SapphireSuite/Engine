@@ -11,7 +11,7 @@
 #include <SA/Engine/Render/Base/Shader/Descriptors/ShaderPushConstantDescriptor.hpp>
 #include <SA/Engine/Render/Base/Shader/Descriptors/ShaderSpecConstantDescriptor.hpp>
 
-namespace Sa
+namespace SA
 {
 	struct ShaderDescriptor
 	{

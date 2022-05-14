@@ -13,7 +13,7 @@
 
 #include <SA/Engine/Render/Vulkan/Device/Queue/VkQueueMgr.hpp>
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	class Instance;
 	class DeviceInfos;

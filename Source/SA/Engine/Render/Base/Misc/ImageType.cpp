@@ -4,20 +4,20 @@
 
 #include <SA/Collections/Debug>
 
-namespace Sa
+namespace SA
 {
 #if SA_VULKAN
 
-	namespace Vk
+	namespace VK
 	{
 		VkImageType API_GetImageType(ImageType _type)
 		{
 			switch (_type)
 			{
-				case Sa::ImageType::Image2D:
-				case Sa::ImageType::Cube:
+				case ImageType::Image2D:
+				case ImageType::Cube:
 					return VK_IMAGE_TYPE_2D;
-				case Sa::ImageType::Image3D:
+				case ImageType::Image3D:
 					return VK_IMAGE_TYPE_3D;
 				default:
 					SA_LOG(L"ImageType [" << _type << L"] not supported yet!", Error, SA/Engine/Render/Vulkan);
@@ -29,11 +29,11 @@ namespace Sa
 		{
 			switch (_type)
 			{
-				case Sa::ImageType::Image2D:
+				case ImageType::Image2D:
 					return VK_IMAGE_VIEW_TYPE_2D;
-				case Sa::ImageType::Cube:
+				case ImageType::Cube:
 					return VK_IMAGE_VIEW_TYPE_CUBE;
-				case Sa::ImageType::Image3D:
+				case ImageType::Image3D:
 					return VK_IMAGE_VIEW_TYPE_3D;
 				default:
 					SA_LOG("ImageViewType [" << _type << L"] not supported yet!", Error, SA/Engine/Render/Vulkan);
@@ -45,11 +45,11 @@ namespace Sa
 		{
 			switch (_type)
 			{
-				case Sa::ImageType::Image2D:
+				case ImageType::Image2D:
 					return 1u;
-				case Sa::ImageType::Image3D:
+				case ImageType::Image3D:
 					return 1u;
-				case Sa::ImageType::Cube:
+				case ImageType::Cube:
 					return 6u;
 				default:
 					SA_LOG("ImageType [" << _type << "L] not supported yet!", Error, SA/Engine/Render/Vulkan);

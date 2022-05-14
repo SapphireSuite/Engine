@@ -12,7 +12,7 @@
 
 #include <SA/Engine/Render/Base/Pass/SampleBits.hpp>
 
-namespace Sa
+namespace SA
 {
 	enum class AttachmentLoadMode
 	{
@@ -45,7 +45,7 @@ namespace Sa
 
 #if SA_VULKAN
 
-	namespace Vk
+	namespace VK
 	{
 		VkAttachmentLoadOp API_GetAttachmentLoadOp(const AttachmentLoadMode _mode) noexcept;
 	}

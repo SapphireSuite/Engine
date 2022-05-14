@@ -5,7 +5,7 @@
 
 #include <Input/GLFW/GLFWInputInterface.hpp>
 
-namespace Sa::GLFW
+namespace SA::GLFW
 {
 	void InputInterface::Create()
 	{

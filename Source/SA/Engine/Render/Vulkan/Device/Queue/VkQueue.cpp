@@ -6,7 +6,7 @@
 
 #include <Render/Vulkan/Device/VkDevice.hpp>
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	bool Queue::IsValid() const noexcept
 	{

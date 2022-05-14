@@ -7,7 +7,7 @@
 #include <Render/Vulkan/Device/VkDeviceInfos.hpp>
 #include <Render/Vulkan/Surface/VkWindowSurface.hpp>
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	DeviceInfos::DeviceInfos(VkPhysicalDevice _device, const QueueRequirements& _reqs) :
 		mReqs{_reqs},

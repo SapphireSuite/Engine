@@ -14,7 +14,7 @@
 
 #endif
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	void RenderInterface::Create(const AWindowInterface* _winIntf)
 	{
@@ -58,7 +58,7 @@ namespace Sa::Vk
 		if(_winSurface)
 		{
 			WindowSurface* const vkWinSurface = Cast<WindowSurface>(_winSurface);
-			SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, vkWinSurface, L"Window surface not of type Vk::WindowSurface.");
+			SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, vkWinSurface, L"Window surface not of type VK::WindowSurface.");
 
 			deviceInfos = Device::QuerySuitableDevices(mInstance, vkWinSurface);
 		}
@@ -75,7 +75,7 @@ namespace Sa::Vk
 
 		Device* const device = mDevices.Emplace();
 
-		device->Create(CastRef<Vk::DeviceInfos>(_infos));
+		device->Create(CastRef<VK::DeviceInfos>(_infos));
 
 		return device;
 	}

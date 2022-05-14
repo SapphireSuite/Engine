@@ -2,7 +2,7 @@
 
 #include <Window/Base/AWindowInterface.hpp>
 
-namespace Sa
+namespace SA
 {
 	bool AWindowInterface::QueryRequiredExtensions(std::vector<const char*>& _extensions) const
 	{

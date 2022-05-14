@@ -2,7 +2,7 @@
 
 #include <Render/Base/Shader/RawShader.hpp>
 
-namespace Sa
+namespace SA
 {
 	void RawShader::Clear()
 	{

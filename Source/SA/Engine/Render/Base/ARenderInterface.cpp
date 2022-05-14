@@ -2,7 +2,7 @@
 
 #include <Render/Base/ARenderInterface.hpp>
 
-namespace Sa
+namespace SA
 {
     void ARenderInterface::Create(const AWindowInterface* _winIntf)
     {

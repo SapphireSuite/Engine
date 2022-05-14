@@ -11,7 +11,7 @@
 #include <SA/Engine/Render/Base/Misc/ImageType.hpp>
 #include <SA/Engine/Render/Base/Pass/SampleBits.hpp>
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	struct ImageBufferCreateInfos
 	{

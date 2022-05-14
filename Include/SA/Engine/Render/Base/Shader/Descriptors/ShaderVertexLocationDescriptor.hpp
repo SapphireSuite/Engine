@@ -9,7 +9,7 @@
 
 #include <string>
 
-namespace Sa
+namespace SA
 {
 	struct ShaderVertexLocationDescriptor
 	{

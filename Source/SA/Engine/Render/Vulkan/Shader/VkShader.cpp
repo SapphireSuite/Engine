@@ -5,7 +5,7 @@
 #include <Render/Vulkan/Debug/Debug.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	void Shader::Create(const Device& _device, ResourceInitializer& _init, const RawShader& _raw)
 	{

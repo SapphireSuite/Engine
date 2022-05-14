@@ -10,7 +10,7 @@
 
 #include <SA/Engine/HI/InterfaceList.hpp>
 
-namespace Sa::GLFW
+namespace SA::GLFW
 {
 	class WindowInterface : public AWindowInterface
 	{

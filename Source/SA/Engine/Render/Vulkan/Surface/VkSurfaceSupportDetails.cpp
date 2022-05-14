@@ -2,7 +2,7 @@
 
 #include <Render/Vulkan/Surface/VkSurfaceSupportDetails.hpp>
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	VkSurfaceFormatKHR SurfaceSupportDetails::ChooseSwapSurfaceFormat() const
 	{

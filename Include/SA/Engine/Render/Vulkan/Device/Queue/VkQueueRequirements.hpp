@@ -7,7 +7,7 @@
 
 #include <SA/Engine/Render/Vulkan/Device/Queue/VkQueueFamily.hpp>
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	struct QueueRequirements
 	{

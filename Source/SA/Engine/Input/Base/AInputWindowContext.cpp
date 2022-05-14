@@ -4,7 +4,7 @@
 
 #include <Input/Base/AInputWindowContext.hpp>
 
-namespace Sa
+namespace SA
 {
 	void AInputWindowContext::Create(AWindow* _win)
 	{

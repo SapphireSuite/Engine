@@ -10,7 +10,7 @@
 #include <SA/Engine/HI/HardwareInterface.hpp>
 #include <SA/Engine/Input/Base/InputContext.hpp>
 
-namespace Sa
+namespace SA
 {
 	class AWindow;
 

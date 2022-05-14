@@ -4,9 +4,9 @@
 
 #include <SA/Collections/Debug>
 #include <SA/Engine/HI/Cast.hpp>
-using namespace Sa;
+using namespace SA;
 
-namespace Sa::UT::Cast
+namespace SA::UT::Cast
 {
 	struct BaseStruct
 	{
@@ -70,11 +70,11 @@ namespace Sa::UT::Cast
 		BaseT& base = derv;
 
 		// Cast.
-		DerivT& castDerv = Sa::Cast<DerivT>(base);
+		DerivT& castDerv = SA::Cast<DerivT>(base);
 		EXPECT_EQ(&castDerv, &derv);
 
 		// CastRef.
-		DerivT& castDerivRef = Sa::CastRef<DerivT>(base);
+		DerivT& castDerivRef = SA::CastRef<DerivT>(base);
 		EXPECT_EQ(&castDerivRef, &derv);
 	}
 
@@ -85,18 +85,18 @@ namespace Sa::UT::Cast
 		BaseT* const base = derv;
 
 		// Cast.
-		DerivT* const castDerv = Sa::Cast<DerivT>(base);
+		DerivT* const castDerv = SA::Cast<DerivT>(base);
 		EXPECT_EQ(castDerv, derv);
 
 		// CastRef.
-		DerivT& castDerivRef = Sa::CastRef<DerivT>(base);
+		DerivT& castDerivRef = SA::CastRef<DerivT>(base);
 		EXPECT_EQ(&castDerivRef, derv);
 
 
 		// Only test with polymorphism.
 		if constexpr (std::is_same_v<std::remove_const_t<BaseT>, BaseClass>)
 		{
-			EXPECT_THROW(Sa::CastRef<OtherClass>(base), Exception_Nullptr);
+			EXPECT_THROW(SA::CastRef<OtherClass>(base), Exception_Nullptr);
 		}
 
 

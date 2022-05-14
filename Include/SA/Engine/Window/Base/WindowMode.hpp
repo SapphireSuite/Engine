@@ -17,7 +17,7 @@
 */
 
 
-namespace Sa
+namespace SA
 {
 	/// Window mode enum.
 	enum class WindowMode : uint8_t

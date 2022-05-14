@@ -4,7 +4,7 @@
 
 #include <SA/Collections/Debug>
 
-namespace Sa
+namespace SA
 {
 #if SA_DEBUG
 

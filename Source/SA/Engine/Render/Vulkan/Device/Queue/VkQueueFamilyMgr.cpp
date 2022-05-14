@@ -4,7 +4,7 @@
 
 #include <SA/Collections/Debug>
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	Queue& QueueFamilyMgr::GetQueue(uint32_t _index)
 	{

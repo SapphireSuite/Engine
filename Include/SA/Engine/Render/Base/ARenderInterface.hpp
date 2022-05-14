@@ -12,7 +12,7 @@
 
 #include <SA/Engine/Render/Base/Surface/AWindowSurface.hpp>
 
-namespace Sa
+namespace SA
 {
 	class AWindowInterface;
 	class AWindow;

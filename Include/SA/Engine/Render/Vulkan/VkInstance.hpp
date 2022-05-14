@@ -7,12 +7,12 @@
 
 #include <SA/Engine/Render/Vulkan/Debug/VkValidationLayers.hpp>
 
-namespace Sa
+namespace SA
 {
 	class AWindowInterface;
 }
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	class Instance
 	{

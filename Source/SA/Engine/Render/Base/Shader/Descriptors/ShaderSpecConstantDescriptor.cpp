@@ -2,7 +2,7 @@
 
 #include <Render/Base/Shader/Descriptors/ShaderSpecConstantDescriptor.hpp>
 
-namespace Sa
+namespace SA
 {
 	bool ShaderSpecConstantDescriptor::operator<(const ShaderSpecConstantDescriptor& _rhs) const noexcept
 	{

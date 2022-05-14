@@ -8,7 +8,7 @@
 #include <string>
 #include <cstdint>
 
-namespace Sa
+namespace SA
 {
 	class ARenderDeviceInfos
 	{

@@ -6,7 +6,7 @@
 
 #include <Render/Vulkan/Surface/VkWindowSurface.hpp>
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	Context::Context(Device& _device) noexcept : mDevice{ _device }
 	{

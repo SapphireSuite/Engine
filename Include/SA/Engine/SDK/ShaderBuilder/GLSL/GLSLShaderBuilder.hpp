@@ -10,7 +10,7 @@
 #include <SA/Engine/SDK/ShaderBuilder/GLSL/GLSLShaderCompiler.hpp>
 #include <SA/Engine/SDK/ShaderBuilder/GLSL/GLSLShaderReflector.hpp>
 
-namespace Sa::GLSL
+namespace SA::GLSL
 {
 	class ShaderBuilder : public AShaderBuilderInterface
 	{

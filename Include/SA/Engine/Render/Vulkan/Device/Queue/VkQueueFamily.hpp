@@ -7,7 +7,7 @@
 
 #include <SA/Flags/Flags.hpp>
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	enum class QueueFamily : uint8_t
 	{

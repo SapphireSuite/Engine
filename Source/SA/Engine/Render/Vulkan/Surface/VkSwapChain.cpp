@@ -9,7 +9,7 @@
 #include <Render/Vulkan/Surface/VkSurface.hpp>
 #include <Render/Vulkan/Surface/VkSurfaceSupportDetails.hpp>
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	Vec2ui SwapChain::GetExtent() const
 	{

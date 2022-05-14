@@ -4,24 +4,24 @@
 
 #include <SA/Collections/Debug>
 
-namespace Sa
+namespace SA
 {
 #if SA_VULKAN
 
-	namespace Vk
+	namespace VK
 	{
 		VkDescriptorType API_GetDescriptorType(ShaderBindingType _type)
 		{
 			switch (_type)
 			{
-				case Sa::ShaderBindingType::UniformBuffer:
+				case ShaderBindingType::UniformBuffer:
 					return VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-				case Sa::ShaderBindingType::StorageBuffer:
+				case ShaderBindingType::StorageBuffer:
 					return VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
-				case Sa::ShaderBindingType::ImageSampler2D:
-				case Sa::ShaderBindingType::ImageSamplerCube:
+				case ShaderBindingType::ImageSampler2D:
+				case ShaderBindingType::ImageSamplerCube:
 					return VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-				case Sa::ShaderBindingType::InputAttachment:
+				case ShaderBindingType::InputAttachment:
 					return VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT;
 				default:
 					SA_LOG("ShaderBindingType [" << _type << L"] not supported yet!", Error, SA/Engine/Render);

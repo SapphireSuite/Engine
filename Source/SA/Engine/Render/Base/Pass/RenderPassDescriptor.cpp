@@ -4,7 +4,7 @@
 
 #include <Render/Base/Surface/ARenderSurface.hpp>
 
-namespace Sa
+namespace SA
 {
 	RenderPassDescriptor RenderPassDescriptor::DefaultSingle(const ARenderSurface* _surface)
 	{

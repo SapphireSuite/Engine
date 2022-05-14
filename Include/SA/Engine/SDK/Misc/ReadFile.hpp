@@ -8,7 +8,7 @@
 #include <ios>
 #include <string>
 
-namespace Sa
+namespace SA
 {
 	namespace Intl
 	{

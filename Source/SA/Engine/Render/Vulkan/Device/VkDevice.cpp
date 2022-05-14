@@ -7,7 +7,7 @@
 #include <Render/Vulkan/Device/VkDevice.hpp>
 #include <Render/Vulkan/Device/VkDeviceInfos.hpp>
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	const VkPhysicalDeviceMemoryProperties& Device::GetMemoryProperties() const noexcept
 	{

@@ -11,7 +11,7 @@
 
 #if SA_VK_VALIDATION_LAYERS
 
-namespace Sa::Vk
+namespace SA::VK
 {
 	class ValidationLayers
 	{

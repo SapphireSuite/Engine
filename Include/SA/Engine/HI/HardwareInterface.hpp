@@ -7,7 +7,7 @@
 
 #include <SA/Support/Debug.hpp>
 
-namespace Sa
+namespace SA
 {
 	class HardwareInterface
 	{

@@ -7,7 +7,7 @@
 
 #include <SA/Support/API/Vulkan.hpp>
 
-namespace Sa
+namespace SA
 {
 	enum class Format : uint8_t
 	{
@@ -48,7 +48,7 @@ namespace Sa
 
 #if SA_VULKAN
 
-	namespace Vk
+	namespace VK
 	{
 		VkFormat API_GetFormat(Format _format);
 		Format API_FromFormat(VkFormat _format);

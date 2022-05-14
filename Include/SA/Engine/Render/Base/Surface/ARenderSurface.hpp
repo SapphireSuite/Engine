@@ -11,7 +11,7 @@
 
 #include <SA/Engine/Render/Base/Misc/Format.hpp>
 
-namespace Sa
+namespace SA
 {
 	class AWindowSurface;
 

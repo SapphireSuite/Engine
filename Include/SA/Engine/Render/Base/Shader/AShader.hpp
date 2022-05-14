@@ -9,7 +9,7 @@
 
 #include <SA/Engine/Render/Base/Shader/RawShader.hpp>
 
-namespace Sa
+namespace SA
 {
     class AShader : protected HardwareInterface
     {
