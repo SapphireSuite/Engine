@@ -13,7 +13,7 @@
 			"program": "${command:cmake.launchTargetPath}",
 			"args": [],
 			"stopAtEntry": false,
-			"cwd": "${fileDirname}",
+			"cwd": "${workspaceFolder}",
 			"environment": [
 				{
 					"name": "PATH",
@@ -42,7 +42,7 @@
 			"program": "${command:cmake.launchTargetPath}",
 			"args": [],
 			"stopAtEntry": false,
-			"cwd": "${fileDirname}",
+			"cwd": "${workspaceFolder}",
 			"environment": [
 				{
 					"name": "PATH",
