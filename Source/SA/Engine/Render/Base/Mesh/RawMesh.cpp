@@ -2,7 +2,7 @@
 
 #include <Render/Base/Mesh/RawMesh.hpp>
 
-namespace Sa
+namespace SA
 {
 	void RawMesh::Reset()
 	{

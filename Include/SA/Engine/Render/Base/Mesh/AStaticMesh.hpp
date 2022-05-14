@@ -7,7 +7,7 @@
 
 #include <SA/Engine/Render/Base/Mesh/AMesh.hpp>
 
-namespace Sa
+namespace SA
 {
 	class AStaticMesh : public AMesh
 	{

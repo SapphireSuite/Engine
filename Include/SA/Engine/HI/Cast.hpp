@@ -62,6 +62,13 @@ namespace SA
 	}
 
 	template <typename T, typename TIn>
+	const T& CastRef(const TIn& _in)
+	{
+		return Cast<T>(_in);
+	}
+
+
+	template <typename T, typename TIn>
 	T& CastRef(TIn* _in)
 	{
 		T* const casted = Cast<T>(_in);

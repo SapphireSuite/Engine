@@ -7,11 +7,18 @@
 
 #include <SA/Engine/HI/HardwareInterface.hpp>
 
-namespace Sa
+#include <SA/Engine/Render/Base/Mesh/RawMesh.hpp>
+#include <SA/Engine/Render/Base/Mesh/MeshDrawInfos.hpp>
+
+namespace SA
 {
+	struct ARenderFrame;
+
 	class AMesh : protected HardwareInterface
 	{
 		using HardwareInterface::Clear; // not used.
+
+		virtual void Draw(const ARenderFrame& _frame, const MeshDrawInfos& _infos = MeshDrawInfos()) const = 0;
 	};
 }
 
