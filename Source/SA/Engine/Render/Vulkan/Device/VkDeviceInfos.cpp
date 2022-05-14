@@ -72,7 +72,8 @@ namespace SA::VK
 	{
 		// TODO: Allow queue with same index but lower device score.
 
-		IndexInfos infos{ _famIndex };
+		IndexInfos infos;
+		infos.index = _famIndex;
 
 		// Graphics family.
 		if (mReqs.familyFlags & QueueFamily::Graphics && (_family.queueFlags & VK_QUEUE_GRAPHICS_BIT) && mReqs.graphicNum > 0)
