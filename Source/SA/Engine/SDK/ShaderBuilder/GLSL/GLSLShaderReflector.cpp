@@ -105,22 +105,22 @@ namespace SA::GLSL
 		}
 
 
-		const spirv_cross::CompilerGLSL glsl(_raw.data);
-		const spirv_cross::ShaderResources resources = glsl.get_shader_resources();
+		const spirv_cross::Compiler comp(_raw.data);
+		const spirv_cross::ShaderResources resources = comp.get_shader_resources();
 
 
-		ParseResources(_desc, glsl, resources.uniform_buffers, ShaderBindingType::UniformBuffer);
-		ParseResources(_desc, glsl, resources.storage_buffers, ShaderBindingType::StorageBuffer);
-		ParseResources(_desc, glsl, resources.subpass_inputs, ShaderBindingType::InputAttachment);
-		ParseResources(_desc, glsl, resources.sampled_images, ShaderBindingType::ImageSampler2D);
+		ParseResources(_desc, comp, resources.uniform_buffers, ShaderBindingType::UniformBuffer);
+		ParseResources(_desc, comp, resources.storage_buffers, ShaderBindingType::StorageBuffer);
+		ParseResources(_desc, comp, resources.subpass_inputs, ShaderBindingType::InputAttachment);
+		ParseResources(_desc, comp, resources.sampled_images, ShaderBindingType::ImageSampler2D);
 
 		// Vertex binding layout.
 		if (_desc.stage == ShaderStage::Vertex)
-			ParseVertexLayout(_desc, glsl, resources.stage_inputs);
+			ParseVertexLayout(_desc, comp, resources.stage_inputs);
 
-		ParsePushConstants(_desc, glsl, resources.push_constant_buffers);
+		ParsePushConstants(_desc, comp, resources.push_constant_buffers);
 
-		ParseSpecConstants(_desc, glsl);
+		ParseSpecConstants(_desc, comp);
 
 		return true;
 	}
