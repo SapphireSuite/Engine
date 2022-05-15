@@ -33,6 +33,7 @@ namespace SA::VK
 
 		ObjectBuffer() = default;
 		ObjectBuffer(ObjectBuffer&& _other) noexcept;
+		virtual ~ObjectBuffer() = default;
 
 
 		bool IsValid() const noexcept;
