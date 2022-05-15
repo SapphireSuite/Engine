@@ -10,6 +10,7 @@
 #include <SA/Engine/Render/Base/Pass/ARenderPass.hpp>
 #include <SA/Engine/Render/Base/Context/ARenderResourceInitializer.hpp>
 #include <SA/Engine/Render/Base/Shader/AShader.hpp>
+#include <SA/Engine/Render/Base/Pipeline/ARenderPipelineLayout.hpp>
 
 namespace SA
 {
@@ -45,6 +46,9 @@ namespace SA
 
 		virtual AShader* CreateShader(ARenderResourceInitializer* _init, const RawShader& _raw) = 0;
 		virtual void DestroyShader(AShader* _shader) = 0;
+
+		virtual ARenderPipelineLayout* CreatePipelineLayout(const RenderPipelineLayoutDescriptor& _desc) = 0;
+		virtual void DestroyPipelineLayout(ARenderPipelineLayout* _pipLayout) = 0;
 //}
 	};
 }

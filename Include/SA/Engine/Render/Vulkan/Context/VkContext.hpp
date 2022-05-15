@@ -11,6 +11,7 @@
 #include <SA/Engine/Render/Vulkan/Pass/VkRenderPass.hpp>
 #include <SA/Engine/Render/Vulkan/Context/VkResourceInitializer.hpp>
 #include <SA/Engine/Render/Vulkan/Shader/VkShader.hpp>
+#include <SA/Engine/Render/Vulkan/Pipeline/VkPipelineLayout.hpp>
 
 #include <SA/Engine/HI/InterfaceList.hpp>
 
@@ -26,6 +27,7 @@ namespace SA::VK
 		InterfaceList<RenderPass> mRenderPasses;
 		InterfaceList<ResourceInitializer> mResInits;
 		InterfaceList<Shader> mShaders;
+		InterfaceList<PipelineLayout> mPipelineLayouts;
 
 	public:
 		Context(Device& _device) noexcept;
@@ -60,6 +62,10 @@ namespace SA::VK
 
 		AShader* CreateShader(ARenderResourceInitializer* _init, const RawShader& _raw) override final;
 		void DestroyShader(AShader* _shader) override final;
+
+		ARenderPipelineLayout* CreatePipelineLayout(const RenderPipelineLayoutDescriptor& _desc) override final;
+		void DestroyPipelineLayout(ARenderPipelineLayout* _pipLayout) override final;
+
 //}
 	};
 
