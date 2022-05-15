@@ -34,6 +34,9 @@ namespace SA::VK
 		mResInits.Clear(ContextObjDestroyer<ResourceInitializer>{ mDevice });
 		mRenderPasses.Clear(ContextObjDestroyer<RenderPass>{ mDevice });
 		mSurfaces.Clear(ContextObjDestroyer<Surface>{ mDevice });
+		mStaticMeshes.Clear(ContextObjDestroyer<StaticMesh>{ mDevice });
+		mTextures.Clear(ContextObjDestroyer<Texture>{ mDevice });
+		mCubemaps.Clear(ContextObjDestroyer<Cubemap>{ mDevice });
 		mPipelineLayouts.Clear(ContextObjDestroyer<PipelineLayout>{ mDevice });
 
 		SA_LOG(L"Render Context cleared.", Infos, SA/Engine/Render/Vulkan);
@@ -166,6 +169,66 @@ namespace SA::VK
 		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _shader);
 
 		mShaders.Erase(_shader, ContextObjDestroyer<Shader>{ mDevice });
+	}
+
+
+	AStaticMesh* Context::CreateStaticMesh(ARenderResourceInitializer* _init, const RawMesh& _raw)
+	{
+		CheckCreated();
+
+		StaticMesh* const mesh = mStaticMeshes.Emplace();
+
+		mesh->Create(mDevice, CastRef<ResourceInitializer>(_init), _raw);
+
+		return mesh;
+	}
+
+	void Context::DestroyStaticMesh(AStaticMesh* _mesh)
+	{
+		CheckCreated();
+		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _mesh);
+
+		mStaticMeshes.Erase(_mesh, ContextObjDestroyer<StaticMesh>{ mDevice });
+	}
+
+	
+	ATexture* Context::CreateTexture(ARenderResourceInitializer* _init, const RawTexture& _raw)
+	{
+		CheckCreated();
+
+		Texture* const texture = mTextures.Emplace();
+
+		texture->Create(mDevice, CastRef<ResourceInitializer>(_init), _raw);
+
+		return texture;
+	}
+	
+	void Context::DestroyTexture(ATexture* _texture)
+	{
+		CheckCreated();
+		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _texture);
+
+		mTextures.Erase(_texture, ContextObjDestroyer<Texture>{ mDevice });
+	}
+
+	
+	ACubemap* Context::CreateCubemap(ARenderResourceInitializer* _init, const RawCubemap& _raw)
+	{
+		CheckCreated();
+
+		Cubemap* const cubemap = mCubemaps.Emplace();
+
+		cubemap->Create(mDevice, CastRef<ResourceInitializer>(_init), _raw);
+
+		return cubemap;
+	}
+	
+	void Context::DestroyCubemap(ACubemap* _cubemap)
+	{
+		CheckCreated();
+		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _cubemap);
+
+		mCubemaps.Erase(_cubemap, ContextObjDestroyer<Cubemap>{ mDevice });
 	}
 
 	

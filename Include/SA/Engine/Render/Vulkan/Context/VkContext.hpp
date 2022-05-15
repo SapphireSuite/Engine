@@ -11,6 +11,9 @@
 #include <SA/Engine/Render/Vulkan/Pass/VkRenderPass.hpp>
 #include <SA/Engine/Render/Vulkan/Context/VkResourceInitializer.hpp>
 #include <SA/Engine/Render/Vulkan/Shader/VkShader.hpp>
+#include <SA/Engine/Render/Vulkan/Mesh/VkStaticMesh.hpp>
+#include <SA/Engine/Render/Vulkan/Texture/VkTexture.hpp>
+#include <SA/Engine/Render/Vulkan/Texture/VkCubemap.hpp>
 #include <SA/Engine/Render/Vulkan/Pipeline/VkPipelineLayout.hpp>
 
 #include <SA/Engine/HI/InterfaceList.hpp>
@@ -27,6 +30,9 @@ namespace SA::VK
 		InterfaceList<RenderPass> mRenderPasses;
 		InterfaceList<ResourceInitializer> mResInits;
 		InterfaceList<Shader> mShaders;
+		InterfaceList<StaticMesh> mStaticMeshes;
+		InterfaceList<Texture> mTextures;
+		InterfaceList<Cubemap> mCubemaps;
 		InterfaceList<PipelineLayout> mPipelineLayouts;
 
 	public:
@@ -62,6 +68,15 @@ namespace SA::VK
 
 		AShader* CreateShader(ARenderResourceInitializer* _init, const RawShader& _raw) override final;
 		void DestroyShader(AShader* _shader) override final;
+
+		AStaticMesh* CreateStaticMesh(ARenderResourceInitializer* _init, const RawMesh& _raw) override final;
+		void DestroyStaticMesh(AStaticMesh* _mesh) override final;
+
+		ATexture* CreateTexture(ARenderResourceInitializer* _init, const RawTexture& _raw) override final;
+		void DestroyTexture(ATexture* _texture) override final;
+
+		ACubemap* CreateCubemap(ARenderResourceInitializer* _init, const RawCubemap& _raw) override final;
+		void DestroyCubemap(ACubemap* _cubemap) override final;
 
 		ARenderPipelineLayout* CreatePipelineLayout(const RenderPipelineLayoutDescriptor& _desc) override final;
 		void DestroyPipelineLayout(ARenderPipelineLayout* _pipLayout) override final;

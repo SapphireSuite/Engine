@@ -10,6 +10,9 @@
 #include <SA/Engine/Render/Base/Pass/ARenderPass.hpp>
 #include <SA/Engine/Render/Base/Context/ARenderResourceInitializer.hpp>
 #include <SA/Engine/Render/Base/Shader/AShader.hpp>
+#include <SA/Engine/Render/Base/Mesh/AStaticMesh.hpp>
+#include <SA/Engine/Render/Base/Texture/ATexture.hpp>
+#include <SA/Engine/Render/Base/Texture/ACubemap.hpp>
 #include <SA/Engine/Render/Base/Pipeline/ARenderPipelineLayout.hpp>
 
 namespace SA
@@ -46,6 +49,15 @@ namespace SA
 
 		virtual AShader* CreateShader(ARenderResourceInitializer* _init, const RawShader& _raw) = 0;
 		virtual void DestroyShader(AShader* _shader) = 0;
+
+		virtual AStaticMesh* CreateStaticMesh(ARenderResourceInitializer* _init, const RawMesh& _raw) = 0;
+		virtual void DestroyStaticMesh(AStaticMesh* _mesh) = 0;
+
+		virtual ATexture* CreateTexture(ARenderResourceInitializer* _init, const RawTexture& _raw) = 0;
+		virtual void DestroyTexture(ATexture* _texture) = 0;
+
+		virtual ACubemap* CreateCubemap(ARenderResourceInitializer* _init, const RawCubemap& _raw) = 0;
+		virtual void DestroyCubemap(ACubemap* _texture) = 0;
 
 		virtual ARenderPipelineLayout* CreatePipelineLayout(const RenderPipelineLayoutDescriptor& _desc) = 0;
 		virtual void DestroyPipelineLayout(ARenderPipelineLayout* _pipLayout) = 0;
