@@ -24,8 +24,8 @@ namespace SA
 		void AddShader(const ShaderDescriptor& _desc);
 
 	private:
-		void AddBindingSets(const std::vector<ShaderBindingSetDescriptor>& _shBindSetDescs);
-		void AddPushConstants(const std::vector<ShaderPushConstantDescriptor>& _shPushCstDescs);
+		void AddBindingSets(const ShaderDescriptor& _desc);
+		void AddPushConstants(const ShaderDescriptor& _desc);
 	};
 }
 

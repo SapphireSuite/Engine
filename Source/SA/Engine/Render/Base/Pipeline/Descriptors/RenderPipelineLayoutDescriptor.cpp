@@ -10,24 +10,24 @@ namespace SA
 {
 	void RenderPipelineLayoutDescriptor::AddShader(const ShaderDescriptor& _desc)
 	{
-		AddBindingSets(_desc.bindingSet);
-		AddPushConstants(_desc.pushConstants);
+		AddBindingSets(_desc);
+		AddPushConstants(_desc);
 	}
 
 
-	void RenderPipelineLayoutDescriptor::AddBindingSets(const std::vector<ShaderBindingSetDescriptor>& _shBindSetDescs)
+	void RenderPipelineLayoutDescriptor::AddBindingSets(const ShaderDescriptor& _desc)
 	{
-		if (bindingSets.size() < _shBindSetDescs.size())
-			bindingSets.resize(_shBindSetDescs.size());
+		if (bindSetDescs.size() < _desc.bindingSet.size())
+			bindSetDescs.resize(_desc.bindingSet.size());
 
-		for (uint32_t i = 0u; i < _shBindSetDescs.size(); ++i)
+		for (uint32_t i = 0u; i < _desc.bindingSet.size(); ++i)
 		{
-			for (auto& shBind : _shBindSetDescs[i].bindings)
+			for (auto& shBind : _desc.bindingSet[i].bindings)
 			{
 				PipelineBindingDescriptor* pipBindDesc = nullptr;
 
 				// Search existing binding.
-				for (auto& pipBindDescIt : bindingSets[i].bindings)
+				for (auto& pipBindDescIt : bindSetDescs[i].bindings)
 				{
 					if (pipBindDescIt.binding == shBind.binding)
 					{
@@ -38,27 +38,27 @@ namespace SA
 
 				// Not found: emplace new binding.
 				if (!pipBindDesc)
-					pipBindDesc = &bindingSets[i].bindings.emplace_back(shBind);
+					pipBindDesc = &bindSetDescs[i].bindings.emplace_back(shBind);
 
 				pipBindDesc->stageFlags |= _desc.stage;
 			}
 		}
 	}
 	
-	void RenderPipelineLayoutDescriptor::AddPushConstants(const std::vector<ShaderPushConstantDescriptor>& _shPushCstDescs)
+	void RenderPipelineLayoutDescriptor::AddPushConstants(const ShaderDescriptor& _desc)
 	{
-		for (auto& pushCst : _shPushCstDescs)
+		for (auto& pushCst : _desc.pushConstants)
 		{
 			PipelinePushConstantDescriptor* pipPushCst = nullptr;
 
 			// Search existing push constant.
-			for (auto& pipPushCstIt : pushConstants)
+			for (auto& pipPushCstIt : pushConstDescs)
 			{
 				if (pipPushCstIt.offset == pushCst.offset)
 				{
 					SA_ASSERT(Default, SA/Render, pipPushCstIt.size == pushCst.size,
-						(std::wstring(L"Add push constant at same offset [") << pipPushCstIt.offset <<
-						L"] with different size: [" << pipPushCstIt << L"] and [" << pushCst.size << L"]!"));
+						L"Add push constant at same offset ["_L << pipPushCstIt.offset <<
+						L"] with different size: [" << pipPushCstIt << L"] and [" << pushCst.size << L"]!");
 
 					pipPushCst = &pipPushCstIt;
 					break;
@@ -67,7 +67,7 @@ namespace SA
 
 			// Not found: emplace new push constant.
 			if(!pipPushCst)
-				pipPushCst = &pushConstants.emplace_back(pushCst);
+				pipPushCst = &pushConstDescs.emplace_back(pushCst);
 
 			pipPushCst->stageFlags |= _desc.stage;
 		}

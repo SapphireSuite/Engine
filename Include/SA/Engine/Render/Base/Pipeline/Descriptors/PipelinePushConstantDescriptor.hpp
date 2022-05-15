@@ -13,6 +13,9 @@ namespace SA
 	struct PipelinePushConstantDescriptor : public ShaderPushConstantDescriptor
 	{
 		Flags<ShaderStage> stageFlags;
+
+		PipelinePushConstantDescriptor() = default;
+		PipelinePushConstantDescriptor(const ShaderPushConstantDescriptor& _other) noexcept : ShaderPushConstantDescriptor(_other) {}
 	};
 }
 

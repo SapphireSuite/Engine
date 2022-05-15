@@ -39,6 +39,8 @@ namespace SA::VK
 	public:
 		void Create(const Device& _device, const RenderPipelineLayoutDescriptor& _desc);
 		void Destroy(const Device& _device);
+
+		operator VkPipelineLayout() const noexcept;
 	};
 }
 

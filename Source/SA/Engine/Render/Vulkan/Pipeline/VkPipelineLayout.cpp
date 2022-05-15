@@ -126,4 +126,9 @@ namespace SA::VK
 
 		SA_LOG(L"Pipeline Layout destroyed.", Infos, SA/Engine/Render/Vulkan);
 	}
+
+	PipelineLayout::operator VkPipelineLayout() const noexcept
+	{
+		return mHandle;
+	}
 }

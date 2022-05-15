@@ -15,6 +15,9 @@ namespace SA
 	struct PipelineBindingDescriptor : public ShaderBindingDescriptor
 	{
 		Flags<ShaderStage> stageFlags;
+
+		PipelineBindingDescriptor() = default;
+		PipelineBindingDescriptor(const ShaderBindingDescriptor& _other) noexcept : ShaderBindingDescriptor(_other) {}
 	};
 
 	struct PipelineBindingSetDescriptor
