@@ -38,6 +38,7 @@ namespace SA::VK
 		mTextures.Clear(ContextObjDestroyer<Texture>{ mDevice });
 		mCubemaps.Clear(ContextObjDestroyer<Cubemap>{ mDevice });
 		mPipelineLayouts.Clear(ContextObjDestroyer<PipelineLayout>{ mDevice });
+		mPipelines.Clear(ContextObjDestroyer<Pipeline>{ mDevice });
 
 		SA_LOG(L"Render Context cleared.", Infos, SA/Engine/Render/Vulkan);
 	}
@@ -248,6 +249,26 @@ namespace SA::VK
 		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _pipLayout);
 
 		mPipelineLayouts.Erase(_pipLayout, ContextObjDestroyer<PipelineLayout>{ mDevice });
+	}
+
+
+	ARenderPipeline* Context::CreatePipeline(const RenderPipelineDescriptor& _desc, const ARenderPipelineLayout* _pipLayout)
+	{
+		CheckCreated();
+
+		Pipeline* const pipeline = mPipelines.Emplace();
+
+		pipeline->Create(mDevice, _desc, CastRef<PipelineLayout>(_pipLayout));
+
+		return pipeline;
+	}
+	
+	void Context::DestroyPipeline(ARenderPipeline* _pipeline)
+	{
+		CheckCreated();
+		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _pipeline);
+
+		mPipelines.Erase(_pipeline, ContextObjDestroyer<Pipeline>{ mDevice });
 	}
 
 //}

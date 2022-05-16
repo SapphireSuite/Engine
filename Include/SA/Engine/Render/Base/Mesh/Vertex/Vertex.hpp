@@ -9,13 +9,18 @@
 
 namespace SA
 {
-	template <typename... VertexComps>
-	class Vertex : public VertexComps...
+	template <typename... Args>
+	class Vertex : public Args...
 	{
-	// public:
-	// 	static constexpr uint32_t size = sizeof(Vertex);
-	// 	static constexpr uint32_t attributeNum = sizeof...(VertexComps);
+		template <typename FindT, typename FirstT, typename... PArgs>
+		static uint32_t GetComponentOffsetPacked() noexcept;
+
+	public:
+		template <tpename T>
+		static uint32_t GetComponentOffset() noexcept;
 	};
 }
+
+#include <SA/Engine/Render/Base/Mesh/Vertex/Vertex.inl>
 
 #endif // GUARD

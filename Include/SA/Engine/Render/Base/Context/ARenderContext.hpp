@@ -14,6 +14,7 @@
 #include <SA/Engine/Render/Base/Texture/ATexture.hpp>
 #include <SA/Engine/Render/Base/Texture/ACubemap.hpp>
 #include <SA/Engine/Render/Base/Pipeline/ARenderPipelineLayout.hpp>
+#include <SA/Engine/Render/Base/Pipeline/ARenderPipeline.hpp>
 
 namespace SA
 {
@@ -61,6 +62,10 @@ namespace SA
 
 		virtual ARenderPipelineLayout* CreatePipelineLayout(const RenderPipelineLayoutDescriptor& _desc) = 0;
 		virtual void DestroyPipelineLayout(ARenderPipelineLayout* _pipLayout) = 0;
+
+		virtual ARenderPipeline* CreatePipeline(const RenderPipelineDescriptor& _desc, const ARenderPipelineLayout* _pipLayout) = 0;
+		virtual void DestroyPipeline(ARenderPipeline* _pip) = 0;
+
 //}
 	};
 }

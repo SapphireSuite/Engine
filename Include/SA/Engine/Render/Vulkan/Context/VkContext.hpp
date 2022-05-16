@@ -15,6 +15,7 @@
 #include <SA/Engine/Render/Vulkan/Texture/VkTexture.hpp>
 #include <SA/Engine/Render/Vulkan/Texture/VkCubemap.hpp>
 #include <SA/Engine/Render/Vulkan/Pipeline/VkPipelineLayout.hpp>
+#include <SA/Engine/Render/Vulkan/Pipeline/VkPipeline.hpp>
 
 #include <SA/Engine/HI/InterfaceList.hpp>
 
@@ -34,6 +35,7 @@ namespace SA::VK
 		InterfaceList<Texture> mTextures;
 		InterfaceList<Cubemap> mCubemaps;
 		InterfaceList<PipelineLayout> mPipelineLayouts;
+		InterfaceList<Pipeline> mPipelines;
 
 	public:
 		Context(Device& _device) noexcept;
@@ -80,6 +82,9 @@ namespace SA::VK
 
 		ARenderPipelineLayout* CreatePipelineLayout(const RenderPipelineLayoutDescriptor& _desc) override final;
 		void DestroyPipelineLayout(ARenderPipelineLayout* _pipLayout) override final;
+
+		ARenderPipeline* CreatePipeline(const RenderPipelineDescriptor& _desc, const ARenderPipelineLayout* _pipLayout) override final;
+		void DestroyPipeline(ARenderPipeline* _pipeline) override final;
 
 //}
 	};
