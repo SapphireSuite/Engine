@@ -39,23 +39,50 @@ namespace SA::VK
 			}
 		}
 
-		//TODO: Implement.
-		// void FillVertexBindings(VkPipelineVertexInputStateCreateInfo& _vertexInputInfo,
-		// 	std::unique_ptr<VkVertexInputBindingDescription>& _bindingDesc,
-		// 	std::unique_ptr<VkVertexInputAttributeDescription[]>& _attribDescs,
-		// 	const VertexBindingLayout& _vertexBindingLayout) noexcept
-		// {
-		// 	_bindingDesc = _vertexBindingLayout.GetBindingDescription();
-		// 	_attribDescs = _vertexBindingLayout.GetAttributeDescriptions();
+		struct VertexInputInfos : public VkPipelineVertexInputStateCreateInfo
+		{
+			VkVertexInputBindingDescription bindDesc;
 
-		// 	_vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-		// 	_vertexInputInfo.pNext = nullptr;
-		// 	_vertexInputInfo.flags = 0u;
-		// 	_vertexInputInfo.vertexBindingDescriptionCount = _vertexBindingLayout.GetBindingDescriptionNum();
-		// 	_vertexInputInfo.pVertexBindingDescriptions = _bindingDesc.get();
-		// 	_vertexInputInfo.vertexAttributeDescriptionCount = _vertexBindingLayout.GetAttributeDescriptionNum();
-		// 	_vertexInputInfo.pVertexAttributeDescriptions = _attribDescs.get();
-		// }
+			std::vector<VkVertexInputAttributeDescription> attribDescs;
+		};
+
+		void FillVertexInputInfos(VertexInputInfos& _vertInfos, const PipelineVertexLayoutDescriptor& _desc)
+		{
+			// bindDesc.
+			_vertInfos.bindDesc.binding = 0u;
+			_vertInfos.bindDesc.stride = _desc.vertexSize;
+			_vertInfos.bindDesc.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+
+
+			// attribDescs
+			_vertInfos.attribDescs.reserve(_desc.locations.size());
+
+			for(uint32_t i = 0; i < _desc.locations.size(); ++i)
+			{
+				const PipelineVertexLocationDescriptor& pipDesc = _desc.locations[i];
+				VkVertexInputAttributeDescription& attrib = _vertInfos.attribDescs.emplace_back();
+
+				attrib.location = pipDesc.location;
+				attrib.binding = 0;
+				attrib.format = API_GetFormat(pipDesc.format);
+				attrib.offset = pipDesc.componentOffset;
+			}
+
+
+
+			_vertInfos.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
+			_vertInfos.pNext = nullptr;
+			_vertInfos.flags = 0u;
+
+
+			_vertInfos.vertexBindingDescriptionCount = 1u;
+			_vertInfos.pVertexBindingDescriptions = &_vertInfos.bindDesc;
+
+
+			_vertInfos.vertexAttributeDescriptionCount = (uint32_t)_vertInfos.attribDescs.size();
+			_vertInfos.pVertexAttributeDescriptions = _vertInfos.attribDescs.data();
+		}
+
 
 		void FillRasterization(VkPipelineRasterizationStateCreateInfo& _rasterizerInfo, const PipelineRenderModes& _modes) noexcept
 		{
@@ -152,12 +179,8 @@ namespace SA::VK
 		Intl::FillShaderStages(shaderStages, _desc.shaderInfos.stages);
 
 
-		//TODO: Implement.
-		// Vertex input infos.
-		// std::unique_ptr<VkVertexInputBindingDescription> bindingDesc;
-		// std::unique_ptr<VkVertexInputAttributeDescription[]> attribDescs;
-		VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
-		// Intl::FillVertexBindings(vertexInputInfo, bindingDesc, attribDescs, _desc.shaderInfos.vertexBindingLayout);
+		Intl::VertexInputInfos vertInputInfos;
+		Intl::FillVertexInputInfos(vertInputInfos, _desc.shaderInfos.vertexLayoutDesc);
 
 
 		VkPipelineInputAssemblyStateCreateInfo inputAssemblyInfo{};
@@ -209,7 +232,7 @@ namespace SA::VK
 		pipelineCreateInfo.flags = 0u;
 		pipelineCreateInfo.stageCount = static_cast<uint32_t>(shaderStages.size());
 		pipelineCreateInfo.pStages = shaderStages.data();
-		pipelineCreateInfo.pVertexInputState = &vertexInputInfo;
+		pipelineCreateInfo.pVertexInputState = &vertInputInfos;
 		pipelineCreateInfo.pInputAssemblyState = &inputAssemblyInfo;
 		pipelineCreateInfo.pTessellationState = nullptr;
 		pipelineCreateInfo.pViewportState = &viewportStateInfo;

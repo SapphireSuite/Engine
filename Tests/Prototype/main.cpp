@@ -77,6 +77,14 @@ int main()
 	ARenderPipelineLayout* const pipLayout = renderContext->CreatePipelineLayout(pipLayoutDesc);
 
 
+	RenderPipelineDescriptor pipDesc;
+	pipDesc.passInfos.SetRenderPass(renderPass, renderPassDesc);
+	pipDesc.shaderInfos.AddShader(vertShader, vertShDesc);
+	pipDesc.shaderInfos.vertexLayoutDesc.BindVertexComponents<VertexPNTT, VertexPosition, VertexTexture>();
+
+	ARenderPipeline* const pipeline = renderContext->CreatePipeline(pipDesc, pipLayout);
+
+
 //}
 
 

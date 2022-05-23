@@ -8,6 +8,7 @@
 #include <vector>
 
 #include <SA/Engine/Render/Base/Pipeline/Descriptors/PipelineShaderStage.hpp>
+#include <SA/Engine/Render/Base/Pipeline/Descriptors/PipelineVertexLayoutDescriptor.hpp>
 
 namespace SA
 {
@@ -15,11 +16,17 @@ namespace SA
 
 	struct PipelineShaderInfos
 	{
-		// VertexBindingLayout vertexBindingLayout;
-
 		std::vector<PipelineShaderStage> stages;
 
+		PipelineVertexLayoutDescriptor vertexLayoutDesc;
+
+
 		void AddShader(const AShader* _shader, const ShaderDescriptor& _desc);
+
+	private:
+		void AddShaderStage(const AShader* _shader, const ShaderDescriptor& _desc);
+
+		void AddVertexLayout(const ShaderVertexLayoutDescriptor& _vertLayoutDesc);
 	};
 }
 
