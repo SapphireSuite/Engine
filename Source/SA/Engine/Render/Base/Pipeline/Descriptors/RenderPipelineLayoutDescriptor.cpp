@@ -47,29 +47,14 @@ namespace SA
 	
 	void RenderPipelineLayoutDescriptor::AddPushConstants(const ShaderDescriptor& _desc)
 	{
+		PipelinePushConstantDescriptor& pipPushCst = pushConstDescs.emplace_back();
+
+		pipPushCst.stage = _desc.stage;
+
 		for (auto& pushCst : _desc.pushConstants)
 		{
-			PipelinePushConstantDescriptor* pipPushCst = nullptr;
-
-			// Search existing push constant.
-			for (auto& pipPushCstIt : pushConstDescs)
-			{
-				if (pipPushCstIt.offset == pushCst.offset)
-				{
-					SA_ASSERT(Default, SA/Render, pipPushCstIt.size == pushCst.size,
-						L"Add push constant at same offset ["_L << pipPushCstIt.offset <<
-						L"] with different size: [" << pipPushCstIt << L"] and [" << pushCst.size << L"]!");
-
-					pipPushCst = &pipPushCstIt;
-					break;
-				}
-			}
-
-			// Not found: emplace new push constant.
-			if(!pipPushCst)
-				pipPushCst = &pushConstDescs.emplace_back(pushCst);
-
-			pipPushCst->stageFlags |= _desc.stage;
+			pipPushCst.offset = std::min(pipPushCst.offset, pushCst.offset);
+			pipPushCst.size += pushCst.size;
 		}
 	}
 }

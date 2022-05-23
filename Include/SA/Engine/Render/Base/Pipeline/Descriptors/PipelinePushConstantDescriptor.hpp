@@ -10,12 +10,13 @@
 
 namespace SA
 {
-	struct PipelinePushConstantDescriptor : public ShaderPushConstantDescriptor
+	struct PipelinePushConstantDescriptor
 	{
-		Flags<ShaderStage> stageFlags;
+		uint32_t size = 0u;
 
-		PipelinePushConstantDescriptor() = default;
-		PipelinePushConstantDescriptor(const ShaderPushConstantDescriptor& _other) noexcept : ShaderPushConstantDescriptor(_other) {}
+		uint32_t offset = ~uint32_t();
+
+		ShaderStage stage;
 	};
 }
 

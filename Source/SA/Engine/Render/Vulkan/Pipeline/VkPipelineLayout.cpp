@@ -16,7 +16,7 @@ namespace SA::VK
 		{
 			VkPushConstantRange& pCstRange = pushCstRanges.emplace_back();
 
-			pCstRange.stageFlags = API_GetShaderStageFlags(pushCstDesc.stageFlags);
+			pCstRange.stageFlags = API_GetShaderStageFlags(pushCstDesc.stage);
 			pCstRange.size = pushCstDesc.size;
 			pCstRange.offset = pushCstDesc.offset;
 		}
