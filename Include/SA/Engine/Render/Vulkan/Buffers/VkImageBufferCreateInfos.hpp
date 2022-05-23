@@ -18,7 +18,7 @@ namespace SA::VK
 		uint32_t imageFlags = 0u;
 		ImageType imageType = ImageType::Image2D;
 
-		Format format = Format::RGBA_32;
+		Format format;
 		Vec2ui extent;
 
 		uint32_t mipLevels = 1u;

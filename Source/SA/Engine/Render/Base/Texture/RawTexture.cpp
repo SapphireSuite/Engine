@@ -24,6 +24,6 @@ namespace SA
 		
 		mipLevels = 1u;
 		extent = Vec2ui::Zero;
-		format = Format::RGBA_32;
+		format = Format(FormatType::RGBA_32, FormatFlags::Norm);
 	}
 }

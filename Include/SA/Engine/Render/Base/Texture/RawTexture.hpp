@@ -17,7 +17,7 @@ namespace SA
 
 		uint32_t mipLevels = 1u;
 
-		Format format = Format::RGBA_32;
+		Format format;
 
 		std::vector<char> data;
 

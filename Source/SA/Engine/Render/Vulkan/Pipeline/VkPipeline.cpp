@@ -120,7 +120,7 @@ namespace SA::VK
 
 			for (auto it = _passInfos.subPassDesc.attachmentDescs.begin(); it != _passInfos.subPassDesc.attachmentDescs.end(); ++it)
 			{
-				if (!IsDepthFormat(it->format))
+				if (!it->format.IsDepthFormat())
 					++colorAttachmentNum;
 			}
 

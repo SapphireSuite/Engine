@@ -12,7 +12,7 @@ namespace SA::VK
 {
 	void FrameBuffer::AddClearColor(Format _format, const Color& _clearColor)
 	{
-		if (IsDepthFormat(_format))
+		if (_format.IsDepthFormat())
 			mClearValues.emplace_back(VkClearValue{ { { 1.f, 0u } } });
 		else
 			mClearValues.emplace_back(_clearColor);
@@ -43,7 +43,7 @@ namespace SA::VK
 				imageInfos.sampling = subIt->sampling; // Reset sampling value.
 
 
-				if (subIt->sampling != SampleBits::Sample1Bit && !IsDepthFormat(attIt->format))
+				if (subIt->sampling != SampleBits::Sample1Bit && !attIt->format.IsDepthFormat())
 				{
 					// Add multisampled buffer.
 					ImageBuffer& multSamplBuffer = mAttachments.emplace_back(ImageBuffer{});
@@ -57,7 +57,7 @@ namespace SA::VK
 				}
 
 
-				if (IsPresentFormat(attIt->format))
+				if (attIt->format.IsPresentFormat())
 				{
 					SA_ASSERT(Default, SA/Engine/Render/Vulkan, presentImage != VK_NULL_HANDLE,
 						L"Framebuffer with present format requiere a valid swapchain image!");

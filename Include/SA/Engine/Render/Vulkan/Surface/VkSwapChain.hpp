@@ -67,7 +67,7 @@ namespace SA::VK
 
 //}
 		Vec2ui mExtent;
-		Format mFormat = Format::sRGBA_32;
+		Format mFormat = Format(FormatType::RGBA_32, FormatFlags::sRGB);
 
 	public:
 		Vec2ui GetExtent() const;

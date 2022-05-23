@@ -22,12 +22,12 @@ namespace SA
 
 			// Color and present attachment.
 			SubPassAttachmentDescriptor& colorAttachDesc = mainSubpassDesc.attachmentDescs.emplace_back();
-			colorAttachDesc.format = _surface ? _surface->GetFormat() : Format::sRGBA_32;
+			colorAttachDesc.format = _surface ? _surface->GetFormat() : Format(FormatType::RGBA_32, FormatFlags::sRGB);
 
 
 			// Depth attachment.
 			SubPassAttachmentDescriptor& depthAttachDesc = mainSubpassDesc.attachmentDescs.emplace_back();
-			depthAttachDesc.format = Format::Depth_16;
+			depthAttachDesc.format.type = FormatType::Depth_16;
 		}
 
 		return result;
@@ -46,26 +46,22 @@ namespace SA
 
 			// Deferred position attachment.
 			SubPassAttachmentDescriptor& posAttachDesc = pbrSubpassDesc.attachmentDescs.emplace_back();
-			posAttachDesc.format = Format::RGBA_32;
 			posAttachDesc.bInputNext = true;
 
 			// Deferred normal attachment.
 			SubPassAttachmentDescriptor& normAttachDesc = pbrSubpassDesc.attachmentDescs.emplace_back();
-			normAttachDesc.format = Format::RGBA_32;
 			normAttachDesc.bInputNext = true;
 
 			// Deferred albedo attachment.
 			SubPassAttachmentDescriptor& albedoAttachDesc = pbrSubpassDesc.attachmentDescs.emplace_back();
-			albedoAttachDesc.format = Format::RGBA_32;
 			albedoAttachDesc.bInputNext = true;
 
 			// Deferred PBR (Metallic, Roughness, Ambiant occlusion) attachment.
 			SubPassAttachmentDescriptor& pbrAttachDesc = pbrSubpassDesc.attachmentDescs.emplace_back();
-			pbrAttachDesc.format = Format::RGBA_32;
 			pbrAttachDesc.bInputNext = true;
 
 			SubPassAttachmentDescriptor& depthAttachDesc = pbrSubpassDesc.attachmentDescs.emplace_back();
-			depthAttachDesc.format = Format::Depth_16;
+			depthAttachDesc.format.type = FormatType::Depth_16;
 		}
 
 
@@ -75,7 +71,7 @@ namespace SA
 			presentSubpassDesc.sampling = SampleBits::Sample8Bits;
 
 			SubPassAttachmentDescriptor& presentAttachDesc = presentSubpassDesc.attachmentDescs.emplace_back();
-			presentAttachDesc.format = _surface ? _surface->GetFormat() : Format::sRGBA_32;
+			presentAttachDesc.format = _surface ? _surface->GetFormat() : Format(FormatType::RGBA_32, FormatFlags::sRGB);
 		}
 
 

@@ -144,7 +144,7 @@ namespace SA::VK
 
 				VkAttachmentDescription& attachDesc = subpassAttachments.emplace_back(Intl::CreateAttachement(format, sampling, loadOp));
 
-				if (IsDepthFormat(attIt->format))
+				if (attIt->format.IsDepthFormat())
 				{
 					attachDesc.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 					depthAttachRef.attachment = subpassAttachments.size() - 1u;
@@ -160,12 +160,12 @@ namespace SA::VK
 
 						VkAttachmentDescription& resolveAttachDesc = subpassAttachments.emplace_back(Intl::CreateAttachement(format, VK_SAMPLE_COUNT_1_BIT, VK_ATTACHMENT_LOAD_OP_DONT_CARE));
 
-						if (IsPresentFormat(attIt->format))
+						if (attIt->format.IsPresentFormat())
 							resolveAttachDesc.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
 
 						resolveAttachmentRefs.back().attachment = (uint32_t)subpassAttachments.size() - 1u;
 					}
-					else if (IsPresentFormat(attIt->format))
+					else if (attIt->format.IsPresentFormat())
 						attachDesc.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
 				}
 

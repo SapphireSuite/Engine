@@ -7,9 +7,11 @@
 
 #include <SA/Support/API/Vulkan.hpp>
 
+#include <SA/Flags/Flags.hpp>
+
 namespace SA
 {
-	enum class Format : uint8_t
+	enum class FormatType : uint8_t
 	{
 		// RGB formats.
 		R_8,
@@ -24,14 +26,6 @@ namespace SA
 		RGBA_64,
 
 
-		// sRGB formats.
-		sR_8,
-		sRG_16,
-
-		sRGBA_32,
-		sBGRA_32,
-
-
 		// Depth formats.
 		Stencil_8,
 		Depth_16,
@@ -39,9 +33,41 @@ namespace SA
 		DepthStencil_32,
 	};
 
-	bool IsColorFormat(Format _format) noexcept;
-	bool IsPresentFormat(Format _format) noexcept;
-	bool IsDepthFormat(Format _format) noexcept;
+
+	enum class FormatFlags : uint8_t
+	{
+		/// Signed / Unsigned flag bit.
+		Signed = 1 << 0,
+
+		/// Normalized / Scaled flag bit.
+		Norm = 1 << 1,
+
+		/// Integer format flag bit.
+		Int = 1 << 2,
+
+		/// Float format flag bit.
+		Float = 1 << 3,
+
+		/// sRGB format flag bit.
+		sRGB = 1 << 4,
+	};
+
+	SA_DEFINE_ENUM_FLAGS(FormatFlags)
+
+
+	struct Format
+	{
+		FormatType type = FormatType::RGBA_32;
+
+		Flags<FormatFlags> flags = FormatFlags::Norm;
+
+
+		Format(FormatType _type = FormatType::RGBA_32, Flags<FormatFlags> _flags = FormatFlags::Norm) noexcept;
+
+		bool IsColorFormat() const noexcept;
+		bool IsPresentFormat() const noexcept;
+		bool IsDepthFormat() const noexcept;
+	};
 
 
 	uint32_t API_GetChannelNum(Format _format);

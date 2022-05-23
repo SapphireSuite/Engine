@@ -6,47 +6,49 @@
 
 namespace SA
 {
-	bool IsColorFormat(Format _format) noexcept
+	Format::Format(FormatType _type, Flags<FormatFlags> _flags) noexcept :
+		type{ _type },
+		flags{ _flags }
 	{
-		return static_cast<uint8_t>(_format) >= static_cast<uint8_t>(Format::R_8) &&
-			static_cast<uint8_t>(_format) <= static_cast<uint8_t>(Format::BGRA_32);
+	}
+
+
+	bool Format::IsColorFormat() const noexcept
+	{
+		return static_cast<uint8_t>(type) >= static_cast<uint8_t>(FormatType::R_8) &&
+			static_cast<uint8_t>(type) <= static_cast<uint8_t>(FormatType::BGRA_32);
 	}
 	
-	bool IsPresentFormat(Format _format) noexcept
+	bool Format::IsPresentFormat() const noexcept
 	{
-		return static_cast<uint8_t>(_format) >= static_cast<uint8_t>(Format::sR_8) &&
-			static_cast<uint8_t>(_format) <= static_cast<uint8_t>(Format::sBGRA_32);
+		return flags.IsSet(FormatFlags::sRGB);
 	}
 	
-	bool IsDepthFormat(Format _format) noexcept
+	bool Format::IsDepthFormat() const noexcept
 	{
-		return static_cast<uint8_t>(_format) >= static_cast<uint8_t>(Format::Stencil_8) &&
-			static_cast<uint8_t>(_format) <= static_cast<uint8_t>(Format::DepthStencil_32);
+		return static_cast<uint8_t>(type) >= static_cast<uint8_t>(FormatType::Stencil_8) &&
+			static_cast<uint8_t>(type) <= static_cast<uint8_t>(FormatType::DepthStencil_32);
 	}
 
 
 	uint32_t API_GetChannelNum(Format _format)
 	{
-		switch (_format)
+		switch (_format.type)
 		{
-			case Format::R_8:
-			case Format::sR_8:
-			case Format::Stencil_8:
+			case FormatType::R_8:
+			case FormatType::Stencil_8:
 				return 1u;
-			case Format::RG_16:
-			case Format::sRG_16:
-			case Format::Depth_16:
+			case FormatType::RG_16:
+			case FormatType::Depth_16:
 				return 2u;
-			case Format::RGB_32:
-			case Format::BGR_32:
-			case Format::RGBA_32:
-			case Format::BGRA_32:
-			case Format::sRGBA_32:
-			case Format::sBGRA_32:
-			case Format::Depth_32:
-			case Format::DepthStencil_32:
+			case FormatType::RGB_32:
+			case FormatType::BGR_32:
+			case FormatType::RGBA_32:
+			case FormatType::BGRA_32:
+			case FormatType::Depth_32:
+			case FormatType::DepthStencil_32:
 				return 4u;
-			case Format::RGBA_64:
+			case FormatType::RGBA_64:
 				return 8;
 			default:
 				SA_LOG(L"Format [" << _format << L"]not supported yet!", Error, SA/Enigne/Render/Vulkan);
@@ -59,44 +61,51 @@ namespace SA
 
 	namespace VK
 	{
+		VkFormat SelectVkFormat(Flags<FormatFlags> _flags, VkFormat _uNormFormat)
+		{
+			uint32_t offset = 0u;
+
+			if (_flags.IsSet(FormatFlags::Signed))
+				offset += 1;
+
+			if(_flags.IsSet(FormatFlags::sRGB) || _flags.IsSet(FormatFlags::Float))
+				offset += 6;
+			else if(_flags.IsSet(FormatFlags::Int))
+				offset += 4;
+			else if(!_flags.IsSet(FormatFlags::Norm))
+				offset += 2;
+
+			return (VkFormat)(_uNormFormat + offset);
+		}
+
 		VkFormat API_GetFormat(Format _format)
 		{
-			switch (_format)
+			switch (_format.type)
 			{
 				// RGB.
-				case Format::R_8:
-					return VK_FORMAT_R8_UNORM;
-				case Format::RG_16:
-					return VK_FORMAT_R8G8_UNORM;
-				case Format::RGB_32:
-					return VK_FORMAT_A2R10G10B10_UNORM_PACK32;
-				case Format::BGR_32:
-					return VK_FORMAT_A2B10G10R10_UNORM_PACK32;
-				case Format::RGBA_32:
-					return VK_FORMAT_R8G8B8A8_UNORM;
-				case Format::BGRA_32:
-					return VK_FORMAT_B8G8R8A8_UNORM;
-				case Format::RGBA_64:
-					return VK_FORMAT_R16G16B16A16_SFLOAT;
-
-				// sRGB.
-				case Format::sR_8:
-					return VK_FORMAT_R8_SRGB;
-				case Format::sRG_16:
-					return VK_FORMAT_R8G8_SRGB;
-				case Format::sRGBA_32:
-					return VK_FORMAT_R8G8B8A8_SRGB;
-				case Format::sBGRA_32:
-					return VK_FORMAT_B8G8R8A8_SRGB;
+				case FormatType::R_8:
+					return SelectVkFormat(_format.flags, VK_FORMAT_R8_UNORM);
+				case FormatType::RG_16:
+					return SelectVkFormat(_format.flags, VK_FORMAT_R8G8_UNORM);
+				case FormatType::RGB_32:
+					return SelectVkFormat(_format.flags, VK_FORMAT_A2R10G10B10_UNORM_PACK32);
+				case FormatType::BGR_32:
+					return SelectVkFormat(_format.flags, VK_FORMAT_A2B10G10R10_UNORM_PACK32);
+				case FormatType::RGBA_32:
+					return SelectVkFormat(_format.flags, VK_FORMAT_R8G8B8A8_UNORM);
+				case FormatType::BGRA_32:
+					return SelectVkFormat(_format.flags, VK_FORMAT_B8G8R8A8_UNORM);
+				case FormatType::RGBA_64:
+					return SelectVkFormat(_format.flags, VK_FORMAT_R16G16B16A16_UNORM);
 
 				// Depth
-				case Format::Stencil_8:
+				case FormatType::Stencil_8:
 					return VK_FORMAT_S8_UINT;
-				case Format::Depth_16:
+				case FormatType::Depth_16:
 					return VK_FORMAT_D16_UNORM;
-				case Format::Depth_32:
+				case FormatType::Depth_32:
 					return VK_FORMAT_D32_SFLOAT;
-				case Format::DepthStencil_32:
+				case FormatType::DepthStencil_32:
 					return VK_FORMAT_D24_UNORM_S8_UINT;
 
 				default:
@@ -105,50 +114,93 @@ namespace SA
 			}
 		}
 
-		Format API_FromFormat(VkFormat _format)
+
+		bool IsInFormatRange(VkFormat _currFormat, VkFormat _minFormat, VkFormat _maxFormat)
 		{
-			switch (_format)
+			return _currFormat >= _minFormat && _currFormat <= _maxFormat;
+		}
+
+		Flags<FormatFlags> SelectFormatFlags(VkFormat _currFormat, VkFormat _uNormFormat)
+		{
+			Flags<FormatFlags> flags;
+			uint32_t offset = _currFormat - _uNormFormat;
+
+			if (offset % 2 != 0)
 			{
-				// RGB.
-				case VK_FORMAT_R8_UNORM:
-					return Format::R_8;
-				case VK_FORMAT_R8G8_UNORM:
-					return Format::RG_16;
-				case VK_FORMAT_A2R10G10B10_UNORM_PACK32:
-					return Format::RGB_32;
-				case VK_FORMAT_A2B10G10R10_UNORM_PACK32:
-					return Format::BGR_32;
-				case VK_FORMAT_R8G8B8A8_UNORM:
-					return Format::RGBA_32;
-				case VK_FORMAT_B8G8R8A8_UNORM:
-					return Format::BGRA_32;
-				case VK_FORMAT_R16G16B16A16_SFLOAT:
-					return Format::RGBA_64;
-
-				// sRGB.
-				case VK_FORMAT_R8_SRGB:
-					return Format::sR_8;
-				case VK_FORMAT_R8G8_SRGB:
-					return Format::sRG_16;
-				case VK_FORMAT_R8G8B8A8_SRGB:
-					return Format::sRGBA_32;
-				case VK_FORMAT_B8G8R8A8_SRGB:
-					return Format::sBGRA_32;
-
-				// Depth
-				case VK_FORMAT_S8_UINT:
-					return Format::Stencil_8;
-				case VK_FORMAT_D16_UNORM:
-					return Format::Depth_16;
-				case VK_FORMAT_D32_SFLOAT:
-					return Format::Depth_32;
-				case VK_FORMAT_D24_UNORM_S8_UINT:
-					return Format::DepthStencil_32;
-
-				default:
-					SA_LOG("Format [" << _format << L"]not supported yet!", Error, SA/Engine/Render/Vulkan);
-					return Format::RGBA_32;
+				flags.Add(FormatFlags::Signed);
+				offset -= 1;
 			}
+
+			if(offset == 6)
+				flags.Add(FormatFlags::Float).Add(FormatFlags::sRGB);
+			else if(offset == 4)
+				flags.Add(FormatFlags::Int);
+			else if(offset == 2)
+				flags.Add(FormatFlags::Norm);
+
+			return flags;
+		}
+
+
+		Format API_FromFormat(VkFormat _vkFormat)
+		{
+			Format format;
+
+			// RGB.
+
+			if(IsInFormatRange(_vkFormat, VK_FORMAT_R8_UNORM, VK_FORMAT_R8_SRGB))
+			{
+				format.type = FormatType::R_8;
+				format.flags = SelectFormatFlags(_vkFormat, VK_FORMAT_R8_UNORM);
+			}
+			else if(IsInFormatRange(_vkFormat, VK_FORMAT_R8G8_UNORM, VK_FORMAT_R8G8_SRGB))
+			{
+				format.type = FormatType::RG_16;
+				format.flags = SelectFormatFlags(_vkFormat, VK_FORMAT_R8G8_UNORM);
+			}
+			else if(IsInFormatRange(_vkFormat, VK_FORMAT_A2R10G10B10_UNORM_PACK32, VK_FORMAT_A2R10G10B10_SINT_PACK32))
+			{
+				format.type = FormatType::RGB_32;
+				format.flags = SelectFormatFlags(_vkFormat, VK_FORMAT_A2R10G10B10_UNORM_PACK32);
+			}
+			else if(IsInFormatRange(_vkFormat, VK_FORMAT_A2B10G10R10_UNORM_PACK32, VK_FORMAT_A2B10G10R10_SINT_PACK32))
+			{
+				format.type = FormatType::BGR_32;
+				format.flags = SelectFormatFlags(_vkFormat, VK_FORMAT_A2B10G10R10_UNORM_PACK32);
+			}
+			else if(IsInFormatRange(_vkFormat, VK_FORMAT_R8G8B8A8_UNORM, VK_FORMAT_R8G8B8A8_SRGB))
+			{
+				format.type = FormatType::RGBA_32;
+				format.flags = SelectFormatFlags(_vkFormat, VK_FORMAT_R8G8B8A8_UNORM);
+			}
+			else if(IsInFormatRange(_vkFormat, VK_FORMAT_B8G8R8A8_UNORM, VK_FORMAT_B8G8R8A8_SRGB))
+			{
+				format.type = FormatType::BGRA_32;
+				format.flags = SelectFormatFlags(_vkFormat, VK_FORMAT_B8G8R8A8_UNORM);
+			}
+			else if(IsInFormatRange(_vkFormat, VK_FORMAT_R16G16B16A16_UNORM, VK_FORMAT_R16G16B16A16_SFLOAT))
+			{
+				format.type = FormatType::RGBA_64;
+				format.flags = SelectFormatFlags(_vkFormat, VK_FORMAT_R16G16B16A16_UNORM);
+			}
+			
+			// Depth
+			else if(_vkFormat == VK_FORMAT_S8_UINT)
+				format.type = FormatType::Stencil_8;
+			else if(_vkFormat == VK_FORMAT_D16_UNORM)
+				format.type = FormatType::Depth_16;
+			else if(_vkFormat == VK_FORMAT_D32_SFLOAT)
+				format.type = FormatType::Depth_32;
+			else if(_vkFormat == VK_FORMAT_D24_UNORM_S8_UINT)
+				format.type = FormatType::DepthStencil_32;
+
+			// Default
+			else
+			{
+				SA_LOG("Format [" << _vkFormat << L"] not supported yet!", Error, SA/Engine/Render/Vulkan);
+			}
+
+			return format;
 		}
 	}
 
