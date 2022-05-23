@@ -80,19 +80,17 @@ namespace SA::VK
 		pipelineLayoutCreateInfo.pNext = nullptr;
 		pipelineLayoutCreateInfo.flags = 0u;
 
+
 		// Descriptor Set Layouts
-		{
-			pipelineLayoutCreateInfo.pSetLayouts = mDescriptorSetLayouts.data();
-			pipelineLayoutCreateInfo.setLayoutCount = static_cast<uint32_t>(mDescriptorSetLayouts.size());
-		}
+		pipelineLayoutCreateInfo.pSetLayouts = mDescriptorSetLayouts.data();
+		pipelineLayoutCreateInfo.setLayoutCount = static_cast<uint32_t>(mDescriptorSetLayouts.size());
+
 
 		// Push Constants
-		{
-			const std::vector<VkPushConstantRange> pushCstRanges = FillPushConstantRanges(_pushConstDescs);
-
-			pipelineLayoutCreateInfo.pushConstantRangeCount = static_cast<uint32_t>(pushCstRanges.size());
-			pipelineLayoutCreateInfo.pPushConstantRanges = pushCstRanges.data();
-		}
+		const std::vector<VkPushConstantRange> pushCstRanges = FillPushConstantRanges(_pushConstDescs);
+		pipelineLayoutCreateInfo.pushConstantRangeCount = static_cast<uint32_t>(pushCstRanges.size());
+		pipelineLayoutCreateInfo.pPushConstantRanges = pushCstRanges.data();
+		
 
 		SA_VK_ASSERT(vkCreatePipelineLayout(_device, &pipelineLayoutCreateInfo, nullptr, &mHandle),
 			L"Failed to create pipeline layout!");

@@ -70,6 +70,13 @@ int main()
 
 	ARenderResourceInitializer* const resInit = renderContext->CreateResourceInitializer();
 	AShader* const vertShader = renderContext->CreateShader(resInit, vertRawSh);
+
+	RenderPipelineLayoutDescriptor pipLayoutDesc;
+	pipLayoutDesc.AddShader(vertShDesc);
+
+	ARenderPipelineLayout* const pipLayout = renderContext->CreatePipelineLayout(pipLayoutDesc);
+
+
 //}
 
 
