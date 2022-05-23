@@ -5,6 +5,8 @@
 #ifndef SAPPHIRE_ENGINE_VERTEX_TEXTURE_GUARD
 #define SAPPHIRE_ENGINE_VERTEX_TEXTURE_GUARD
 
+#include <SA/Engine/Render/Base/Mesh/Vertex/Components/VertexComponent.hpp>
+
 #include <SA/Maths/Space/Vector2.hpp>
 
 namespace SA
@@ -12,6 +14,8 @@ namespace SA
 	struct VertexTexture
 	{
 		Vec2f texture;
+
+		static constexpr Format format = Format(FormatType::R32G32, FormatFlags::Float);
 	};
 }
 

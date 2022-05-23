@@ -25,6 +25,10 @@ namespace SA
 
 		RGBA_64,
 
+		R32G32,
+		R32G32B32,
+		R32G32B32A32,
+
 
 		// Depth formats.
 		Stencil_8,
@@ -62,7 +66,12 @@ namespace SA
 		Flags<FormatFlags> flags = FormatFlags::Norm;
 
 
-		Format(FormatType _type = FormatType::RGBA_32, Flags<FormatFlags> _flags = FormatFlags::Norm) noexcept;
+		constexpr Format(FormatType _type = FormatType::RGBA_32, Flags<FormatFlags> _flags = FormatFlags::Norm) noexcept :
+			type{ _type },
+			flags{ _flags }
+		{
+		}
+
 
 		bool IsColorFormat() const noexcept;
 		bool IsPresentFormat() const noexcept;

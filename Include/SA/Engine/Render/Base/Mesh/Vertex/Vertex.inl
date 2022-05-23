@@ -18,6 +18,6 @@ namespace SA
 	{
         static_assert(std::is_base_of<T, Vertex>::value, "Component is not a part of Vertex");
 
-		return GetOffsetPacked<T, Args...>();
+		return GetComponentOffsetPacked<T, Args...>();
 	}
 }

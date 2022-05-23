@@ -6,13 +6,6 @@
 
 namespace SA
 {
-	Format::Format(FormatType _type, Flags<FormatFlags> _flags) noexcept :
-		type{ _type },
-		flags{ _flags }
-	{
-	}
-
-
 	bool Format::IsColorFormat() const noexcept
 	{
 		return static_cast<uint8_t>(type) >= static_cast<uint8_t>(FormatType::R_8) &&
@@ -78,6 +71,19 @@ namespace SA
 			return (VkFormat)(_uNormFormat + offset);
 		}
 
+		VkFormat SelectVkFormatIntOrFloat(Flags<FormatFlags> _flags, VkFormat _uIntFormat)
+		{
+			uint32_t offset = 0u;
+
+			if(_flags.IsSet(FormatFlags::Float))
+				offset += 2;
+			else if (_flags.IsSet(FormatFlags::Signed))
+				offset += 1;
+
+			return (VkFormat)(_uIntFormat + offset);
+		}
+
+
 		VkFormat API_GetFormat(Format _format)
 		{
 			switch (_format.type)
@@ -97,6 +103,13 @@ namespace SA
 					return SelectVkFormat(_format.flags, VK_FORMAT_B8G8R8A8_UNORM);
 				case FormatType::RGBA_64:
 					return SelectVkFormat(_format.flags, VK_FORMAT_R16G16B16A16_UNORM);
+
+				case FormatType::R32G32:
+					return SelectVkFormatIntOrFloat(_format.flags, VK_FORMAT_R32G32_UINT);
+				case FormatType::R32G32B32:
+					return SelectVkFormatIntOrFloat(_format.flags, VK_FORMAT_R32G32B32_UINT);
+				case FormatType::R32G32B32A32:
+					return SelectVkFormatIntOrFloat(_format.flags, VK_FORMAT_R32G32B32A32_UINT);
 
 				// Depth
 				case FormatType::Stencil_8:
