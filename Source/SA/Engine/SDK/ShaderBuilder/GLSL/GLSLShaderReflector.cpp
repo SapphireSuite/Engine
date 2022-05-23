@@ -43,7 +43,7 @@ namespace SA::GLSL
 	{
 		for (auto& res : _resources)
 		{
-			ShaderVertexLocationDescriptor& locDesc = _desc.layout.locations.emplace_back();
+			ShaderVertexLocationDescriptor& locDesc = _desc.vertexLayout.locations.emplace_back();
 
 			locDesc.name = _comp.get_name(res.id);
 			locDesc.location = _comp.get_decoration(res.id, spv::DecorationLocation);
@@ -53,7 +53,7 @@ namespace SA::GLSL
 		}
 
 		// Sort by location.
-		std::sort(_desc.layout.locations.begin(), _desc.layout.locations.end());
+		std::sort(_desc.vertexLayout.locations.begin(), _desc.vertexLayout.locations.end());
 	}
 
 	void ParsePushConstants(ShaderDescriptor& _desc,

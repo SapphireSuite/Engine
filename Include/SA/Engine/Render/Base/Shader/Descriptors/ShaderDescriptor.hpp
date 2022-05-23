@@ -17,7 +17,7 @@ namespace SA
 	{
 		ShaderStage stage = ShaderStage::Unknown;
 
-		ShaderVertexLayoutDescriptor layout;
+		ShaderVertexLayoutDescriptor vertexLayout;
 
 		std::vector<ShaderBindingSetDescriptor> bindingSet;
 		std::vector<ShaderPushConstantDescriptor> pushConstants;
