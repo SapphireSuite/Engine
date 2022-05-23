@@ -34,6 +34,7 @@ namespace SA::VK
 		mResInits.Clear(ContextObjDestroyer<ResourceInitializer>{ mDevice });
 		mRenderPasses.Clear(ContextObjDestroyer<RenderPass>{ mDevice });
 		mSurfaces.Clear(ContextObjDestroyer<Surface>{ mDevice });
+		mShaders.Clear(ContextObjDestroyer<Shader>{ mDevice });
 		mStaticMeshes.Clear(ContextObjDestroyer<StaticMesh>{ mDevice });
 		mTextures.Clear(ContextObjDestroyer<Texture>{ mDevice });
 		mCubemaps.Clear(ContextObjDestroyer<Cubemap>{ mDevice });

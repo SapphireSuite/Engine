@@ -64,10 +64,12 @@ int main()
 
 	GLSL::ShaderBuilder shBuilder;
 
-	RawShader rawSh;
-	ShaderDescriptor descSh;
-	shBuilder.Build("Resources/Shaders/Forward/unlit.vert", rawSh, descSh);
+	RawShader vertRawSh;
+	ShaderDescriptor vertShDesc;
+	shBuilder.Build("Resources/Shaders/Forward/unlit.vert", vertRawSh, vertShDesc);
 
+	ARenderResourceInitializer* const resInit = renderContext->CreateResourceInitializer();
+	AShader* const vertShader = renderContext->CreateShader(resInit, vertRawSh);
 //}
 
 
