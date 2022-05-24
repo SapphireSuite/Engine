@@ -8,7 +8,7 @@
 #include <Render/Base/Shader/RawShader.hpp>
 #include <Render/Base/Shader/Descriptors/ShaderDescriptor.hpp>
 
-#include <SDK/Misc/ReadFile.hpp>
+#include <SDK/Wrappers/ReadFile.hpp>
 #include <SDK/ShaderBuilder/GLSL/GLSLShaderFileIncluder.hpp>
 
 namespace SA::GLSL

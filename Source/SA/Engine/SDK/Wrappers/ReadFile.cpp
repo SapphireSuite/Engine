@@ -1,6 +1,6 @@
 // Copyright (c) 2022 Sapphire's Suite. All Rights Reserved.
 
-#include <SDK/Misc/ReadFile.hpp>
+#include <SDK/Wrappers/ReadFile.hpp>
 
 #include <sstream>
 #include <fstream>
