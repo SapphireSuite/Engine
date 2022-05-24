@@ -105,6 +105,8 @@ int main()
 
 		renderPass->Begin(frame, renderRect);
 
+		pipeline->Bind(frame);
+
 		renderPass->End(frame);
 
 		renderContext->EndSurface(surface);

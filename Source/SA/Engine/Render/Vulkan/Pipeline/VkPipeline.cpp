@@ -263,4 +263,12 @@ namespace SA::VK
 		SA_LOG(L"Pipeline [" << mHandle << L"] destroyed.", Infos, SA/Engine/Render/Vulkan);
 		mHandle = VK_NULL_HANDLE;
 	}
+
+
+	void Pipeline::Bind(ARenderFrame& _frame)
+	{
+		Frame& vkFrame = CastRef<Frame>(_frame);
+
+		vkCmdBindPipeline(vkFrame.cmd, VK_PIPELINE_BIND_POINT_GRAPHICS, mHandle);
+	}
 }

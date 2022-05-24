@@ -11,9 +11,14 @@
 
 namespace SA
 {
+	struct ARenderFrame;
+
 	class ARenderPipeline : protected HardwareInterface
 	{
 		using HardwareInterface::Clear; // not used.
+
+	public:
+		virtual void Bind(ARenderFrame& _frame) = 0;
 	};
 }
 

@@ -111,7 +111,7 @@ namespace SA::VK
 
 		CreatePipelineLayout(_device, _desc.pushConstDescs);
 
-		SA_LOG(L"Pipeline Layout created.", Infos, SA/Engine/Render/Vulkan);
+		SA_LOG(L"Pipeline Layout [" << mHandle << L"] created.", Infos, SA/Engine/Render/Vulkan);
 	}
 
 	void PipelineLayout::Destroy(const Device& _device)
@@ -120,9 +120,9 @@ namespace SA::VK
 
 		DestroyDescriptorSetLayouts(_device);
 
-		DestroyPipelineLayout(_device);
+		SA_LOG(L"Pipeline Layout [" << mHandle << L"] destroyed.", Infos, SA/Engine/Render/Vulkan);
 
-		SA_LOG(L"Pipeline Layout destroyed.", Infos, SA/Engine/Render/Vulkan);
+		DestroyPipelineLayout(_device);
 	}
 
 	PipelineLayout::operator VkPipelineLayout() const noexcept

@@ -12,8 +12,6 @@ namespace SA
 {
 	struct ShaderSpecConstantDescriptor
 	{
-		// Serialized
-
 		std::string name;
 
 		uint32_t id = 0u;

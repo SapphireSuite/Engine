@@ -24,6 +24,8 @@ namespace SA::VK
 	public:
 		void Create(const Device& _device, const RenderPipelineDescriptor& _desc, const PipelineLayout& _layout);
 		void Destroy(const Device& _device);
+
+		void Bind(ARenderFrame& _frame) override final;
 	};
 }
 
