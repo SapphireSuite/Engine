@@ -103,6 +103,8 @@ endif()
 option(SA_SDK "Compile Engine SDK module" ON)
 
 if(SA_SDK)
+	target_link_libraries(SA_EngineDeps INTERFACE SA_Serialize)
+
 	target_compile_definitions(SA_EngineDeps INTERFACE SA_SDK)
 	file(GLOB_RECURSE SA_SDK_SOURCES "${SA_SOURCE_DIR}/SDK/*")
 

@@ -8,6 +8,9 @@
 [submodule "ThirdParty/SA/Event"]
 	path = ThirdParty/SA/Event
 	url = https://github.com/SapphireSuite/Event.git
+[submodule "ThirdParty/SA/Serialize"]
+	path = ThirdParty/SA/Serialize
+	url = https://github.com/SapphireSuite/Serialize.git
 
 
 # Rendering modules
