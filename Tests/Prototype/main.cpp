@@ -8,8 +8,9 @@
 #include <SA/Collections/Render>
 using namespace SA;
 
-#include <SA/Engine/SDK/ShaderBuilder/GLSL/GLSLShaderBuilder.hpp>
-#include <SA/Engine/Render/Base/Shader/Descriptors/ShaderDescriptor.hpp>
+// #include <SA/Engine/Render/Base/Shader/Descriptors/ShaderDescriptor.hpp>
+
+#include <SA/Engine/SDK/Assets/Render/ShaderAsset.hpp>
 
 int main()
 {
@@ -62,24 +63,28 @@ int main()
 	renderContext->CreateFrameBuffers(surface, renderPass, renderPassDesc);
 	
 
-	GLSL::ShaderBuilder shBuilder;
-
-	RawShader vertRawSh;
-	ShaderDescriptor vertShDesc;
-	shBuilder.Build("Resources/Shaders/Forward/unlit.vert", vertRawSh, vertShDesc);
+	
+	SDK::ShaderAsset vertexShAsset;
+	if(!vertexShAsset.Load("Assets/Shaders/Forward/unlit_vert.spha"))
+	{
+		if(!vertexShAsset.Import("Resources/Shaders/Forward/unlit.vert"))
+		{
+			SA_LOG(L"Fail to import shader: {Resources/Shaders/Forward/unlit.vert}", Error, Prototype);
+		}
+	}
 
 	ARenderResourceInitializer* const resInit = renderContext->CreateResourceInitializer();
-	AShader* const vertShader = renderContext->CreateShader(resInit, vertRawSh);
+	AShader* const vertShader = renderContext->CreateShader(resInit, vertexShAsset.raw);
 
 	RenderPipelineLayoutDescriptor pipLayoutDesc;
-	pipLayoutDesc.AddShader(vertShDesc);
+	pipLayoutDesc.AddShader(vertexShAsset.descriptor);
 
 	ARenderPipelineLayout* const pipLayout = renderContext->CreatePipelineLayout(pipLayoutDesc);
 
 
 	RenderPipelineDescriptor pipDesc;
 	pipDesc.passInfos.SetRenderPass(renderPass, renderPassDesc);
-	pipDesc.shaderInfos.AddShader(vertShader, vertShDesc);
+	pipDesc.shaderInfos.AddShader(vertShader, vertexShAsset.descriptor);
 	pipDesc.shaderInfos.vertexLayoutDesc.BindVertexComponents<VertexPNTT, VertexPosition, VertexTexture>();
 
 	ARenderPipeline* const pipeline = renderContext->CreatePipeline(pipDesc, pipLayout);
