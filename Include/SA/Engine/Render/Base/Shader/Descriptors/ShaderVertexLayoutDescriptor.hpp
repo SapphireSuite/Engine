@@ -14,6 +14,8 @@ namespace SA
 	struct ShaderVertexLayoutDescriptor
 	{
 		std::vector<ShaderVertexLocationDescriptor> locations;
+
+		void Clear();
 	};
 }
 

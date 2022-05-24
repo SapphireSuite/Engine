@@ -16,9 +16,10 @@ namespace SA
 	{
 		stage = ShaderStage::Unknown;
 
-		// vertexLayout = 0u;
+		vertexLayout.Clear();
 
 		bindingSet.clear();
+		pushConstants.clear();
 		specConstants.clear();
 	}
 }
