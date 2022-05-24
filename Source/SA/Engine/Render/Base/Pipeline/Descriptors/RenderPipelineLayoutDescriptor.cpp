@@ -47,6 +47,9 @@ namespace SA
 	
 	void RenderPipelineLayoutDescriptor::AddPushConstants(const ShaderDescriptor& _desc)
 	{
+		if(_desc.pushConstants.empty())
+			return;
+
 		PipelinePushConstantDescriptor& pipPushCst = pushConstDescs.emplace_back();
 
 		pipPushCst.stage = _desc.stage;
