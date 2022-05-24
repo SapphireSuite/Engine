@@ -8,9 +8,7 @@
 #include <SA/Collections/Render>
 using namespace SA;
 
-// #include <SA/Engine/Render/Base/Shader/Descriptors/ShaderDescriptor.hpp>
-
-#include <SA/Engine/SDK/Assets/Render/ShaderAsset.hpp>
+#include "UnlitRenderer.hpp"
 
 int main()
 {
@@ -63,32 +61,8 @@ int main()
 	renderContext->CreateFrameBuffers(surface, renderPass, renderPassDesc);
 	
 
-	
-	SDK::ShaderAsset vertexShAsset;
-	if(!vertexShAsset.Load("Assets/Shaders/Forward/unlit_vert.spha"))
-	{
-		if(!vertexShAsset.Import("Resources/Shaders/Forward/unlit.vert"))
-		{
-			SA_LOG(L"Fail to import shader: {Resources/Shaders/Forward/unlit.vert}", Error, Prototype);
-		}
-	}
-
-	ARenderResourceInitializer* const resInit = renderContext->CreateResourceInitializer();
-	AShader* const vertShader = renderContext->CreateShader(resInit, vertexShAsset.raw);
-
-	RenderPipelineLayoutDescriptor pipLayoutDesc;
-	pipLayoutDesc.AddShader(vertexShAsset.descriptor);
-
-	ARenderPipelineLayout* const pipLayout = renderContext->CreatePipelineLayout(pipLayoutDesc);
-
-
-	RenderPipelineDescriptor pipDesc;
-	pipDesc.passInfos.SetRenderPass(renderPass, renderPassDesc);
-	pipDesc.shaderInfos.AddShader(vertShader, vertexShAsset.descriptor);
-	pipDesc.shaderInfos.vertexLayoutDesc.BindVertexComponents<VertexPNTT, VertexPosition, VertexTexture>();
-
-	ARenderPipeline* const pipeline = renderContext->CreatePipeline(pipDesc, pipLayout);
-
+	UnlitRenderer unlitRender;
+	unlitRender.Create(renderContext, renderPass, renderPassDesc, 0u);
 
 //}
 
@@ -110,7 +84,7 @@ int main()
 
 		renderPass->Begin(frame, renderRect);
 
-		pipeline->Bind(frame);
+		unlitRender.pipeline->Bind(frame);
 
 		renderPass->End(frame);
 
