@@ -16,6 +16,7 @@
 #include <SA/Engine/Render/Vulkan/Texture/VkCubemap.hpp>
 #include <SA/Engine/Render/Vulkan/Pipeline/VkPipelineLayout.hpp>
 #include <SA/Engine/Render/Vulkan/Pipeline/VkPipeline.hpp>
+#include <SA/Engine/Render/Vulkan/Material/VkMaterial.hpp>
 
 #include <SA/Engine/HI/InterfaceList.hpp>
 
@@ -36,6 +37,7 @@ namespace SA::VK
 		InterfaceList<Cubemap> mCubemaps;
 		InterfaceList<PipelineLayout> mPipelineLayouts;
 		InterfaceList<Pipeline> mPipelines;
+		InterfaceList<Material> mMaterials;
 
 	public:
 		Context(Device& _device) noexcept;
@@ -80,12 +82,17 @@ namespace SA::VK
 		ACubemap* CreateCubemap(ARenderResourceInitializer* _init, const RawCubemap& _raw) override final;
 		void DestroyCubemap(ACubemap* _cubemap) override final;
 
+
 		ARenderPipelineLayout* CreatePipelineLayout(const RenderPipelineLayoutDescriptor& _desc) override final;
 		void DestroyPipelineLayout(ARenderPipelineLayout* _pipLayout) override final;
 
 		ARenderPipeline* CreatePipeline(const RenderPipelineDescriptor& _desc, const ARenderPipelineLayout* _pipLayout) override final;
 		void DestroyPipeline(ARenderPipeline* _pipeline) override final;
 
+
+		ARenderMaterial* CreateMaterial(const RenderPipelineLayoutDescriptor& _pipLayout,
+			const RenderMaterialBindings& _bindings = RenderMaterialBindings()) override final;
+		void DestroyMaterial(ARenderMaterial* _mat) override final;
 //}
 	};
 

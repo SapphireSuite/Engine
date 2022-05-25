@@ -20,6 +20,7 @@ namespace SA
 
 		struct DescriptorPoolInfos
 		{
+			uint32_t setNum = 1u;
 			std::vector<VkDescriptorPoolSize> poolSizes;
 
 			void AddBindings(const PipelineBindingSetDescriptor& _desc);

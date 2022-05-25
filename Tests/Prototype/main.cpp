@@ -61,8 +61,27 @@ int main()
 	renderContext->CreateFrameBuffers(surface, renderPass, renderPassDesc);
 	
 
+
+	ARenderResourceInitializer* const resInit = renderContext->CreateResourceInitializer();
+
 	UnlitRenderer unlitRender;
-	unlitRender.Create(renderContext, renderPass, renderPassDesc, 0u);
+	unlitRender.Create(renderContext, resInit, renderPass, renderPassDesc, 0u);
+
+	ATexture* const missingTexture = LoadImportSaveCreateTexture(
+		renderContext,
+		resInit,
+		"Bin/Assets/Textures/missing_texture.spha",
+		"Resources/Textures/missing_texture.png"
+	);
+
+	RenderMaterialBindings unlitMatBinds;
+	unlitMatBinds.Add<IBOBinding>(0, 0, missingTexture);
+	ARenderMaterial* const unlitMat = renderContext->CreateMaterial(unlitRender.pipLayoutDesc, unlitMatBinds);
+
+
+
+	renderContext->SubmitResourceInitializer(resInit);
+	renderContext->DestroyResourceInitializer(resInit);
 
 //}
 

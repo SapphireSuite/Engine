@@ -16,6 +16,7 @@ namespace SA::VK
 	void Material::CreateDescriptorPool(const Device& _device, const RenderPipelineLayoutDescriptor& _pipLayout)
 	{
 		DescriptorPoolInfos infos;
+		infos.setNum = (uint32_t)_pipLayout.bindSetDescs.size();
 
 		for (auto it = _pipLayout.bindSetDescs.begin(); it != _pipLayout.bindSetDescs.end(); ++it)
 			infos.AddBindings(*it);

@@ -15,6 +15,7 @@
 #include <SA/Engine/Render/Base/Texture/ACubemap.hpp>
 #include <SA/Engine/Render/Base/Pipeline/ARenderPipelineLayout.hpp>
 #include <SA/Engine/Render/Base/Pipeline/ARenderPipeline.hpp>
+#include <SA/Engine/Render/Base/Material/ARenderMaterial.hpp>
 
 namespace SA
 {
@@ -60,12 +61,17 @@ namespace SA
 		virtual ACubemap* CreateCubemap(ARenderResourceInitializer* _init, const RawCubemap& _raw) = 0;
 		virtual void DestroyCubemap(ACubemap* _texture) = 0;
 
+
 		virtual ARenderPipelineLayout* CreatePipelineLayout(const RenderPipelineLayoutDescriptor& _desc) = 0;
 		virtual void DestroyPipelineLayout(ARenderPipelineLayout* _pipLayout) = 0;
 
 		virtual ARenderPipeline* CreatePipeline(const RenderPipelineDescriptor& _desc, const ARenderPipelineLayout* _pipLayout) = 0;
 		virtual void DestroyPipeline(ARenderPipeline* _pip) = 0;
 
+
+		virtual ARenderMaterial* CreateMaterial(const RenderPipelineLayoutDescriptor& _pipLayout,
+			const RenderMaterialBindings& _bindings = RenderMaterialBindings()) = 0;
+		virtual void DestroyMaterial(ARenderMaterial* _mat) = 0;
 //}
 	};
 }

@@ -9,6 +9,7 @@
 #include <SA/Collections/Render>
 
 #include <SA/Engine/SDK/Assets/Render/ShaderAsset.hpp>
+#include <SA/Engine/SDK/Assets/Render/TextureAsset.hpp>
 
 namespace SA
 {
@@ -28,10 +29,9 @@ namespace SA
 		return asset;
 	}
 
-	void LoadImportCreateShader(
+	AShader* LoadImportSaveCreateShader(
 		ARenderContext* _renderContext,
 		ARenderResourceInitializer* _resInit, 
-		AShader*& _shader,
 		RenderPipelineDescriptor& _pipDesc,
 		RenderPipelineLayoutDescriptor& _pipLayoutDesc,
 		const std::string& _assetPath,
@@ -39,9 +39,24 @@ namespace SA
 	{
 		SDK::ShaderAsset asset = LoadImportSaveAsset<SDK::ShaderAsset>(_assetPath, _resPath);
 
-		_shader = _renderContext->CreateShader(_resInit, asset.raw);
-		_pipDesc.shaderInfos.AddShader(_shader, asset.descriptor);
+		AShader* shader = _renderContext->CreateShader(_resInit, asset.raw);
+		_pipDesc.shaderInfos.AddShader(shader, asset.descriptor);
 		_pipLayoutDesc.AddShader(asset.descriptor);
+
+		return shader;
+	}
+
+	ATexture* LoadImportSaveCreateTexture(
+		ARenderContext* _renderContext,
+		ARenderResourceInitializer* _resInit,
+		const std::string& _assetPath,
+		const std::string& _resPath)
+	{
+		SDK::TextureAsset asset = LoadImportSaveAsset<SDK::TextureAsset>(_assetPath, _resPath);
+
+		ATexture* const texture = _renderContext->CreateTexture(_resInit, asset.raw);
+		
+		return texture;
 	}
 }
 

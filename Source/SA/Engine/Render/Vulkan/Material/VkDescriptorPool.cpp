@@ -31,7 +31,7 @@ namespace SA::VK
 		descriptorPoolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
 		descriptorPoolInfo.pNext = nullptr;
 		descriptorPoolInfo.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
-		descriptorPoolInfo.maxSets = 1u;
+		descriptorPoolInfo.maxSets = _infos.setNum;
 		descriptorPoolInfo.poolSizeCount = (uint32_t)(_infos.poolSizes.size());
 		descriptorPoolInfo.pPoolSizes = _infos.poolSizes.data();
 

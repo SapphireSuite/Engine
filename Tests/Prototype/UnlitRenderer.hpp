@@ -15,23 +15,21 @@ namespace SA
 		AShader* vertShader = nullptr;
 		AShader* fragShader = nullptr;
 
+		RenderPipelineLayoutDescriptor pipLayoutDesc;
 		ARenderPipelineLayout* pipLayout = nullptr;
+
+		RenderPipelineDescriptor pipDesc;
 		ARenderPipeline* pipeline = nullptr;
 
 		void Create(ARenderContext* _renderContext,
+			ARenderResourceInitializer* _resInit,
 			ARenderPass* _renderPass,
 			const RenderPassDescriptor& _renderPassDesc,
 			uint32_t _subPassIndex = 0u)
 		{
-			RenderPipelineDescriptor pipDesc;
-			RenderPipelineLayoutDescriptor pipLayoutDesc;
-			
-			ARenderResourceInitializer* const resInit = _renderContext->CreateResourceInitializer();
-
 			// Vertex Shader
-			LoadImportCreateShader(_renderContext,
-				resInit,
-				vertShader,
+			vertShader = LoadImportSaveCreateShader(_renderContext,
+				_resInit,
 				pipDesc,
 				pipLayoutDesc,
 				"Bin/Assets/Shaders/Forward/unlit_vert.spha",
@@ -39,9 +37,8 @@ namespace SA
 			);
 
 			// Fragment Shader
-			LoadImportCreateShader(_renderContext,
-				resInit,
-				fragShader,
+			fragShader = LoadImportSaveCreateShader(_renderContext,
+				_resInit,
 				pipDesc,
 				pipLayoutDesc,
 				"Bin/Assets/Shaders/Forward/unlit_frag.spha",
