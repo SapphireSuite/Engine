@@ -28,6 +28,16 @@ namespace SA
 
 		void Clear();
 	};
+
+
+	namespace Ser
+	{
+		template <>
+		bool ToBinary(const ShaderDescriptor& _desc, std::string& _dst);
+
+		template <>
+		bool FromBinary(ShaderDescriptor& _desc, const std::string& _src, size_t& _offset);
+	}
 }
 
 #endif // GUARD

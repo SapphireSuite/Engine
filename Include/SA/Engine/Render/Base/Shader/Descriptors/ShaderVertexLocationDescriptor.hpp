@@ -7,7 +7,7 @@
 
 #include <cstdint>
 
-#include <string>
+#include <SA/Collections/SerializeBinary>
 
 namespace SA
 {
@@ -20,6 +20,16 @@ namespace SA
 
 		bool operator<(const ShaderVertexLocationDescriptor& _rhs) const noexcept;
 	};
+
+
+	namespace Ser
+	{
+		template <>
+		bool ToBinary(const ShaderVertexLocationDescriptor& _desc, std::string& _dst);
+
+		template <>
+		bool FromBinary(ShaderVertexLocationDescriptor& _desc, const std::string& _src, size_t& _offset);
+	}
 }
 
 #endif // GUARD

@@ -8,4 +8,28 @@ namespace SA
 	{
 		return location < _rhs.location;
 	}
+
+
+	namespace Ser
+	{
+		template <>
+		bool ToBinary(const ShaderVertexLocationDescriptor& _desc, std::string& _dst)
+		{
+			ToBinary(_desc.name, _dst);
+			ToBinary(_desc.location, _dst);
+			ToBinary(_desc.size, _dst);
+
+			return true;
+		}
+
+		template <>
+		bool FromBinary(ShaderVertexLocationDescriptor& _desc, const std::string& _src, size_t& _offset)
+		{
+			FromBinary(_desc.name, _src, _offset);
+			FromBinary(_desc.location, _src, _offset);
+			FromBinary(_desc.size, _src, _offset);
+
+			return true;
+		}
+	}
 }

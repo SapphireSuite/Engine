@@ -6,7 +6,8 @@
 #define SAPPHIRE_ENGINE_RAW_SHADER_GUARD
 
 #include <cstdint>
-#include <vector>
+
+#include <SA/Collections/SerializeBinary>
 
 namespace SA
 {
@@ -16,6 +17,16 @@ namespace SA
 
 		void Clear();
 	};
+
+
+	namespace Ser
+	{
+		template <>
+		bool ToBinary(const RawShader& _raw, std::string& _dst);
+
+		template <>
+		bool FromBinary(RawShader& _raw, const std::string& _src, size_t& _offset);
+	}
 }
 
 #endif // GUARD
