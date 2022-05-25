@@ -6,7 +6,8 @@
 #define SAPPHIRE_ENGINE_RAW_MESH_GUARD
 
 #include <cstdint>
-#include <vector>
+
+#include <SA/Collections/SerializeBinary>
 
 namespace SA
 {
@@ -15,8 +16,18 @@ namespace SA
 		std::vector<char> vertices;
 		std::vector<uint32_t> indices;
 
-		void Reset();
+		void Clear();
 	};
+
+
+	namespace Ser
+	{
+		template <>
+		bool ToBinary(const RawMesh& _raw, std::string& _dst);
+
+		template <>
+		bool FromBinary(RawMesh& _raw, const std::string& _src, size_t& _offset);
+	}
 }
 
 #endif // GUARD
