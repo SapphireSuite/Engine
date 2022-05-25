@@ -7,6 +7,10 @@
 
 #include <SA/Engine/HI/HardwareInterface.hpp>
 
+#include <SA/Engine/Render/Base/Material/Bindings/IBOBinding.hpp>
+#include <SA/Engine/Render/Base/Material/Bindings/UBOBinding.hpp>
+#include <SA/Engine/Render/Base/Material/Bindings/RenderMaterialBindings.hpp>
+
 namespace SA
 {
 	class ARenderMaterial : protected HardwareInterface

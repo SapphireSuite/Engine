@@ -33,8 +33,12 @@ namespace SA
 			void DestroyDescriptorSetLayouts(const Device& _device);
 
 		public:
-			void Create(const Device& _device, const RenderPipelineLayoutDescriptor& _pipLayout);
+			void Create(const Device& _device,
+				const RenderPipelineLayoutDescriptor& _pipLayout,
+				const RenderMaterialBindings& _bindings = RenderMaterialBindings());
 			void Destroy(const Device& _device);
+
+			void Update(const Device& _device, const RenderMaterialBindings& _bindings);
 		};
 	}
 }
