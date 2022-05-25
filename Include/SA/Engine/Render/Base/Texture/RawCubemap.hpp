@@ -25,8 +25,18 @@ namespace SA
 		uint64_t GetTotalMapSize() const noexcept;
 
 
-		void Reset() override final;
+		void Clear() override final;
 	};
+
+
+	namespace Ser
+	{
+		template <>
+		bool ToBinary(const RawCubemap& _raw, std::string& _dst);
+
+		template <>
+		bool FromBinary(RawCubemap& _raw, const std::string& _src, size_t& _offset);
+	}
 }
 
 #endif // GUARD

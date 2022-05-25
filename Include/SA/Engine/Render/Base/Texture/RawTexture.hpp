@@ -5,6 +5,9 @@
 #ifndef SAPPHIRE_ENGINE_RAW_TEXTURE_GUARD
 #define SAPPHIRE_ENGINE_RAW_TEXTURE_GUARD
 
+#include <SA/Collections/SerializeBinary>
+
+
 #include <SA/Maths/Space/Vector2.hpp>
 
 #include <SA/Engine/Render/Base/Misc/Format.hpp>
@@ -29,8 +32,18 @@ namespace SA
 		uint64_t GetTotalSize() const noexcept;
 
 
-		virtual void Reset();
+		virtual void Clear();
 	};
+
+
+	namespace Ser
+	{
+		template <>
+		bool ToBinary(const RawTexture& _raw, std::string& _dst);
+
+		template <>
+		bool FromBinary(RawTexture& _raw, const std::string& _src, size_t& _offset);
+	}
 }
 
 #endif // GUARD

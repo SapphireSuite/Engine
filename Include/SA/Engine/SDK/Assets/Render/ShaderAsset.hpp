@@ -12,13 +12,13 @@
 
 namespace SA::SDK
 {
-	class ShaderAsset : AAsset
+	class ShaderAsset : public AAsset
 	{
 		std::string mResourcePath;
 		mutable std::string mAssetPath;
 
-		bool Save_Internal(std::fstream& _fstream) const override final;
 		bool Load_Internal(std::string&& _bin) override final;
+		bool Save_Internal(std::fstream& _fstream) const override final;
 
 		bool ShouldCompileShader() const noexcept;
 

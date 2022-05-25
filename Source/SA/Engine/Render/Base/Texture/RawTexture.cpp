@@ -18,12 +18,38 @@ namespace SA
 	}
 
 
-	void RawTexture::Reset()
+	void RawTexture::Clear()
 	{
 		data.clear();
 		
 		mipLevels = 1u;
 		extent = Vec2ui::Zero;
 		format = Format(FormatType::RGBA_32, FormatFlags::Norm);
+	}
+
+
+	namespace Ser
+	{
+		template <>
+		bool ToBinary(const RawTexture& _raw, std::string& _dst)
+		{
+			ToBinary(_raw.extent, _dst);
+			ToBinary(_raw.mipLevels, _dst);
+			ToBinary(_raw.format, _dst);
+			ToBinary(_raw.data, _dst);
+
+			return true;
+		}
+
+		template <>
+		bool FromBinary(RawTexture& _raw, const std::string& _src, size_t& _offset)
+		{
+			FromBinary(_raw.extent, _src, _offset);
+			FromBinary(_raw.mipLevels, _src, _offset);
+			FromBinary(_raw.format, _src, _offset);
+			FromBinary(_raw.data, _src, _offset);
+
+			return true;
+		}
 	}
 }
