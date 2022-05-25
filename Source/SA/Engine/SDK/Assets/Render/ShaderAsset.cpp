@@ -97,8 +97,18 @@ namespace SA::SDK
 		struct stat assetStat;
 		struct stat resourceStat;
 
-		return stat(mAssetPath.c_str(), &assetStat) != 0 ||
-			stat(mResourcePath.c_str(), &resourceStat) != 0 ||
-			assetStat.st_mtime < resourceStat.st_mtime;
+		if(!(stat(mResourcePath.c_str(), &resourceStat) == 0))
+		{
+			// Resource file stat failed: can't reimport, assume asset is up to date.
+
+			return false;
+		}
+		else
+		{
+			stat(mAssetPath.c_str(), &assetStat); // file currently opened: can't fail.
+
+			// Check asset is up-to-date.
+			return assetStat.st_mtime < resourceStat.st_mtime;
+		}
 	}
 }

@@ -34,7 +34,7 @@ namespace SA
 				vertShader,
 				pipDesc,
 				pipLayoutDesc,
-				"Assets/Shaders/Forward/unlit_vert.spha",
+				"Bin/Assets/Shaders/Forward/unlit_vert.spha",
 				"Resources/Shaders/Forward/unlit.vert"
 			);
 
@@ -44,7 +44,7 @@ namespace SA
 				fragShader,
 				pipDesc,
 				pipLayoutDesc,
-				"Assets/Shaders/Forward/unlit_frag.spha",
+				"Bin/Assets/Shaders/Forward/unlit_frag.spha",
 				"Resources/Shaders/Forward/unlit.frag"
 			);
 
