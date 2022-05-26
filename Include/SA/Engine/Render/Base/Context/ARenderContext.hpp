@@ -69,9 +69,11 @@ namespace SA
 		virtual void DestroyPipeline(ARenderPipeline* _pip) = 0;
 
 
-		virtual ARenderMaterial* CreateMaterial(const RenderPipelineLayoutDescriptor& _pipLayout,
-			const RenderMaterialBindings& _bindings = RenderMaterialBindings()) = 0;
+		virtual ARenderMaterial* CreateMaterial(const ARenderPipelineLayout* _pipLayout,
+			const RenderPipelineLayoutDescriptor& _pipLayoutDesc,
+			const MaterialBindingData& _bindData = MaterialBindingData()) = 0;
 		virtual void DestroyMaterial(ARenderMaterial* _mat) = 0;
+		virtual void BindMaterialData(ARenderMaterial* _mat, const MaterialBindingData& _bindData) = 0;
 //}
 	};
 }

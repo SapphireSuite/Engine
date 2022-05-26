@@ -7,8 +7,7 @@
 
 #include <vector>
 
-#include <SA/Engine/Render/Vulkan/Material/VkDescriptorSet.hpp>
-#include <SA/Engine/Render/Vulkan/Material/VkDescriptorSetLayout.hpp>
+#include <SA/Engine/Render/Vulkan/DescriptorSet/VkDescriptorSet.hpp>
 
 namespace SA
 {
@@ -17,6 +16,7 @@ namespace SA
 	namespace VK
 	{
 		class Device;
+		class DescriptorSetLayout;
 
 		struct DescriptorPoolInfos
 		{

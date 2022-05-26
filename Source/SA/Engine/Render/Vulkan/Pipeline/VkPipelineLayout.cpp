@@ -24,49 +24,29 @@ namespace SA::VK
 		return pushCstRanges;
 	}
 
+	const std::vector<DescriptorSetLayout>& PipelineLayout::GetDescriptorSetLayouts() const noexcept
+	{
+		return mDescriptorSetLayouts;
+	}
+
 
 	void PipelineLayout::CreateDescriptorSetLayouts(const Device& _device,
 		const std::vector<PipelineBindingSetDescriptor>& _pipBindSetDescs)
 	{
 		mDescriptorSetLayouts.reserve(_pipBindSetDescs.size());
 
-		// Re-use memory each loop.
-		std::vector<VkDescriptorSetLayoutBinding> descSetLayout;
-
 		for(auto it = _pipBindSetDescs.begin(); it != _pipBindSetDescs.end(); ++it)
 		{
-			descSetLayout.clear();
-			descSetLayout.reserve(it->bindings.size());
-
-			for (auto& bind : it->bindings)
-			{
-				VkDescriptorSetLayoutBinding& descBinding = descSetLayout.emplace_back();
-
-				descBinding.binding = bind.binding;
-				descBinding.descriptorType = API_GetDescriptorType(bind.type);
-				descBinding.descriptorCount = bind.num;
-				descBinding.stageFlags = API_GetShaderStageFlags(bind.stageFlags);
-				descBinding.pImmutableSamplers = nullptr;
-			}
-
-			VkDescriptorSetLayoutCreateInfo descriptorSetLayoutInfo{};
-			descriptorSetLayoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-			descriptorSetLayoutInfo.pNext = nullptr;
-			descriptorSetLayoutInfo.flags = 0u;
-			descriptorSetLayoutInfo.bindingCount = static_cast<uint32_t>(descSetLayout.size());
-			descriptorSetLayoutInfo.pBindings = descSetLayout.data();
-
-			VkDescriptorSetLayout& outLayout = mDescriptorSetLayouts.emplace_back();
-
-			SA_VK_ASSERT(vkCreateDescriptorSetLayout(_device, &descriptorSetLayoutInfo, nullptr, &outLayout),
-				L"Failed to create descriptor set layout!");
+			DescriptorSetLayout& descSetLayout = mDescriptorSetLayouts.emplace_back();
+			
+			descSetLayout.Create(_device, *it);
 		}
 	}
 
 	void PipelineLayout::DestroyDescriptorSetLayouts(const Device& _device)
 	{
 		for(auto it = mDescriptorSetLayouts.begin(); it != mDescriptorSetLayouts.end(); ++it)
-			vkDestroyDescriptorSetLayout(_device, *it, nullptr);
+			it->Destroy(_device);
 
 		mDescriptorSetLayouts.clear();
 	}
@@ -82,7 +62,7 @@ namespace SA::VK
 
 
 		// Descriptor Set Layouts
-		pipelineLayoutCreateInfo.pSetLayouts = mDescriptorSetLayouts.data();
+		pipelineLayoutCreateInfo.pSetLayouts = reinterpret_cast<const VkDescriptorSetLayout*>(mDescriptorSetLayouts.data());
 		pipelineLayoutCreateInfo.setLayoutCount = static_cast<uint32_t>(mDescriptorSetLayouts.size());
 
 

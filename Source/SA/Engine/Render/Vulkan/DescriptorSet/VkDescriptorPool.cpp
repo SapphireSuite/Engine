@@ -1,11 +1,13 @@
 // Copyright (c) 2022 Sapphire's Suite. All Rights Reserved.
 
-#include <Render/Vulkan/Material/VkDescriptorPool.hpp>
+#include <Render/Vulkan/DescriptorSet/VkDescriptorPool.hpp>
 
 #include <Render/Base/Pipeline/Descriptors/PipelineBindingSetDescriptor.hpp>
 
 #include <Render/Vulkan/Debug/Debug.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
+
+#include <Render/Vulkan/DescriptorSet/VkDescriptorSetLayout.hpp>
 
 namespace SA::VK
 {
@@ -32,7 +34,7 @@ namespace SA::VK
 		descriptorPoolInfo.pNext = nullptr;
 		descriptorPoolInfo.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
 		descriptorPoolInfo.maxSets = _infos.setNum;
-		descriptorPoolInfo.poolSizeCount = (uint32_t)(_infos.poolSizes.size());
+		descriptorPoolInfo.poolSizeCount = (uint32_t)_infos.poolSizes.size();
 		descriptorPoolInfo.pPoolSizes = _infos.poolSizes.data();
 
 		SA_VK_ASSERT(vkCreateDescriptorPool(_device, &descriptorPoolInfo, nullptr, &mHandle),

@@ -1,6 +1,6 @@
 // Copyright (c) 2022 Sapphire's Suite. All Rights Reserved.
 
-#include <Render/Vulkan/Material/VkDescriptorSetLayout.hpp>
+#include <Render/Vulkan/DescriptorSet/VkDescriptorSetLayout.hpp>
 
 #include <Render/Base/Pipeline/Descriptors/PipelineBindingSetDescriptor.hpp>
 

@@ -7,40 +7,35 @@
 
 #include <SA/Engine/Render/Base/Material/ARenderMaterial.hpp>
 
-#include <SA/Engine/Render/Vulkan/Material/VkDescriptorPool.hpp>
+#include <SA/Engine/Render/Vulkan/DescriptorSet/VkDescriptorPool.hpp>
 
-namespace SA
+namespace SA::VK
 {
-	struct RenderPipelineLayoutDescriptor;
+	class Device;
+	class PipelineLayout;
+	struct MaterialBindRecorder;
 
-	namespace VK
+	class Material : public ARenderMaterial
 	{
-		class Device;
+		using ARenderMaterial::Destroy; // overloaded.
 
-		class Material : public ARenderMaterial
-		{
-			using ARenderMaterial::Create; // overloaded.
-			using ARenderMaterial::Destroy; // overloaded.
+		DescriptorPool mPool;
+		std::vector<DescriptorSet> mSets;
 
-			DescriptorPool mPool;
-			std::vector<DescriptorSetLayout> mLayouts;
-			std::vector<DescriptorSet> mSets;
+		void CreateDescriptorPool(const Device& _device, const RenderPipelineLayoutDescriptor& _pipLayoutDesc);
+		void DestroyDescriptorPool(const Device& _device);
 
-			void CreateDescriptorPool(const Device& _device, const RenderPipelineLayoutDescriptor& _pipLayout);
-			void DestroyDescriptorPool(const Device& _device);
+		void ParseBinding(MaterialBindRecorder& _rec, const MaterialStaticBindingInfos& _infos, ARenderMaterialBinding* _binding);
 
-			void CreateDescriptorSetLayouts(const Device& _device, const RenderPipelineLayoutDescriptor& _pipLayout);
-			void DestroyDescriptorSetLayouts(const Device& _device);
+	public:
+		void Create(const Device& _device,
+			const PipelineLayout& _pipLayout,
+			const RenderPipelineLayoutDescriptor& _pipLayoutDesc,
+			const MaterialBindingData& _bindData = MaterialBindingData());
+		void Destroy(const Device& _device);
 
-		public:
-			void Create(const Device& _device,
-				const RenderPipelineLayoutDescriptor& _pipLayout,
-				const RenderMaterialBindings& _bindings = RenderMaterialBindings());
-			void Destroy(const Device& _device);
-
-			void Update(const Device& _device, const RenderMaterialBindings& _bindings);
-		};
-	}
+		void Bind(const Device& _device, const MaterialBindingData& _bindData);
+	};
 }
 
 #endif // GUARD

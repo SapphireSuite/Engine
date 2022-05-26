@@ -1,24 +1,24 @@
 // Copyright (c) 2022 Sapphire's Suite. All Rights Reserved.
 
 #include <Render/Vulkan/Material/VkMaterial.hpp>
+#include <Render/Vulkan/Material/VkMaterialBindRecorder.hpp>
+
+#include <HI/Cast.hpp>
 
 #include <Render/Base/Pipeline/Descriptors/RenderPipelineLayoutDescriptor.hpp>
 
-#include <Render/Base/Material/Bindings/ARenderMaterialBinding.hpp>
-
 #include <Render/Vulkan/Debug/Debug.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
-
-#include <Render/Vulkan/Material/VkDescriptorSetUpdater.hpp>
+#include <Render/Vulkan/Texture/VkTexture.hpp>
 
 namespace SA::VK
 {
-	void Material::CreateDescriptorPool(const Device& _device, const RenderPipelineLayoutDescriptor& _pipLayout)
+	void Material::CreateDescriptorPool(const Device& _device, const RenderPipelineLayoutDescriptor& _pipLayoutDesc)
 	{
 		DescriptorPoolInfos infos;
-		infos.setNum = (uint32_t)_pipLayout.bindSetDescs.size();
+		infos.setNum = (uint32_t)_pipLayoutDesc.bindSetDescs.size();
 
-		for (auto it = _pipLayout.bindSetDescs.begin(); it != _pipLayout.bindSetDescs.end(); ++it)
+		for (auto it = _pipLayoutDesc.bindSetDescs.begin(); it != _pipLayoutDesc.bindSetDescs.end(); ++it)
 			infos.AddBindings(*it);
 
 		mPool.Create(_device, infos);
@@ -30,68 +30,67 @@ namespace SA::VK
 	}
 
 
-	void Material::CreateDescriptorSetLayouts(const Device& _device, const RenderPipelineLayoutDescriptor& _pipLayout)
-	{
-		mLayouts.reserve(_pipLayout.bindSetDescs.size());
-
-		for (auto it = _pipLayout.bindSetDescs.begin(); it != _pipLayout.bindSetDescs.end(); ++it)
-		{
-			DescriptorSetLayout& layout = mLayouts.emplace_back();
-			layout.Create(_device, *it);
-		}
-	}
-	
-	void Material::DestroyDescriptorSetLayouts(const Device& _device)
-	{
-		for (auto it = mLayouts.begin(); it != mLayouts.end(); ++it)
-			it->Destroy(_device);
-
-		mLayouts.clear();
-	}
-
-
 	void Material::Create(const Device& _device,
-		const RenderPipelineLayoutDescriptor& _pipLayout,
-		const RenderMaterialBindings& _bindings)
+		const PipelineLayout& _pipLayout,
+		const RenderPipelineLayoutDescriptor& _pipLayoutDesc,
+		const MaterialBindingData& _bindData)
 	{
-		CreateDescriptorPool(_device, _pipLayout);
-		CreateDescriptorSetLayouts(_device, _pipLayout);
+		ARenderMaterial::Create(_pipLayoutDesc);
 
-		mSets = mPool.Allocate(_device, mLayouts);
+		CreateDescriptorPool(_device, _pipLayoutDesc);
+
+		mSets = mPool.Allocate(_device, _pipLayout.GetDescriptorSetLayouts());
 
 		SA_LOG("Material created.", Infos, SA/Engine/Render/Vulkan);
 
-		if(!_bindings.empty())
-			Update(_device, _bindings);
+		if(!_bindData.Empty())
+			Bind(_device, _bindData);
 	}
 
 	void Material::Destroy(const Device& _device)
 	{
+		ARenderMaterial::Destroy();
+
 		// No need to be called: DescriptorPool Destroy already free memory.
 		// mPool.Free(_device, mSets);
 		mSets.clear();
 
 		DestroyDescriptorPool(_device);
-		DestroyDescriptorSetLayouts(_device);
 
 		SA_LOG("Material destroyed.", Infos, SA/Engine/Render/Vulkan);
 	}
 
-	
-	void Material::Update(const Device& _device, const RenderMaterialBindings& _bindings)
+
+	void Material::ParseBinding(MaterialBindRecorder& _rec, const MaterialStaticBindingInfos& _infos, ARenderMaterialBinding* _binding)
 	{
-		DescriptorSetUpdater updater(mSets);
-		std::vector<VkWriteDescriptorSet> descWrites;
+		SA_ASSERT(OutOfArrayRange, SA/Engine/Render/Vulkan, _infos.set, mSets);
+		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _binding, L"Input binding nulltpr!");
 
-		for (auto it = _bindings.begin(); it != _bindings.end(); ++it)
+		VkWriteDescriptorSet& descWrite = _rec.descWrites.emplace_back();
+		descWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+		descWrite.pNext = nullptr;
+		descWrite.dstSet = mSets[_infos.set];
+		descWrite.dstBinding = _infos.binding;
+		descWrite.dstArrayElement = _infos.offset;
+
+		_binding->FillVkDescriptorWrite(_rec, descWrite);
+	}
+
+	void Material::Bind(const Device& _device, const MaterialBindingData& _bindData)
+	{
+		MaterialBindRecorder rec;
+		
+		for(auto& pair : _bindData.staticBindings)
+			ParseBinding(rec, pair.first, pair.second);
+
+		for(auto& pair : _bindData.namedBindings)
 		{
-			const ARenderMaterialBinding& bind = **it;
+			MaterialStaticBindingInfos staticBind;
 
-			VkWriteDescriptorSet descWrite = bind.MakeVkDescriptors(updater);
-
-			descWrites.push_back(descWrite);
+			if(GetStaticBindFromNamed(pair.first, staticBind))
+				ParseBinding(rec, staticBind, pair.second);
 		}
 
-		vkUpdateDescriptorSets(_device, (uint32_t)descWrites.size(), descWrites.data(), 0, nullptr);
+		rec.Submit(_device);
 	}
 }

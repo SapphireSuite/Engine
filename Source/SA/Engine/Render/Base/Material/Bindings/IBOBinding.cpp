@@ -12,14 +12,13 @@
 
 namespace SA
 {
-	IBOBinding::IBOBinding(uint32_t _binding, uint32_t _set, const ATexture* _IBO) :
-		ARenderMaterialBinding(_binding, _set),
+	IBOBinding::IBOBinding(const ATexture* _IBO) :
 		IBOs{ _IBO }
 	{
+
 	}
 	
-	IBOBinding::IBOBinding(uint32_t _binding, uint32_t _set, std::vector<const ATexture*> _IBOs) :
-		ARenderMaterialBinding(_binding, _set),
+	IBOBinding::IBOBinding(std::vector<const ATexture*> _IBOs) noexcept :
 		IBOs{ std::move(_IBOs) }
 	{
 	}
@@ -27,28 +26,17 @@ namespace SA
 
 #if SA_VULKAN
 
-	VkDescriptorType IBOBinding::GetVkDescriptorType() const noexcept
+	void IBOBinding::FillVkDescriptorWrite(VK::MaterialBindRecorder& _rec, VkWriteDescriptorSet& _descWrite)
 	{
-		return VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-	}
-
-	VkWriteDescriptorSet IBOBinding::MakeVkDescriptors(VK::DescriptorSetUpdater& _updater) const
-	{
-		std::vector<VkDescriptorImageInfo>& descs = _updater.imageDescs.emplace_back();
+		std::vector<VkDescriptorImageInfo>& descs = _rec.imageDescs.emplace_back();
+		descs.reserve(IBOs.size());
 
 		for (auto it = IBOs.begin(); it != IBOs.end(); ++it)
 			descs.emplace_back(CastRef<VK::Texture>(*it).CreateDescriptorImageInfo());
 
-		VkWriteDescriptorSet descWrite{};
-		descWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-		descWrite.pNext = nullptr;
-		descWrite.dstSet = _updater.sets[set];
-		descWrite.dstBinding = binding;
-		descWrite.descriptorCount = (uint32_t)descs.size();
-		descWrite.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-		descWrite.pImageInfo = descs.data();
-
-		return descWrite;
+		_descWrite.descriptorCount = (uint32_t)IBOs.size();
+		_descWrite.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+		_descWrite.pImageInfo = descs.data();
 	}
 
 #endif

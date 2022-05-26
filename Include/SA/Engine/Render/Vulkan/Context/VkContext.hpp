@@ -90,9 +90,12 @@ namespace SA::VK
 		void DestroyPipeline(ARenderPipeline* _pipeline) override final;
 
 
-		ARenderMaterial* CreateMaterial(const RenderPipelineLayoutDescriptor& _pipLayout,
-			const RenderMaterialBindings& _bindings = RenderMaterialBindings()) override final;
+		ARenderMaterial* CreateMaterial(const ARenderPipelineLayout* _pipLayout,
+			const RenderPipelineLayoutDescriptor& _pipLayoutDesc,
+			const MaterialBindingData& _bindData = MaterialBindingData()) override final;
 		void DestroyMaterial(ARenderMaterial* _mat) override final;
+		void BindMaterialData(ARenderMaterial* _mat, const MaterialBindingData& _bindData) override final;
+
 //}
 	};
 

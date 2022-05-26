@@ -74,10 +74,11 @@ int main()
 		"Resources/Textures/missing_texture.png"
 	);
 
-	RenderMaterialBindings unlitMatBinds;
-	unlitMatBinds.Add<IBOBinding>(0, 0, missingTexture);
-	ARenderMaterial* const unlitMat = renderContext->CreateMaterial(unlitRender.pipLayoutDesc, unlitMatBinds);
 
+	MaterialBindingData unlitBindData;
+	unlitBindData.Add<IBOBinding>({ "albedo" }, missingTexture);
+	ARenderMaterial* const unlitMat = renderContext->CreateMaterial(unlitRender.pipLayout, unlitRender.pipLayoutDesc, unlitBindData);
+	// renderContext->BindMaterialData(unlitMat, unlitBindData);
 
 
 	renderContext->SubmitResourceInitializer(resInit);

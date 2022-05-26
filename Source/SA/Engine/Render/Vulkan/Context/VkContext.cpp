@@ -274,14 +274,15 @@ namespace SA::VK
 	}
 
 
-	ARenderMaterial* Context::CreateMaterial(const RenderPipelineLayoutDescriptor& _pipLayout,
-		const RenderMaterialBindings& _bindings)
+	ARenderMaterial* Context::CreateMaterial(const ARenderPipelineLayout* _pipLayout,
+		const RenderPipelineLayoutDescriptor& _pipLayoutDesc,
+		const MaterialBindingData& _bindData)
 	{
 		CheckCreated();
 
 		Material* const mat = mMaterials.Emplace();
 
-		mat->Create(mDevice, _pipLayout, _bindings);
+		mat->Create(mDevice, CastRef<PipelineLayout>(_pipLayout), _pipLayoutDesc, _bindData);
 
 		return mat;
 	}
@@ -292,6 +293,14 @@ namespace SA::VK
 		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _mat);
 
 		mMaterials.Erase(_mat, ContextObjDestroyer<Material>{ mDevice });
+	}
+
+	void Context::BindMaterialData(ARenderMaterial* _mat, const MaterialBindingData& _bindData)
+	{
+		CheckCreated();
+		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _mat);
+
+		Cast<Material>(_mat)->Bind(mDevice, _bindData);
 	}
 
 //}

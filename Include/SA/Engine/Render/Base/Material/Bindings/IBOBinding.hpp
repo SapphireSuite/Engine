@@ -18,16 +18,12 @@ namespace SA
 	public:
 		std::vector<const ATexture*> IBOs;
 
-		IBOBinding() = default;
-		IBOBinding(uint32_t _binding, uint32_t _set, const ATexture* _IBO);
-		IBOBinding(uint32_t _binding, uint32_t _set, std::vector<const ATexture*> _IBOs);
-
+		IBOBinding(const ATexture* _IBO);
+		IBOBinding(std::vector<const ATexture*> _IBOs) noexcept;
 
 	#if SA_VULKAN
 
-		VkDescriptorType GetVkDescriptorType() const noexcept override final;
-	
-		VkWriteDescriptorSet MakeVkDescriptors(VK::DescriptorSetUpdater& _updater) const override final;
+		void FillVkDescriptorWrite(VK::MaterialBindRecorder& _rec, VkWriteDescriptorSet& _descWrite) override final;
 
 	#endif
 	};
