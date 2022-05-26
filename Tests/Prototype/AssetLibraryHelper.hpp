@@ -32,8 +32,8 @@ namespace SA
 	AShader* LoadImportSaveCreateShader(
 		ARenderContext* _renderContext,
 		ARenderResourceInitializer* _resInit, 
-		RenderPipelineDescriptor& _pipDesc,
-		RenderPipelineLayoutDescriptor& _pipLayoutDesc,
+		PipelineDescriptor& _pipDesc,
+		PipelineLayoutDescriptor& _pipLayoutDesc,
 		const std::string& _assetPath,
 		const std::string& _resPath)
 	{

@@ -15,10 +15,10 @@ namespace SA
 		AShader* vertShader = nullptr;
 		AShader* fragShader = nullptr;
 
-		RenderPipelineLayoutDescriptor pipLayoutDesc;
+		PipelineLayoutDescriptor pipLayoutDesc;
 		ARenderPipelineLayout* pipLayout = nullptr;
 
-		RenderPipelineDescriptor pipDesc;
+		PipelineDescriptor pipDesc;
 		ARenderPipeline* pipeline = nullptr;
 
 		void Create(ARenderContext* _renderContext,

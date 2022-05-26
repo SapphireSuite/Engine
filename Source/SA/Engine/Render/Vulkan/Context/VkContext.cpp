@@ -235,7 +235,7 @@ namespace SA::VK
 	}
 
 	
-	ARenderPipelineLayout* Context::CreatePipelineLayout(const RenderPipelineLayoutDescriptor& _desc)
+	ARenderPipelineLayout* Context::CreatePipelineLayout(const PipelineLayoutDescriptor& _desc)
 	{
 		CheckCreated();
 		PipelineLayout* const pipLayout = mPipelineLayouts.Emplace();
@@ -254,7 +254,7 @@ namespace SA::VK
 	}
 
 
-	ARenderPipeline* Context::CreatePipeline(const RenderPipelineDescriptor& _desc, const ARenderPipelineLayout* _pipLayout)
+	ARenderPipeline* Context::CreatePipeline(const PipelineDescriptor& _desc, const ARenderPipelineLayout* _pipLayout)
 	{
 		CheckCreated();
 
@@ -275,7 +275,7 @@ namespace SA::VK
 
 
 	ARenderMaterial* Context::CreateMaterial(const ARenderPipelineLayout* _pipLayout,
-		const RenderPipelineLayoutDescriptor& _pipLayoutDesc,
+		const PipelineLayoutDescriptor& _pipLayoutDesc,
 		const MaterialBindingData& _bindData)
 	{
 		CheckCreated();

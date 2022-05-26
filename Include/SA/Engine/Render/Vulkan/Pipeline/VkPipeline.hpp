@@ -22,7 +22,7 @@ namespace SA::VK
 		using ARenderPipeline::Destroy; // overloaded.
 
 	public:
-		void Create(const Device& _device, const RenderPipelineDescriptor& _desc, const PipelineLayout& _layout);
+		void Create(const Device& _device, const PipelineDescriptor& _desc, const PipelineLayout& _layout);
 		void Destroy(const Device& _device);
 
 		void Bind(ARenderFrame& _frame) override final;

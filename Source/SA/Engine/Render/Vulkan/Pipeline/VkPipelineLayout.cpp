@@ -83,7 +83,7 @@ namespace SA::VK
 	}
 
 
-	void PipelineLayout::Create(const Device& _device, const RenderPipelineLayoutDescriptor& _desc)
+	void PipelineLayout::Create(const Device& _device, const PipelineLayoutDescriptor& _desc)
 	{
 		ARenderPipelineLayout::Create();
 

@@ -62,15 +62,15 @@ namespace SA
 		virtual void DestroyCubemap(ACubemap* _texture) = 0;
 
 
-		virtual ARenderPipelineLayout* CreatePipelineLayout(const RenderPipelineLayoutDescriptor& _desc) = 0;
+		virtual ARenderPipelineLayout* CreatePipelineLayout(const PipelineLayoutDescriptor& _desc) = 0;
 		virtual void DestroyPipelineLayout(ARenderPipelineLayout* _pipLayout) = 0;
 
-		virtual ARenderPipeline* CreatePipeline(const RenderPipelineDescriptor& _desc, const ARenderPipelineLayout* _pipLayout) = 0;
+		virtual ARenderPipeline* CreatePipeline(const PipelineDescriptor& _desc, const ARenderPipelineLayout* _pipLayout) = 0;
 		virtual void DestroyPipeline(ARenderPipeline* _pip) = 0;
 
 
 		virtual ARenderMaterial* CreateMaterial(const ARenderPipelineLayout* _pipLayout,
-			const RenderPipelineLayoutDescriptor& _pipLayoutDesc,
+			const PipelineLayoutDescriptor& _pipLayoutDesc,
 			const MaterialBindingData& _bindData = MaterialBindingData()) = 0;
 		virtual void DestroyMaterial(ARenderMaterial* _mat) = 0;
 		virtual void BindMaterialData(ARenderMaterial* _mat, const MaterialBindingData& _bindData) = 0;

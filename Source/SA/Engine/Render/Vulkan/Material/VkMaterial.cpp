@@ -5,7 +5,7 @@
 
 #include <HI/Cast.hpp>
 
-#include <Render/Base/Pipeline/Descriptors/RenderPipelineLayoutDescriptor.hpp>
+#include <Render/Base/Pipeline/Descriptors/PipelineLayoutDescriptor.hpp>
 
 #include <Render/Vulkan/Debug/Debug.hpp>
 #include <Render/Vulkan/Device/VkDevice.hpp>
@@ -13,7 +13,7 @@
 
 namespace SA::VK
 {
-	void Material::CreateDescriptorPool(const Device& _device, const RenderPipelineLayoutDescriptor& _pipLayoutDesc)
+	void Material::CreateDescriptorPool(const Device& _device, const PipelineLayoutDescriptor& _pipLayoutDesc)
 	{
 		DescriptorPoolInfos infos;
 		infos.setNum = (uint32_t)_pipLayoutDesc.bindSetDescs.size();
@@ -32,7 +32,7 @@ namespace SA::VK
 
 	void Material::Create(const Device& _device,
 		const PipelineLayout& _pipLayout,
-		const RenderPipelineLayoutDescriptor& _pipLayoutDesc,
+		const PipelineLayoutDescriptor& _pipLayoutDesc,
 		const MaterialBindingData& _bindData)
 	{
 		ARenderMaterial::Create(_pipLayoutDesc);

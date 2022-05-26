@@ -83,15 +83,15 @@ namespace SA::VK
 		void DestroyCubemap(ACubemap* _cubemap) override final;
 
 
-		ARenderPipelineLayout* CreatePipelineLayout(const RenderPipelineLayoutDescriptor& _desc) override final;
+		ARenderPipelineLayout* CreatePipelineLayout(const PipelineLayoutDescriptor& _desc) override final;
 		void DestroyPipelineLayout(ARenderPipelineLayout* _pipLayout) override final;
 
-		ARenderPipeline* CreatePipeline(const RenderPipelineDescriptor& _desc, const ARenderPipelineLayout* _pipLayout) override final;
+		ARenderPipeline* CreatePipeline(const PipelineDescriptor& _desc, const ARenderPipelineLayout* _pipLayout) override final;
 		void DestroyPipeline(ARenderPipeline* _pipeline) override final;
 
 
 		ARenderMaterial* CreateMaterial(const ARenderPipelineLayout* _pipLayout,
-			const RenderPipelineLayoutDescriptor& _pipLayoutDesc,
+			const PipelineLayoutDescriptor& _pipLayoutDesc,
 			const MaterialBindingData& _bindData = MaterialBindingData()) override final;
 		void DestroyMaterial(ARenderMaterial* _mat) override final;
 		void BindMaterialData(ARenderMaterial* _mat, const MaterialBindingData& _bindData) override final;

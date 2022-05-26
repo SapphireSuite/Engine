@@ -40,7 +40,7 @@ namespace SA
 		public:
 			const std::vector<DescriptorSetLayout>& GetDescriptorSetLayouts() const noexcept;
 
-			void Create(const Device& _device, const RenderPipelineLayoutDescriptor& _desc);
+			void Create(const Device& _device, const PipelineLayoutDescriptor& _desc);
 			void Destroy(const Device& _device);
 
 			operator VkPipelineLayout() const noexcept;

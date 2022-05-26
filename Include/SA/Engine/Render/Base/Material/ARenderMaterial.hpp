@@ -16,7 +16,7 @@
 namespace SA
 {
 	class ATexture;
-	struct RenderPipelineLayoutDescriptor;
+	struct PipelineLayoutDescriptor;
 	class ARenderMaterialBindRecorder;
 
 	class ARenderMaterial : protected HardwareInterface
@@ -35,7 +35,7 @@ namespace SA
 
 
 	protected:
-		void Create(const RenderPipelineLayoutDescriptor& _pipLayoutDesc);
+		void Create(const PipelineLayoutDescriptor& _pipLayoutDesc);
 
 		bool GetStaticBindFromNamed(const MaterialNamedBindingInfos& _named, MaterialStaticBindingInfos& _static) const;
 	};

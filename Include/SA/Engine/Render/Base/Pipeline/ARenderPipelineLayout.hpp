@@ -7,7 +7,7 @@
 
 #include <SA/Engine/HI/HardwareInterface.hpp>
 
-#include <SA/Engine/Render/Base/Pipeline/Descriptors/RenderPipelineLayoutDescriptor.hpp>
+#include <SA/Engine/Render/Base/Pipeline/Descriptors/PipelineLayoutDescriptor.hpp>
 
 namespace SA
 {

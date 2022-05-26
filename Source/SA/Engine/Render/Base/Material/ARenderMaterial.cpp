@@ -4,11 +4,11 @@
 
 #include <SA/Collections/Debug>
 
-#include <Render/Base/Pipeline/Descriptors/RenderPipelineLayoutDescriptor.hpp>
+#include <Render/Base/Pipeline/Descriptors/PipelineLayoutDescriptor.hpp>
 
 namespace SA
 {
-	void ARenderMaterial::Create(const RenderPipelineLayoutDescriptor& _pipLayoutDesc)
+	void ARenderMaterial::Create(const PipelineLayoutDescriptor& _pipLayoutDesc)
 	{
 		HardwareInterface::Create();
 

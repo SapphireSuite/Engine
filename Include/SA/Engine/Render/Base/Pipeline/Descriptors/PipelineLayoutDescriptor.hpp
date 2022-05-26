@@ -2,8 +2,8 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_ENGINE_RENDER_PIPELINE_LAYOUT_DESCRIPTOR_GUARD
-#define SAPPHIRE_ENGINE_RENDER_PIPELINE_LAYOUT_DESCRIPTOR_GUARD
+#ifndef SAPPHIRE_ENGINE_PIPELINE_LAYOUT_DESCRIPTOR_GUARD
+#define SAPPHIRE_ENGINE_PIPELINE_LAYOUT_DESCRIPTOR_GUARD
 
 #include <vector>
 
@@ -16,7 +16,7 @@ namespace SA
 	struct ShaderBindingSetDescriptor;
 	struct ShaderPushConstantDescriptor;
 
-	struct RenderPipelineLayoutDescriptor
+	struct PipelineLayoutDescriptor
 	{
 		std::vector<PipelineBindingSetDescriptor> bindSetDescs;
 		std::vector<PipelinePushConstantDescriptor> pushConstDescs;

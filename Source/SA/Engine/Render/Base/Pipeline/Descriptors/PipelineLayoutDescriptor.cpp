@@ -1,6 +1,6 @@
 // Copyright (c) 2022 Sapphire's Suite. All Rights Reserved.
 
-#include <Render/Base/Pipeline/Descriptors/RenderPipelineLayoutDescriptor.hpp>
+#include <Render/Base/Pipeline/Descriptors/PipelineLayoutDescriptor.hpp>
 
 #include <SA/Collections/Debug>
 
@@ -8,14 +8,14 @@
 
 namespace SA
 {
-	void RenderPipelineLayoutDescriptor::AddShader(const ShaderDescriptor& _desc)
+	void PipelineLayoutDescriptor::AddShader(const ShaderDescriptor& _desc)
 	{
 		AddBindingSets(_desc);
 		AddPushConstants(_desc);
 	}
 
 
-	void RenderPipelineLayoutDescriptor::AddBindingSets(const ShaderDescriptor& _desc)
+	void PipelineLayoutDescriptor::AddBindingSets(const ShaderDescriptor& _desc)
 	{
 		if (bindSetDescs.size() < _desc.bindingSet.size())
 			bindSetDescs.resize(_desc.bindingSet.size());
@@ -45,7 +45,7 @@ namespace SA
 		}
 	}
 	
-	void RenderPipelineLayoutDescriptor::AddPushConstants(const ShaderDescriptor& _desc)
+	void PipelineLayoutDescriptor::AddPushConstants(const ShaderDescriptor& _desc)
 	{
 		if(_desc.pushConstants.empty())
 			return;

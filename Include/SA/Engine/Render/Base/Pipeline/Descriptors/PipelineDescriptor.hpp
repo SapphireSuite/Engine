@@ -2,8 +2,8 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_ENGINE_RENDER_PIPELINE_DESCRIPTOR_GUARD
-#define SAPPHIRE_ENGINE_RENDER_PIPELINE_DESCRIPTOR_GUARD
+#ifndef SAPPHIRE_ENGINE_PIPELINE_DESCRIPTOR_GUARD
+#define SAPPHIRE_ENGINE_PIPELINE_DESCRIPTOR_GUARD
 
 #include <SA/Engine/Render/Base/Pipeline/Descriptors/PipelineRenderPassInfos.hpp>
 #include <SA/Engine/Render/Base/Pipeline/Descriptors/PipelineShaderInfos.hpp>
@@ -11,7 +11,7 @@
 
 namespace SA
 {
-	struct RenderPipelineDescriptor
+	struct PipelineDescriptor
 	{
 		/// Bound RenderPass infos.
 		PipelineRenderPassInfos passInfos;
