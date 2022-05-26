@@ -44,7 +44,7 @@ namespace SA::VK
 		SA_LOG("Material created.", Infos, SA/Engine/Render/Vulkan);
 
 		if(!_bindData.Empty())
-			Bind(_device, _bindData);
+			BindData(_device, _bindData);
 	}
 
 	void Material::Destroy(const Device& _device)
@@ -76,7 +76,7 @@ namespace SA::VK
 		_binding->FillVkDescriptorWrite(_rec, descWrite);
 	}
 
-	void Material::Bind(const Device& _device, const MaterialBindingData& _bindData)
+	void Material::BindData(const Device& _device, const MaterialBindingData& _bindData)
 	{
 		MaterialBindRecorder rec;
 		

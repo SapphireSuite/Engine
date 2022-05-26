@@ -34,7 +34,7 @@ namespace SA::VK
 			const MaterialBindingData& _bindData = MaterialBindingData());
 		void Destroy(const Device& _device);
 
-		void Bind(const Device& _device, const MaterialBindingData& _bindData);
+		void BindData(const Device& _device, const MaterialBindingData& _bindData);
 	};
 }
 

@@ -300,7 +300,7 @@ namespace SA::VK
 		CheckCreated();
 		SA_ASSERT(Nullptr, SA/Engine/Render/Vulkan, _mat);
 
-		Cast<Material>(_mat)->Bind(mDevice, _bindData);
+		Cast<Material>(_mat)->BindData(mDevice, _bindData);
 	}
 
 //}
