@@ -5,13 +5,13 @@
 #ifndef SAPPHIRE_ENGINE_TEXTURE_ASSET_GUARD
 #define SAPPHIRE_ENGINE_TEXTURE_ASSET_GUARD
 
-#include <SA/Engine/SDK/Assets/AAsset.hpp>
+#include <SA/Engine/SDK/Assets/Render/ARenderAsset.hpp>
 
 #include <SA/Engine/Render/Base/Texture/RawTexture.hpp>
 
 namespace SA::SDK
 {
-	class TextureAsset : public AAsset
+	class TextureAsset : public ARenderAsset
 	{
 		bool Load_Internal(std::string&& _bin) override final;
 		bool Save_Internal(std::fstream& _fstream) const override final;

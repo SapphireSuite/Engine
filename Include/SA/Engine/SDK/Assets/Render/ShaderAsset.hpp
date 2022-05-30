@@ -5,14 +5,14 @@
 #ifndef SAPPHIRE_ENGINE_SHADER_ASSET_GUARD
 #define SAPPHIRE_ENGINE_SHADER_ASSET_GUARD
 
-#include <SA/Engine/SDK/Assets/AAsset.hpp>
+#include <SA/Engine/SDK/Assets/Render/ARenderAsset.hpp>
 
 #include <SA/Engine/Render/Base/Shader/RawShader.hpp>
 #include <SA/Engine/Render/Base/Shader/Descriptors/ShaderDescriptor.hpp>
 
 namespace SA::SDK
 {
-	class ShaderAsset : public AAsset
+	class ShaderAsset : public ARenderAsset
 	{
 		std::string mResourcePath;
 		mutable std::string mAssetPath;
