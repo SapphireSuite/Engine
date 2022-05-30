@@ -1,6 +1,6 @@
 // Copyright (c) 2022 Sapphire's Suite. All Rights Reserved.
 
-#include <SA/Engine/Render/Base/Pass/SampleBits.hpp>
+#include <SA/Engine/Render/Base/Pass/Descriptors/SampleBits.hpp>
 
 namespace SA
 {

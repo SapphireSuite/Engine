@@ -1,6 +1,6 @@
 // Copyright (c) 2022 Sapphire's Suite. All Rights Reserved.
 
-#include <Render/Base/Pass/SubPassDescriptor.hpp>
+#include <Render/Base/Pass/Descriptors/SubPassAttachmentLoadMode.hpp>
 
 #include <SA/Collections/Debug>
 

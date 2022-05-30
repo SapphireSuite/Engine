@@ -11,12 +11,7 @@ namespace SA::SDK
 		return !raw.data.empty();
 	}
 
-	
-	void TextureAsset::UnLoad()
-	{
-		raw.Clear();
-	}
-	
+
 	bool TextureAsset::Load_Internal(std::string&& _bin)
 	{
 		Ser::BinaryStream ser(std::move(_bin));
@@ -26,7 +21,12 @@ namespace SA::SDK
 		return true;
 	}
 
-	
+	void TextureAsset::UnLoad()
+	{
+		raw.Clear();
+	}
+
+
 	bool TextureAsset::Save_Internal(std::fstream& _fstream) const
 	{
 		Ser::BinaryStream ser;
@@ -38,7 +38,7 @@ namespace SA::SDK
 		return true;
 	}
 
-	
+
 	bool TextureAsset::Import(const std::string& _path)
 	{
 		return StbImage::Import(_path, raw);

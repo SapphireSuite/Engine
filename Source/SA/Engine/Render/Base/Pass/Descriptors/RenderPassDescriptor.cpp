@@ -1,11 +1,17 @@
 // Copyright (c) 2022 Sapphire's Suite. All Rights Reserved.
 
-#include <Render/Base/Pass/RenderPassDescriptor.hpp>
+#include <Render/Base/Pass/Descriptors/RenderPassDescriptor.hpp>
 
 #include <Render/Base/Surface/ARenderSurface.hpp>
 
 namespace SA
 {
+	void RenderPassDescriptor::Clear()
+	{
+		subPassDescs.clear();
+	}
+
+
 	RenderPassDescriptor RenderPassDescriptor::DefaultSingle(const ARenderSurface* _surface)
 	{
 		RenderPassDescriptor result{};
@@ -76,5 +82,21 @@ namespace SA
 
 
 		return result;
+	}
+
+
+	namespace Ser
+	{
+		template <>
+		bool ToBinary(const RenderPassDescriptor& _desc, std::string& _dst)
+		{
+			return ToBinary(_desc.subPassDescs, _dst);
+		}
+
+		template <>
+		bool FromBinary(RenderPassDescriptor& _desc, const std::string& _src, size_t& _offset)
+		{
+			return FromBinary(_desc.subPassDescs, _src, _offset);
+		}
 	}
 }

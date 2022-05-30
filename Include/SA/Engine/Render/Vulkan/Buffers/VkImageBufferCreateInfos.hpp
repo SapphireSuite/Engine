@@ -9,7 +9,7 @@
 
 #include <SA/Engine/Render/Base/Misc/Format.hpp>
 #include <SA/Engine/Render/Base/Misc/ImageType.hpp>
-#include <SA/Engine/Render/Base/Pass/SampleBits.hpp>
+#include <SA/Engine/Render/Base/Pass/Descriptors/SampleBits.hpp>
 
 namespace SA::VK
 {

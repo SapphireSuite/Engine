@@ -9,7 +9,7 @@
 
 #include <SA/Maths/Geometry/Rectangle2D.hpp>
 
-#include <SA/Engine/Render/Base/Pass/RenderPassDescriptor.hpp>
+#include <SA/Engine/Render/Base/Pass/Descriptors/RenderPassDescriptor.hpp>
 
 namespace SA
 {
