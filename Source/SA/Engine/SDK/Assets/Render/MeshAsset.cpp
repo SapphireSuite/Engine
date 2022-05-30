@@ -35,13 +35,4 @@ namespace SA::SDK
 
 		return true;
 	}
-
-	
-	bool MeshAsset::Import(const std::string& _path)
-	{
-		// TODO: Implement.
-		(void)_path;
-
-		return false;
-	}
 }

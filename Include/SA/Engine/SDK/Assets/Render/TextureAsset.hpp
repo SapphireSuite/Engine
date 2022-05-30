@@ -23,7 +23,7 @@ namespace SA::SDK
 
 		void UnLoad() override final;
 
-		bool Import(const std::string& _path) override final;
+		bool Import(const std::string& _path);
 	};
 }
 

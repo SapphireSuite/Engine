@@ -24,8 +24,6 @@ namespace SA::SDK
 		virtual void UnLoad() = 0;
 
 		virtual bool Save(const std::string& _path) const;
-
-		virtual bool Import(const std::string& _path) = 0;
 	};
 }
 

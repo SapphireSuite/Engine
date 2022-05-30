@@ -33,7 +33,7 @@ namespace SA::SDK
 
 		bool Save(const std::string& _path) const override final;
 
-		bool Import(const std::string& _path) override final;
+		bool Import(const std::string& _path);
 	};
 }
 

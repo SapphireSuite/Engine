@@ -22,8 +22,6 @@ namespace SA::SDK
 		bool IsValid() const override final;
 
 		void UnLoad() override final;
-
-		bool Import(const std::string& _path) override final;
 	};
 }
 
