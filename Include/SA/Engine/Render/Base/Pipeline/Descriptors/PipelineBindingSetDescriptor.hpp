@@ -7,25 +7,25 @@
 
 #include <vector>
 
-#include <SA/Engine/Render/Base/Shader/Descriptors/ShaderStage.hpp>
-#include <SA/Engine/Render/Base/Shader/Descriptors/ShaderBindingDescriptor.hpp>
+#include <SA/Engine/Render/Base/Pipeline/Descriptors/PipelineBindingDescriptor.hpp>
 
 namespace SA
 {
-	struct PipelineBindingDescriptor : public ShaderBindingDescriptor
-	{
-		Flags<ShaderStage> stageFlags;
-
-		PipelineBindingDescriptor() = default;
-		PipelineBindingDescriptor(ShaderBindingDescriptor&& _other) noexcept : ShaderBindingDescriptor(std::move(_other)) {}
-		PipelineBindingDescriptor(const ShaderBindingDescriptor& _other) noexcept : ShaderBindingDescriptor(_other) {}
-	};
-
 	struct PipelineBindingSetDescriptor
 	{
 		/// List of registered bindings for set.
 		std::vector<PipelineBindingDescriptor> bindings;
 	};
+
+
+	namespace Ser
+	{
+		template <>
+		bool ToBinary(const PipelineBindingSetDescriptor& _desc, std::string& _dst);
+
+		template <>
+		bool FromBinary(PipelineBindingSetDescriptor& _desc, const std::string& _src, size_t& _offset);
+	}
 }
 
 #endif // GUARD

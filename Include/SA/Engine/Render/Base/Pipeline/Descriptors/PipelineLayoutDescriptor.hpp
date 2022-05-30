@@ -21,12 +21,25 @@ namespace SA
 		std::vector<PipelineBindingSetDescriptor> bindSetDescs;
 		std::vector<PipelinePushConstantDescriptor> pushConstDescs;
 
+		bool Empty() const noexcept;
+		void Clear();
+
 		void AddShader(const ShaderDescriptor& _desc);
 
 	private:
 		void AddBindingSets(const ShaderDescriptor& _desc);
 		void AddPushConstants(const ShaderDescriptor& _desc);
 	};
+
+
+	namespace Ser
+	{
+		template <>
+		bool ToBinary(const PipelineLayoutDescriptor& _desc, std::string& _dst);
+
+		template <>
+		bool FromBinary(PipelineLayoutDescriptor& _desc, const std::string& _src, size_t& _offset);
+	}
 }
 
 #endif // GUARD

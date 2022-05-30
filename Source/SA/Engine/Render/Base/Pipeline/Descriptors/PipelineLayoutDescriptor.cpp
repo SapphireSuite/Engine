@@ -8,6 +8,18 @@
 
 namespace SA
 {
+	bool PipelineLayoutDescriptor::Empty() const noexcept
+	{
+		return bindSetDescs.empty() && pushConstDescs.empty();
+	}
+
+	void PipelineLayoutDescriptor::Clear()
+	{
+		bindSetDescs.clear();
+		pushConstDescs.clear();
+	}
+
+
 	void PipelineLayoutDescriptor::AddShader(const ShaderDescriptor& _desc)
 	{
 		AddBindingSets(_desc);
@@ -58,6 +70,28 @@ namespace SA
 		{
 			pipPushCst.offset = std::min(pipPushCst.offset, pushCst.offset);
 			pipPushCst.size += pushCst.size;
+		}
+	}
+
+
+	namespace Ser
+	{
+		template <>
+		bool ToBinary(const PipelineLayoutDescriptor& _desc, std::string& _dst)
+		{
+			ToBinary(_desc.bindSetDescs, _dst);
+			ToBinary(_desc.pushConstDescs, _dst);
+
+			return true;
+		}
+
+		template <>
+		bool FromBinary(PipelineLayoutDescriptor& _desc, const std::string& _src, size_t& _offset)
+		{
+			FromBinary(_desc.bindSetDescs, _src, _offset);
+			FromBinary(_desc.pushConstDescs, _src, _offset);
+			
+			return true;
 		}
 	}
 }
