@@ -16,6 +16,8 @@ namespace SA
 		std::string name;
 
 		uint32_t location = 0u;
+
+		/// Size in bytes.
 		uint32_t size = 0u;
 
 		bool operator<(const ShaderVertexLocationDescriptor& _rhs) const noexcept;

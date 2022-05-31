@@ -5,6 +5,8 @@
 #ifndef SAPPHIRE_ENGINE_PIPELINE_VERTEX_LOCATION_DESCRIPTOR_GUARD
 #define SAPPHIRE_ENGINE_PIPELINE_VERTEX_LOCATION_DESCRIPTOR_GUARD
 
+#include <SA/Collections/Debug>
+
 #include <SA/Engine/Render/Base/Misc/Format.hpp>
 
 #include <SA/Engine/Render/Base/Mesh/Vertex/Vertex.hpp>
@@ -23,6 +25,10 @@ namespace SA
 		template <typename VertexT, typename VertexCompT>
 		void BindVertexComponent()
 		{
+			SA_ASSERT(Default, SA/Engine/Render, size == sizeof(VertexCompT),
+				L"Try to bind Vertex component with size ["_L << sizeof(VertexCompT) <<
+				L"] different from shader descriptor [" << size << L"]");
+
 			format = VertexCompT::format;
 			componentOffset = VertexT::template GetComponentOffset<VertexCompT>();
 		}

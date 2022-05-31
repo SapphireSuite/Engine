@@ -49,7 +49,7 @@ namespace SA::GLSL
 			locDesc.location = _comp.get_decoration(res.id, spv::DecorationLocation);
 
 			const spirv_cross::SPIRType& type = _comp.get_type(res.type_id);
-			locDesc.size = type.width;
+			locDesc.size = (type.width / 8u) * type.vecsize; // Convert from bits to bytes: / 8u.
 		}
 
 		// Sort by location.
