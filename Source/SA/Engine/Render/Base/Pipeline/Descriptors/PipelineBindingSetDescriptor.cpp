@@ -9,7 +9,7 @@ namespace SA
 		template <>
 		bool ToBinary(const PipelineBindingSetDescriptor& _desc, std::string& _dst)
 		{
-			ToBinary(_desc.bindings, _dst)
+			ToBinary(_desc.bindings, _dst);
 
 			return true;
 		}
@@ -17,7 +17,7 @@ namespace SA
 		template <>
 		bool FromBinary(PipelineBindingSetDescriptor& _desc, const std::string& _src, size_t& _offset)
 		{
-			FromBinary(_desc.bindings, _src, _offset)
+			FromBinary(_desc.bindings, _src, _offset);
 
 			return true;
 		}

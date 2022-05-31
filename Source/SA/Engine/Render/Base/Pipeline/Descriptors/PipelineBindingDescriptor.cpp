@@ -21,7 +21,7 @@ namespace SA
 		bool ToBinary(const PipelineBindingDescriptor& _desc, std::string& _dst)
 		{
 			ToBinary<ShaderBindingDescriptor>(_desc, _dst);
-			ToBinary(_desc.stageFlags, _dst)
+			ToBinary(_desc.stageFlags, _dst);
 
 			return true;
 		}
@@ -30,7 +30,7 @@ namespace SA
 		bool FromBinary(PipelineBindingDescriptor& _desc, const std::string& _src, size_t& _offset)
 		{
 			FromBinary<ShaderBindingDescriptor>(_desc, _src, _offset);
-			FromBinary(_desc.stageFlags, _src, _offset)
+			FromBinary(_desc.stageFlags, _src, _offset);
 
 			return true;
 		}

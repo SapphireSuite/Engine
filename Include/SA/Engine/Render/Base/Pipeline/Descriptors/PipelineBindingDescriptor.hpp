@@ -15,8 +15,8 @@ namespace SA
 		Flags<ShaderStage> stageFlags;
 
 		PipelineBindingDescriptor() = default;
-		PipelineBindingDescriptor(ShaderBindingDescriptor&& _other) noexcept : ShaderBindingDescriptor(std::move(_other)) {}
-		PipelineBindingDescriptor(const ShaderBindingDescriptor& _other) noexcept : ShaderBindingDescriptor(_other) {}
+		PipelineBindingDescriptor(ShaderBindingDescriptor&& _other) noexcept;
+		PipelineBindingDescriptor(const ShaderBindingDescriptor& _other) noexcept;
 	};
 
 

@@ -17,7 +17,6 @@ namespace SA
 {
 	class ATexture;
 	struct PipelineLayoutDescriptor;
-	class ARenderMaterialBindRecorder;
 
 	class ARenderMaterial : protected HardwareInterface
 	{
