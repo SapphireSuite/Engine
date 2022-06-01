@@ -18,6 +18,8 @@ namespace SA::SDK
 		virtual bool Load_Internal(std::string&& _bin) = 0;
 
 	public:
+		virtual ~AAsset() = default;
+
 		virtual bool IsValid() const = 0;
 
 		virtual bool Load(const std::string& _path);

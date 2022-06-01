@@ -7,6 +7,7 @@
 
 #include <SA/Collections/Debug>
 #include <SA/Collections/Render>
+#include <SA/Collections/Assets>
 
 #include <SA/Engine/SDK/Assets/Render/ShaderAsset.hpp>
 #include <SA/Engine/SDK/Assets/Render/TextureAsset.hpp>
@@ -57,6 +58,34 @@ namespace SA
 		ATexture* const texture = _renderContext->CreateTexture(_resInit, asset.raw);
 		
 		return texture;
+	}
+
+
+	AStaticMesh* LoadImportSaveCreateMesh(
+		ARenderContext* _renderContext,
+		ARenderResourceInitializer* _resInit,
+		const std::string& _assetPath,
+		const std::string& _resPath)
+	{
+		SDK::MeshAsset meshAsset;
+
+		if(!meshAsset.Load(_assetPath))
+		{
+			SDK::ModelAsset modelAsset;
+
+			if(modelAsset.Import(_resPath))
+			{
+				meshAsset = modelAsset.meshes[0];
+				meshAsset.Save(_assetPath);
+			}
+			else
+				SA_LOG(L"Import {" << _resPath << L"} Failed", Error, SA/Engine/Prototype);
+		}
+
+
+		AStaticMesh* const mesh = _renderContext->CreateStaticMesh(_resInit, meshAsset.raw);
+		
+		return mesh;
 	}
 }
 

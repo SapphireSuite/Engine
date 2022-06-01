@@ -1,0 +1,21 @@
+// Copyright (c) 2022 Sapphire's Suite. All Rights Reserved.
+
+#pragma once
+
+#ifndef SAPPHIRE_COLLECTIONS_ASSETS_GUARD
+#define SAPPHIRE_COLLECTIONS_ASSETS_GUARD
+
+
+#include <SA/Engine/SDK/Assets/AAsset.hpp>
+
+#if SA_RENDER
+
+	#include <SA/Engine/SDK/Assets/Render/ShaderAsset.hpp>
+	#include <SA/Engine/SDK/Assets/Render/TextureAsset.hpp>
+	#include <SA/Engine/SDK/Assets/Render/MeshAsset.hpp>
+	#include <SA/Engine/SDK/Assets/Render/ModelAsset.hpp>
+
+#endif
+
+
+#endif // GUARD
