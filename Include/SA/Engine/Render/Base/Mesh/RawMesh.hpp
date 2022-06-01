@@ -7,6 +7,8 @@
 
 #include <cstdint>
 
+#include <SA/Maths/Geometry/AABB3D.hpp>
+
 #include <SA/Collections/SerializeBinary>
 
 namespace SA
@@ -15,6 +17,8 @@ namespace SA
 	{
 		std::vector<char> vertices;
 		std::vector<uint32_t> indices;
+
+		AABB3Df aabb;
 
 		void Clear();
 	};

@@ -8,6 +8,8 @@ namespace SA
 	{
 		vertices.clear();
 		indices.clear();
+
+		aabb = AABB3Df();
 	}
 
 
@@ -18,6 +20,7 @@ namespace SA
 		{
 			ToBinary(_raw.vertices, _dst);
 			ToBinary(_raw.indices, _dst);
+			ToBinary(_raw.aabb, _dst);
 
 			return true;
 		}
@@ -27,6 +30,7 @@ namespace SA
 		{
 			FromBinary(_raw.vertices, _src, _offset);
 			FromBinary(_raw.indices, _src, _offset);
+			FromBinary(_raw.aabb, _src, _offset);
 
 			return true;
 		}
