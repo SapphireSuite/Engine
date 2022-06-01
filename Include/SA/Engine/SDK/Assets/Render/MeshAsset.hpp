@@ -9,6 +9,9 @@
 
 #include <SA/Engine/Render/Base/Mesh/RawMesh.hpp>
 
+// Assimp.
+struct aiMesh;
+
 namespace SA::SDK
 {
 	class MeshAsset : public ARenderAsset
@@ -22,6 +25,8 @@ namespace SA::SDK
 		bool IsValid() const override final;
 
 		void UnLoad() override final;
+
+		bool Import(const aiMesh* aiMesh);
 	};
 }
 
