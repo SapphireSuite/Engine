@@ -11,32 +11,23 @@
 
 namespace SA::SDK
 {
-	bool ShaderAsset::IsValid() const
+	bool ShaderAsset::Load(AssetMgr& _mgr, const std::string& _path, std::string&& _bin)
 	{
-		return !raw.data.empty();
-	}
+		SA_LOG(L"Loading shader [" << _path << L"]", Infos, SA/Engine/SDK/Asset);
 
+		(void)_mgr;
 
-	bool ShaderAsset::Load(const std::string& _path)
-	{
-		mAssetPath = _path;
-
-		return AAsset::Load(_path);
-	}
-
-	bool ShaderAsset::Load_Internal(std::string&& _bin)
-	{
 		Ser::BinaryStream ser(std::move(_bin));
 
 		ser >> mResourcePath;
 
-		if (ShouldCompileShader())
+		if (ShouldCompileShader(_path, mResourcePath))
 		{
 			// Re-import shader for compilation.
 
-			if (!Import(mResourcePath))
+			if (!Import(_mgr, mResourcePath))
 			{
-				SA_LOG(L"Shader {" << mAssetPath << L"} Re-import compilation failed!", Error, SA/Engine/SDK/Asset);
+				SA_LOG(L"Shader {" << _path << L"} Re-import compilation failed!", Error, SA/Engine/SDK/Asset);
 				return false;
 			}
 		}
@@ -48,39 +39,33 @@ namespace SA::SDK
 
 		return true;
 	}
-
-	void ShaderAsset::UnLoad()
+	
+	
+	bool ShaderAsset::Save(AssetMgr& _mgr, const std::string& _path, std::string& _bin) const
 	{
-		mResourcePath.clear();
+		SA_LOG(L"Saving shader [" << _path << L"]", Infos, SA/Engine/SDK/Asset);
 
-		raw.Clear();
-		descriptor.Clear();
-	}
+		(void)_mgr;
+		(void)_path;
 
-
-	bool ShaderAsset::Save(const std::string& _path) const
-	{
-		mAssetPath = _path;
-
-		return AAsset::Save(_path);
-	}
-
-	bool ShaderAsset::Save_Internal(std::fstream& _fstream) const
-	{
 		Ser::BinaryStream ser;
 
 		ser << mResourcePath;
 		ser << raw;
 		ser << descriptor;
 
-		_fstream << ser.bin;
+		_bin = std::move(ser.bin);
 
 		return true;
 	}
 
 
-	bool ShaderAsset::Import(const std::string& _path)
+	bool ShaderAsset::Import(AssetMgr& _mgr, const std::string& _path)
 	{
+		SA_LOG(L"Importing shader [" << _path << L"]", Infos, SA/Engine/SDK/Asset);
+
+		(void)_mgr;
+
 		GLSL::ShaderBuilder builder;
 		// AShaderBuilderInterface* builder;
 
@@ -90,12 +75,12 @@ namespace SA::SDK
 	}
 
 
-	bool ShaderAsset::ShouldCompileShader() const noexcept
+	bool ShaderAsset::ShouldCompileShader(const std::string& _assetPath, const std::string& _resPath) noexcept
 	{
 		struct stat assetStat;
 		struct stat resourceStat;
 
-		if(!(stat(mResourcePath.c_str(), &resourceStat) == 0))
+		if(!(stat(_resPath.c_str(), &resourceStat) == 0))
 		{
 			// Resource file stat failed: can't reimport, assume asset is up to date.
 
@@ -103,7 +88,7 @@ namespace SA::SDK
 		}
 		else
 		{
-			stat(mAssetPath.c_str(), &assetStat); // file currently opened: can't fail.
+			stat(_assetPath.c_str(), &assetStat); // file currently opened: can't fail.
 
 			// Check asset is up-to-date.
 			return assetStat.st_mtime < resourceStat.st_mtime;

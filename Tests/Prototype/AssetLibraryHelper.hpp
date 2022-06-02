@@ -9,28 +9,10 @@
 #include <SA/Collections/Render>
 #include <SA/Collections/Assets>
 
-#include <SA/Engine/SDK/Assets/Render/ShaderAsset.hpp>
-#include <SA/Engine/SDK/Assets/Render/TextureAsset.hpp>
-
 namespace SA
 {
-	template <typename T>
-	T LoadImportSaveAsset(const std::string& _assetPath, const std::string& _resPath)
-	{
-		T asset;
-
-		if(!asset.Load(_assetPath))
-		{
-			if(asset.Import(_resPath))
-				asset.Save(_assetPath);
-			else
-				SA_LOG(L"Import {" << _resPath << L"} Failed", Error, SA/Engine/Prototype);
-		}
-
-		return asset;
-	}
-
 	AShader* LoadImportSaveCreateShader(
+		SDK::AssetMgr& _assetMgr,
 		ARenderContext* _renderContext,
 		ARenderResourceInitializer* _resInit, 
 		PipelineDescriptor& _pipDesc,
@@ -38,55 +20,64 @@ namespace SA
 		const std::string& _assetPath,
 		const std::string& _resPath)
 	{
-		SDK::ShaderAsset asset = LoadImportSaveAsset<SDK::ShaderAsset>(_assetPath, _resPath);
+		std::shared_ptr<SDK::ShaderAsset> asset = _assetMgr.LoadOrImport<SDK::ShaderAsset>(_assetPath, _resPath);
 
-		AShader* shader = _renderContext->CreateShader(_resInit, asset.raw);
-		_pipDesc.shaderInfos.AddShader(shader, asset.descriptor);
-		_pipLayoutDesc.AddShader(asset.descriptor);
+		AShader* shader = nullptr;
+
+		if(asset)
+		{
+			shader = _renderContext->CreateShader(_resInit, asset->raw);
+			_pipDesc.shaderInfos.AddShader(shader, asset->descriptor);
+			_pipLayoutDesc.AddShader(asset->descriptor);
+		}
 
 		return shader;
 	}
 
 	ATexture* LoadImportSaveCreateTexture(
+		SDK::AssetMgr& _assetMgr,
 		ARenderContext* _renderContext,
 		ARenderResourceInitializer* _resInit,
 		const std::string& _assetPath,
 		const std::string& _resPath)
 	{
-		SDK::TextureAsset asset = LoadImportSaveAsset<SDK::TextureAsset>(_assetPath, _resPath);
+		std::shared_ptr<SDK::TextureAsset> asset = _assetMgr.LoadOrImport<SDK::TextureAsset>(_assetPath, _resPath);
 
-		ATexture* const texture = _renderContext->CreateTexture(_resInit, asset.raw);
+		ATexture* texture = nullptr;
+
+		if(asset)
+			texture = _renderContext->CreateTexture(_resInit, asset->raw);
 		
 		return texture;
 	}
 
 
-	AStaticMesh* LoadImportSaveCreateMesh(
-		ARenderContext* _renderContext,
-		ARenderResourceInitializer* _resInit,
-		const std::string& _assetPath,
-		const std::string& _resPath)
-	{
-		SDK::MeshAsset meshAsset;
+	// AStaticMesh* LoadImportSaveCreateMesh(
+	// 	ARenderContext* _renderContext,
+	// 	ARenderResourceInitializer* _resInit,
+	// 	const std::string& _assetPath,
+	// 	const std::string& _resPath)
+	// {
+	// 	SDK::MeshAsset meshAsset;
 
-		if(!meshAsset.Load(_assetPath))
-		{
-			SDK::ModelAsset modelAsset;
+	// 	if(!meshAsset.Load(_assetPath))
+	// 	{
+	// 		SDK::ModelAsset modelAsset;
 
-			if(modelAsset.Import(_resPath))
-			{
-				meshAsset = modelAsset.meshes[0];
-				meshAsset.Save(_assetPath);
-			}
-			else
-				SA_LOG(L"Import {" << _resPath << L"} Failed", Error, SA/Engine/Prototype);
-		}
+	// 		if(modelAsset.Import(_resPath))
+	// 		{
+	// 			meshAsset = modelAsset.meshes[0];
+	// 			meshAsset.Save(_assetPath);
+	// 		}
+	// 		else
+	// 			SA_LOG(L"Import {" << _resPath << L"} Failed", Error, SA/Engine/Prototype);
+	// 	}
 
 
-		AStaticMesh* const mesh = _renderContext->CreateStaticMesh(_resInit, meshAsset.raw);
+	// 	AStaticMesh* const mesh = _renderContext->CreateStaticMesh(_resInit, meshAsset.raw);
 		
-		return mesh;
-	}
+	// 	return mesh;
+	// }
 }
 
 #endif // GUARD

@@ -5,27 +5,21 @@
 #ifndef SAPPHIRE_ENGINE_AASSET_GUARD
 #define SAPPHIRE_ENGINE_AASSET_GUARD
 
-#include <fstream>
+#include <string>
 
 namespace SA::SDK
 {
+	class AssetMgr;
+
 	class AAsset
 	{
-		void CreateDirectory(const std::string& _path) const;
+		friend AssetMgr;
 
 	protected:
-		virtual bool Save_Internal(std::fstream& _fstream) const = 0;
-		virtual bool Load_Internal(std::string&& _bin) = 0;
-
-	public:
 		virtual ~AAsset() = default;
 
-		virtual bool IsValid() const = 0;
-
-		virtual bool Load(const std::string& _path);
-		virtual void UnLoad() = 0;
-
-		virtual bool Save(const std::string& _path) const;
+		virtual bool Load(AssetMgr& _mgr, const std::string& _path, std::string&& _bin) = 0;
+		virtual bool Save(AssetMgr& _mgr, const std::string& _path, std::string& _bin) const = 0;
 	};
 }
 

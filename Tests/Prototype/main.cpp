@@ -64,10 +64,15 @@ int main()
 
 	ARenderResourceInitializer* const resInit = renderContext->CreateResourceInitializer();
 
+
+	SDK::AssetMgr assetMgr;
+
+
 	UnlitRenderer unlitRender;
-	unlitRender.Create(renderContext, resInit, renderPass, renderPassDesc, 0u);
+	unlitRender.Create(assetMgr, renderContext, resInit, renderPass, renderPassDesc, 0u);
 
 	ATexture* const missingTexture = LoadImportSaveCreateTexture(
+		assetMgr,
 		renderContext,
 		resInit,
 		"Bin/Assets/Textures/missing_texture.spha",
@@ -81,12 +86,12 @@ int main()
 	// renderContext->BindMaterialData(unlitMat, unlitBindData);
 
 
-	AStaticMesh* const cubeMesh = LoadImportSaveCreateMesh(
-		renderContext,
-		resInit,
-		"Bin/Assets/Meshes/cube.spha",
-		"Resources/Meshes/cube.obj"
-	);
+	// AStaticMesh* const cubeMesh = LoadImportSaveCreateMesh(
+	// 	renderContext,
+	// 	resInit,
+	// 	"Bin/Assets/Meshes/cube.spha",
+	// 	"Resources/Meshes/cube.obj"
+	// );
 
 
 	renderContext->SubmitResourceInitializer(resInit);

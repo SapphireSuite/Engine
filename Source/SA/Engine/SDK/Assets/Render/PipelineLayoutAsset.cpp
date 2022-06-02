@@ -2,36 +2,36 @@
 
 #include <SDK/Assets/Render/PipelineLayoutAsset.hpp>
 
+#include <SA/Collections/Debug>
+
 namespace SA::SDK
 {
-	bool PipelineLayoutAsset::IsValid() const
+	bool PipelineLayoutAsset::Load(AssetMgr& _mgr, const std::string& _path, std::string&& _bin)
 	{
-		return descriptor.Empty();
-	}
+		SA_LOG(L"Loading PipelineLayout [" << _path << L"]", Infos, SA/Engine/SDK/Asset);
 
+		(void)_mgr;
+		(void)_path;
 
-	bool PipelineLayoutAsset::Load_Internal(std::string&& _bin)
-	{
 		Ser::BinaryStream ser(std::move(_bin));
 
 		ser >> descriptor;
 
 		return true;
 	}
-	
-	void PipelineLayoutAsset::UnLoad()
-	{
-		return descriptor.Clear();
-	}
 
-
-	bool PipelineLayoutAsset::Save_Internal(std::fstream& _fstream) const
+	bool PipelineLayoutAsset::Save(AssetMgr& _mgr, const std::string& _path, std::string& _bin) const
 	{
+		SA_LOG(L"Saving PipelineLayout [" << _path << L"]", Infos, SA/Engine/SDK/Asset);
+
+		(void)_mgr;
+		(void)_path;
+
 		Ser::BinaryStream ser;
 
 		ser << descriptor;
 
-		_fstream << ser.bin;
+		_bin = std::move(ser.bin);
 
 		return true;
 	}

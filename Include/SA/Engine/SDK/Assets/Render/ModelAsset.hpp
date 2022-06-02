@@ -17,20 +17,20 @@ namespace SA::SDK
 {
 	class ModelAsset : public ARenderAsset
 	{
-		bool ParseScene(const aiScene* _scene);
-		bool ParseNode(const aiScene* _scene, const aiNode* _node);
+	// 	bool ParseScene(const aiScene* _scene);
+	// 	bool ParseNode(const aiScene* _scene, const aiNode* _node);
 
-		bool Load_Internal(std::string&& _bin) override final;
-		bool Save_Internal(std::fstream& _fstream) const override final;
+	// 	bool Load_Internal(std::string&& _bin) override final;
+	// 	bool Save_Internal(std::fstream& _fstream) const override final;
 
-	public:
-		std::vector<MeshAsset> meshes;
+	// public:
+	// 	std::vector<MeshAsset> meshes;
 
-		bool IsValid() const override final;
+	// 	bool IsValid() const override final;
 
-		void UnLoad() override final;
+	// 	void UnLoad() override final;
 
-		bool Import(const std::string& _path);
+	// 	bool Import(const std::string& _path);
 	};
 }
 

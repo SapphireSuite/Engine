@@ -13,17 +13,13 @@ namespace SA::SDK
 {
 	class TextureAsset : public ARenderAsset
 	{
-		bool Load_Internal(std::string&& _bin) override final;
-		bool Save_Internal(std::fstream& _fstream) const override final;
+		bool Load(AssetMgr& _mgr, const std::string& _path, std::string&& _bin) override final;
+		bool Save(AssetMgr& _mgr, const std::string& _path, std::string& _bin) const override final;
 
 	public:
 		RawTexture raw;
 
-		bool IsValid() const override final;
-
-		void UnLoad() override final;
-
-		bool Import(const std::string& _path);
+		bool Import(AssetMgr& _mgr, const std::string& _path);
 	};
 }
 

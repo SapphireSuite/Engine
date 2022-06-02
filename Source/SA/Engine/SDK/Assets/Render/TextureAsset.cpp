@@ -6,14 +6,13 @@
 
 namespace SA::SDK
 {
-	bool TextureAsset::IsValid() const
+	bool TextureAsset::Load(AssetMgr& _mgr, const std::string& _path, std::string&& _bin)
 	{
-		return !raw.data.empty();
-	}
+		SA_LOG(L"Loading texture [" << _path << L"]", Infos, SA/Engine/SDK/Asset);
 
+		(void)_mgr;
+		(void)_path;
 
-	bool TextureAsset::Load_Internal(std::string&& _bin)
-	{
 		Ser::BinaryStream ser(std::move(_bin));
 
 		ser >> raw;
@@ -21,26 +20,29 @@ namespace SA::SDK
 		return true;
 	}
 
-	void TextureAsset::UnLoad()
+	bool TextureAsset::Save(AssetMgr& _mgr, const std::string& _path, std::string& _bin) const
 	{
-		raw.Clear();
-	}
+		SA_LOG(L"Saving texture [" << _path << L"]", Infos, SA/Engine/SDK/Asset);
 
+		(void)_mgr;
+		(void)_path;
 
-	bool TextureAsset::Save_Internal(std::fstream& _fstream) const
-	{
 		Ser::BinaryStream ser;
 
 		ser << raw;
 
-		_fstream << ser.bin;
+		_bin = std::move(ser.bin);
 
 		return true;
 	}
 
 
-	bool TextureAsset::Import(const std::string& _path)
+	bool TextureAsset::Import(AssetMgr& _mgr, const std::string& _path)
 	{
+		SA_LOG(L"Importing texture [" << _path << L"]", Infos, SA/Engine/SDK/Asset);
+
+		(void)_mgr;
+
 		return StbImage::Import(_path, raw);
 	}
 }

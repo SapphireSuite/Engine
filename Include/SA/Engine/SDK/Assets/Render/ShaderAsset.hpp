@@ -15,25 +15,17 @@ namespace SA::SDK
 	class ShaderAsset : public ARenderAsset
 	{
 		std::string mResourcePath;
-		mutable std::string mAssetPath;
 
-		bool Load_Internal(std::string&& _bin) override final;
-		bool Save_Internal(std::fstream& _fstream) const override final;
-
-		bool ShouldCompileShader() const noexcept;
+		bool Load(AssetMgr& _mgr, const std::string& _path, std::string&& _bin) override final;
+		bool Save(AssetMgr& _mgr, const std::string& _path, std::string& _bin) const override final;
 
 	public:
 		RawShader raw;
 		ShaderDescriptor descriptor;
-	
-		bool IsValid() const override final;
 
-		bool Load(const std::string& _path) override final;
-		void UnLoad() override final;
+		bool Import(AssetMgr& _mgr, const std::string& _path);
 
-		bool Save(const std::string& _path) const override final;
-
-		bool Import(const std::string& _path);
+		static bool ShouldCompileShader(const std::string& _assetPath, const std::string& _resPath) noexcept;
 	};
 }
 

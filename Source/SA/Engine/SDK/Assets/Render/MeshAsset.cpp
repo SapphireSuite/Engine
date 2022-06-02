@@ -10,19 +10,13 @@
 
 namespace SA::SDK
 {
-	bool MeshAsset::IsValid() const
+	bool MeshAsset::Load(AssetMgr& _mgr, const std::string& _path, std::string&& _bin)
 	{
-		return !raw.vertices.empty() && !raw.indices.empty();
-	}
+		SA_LOG(L"Loading mesh [" << _path << L"]", Infos, SA/Engine/SDK/Asset);
 
-	
-	void MeshAsset::UnLoad()
-	{
-		raw.Clear();
-	}
-	
-	bool MeshAsset::Load_Internal(std::string&& _bin)
-	{
+		(void)_mgr;
+		(void)_path;
+
 		Ser::BinaryStream ser(std::move(_bin));
 
 		ser >> raw;
@@ -30,14 +24,18 @@ namespace SA::SDK
 		return true;
 	}
 
-	
-	bool MeshAsset::Save_Internal(std::fstream& _fstream) const
+	bool MeshAsset::Save(AssetMgr& _mgr, const std::string& _path, std::string& _bin) const
 	{
+		SA_LOG(L"Saving mesh [" << _path << L"]", Infos, SA/Engine/SDK/Asset);
+
+		(void)_mgr;
+		(void)_path;
+
 		Ser::BinaryStream ser;
 
 		ser << raw;
 
-		_fstream << ser.bin;
+		_bin = std::move(ser.bin);
 
 		return true;
 	}
@@ -45,6 +43,8 @@ namespace SA::SDK
 
 	bool MeshAsset::Import(const aiMesh* aiMesh)
 	{
+		SA_LOG(L"Importing assimp mesh", Infos, SA/Engine/SDK/Asset);
+
 		SA_ASSERT(Default, SA/SDK/Asset, aiMesh->mPrimitiveTypes == aiPrimitiveType_TRIANGLE, L"Mesh must be triangle!");
 
 

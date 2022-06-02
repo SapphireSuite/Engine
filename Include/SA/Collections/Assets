@@ -7,6 +7,7 @@
 
 
 #include <SA/Engine/SDK/Assets/AAsset.hpp>
+#include <SA/Engine/SDK/Assets/AssetMgr.hpp>
 
 #if SA_RENDER
 

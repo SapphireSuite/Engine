@@ -21,14 +21,17 @@ namespace SA
 		PipelineDescriptor pipDesc;
 		ARenderPipeline* pipeline = nullptr;
 
-		void Create(ARenderContext* _renderContext,
+		void Create(SDK::AssetMgr& _assetMgr,
+			ARenderContext* _renderContext,
 			ARenderResourceInitializer* _resInit,
 			ARenderPass* _renderPass,
 			const RenderPassDescriptor& _renderPassDesc,
 			uint32_t _subPassIndex = 0u)
 		{
 			// Vertex Shader
-			vertShader = LoadImportSaveCreateShader(_renderContext,
+			vertShader = LoadImportSaveCreateShader(
+				_assetMgr,
+				_renderContext,
 				_resInit,
 				pipDesc,
 				pipLayoutDesc,
@@ -37,7 +40,9 @@ namespace SA
 			);
 
 			// Fragment Shader
-			fragShader = LoadImportSaveCreateShader(_renderContext,
+			fragShader = LoadImportSaveCreateShader(
+				_assetMgr,
+				_renderContext,
 				_resInit,
 				pipDesc,
 				pipLayoutDesc,

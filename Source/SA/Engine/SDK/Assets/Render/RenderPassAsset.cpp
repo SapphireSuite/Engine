@@ -2,36 +2,36 @@
 
 #include <SDK/Assets/Render/RenderPassAsset.hpp>
 
+#include <SA/Collections/Debug>
+
 namespace SA::SDK
 {
-	bool RenderPassAsset::IsValid() const
+	bool RenderPassAsset::Load(AssetMgr& _mgr, const std::string& _path, std::string&& _bin)
 	{
-		return !descriptor.subPassDescs.empty();
-	}
+		SA_LOG(L"Loading RenderPass [" << _path << L"]", Infos, SA/Engine/SDK/Asset);
 
+		(void)_mgr;
+		(void)_path;
 
-	bool RenderPassAsset::Load_Internal(std::string&& _bin)
-	{
 		Ser::BinaryStream ser(std::move(_bin));
 
 		ser >> descriptor;
 
 		return true;
 	}
-
-	void RenderPassAsset::UnLoad()
+	
+	bool RenderPassAsset::Save(AssetMgr& _mgr, const std::string& _path, std::string& _bin) const
 	{
-		descriptor.Clear();
-	}
+		SA_LOG(L"Saving RenderPass [" << _path << L"]", Infos, SA/Engine/SDK/Asset);
 
+		(void)_mgr;
+		(void)_path;
 
-	bool RenderPassAsset::Save_Internal(std::fstream& _fstream) const
-	{
 		Ser::BinaryStream ser;
 
 		ser << descriptor;
 
-		_fstream << ser.bin;
+		_bin = std::move(ser.bin);
 
 		return true;
 	}

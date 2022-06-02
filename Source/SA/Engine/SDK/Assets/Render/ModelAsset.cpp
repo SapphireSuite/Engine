@@ -10,109 +10,109 @@
 
 namespace SA::SDK
 {
-	bool ModelAsset::IsValid() const
-	{
-		return !meshes.empty();
-	}
+	// bool ModelAsset::IsValid() const
+	// {
+	// 	return !meshes.empty();
+	// }
 
 	
-	bool ModelAsset::Load_Internal(std::string&& _bin)
-	{
-		(void)_bin;
+	// bool ModelAsset::Load_Internal(std::string&& _bin)
+	// {
+	// 	(void)_bin;
 
-		// TODO: Implement.
-		return false;
-	}
+	// 	// TODO: Implement.
+	// 	return false;
+	// }
 	
-	void ModelAsset::UnLoad()
-	{
-		meshes.clear();
-	}
-
-	
-	bool ModelAsset::Save_Internal(std::fstream& _fstream) const
-	{
-		(void)_fstream;
-
-		// TODO: Implement.
-		return false;
-	}
+	// void ModelAsset::UnLoad()
+	// {
+	// 	meshes.clear();
+	// }
 
 	
-	bool ModelAsset::Import(const std::string& _path)
-	{
-		SA_LOG(L"Importing model {" << _path << L"}", Infos, SA/SDK/Asset);
+	// bool ModelAsset::Save_Internal(std::fstream& _fstream) const
+	// {
+	// 	(void)_fstream;
 
-		Assimp::Importer importer;
+	// 	// TODO: Implement.
+	// 	return false;
+	// }
 
-		const aiScene* scene = importer.ReadFile(_path, aiProcessPreset_TargetRealtime_MaxQuality);
+	
+	// bool ModelAsset::Import(const std::string& _path)
+	// {
+	// 	SA_LOG(L"Importing model {" << _path << L"}", Infos, SA/SDK/Asset);
 
-		if (!scene)
-		{
-			SA_LOG(L"Assimp Error: " << importer.GetErrorString(), Error, SA/SDK/Asset);
-			return false;
-		}
+	// 	Assimp::Importer importer;
 
-		return ParseScene(scene);
-	}
+	// 	const aiScene* scene = importer.ReadFile(_path, aiProcessPreset_TargetRealtime_MaxQuality);
 
+	// 	if (!scene)
+	// 	{
+	// 		SA_LOG(L"Assimp Error: " << importer.GetErrorString(), Error, SA/SDK/Asset);
+	// 		return false;
+	// 	}
 
-	bool ModelAsset::ParseScene(const aiScene* _scene)
-	{
-		// Animations
-		{
-			// TODO: Parsing.
-
-			//for (uint32 i = 0u; i < _scene->mNumAnimations; ++i)
-			//{
-			//	_scene->mAnimations[i];
-			//}
-		}
+	// 	return ParseScene(scene);
+	// }
 
 
-		return ParseNode(_scene, _scene->mRootNode);
-	}
+	// bool ModelAsset::ParseScene(const aiScene* _scene)
+	// {
+	// 	// Animations
+	// 	{
+	// 		// TODO: Parsing.
 
-	bool ModelAsset::ParseNode(const aiScene* _scene, const aiNode* _node)
-	{
-		// Parsing meshes of this node.
-		for (uint32_t i = 0u; i < _node->mNumMeshes; ++i)
-		{
-			const aiMesh* const aiMesh = _scene->mMeshes[_node->mMeshes[i]];
-
-			// Static mesh
-			if(aiMesh->mNumBones == 0)
-			{
-				MeshAsset& meshAsset = meshes.emplace_back();
-				meshAsset.Import(aiMesh);
-			}
-			else
-			{
-				// Skeletal Mesh.
-
-				// TODO: Implement.
-
-				//for (uint32 j = 0u; j < aiMesh->mNumBones; ++j)
-				//{
-				//	const aiBone* bone = aiMesh->mBones[j];
-
-				//}
-			}
+	// 		//for (uint32 i = 0u; i < _scene->mNumAnimations; ++i)
+	// 		//{
+	// 		//	_scene->mAnimations[i];
+	// 		//}
+	// 	}
 
 
-			// Material
-			{
-				// TODO: Parsing.
+	// 	return ParseNode(_scene, _scene->mRootNode);
+	// }
 
-				//const aiMaterial* mat = _scene->mMaterials[aiMesh->mMaterialIndex];
-			}
-		}
+	// bool ModelAsset::ParseNode(const aiScene* _scene, const aiNode* _node)
+	// {
+	// 	// Parsing meshes of this node.
+	// 	for (uint32_t i = 0u; i < _node->mNumMeshes; ++i)
+	// 	{
+	// 		const aiMesh* const aiMesh = _scene->mMeshes[_node->mMeshes[i]];
+
+	// 		// Static mesh
+	// 		if(aiMesh->mNumBones == 0)
+	// 		{
+	// 			MeshAsset& meshAsset = meshes.emplace_back();
+	// 			meshAsset.Import(aiMesh);
+	// 		}
+	// 		else
+	// 		{
+	// 			// Skeletal Mesh.
+
+	// 			// TODO: Implement.
+
+	// 			//for (uint32 j = 0u; j < aiMesh->mNumBones; ++j)
+	// 			//{
+	// 			//	const aiBone* bone = aiMesh->mBones[j];
+
+	// 			//}
+	// 		}
 
 
-		// Parsing children nodes.
-		for (uint32_t i = 0; i < _node->mNumChildren; ++i)
-			ParseNode(_scene, _node->mChildren[i]);
+	// 		// Material
+	// 		{
+	// 			// TODO: Parsing.
 
-		return true;
-	}
+	// 			//const aiMaterial* mat = _scene->mMaterials[aiMesh->mMaterialIndex];
+	// 		}
+	// 	}
+
+
+	// 	// Parsing children nodes.
+	// 	for (uint32_t i = 0; i < _node->mNumChildren; ++i)
+	// 		ParseNode(_scene, _node->mChildren[i]);
+
+	// 	return true;
+	// }
 }
