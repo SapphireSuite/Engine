@@ -97,6 +97,7 @@ int main()
 	renderContext->SubmitResourceInitializer(resInit);
 	renderContext->DestroyResourceInitializer(resInit);
 
+	assetMgr.Clear();
 
 //}
 

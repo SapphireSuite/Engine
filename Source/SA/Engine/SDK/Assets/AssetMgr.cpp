@@ -32,6 +32,17 @@ namespace SA::SDK
 	}
 
 
+	void AssetMgr::Emplace(std::shared_ptr<AAsset> _assetPtr, const std::string& _path)
+	{
+		std::shared_ptr<AAsset>& emplAssetPtrRef = mPathToAssetMap[_path];
+
+		SA_ERROR(!(emplAssetPtrRef && emplAssetPtrRef != _assetPtr), SA/Engine/SDK/Asset,
+			"Asset at path [" << _path << L"] already registered with different value. Previous content erased.");
+
+		emplAssetPtrRef = _assetPtr;
+	}
+
+
 //{ Load
 
 	bool AssetMgr::Load_Internal(AAsset* _asset, const std::string& _path)
@@ -73,14 +84,14 @@ namespace SA::SDK
 		return true;
 	}
 
-	void AssetMgr::Save(std::shared_ptr<AAsset> _asset, const std::string& _path)
+	bool AssetMgr::Save(std::shared_ptr<AAsset> _asset, const std::string& _path)
 	{
 		SA_ASSERT(Nullptr, SA/Engine/SDK/Asset, _asset != nullptr, L"Try save null asset at path ["_L << _path << L"]");
 
 		// Register at new path.
-		mPathToAssetMap[_path] = _asset;
+		Emplace(_asset, _path);
 
-		Save_Internal(_asset.get(), _path);
+		return Save_Internal(_asset.get(), _path);
 	}
 
 //}

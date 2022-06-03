@@ -20,7 +20,7 @@ namespace SA
 		const std::string& _assetPath,
 		const std::string& _resPath)
 	{
-		std::shared_ptr<SDK::ShaderAsset> asset = _assetMgr.LoadOrImport<SDK::ShaderAsset>(_assetPath, _resPath);
+		auto asset = _assetMgr.LoadOrImport<SDK::ShaderAsset>(_assetPath, _resPath);
 
 		AShader* shader = nullptr;
 
@@ -41,7 +41,7 @@ namespace SA
 		const std::string& _assetPath,
 		const std::string& _resPath)
 	{
-		std::shared_ptr<SDK::TextureAsset> asset = _assetMgr.LoadOrImport<SDK::TextureAsset>(_assetPath, _resPath);
+		auto asset = _assetMgr.LoadOrImport<SDK::TextureAsset>(_assetPath, _resPath);
 
 		ATexture* texture = nullptr;
 
