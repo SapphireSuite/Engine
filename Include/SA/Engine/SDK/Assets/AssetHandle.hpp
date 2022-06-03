@@ -14,15 +14,17 @@ namespace SA::SDK
 	class AssetMgr;
 
 	template <typename T>
-	class AssetHandle
+	class AssetHandleBase
 	{
+	protected:
+
 		AssetMgr* mMgr = nullptr;
 
 		std::shared_ptr<T> mAssetPtr;
 		
 	public:
 
-		AssetHandle(AssetMgr& _mgr, std::shared_ptr<T> _assetPtr = nullptr);
+		AssetHandleBase(AssetMgr& _mgr, std::shared_ptr<T> _assetPtr = nullptr);
 
 // { Valid
 
@@ -49,6 +51,14 @@ namespace SA::SDK
 
 		bool Save(const std::string& _path);
 
+	};
+
+
+	template <typename T>
+	class AssetHandle : public AssetHandleBase<T>
+	{
+	public:
+		using AssetHandleBase<T>::AssetHandleBase;
 	};
 }
 

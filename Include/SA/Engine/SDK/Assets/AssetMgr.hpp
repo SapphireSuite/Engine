@@ -23,13 +23,21 @@ namespace SA::SDK
 		template <typename T>
 		std::shared_ptr<T> FindTypedAsset(const std::string& _path);
 
-		void Emplace(std::shared_ptr<AAsset> _assetPtr, const std::string& _path);
-
 		bool Load_Internal(AAsset* _asset, const std::string& _path);
 		bool Save_Internal(AAsset* _asset, const std::string& _path);
 
 	public:
 		void Clear();
+
+		/**
+		 * @brief Emplace asset at path.
+		 * Internal use only: should not be called by user.
+		 * 
+		 * @param _assetPtr 	Asset ptr to emplace in map.
+		 * @param _path 		Path key to emplace in map.
+		 */
+		void Emplace(std::shared_ptr<AAsset> _assetPtr, const std::string& _path);
+
 
 		/**
 		 * @brief Try found previously registered asset at path, otherwise load and register.

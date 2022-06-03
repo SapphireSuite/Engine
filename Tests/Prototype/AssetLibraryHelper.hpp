@@ -52,32 +52,32 @@ namespace SA
 	}
 
 
-	// AStaticMesh* LoadImportSaveCreateMesh(
-	// 	ARenderContext* _renderContext,
-	// 	ARenderResourceInitializer* _resInit,
-	// 	const std::string& _assetPath,
-	// 	const std::string& _resPath)
-	// {
-	// 	SDK::MeshAsset meshAsset;
+	AStaticMesh* LoadImportSaveCreateMesh(
+		SDK::AssetMgr& _assetMgr,
+		ARenderContext* _renderContext,
+		ARenderResourceInitializer* _resInit,
+		const std::string& _assetPath,
+		const std::string& _resPath)
+	{
+		auto meshAsset = _assetMgr.Load<SDK::MeshAsset>(_assetPath);
 
-	// 	if(!meshAsset.Load(_assetPath))
-	// 	{
-	// 		SDK::ModelAsset modelAsset;
+		if(!meshAsset)
+		{
+			auto modelAsset = _assetMgr.Import<SDK::ModelAsset>(_resPath);
 
-	// 		if(modelAsset.Import(_resPath))
-	// 		{
-	// 			meshAsset = modelAsset.meshes[0];
-	// 			meshAsset.Save(_assetPath);
-	// 		}
-	// 		else
-	// 			SA_LOG(L"Import {" << _resPath << L"} Failed", Error, SA/Engine/Prototype);
-	// 	}
+			if(modelAsset)
+			{
+				meshAsset = modelAsset.GetMesh(0);
+				meshAsset.Save(_assetPath);
+			}
+			else
+				SA_LOG(L"Import {" << _resPath << L"} Failed", Error, SA/Engine/Prototype);
+		}
 
-
-	// 	AStaticMesh* const mesh = _renderContext->CreateStaticMesh(_resInit, meshAsset.raw);
+		AStaticMesh* const mesh = _renderContext->CreateStaticMesh(_resInit, meshAsset->raw);
 		
-	// 	return mesh;
-	// }
+		return mesh;
+	}
 }
 
 #endif // GUARD

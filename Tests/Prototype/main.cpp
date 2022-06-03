@@ -86,12 +86,13 @@ int main()
 	// renderContext->BindMaterialData(unlitMat, unlitBindData);
 
 
-	// AStaticMesh* const cubeMesh = LoadImportSaveCreateMesh(
-	// 	renderContext,
-	// 	resInit,
-	// 	"Bin/Assets/Meshes/cube.spha",
-	// 	"Resources/Meshes/cube.obj"
-	// );
+	AStaticMesh* const cubeMesh = LoadImportSaveCreateMesh(
+		assetMgr,
+		renderContext,
+		resInit,
+		"Bin/Assets/Meshes/cube.spha",
+		"Resources/Meshes/cube.obj"
+	);
 
 
 	renderContext->SubmitResourceInitializer(resInit);
