@@ -34,15 +34,7 @@ namespace SA::SDK
 	{
 		auto pathListIt = mAssetToPathsMap.find(_assetPtr);
 
-	#if SA_DEBUG
-
-		if(pathListIt == mAssetToPathsMap.end())
-		{
-			SA_LOG(L"Asset ptr not registered in map.", Error, SA/Engine/SDK/Asset/Manager);
-			return;
-		}
-
-	#endif
+		SA_ERROR(pathListIt != mAssetToPathsMap.end(), SA/Engine/SDK/Asset/Manager, L"Asset ptr not registered in map.", return);
 
 		std::list<std::string>& pathList = pathListIt->second;
 
@@ -68,15 +60,8 @@ namespace SA::SDK
 	{
 		auto pathToAssetIt = mPathToAssetMap.find(_path);
 
-	#if SA_DEBUG
-
-		if(pathToAssetIt == mPathToAssetMap.end())
-		{
-			SA_LOG("Can not find registered path [" << _path << "] for unloading asset", Error, SA/Engine/SDK/Asset/Manager);
-			return;
-		}
-
-	#endif
+		SA_ERROR(pathToAssetIt != mPathToAssetMap.end(), SA/Engine/SDK/Asset/Manager,
+			"Can not find registered path [" << _path << "] for unloading asset", return);
 
 		// Save asset before map erasing.
 		const std::shared_ptr<AAsset> asset = pathToAssetIt->second.ptr;
@@ -101,15 +86,7 @@ namespace SA::SDK
 		// Query all reference path for input asset.
 		auto assetToPathsIt = mAssetToPathsMap.find(_asset);
 
-	#if SA_DEBUG
-
-		if(assetToPathsIt == mAssetToPathsMap.end())
-		{
-			SA_LOG(L"Asset not registered in this manager!", Error, SA/Engine/SDK/Asset/Manager);
-			return;
-		}
-
-	#endif
+		SA_ERROR(assetToPathsIt != mAssetToPathsMap.end(), SA/Engine/SDK/Asset/Manager, L"Asset not registered in this manager!", return);
 
 
 		std::list<std::string>& assetPaths = assetToPathsIt->second;
@@ -119,21 +96,10 @@ namespace SA::SDK
 		{
 			auto pathToAssetIt = mPathToAssetMap.find(*pathIt);
 
-		#if SA_DEBUG
-
-			if(pathToAssetIt == mPathToAssetMap.end())
-			{
-				SA_LOG(L"Can not find registered path [" << *pathIt << "] for unloading asset", Error, SA/Engine/SDK/Asset/Manager);
-				continue;
-			}
-
-			if(pathToAssetIt->second.ptr != _asset)
-			{
-				SA_LOG(L"Registered asset at path [" << *pathIt << L"] is different requested unload asset", Error, SA/Engine/SDK/Asset/Manager);
-				continue;
-			}
-
-		#endif
+		SA_ERROR(pathToAssetIt != mPathToAssetMap.end(), SA/Engine/SDK/Asset/Manager,
+			L"Can not find registered path [" << *pathIt << "] for unloading asset", continue);
+		SA_ERROR(pathToAssetIt->second.ptr == _asset, SA/Engine/SDK/Asset/Manager,
+			L"Registered asset at path [" << *pathIt << L"] is different requested unload asset", continue);
 
 
 			// No more references?
