@@ -2,109 +2,161 @@
 
 #include <SDK/Assets/AssetManager.hpp>
 
+#include <SDK/Assets/AAsset.hpp>
+
 namespace SA::SDK
 {
+//{ Mapping
+
 	void AssetMgr::Clear()
 	{
 		mPathToAssetMap.clear();
+		mAssetToPathsMap.clear();
 	}
 
 	void AssetMgr::Emplace(std::shared_ptr<AAsset> _assetPtr, const std::string& _path)
 	{
-		std::shared_ptr<AAsset>& emplAssetPtrRef = mPathToAssetMap[_path];
+		SharedAsset& emplAssetPtrRef = mPathToAssetMap[_path];
 
 		// Erase previously registered element path.
-		if(emplAssetPtrRef && emplAssetPtrRef != _assetPtr)
+		if(emplAssetPtrRef.ptr && emplAssetPtrRef.ptr != _assetPtr)
 		{
 			SA_LOG(L"Asset at path [" << _path << L"] already registered with different value. Previous content erased.", Warning, SA/Engine/SDK/Asset);
 
-			std::vector<std::string>& pathList = mAssetToPathsMap[emplAssetPtrRef];
-
-			for(auto it = pathList.begin(); it != pathList.end(); ++it)
-			{
-				if(*it == _path)
-				{
-					pathList.erase(it);
-					break;
-				}
-			}
+			ErasePath(_assetPtr, _path);
 		}
 
-		emplAssetPtrRef = _assetPtr;
+		emplAssetPtrRef.ptr = _assetPtr;
 		mAssetToPathsMap[_assetPtr].emplace_back(_path);
 	}
 
-
-//{ Load / Unload
-
-	void AssetMgr::Unload(std::shared_ptr<AAsset> _asset)
+	void AssetMgr::ErasePath(std::shared_ptr<AAsset> _assetPtr, const std::string& _path)
 	{
-		// Query all reference path for input asset.
-		auto findIt = mAssetToPathsMap.find(_asset);
+		auto pathListIt = mAssetToPathsMap.find(_assetPtr);
 
-		if(findIt == mAssetToPathsMap.end())
+	#if SA_DEBUG
+
+		if(pathListIt == mAssetToPathsMap.end())
 		{
-			SA_LOG(L"Asset not registered in this manager!", Error, SA/Engine/SDK/Asset);
+			SA_LOG(L"Asset ptr not registered in map.", Error, SA/Engine/SDK/Asset/Manager);
 			return;
 		}
 
+	#endif
 
-		// Unload every instance registered in paths
-		for(const std::string& path : findIt->second)
+		std::list<std::string>& pathList = pathListIt->second;
+
+		for(auto it = pathList.begin(); it != pathList.end(); ++it)
 		{
-		#if SA_DEBUG
-
-			auto pathFindIt = mPathToAssetMap.find(path);
-
-			if(pathFindIt == mPathToAssetMap.end())
-				SA_LOG(L"Can not find registered path [" << path << "] for unloading asset", Error, SA/Engine/SDK/Asset)
-
-			// Find a different instance than expected?
-			SA_ERROR(pathFindIt->second == _asset, L"Registered asset at path [" << path << L"] is different requested unload asset");
-
-		#endif
-
-			mPathToAssetMap.erase(path);
+			if(*it == _path)
+			{
+				pathList.erase(it);
+				break;
+			}
 		}
 
-		mAssetToPathsMap.erase(findIt);
+		if (pathList.empty())
+			mAssetToPathsMap.erase(pathListIt);
 	}
 
 //}
 
 
-//{ Save
+//{ Load / Unload
 
-	bool AssetMgr::Save(std::shared_ptr<AAsset> _asset, const std::string& _path)
+	void AssetMgr::Unload(const std::string& _path)
 	{
-		SA_ASSERT(Nullptr, SA/Engine/SDK/Asset, _asset != nullptr, L"Try save null asset at path ["_L << _path << L"]");
+		auto pathToAssetIt = mPathToAssetMap.find(_path);
 
-		// TODO: Save using input serializer (JSON, Binary, etc).
-		// Serializer create directory and open fstream itself.
+	#if SA_DEBUG
 
-		// CreateDirectory(_path);
+		if(pathToAssetIt == mPathToAssetMap.end())
+		{
+			SA_LOG("Can not find registered path [" << _path << "] for unloading asset", Error, SA/Engine/SDK/Asset/Manager);
+			return;
+		}
 
-		// std::fstream fstream(_path, std::fstream::binary | std::fstream::out | std::fstream::trunc);
+	#endif
 
-		// if (!fstream.is_open())
-		// {
-		// 	SA_LOG(L"Failed to open file {" << _path << L"}!", Error, SA/Engine/SDK/Asset);
-		// 	return false;
-		// }
-
-
-		// std::string bin;
-
-		// if(!_asset->Save(*this, _path, bin))
-		// 	return false;
+		// Save asset before map erasing.
+		const std::shared_ptr<AAsset> asset = pathToAssetIt->second.ptr;
 
 
-		// fstream << bin;
+		// No more references?
+		if(--(pathToAssetIt->second.refCount) == 0)
+		{
+			// Erase asset.
+			mPathToAssetMap.erase(pathToAssetIt);
 
-		// Register at new path on success.
-		Emplace(_asset, _path);
+			ErasePath(pathToAssetIt->second.ptr, _path);
+		}
 
-		return true;
+
+		// Call asset reference unloading.
+		asset->Unload(*this);
+	}
+
+	void AssetMgr::Unload(std::shared_ptr<AAsset> _asset)
+	{
+		// Query all reference path for input asset.
+		auto assetToPathsIt = mAssetToPathsMap.find(_asset);
+
+	#if SA_DEBUG
+
+		if(assetToPathsIt == mAssetToPathsMap.end())
+		{
+			SA_LOG(L"Asset not registered in this manager!", Error, SA/Engine/SDK/Asset/Manager);
+			return;
+		}
+
+	#endif
+
+
+		std::list<std::string>& assetPaths = assetToPathsIt->second;
+
+		// Decrement every shared instance registered in each path.
+		for(auto pathIt = assetPaths.begin(); pathIt != assetPaths.end();)
+		{
+			auto pathToAssetIt = mPathToAssetMap.find(*pathIt);
+
+		#if SA_DEBUG
+
+			if(pathToAssetIt == mPathToAssetMap.end())
+			{
+				SA_LOG(L"Can not find registered path [" << *pathIt << "] for unloading asset", Error, SA/Engine/SDK/Asset/Manager);
+				continue;
+			}
+
+			if(pathToAssetIt->second.ptr != _asset)
+			{
+				SA_LOG(L"Registered asset at path [" << *pathIt << L"] is different requested unload asset", Error, SA/Engine/SDK/Asset/Manager);
+				continue;
+			}
+
+		#endif
+
+
+			// No more references?
+			if(--(pathToAssetIt->second.refCount) == 0)
+			{
+				// Erase asset.
+				mPathToAssetMap.erase(pathToAssetIt);
+
+				// Erase registered path.
+				pathIt = assetPaths.erase(pathIt);
+			}
+			else
+				pathIt++;
+		}
+
+
+		// No more path registered for this asset: erase asset ptr key.
+		if(assetPaths.empty())
+			mAssetToPathsMap.erase(assetToPathsIt);
+
+
+		// Call asset reference unloading.
+		_asset->Unload(*this);
 	}
 
 //}

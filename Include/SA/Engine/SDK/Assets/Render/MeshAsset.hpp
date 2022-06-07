@@ -25,6 +25,13 @@ namespace SA::SDK
 		std::string materialPath;
 
 
+//{ Load / Unload
+
+	void Unload(AssetMgr& _mgr) override;
+
+//}
+
+
 //{ Import
 
 		struct ImportInfos : public ARenderAsset::ImportInfos
@@ -49,6 +56,20 @@ namespace SA::SDK
 
 //}
 	};
+
+
+//{ Handle
+
+	template <>
+	class AssetHandle<MeshAsset> : public AssetHandleBase<MeshAsset>
+	{
+	public:
+		using AssetHandleBase<MeshAsset>::AssetHandleBase;
+
+		AssetHandle<MaterialAsset> GetMaterial();
+	};
+
+//}
 }
 
 #endif // GUARD

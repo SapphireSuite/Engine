@@ -2,11 +2,6 @@
 
 #include <SDK/Assets/Render/MeshAsset.hpp>
 
-#include <SA/Collections/Debug>
-
-#include <SDK/Assets/AssetManager.hpp>
-#include <SDK/Assets/AssetHandle.hpp>
-
 // TODO: remove later.
 #include <Render/Base/Mesh/Vertex/Vertex.hpp>
 
@@ -16,6 +11,16 @@
 
 namespace SA::SDK
 {
+//{ Load / Unload
+
+	void MeshAsset::Unload(AssetMgr& _mgr)
+	{
+		_mgr.Unload(materialPath);
+	}
+
+//}
+
+
 //{ Import
 
 	bool MeshAsset::Import(AssetMgr& _mgr, const std::string& _path, const ImportInfos& _infos)
@@ -97,6 +102,16 @@ namespace SA::SDK
 			materialPath = pathName;
 
 		return matAsset;
+	}
+
+//}
+
+
+//{ Handle
+
+	AssetHandle<MaterialAsset> AssetHandle<MeshAsset>::GetMaterial()
+	{
+		return QueryAsset<MaterialAsset>(mAssetPtr->materialPath);
 	}
 
 //}

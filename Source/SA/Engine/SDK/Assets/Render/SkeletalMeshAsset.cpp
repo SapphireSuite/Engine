@@ -2,16 +2,21 @@
 
 #include <SDK/Assets/Render/SkeletalMeshAsset.hpp>
 
-#include <SA/Collections/Debug>
-
-#include <SDK/Assets/AssetManager.hpp>
-#include <SDK/Assets/AssetHandle.hpp>
-
 
 #include <assimp/mesh.h>
 
 namespace SA::SDK
 {
+//{ Load / Unload
+
+	void SkeletalMeshAsset::Unload(AssetMgr& _mgr)
+	{
+		_mgr.Unload(skeletonPath);
+	}
+
+//}
+
+
 //{ Import
 
 	void SkeletalMeshAsset::ImportInfos::SetMesh(const aiMesh* _mesh)

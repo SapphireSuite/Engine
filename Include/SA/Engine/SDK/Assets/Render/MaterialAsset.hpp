@@ -5,8 +5,6 @@
 #ifndef SAPPHIRE_ENGINE_MATERIAL_ASSET_GUARD
 #define SAPPHIRE_ENGINE_MATERIAL_ASSET_GUARD
 
-#include <string>
-
 #include <SA/Engine/SDK/Assets/Render/ARenderAsset.hpp>
 
 // Assimp
@@ -20,6 +18,14 @@ namespace SA::SDK
 	class MaterialAsset : public ARenderAsset
 	{
 	public:
+
+
+//{ Load / Unload
+
+	void Unload(AssetMgr& _mgr) override;
+
+//}
+
 
 //{ Import
 

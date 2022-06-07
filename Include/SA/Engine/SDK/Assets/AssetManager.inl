@@ -2,23 +2,41 @@
 
 namespace SA::SDK
 {
+//{ SharedAssetPtr
+
 	template <typename T>
-	std::shared_ptr<T> AssetMgr::FindTypedAsset(const std::string& _path)
+	std::shared_ptr<T> AssetMgr::SharedAsset::Cast()
 	{
-		std::shared_ptr<T> assetPtr;
+		return std::dynamic_pointer_cast<T>(ptr);
+	}
+
+//}
+
+
+//{ Mapping
+
+	template <typename T>
+	AssetMgr::SharedAsset* AssetMgr::FindAsset(const std::string& _path)
+	{
+		AssetMgr::SharedAsset* sharedAsset = nullptr;
 
 		auto findIt = mPathToAssetMap.find(_path);
 		
 		if(findIt != mPathToAssetMap.end())
-		{
-			// Found cast.
+			sharedAsset = &findIt->second;
 
-			assetPtr = std::dynamic_pointer_cast<T>(findIt->second);
+		return sharedAsset;
+	}
 
-			SA_ASSERT(Nullptr, SA/Engine/SDK/Asset, assetPtr != nullptr, L"Imported asset ["_L << _path << "L] alread loaded with different type.");
-		}
+//}
 
-		return assetPtr;
+
+	template <typename T>
+	AssetHandle<T> AssetMgr::Get(const std::string& _path)
+	{
+		SharedAsset* const sharedAsset = FindAsset<T>(_path);
+
+		return AssetHandle<T>(*this, sharedAsset ? sharedAsset->Cast<T>() : nullptr);
 	}
 
 
@@ -30,22 +48,26 @@ namespace SA::SDK
 		std::shared_ptr<T> assetPtr;
 
 		// Try find previously loaded.
-		assetPtr = FindTypedAsset<T>(_path);
-
-		if(!assetPtr)
+		if(SharedAsset* const sharedAsset = FindAsset<T>(_path))
+		{
+			(sharedAsset->refCount)++;
+			assetPtr = sharedAsset->Cast<T>();
+		}
+		else
 		{
 			// Not found: import new asset.
 
 			T asset;
 			
-			if(asset.Load(*this, _path))
-			{
-				// Emplace asset;
-				assetPtr = std::make_shared<T>(std::move(asset));
+			// TODO: Implement asset load.
+			// if(asset.Load(*this, _path))
+			// {
+			// 	// Emplace asset;
+			// 	assetPtr = std::make_shared<T>(std::move(asset));
 
-				// Register asset at load path.
-				Emplace(assetPtr, _path);
-			}
+			// 	// Register asset at load path.
+			// 	Emplace(assetPtr, _path);
+			// }
 		}
 
 		return AssetHandle<T>(*this, assetPtr);
@@ -62,9 +84,12 @@ namespace SA::SDK
 		std::shared_ptr<T> assetPtr;
 
 		// Try find previously loaded.
-		assetPtr = FindTypedAsset<T>(_path);
-
-		if(!assetPtr)
+		if(SharedAsset* const sharedAsset = FindAsset<T>(_path))
+		{
+			(sharedAsset->refCount)++;
+			assetPtr = sharedAsset->Cast<T>();
+		}
+		else
 		{
 			// Not found: import new asset.
 
@@ -87,12 +112,11 @@ namespace SA::SDK
 	template <typename T>
 	AssetHandle<T> AssetMgr::LoadOrImport(const std::string& _assetPath,
 		const std::string& _resPath,
-		const typename T::ImportInfosT& _infos,
-		bool bSaveOnImport)
+		const typename T::ImportInfos& _infos)
 	{
 		AssetHandle<T> handle = Load<T>(_assetPath);
 
-		if(handle.IsValid())
+		if(handle)
 		{
 			// Also register asset at resource path.
 			Emplace(handle.Get(), _resPath);
@@ -103,25 +127,10 @@ namespace SA::SDK
 
 			handle = Import<T>(_resPath, _infos);
 
-			if(handle.IsValid())
+			if(handle)
 			{
-				// TODO: Implement.
-				(void)bSaveOnImport;
-
-				// if(bSaveOnImport)
-				// {
-				// 	// Save and register as new asset at _assetPath 
-				// 	Save(handle.Get(), _assetPath);
-				// }
-				// else
-				// {
-				
-				
 				// Register only asset at asset path.
 				Emplace(handle.Get(), _assetPath);
-				
-				
-				// }
 			}
 		}
 

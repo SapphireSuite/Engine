@@ -2,10 +2,6 @@
 
 #include <SDK/Assets/Render/ModelAsset.hpp>
 
-#include <SA/Collections/Debug>
-
-#include <SDK/Assets/AssetManager.hpp>
-#include <SDK/Assets/AssetHandle.hpp>
 #include <SDK/Assets/Render/SkeletalMeshAsset.hpp>
 
 
@@ -15,6 +11,25 @@
 
 namespace SA::SDK
 {
+//{ Load / Unload
+
+	void ModelAsset::Unload(AssetMgr& _mgr)
+	{
+		UnloadNode(_mgr, root);
+	}
+
+	void ModelAsset::UnloadNode(AssetMgr& _mgr, const Node& _node)
+	{
+		for(const auto& path : _node.meshPaths)
+			_mgr.Unload(path);
+
+		for(const auto& child : _node.children)
+			UnloadNode(_mgr, child);
+	}
+
+//}
+
+
 //{ Import
 
 	//{ Helpers
@@ -118,7 +133,7 @@ namespace SA::SDK
 
 		// TODO: Implement.
 
-		return false;
+		return true;
 	}
 
 //}

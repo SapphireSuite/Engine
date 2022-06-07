@@ -18,6 +18,13 @@ namespace SA::SDK
 		std::string skeletonPath;
 
 
+//{ Load / Unload
+
+	void Unload(AssetMgr& _mgr) override final;
+
+//}
+
+
 //{ Import
 
 		struct ImportInfos : public MeshAsset::ImportInfos

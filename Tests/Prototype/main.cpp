@@ -67,8 +67,9 @@ int main()
 
 	SDK::AssetMgr assetMgr;
 
-	assetMgr.Import<SDK::ModelAsset>("Resources/Meshes/cube.obj");
+	auto cubeAsset = assetMgr.LoadOrImport<SDK::ModelAsset>("Bin/Meshes/cube.spha", "Resources/Meshes/cube.obj");
 
+	cubeAsset.Unload();
 
 	// UnlitRenderer unlitRender;
 	// unlitRender.Create(assetMgr, renderContext, resInit, renderPass, renderPassDesc, 0u);

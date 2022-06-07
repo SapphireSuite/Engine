@@ -2,13 +2,25 @@
 
 #include <SDK/Assets/Render/MaterialAsset.hpp>
 
-#include <SA/Collections/Debug>
-
 
 #include <assimp/material.h>
 
 namespace SA::SDK
 {
+//{ Load / Unload
+
+	void MaterialAsset::Unload(AssetMgr& _mgr)
+	{
+		(void)_mgr;
+
+		// TODO: Implement.
+	}
+
+//}
+
+
+//{ Import
+
 	bool MaterialAsset::Import(AssetMgr& _mgr, const std::string& _path, const ImportInfos& _infos)
 	{
 		SA_LOG(L"Importing assimp material [" << _infos.mat << L"] from path [" << _path << L"]", Infos, SA/Engine/SDK/Asset);
@@ -20,4 +32,6 @@ namespace SA::SDK
 
 		return true;
 	}
+
+//}
 }

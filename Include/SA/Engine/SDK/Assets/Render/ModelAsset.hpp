@@ -31,7 +31,20 @@ namespace SA::SDK
 
 		Node root;
 
+
+//{ Load / Unload
+
+		void Unload(AssetMgr& _mgr) override final;
+
+	private:
+
+		void UnloadNode(AssetMgr& _mgr, const Node& _node);
+
+//}
+
+
 //{ Import
+	public:
 
 		struct ImportInfos : public ARenderAsset::ImportInfos
 		{

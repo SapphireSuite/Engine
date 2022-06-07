@@ -4,6 +4,8 @@
 
 namespace SA::SDK
 {
+//{ Import
+
 	bool CubemapAsset::Import(AssetMgr& _mgr, const std::string& _path, const ImportInfos& _infos)
 	{
 		SA_LOG(L"Importing cubemap [" << _path << L"]", Infos, SA/Engine/SDK/Asset);
@@ -15,4 +17,6 @@ namespace SA::SDK
 
 		return false;
 	}
+	
+//}
 }

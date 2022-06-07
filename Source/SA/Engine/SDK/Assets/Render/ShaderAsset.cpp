@@ -2,10 +2,7 @@
 
 #include <SDK/Assets/Render/ShaderAsset.hpp>
 
-#include <SA/Collections/Debug>
-
 #include <SDK/ShaderBuilder/GLSL/GLSLShaderBuilder.hpp>
-
 
 namespace SA::SDK
 {

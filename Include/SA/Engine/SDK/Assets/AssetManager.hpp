@@ -7,9 +7,8 @@
 
 #include <string>
 #include <memory>
+#include <list>
 #include <unordered_map>
-
-#include <SA/Collections/Debug>
 
 namespace SA::SDK
 {
@@ -20,11 +19,24 @@ namespace SA::SDK
 
 	class AssetMgr
 	{
-		std::unordered_map<std::string, std::shared_ptr<AAsset>> mPathToAssetMap;
-		std::unordered_map<std::shared_ptr<AAsset>, std::vector<std::string>> mAssetToPathsMap;
+		struct SharedAsset
+		{
+			std::shared_ptr<AAsset> ptr;
+
+			/// Asset reference counter.
+			uint32_t refCount = 1;
+
+			template <typename T>
+			std::shared_ptr<T> Cast();
+		};
+
+		std::unordered_map<std::string, SharedAsset> mPathToAssetMap;
+		std::unordered_map<std::shared_ptr<AAsset>, std::list<std::string>> mAssetToPathsMap;
+
+//{ Mapping
 
 		template <typename T>
-		std::shared_ptr<T> FindTypedAsset(const std::string& _path);
+		SharedAsset* FindAsset(const std::string& _path);
 
 		/**
 		 * @brief Emplace asset at path.
@@ -35,9 +47,25 @@ namespace SA::SDK
 		 */
 		void Emplace(std::shared_ptr<AAsset> _assetPtr, const std::string& _path);
 
+		/// Erase path from mAssetToPathsMap for asset ptr.
+		void ErasePath(std::shared_ptr<AAsset> _assetPtr, const std::string& _path);
+
+//}
+
 	public:
 		void Clear();
 
+		/**
+		 * @brief 
+		 * Does \b not add asset reference count.
+		 * 
+		 * @tparam T 
+		 * @param _path 
+		 * @return AssetHandle<T> 
+		 */
+		template <typename T>
+		AssetHandle<T> Get(const std::string& _path);
+		
 
 //{ Load / Unload
 
@@ -51,22 +79,21 @@ namespace SA::SDK
 		template <typename T>
 		AssetHandle<T> Load(const std::string& _path);
 
-		void Unload(std::shared_ptr<AAsset> _asset);
-
-//}
-
-
-//{ Save
+		/**
+		 * @brief Unload asset previously registed at path.
+		 * Any other reference of this asset loaded with another key path won't be decremented.
+		 * 
+		 * @param _path key path of the asset to unload.
+		 */
+		void Unload(const std::string& _path);
 
 		/**
-		 * @brief Asset Mgr save asset implementation.
-		 * Use AssetHandle.Save() instead.
+		 * @brief Unload asset previously registered.
+		 * Every reference of this asset will be decremented once.
 		 * 
-		 * @param _asset 	Asset to register at new path and save.
-		 * @param _path 	Path to register and save asset.
-		 * @return 			true on save success.
+		 * @param _asset Asset to unload.
 		 */
-		bool Save(std::shared_ptr<AAsset> _asset, const std::string& _path);
+		void Unload(std::shared_ptr<AAsset> _asset);
 
 //}
 
@@ -96,14 +123,21 @@ namespace SA::SDK
 		template <typename T>
 		AssetHandle<T> LoadOrImport(const std::string& _assetPath,
 			const std::string& _resPath,
-			const typename T::ImportInfosT& _infos = typename T::ImportInfosT(),
-			bool bSaveOnImport = true);
+			const typename T::ImportInfos& _infos = typename T::ImportInfos());
+
+//}
+
+
+//{ Export
+
+
 
 //}
 
 	};
 }
 
+#include <SA/Engine/SDK/Assets/AssetHandle.hpp>
 #include <SA/Engine/SDK/Assets/AssetManager.inl>
 
 #endif // GUARD

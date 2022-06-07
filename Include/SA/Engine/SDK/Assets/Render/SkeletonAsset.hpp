@@ -5,8 +5,6 @@
 #ifndef SAPPHIRE_ENGINE_SKELETON_ASSET_GUARD
 #define SAPPHIRE_ENGINE_SKELETON_ASSET_GUARD
 
-#include <string>
-
 #include <SA/Engine/SDK/Assets/Render/ARenderAsset.hpp>
 
 // Assimp
