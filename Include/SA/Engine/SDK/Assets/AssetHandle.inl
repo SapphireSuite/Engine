@@ -3,22 +3,23 @@
 namespace SA::SDK
 {
 	template <typename T>
-	AssetHandleBase<T>::AssetHandleBase(AssetMgr& _mgr, std::shared_ptr<T> _assetPtr) :
-		mMgr{ &_mgr },
+	AssetHandle<T>::AssetHandle(AssetMgr& _mgr, std::shared_ptr<T> _assetPtr) :
+		mMgr{ _mgr },
 		mAssetPtr{ _assetPtr }
 	{
 	}
 
+
 // { Valid
 
 	template <typename T>
-	bool AssetHandleBase<T>::IsValid() const noexcept
+	bool AssetHandle<T>::IsValid() const noexcept
 	{
 		return mAssetPtr != nullptr;
 	}
 
 	template <typename T>
-	AssetHandleBase<T>::operator bool() const noexcept
+	AssetHandle<T>::operator bool() const noexcept
 	{
 		return IsValid();
 	}
@@ -28,15 +29,15 @@ namespace SA::SDK
 
 //{ Accessor
 
-	template <typename T>
-	std::shared_ptr<T> AssetHandleBase<T>::Get() const noexcept
-	{
-		return mAssetPtr;
-	}
+	// template <typename T>
+	// std::shared_ptr<T> AssetHandle<T>::Get() const noexcept
+	// {
+	// 	return mAssetPtr;
+	// }
 
 
 	template <typename T>
-	T& AssetHandleBase<T>::operator*() const
+	T& AssetHandle<T>::operator*() const
 	{
 		SA_ASSERT(Nullptr, SA/Engine/SDK/Asset, mAssetPtr);
 
@@ -44,7 +45,7 @@ namespace SA::SDK
 	}
 
 	template <typename T>
-	T* AssetHandleBase<T>::operator->() const
+	T* AssetHandle<T>::operator->() const
 	{
 		return mAssetPtr.operator->();
 	}
@@ -52,17 +53,13 @@ namespace SA::SDK
 //}
 
 
-	template <typename T>
-	std::shared_ptr<T> AssetHandleBase<T>::Emplace(T&& _asset)
-	{
-		mAssetPtr = std::make_shared<T>(std::move(_asset));
-
-		return mAssetPtr;
-	}
+//{ Management
 
 	template <typename T>
-	bool AssetHandleBase<T>::Save(const std::string& _path)
+	void AssetHandle<T>::Unload()
 	{
-		return mMgr->Save(mAssetPtr, _path);
+		mMgr.Unload(mAssetPtr);
 	}
+
+//}
 }

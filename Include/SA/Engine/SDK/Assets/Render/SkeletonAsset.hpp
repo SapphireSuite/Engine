@@ -2,24 +2,30 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_ENGINE_TEXTURE_ASSET_GUARD
-#define SAPPHIRE_ENGINE_TEXTURE_ASSET_GUARD
+#ifndef SAPPHIRE_ENGINE_SKELETON_ASSET_GUARD
+#define SAPPHIRE_ENGINE_SKELETON_ASSET_GUARD
+
+#include <string>
 
 #include <SA/Engine/SDK/Assets/Render/ARenderAsset.hpp>
 
-#include <SA/Engine/Render/Base/Texture/RawTexture.hpp>
+// Assimp
+struct aiMesh;
+
 
 namespace SA::SDK
 {
-	class TextureAsset : public ARenderAsset
+	struct SkeletonImportInfos;
+
+	class SkeletonAsset : public ARenderAsset
 	{
 	public:
-		RawTexture raw;
 
 //{ Import
 
 		struct ImportInfos : public ARenderAsset::ImportInfos
 		{
+			const aiMesh* mesh = nullptr;
 		};
 
 

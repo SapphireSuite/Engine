@@ -9,20 +9,45 @@
 
 #include <SA/Engine/Render/Base/Mesh/RawMesh.hpp>
 
+#include <SA/Engine/SDK/Assets/Render/MaterialAsset.hpp>
+
 // Assimp.
 struct aiMesh;
+
 
 namespace SA::SDK
 {
 	class MeshAsset : public ARenderAsset
 	{
-		bool Load(AssetMgr& _mgr, const std::string& _path, std::string&& _bin) override final;
-		bool Save(AssetMgr& _mgr, const std::string& _path, std::string& _bin) const override final;
-
 	public:
 		RawMesh raw;
 
-		bool Import(const aiMesh* aiMesh);
+		std::string materialPath;
+
+
+//{ Import
+
+		struct ImportInfos : public ARenderAsset::ImportInfos
+		{
+			/// Output base path from model.
+			std::string outModelBasePath;
+
+			const aiMesh* mesh = nullptr;
+
+			MaterialAsset::ImportInfos matImport;
+		};
+
+
+		bool Import(AssetMgr& _mgr, const std::string& _path, const ImportInfos& _infos);
+
+	private:
+
+		bool ImportVertices(const ImportInfos& _infos);
+		bool ImportIndices(const ImportInfos& _infos);
+		bool ImportAABB(const ImportInfos& _infos);
+		bool ImportMaterial(AssetMgr& _mgr, const ImportInfos& _infos);
+
+//}
 	};
 }
 

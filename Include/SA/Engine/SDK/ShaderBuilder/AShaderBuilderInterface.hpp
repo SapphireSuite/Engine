@@ -15,6 +15,8 @@ namespace SA
 	class AShaderBuilderInterface
 	{
 	public:
+		virtual ~AShaderBuilderInterface() = default;
+
 		/**
 		*	Build Shader script in file at _path.
 		*

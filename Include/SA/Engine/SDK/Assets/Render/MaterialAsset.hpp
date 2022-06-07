@@ -2,24 +2,30 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_ENGINE_TEXTURE_ASSET_GUARD
-#define SAPPHIRE_ENGINE_TEXTURE_ASSET_GUARD
+#ifndef SAPPHIRE_ENGINE_MATERIAL_ASSET_GUARD
+#define SAPPHIRE_ENGINE_MATERIAL_ASSET_GUARD
+
+#include <string>
 
 #include <SA/Engine/SDK/Assets/Render/ARenderAsset.hpp>
 
-#include <SA/Engine/Render/Base/Texture/RawTexture.hpp>
+// Assimp
+struct aiMaterial;
+
 
 namespace SA::SDK
 {
-	class TextureAsset : public ARenderAsset
+	struct MaterialImportInfos;
+
+	class MaterialAsset : public ARenderAsset
 	{
 	public:
-		RawTexture raw;
 
 //{ Import
 
 		struct ImportInfos : public ARenderAsset::ImportInfos
 		{
+			const aiMaterial* mat = nullptr;
 		};
 
 

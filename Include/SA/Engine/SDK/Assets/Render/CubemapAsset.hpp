@@ -2,19 +2,19 @@
 
 #pragma once
 
-#ifndef SAPPHIRE_ENGINE_TEXTURE_ASSET_GUARD
-#define SAPPHIRE_ENGINE_TEXTURE_ASSET_GUARD
+#ifndef SAPPHIRE_ENGINE_CUBEMAP_ASSET_GUARD
+#define SAPPHIRE_ENGINE_CUBEMAP_ASSET_GUARD
 
 #include <SA/Engine/SDK/Assets/Render/ARenderAsset.hpp>
 
-#include <SA/Engine/Render/Base/Texture/RawTexture.hpp>
+#include <SA/Engine/Render/Base/Texture/RawCubemap.hpp>
 
 namespace SA::SDK
 {
-	class TextureAsset : public ARenderAsset
+	class CubemapAsset : public ARenderAsset
 	{
 	public:
-		RawTexture raw;
+		RawCubemap raw;
 
 //{ Import
 

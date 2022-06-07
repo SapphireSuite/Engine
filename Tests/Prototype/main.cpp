@@ -62,43 +62,45 @@ int main()
 	
 
 
-	ARenderResourceInitializer* const resInit = renderContext->CreateResourceInitializer();
+	// ARenderResourceInitializer* const resInit = renderContext->CreateResourceInitializer();
 
 
 	SDK::AssetMgr assetMgr;
 
-
-	UnlitRenderer unlitRender;
-	unlitRender.Create(assetMgr, renderContext, resInit, renderPass, renderPassDesc, 0u);
-
-	ATexture* const missingTexture = LoadImportSaveCreateTexture(
-		assetMgr,
-		renderContext,
-		resInit,
-		"Bin/Assets/Textures/missing_texture.spha",
-		"Resources/Textures/missing_texture.png"
-	);
+	assetMgr.Import<SDK::ModelAsset>("Resources/Meshes/cube.obj");
 
 
-	MaterialBindingData unlitBindData;
-	unlitBindData.Add<IBOBinding>({ "albedo" }, missingTexture);
-	ARenderMaterial* const unlitMat = renderContext->CreateMaterial(unlitRender.pipLayout, unlitRender.pipLayoutDesc, unlitBindData);
-	// renderContext->BindMaterialData(unlitMat, unlitBindData);
+	// UnlitRenderer unlitRender;
+	// unlitRender.Create(assetMgr, renderContext, resInit, renderPass, renderPassDesc, 0u);
+
+	// ATexture* const missingTexture = LoadImportSaveCreateTexture(
+	// 	assetMgr,
+	// 	renderContext,
+	// 	resInit,
+	// 	"Bin/Assets/Textures/missing_texture.spha",
+	// 	"Resources/Textures/missing_texture.png"
+	// );
 
 
-	AStaticMesh* const cubeMesh = LoadImportSaveCreateMesh(
-		assetMgr,
-		renderContext,
-		resInit,
-		"Bin/Assets/Meshes/cube.spha",
-		"Resources/Meshes/cube.obj"
-	);
+	// MaterialBindingData unlitBindData;
+	// unlitBindData.Add<IBOBinding>({ "albedo" }, missingTexture);
+	// ARenderMaterial* const unlitMat = renderContext->CreateMaterial(unlitRender.pipLayout, unlitRender.pipLayoutDesc, unlitBindData);
+	// // renderContext->BindMaterialData(unlitMat, unlitBindData);
 
 
-	renderContext->SubmitResourceInitializer(resInit);
-	renderContext->DestroyResourceInitializer(resInit);
+	// AStaticMesh* const cubeMesh = LoadImportSaveCreateMesh(
+	// 	assetMgr,
+	// 	renderContext,
+	// 	resInit,
+	// 	"Bin/Assets/Meshes/cube.spha",
+	// 	"Resources/Meshes/cube.obj"
+	// );
 
-	assetMgr.Clear();
+
+	// renderContext->SubmitResourceInitializer(resInit);
+	// renderContext->DestroyResourceInitializer(resInit);
+
+	// assetMgr.Clear();
 
 //}
 
@@ -120,7 +122,7 @@ int main()
 
 		renderPass->Begin(frame, renderRect);
 
-		unlitRender.pipeline->Bind(frame);
+		// unlitRender.pipeline->Bind(frame);
 
 		renderPass->End(frame);
 

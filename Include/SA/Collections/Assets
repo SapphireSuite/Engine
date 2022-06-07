@@ -7,13 +7,16 @@
 
 
 #include <SA/Engine/SDK/Assets/AAsset.hpp>
-#include <SA/Engine/SDK/Assets/AssetMgr.hpp>
+#include <SA/Engine/SDK/Assets/AssetManager.hpp>
+#include <SA/Engine/SDK/Assets/AssetHandle.hpp>
 
 #if SA_RENDER
 
 	#include <SA/Engine/SDK/Assets/Render/ShaderAsset.hpp>
 	#include <SA/Engine/SDK/Assets/Render/TextureAsset.hpp>
+	#include <SA/Engine/SDK/Assets/Render/CubemapAsset.hpp>
 	#include <SA/Engine/SDK/Assets/Render/MeshAsset.hpp>
+	#include <SA/Engine/SDK/Assets/Render/MaterialAsset.hpp>
 	#include <SA/Engine/SDK/Assets/Render/ModelAsset.hpp>
 
 #endif

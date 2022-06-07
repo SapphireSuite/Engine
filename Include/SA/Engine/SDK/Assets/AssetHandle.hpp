@@ -14,17 +14,17 @@ namespace SA::SDK
 	class AssetMgr;
 
 	template <typename T>
-	class AssetHandleBase
+	class AssetHandle
 	{
 	protected:
 
-		AssetMgr* mMgr = nullptr;
+		AssetMgr& mMgr;
 
 		std::shared_ptr<T> mAssetPtr;
 		
 	public:
 
-		AssetHandleBase(AssetMgr& _mgr, std::shared_ptr<T> _assetPtr = nullptr);
+		AssetHandle(AssetMgr& _mgr, std::shared_ptr<T> _assetPtr = nullptr);
 
 // { Valid
 
@@ -37,8 +37,7 @@ namespace SA::SDK
 
 //{ Accessor
 
-		std::shared_ptr<T> Get() const noexcept;
-
+		// std::shared_ptr<T> Get() const noexcept;
 
 		T& operator*() const;
 
@@ -46,19 +45,16 @@ namespace SA::SDK
 
 //}
 
-		
-		std::shared_ptr<T> Emplace(T&& _asset);
 
-		bool Save(const std::string& _path);
+//{ Management
 
-	};
+	/**
+	 * @brief Unload handled asset.
+	 * Every instance of this asset will be unloaded from manager.
+	 */
+	void Unload();
 
-
-	template <typename T>
-	class AssetHandle : public AssetHandleBase<T>
-	{
-	public:
-		using AssetHandleBase<T>::AssetHandleBase;
+//}
 	};
 }
 

@@ -11,6 +11,10 @@ namespace SA::SDK
 {
 	class ARenderAsset : public AAsset
 	{
+	public:
+		struct ImportInfos : public AAsset::ImportInfos
+		{
+		};
 	};
 }
 

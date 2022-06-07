@@ -7,51 +7,47 @@
 
 #include <vector>
 
-#include <SA/Engine/SDK/Assets/AssetMgr.hpp>
-#include <SA/Engine/SDK/Assets/AssetHandle.hpp>
+#include <SA/Engine/SDK/Assets/Render/ARenderAsset.hpp>
 
-#include <SA/Engine/SDK/Assets/Render/ModelNode.hpp>
-#include <SA/Engine/SDK/Assets/Render/MeshAsset.hpp>
+#include <SA/Maths/Matrix/Matrix4.hpp>
 
-// Assimp node.
+// Assimp.
 struct aiScene;
 struct aiNode;
-struct aiMesh;
-struct aiMaterial;
+
 
 namespace SA::SDK
 {
 	class ModelAsset : public ARenderAsset
 	{
-		bool ParseScene(AssetMgr& _mgr, const std::string& _savedPath, const aiScene* _aiScene);
-		bool ParseNode(AssetMgr& _mgr, const std::string& _savedPath, const aiScene* _aiScene, const aiNode* _aiNode);
-		bool ParseSkeleton(AssetMgr& _mgr, const std::string& _savedPath, const aiMesh* aiMesh);
-		bool ParseMaterial(AssetMgr& _mgr, const std::string& _savedPath, const aiMaterial* aiMat);
-		bool ParseAnimations(AssetMgr& _mgr, const std::string& _savedPath, const aiScene* _aiScene);
-
-		bool Load(AssetMgr& _mgr, const std::string& _path, std::string&& _bin) override final;
-		bool Save(AssetMgr& _mgr, const std::string& _path, std::string& _bin) const override final;
-
 	public:
-		std::vector<ModelNode> nodes;
+		struct Node
+		{
+			Mat4f trMat;
+			std::vector<std::string> meshPaths;
 
-		bool Import(AssetMgr& _mgr, const std::string& _path);
-	};
+			std::vector<Node> children;
+		};
+
+		Node root;
+
+//{ Import
+
+		struct ImportInfos : public ARenderAsset::ImportInfos
+		{
+		};
 
 
-//{ Handle
+		bool Import(AssetMgr& _mgr, const std::string& _path, const ImportInfos& _infos);
 
-	template <>
-	class AssetHandle<ModelAsset> : public AssetHandleBase<ModelAsset>
-	{
-	public:
-		using AssetHandleBase<ModelAsset>::AssetHandleBase;
-
-		AssetHandle<MeshAsset> GetMesh(uint32_t _index);
-		AssetHandle<MeshAsset> GetMesh(const std::string& _path);
-	};
+	private:
+		bool ParseScene(AssetMgr& _mgr, const std::string& _outBasePath, const aiScene* _aiScene);
+		bool ParseNode(AssetMgr& _mgr, Node& _node, const std::string& _outBasePath, const aiScene* _aiScene, const aiNode* _aiNode);
+		bool ParseAnimations(AssetMgr& _mgr, const std::string& _outBasePath, const aiScene* _aiScene);
 
 //}
+
+	};
 }
 
 #endif // GUARD
