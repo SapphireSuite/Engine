@@ -10,8 +10,36 @@ using namespace SA;
 
 #include "UnlitRenderer.hpp"
 
+#include <SA/Engine/SDK/MaterialBuilder/Graph/PBRMaterialGraph.hpp>
+#include <SA/Engine/SDK/MaterialBuilder/Nodes/MaterialNodeResult.hpp>
+#include <SA/Engine/SDK/MaterialBuilder/Nodes/Inputs/MaterialNodeInputColor.hpp>
+#include <SA/Engine/SDK/MaterialBuilder/Nodes/Inputs/MaterialNodeInputScalar.hpp>
+#include <SA/Engine/SDK/MaterialBuilder/Nodes/Inputs/MaterialNodeInputTexture.hpp>
+#include <SA/Engine/SDK/MaterialBuilder/Nodes/Operators/MaterialNodeOpAdd.hpp>
+#include <SA/Engine/SDK/MaterialBuilder/Nodes/Operators/MaterialNodeOpSubstract.hpp>
+#include <SA/Engine/SDK/MaterialBuilder/Nodes/Operators/MaterialNodeOpMultiply.hpp>
+
 int main()
 {
+	SDK::PBRMaterialGraph pbrGraph;
+
+
+	auto c1 = std::make_shared<SDK::MaterialNodeInputColor>();
+	c1->color = Color::blue;
+
+	auto t1 = std::make_shared<SDK::MaterialNodeInputTexture>();
+	auto t2 = std::make_shared<SDK::MaterialNodeInputTexture>();
+
+	pbrGraph.baseColor = std::make_shared<SDK::MaterialNodeResult>();
+	pbrGraph.baseColor->CreateOperation<SDK::MaterialNodeOpAdd>({ t1, t2 });
+
+	return 0;
+
+
+
+
+
+
 //{ Init
 
 	// Logger
