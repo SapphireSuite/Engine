@@ -11,27 +11,79 @@ using namespace SA;
 #include "UnlitRenderer.hpp"
 
 #include <SA/Engine/SDK/MaterialBuilder/Graph/PBRMaterialGraph.hpp>
-#include <SA/Engine/SDK/MaterialBuilder/Nodes/MaterialNodeResult.hpp>
-#include <SA/Engine/SDK/MaterialBuilder/Nodes/Inputs/MaterialNodeInputColor.hpp>
-#include <SA/Engine/SDK/MaterialBuilder/Nodes/Inputs/MaterialNodeInputScalar.hpp>
-#include <SA/Engine/SDK/MaterialBuilder/Nodes/Inputs/MaterialNodeInputTexture.hpp>
-#include <SA/Engine/SDK/MaterialBuilder/Nodes/Operators/MaterialNodeOpAdd.hpp>
-#include <SA/Engine/SDK/MaterialBuilder/Nodes/Operators/MaterialNodeOpSubstract.hpp>
-#include <SA/Engine/SDK/MaterialBuilder/Nodes/Operators/MaterialNodeOpMultiply.hpp>
+
+#include <SA/Engine/SDK/MaterialBuilder/Graph/Node/Scalar/MaterialScalarValueNode.hpp>
+#include <SA/Engine/SDK/MaterialBuilder/Graph/Node/Scalar/MaterialNodeScalarLink.hpp>
+
+
+#include <SA/Engine/SDK/MaterialBuilder/Graph/Node/Color/MaterialColorValueNode.hpp>
+#include <SA/Engine/SDK/MaterialBuilder/Graph/Node/Color/MaterialTextureValueNode.hpp>
+#include <SA/Engine/SDK/MaterialBuilder/Graph/Node/Color/MaterialNodeColorLink.hpp>
+#include <SA/Engine/SDK/MaterialBuilder/Graph/Node/Color/MaterialNodeColorSingleComponentLink.hpp>
+
+#include <SA/Engine/SDK/MaterialBuilder/Graph/Node/Instructions/MaterialOpAddNode.hpp>
 
 int main()
 {
 	SDK::PBRMaterialGraph pbrGraph;
 
+	// Scalar
+	{
+		auto s1 = std::make_shared<SDK::MaterialScalarValueNode>(6.45f);
+		auto l1 = std::make_shared<SDK::MaterialNodeScalarLink>(s1);
 
-	auto c1 = std::make_shared<SDK::MaterialNodeInputColor>();
-	c1->color = Color::blue;
+		auto s2 = std::make_shared<SDK::MaterialScalarValueNode>(8.654f);
+		auto l2 = std::make_shared<SDK::MaterialNodeScalarLink>(s2);
+		
+		auto c3 = std::make_shared<SDK::MaterialColorValueNode>(Color{ 0.25f, 0.47f, 0.98f, 1.0f});
+		auto l3 = std::make_shared<SDK::MaterialNodeColorSingleComponentLink>(c3,
+			SDK::MaterialNodeColorSingleComponentLink::ColorComponent::G);
 
-	auto t1 = std::make_shared<SDK::MaterialNodeInputTexture>();
-	auto t2 = std::make_shared<SDK::MaterialNodeInputTexture>();
+		auto add = std::make_shared<SDK::MaterialOpAddScalarNode>();
 
-	pbrGraph.baseColor = std::make_shared<SDK::MaterialNodeResult>();
-	pbrGraph.baseColor->CreateOperation<SDK::MaterialNodeOpAdd>({ t1, t2 });
+		add->entries.AddEntry(l1);
+		add->entries.AddEntry(l2);
+		add->entries.AddEntry(l3);
+	}
+
+	// Color.
+	{
+		auto c1 = std::make_shared<SDK::MaterialColorValueNode>(Color{ 0.25f, 0.47f, 0.98f, 1.0f});
+		auto l1 = std::make_shared<SDK::MaterialNodeColorLink>(c1);
+
+		auto t2 = std::make_shared<SDK::MaterialTextureValueNode>();
+		auto l2 = std::make_shared<SDK::MaterialNodeColorLink>(t2);
+
+
+		auto add = std::make_shared<SDK::MaterialOpAddColorNode>();
+
+		add->entries.AddEntry(l1);
+		add->entries.AddEntry(l2);
+	}
+
+	// auto c1 = std::make_shared<SDK::MaterialNodeInputColor>();
+	// c1->color = Color::blue;
+
+	// auto t1 = std::make_shared<SDK::MaterialValueTextureNode>();
+	// auto t2 = std::make_shared<SDK::MaterialValueTextureNode>();
+
+	// auto s1 = std::make_shared<SDK::MaterialValueScalarNode>(5.2f);
+	// auto s1Link = SDK::MaterialNodeScalarLink(); s1Link.node = s1;
+
+	// auto s2 = std::make_shared<SDK::MaterialValueScalarNode>(8.45f);
+	// auto s2Link = SDK::MaterialNodeScalarLink(); s2Link.node = s1;
+
+	// auto sAdd = std::make_shared<SDK::MaterialOpAddNode<SDK::MaterialNodeScalarLink>>();
+
+	// sAdd->inputs.AddEntry(s1Link);
+	// sAdd->inputs.AddEntry(s2Link);
+
+	// auto add = std::make_shared<SDK::MaterialOpAddNode<MaterialNodeColorLink>>();
+	
+
+
+	// pbrGraph.baseColor = std::make_shared<SDK::MaterialNodeResult>();
+	// pbrGraph.baseColor->CreateOperation<SDK::MaterialNodeOpAdd>({ t1, t2 });
 
 	return 0;
 

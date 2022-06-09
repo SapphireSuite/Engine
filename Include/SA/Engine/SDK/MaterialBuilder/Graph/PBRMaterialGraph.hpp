@@ -5,26 +5,21 @@
 #ifndef SAPPHIRE_ENGINE_PBR_MATERIAL_GRAPH_GUARD
 #define SAPPHIRE_ENGINE_PBR_MATERIAL_GRAPH_GUARD
 
-#include <memory>
-
-#include <SA/Engine/SDK/MaterialBuilder/Graph/MaterialGraph.hpp>
+#include <SA/Engine/SDK/MaterialBuilder/Graph/AMaterialGraph.hpp>
 
 namespace SA::SDK
 {
-	class MaterialNodeResult;
-
-	class PBRMaterialGraph : public MaterialGraph
+	class PBRMaterialGraph : public AMaterialGraph
 	{
 	public:
-		std::shared_ptr<MaterialNodeResult> baseColor;
-		std::shared_ptr<MaterialNodeResult> specular;
-		std::shared_ptr<MaterialNodeResult> metallic;
-		std::shared_ptr<MaterialNodeResult> roughness;
-		std::shared_ptr<MaterialNodeResult> emissive;
-		
-		std::shared_ptr<MaterialNodeResult> normal;
+		// MaterialLink<IMaterialColorNode> baseColorIn;
+		// MaterialLink<IMaterialColorNode> specularIn;
+		// MaterialLink<IMaterialScalarNode> metallicIn;
+		// MaterialLink<IMaterialScalarNode> roughnessIn;
+		// MaterialLink<IMaterialColorNode> normalIn;
+		// MaterialLink<IMaterialColorNode> ambientOcclusionIn;
 
-		std::shared_ptr<MaterialNodeResult> ambiantOcclusion;
+		void Build(AMaterialBuilderInterface* _builder) override;
 	};
 }
 
