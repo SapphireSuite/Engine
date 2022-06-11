@@ -9,7 +9,7 @@
 #include <Render/Base/Shader/RawShader.hpp>
 #include <Render/Base/Shader/Descriptors/ShaderDescriptor.hpp>
 
-namespace SA::GLSL
+namespace SA::SDK::GLSL
 {
 	void ParseResources(ShaderDescriptor& _desc,
 		const spirv_cross::Compiler& _comp,

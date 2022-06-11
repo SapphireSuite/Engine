@@ -2,7 +2,7 @@
 
 #include <SDK/ShaderBuilder/GLSL/GLSLShaderBuilder.hpp>
 
-namespace SA::GLSL
+namespace SA::SDK::GLSL
 {
 	bool ShaderBuilder::Build(const std::string& _path, RawShader& _raw, ShaderDescriptor& _desc) const
 	{

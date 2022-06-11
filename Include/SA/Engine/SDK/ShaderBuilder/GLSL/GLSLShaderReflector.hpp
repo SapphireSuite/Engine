@@ -10,7 +10,7 @@ namespace SA
 	struct RawShader;
 	struct ShaderDescriptor;
 
-	namespace GLSL
+	namespace SDK::GLSL
 	{
 		class ShaderReflector
 		{

@@ -11,7 +11,7 @@
 #include <SDK/Wrappers/ReadFile.hpp>
 #include <SDK/ShaderBuilder/GLSL/GLSLShaderFileIncluder.hpp>
 
-namespace SA::GLSL
+namespace SA::SDK::GLSL
 {
 	shaderc_shader_kind GetShaderKind(ShaderStage _stage)
 	{

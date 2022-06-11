@@ -5,14 +5,14 @@
 #ifndef SAPPHIRE_ENGINE_GLSL_SHADER_BUILDER_GUARD
 #define SAPPHIRE_ENGINE_GLSL_SHADER_BUILDER_GUARD
 
-#include <SA/Engine/SDK/ShaderBuilder/AShaderBuilderInterface.hpp>
+#include <SA/Engine/SDK/ShaderBuilder/AShaderBuilder.hpp>
 
 #include <SA/Engine/SDK/ShaderBuilder/GLSL/GLSLShaderCompiler.hpp>
 #include <SA/Engine/SDK/ShaderBuilder/GLSL/GLSLShaderReflector.hpp>
 
-namespace SA::GLSL
+namespace SA::SDK::GLSL
 {
-	class ShaderBuilder : public AShaderBuilderInterface
+	class ShaderBuilder : public AShaderBuilder
 	{
 		ShaderCompiler mCompiler;
 		ShaderReflector mReflector;

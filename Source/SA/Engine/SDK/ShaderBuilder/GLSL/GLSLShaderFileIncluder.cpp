@@ -6,7 +6,7 @@
 
 #include <SA/Collections/Debug>
 
-namespace SA::GLSL
+namespace SA::SDK::GLSL
 {
 	shaderc_include_result* MakeError(const std::string& message)
 	{

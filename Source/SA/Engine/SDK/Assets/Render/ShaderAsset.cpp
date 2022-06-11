@@ -8,9 +8,9 @@ namespace SA::SDK
 {
 //{ Import
 
-	std::unique_ptr<AShaderBuilderInterface> SelectBuilder(ShaderLanguage _lang)
+	std::unique_ptr<AShaderBuilder> SelectBuilder(ShaderLanguage _lang)
 	{
-		std::unique_ptr<AShaderBuilderInterface> builder;
+		std::unique_ptr<AShaderBuilder> builder;
 
 		switch (_lang)
 		{
@@ -35,7 +35,7 @@ namespace SA::SDK
 		(void)_mgr;
 
 
-		std::unique_ptr<AShaderBuilderInterface> builder = SelectBuilder(_infos.language);
+		std::unique_ptr<AShaderBuilder> builder = SelectBuilder(_infos.language);
 
 		if (!builder)
 		{
