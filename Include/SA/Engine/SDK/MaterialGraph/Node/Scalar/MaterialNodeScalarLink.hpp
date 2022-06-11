@@ -5,10 +5,10 @@
 #ifndef SAPPHIRE_ENGINE_MATERIAL_NODE_SCALAR_LINK_GUARD
 #define SAPPHIRE_ENGINE_MATERIAL_NODE_SCALAR_LINK_GUARD
 
-#include <SA/Engine/SDK/MaterialBuilder/Graph/Node/AMaterialNodeLink.hpp>
-#include <SA/Engine/SDK/MaterialBuilder/Graph/Node/Scalar/IMaterialScalarNodeLink.hpp>
+#include <SA/Engine/SDK/MaterialGraph/Node/AMaterialNodeLink.hpp>
+#include <SA/Engine/SDK/MaterialGraph/Node/Scalar/IMaterialScalarNodeLink.hpp>
 
-#include <SA/Engine/SDK/MaterialBuilder/Graph/Node/Scalar/IMaterialScalarNode.hpp>
+#include <SA/Engine/SDK/MaterialGraph/Node/Scalar/IMaterialScalarNode.hpp>
 
 namespace SA::SDK
 {

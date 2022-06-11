@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_ENGINE_PBR_MATERIAL_GRAPH_GUARD
 #define SAPPHIRE_ENGINE_PBR_MATERIAL_GRAPH_GUARD
 
-#include <SA/Engine/SDK/MaterialBuilder/Graph/AMaterialGraph.hpp>
+#include <SA/Engine/SDK/MaterialGraph/AMaterialGraph.hpp>
 
 namespace SA::SDK
 {
@@ -19,7 +19,7 @@ namespace SA::SDK
 		// MaterialLink<IMaterialColorNode> normalIn;
 		// MaterialLink<IMaterialColorNode> ambientOcclusionIn;
 
-		void Build(AMaterialBuilderInterface* _builder) override;
+		void Build(AShaderWriter* _writer) override;
 	};
 }
 

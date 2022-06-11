@@ -7,10 +7,10 @@
 
 #include <memory>
 
-#include <SA/Engine/SDK/MaterialBuilder/Graph/Node/AMaterialNodeLink.hpp>
-#include <SA/Engine/SDK/MaterialBuilder/Graph/Node/Color/IMaterialColorNodeLink.hpp>
+#include <SA/Engine/SDK/MaterialGraph/Node/AMaterialNodeLink.hpp>
+#include <SA/Engine/SDK/MaterialGraph/Node/Color/IMaterialColorNodeLink.hpp>
 
-#include <SA/Engine/SDK/MaterialBuilder/Graph/Node/Color/IMaterialColorNode.hpp>
+#include <SA/Engine/SDK/MaterialGraph/Node/Color/IMaterialColorNode.hpp>
 
 namespace SA::SDK
 {

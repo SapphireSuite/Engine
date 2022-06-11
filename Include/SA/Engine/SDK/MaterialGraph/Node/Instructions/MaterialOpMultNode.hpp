@@ -5,7 +5,7 @@
 #ifndef SAPPHIRE_ENGINE_MATERIAL_OP_MULT_NODE_GUARD
 #define SAPPHIRE_ENGINE_MATERIAL_OP_MULT_NODE_GUARD
 
-#include <SA/Engine/SDK/MaterialBuilder/Graph/Node/Instructions/AMaterialInstructionNode.hpp>
+#include <SA/Engine/SDK/MaterialGraph/Node/Instructions/AMaterialInstructionNode.hpp>
 
 namespace SA::SDK
 {

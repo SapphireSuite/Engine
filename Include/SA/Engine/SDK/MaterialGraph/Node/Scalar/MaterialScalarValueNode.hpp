@@ -5,8 +5,8 @@
 #ifndef SAPPHIRE_ENGINE_MATERIAL_SCALAR_VALUE_NODE_GUARD
 #define SAPPHIRE_ENGINE_MATERIAL_SCALAR_VALUE_NODE_GUARD
 
-#include <SA/Engine/SDK/MaterialBuilder/Graph/Node/AMaterialValueNode.hpp>
-#include <SA/Engine/SDK/MaterialBuilder/Graph/Node/Scalar/IMaterialScalarNode.hpp>
+#include <SA/Engine/SDK/MaterialGraph/Node/AMaterialValueNode.hpp>
+#include <SA/Engine/SDK/MaterialGraph/Node/Scalar/IMaterialScalarNode.hpp>
 
 namespace SA::SDK
 {

@@ -7,9 +7,9 @@
 
 #include <string>
 
-#include <SA/Engine/SDK/MaterialBuilder/Graph/Node/AMaterialValueNode.hpp>
+#include <SA/Engine/SDK/MaterialGraph/Node/AMaterialValueNode.hpp>
 
-#include <SA/Engine/SDK/MaterialBuilder/Graph/Node/Color/IMaterialColorNode.hpp>
+#include <SA/Engine/SDK/MaterialGraph/Node/Color/IMaterialColorNode.hpp>
 
 namespace SA::SDK
 {

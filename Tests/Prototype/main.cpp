@@ -10,18 +10,18 @@ using namespace SA;
 
 #include "UnlitRenderer.hpp"
 
-#include <SA/Engine/SDK/MaterialBuilder/Graph/PBRMaterialGraph.hpp>
+#include <SA/Engine/SDK/MaterialGraph/PBRMaterialGraph.hpp>
 
-#include <SA/Engine/SDK/MaterialBuilder/Graph/Node/Scalar/MaterialScalarValueNode.hpp>
-#include <SA/Engine/SDK/MaterialBuilder/Graph/Node/Scalar/MaterialNodeScalarLink.hpp>
+#include <SA/Engine/SDK/MaterialGraph/Node/Scalar/MaterialScalarValueNode.hpp>
+#include <SA/Engine/SDK/MaterialGraph/Node/Scalar/MaterialNodeScalarLink.hpp>
 
 
-#include <SA/Engine/SDK/MaterialBuilder/Graph/Node/Color/MaterialColorValueNode.hpp>
-#include <SA/Engine/SDK/MaterialBuilder/Graph/Node/Color/MaterialTextureValueNode.hpp>
-#include <SA/Engine/SDK/MaterialBuilder/Graph/Node/Color/MaterialNodeColorLink.hpp>
-#include <SA/Engine/SDK/MaterialBuilder/Graph/Node/Color/MaterialNodeColorSingleComponentLink.hpp>
+#include <SA/Engine/SDK/MaterialGraph/Node/Color/MaterialColorValueNode.hpp>
+#include <SA/Engine/SDK/MaterialGraph/Node/Color/MaterialTextureValueNode.hpp>
+#include <SA/Engine/SDK/MaterialGraph/Node/Color/MaterialNodeColorLink.hpp>
+#include <SA/Engine/SDK/MaterialGraph/Node/Color/MaterialNodeColorSingleComponentLink.hpp>
 
-#include <SA/Engine/SDK/MaterialBuilder/Graph/Node/Instructions/MaterialOpAddNode.hpp>
+#include <SA/Engine/SDK/MaterialGraph/Node/Instructions/MaterialOpAddNode.hpp>
 
 int main()
 {

@@ -7,9 +7,9 @@
 
 #include <memory>
 
-#include <SA/Engine/SDK/MaterialBuilder/Graph/Node/Instructions/AMaterialInstructionNode.hpp>
+#include <SA/Engine/SDK/MaterialGraph/Node/Instructions/AMaterialInstructionNode.hpp>
 
-#include <SA/Engine/SDK/MaterialBuilder/Graph/Misc/MaterialArrayEntry.hpp>
+#include <SA/Engine/SDK/MaterialGraph/Misc/MaterialArrayEntry.hpp>
 
 namespace SA::SDK
 {

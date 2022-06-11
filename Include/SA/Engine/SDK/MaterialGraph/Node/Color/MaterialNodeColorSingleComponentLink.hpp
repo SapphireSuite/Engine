@@ -5,8 +5,8 @@
 #ifndef SAPPHIRE_ENGINE_MATERIAL_NODE_COLOR_SINGLE_COMPONENT_LINK_GUARD
 #define SAPPHIRE_ENGINE_MATERIAL_NODE_COLOR_SINGLE_COMPONENT_LINK_GUARD
 
-#include <SA/Engine/SDK/MaterialBuilder/Graph/Node/Color/MaterialNodeColorLink.hpp>
-#include <SA/Engine/SDK/MaterialBuilder/Graph/Node/Scalar/IMaterialScalarNodeLink.hpp>
+#include <SA/Engine/SDK/MaterialGraph/Node/Color/MaterialNodeColorLink.hpp>
+#include <SA/Engine/SDK/MaterialGraph/Node/Scalar/IMaterialScalarNodeLink.hpp>
 
 namespace SA::SDK
 {

@@ -5,14 +5,14 @@
 #ifndef SAPPHIRE_ENGINE_AMATERIAL_GRAPH_GUARD
 #define SAPPHIRE_ENGINE_AMATERIAL_GRAPH_GUARD
 
-#include <SA/Engine/SDK/MaterialBuilder/AMaterialBuilderInterface.hpp>
+#include <SA/Engine/SDK/ShaderBuilder/AShaderWriter.hpp>
 
 namespace SA::SDK
 {
 	class AMaterialGraph
 	{
 	public:
-		virtual void Build(AMaterialBuilderInterface* _builder) = 0;
+		virtual void Build(AShaderWriter* _writer) = 0;
 	};
 }
 
