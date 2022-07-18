@@ -11,69 +11,23 @@
 			}
 		},
 		{
-			"name": "Debug",
-			"hidden": true,
-			"inherits": "Base",
-			"cacheVariables": {
-				"CMAKE_BUILD_TYPE": "Debug"
-			}
-		},
-		{
-			"name": "Release",
-			"hidden": true,
-			"inherits": "Base",
-			"cacheVariables": {
-				"CMAKE_BUILD_TYPE": "Release"
-			}
-		},
-		{
 			"name": "Clang",
-			"hidden": true,
-			"generator": "Ninja",
+			"inherits": "Base",
+			"generator": "Ninja Multi-Config",
 			"cacheVariables": {
-				"CMAKE_C_COMPILER": "clang",
-				"CMAKE_CXX_COMPILER": "clang++"
-			}
-		},
-		{
-			"name": "Clang Debug",
-			"inherits": [
-				"Clang",
-				"Debug"
-			],
-			"description": "Compilers: C=clang, CXX=clang++"
-		},
-		{
-			"name": "Clang Release",
-			"inherits": [
-				"Clang",
-				"Release"
-			],
+				"CMAKE_C_COMPILER": "clang$env{clang_compiler_v}",
+				"CMAKE_CXX_COMPILER": "clang++$env{clang_compiler_v}"
+			},
 			"description": "Compilers: C=clang, CXX=clang++"
 		},
 		{
 			"name": "GCC",
-			"hidden": true,
-			"generator": "Ninja",
+			"inherits": "Base",
+			"generator": "Ninja Multi-Config",
 			"cacheVariables": {
-				"CMAKE_C_COMPILER": "gcc",
-				"CMAKE_CXX_COMPILER": "g++"
-			}
-		},
-		{
-			"name": "GCC Debug",
-			"inherits": [
-				"GCC",
-				"Debug"
-			],
-			"description": "Compilers: C=gcc, CXX=g++"
-		},
-		{
-			"name": "GCC Release",
-			"inherits": [
-				"GCC",
-				"Release"
-			],
+				"CMAKE_C_COMPILER": "gcc$env{gcc_compiler_v}",
+				"CMAKE_CXX_COMPILER": "g++$env{gcc_compiler_v}"
+			},
 			"description": "Compilers: C=gcc, CXX=g++"
 		},
 		{
@@ -86,7 +40,7 @@
 			}
 		},
 		{
-			"name": "VisualStudio",
+			"name": "Visual Studio",
 			"hidden": true,
 			"inherits": [
 				"Windows",
@@ -96,28 +50,28 @@
 		},
 		{
 			"name": "VS_2017",
-			"inherits": "VisualStudio",
+			"inherits": "Visual Studio",
 			"displayName": "Visual Studio 2017",
 			"description": "MSVC Compiler",
 			"generator": "Visual Studio 15 2017"
 		},
 		{
 			"name": "VS_2019",
-			"inherits": "VisualStudio",
+			"inherits": "Visual Studio",
 			"displayName": "Visual Studio 2019",
 			"description": "MSVC Compiler",
 			"generator": "Visual Studio 16 2019"
 		},
 		{
 			"name": "VS_2022",
-			"inherits": "VisualStudio",
+			"inherits": "Visual Studio",
 			"displayName": "Visual Studio 2022",
 			"description": "MSVC Compiler",
 			"generator": "Visual Studio 17 2022"
 		},
 		{
 			"name": "VS_ClangCL",
-			"inherits": "VisualStudio",
+			"inherits": "Visual Studio",
 			"displayName": "ClangCL Visual Studio 2022",
 			"description": "Clang CL Compiler with Visual Studio",
 			"generator": "Visual Studio 17 2022",
@@ -167,26 +121,26 @@
 		{
 			"name": "Clang Debug",
 			"inherits": "Debug",
-			"displayName": "Default",
-			"configurePreset": "Clang Debug"
+			"displayName": "Debug",
+			"configurePreset": "Clang"
 		},
 		{
 			"name": "Clang Release",
 			"inherits": "Release",
-			"displayName": "Default",
-			"configurePreset": "Clang Release"
+			"displayName": "Release",
+			"configurePreset": "Clang"
 		},
 		{
 			"name": "GCC Debug",
 			"inherits": "Debug",
-			"displayName": "Default",
-			"configurePreset": "GCC Debug"
+			"displayName": "Debug",
+			"configurePreset": "GCC"
 		},
 		{
 			"name": "GCC Release",
 			"inherits": "Release",
-			"displayName": "Default",
-			"configurePreset": "GCC Release"
+			"displayName": "Release",
+			"configurePreset": "GCC"
 		},
 		{
 			"name": "VS_2017 Debug",
@@ -282,26 +236,26 @@
 		{
 			"name": "Clang Debug",
 			"inherits": "Debug",
-			"displayName": "Default",
-			"configurePreset": "Clang Debug"
+			"displayName": "Debug",
+			"configurePreset": "Clang"
 		},
 		{
 			"name": "Clang Release",
 			"inherits": "Release",
-			"displayName": "Default",
-			"configurePreset": "Clang Release"
+			"displayName": "Release",
+			"configurePreset": "Clang"
 		},
 		{
 			"name": "GCC Debug",
 			"inherits": "Debug",
-			"displayName": "Default",
-			"configurePreset": "GCC Debug"
+			"displayName": "Debug",
+			"configurePreset": "GCC"
 		},
 		{
 			"name": "GCC Release",
 			"inherits": "Release",
-			"displayName": "Default",
-			"configurePreset": "GCC Release"
+			"displayName": "Release",
+			"configurePreset": "GCC"
 		},
 		{
 			"name": "VS_2017 Debug",
